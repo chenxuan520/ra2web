@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/zlib
+/conf
+/cmake/Modules
+/build
+/lua5.1
+/.vs

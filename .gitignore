@@ -1,0 +1,11 @@
+/game-files/
+/assets/
+node_modules/
+dist/
+.artifacts/
+.cache/
+certs/
+.env
+.env.*
+*.log
+*.tsbuildinfo
