@@ -72,6 +72,12 @@ def observations(match, side):
                 finalSampleForce=samples[-1].get('forceComposition') if samples else None)
     if 'mobility' in match['telemetry']:
         result['mobility'] = match['telemetry']['mobility']['players'][side]
+        for name in ('HTK', 'JUMPJET'):
+            result['produced'][name] = len(production[side].get(name, {}).get('factoryProducedTicks', [])) if production is not None else None
+            if result['damageBySourceType'] is not None:
+                result['damageBySourceType'][name] = damage[side].get(name, {})
+        result['firstFlakTrackTick'] = min(production[side].get('HTK', {}).get('factoryProducedTicks', []), default=None) if production is not None else None
+        result['flakTrackAirShots'] = sum(v['count'] for weapon, v in shots[side].get('HTK', {}).items() if 'AA' in weapon.upper()) if shots is not None else None
     return result
 
 
@@ -84,7 +90,9 @@ def verify(paths, candidate, baseline=CONTROL, schedule='pilot'):
         require(report['candidate']['commit'] == candidate and report['baseline']['commit'] == baseline,
                 'Frozen candidate/baseline mismatch')
         require(report['candidate']['profile'] == report['baseline']['profile'] == 'brutal', 'Profiles differ')
-        require(report['candidate']['dirty'] is False and report['engineDirty'] is False, 'Dirty code cannot be compared')
+        # Baselines are loaded from git archive; older raw reports have no dirty field for them.
+        require(report['candidate']['dirty'] is False and report['baseline'].get('dirty', False) is False and
+                report['engineDirty'] is False, 'Dirty code cannot be compared')
         require(re.fullmatch(r'[a-f0-9]{40}', report['engineCommit']) is not None, 'Engine must be frozen')
         require(report['settings'] == SETTINGS, 'Unequal or unexpected game settings')
         current = {k: report[k] for k in ('engineCommit', 'settings', 'resources')}
@@ -119,7 +127,7 @@ def verify(paths, candidate, baseline=CONTROL, schedule='pilot'):
                 game['baselinePlayerName'] == paired['candidatePlayerName'], 'Unequal paired starts or player slots')
     values = [games[key] for key in sorted(games)]
     totals = counts(values)
-    return dict(format=1, kind='direct-current-bot-tactic', schedule=schedule,
+    result = dict(format=1, kind='direct-current-bot-tactic', schedule=schedule,
                 candidateCommit=candidate, baselineCommit=baseline, profiles=['brutal', 'brutal'],
                 config=config, mapResources=resources, rawReports=raw_index, totals=totals, games=values,
                 byCountry={c: counts([g for g in values if g['candidateCountry'] == c]) for c in sorted({g['candidateCountry'] for g in values})},
@@ -129,23 +137,35 @@ def verify(paths, candidate, baseline=CONTROL, schedule='pilot'):
                        'Dog counts, damage and distances include scouts, not only escorts; production may diverge after micro changes.',
                        'Max escort and force state are sampled every 900 ticks. No sampled escort does not prove zero assignment.',
                        'Missing observations remain null. Dog death does not establish tank-shot interception.'])
+    if candidate == baseline:
+        result['controlSanity'] = totals['wins'] == totals['losses']
+        result['screeningPositive'] = False
+        result['notes'].append('Self-play is an integrity control: symmetric outcomes are not an improvement or qualification.')
+    return result
 
 
 def write(result, directory):
     directory.mkdir(parents=True, exist_ok=True)
     (directory / 'results.json').write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n')
     t = result['totals']
-    lines = ['# P1 direct comparison with C18', '', f"Candidate `{result['candidateCommit']}` vs `{result['baselineCommit']}`.", '',
+    baseline_label = 'C18' if result['baselineCommit'] == CONTROL else 'frozen bot ' + result['baselineCommit'][:7]
+    control = result.get('controlSanity')
+    passed = result.get('controlSanity', result['screeningPositive'])
+    verdict = ('symmetric self-play control' if control else 'asymmetric self-play control') if control is not None else ('positive' if passed else 'not improved')
+    lines = [f'# P1 direct comparison with {baseline_label}', '', f"Candidate `{result['candidateCommit']}` vs `{result['baselineCommit']}`.", '',
              f"{t['games']} games: {t['wins']}W / {t['losses']}L / {t['draws']}D / 0E. Wins/all games {t['winRate']:.2%}; score with half draws {t['scoreWithHalfDraws']:.2%}.", '',
-             f"Development screen: {'positive' if result['screeningPositive'] else 'not improved'}. **Not qualified.**", '',
+             f"Development screen: {verdict}. **Not qualified.**", '',
              '| Country | W | L | D | Wins/all |', '| --- | ---: | ---: | ---: | ---: |']
     for name, row in result['byCountry'].items():
         lines.append(f"| {name} | {row['wins']} | {row['losses']} | {row['draws']} | {row['winRate']:.2%} |")
     lines.extend(['', *result['notes'], ''])
     (directory / 'report.md').write_text('\n'.join(lines))
     (directory / 'strength-assessment.json').write_text(json.dumps(dict(kind=result['kind'],
-        passed=result['screeningPositive'], qualified=False, completed=t['games'], errors=0,
-        failure=None if result['screeningPositive'] else 'Candidate wins do not exceed current C18 wins'), indent=2) + '\n')
+        passed=passed, qualified=False, completed=t['games'], errors=0,
+        **({'controlSanity': control} if control is not None else {}),
+        failure=None if passed else 'Self-play outcomes are asymmetric' if control is not None else
+            'Candidate wins do not exceed current C18 wins' if result['baselineCommit'] == CONTROL else
+            'Candidate wins do not exceed the previous frozen bot wins'), indent=2) + '\n')
 
 
 if __name__ == '__main__':
@@ -160,5 +180,5 @@ if __name__ == '__main__':
     result = verify(args.reports, args.candidate_ref, args.baseline_ref, args.schedule)
     write(result, args.out)
     print(json.dumps(result['totals']))
-    if args.require_positive and not result['screeningPositive']:
+    if args.require_positive and not result.get('controlSanity', result['screeningPositive']):
         raise SystemExit(2)

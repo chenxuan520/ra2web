@@ -1,0 +1,2003 @@
+{
+  "format": 1,
+  "date": "2026-10-26",
+  "qualified": false,
+  "allRawReportsPreservedLocally": true,
+  "runs": {
+    "mobile-c18": {
+      "candidateCommit": "e1d6fcd3abaa3599d1560ef00b32b546f1465829",
+      "baselineCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+      "engineCommit": "e1d6fcd3abaa3599d1560ef00b32b546f1465829",
+      "profiles": [
+        "brutal",
+        "brutal"
+      ],
+      "settings": {
+        "maxTicks": 27000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "gameSpeed": 3,
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true,
+        "simulationTicksPerSecond": 15,
+        "shortGame": true,
+        "superWeapons": false,
+        "crates": false,
+        "engineStalemateDetection": false
+      },
+      "resources": {
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+      },
+      "mapResources": {
+        "mp08t2": {
+          "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+          "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+        },
+        "tn01t2": {
+          "mapSha256": "95a836a2b42728d2c7d5c606902619b98afe428cb54eaf8b489e2d83819213e3",
+          "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+        }
+      },
+      "totals": {
+        "games": 8,
+        "wins": 1,
+        "losses": 5,
+        "draws": 2,
+        "errors": 0,
+        "winRate": 0.125,
+        "decisiveWinRate": 0.16666666666666666,
+        "scoreWithHalfDraws": 0.25
+      },
+      "byMap": {
+        "mp08t2": {
+          "games": 4,
+          "wins": 1,
+          "losses": 2,
+          "draws": 1,
+          "errors": 0,
+          "winRate": 0.25,
+          "decisiveWinRate": 0.3333333333333333,
+          "scoreWithHalfDraws": 0.375
+        },
+        "tn01t2": {
+          "games": 4,
+          "wins": 0,
+          "losses": 3,
+          "draws": 1,
+          "errors": 0,
+          "winRate": 0.0,
+          "decisiveWinRate": 0.0,
+          "scoreWithHalfDraws": 0.125
+        }
+      },
+      "byCountry": {
+        "Arabs": {
+          "games": 4,
+          "wins": 1,
+          "losses": 3,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 0.25,
+          "decisiveWinRate": 0.25,
+          "scoreWithHalfDraws": 0.25
+        },
+        "Russians": {
+          "games": 4,
+          "wins": 0,
+          "losses": 2,
+          "draws": 2,
+          "errors": 0,
+          "winRate": 0.0,
+          "decisiveWinRate": 0.0,
+          "scoreWithHalfDraws": 0.25
+        }
+      },
+      "bySwap": {
+        "False": {
+          "games": 4,
+          "wins": 0,
+          "losses": 4,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 0.0,
+          "decisiveWinRate": 0.0,
+          "scoreWithHalfDraws": 0.0
+        },
+        "True": {
+          "games": 4,
+          "wins": 1,
+          "losses": 1,
+          "draws": 2,
+          "errors": 0,
+          "winRate": 0.25,
+          "decisiveWinRate": 0.5,
+          "scoreWithHalfDraws": 0.5
+        }
+      },
+      "sideMechanisms": [
+        {
+          "flakTracksProduced": 9,
+          "flakTrackAirShots": 175,
+          "jumpjetDamageToOpposingHarvesters": 0,
+          "opposingHarvestersKilledByJumpjets": 0,
+          "lostValue": 167400
+        },
+        {
+          "flakTracksProduced": 13,
+          "flakTrackAirShots": 0,
+          "jumpjetDamageToOpposingHarvesters": 0,
+          "opposingHarvestersKilledByJumpjets": 0,
+          "lostValue": 119800
+        }
+      ],
+      "rawReport": {
+        "file": "mobile-c18.json",
+        "bytes": 10269592,
+        "sha256": "5a80e0e71333453c7b831eeefdbbaacc430ac14964ac7a93b03c1193d0a08185"
+      },
+      "gamesFile": "mobile-c18.games.jsonl",
+      "qualified": false,
+      "compactSha256": "dbcbca926247094bb8bfea3a44b849877a2c0fd6f5338ed1c8da520e4ad30175"
+    },
+    "mobile-previous": {
+      "candidateCommit": "e1d6fcd3abaa3599d1560ef00b32b546f1465829",
+      "baselineCommit": "af9360defba88d3a64d8b9f933480094b283f17f",
+      "engineCommit": "e1d6fcd3abaa3599d1560ef00b32b546f1465829",
+      "profiles": [
+        "brutal",
+        "brutal"
+      ],
+      "settings": {
+        "maxTicks": 27000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "gameSpeed": 3,
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true,
+        "simulationTicksPerSecond": 15,
+        "shortGame": true,
+        "superWeapons": false,
+        "crates": false,
+        "engineStalemateDetection": false
+      },
+      "resources": {
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+      },
+      "mapResources": {
+        "mp08t2": {
+          "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+          "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+        },
+        "tn01t2": {
+          "mapSha256": "95a836a2b42728d2c7d5c606902619b98afe428cb54eaf8b489e2d83819213e3",
+          "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+        }
+      },
+      "totals": {
+        "games": 8,
+        "wins": 2,
+        "losses": 4,
+        "draws": 2,
+        "errors": 0,
+        "winRate": 0.25,
+        "decisiveWinRate": 0.3333333333333333,
+        "scoreWithHalfDraws": 0.375
+      },
+      "byMap": {
+        "mp08t2": {
+          "games": 4,
+          "wins": 2,
+          "losses": 1,
+          "draws": 1,
+          "errors": 0,
+          "winRate": 0.5,
+          "decisiveWinRate": 0.6666666666666666,
+          "scoreWithHalfDraws": 0.625
+        },
+        "tn01t2": {
+          "games": 4,
+          "wins": 0,
+          "losses": 3,
+          "draws": 1,
+          "errors": 0,
+          "winRate": 0.0,
+          "decisiveWinRate": 0.0,
+          "scoreWithHalfDraws": 0.125
+        }
+      },
+      "byCountry": {
+        "Arabs": {
+          "games": 4,
+          "wins": 1,
+          "losses": 2,
+          "draws": 1,
+          "errors": 0,
+          "winRate": 0.25,
+          "decisiveWinRate": 0.3333333333333333,
+          "scoreWithHalfDraws": 0.375
+        },
+        "Russians": {
+          "games": 4,
+          "wins": 1,
+          "losses": 2,
+          "draws": 1,
+          "errors": 0,
+          "winRate": 0.25,
+          "decisiveWinRate": 0.3333333333333333,
+          "scoreWithHalfDraws": 0.375
+        }
+      },
+      "bySwap": {
+        "False": {
+          "games": 4,
+          "wins": 2,
+          "losses": 2,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 0.5,
+          "decisiveWinRate": 0.5,
+          "scoreWithHalfDraws": 0.5
+        },
+        "True": {
+          "games": 4,
+          "wins": 0,
+          "losses": 2,
+          "draws": 2,
+          "errors": 0,
+          "winRate": 0.0,
+          "decisiveWinRate": 0.0,
+          "scoreWithHalfDraws": 0.25
+        }
+      },
+      "sideMechanisms": [
+        {
+          "flakTracksProduced": 13,
+          "flakTrackAirShots": 263,
+          "jumpjetDamageToOpposingHarvesters": 0,
+          "opposingHarvestersKilledByJumpjets": 0,
+          "lostValue": 194900
+        },
+        {
+          "flakTracksProduced": 19,
+          "flakTrackAirShots": 155,
+          "jumpjetDamageToOpposingHarvesters": 0,
+          "opposingHarvestersKilledByJumpjets": 0,
+          "lostValue": 173800
+        }
+      ],
+      "rawReport": {
+        "file": "mobile-previous.json",
+        "bytes": 10949481,
+        "sha256": "eda6602aff0f58c7c7a07eae92c1bf3e8d2a12a4d6ecd67e4b2d414b1f95d05a"
+      },
+      "gamesFile": "mobile-previous.games.jsonl",
+      "qualified": false,
+      "compactSha256": "92f0a53b7a26b73b04a3af4fde4b0f6ff755840f47bef7b804954f34bf006121"
+    },
+    "budget-control-c18": {
+      "candidateCommit": "750b3255980760ce72c453136a6ab02e7cdf4f2a",
+      "baselineCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+      "engineCommit": "e1d6fcd3abaa3599d1560ef00b32b546f1465829",
+      "profiles": [
+        "brutal",
+        "brutal"
+      ],
+      "settings": {
+        "maxTicks": 27000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "gameSpeed": 3,
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true,
+        "simulationTicksPerSecond": 15,
+        "shortGame": true,
+        "superWeapons": false,
+        "crates": false,
+        "engineStalemateDetection": false
+      },
+      "resources": {
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+      },
+      "mapResources": {
+        "mp08t2": {
+          "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+          "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+        },
+        "tn01t2": {
+          "mapSha256": "95a836a2b42728d2c7d5c606902619b98afe428cb54eaf8b489e2d83819213e3",
+          "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+        }
+      },
+      "totals": {
+        "games": 8,
+        "wins": 2,
+        "losses": 3,
+        "draws": 3,
+        "errors": 0,
+        "winRate": 0.25,
+        "decisiveWinRate": 0.4,
+        "scoreWithHalfDraws": 0.4375
+      },
+      "byMap": {
+        "mp08t2": {
+          "games": 4,
+          "wins": 2,
+          "losses": 2,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 0.5,
+          "decisiveWinRate": 0.5,
+          "scoreWithHalfDraws": 0.5
+        },
+        "tn01t2": {
+          "games": 4,
+          "wins": 0,
+          "losses": 1,
+          "draws": 3,
+          "errors": 0,
+          "winRate": 0.0,
+          "decisiveWinRate": 0.0,
+          "scoreWithHalfDraws": 0.375
+        }
+      },
+      "byCountry": {
+        "Arabs": {
+          "games": 4,
+          "wins": 1,
+          "losses": 2,
+          "draws": 1,
+          "errors": 0,
+          "winRate": 0.25,
+          "decisiveWinRate": 0.3333333333333333,
+          "scoreWithHalfDraws": 0.375
+        },
+        "Russians": {
+          "games": 4,
+          "wins": 1,
+          "losses": 1,
+          "draws": 2,
+          "errors": 0,
+          "winRate": 0.25,
+          "decisiveWinRate": 0.5,
+          "scoreWithHalfDraws": 0.5
+        }
+      },
+      "bySwap": {
+        "False": {
+          "games": 4,
+          "wins": 0,
+          "losses": 3,
+          "draws": 1,
+          "errors": 0,
+          "winRate": 0.0,
+          "decisiveWinRate": 0.0,
+          "scoreWithHalfDraws": 0.125
+        },
+        "True": {
+          "games": 4,
+          "wins": 2,
+          "losses": 0,
+          "draws": 2,
+          "errors": 0,
+          "winRate": 0.5,
+          "decisiveWinRate": 1.0,
+          "scoreWithHalfDraws": 0.75
+        }
+      },
+      "sideMechanisms": [
+        {
+          "flakTracksProduced": 6,
+          "flakTrackAirShots": 0,
+          "jumpjetDamageToOpposingHarvesters": 0,
+          "opposingHarvestersKilledByJumpjets": 0,
+          "lostValue": 109600
+        },
+        {
+          "flakTracksProduced": 5,
+          "flakTrackAirShots": 0,
+          "jumpjetDamageToOpposingHarvesters": 0,
+          "opposingHarvestersKilledByJumpjets": 0,
+          "lostValue": 99700
+        }
+      ],
+      "rawReport": {
+        "file": "budget-control-c18.json",
+        "bytes": 8476821,
+        "sha256": "ae4e28c1dbabcf7ac5df50696a436e0a642d2912f066a6e5502b96603cede8dd"
+      },
+      "gamesFile": "budget-control-c18.games.jsonl",
+      "qualified": false,
+      "compactSha256": "bbb533de9aa27e13c2c623b055411585b46dca42acf8594ebaba823b2ef914d3"
+    },
+    "mobile-launch-c18": {
+      "candidateCommit": "027fee539180073a51bcc18ef0a587318c47bd7f",
+      "baselineCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+      "engineCommit": "027fee539180073a51bcc18ef0a587318c47bd7f",
+      "profiles": [
+        "brutal",
+        "brutal"
+      ],
+      "settings": {
+        "maxTicks": 27000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "gameSpeed": 3,
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true,
+        "simulationTicksPerSecond": 15,
+        "shortGame": true,
+        "superWeapons": false,
+        "crates": false,
+        "engineStalemateDetection": false
+      },
+      "resources": {
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+      },
+      "mapResources": {
+        "mp08t2": {
+          "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+          "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+        },
+        "tn01t2": {
+          "mapSha256": "95a836a2b42728d2c7d5c606902619b98afe428cb54eaf8b489e2d83819213e3",
+          "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+        }
+      },
+      "totals": {
+        "games": 8,
+        "wins": 3,
+        "losses": 3,
+        "draws": 2,
+        "errors": 0,
+        "winRate": 0.375,
+        "decisiveWinRate": 0.5,
+        "scoreWithHalfDraws": 0.5
+      },
+      "byMap": {
+        "mp08t2": {
+          "games": 4,
+          "wins": 1,
+          "losses": 1,
+          "draws": 2,
+          "errors": 0,
+          "winRate": 0.25,
+          "decisiveWinRate": 0.5,
+          "scoreWithHalfDraws": 0.5
+        },
+        "tn01t2": {
+          "games": 4,
+          "wins": 2,
+          "losses": 2,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 0.5,
+          "decisiveWinRate": 0.5,
+          "scoreWithHalfDraws": 0.5
+        }
+      },
+      "byCountry": {
+        "Arabs": {
+          "games": 4,
+          "wins": 2,
+          "losses": 1,
+          "draws": 1,
+          "errors": 0,
+          "winRate": 0.5,
+          "decisiveWinRate": 0.6666666666666666,
+          "scoreWithHalfDraws": 0.625
+        },
+        "Russians": {
+          "games": 4,
+          "wins": 1,
+          "losses": 2,
+          "draws": 1,
+          "errors": 0,
+          "winRate": 0.25,
+          "decisiveWinRate": 0.3333333333333333,
+          "scoreWithHalfDraws": 0.375
+        }
+      },
+      "bySwap": {
+        "False": {
+          "games": 4,
+          "wins": 1,
+          "losses": 1,
+          "draws": 2,
+          "errors": 0,
+          "winRate": 0.25,
+          "decisiveWinRate": 0.5,
+          "scoreWithHalfDraws": 0.5
+        },
+        "True": {
+          "games": 4,
+          "wins": 2,
+          "losses": 2,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 0.5,
+          "decisiveWinRate": 0.5,
+          "scoreWithHalfDraws": 0.5
+        }
+      },
+      "sideMechanisms": [
+        {
+          "flakTracksProduced": 11,
+          "flakTrackAirShots": 150,
+          "jumpjetDamageToOpposingHarvesters": 0,
+          "opposingHarvestersKilledByJumpjets": 0,
+          "lostValue": 158100
+        },
+        {
+          "flakTracksProduced": 5,
+          "flakTrackAirShots": 0,
+          "jumpjetDamageToOpposingHarvesters": 0,
+          "opposingHarvestersKilledByJumpjets": 0,
+          "lostValue": 149400
+        }
+      ],
+      "rawReport": {
+        "file": "mobile-launch-c18.json",
+        "bytes": 10341950,
+        "sha256": "8804f2cecf54fb5eca17e0aa28d0d4fafef63b6f0204540a12239d684e336d01"
+      },
+      "gamesFile": "mobile-launch-c18.games.jsonl",
+      "qualified": false,
+      "compactSha256": "b4275a8b66e192253410f27ea290179d8e050c10d2d8af5f4880342630cd0ae3"
+    },
+    "mobile-launch-previous": {
+      "candidateCommit": "027fee539180073a51bcc18ef0a587318c47bd7f",
+      "baselineCommit": "af9360defba88d3a64d8b9f933480094b283f17f",
+      "engineCommit": "027fee539180073a51bcc18ef0a587318c47bd7f",
+      "profiles": [
+        "brutal",
+        "brutal"
+      ],
+      "settings": {
+        "maxTicks": 27000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "gameSpeed": 3,
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true,
+        "simulationTicksPerSecond": 15,
+        "shortGame": true,
+        "superWeapons": false,
+        "crates": false,
+        "engineStalemateDetection": false
+      },
+      "resources": {
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+      },
+      "mapResources": {
+        "mp08t2": {
+          "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+          "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+        },
+        "tn01t2": {
+          "mapSha256": "95a836a2b42728d2c7d5c606902619b98afe428cb54eaf8b489e2d83819213e3",
+          "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+        }
+      },
+      "totals": {
+        "games": 8,
+        "wins": 3,
+        "losses": 4,
+        "draws": 1,
+        "errors": 0,
+        "winRate": 0.375,
+        "decisiveWinRate": 0.42857142857142855,
+        "scoreWithHalfDraws": 0.4375
+      },
+      "byMap": {
+        "mp08t2": {
+          "games": 4,
+          "wins": 1,
+          "losses": 2,
+          "draws": 1,
+          "errors": 0,
+          "winRate": 0.25,
+          "decisiveWinRate": 0.3333333333333333,
+          "scoreWithHalfDraws": 0.375
+        },
+        "tn01t2": {
+          "games": 4,
+          "wins": 2,
+          "losses": 2,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 0.5,
+          "decisiveWinRate": 0.5,
+          "scoreWithHalfDraws": 0.5
+        }
+      },
+      "byCountry": {
+        "Arabs": {
+          "games": 4,
+          "wins": 1,
+          "losses": 2,
+          "draws": 1,
+          "errors": 0,
+          "winRate": 0.25,
+          "decisiveWinRate": 0.3333333333333333,
+          "scoreWithHalfDraws": 0.375
+        },
+        "Russians": {
+          "games": 4,
+          "wins": 2,
+          "losses": 2,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 0.5,
+          "decisiveWinRate": 0.5,
+          "scoreWithHalfDraws": 0.5
+        }
+      },
+      "bySwap": {
+        "False": {
+          "games": 4,
+          "wins": 3,
+          "losses": 1,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 0.75,
+          "decisiveWinRate": 0.75,
+          "scoreWithHalfDraws": 0.75
+        },
+        "True": {
+          "games": 4,
+          "wins": 0,
+          "losses": 3,
+          "draws": 1,
+          "errors": 0,
+          "winRate": 0.0,
+          "decisiveWinRate": 0.0,
+          "scoreWithHalfDraws": 0.125
+        }
+      },
+      "sideMechanisms": [
+        {
+          "flakTracksProduced": 6,
+          "flakTrackAirShots": 346,
+          "jumpjetDamageToOpposingHarvesters": 0,
+          "opposingHarvestersKilledByJumpjets": 0,
+          "lostValue": 187900
+        },
+        {
+          "flakTracksProduced": 10,
+          "flakTrackAirShots": 121,
+          "jumpjetDamageToOpposingHarvesters": 0,
+          "opposingHarvestersKilledByJumpjets": 0,
+          "lostValue": 139500
+        }
+      ],
+      "rawReport": {
+        "file": "mobile-launch-previous.json",
+        "bytes": 9519802,
+        "sha256": "8e026c5aba7fb5f31dcd251ff15dd5cb96477ac8a27f9d8e5ccfeb7de3740d5b"
+      },
+      "gamesFile": "mobile-launch-previous.games.jsonl",
+      "qualified": false,
+      "compactSha256": "a3c43c098d80989c2ff8334b8d669af74d34fb9b404f11b9906be9e747845ede"
+    },
+    "mobile-launch-budget-control": {
+      "candidateCommit": "027fee539180073a51bcc18ef0a587318c47bd7f",
+      "baselineCommit": "750b3255980760ce72c453136a6ab02e7cdf4f2a",
+      "engineCommit": "027fee539180073a51bcc18ef0a587318c47bd7f",
+      "profiles": [
+        "brutal",
+        "brutal"
+      ],
+      "settings": {
+        "maxTicks": 27000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "gameSpeed": 3,
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true,
+        "simulationTicksPerSecond": 15,
+        "shortGame": true,
+        "superWeapons": false,
+        "crates": false,
+        "engineStalemateDetection": false
+      },
+      "resources": {
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+      },
+      "mapResources": {
+        "mp08t2": {
+          "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+          "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+        },
+        "tn01t2": {
+          "mapSha256": "95a836a2b42728d2c7d5c606902619b98afe428cb54eaf8b489e2d83819213e3",
+          "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+        }
+      },
+      "totals": {
+        "games": 8,
+        "wins": 2,
+        "losses": 3,
+        "draws": 3,
+        "errors": 0,
+        "winRate": 0.25,
+        "decisiveWinRate": 0.4,
+        "scoreWithHalfDraws": 0.4375
+      },
+      "byMap": {
+        "mp08t2": {
+          "games": 4,
+          "wins": 1,
+          "losses": 2,
+          "draws": 1,
+          "errors": 0,
+          "winRate": 0.25,
+          "decisiveWinRate": 0.3333333333333333,
+          "scoreWithHalfDraws": 0.375
+        },
+        "tn01t2": {
+          "games": 4,
+          "wins": 1,
+          "losses": 1,
+          "draws": 2,
+          "errors": 0,
+          "winRate": 0.25,
+          "decisiveWinRate": 0.5,
+          "scoreWithHalfDraws": 0.5
+        }
+      },
+      "byCountry": {
+        "Arabs": {
+          "games": 4,
+          "wins": 2,
+          "losses": 0,
+          "draws": 2,
+          "errors": 0,
+          "winRate": 0.5,
+          "decisiveWinRate": 1.0,
+          "scoreWithHalfDraws": 0.75
+        },
+        "Russians": {
+          "games": 4,
+          "wins": 0,
+          "losses": 3,
+          "draws": 1,
+          "errors": 0,
+          "winRate": 0.0,
+          "decisiveWinRate": 0.0,
+          "scoreWithHalfDraws": 0.125
+        }
+      },
+      "bySwap": {
+        "False": {
+          "games": 4,
+          "wins": 1,
+          "losses": 2,
+          "draws": 1,
+          "errors": 0,
+          "winRate": 0.25,
+          "decisiveWinRate": 0.3333333333333333,
+          "scoreWithHalfDraws": 0.375
+        },
+        "True": {
+          "games": 4,
+          "wins": 1,
+          "losses": 1,
+          "draws": 2,
+          "errors": 0,
+          "winRate": 0.25,
+          "decisiveWinRate": 0.5,
+          "scoreWithHalfDraws": 0.5
+        }
+      },
+      "sideMechanisms": [
+        {
+          "flakTracksProduced": 8,
+          "flakTrackAirShots": 191,
+          "jumpjetDamageToOpposingHarvesters": 0,
+          "opposingHarvestersKilledByJumpjets": 0,
+          "lostValue": 129200
+        },
+        {
+          "flakTracksProduced": 6,
+          "flakTrackAirShots": 0,
+          "jumpjetDamageToOpposingHarvesters": 0,
+          "opposingHarvestersKilledByJumpjets": 0,
+          "lostValue": 168800
+        }
+      ],
+      "rawReport": {
+        "file": "mobile-launch-budget-control.json",
+        "bytes": 10211158,
+        "sha256": "d1976a85d7064a0905c7325daaad1078e69c0b297fd0029b63139b5e8fcf9d50"
+      },
+      "gamesFile": "mobile-launch-budget-control.games.jsonl",
+      "qualified": false,
+      "compactSha256": "90feaeae936e7578b07bbf81c4df0011da4bf896ece0abf02eb6d714d30817c5"
+    },
+    "mobile-reserve-c18": {
+      "candidateCommit": "09a2652e7fda6f3061080884b5336264b42e07e8",
+      "baselineCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+      "engineCommit": "09a2652e7fda6f3061080884b5336264b42e07e8",
+      "profiles": [
+        "brutal",
+        "brutal"
+      ],
+      "settings": {
+        "maxTicks": 27000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "gameSpeed": 3,
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true,
+        "simulationTicksPerSecond": 15,
+        "shortGame": true,
+        "superWeapons": false,
+        "crates": false,
+        "engineStalemateDetection": false
+      },
+      "resources": {
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+      },
+      "mapResources": {
+        "mp08t2": {
+          "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+          "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+        },
+        "tn01t2": {
+          "mapSha256": "95a836a2b42728d2c7d5c606902619b98afe428cb54eaf8b489e2d83819213e3",
+          "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+        }
+      },
+      "totals": {
+        "games": 8,
+        "wins": 3,
+        "losses": 5,
+        "draws": 0,
+        "errors": 0,
+        "winRate": 0.375,
+        "decisiveWinRate": 0.375,
+        "scoreWithHalfDraws": 0.375
+      },
+      "byMap": {
+        "mp08t2": {
+          "games": 4,
+          "wins": 0,
+          "losses": 4,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 0.0,
+          "decisiveWinRate": 0.0,
+          "scoreWithHalfDraws": 0.0
+        },
+        "tn01t2": {
+          "games": 4,
+          "wins": 3,
+          "losses": 1,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 0.75,
+          "decisiveWinRate": 0.75,
+          "scoreWithHalfDraws": 0.75
+        }
+      },
+      "byCountry": {
+        "Arabs": {
+          "games": 4,
+          "wins": 2,
+          "losses": 2,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 0.5,
+          "decisiveWinRate": 0.5,
+          "scoreWithHalfDraws": 0.5
+        },
+        "Russians": {
+          "games": 4,
+          "wins": 1,
+          "losses": 3,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 0.25,
+          "decisiveWinRate": 0.25,
+          "scoreWithHalfDraws": 0.25
+        }
+      },
+      "bySwap": {
+        "False": {
+          "games": 4,
+          "wins": 1,
+          "losses": 3,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 0.25,
+          "decisiveWinRate": 0.25,
+          "scoreWithHalfDraws": 0.25
+        },
+        "True": {
+          "games": 4,
+          "wins": 2,
+          "losses": 2,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 0.5,
+          "decisiveWinRate": 0.5,
+          "scoreWithHalfDraws": 0.5
+        }
+      },
+      "sideMechanisms": [
+        {
+          "flakTracksProduced": 8,
+          "flakTrackAirShots": 96,
+          "jumpjetDamageToOpposingHarvesters": 0,
+          "opposingHarvestersKilledByJumpjets": 0,
+          "lostValue": 170500
+        },
+        {
+          "flakTracksProduced": 5,
+          "flakTrackAirShots": 0,
+          "jumpjetDamageToOpposingHarvesters": 0,
+          "opposingHarvestersKilledByJumpjets": 0,
+          "lostValue": 112000
+        }
+      ],
+      "rawReport": {
+        "file": "mobile-reserve-c18.json",
+        "bytes": 8834318,
+        "sha256": "611bdbc2c24b1fb7fedfb6827a35cffcb26fd4b5766060896e35a84357f5f657"
+      },
+      "gamesFile": "mobile-reserve-c18.games.jsonl",
+      "qualified": false,
+      "compactSha256": "c7cc55b37a30a333b3a73418e71aea9c8c291e0fdd24dcb6b7aaed14fba15496"
+    },
+    "mobile-reserve-previous": {
+      "candidateCommit": "09a2652e7fda6f3061080884b5336264b42e07e8",
+      "baselineCommit": "027fee539180073a51bcc18ef0a587318c47bd7f",
+      "engineCommit": "09a2652e7fda6f3061080884b5336264b42e07e8",
+      "profiles": [
+        "brutal",
+        "brutal"
+      ],
+      "settings": {
+        "maxTicks": 27000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "gameSpeed": 3,
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true,
+        "simulationTicksPerSecond": 15,
+        "shortGame": true,
+        "superWeapons": false,
+        "crates": false,
+        "engineStalemateDetection": false
+      },
+      "resources": {
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+      },
+      "mapResources": {
+        "mp08t2": {
+          "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+          "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+        },
+        "tn01t2": {
+          "mapSha256": "95a836a2b42728d2c7d5c606902619b98afe428cb54eaf8b489e2d83819213e3",
+          "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+        }
+      },
+      "totals": {
+        "games": 8,
+        "wins": 5,
+        "losses": 1,
+        "draws": 2,
+        "errors": 0,
+        "winRate": 0.625,
+        "decisiveWinRate": 0.8333333333333334,
+        "scoreWithHalfDraws": 0.75
+      },
+      "byMap": {
+        "mp08t2": {
+          "games": 4,
+          "wins": 2,
+          "losses": 1,
+          "draws": 1,
+          "errors": 0,
+          "winRate": 0.5,
+          "decisiveWinRate": 0.6666666666666666,
+          "scoreWithHalfDraws": 0.625
+        },
+        "tn01t2": {
+          "games": 4,
+          "wins": 3,
+          "losses": 0,
+          "draws": 1,
+          "errors": 0,
+          "winRate": 0.75,
+          "decisiveWinRate": 1.0,
+          "scoreWithHalfDraws": 0.875
+        }
+      },
+      "byCountry": {
+        "Arabs": {
+          "games": 4,
+          "wins": 2,
+          "losses": 1,
+          "draws": 1,
+          "errors": 0,
+          "winRate": 0.5,
+          "decisiveWinRate": 0.6666666666666666,
+          "scoreWithHalfDraws": 0.625
+        },
+        "Russians": {
+          "games": 4,
+          "wins": 3,
+          "losses": 0,
+          "draws": 1,
+          "errors": 0,
+          "winRate": 0.75,
+          "decisiveWinRate": 1.0,
+          "scoreWithHalfDraws": 0.875
+        }
+      },
+      "bySwap": {
+        "False": {
+          "games": 4,
+          "wins": 2,
+          "losses": 1,
+          "draws": 1,
+          "errors": 0,
+          "winRate": 0.5,
+          "decisiveWinRate": 0.6666666666666666,
+          "scoreWithHalfDraws": 0.625
+        },
+        "True": {
+          "games": 4,
+          "wins": 3,
+          "losses": 0,
+          "draws": 1,
+          "errors": 0,
+          "winRate": 0.75,
+          "decisiveWinRate": 1.0,
+          "scoreWithHalfDraws": 0.875
+        }
+      },
+      "sideMechanisms": [
+        {
+          "flakTracksProduced": 9,
+          "flakTrackAirShots": 77,
+          "jumpjetDamageToOpposingHarvesters": 0,
+          "opposingHarvestersKilledByJumpjets": 0,
+          "lostValue": 93500
+        },
+        {
+          "flakTracksProduced": 3,
+          "flakTrackAirShots": 194,
+          "jumpjetDamageToOpposingHarvesters": 0,
+          "opposingHarvestersKilledByJumpjets": 0,
+          "lostValue": 178600
+        }
+      ],
+      "rawReport": {
+        "file": "mobile-reserve-previous.json",
+        "bytes": 10864176,
+        "sha256": "cf421d1268de4a4bfe4debd52df6d5e4a1a1b5bfe79a1c2d91ea6abf0bd09a07"
+      },
+      "gamesFile": "mobile-reserve-previous.games.jsonl",
+      "qualified": false,
+      "compactSha256": "9226c276ca3806167c00075efc83910fdd4bee30e5cc0cd038b4bb3bc3a5c2f6"
+    },
+    "mobile-air-us": {
+      "candidateCommit": "635c3f08f1e7117bd8b50f96e91d4c03a059f00a",
+      "baselineCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+      "engineCommit": "635c3f08f1e7117bd8b50f96e91d4c03a059f00a",
+      "profiles": [
+        "brutal",
+        "brutal"
+      ],
+      "settings": {
+        "maxTicks": 27000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "gameSpeed": 3,
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true,
+        "simulationTicksPerSecond": 15,
+        "shortGame": true,
+        "superWeapons": false,
+        "crates": false,
+        "engineStalemateDetection": false
+      },
+      "resources": {
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+      },
+      "mapResources": {
+        "mp08t2": {
+          "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+          "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+        },
+        "tn01t2": {
+          "mapSha256": "95a836a2b42728d2c7d5c606902619b98afe428cb54eaf8b489e2d83819213e3",
+          "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+        }
+      },
+      "totals": {
+        "games": 8,
+        "wins": 3,
+        "losses": 2,
+        "draws": 3,
+        "errors": 0,
+        "winRate": 0.375,
+        "decisiveWinRate": 0.6,
+        "scoreWithHalfDraws": 0.5625
+      },
+      "byMap": {
+        "mp08t2": {
+          "games": 4,
+          "wins": 1,
+          "losses": 2,
+          "draws": 1,
+          "errors": 0,
+          "winRate": 0.25,
+          "decisiveWinRate": 0.3333333333333333,
+          "scoreWithHalfDraws": 0.375
+        },
+        "tn01t2": {
+          "games": 4,
+          "wins": 2,
+          "losses": 0,
+          "draws": 2,
+          "errors": 0,
+          "winRate": 0.5,
+          "decisiveWinRate": 1.0,
+          "scoreWithHalfDraws": 0.75
+        }
+      },
+      "byCountry": {
+        "Arabs": {
+          "games": 4,
+          "wins": 1,
+          "losses": 1,
+          "draws": 2,
+          "errors": 0,
+          "winRate": 0.25,
+          "decisiveWinRate": 0.5,
+          "scoreWithHalfDraws": 0.5
+        },
+        "Russians": {
+          "games": 4,
+          "wins": 2,
+          "losses": 1,
+          "draws": 1,
+          "errors": 0,
+          "winRate": 0.5,
+          "decisiveWinRate": 0.6666666666666666,
+          "scoreWithHalfDraws": 0.625
+        }
+      },
+      "bySwap": {
+        "False": {
+          "games": 4,
+          "wins": 2,
+          "losses": 0,
+          "draws": 2,
+          "errors": 0,
+          "winRate": 0.5,
+          "decisiveWinRate": 1.0,
+          "scoreWithHalfDraws": 0.75
+        },
+        "True": {
+          "games": 4,
+          "wins": 1,
+          "losses": 2,
+          "draws": 1,
+          "errors": 0,
+          "winRate": 0.25,
+          "decisiveWinRate": 0.3333333333333333,
+          "scoreWithHalfDraws": 0.375
+        }
+      },
+      "sideMechanisms": [
+        {
+          "flakTracksProduced": 38,
+          "flakTrackAirShots": 383,
+          "jumpjetDamageToOpposingHarvesters": 0,
+          "opposingHarvestersKilledByJumpjets": 0,
+          "lostValue": 177900
+        },
+        {
+          "flakTracksProduced": 0,
+          "flakTrackAirShots": 0,
+          "jumpjetDamageToOpposingHarvesters": 715,
+          "opposingHarvestersKilledByJumpjets": 1,
+          "lostValue": 183900
+        }
+      ],
+      "rawReport": {
+        "file": "mobile-air-us.json",
+        "bytes": 10235213,
+        "sha256": "2a967fe70ff357abaf6b8ad2f9750ec4428e4aa310e6a8695537dab15bd2d5d5"
+      },
+      "gamesFile": "mobile-air-us.games.jsonl",
+      "qualified": false,
+      "compactSha256": "c6279f1666b72a3a90b8389b0b07b0ff64a121415e848e74d97922a553595841"
+    },
+    "mobile-no-air-us": {
+      "candidateCommit": "09a2652e7fda6f3061080884b5336264b42e07e8",
+      "baselineCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+      "engineCommit": "635c3f08f1e7117bd8b50f96e91d4c03a059f00a",
+      "profiles": [
+        "brutal",
+        "brutal"
+      ],
+      "settings": {
+        "maxTicks": 27000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "gameSpeed": 3,
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true,
+        "simulationTicksPerSecond": 15,
+        "shortGame": true,
+        "superWeapons": false,
+        "crates": false,
+        "engineStalemateDetection": false
+      },
+      "resources": {
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+      },
+      "mapResources": {
+        "mp08t2": {
+          "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+          "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+        },
+        "tn01t2": {
+          "mapSha256": "95a836a2b42728d2c7d5c606902619b98afe428cb54eaf8b489e2d83819213e3",
+          "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+        }
+      },
+      "totals": {
+        "games": 8,
+        "wins": 0,
+        "losses": 7,
+        "draws": 1,
+        "errors": 0,
+        "winRate": 0.0,
+        "decisiveWinRate": 0.0,
+        "scoreWithHalfDraws": 0.0625
+      },
+      "byMap": {
+        "mp08t2": {
+          "games": 4,
+          "wins": 0,
+          "losses": 4,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 0.0,
+          "decisiveWinRate": 0.0,
+          "scoreWithHalfDraws": 0.0
+        },
+        "tn01t2": {
+          "games": 4,
+          "wins": 0,
+          "losses": 3,
+          "draws": 1,
+          "errors": 0,
+          "winRate": 0.0,
+          "decisiveWinRate": 0.0,
+          "scoreWithHalfDraws": 0.125
+        }
+      },
+      "byCountry": {
+        "Arabs": {
+          "games": 4,
+          "wins": 0,
+          "losses": 4,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 0.0,
+          "decisiveWinRate": 0.0,
+          "scoreWithHalfDraws": 0.0
+        },
+        "Russians": {
+          "games": 4,
+          "wins": 0,
+          "losses": 3,
+          "draws": 1,
+          "errors": 0,
+          "winRate": 0.0,
+          "decisiveWinRate": 0.0,
+          "scoreWithHalfDraws": 0.125
+        }
+      },
+      "bySwap": {
+        "False": {
+          "games": 4,
+          "wins": 0,
+          "losses": 3,
+          "draws": 1,
+          "errors": 0,
+          "winRate": 0.0,
+          "decisiveWinRate": 0.0,
+          "scoreWithHalfDraws": 0.125
+        },
+        "True": {
+          "games": 4,
+          "wins": 0,
+          "losses": 4,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 0.0,
+          "decisiveWinRate": 0.0,
+          "scoreWithHalfDraws": 0.0
+        }
+      },
+      "sideMechanisms": [
+        {
+          "flakTracksProduced": 1,
+          "flakTrackAirShots": 60,
+          "jumpjetDamageToOpposingHarvesters": 0,
+          "opposingHarvestersKilledByJumpjets": 0,
+          "lostValue": 166000
+        },
+        {
+          "flakTracksProduced": 0,
+          "flakTrackAirShots": 0,
+          "jumpjetDamageToOpposingHarvesters": 6603,
+          "opposingHarvestersKilledByJumpjets": 4,
+          "lostValue": 36000
+        }
+      ],
+      "rawReport": {
+        "file": "mobile-no-air-us.json",
+        "bytes": 4664386,
+        "sha256": "54dc37627a5ba837e48cd746941f0dfc3271a748c13f2ef60f0827b758230453"
+      },
+      "gamesFile": "mobile-no-air-us.games.jsonl",
+      "qualified": false,
+      "compactSha256": "6b98a15fe8159e06a6889e2760a91fb5ed24474d1547c9fdb9d812b22807a72b"
+    },
+    "c18-air-us": {
+      "candidateCommit": "356d35b7271d14a37380585f4f809ccd19703757",
+      "baselineCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+      "engineCommit": "356d35b7271d14a37380585f4f809ccd19703757",
+      "profiles": [
+        "brutal",
+        "brutal"
+      ],
+      "settings": {
+        "maxTicks": 27000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "gameSpeed": 3,
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true,
+        "simulationTicksPerSecond": 15,
+        "shortGame": true,
+        "superWeapons": false,
+        "crates": false,
+        "engineStalemateDetection": false
+      },
+      "resources": {
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+      },
+      "mapResources": {
+        "mp08t2": {
+          "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+          "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+        },
+        "tn01t2": {
+          "mapSha256": "95a836a2b42728d2c7d5c606902619b98afe428cb54eaf8b489e2d83819213e3",
+          "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+        }
+      },
+      "totals": {
+        "games": 8,
+        "wins": 8,
+        "losses": 0,
+        "draws": 0,
+        "errors": 0,
+        "winRate": 1.0,
+        "decisiveWinRate": 1.0,
+        "scoreWithHalfDraws": 1.0
+      },
+      "byMap": {
+        "mp08t2": {
+          "games": 4,
+          "wins": 4,
+          "losses": 0,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 1.0,
+          "decisiveWinRate": 1.0,
+          "scoreWithHalfDraws": 1.0
+        },
+        "tn01t2": {
+          "games": 4,
+          "wins": 4,
+          "losses": 0,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 1.0,
+          "decisiveWinRate": 1.0,
+          "scoreWithHalfDraws": 1.0
+        }
+      },
+      "byCountry": {
+        "Arabs": {
+          "games": 4,
+          "wins": 4,
+          "losses": 0,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 1.0,
+          "decisiveWinRate": 1.0,
+          "scoreWithHalfDraws": 1.0
+        },
+        "Russians": {
+          "games": 4,
+          "wins": 4,
+          "losses": 0,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 1.0,
+          "decisiveWinRate": 1.0,
+          "scoreWithHalfDraws": 1.0
+        }
+      },
+      "bySwap": {
+        "False": {
+          "games": 4,
+          "wins": 4,
+          "losses": 0,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 1.0,
+          "decisiveWinRate": 1.0,
+          "scoreWithHalfDraws": 1.0
+        },
+        "True": {
+          "games": 4,
+          "wins": 4,
+          "losses": 0,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 1.0,
+          "decisiveWinRate": 1.0,
+          "scoreWithHalfDraws": 1.0
+        }
+      },
+      "sideMechanisms": [
+        {
+          "flakTracksProduced": 27,
+          "flakTrackAirShots": 280,
+          "jumpjetDamageToOpposingHarvesters": 0,
+          "opposingHarvestersKilledByJumpjets": 0,
+          "lostValue": 37300
+        },
+        {
+          "flakTracksProduced": 0,
+          "flakTrackAirShots": 0,
+          "jumpjetDamageToOpposingHarvesters": 0,
+          "opposingHarvestersKilledByJumpjets": 0,
+          "lostValue": 209700
+        }
+      ],
+      "rawReport": {
+        "file": "c18-air-us.json",
+        "bytes": 5580772,
+        "sha256": "757d5954e378fc30fd183e46291aab5828da1ace0369405bd0695694d21617b2"
+      },
+      "gamesFile": "c18-air-us.games.jsonl",
+      "qualified": false,
+      "compactSha256": "04f1e4cc0d3eada23007214c6e4ba5f30269e02a283ca39a556efb278ef7cc63"
+    },
+    "c18-self-us": {
+      "candidateCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+      "baselineCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+      "engineCommit": "356d35b7271d14a37380585f4f809ccd19703757",
+      "profiles": [
+        "brutal",
+        "brutal"
+      ],
+      "settings": {
+        "maxTicks": 27000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "gameSpeed": 3,
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true,
+        "simulationTicksPerSecond": 15,
+        "shortGame": true,
+        "superWeapons": false,
+        "crates": false,
+        "engineStalemateDetection": false
+      },
+      "resources": {
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+      },
+      "mapResources": {
+        "mp08t2": {
+          "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+          "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+        },
+        "tn01t2": {
+          "mapSha256": "95a836a2b42728d2c7d5c606902619b98afe428cb54eaf8b489e2d83819213e3",
+          "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+        }
+      },
+      "totals": {
+        "games": 8,
+        "wins": 2,
+        "losses": 6,
+        "draws": 0,
+        "errors": 0,
+        "winRate": 0.25,
+        "decisiveWinRate": 0.25,
+        "scoreWithHalfDraws": 0.25
+      },
+      "byMap": {
+        "mp08t2": {
+          "games": 4,
+          "wins": 2,
+          "losses": 2,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 0.5,
+          "decisiveWinRate": 0.5,
+          "scoreWithHalfDraws": 0.5
+        },
+        "tn01t2": {
+          "games": 4,
+          "wins": 0,
+          "losses": 4,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 0.0,
+          "decisiveWinRate": 0.0,
+          "scoreWithHalfDraws": 0.0
+        }
+      },
+      "byCountry": {
+        "Arabs": {
+          "games": 4,
+          "wins": 1,
+          "losses": 3,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 0.25,
+          "decisiveWinRate": 0.25,
+          "scoreWithHalfDraws": 0.25
+        },
+        "Russians": {
+          "games": 4,
+          "wins": 1,
+          "losses": 3,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 0.25,
+          "decisiveWinRate": 0.25,
+          "scoreWithHalfDraws": 0.25
+        }
+      },
+      "bySwap": {
+        "False": {
+          "games": 4,
+          "wins": 0,
+          "losses": 4,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 0.0,
+          "decisiveWinRate": 0.0,
+          "scoreWithHalfDraws": 0.0
+        },
+        "True": {
+          "games": 4,
+          "wins": 2,
+          "losses": 2,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 0.5,
+          "decisiveWinRate": 0.5,
+          "scoreWithHalfDraws": 0.5
+        }
+      },
+      "sideMechanisms": [
+        {
+          "flakTracksProduced": 3,
+          "flakTrackAirShots": 55,
+          "jumpjetDamageToOpposingHarvesters": 0,
+          "opposingHarvestersKilledByJumpjets": 0,
+          "lostValue": 137400
+        },
+        {
+          "flakTracksProduced": 0,
+          "flakTrackAirShots": 0,
+          "jumpjetDamageToOpposingHarvesters": 9657,
+          "opposingHarvestersKilledByJumpjets": 7,
+          "lostValue": 62000
+        }
+      ],
+      "rawReport": {
+        "file": "c18-self-us.json",
+        "bytes": 4660684,
+        "sha256": "7014e498646ee41f3b67eb1f253390296a9a665b03e9d0655c4596d3c7426bc1"
+      },
+      "gamesFile": "c18-self-us.games.jsonl",
+      "qualified": false,
+      "compactSha256": "bbf7f696f39bd808627f43e7aa524c36fa9f27f2103ca9ce0c8910a3b35ecdf8"
+    },
+    "c18-air-mirror": {
+      "candidateCommit": "356d35b7271d14a37380585f4f809ccd19703757",
+      "baselineCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+      "engineCommit": "356d35b7271d14a37380585f4f809ccd19703757",
+      "profiles": [
+        "brutal",
+        "brutal"
+      ],
+      "settings": {
+        "maxTicks": 27000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "gameSpeed": 3,
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true,
+        "simulationTicksPerSecond": 15,
+        "shortGame": true,
+        "superWeapons": false,
+        "crates": false,
+        "engineStalemateDetection": false
+      },
+      "resources": {
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+      },
+      "mapResources": {
+        "mp08t2": {
+          "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+          "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+        },
+        "tn01t2": {
+          "mapSha256": "95a836a2b42728d2c7d5c606902619b98afe428cb54eaf8b489e2d83819213e3",
+          "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+        }
+      },
+      "totals": {
+        "games": 8,
+        "wins": 2,
+        "losses": 2,
+        "draws": 4,
+        "errors": 0,
+        "winRate": 0.25,
+        "decisiveWinRate": 0.5,
+        "scoreWithHalfDraws": 0.5
+      },
+      "byMap": {
+        "mp08t2": {
+          "games": 4,
+          "wins": 2,
+          "losses": 2,
+          "draws": 0,
+          "errors": 0,
+          "winRate": 0.5,
+          "decisiveWinRate": 0.5,
+          "scoreWithHalfDraws": 0.5
+        },
+        "tn01t2": {
+          "games": 4,
+          "wins": 0,
+          "losses": 0,
+          "draws": 4,
+          "errors": 0,
+          "winRate": 0.0,
+          "decisiveWinRate": null,
+          "scoreWithHalfDraws": 0.5
+        }
+      },
+      "byCountry": {
+        "Arabs": {
+          "games": 4,
+          "wins": 1,
+          "losses": 1,
+          "draws": 2,
+          "errors": 0,
+          "winRate": 0.25,
+          "decisiveWinRate": 0.5,
+          "scoreWithHalfDraws": 0.5
+        },
+        "Russians": {
+          "games": 4,
+          "wins": 1,
+          "losses": 1,
+          "draws": 2,
+          "errors": 0,
+          "winRate": 0.25,
+          "decisiveWinRate": 0.5,
+          "scoreWithHalfDraws": 0.5
+        }
+      },
+      "bySwap": {
+        "False": {
+          "games": 4,
+          "wins": 0,
+          "losses": 2,
+          "draws": 2,
+          "errors": 0,
+          "winRate": 0.0,
+          "decisiveWinRate": 0.0,
+          "scoreWithHalfDraws": 0.25
+        },
+        "True": {
+          "games": 4,
+          "wins": 2,
+          "losses": 0,
+          "draws": 2,
+          "errors": 0,
+          "winRate": 0.5,
+          "decisiveWinRate": 1.0,
+          "scoreWithHalfDraws": 0.75
+        }
+      },
+      "sideMechanisms": [
+        {
+          "flakTracksProduced": 5,
+          "flakTrackAirShots": 0,
+          "jumpjetDamageToOpposingHarvesters": 0,
+          "opposingHarvestersKilledByJumpjets": 0,
+          "lostValue": 98100
+        },
+        {
+          "flakTracksProduced": 5,
+          "flakTrackAirShots": 0,
+          "jumpjetDamageToOpposingHarvesters": 0,
+          "opposingHarvestersKilledByJumpjets": 0,
+          "lostValue": 98100
+        }
+      ],
+      "rawReport": {
+        "file": "c18-air-mirror.json",
+        "bytes": 8395680,
+        "sha256": "1b377262a913944b6f009991ea76e5603f2304bb8c7e9a70bbb09c8f34d73900"
+      },
+      "gamesFile": "c18-air-mirror.games.jsonl",
+      "qualified": false,
+      "compactSha256": "16b9689cf6fcd0734ad9c941d5c44c359d4c3f16940446c2745c500fc3b8a5f8"
+    }
+  },
+  "comparisons": [
+    {
+      "left": "mobile-air-us",
+      "right": "mobile-no-air-us",
+      "kind": "same-condition common-opponent comparison; not direct A-vs-B",
+      "matchedGames": 8,
+      "games": [
+        {
+          "identity": [
+            "Arabs",
+            "Americans",
+            "mp08t2",
+            610101,
+            false
+          ],
+          "leftResult": "draw",
+          "rightResult": "baseline-win"
+        },
+        {
+          "identity": [
+            "Arabs",
+            "Americans",
+            "mp08t2",
+            610101,
+            true
+          ],
+          "leftResult": "baseline-win",
+          "rightResult": "baseline-win"
+        },
+        {
+          "identity": [
+            "Russians",
+            "Americans",
+            "mp08t2",
+            610101,
+            false
+          ],
+          "leftResult": "candidate-win",
+          "rightResult": "baseline-win"
+        },
+        {
+          "identity": [
+            "Russians",
+            "Americans",
+            "mp08t2",
+            610101,
+            true
+          ],
+          "leftResult": "baseline-win",
+          "rightResult": "baseline-win"
+        },
+        {
+          "identity": [
+            "Arabs",
+            "Americans",
+            "tn01t2",
+            610101,
+            false
+          ],
+          "leftResult": "draw",
+          "rightResult": "baseline-win"
+        },
+        {
+          "identity": [
+            "Arabs",
+            "Americans",
+            "tn01t2",
+            610101,
+            true
+          ],
+          "leftResult": "candidate-win",
+          "rightResult": "baseline-win"
+        },
+        {
+          "identity": [
+            "Russians",
+            "Americans",
+            "tn01t2",
+            610101,
+            false
+          ],
+          "leftResult": "candidate-win",
+          "rightResult": "draw"
+        },
+        {
+          "identity": [
+            "Russians",
+            "Americans",
+            "tn01t2",
+            610101,
+            true
+          ],
+          "leftResult": "draw",
+          "rightResult": "baseline-win"
+        }
+      ]
+    },
+    {
+      "left": "c18-air-us",
+      "right": "c18-self-us",
+      "kind": "same-condition common-opponent comparison; not direct A-vs-B",
+      "matchedGames": 8,
+      "games": [
+        {
+          "identity": [
+            "Arabs",
+            "Americans",
+            "mp08t2",
+            610101,
+            false
+          ],
+          "leftResult": "candidate-win",
+          "rightResult": "baseline-win"
+        },
+        {
+          "identity": [
+            "Arabs",
+            "Americans",
+            "mp08t2",
+            610101,
+            true
+          ],
+          "leftResult": "candidate-win",
+          "rightResult": "candidate-win"
+        },
+        {
+          "identity": [
+            "Russians",
+            "Americans",
+            "mp08t2",
+            610101,
+            false
+          ],
+          "leftResult": "candidate-win",
+          "rightResult": "baseline-win"
+        },
+        {
+          "identity": [
+            "Russians",
+            "Americans",
+            "mp08t2",
+            610101,
+            true
+          ],
+          "leftResult": "candidate-win",
+          "rightResult": "candidate-win"
+        },
+        {
+          "identity": [
+            "Arabs",
+            "Americans",
+            "tn01t2",
+            610101,
+            false
+          ],
+          "leftResult": "candidate-win",
+          "rightResult": "baseline-win"
+        },
+        {
+          "identity": [
+            "Arabs",
+            "Americans",
+            "tn01t2",
+            610101,
+            true
+          ],
+          "leftResult": "candidate-win",
+          "rightResult": "baseline-win"
+        },
+        {
+          "identity": [
+            "Russians",
+            "Americans",
+            "tn01t2",
+            610101,
+            false
+          ],
+          "leftResult": "candidate-win",
+          "rightResult": "baseline-win"
+        },
+        {
+          "identity": [
+            "Russians",
+            "Americans",
+            "tn01t2",
+            610101,
+            true
+          ],
+          "leftResult": "candidate-win",
+          "rightResult": "baseline-win"
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Exposed development seed 610101 on two maps; separate versions must never be pooled.",
+    "US-only C18 self play is country-asymmetric: W=L is not expected on this subset.",
+    "Production is actual factory output including replacement units, not equal whole-game spending.",
+    "Jumpjet damage to HARV is read from damagedTypes; ownerless radiation is not attributed to a player.",
+    "First-shot and movement samples do not establish a successful attack; feature fixtures are separate."
+  ]
+}
