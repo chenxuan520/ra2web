@@ -1,0 +1,704 @@
+{
+  "scope": "Base rules.ini merged with project rulescd.ini; no map overrides. Observation, not match-strength evidence.",
+  "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+  "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66",
+  "general": {
+    "buildSpeed": 0.6999969482421875,
+    "multipleFactory": 0.79998779296875
+  },
+  "units": [
+    {
+      "name": "HTNK",
+      "type": 7,
+      "cost": 900,
+      "strength": 400,
+      "speed": 23.630769230769232,
+      "iniSpeed": "6",
+      "armor": 5,
+      "prerequisite": [
+        "NAWEAP"
+      ],
+      "immuneToRadiation": false,
+      "crusher": true,
+      "crushable": false,
+      "passengers": 0,
+      "primary": "120mm",
+      "weaponNames": [
+        "120mm"
+      ],
+      "weapon": {
+        "damage": 90,
+        "range": 5.75,
+        "rof": 65,
+        "projectile": "Cannon",
+        "subjectToWalls": true,
+        "inaccurate": false,
+        "arcing": true
+      }
+    },
+    {
+      "name": "MTNK",
+      "type": 7,
+      "cost": 700,
+      "strength": 300,
+      "speed": 27.56923076923077,
+      "iniSpeed": "7",
+      "armor": 5,
+      "prerequisite": [
+        "GAWEAP"
+      ],
+      "immuneToRadiation": false,
+      "crusher": true,
+      "crushable": false,
+      "passengers": 0,
+      "primary": "105mm",
+      "weaponNames": [
+        "105mm"
+      ],
+      "weapon": {
+        "damage": 65,
+        "range": 5,
+        "rof": 60,
+        "projectile": "Cannon",
+        "subjectToWalls": true,
+        "inaccurate": false,
+        "arcing": true
+      }
+    },
+    {
+      "name": "DOG",
+      "type": 3,
+      "cost": 200,
+      "strength": 100,
+      "speed": 20.48,
+      "iniSpeed": "8",
+      "armor": 0,
+      "prerequisite": [
+        "Barracks"
+      ],
+      "immuneToRadiation": false,
+      "crusher": false,
+      "crushable": true,
+      "passengers": 0,
+      "primary": "BadTeeth",
+      "weaponNames": [
+        "BadTeeth",
+        "VirtualScanner"
+      ],
+      "weapon": {
+        "damage": 30,
+        "range": 1.5,
+        "rof": 30,
+        "projectile": "DOGJUMP",
+        "subjectToWalls": true,
+        "inaccurate": false,
+        "arcing": false
+      }
+    },
+    {
+      "name": "ADOG",
+      "type": 3,
+      "cost": 200,
+      "strength": 100,
+      "speed": 20.48,
+      "iniSpeed": "8",
+      "armor": 0,
+      "prerequisite": [
+        "Barracks"
+      ],
+      "immuneToRadiation": false,
+      "crusher": false,
+      "crushable": true,
+      "passengers": 0,
+      "primary": "GoodTeeth",
+      "weaponNames": [
+        "GoodTeeth",
+        "VirtualScanner"
+      ],
+      "weapon": {
+        "damage": 30,
+        "range": 1.5,
+        "rof": 30,
+        "projectile": "ADOGJUMP",
+        "subjectToWalls": true,
+        "inaccurate": false,
+        "arcing": false
+      }
+    },
+    {
+      "name": "E2",
+      "type": 3,
+      "cost": 100,
+      "strength": 125,
+      "speed": 10.24,
+      "iniSpeed": "4",
+      "armor": 1,
+      "prerequisite": [
+        "NAHAND"
+      ],
+      "immuneToRadiation": false,
+      "crusher": false,
+      "crushable": true,
+      "passengers": 0,
+      "primary": "M1Carbine",
+      "weaponNames": [
+        "M1Carbine"
+      ],
+      "weapon": {
+        "damage": 15,
+        "range": 4,
+        "rof": 25,
+        "projectile": "InvisibleLow",
+        "subjectToWalls": true,
+        "inaccurate": false,
+        "arcing": false
+      }
+    },
+    {
+      "name": "E1",
+      "type": 3,
+      "cost": 200,
+      "strength": 125,
+      "speed": 10.24,
+      "iniSpeed": "4",
+      "armor": 0,
+      "prerequisite": [
+        "GAPILE"
+      ],
+      "immuneToRadiation": false,
+      "crusher": false,
+      "crushable": true,
+      "passengers": 0,
+      "primary": "M60",
+      "weaponNames": [
+        "M60",
+        "Para"
+      ],
+      "weapon": {
+        "damage": 15,
+        "range": 4,
+        "rof": 20,
+        "projectile": "InvisibleLow",
+        "subjectToWalls": true,
+        "inaccurate": false,
+        "arcing": false
+      }
+    },
+    {
+      "name": "HARV",
+      "type": 7,
+      "cost": 1400,
+      "strength": 1000,
+      "speed": 15.753846153846155,
+      "iniSpeed": "4",
+      "armor": 4,
+      "prerequisite": [
+        "NAWEAP",
+        "PROC"
+      ],
+      "immuneToRadiation": true,
+      "crusher": true,
+      "crushable": false,
+      "passengers": 0,
+      "primary": "20mmRapid",
+      "weaponNames": [
+        "20mmRapid"
+      ],
+      "weapon": {
+        "damage": 30,
+        "range": 5.5,
+        "rof": 20,
+        "projectile": "InvisibleLow",
+        "subjectToWalls": true,
+        "inaccurate": false,
+        "arcing": false
+      }
+    },
+    {
+      "name": "CMIN",
+      "type": 7,
+      "cost": 1400,
+      "strength": 1000,
+      "speed": 15.753846153846155,
+      "iniSpeed": "4",
+      "armor": 4,
+      "prerequisite": [
+        "GAWEAP",
+        "PROC"
+      ],
+      "immuneToRadiation": true,
+      "crusher": true,
+      "crushable": false,
+      "passengers": 0,
+      "weaponNames": []
+    },
+    {
+      "name": "HTK",
+      "type": 7,
+      "cost": 500,
+      "strength": 180,
+      "speed": 31.50769230769231,
+      "iniSpeed": "8",
+      "armor": 5,
+      "prerequisite": [
+        "NAWEAP"
+      ],
+      "immuneToRadiation": false,
+      "crusher": true,
+      "crushable": false,
+      "passengers": 5,
+      "primary": "FlakTrackGun",
+      "weaponNames": [
+        "FlakTrackGun",
+        "FlakTrackAAGun"
+      ],
+      "weapon": {
+        "damage": 25,
+        "range": 5,
+        "rof": 40,
+        "projectile": "FlakTProj",
+        "subjectToWalls": true,
+        "inaccurate": true,
+        "arcing": true
+      }
+    },
+    {
+      "name": "FV",
+      "type": 7,
+      "cost": 600,
+      "strength": 200,
+      "speed": 39.38461538461539,
+      "iniSpeed": "10",
+      "armor": 3,
+      "prerequisite": [
+        "GAWEAP"
+      ],
+      "immuneToRadiation": false,
+      "crusher": false,
+      "crushable": false,
+      "passengers": 1,
+      "primary": "HoverMissile",
+      "weaponNames": [
+        "HoverMissile",
+        "RepairBullet",
+        "CRM60",
+        "CRFlakGuyGun",
+        "CRMP5",
+        "AWPE",
+        "CRElectricBolt",
+        "CRNuke",
+        "CRMindControl",
+        "CRRadBeamWeapon",
+        "CRNeutronRifle",
+        "CRTerrorBomb",
+        "CowShot"
+      ],
+      "weapon": {
+        "damage": 25,
+        "range": 6,
+        "rof": 50,
+        "projectile": "AAHeatSeeker2",
+        "subjectToWalls": false,
+        "inaccurate": false,
+        "arcing": false
+      }
+    },
+    {
+      "name": "DESO",
+      "type": 3,
+      "cost": 600,
+      "strength": 150,
+      "speed": 10.24,
+      "iniSpeed": "4",
+      "armor": 2,
+      "prerequisite": [
+        "NAHAND",
+        "RADAR"
+      ],
+      "immuneToRadiation": true,
+      "crusher": false,
+      "crushable": false,
+      "passengers": 0,
+      "primary": "RadBeamWeapon",
+      "weaponNames": [
+        "RadBeamWeapon",
+        "RadEruptionWeapon"
+      ],
+      "weapon": {
+        "damage": 125,
+        "range": 6,
+        "rof": 50,
+        "projectile": "InvisibleLow",
+        "subjectToWalls": true,
+        "inaccurate": false,
+        "arcing": false
+      }
+    },
+    {
+      "name": "GTGCAN",
+      "type": 2,
+      "cost": 2000,
+      "strength": 900,
+      "speed": 0,
+      "iniSpeed": "",
+      "armor": 7,
+      "prerequisite": [
+        "RADAR",
+        "GACNST"
+      ],
+      "immuneToRadiation": false,
+      "crusher": false,
+      "crushable": false,
+      "passengers": 0,
+      "primary": "GrandCannonWeapon",
+      "weaponNames": [
+        "GrandCannonWeapon"
+      ],
+      "weapon": {
+        "damage": 150,
+        "range": 15,
+        "rof": 120,
+        "projectile": "GrandCannonBall",
+        "subjectToWalls": false,
+        "inaccurate": false,
+        "arcing": true
+      }
+    },
+    {
+      "name": "SREF",
+      "type": 7,
+      "cost": 1200,
+      "strength": 150,
+      "speed": 15.753846153846155,
+      "iniSpeed": "4",
+      "armor": 3,
+      "prerequisite": [
+        "GAWEAP",
+        "GATECH"
+      ],
+      "immuneToRadiation": false,
+      "crusher": true,
+      "crushable": false,
+      "passengers": 0,
+      "weaponNames": [
+        "Comet"
+      ],
+      "weapon": {
+        "damage": 100,
+        "range": 10,
+        "rof": 100,
+        "projectile": "LargeCometP",
+        "subjectToWalls": false,
+        "inaccurate": false,
+        "arcing": false
+      }
+    },
+    {
+      "name": "MGTK",
+      "type": 7,
+      "cost": 1000,
+      "strength": 200,
+      "speed": 27.56923076923077,
+      "iniSpeed": "7",
+      "armor": 3,
+      "prerequisite": [
+        "GAWEAP",
+        "GATECH"
+      ],
+      "immuneToRadiation": false,
+      "crusher": true,
+      "crushable": false,
+      "passengers": 0,
+      "primary": "MirageGun",
+      "weaponNames": [
+        "MirageGun"
+      ],
+      "weapon": {
+        "damage": 100,
+        "range": 7,
+        "rof": 70,
+        "projectile": "InvisibleLow",
+        "subjectToWalls": true,
+        "inaccurate": false,
+        "arcing": false
+      }
+    },
+    {
+      "name": "APOC",
+      "type": 7,
+      "cost": 1750,
+      "strength": 800,
+      "speed": 15.753846153846155,
+      "iniSpeed": "4",
+      "armor": 5,
+      "prerequisite": [
+        "NAWEAP",
+        "NATECH"
+      ],
+      "immuneToRadiation": false,
+      "crusher": true,
+      "crushable": false,
+      "passengers": 0,
+      "primary": "120mmx",
+      "weaponNames": [
+        "120mmx",
+        "MammothTusk"
+      ],
+      "weapon": {
+        "damage": 100,
+        "range": 5.75,
+        "rof": 80,
+        "projectile": "Cannon",
+        "subjectToWalls": true,
+        "inaccurate": false,
+        "arcing": true
+      }
+    },
+    {
+      "name": "V3",
+      "type": 7,
+      "cost": 800,
+      "strength": 150,
+      "speed": 15.753846153846155,
+      "iniSpeed": "4",
+      "armor": 3,
+      "prerequisite": [
+        "NAWEAP",
+        "NARADR"
+      ],
+      "immuneToRadiation": false,
+      "crusher": true,
+      "crushable": false,
+      "passengers": 0,
+      "primary": "V3Launcher",
+      "weaponNames": [
+        "V3Launcher"
+      ],
+      "weapon": {
+        "damage": 1,
+        "range": 18,
+        "rof": 150,
+        "projectile": "InvisibleHigh",
+        "subjectToWalls": false,
+        "inaccurate": false,
+        "arcing": false
+      }
+    },
+    {
+      "name": "SNIPE",
+      "type": 3,
+      "cost": 600,
+      "strength": 125,
+      "speed": 10.24,
+      "iniSpeed": "4",
+      "armor": 0,
+      "prerequisite": [
+        "GAPILE",
+        "RADAR"
+      ],
+      "immuneToRadiation": false,
+      "crusher": false,
+      "crushable": true,
+      "passengers": 0,
+      "primary": "AWP",
+      "weaponNames": [
+        "AWP"
+      ],
+      "weapon": {
+        "damage": 125,
+        "range": 14,
+        "rof": 150,
+        "projectile": "InvisibleLow",
+        "subjectToWalls": true,
+        "inaccurate": false,
+        "arcing": false
+      }
+    },
+    {
+      "name": "TNKD",
+      "type": 7,
+      "cost": 900,
+      "strength": 400,
+      "speed": 19.692307692307693,
+      "iniSpeed": "5",
+      "armor": 5,
+      "prerequisite": [
+        "GAWEAP",
+        "RADAR"
+      ],
+      "immuneToRadiation": false,
+      "crusher": true,
+      "crushable": false,
+      "passengers": 0,
+      "primary": "SABOT",
+      "weaponNames": [
+        "SABOT"
+      ],
+      "weapon": {
+        "damage": 150,
+        "range": 5,
+        "rof": 70,
+        "projectile": "Cannon",
+        "subjectToWalls": true,
+        "inaccurate": false,
+        "arcing": true
+      }
+    },
+    {
+      "name": "TTNK",
+      "type": 7,
+      "cost": 1200,
+      "strength": 300,
+      "speed": 23.630769230769232,
+      "iniSpeed": "6",
+      "armor": 5,
+      "prerequisite": [
+        "NAWEAP",
+        "NARADR"
+      ],
+      "immuneToRadiation": false,
+      "crusher": true,
+      "crushable": false,
+      "passengers": 0,
+      "primary": "TankBolt",
+      "weaponNames": [
+        "TankBolt"
+      ],
+      "weapon": {
+        "damage": 135,
+        "range": 4,
+        "rof": 75,
+        "projectile": "InvisibleLow",
+        "subjectToWalls": true,
+        "inaccurate": false,
+        "arcing": false
+      }
+    },
+    {
+      "name": "BEAG",
+      "type": 1,
+      "cost": 1200,
+      "strength": 200,
+      "speed": 35.84,
+      "iniSpeed": "14",
+      "armor": 3,
+      "prerequisite": [
+        "RADAR"
+      ],
+      "immuneToRadiation": false,
+      "crusher": false,
+      "crushable": false,
+      "passengers": 0,
+      "primary": "Maverick2",
+      "weaponNames": [
+        "Maverick2"
+      ],
+      "weapon": {
+        "damage": 200,
+        "range": 6,
+        "rof": 10,
+        "projectile": "AirToGroundMissile",
+        "subjectToWalls": false,
+        "inaccurate": false,
+        "arcing": false
+      }
+    },
+    {
+      "name": "ORCA",
+      "type": 1,
+      "cost": 1200,
+      "strength": 150,
+      "speed": 35.84,
+      "iniSpeed": "14",
+      "armor": 3,
+      "prerequisite": [
+        "RADAR"
+      ],
+      "immuneToRadiation": false,
+      "crusher": false,
+      "crushable": false,
+      "passengers": 0,
+      "primary": "Maverick",
+      "weaponNames": [
+        "Maverick"
+      ],
+      "weapon": {
+        "damage": 150,
+        "range": 6,
+        "rof": 10,
+        "projectile": "AirToGroundMissile",
+        "subjectToWalls": false,
+        "inaccurate": false,
+        "arcing": false
+      }
+    },
+    {
+      "name": "DTRUCK",
+      "type": 7,
+      "cost": 1500,
+      "strength": 150,
+      "speed": 19.692307692307693,
+      "iniSpeed": "5",
+      "armor": 3,
+      "prerequisite": [
+        "NAWEAP",
+        "RADAR"
+      ],
+      "immuneToRadiation": false,
+      "crusher": false,
+      "crushable": false,
+      "passengers": 0,
+      "primary": "Demobomb",
+      "weaponNames": [
+        "Demobomb"
+      ],
+      "weapon": {
+        "damage": 300,
+        "range": 1,
+        "rof": 80,
+        "projectile": "InvisibleLow",
+        "subjectToWalls": true,
+        "inaccurate": false,
+        "arcing": false
+      }
+    },
+    {
+      "name": "TERROR",
+      "type": 3,
+      "cost": 200,
+      "strength": 75,
+      "speed": 15.36,
+      "iniSpeed": "6",
+      "armor": 1,
+      "prerequisite": [
+        "NAHAND",
+        "RADAR"
+      ],
+      "immuneToRadiation": false,
+      "crusher": false,
+      "crushable": true,
+      "passengers": 0,
+      "primary": "TerrorBomb",
+      "weaponNames": [
+        "TerrorBomb"
+      ],
+      "weapon": {
+        "damage": 225,
+        "range": 1.5,
+        "rof": 10,
+        "projectile": "Invisible",
+        "subjectToWalls": false,
+        "inaccurate": false,
+        "arcing": false
+      }
+    }
+  ],
+  "gameSourceCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+  "observedAt": "2026-10-25",
+  "loader": "e2e/ai-specialty-scenarios.ts:loadSpecialtyResources + Rules",
+  "notes": [
+    "Object and weapon numerical observations only; no game resources are included.",
+    "Parsed movement speeds are internal units; infantry and vehicle INI Speed fields have different conversions.",
+    "SREF uses Weapon1=Comet; V3 launches a separate missile whose damage is not the launcher Damage=1."
+  ]
+}

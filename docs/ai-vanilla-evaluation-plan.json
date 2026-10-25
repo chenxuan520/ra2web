@@ -1,0 +1,35 @@
+{
+  "format": 1,
+  "scope": "Original Red Alert 2, standard land 1v1; not expansion or mod rules",
+  "controlCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+  "primaryBaselineCommit": "0a46d527995adc2411c04484de7336d63d4b0c5f",
+  "baselines": [
+    {"commit": "14ffd3613663a0e1a373593922e0f5e1c5f20f40", "profile": "normal"},
+    {"commit": "04a9f7ae57053e3f7f108afd14f830c293cac47a", "profile": "brutal"},
+    {"commit": "0a46d527995adc2411c04484de7336d63d4b0c5f", "profile": "brutal"}
+  ],
+  "countries": ["Americans", "Alliance", "French", "Germans", "British", "Africans", "Arabs", "Confederation", "Russians"],
+  "settings": {"credits": 10000, "unitCount": 0, "maxTicks": 27000, "engineDifficulty": 4, "pairedSpawnSwap": true, "pairedPlayerOrderSwap": true, "candidateProfile": "brutal"},
+  "scenarioSets": {
+    "regression": {"short": "mp08t2:10111", "medium": "tn01t2:20222", "long": "mp11t2:30333"},
+    "development": {"short": "mp08t2:610101", "medium": "tn01t2:610202", "long": "mp11t2:610303"},
+    "qualification_a": {"short": "mp08t2:710101", "medium": "tn01t2:710202", "long": "mp11t2:710303"},
+    "qualification_b": {"short": "mp08t2:720101", "medium": "tn01t2:720202", "long": "mp11t2:720303"},
+    "qualification_c": {"short": "mp08t2:730101", "medium": "tn01t2:730202", "long": "mp11t2:730303"}
+  },
+  "qualificationSets": ["qualification_a", "qualification_b", "qualification_c"],
+  "qualificationRequiresNewMaps": false,
+  "unseenMapReview": {"status": "not certified", "candidateMaps": ["mp06t2", "mp14t2"], "requires": ["map overrides and rule hashes", "reachable paired starts", "terrain and economy review", "separate frozen seeds before use"], "note": "Known-map seed qualification does not establish unseen-map or naval performance."},
+  "gates": {"overallWinRate": 0.8, "countryWinRate": 0.7, "mapWinRate": 0.7, "maximumGroupRegression": 0.05, "minimumOverallDelta": -0.02, "minimumTargetDelta": 0.03, "minimumMaps": 3, "minimumSeedsPerMap": 3, "bootstrapReplicates": 5000, "bootstrapSeed": 20261025, "confidence": 0.95},
+  "hypotheses": {
+    "rhino_dog_micro": {"phase": "P1a", "targetCountries": ["Africans", "Arabs", "Confederation", "Russians"], "change": "Dog escort positioning only; keep the same production and opening", "requiredEvidence": ["same-unit real-engine control", "automatic and explicit enemy targeting", "tank survival and actual firing", "dog cohesion and friendly radiation exposure"]},
+    "rhino_dog_opening": {"phase": "P1b", "targetCountries": ["Africans", "Arabs", "Confederation", "Russians"], "change": "One funded rhino/dog opening; freeze the P1a controller", "requiredEvidence": ["normal-economy opening", "first tank and pressure ticks", "dog and infantry spending", "anti-infantry-rush regression"]},
+    "opening_transition": {"phase": "P2", "targetCountries": ["Americans", "Alliance", "French", "Germans", "British", "Africans", "Arabs", "Confederation", "Russians"], "change": "Explicit pressure/economy transitions from scouted information", "requiredEvidence": ["plan transitions and reasons", "no hidden-enemy dependence", "production cancellation churn", "miner and frontline survival"]},
+    "allied_tech": {"phase": "P3", "targetCountries": ["Americans", "Alliance", "French", "Germans", "British"], "change": "Protect ground income before a purposeful technology transition", "requiredEvidence": ["first useful tech force arrival", "income-chain survival", "short-map and reversed-spawn regression"]},
+    "iraqi_guard": {"phase": "P4", "targetCountries": ["Arabs"], "change": "Fund and position a real independent radiation guard", "requiredEvidence": ["eligible scenarios", "normal production and deployment", "victim-side radiation damage", "friendly exit and route safety"]},
+    "national_support": {"phase": "P5", "targetCountries": ["Americans", "Alliance", "French"], "change": "Evaluate each national ability as its own frozen experiment", "requiredEvidence": ["separate commits per national change", "actual use and outcomes", "opportunity cost and home defence"]},
+    "multi_front": {"phase": "P6", "targetCountries": ["Americans", "Alliance", "French", "Germans", "British", "Africans", "Arabs", "Confederation", "Russians"], "change": "One coordinated pressure or infiltration tactic per experiment", "requiredEvidence": ["overlapping actual pressure", "frontline reserve", "damage or attributed capture", "transport and abort outcomes"]}
+  },
+  "releaseRequires": ["valid original report receipts", "hypothesis mechanism evidence", "qualification comparison against each baseline", "direct matches versus C18 and the previous candidate", "independent tactical opponents", "failed-sample review", "normal-profile regression", "complete Chinese report"],
+  "notes": ["Do not tune on qualification seeds after observing results. Retire exposed qualification sets before another candidate selection.", "This is a preregistered experiment plan, not evidence that the tactics have been implemented or passed.", "The comparison tool reports promising, regression or inconclusive; it does not authorize release by itself."]
+}

@@ -3,9 +3,9 @@ name: AI validation
 on:
   push:
     branches: [master]
-    paths: ['ts-redalert2/**', '.github/workflows/ai.yml', '.github/scripts/**']
+    paths: ['ts-redalert2/**', '.github/workflows/ai.yml', '.github/scripts/**', 'docs/ai-vanilla-evaluation-plan.json']
   pull_request:
-    paths: ['ts-redalert2/**', '.github/workflows/ai.yml', '.github/scripts/**']
+    paths: ['ts-redalert2/**', '.github/workflows/ai.yml', '.github/scripts/**', 'docs/ai-vanilla-evaluation-plan.json']
   schedule:
     - cron: '0 3 * * 1'
   workflow_dispatch:
@@ -27,6 +27,11 @@ on:
         type: choice
         options: [brutal, normal]
         default: brutal
+      evaluation_set:
+        description: Preregistered map seeds (do not tune on qualification results)
+        type: choice
+        options: [regression, development, qualification_a, qualification_b, qualification_c]
+        default: regression
 
 permissions:
   contents: read
@@ -41,6 +46,7 @@ env:
   AI_BASELINE_REF: ${{ inputs.baseline_ref || '04a9f7a' }}
   AI_CANDIDATE_REF: ${{ inputs.candidate_ref || github.sha }}
   AI_BASELINE_PROFILE: ${{ inputs.baseline_profile || 'brutal' }}
+  AI_EVALUATION_SET: ${{ inputs.evaluation_set || 'regression' }}
   AI_TOURNAMENT_WORKERS: ${{ github.event.repository.private && '2' || '4' }}
 
 jobs:
@@ -100,11 +106,8 @@ jobs:
       matrix:
         include:
           - id: short
-            scenario: mp08t2:10111
           - id: medium
-            scenario: tn01t2:20222
           - id: long
-            scenario: mp11t2:30333
     steps:
       - uses: actions/checkout@v4
         with:
@@ -126,9 +129,10 @@ jobs:
       - name: Real country matches
         working-directory: ts-redalert2
         env:
-          AI_SCENARIO: ${{ matrix.scenario }}
           AI_SHARD: ${{ matrix.id }}
         run: |
+          AI_SCENARIO="$(python3 ../.github/scripts/ai-evaluation-scenario.py \
+            --plan ../docs/ai-vanilla-evaluation-plan.json --set "$AI_EVALUATION_SET" --shard "$AI_SHARD")"
           bun e2e/ai-tournament.ts --candidate-ref "$AI_CANDIDATE_REF" --baseline-ref "$AI_BASELINE_REF" \
             --baseline-profile "$AI_BASELINE_PROFILE" \
             --scenarios "$AI_SCENARIO" --concurrency "$AI_TOURNAMENT_WORKERS" --out ".artifacts/ai-ci/country-$AI_SHARD"
