@@ -50,3 +50,42 @@ bun run test:ai --candidate-ref 3497729 --baseline-ref 3497729 \
 先检验同版本自对打是否按换边镜像，再看不同版本胜/平/负与产能、战损。单个种子、单一地图或只有低资金时间改善，都不足以证明普遍胜率提升。
 
 已完成的对战与局限见 [评估报告](../../docs/ai-evaluation.md)，策略来源见 [研究记录](../../docs/ai-research.md)。完整参数使用 `bun run test:ai --help` 查看。
+
+## 全国家交叉赛程
+
+`ai-tournament.ts` 默认安排 9 国分别对其余 8 国：每组使用三个地图/种子配置，每个配置交换出生点与玩家槽位，共 216 个成对任务、432 局。双方默认使用 brutal 策略与相同的 Normal 游戏加成、10000 初始资金。每局限时 27000 tick（30 模拟分钟），超时记平局。
+
+```bash
+# 固定候选与上一稳定版。默认包含所有国家；可先 --dry-run 检查赛程。
+bun e2e/ai-tournament.ts --candidate-ref 39679b2 --baseline-ref 04a9f7a \
+  --scenarios mp08t2:10111,tn01t2:20222,mp11t2:30333 \
+  --concurrency 4 --out .artifacts/ai-tournament/national-v3
+
+# 同一代码、资源、选项和目录下续跑；已完成对局不重复统计。
+bun e2e/ai-tournament.ts --candidate-ref 39679b2 --baseline-ref 04a9f7a \
+  --scenarios mp08t2:10111,tn01t2:20222,mp11t2:30333 \
+  --concurrency 4 --out .artifacts/ai-tournament/national-v3 --resume
+```
+
+默认配置为 `mp08t2:1011,tn01t2:2022,mp11t2:3033`。每个国家配对有 6 局，每个候选国家共 48 局；这不是每张地图再分别跑三个种子。前两张地图用于开发过，最终第三版命令另用 `10111/20222/30333`，避免复用第二版开发赛程种子。
+
+`manifest.json` 冻结提交、引擎/runner/规则/资源摘要与赛程；`jobs/` 保留每个成对任务的完整遥测、日志和校验凭据；`summary.json` 输出逐国家矩阵。主胜率为 `胜 / (胜+负+平)`，错误数另列；决胜局胜率 `胜 / (胜+负)` 仅作补充。国家胜率表示新 Bot 使用该国对上一版其他国家的结果，不能直接当作国家强弱排行。
+
+运行期间不要提交或修改引擎、Bot API shim、runner。续跑会核对版本与资源；更换版本应使用新目录。`--resume --retry-errors` 会先归档错误任务的原始报告与日志，再重跑对应配对；归档尝试不重复计入最终矩阵。
+
+## 特色机制与分兵场景
+
+```bash
+bun e2e/ai-specialty-scenarios.ts --repeat 2
+bun e2e/ai-harassment-scenario.ts
+```
+
+这些场景使用真实引擎验证辐射展开/友军避让/残留区、巨炮、坦克冷却撤退、美国伞兵，以及已有军队分兵与受袭回防。场景会预置单位；伞兵场景还缩短充能，因此只能证明机制和控制器行为。正常经济下是否造出特色单位、是否有战力收益，须看完整对局遥测。国家特色研究见 [资料与实际规则核对](../../docs/ai-national-research.md)。
+
+工程师偷建筑场景使用实际 `SneakCaptureMissionFactory`、`MissionController` 和引擎 Capture 命令，核对所有权真实变化及已知守军阻止行动：
+
+```bash
+bun e2e/ai-sneak-capture-scenario.ts
+```
+
+CI 入口、触发方式和报告下载见 [AI 持续验证](../../docs/ai-ci.md)。恢复历史赛程须使用原提交及相同资源；可放到固定提交的独立 worktree 中后台续跑，让主工作目录继续开发。

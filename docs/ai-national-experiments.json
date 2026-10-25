@@ -1,0 +1,2884 @@
+{
+  "format": 1,
+  "reports": [
+    {
+      "name": "specialty-eight-first",
+      "rawReportSha256": "98700d9066949d2f9ce244f288d74ff669bc53f341304fefdca5c6d9a8e5fe3d",
+      "passed": false,
+      "deterministic": true,
+      "notes": [
+        "Preplaced units (including a deliberately injured tank), completed buildings and a precharged paradrop are fixture setup, not AI production or an economic test.",
+        "Manual fixtures use no-op bots; AI fixtures run the actual Brutal CombatSquad through a Mission and ActionBatcher.",
+        "The engine handles every movement, shot and damage event. The AI context sees only GameApi-visible enemies.",
+        "Radiation can harm friendly units and has no engine player attribution; do not turn fixture success into match wins."
+      ],
+      "scenarios": [
+        {
+          "name": "desolator-radiation",
+          "controller": "documented manual action",
+          "passed": true,
+          "checks": {
+            "deployedViaAction": true,
+            "eruptionFired": true,
+            "radiationFieldObserved": true,
+            "targetDamagedInRadiation": true
+          }
+        },
+        {
+          "name": "grand-cannon",
+          "controller": "documented manual action",
+          "passed": true,
+          "checks": {
+            "cannonHasPower": true,
+            "cannonFired": true,
+            "tankDamagedByCannon": true
+          }
+        },
+        {
+          "name": "tank-duel",
+          "controller": "documented manual action",
+          "passed": true,
+          "checks": {
+            "rhinoFired": true,
+            "grizzlyFired": true,
+            "bothTanksDamaged": true
+          }
+        },
+        {
+          "name": "ai-desolator-safe",
+          "controller": "actual Brutal CombatSquad",
+          "passed": true,
+          "checks": {
+            "actualControllerRan": true,
+            "aiIssuedDeploy": true,
+            "deploymentExecuted": true,
+            "eruptionFired": true,
+            "targetDamagedInRadiation": true
+          }
+        },
+        {
+          "name": "ai-desolator-blocked",
+          "controller": "actual Brutal CombatSquad",
+          "passed": true,
+          "checks": {
+            "actualControllerRan": true,
+            "noUnsafeDeployOrder": true,
+            "noEruptionFired": true,
+            "friendlyInfantrySurvives": true
+          }
+        },
+        {
+          "name": "ai-radiation-detour",
+          "controller": "actual Brutal CombatSquad",
+          "passed": true,
+          "checks": {
+            "actualControllerRan": true,
+            "plumeCreatedByAi": true,
+            "residualRadiationAfterUndeploy": true,
+            "tankDetoursOrWaitsForDecay": true,
+            "tankStayedOutsideActiveSite": true,
+            "noTankRadiationDamage": true
+          }
+        },
+        {
+          "name": "ai-american-paradrop",
+          "controller": "actual ParaDropSupport",
+          "passed": true,
+          "checks": {
+            "actualControllerRan": true,
+            "allowedWithSuperWeaponsDisabled": true,
+            "actualEngineActivated": true,
+            "transportAircraftSpawned": true,
+            "gisActuallyLanded": true
+          }
+        },
+        {
+          "name": "ai-injured-tank-retreat",
+          "controller": "actual Brutal CombatSquad",
+          "passed": false,
+          "checks": {
+            "actualControllerRan": true,
+            "retreatMoveIssued": false,
+            "tankActuallyMoved": true
+          }
+        }
+      ],
+      "version": {
+        "commit": "782a9a2ee7bc09919ae526fcd2896be010fd6e4b",
+        "source": "working-tree",
+        "dirty": true,
+        "workingTreeStatus": "M ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/building/queueController.ts\n M ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/baseBuildingMission.ts\n M ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/harassmentMission.ts\n M ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/strategy/defaultStrategy.ts\n M ts-redalert2/src/game/ai/thirdpartbot/builtIn/game-api.ts\n?? ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/building/firstFactoryPlacement.ts\n?? ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/building/strategicBuildings.ts\n?? ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/paraDropSupport.ts\n?? ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/strategy/nationalComposition.ts",
+        "trackedDiffSha256": "729bd723b17bb10ec2cf7a49cda27dd742773618579681f1a96dbdbf62ff5cae",
+        "builtInSourceSha256": "dd56c62944ddee545c412f427d3c7c0514762991d3429b1d95fa17d6b0d434a6",
+        "runnerSha256": "cba550003b97c5a3a022a597bbd6a82b046ad4792f913b4a28effd8f5ec5e412"
+      },
+      "resources": {
+        "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+        "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4",
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+      },
+      "scope": "earlier diagnostic with failed retreat, retained as failure evidence"
+    },
+    {
+      "name": "specialty-v2-final",
+      "rawReportSha256": "0b0a02edd310e7bdd2988b7e8deb509a2423aea01e6f0ebb90ae49d3a4d294d9",
+      "passed": true,
+      "deterministic": true,
+      "notes": [
+        "Preplaced units (including a deliberately injured tank), completed buildings and a precharged paradrop are fixture setup, not AI production or an economic test.",
+        "Manual fixtures use no-op bots; AI fixtures run the actual Brutal CombatSquad through a Mission and ActionBatcher, or the actual ParaDropSupport controller.",
+        "The engine handles every movement, shot and damage event. The AI context sees only GameApi-visible enemies.",
+        "Radiation can harm friendly units and has no engine player attribution; do not turn fixture success into match wins."
+      ],
+      "scenarios": [
+        {
+          "name": "desolator-radiation",
+          "controller": "documented manual action",
+          "passed": true,
+          "checks": {
+            "deployedViaAction": true,
+            "eruptionFired": true,
+            "radiationFieldObserved": true,
+            "targetDamagedInRadiation": true
+          }
+        },
+        {
+          "name": "grand-cannon",
+          "controller": "documented manual action",
+          "passed": true,
+          "checks": {
+            "cannonHasPower": true,
+            "cannonFired": true,
+            "tankDamagedByCannon": true
+          }
+        },
+        {
+          "name": "tank-duel",
+          "controller": "documented manual action",
+          "passed": true,
+          "checks": {
+            "rhinoFired": true,
+            "grizzlyFired": true,
+            "bothTanksDamaged": true
+          }
+        },
+        {
+          "name": "ai-desolator-safe",
+          "controller": "actual Brutal CombatSquad",
+          "passed": true,
+          "checks": {
+            "actualControllerRan": true,
+            "aiIssuedDeploy": true,
+            "deploymentExecuted": true,
+            "eruptionFired": true,
+            "targetDamagedInRadiation": true
+          }
+        },
+        {
+          "name": "ai-desolator-blocked",
+          "controller": "actual Brutal CombatSquad",
+          "passed": true,
+          "checks": {
+            "actualControllerRan": true,
+            "noUnsafeDeployOrder": true,
+            "noEruptionFired": true,
+            "friendlyInfantrySurvives": true
+          }
+        },
+        {
+          "name": "ai-radiation-detour",
+          "controller": "actual Brutal CombatSquad",
+          "passed": true,
+          "checks": {
+            "actualControllerRan": true,
+            "plumeCreatedByAi": true,
+            "residualRadiationAfterUndeploy": true,
+            "tankDetoursOrWaitsForDecay": true,
+            "tankStayedOutsideActiveSite": true,
+            "noTankRadiationDamage": true
+          }
+        },
+        {
+          "name": "ai-american-paradrop",
+          "controller": "actual ParaDropSupport",
+          "passed": true,
+          "checks": {
+            "actualControllerRan": true,
+            "allowedWithSuperWeaponsDisabled": true,
+            "actualEngineActivated": true,
+            "transportAircraftSpawned": true,
+            "gisActuallyLanded": true
+          }
+        },
+        {
+          "name": "ai-injured-tank-retreat",
+          "controller": "actual Brutal CombatSquad",
+          "passed": true,
+          "checks": {
+            "actualControllerRan": true,
+            "retreatMoveIssued": true,
+            "tankActuallyMoved": true
+          }
+        }
+      ],
+      "version": {
+        "commit": "bd4cc1c36fd271e4763b040ef2fa8092b1fca2c6",
+        "source": "working-tree",
+        "dirty": false,
+        "workingTreeStatus": null,
+        "trackedDiffSha256": null,
+        "builtInSourceSha256": "16cca3c22e451bda56c506732d1cf6e831ff03bde2383a6a5f3186d6ebeee161",
+        "runnerSha256": "fb270c51b4ff8e15d4a792702a5ca8dcd9c79711737571b2dbda766c7325a96c"
+      },
+      "resources": {
+        "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+        "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4",
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+      },
+      "scope": "actual engine fixture on final code; preplaced forces, not an economy match"
+    },
+    {
+      "name": "harassment-v2-final",
+      "rawReportSha256": "4e90c6516e2b3c3b307b0b6a6aeff3475eff59275b4fdeaa184e6a3f150f1e64",
+      "passed": true,
+      "deterministic": true,
+      "notes": [
+        "Nine healthy tanks are preplaced in two real AttackMissions (5 + 4). No economic victory is claimed.",
+        "Actual MissionController, HarassmentMissionFactory, CombatSquad and Game.update execute every AI order and movement.",
+        "An owned scout reveals the outside miner through normal vision; a scripted enemy arrival tests base recall."
+      ],
+      "checks": {
+        "actualControllersRan": true,
+        "splitThreeFromTwoExistingWaves": true,
+        "mainForcesPreserved": true,
+        "minerVisibleAtLaunch": true,
+        "distinctMainAndRaidTargets": true,
+        "independentRaidOrders": true,
+        "noDoubleOwnership": true,
+        "noAdditionalProduction": true,
+        "baseThreatCausedRecall": true,
+        "raidReturnedAndReleased": true
+      },
+      "lifecycle": [
+        {
+          "tick": 30,
+          "message": "Added mission: harassment_30"
+        },
+        {
+          "tick": 30,
+          "message": "Harassment harassment_30 detached 3 existing tanks toward 873"
+        },
+        {
+          "tick": 30,
+          "message": "Mission harassment_30 received: HTNK x 3"
+        },
+        {
+          "tick": 32,
+          "message": "CombatSquad harassment_30 switching back to attack mode (5)"
+        },
+        {
+          "tick": 294,
+          "message": "Mission harassment_30 disbanding as requested."
+        },
+        {
+          "tick": 294,
+          "message": "mission disbanded: harassment_30, reason: base-under-attack"
+        }
+      ],
+      "version": {
+        "commit": "bd4cc1c36fd271e4763b040ef2fa8092b1fca2c6",
+        "builtInSourceSha256": "16cca3c22e451bda56c506732d1cf6e831ff03bde2383a6a5f3186d6ebeee161",
+        "workingTreeStatus": ""
+      },
+      "runnerSha256": "bf1056ebc22687da5b29fef8e4647f85a758a24402fa5ff7cf4ce5ebe957a8b7",
+      "resources": {
+        "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+        "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4",
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+      },
+      "setup": [
+        {
+          "label": "tank-0",
+          "name": "HTNK",
+          "type": 7,
+          "player": 0,
+          "x": -2,
+          "y": -2,
+          "id": 863,
+          "tile": {
+            "x": 45,
+            "y": 32
+          }
+        },
+        {
+          "label": "tank-1",
+          "name": "HTNK",
+          "type": 7,
+          "player": 0,
+          "x": 0,
+          "y": -2,
+          "id": 864,
+          "tile": {
+            "x": 47,
+            "y": 32
+          }
+        },
+        {
+          "label": "tank-2",
+          "name": "HTNK",
+          "type": 7,
+          "player": 0,
+          "x": 2,
+          "y": -2,
+          "id": 865,
+          "tile": {
+            "x": 49,
+            "y": 32
+          }
+        },
+        {
+          "label": "tank-3",
+          "name": "HTNK",
+          "type": 7,
+          "player": 0,
+          "x": -1,
+          "y": 0,
+          "id": 866,
+          "tile": {
+            "x": 46,
+            "y": 34
+          }
+        },
+        {
+          "label": "tank-4",
+          "name": "HTNK",
+          "type": 7,
+          "player": 0,
+          "x": 1,
+          "y": 0,
+          "id": 867,
+          "tile": {
+            "x": 48,
+            "y": 34
+          }
+        },
+        {
+          "label": "tank-5",
+          "name": "HTNK",
+          "type": 7,
+          "player": 0,
+          "x": -2,
+          "y": 4,
+          "id": 868,
+          "tile": {
+            "x": 45,
+            "y": 38
+          }
+        },
+        {
+          "label": "tank-6",
+          "name": "HTNK",
+          "type": 7,
+          "player": 0,
+          "x": 0,
+          "y": 4,
+          "id": 869,
+          "tile": {
+            "x": 47,
+            "y": 38
+          }
+        },
+        {
+          "label": "tank-7",
+          "name": "HTNK",
+          "type": 7,
+          "player": 0,
+          "x": 2,
+          "y": 4,
+          "id": 870,
+          "tile": {
+            "x": 49,
+            "y": 38
+          }
+        },
+        {
+          "label": "tank-8",
+          "name": "HTNK",
+          "type": 7,
+          "player": 0,
+          "x": 0,
+          "y": 6,
+          "id": 871,
+          "tile": {
+            "x": 47,
+            "y": 40
+          }
+        },
+        {
+          "label": "home-mcv",
+          "name": "SMCV",
+          "type": 7,
+          "player": 0,
+          "x": -8,
+          "y": 4,
+          "id": 872,
+          "tile": {
+            "x": 39,
+            "y": 38
+          }
+        },
+        {
+          "label": "outside-miner",
+          "name": "CMIN",
+          "type": 7,
+          "player": 1,
+          "x": 22,
+          "y": 4,
+          "id": 873,
+          "tile": {
+            "x": 69,
+            "y": 38
+          }
+        },
+        {
+          "label": "vision-scout",
+          "name": "ADOG",
+          "type": 3,
+          "player": 0,
+          "x": 18,
+          "y": 6,
+          "id": 874,
+          "tile": {
+            "x": 65,
+            "y": 40
+          }
+        },
+        {
+          "label": "base-attacker",
+          "name": "HTNK",
+          "type": 7,
+          "player": 1,
+          "x": -5,
+          "y": 8,
+          "id": 875,
+          "tile": {
+            "x": 42,
+            "y": 42
+          }
+        }
+      ],
+      "scope": "actual engine fixture on final code; preplaced forces, not an economy match"
+    },
+    {
+      "candidate": {
+        "commit": "62128b20c2d8a01f6b603ea1c592fc81f2d10054",
+        "profile": "brutal",
+        "source": "62128b2",
+        "dirty": false,
+        "workingTreeStatus": null,
+        "diffSha256": null,
+        "sourceSha256": null
+      },
+      "baseline": {
+        "commit": "04a9f7ae57053e3f7f108afd14f830c293cac47a",
+        "profile": "brutal"
+      },
+      "settings": {
+        "maxTicks": 27000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "gameSpeed": 3,
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true,
+        "simulationTicksPerSecond": 15,
+        "shortGame": true,
+        "superWeapons": false,
+        "crates": false,
+        "engineStalemateDetection": false
+      },
+      "summary": {
+        "total": 6,
+        "candidateWins": 6,
+        "baselineWins": 0,
+        "draws": 0,
+        "invalid": 0
+      },
+      "name": "national-v1-iraq",
+      "rawReportSha256": "fadf2f9e50c6ef826924351dea2dab081e3a54583a052c102c0a1a392148313c",
+      "matches": [
+        {
+          "map": "mp08t2.map",
+          "seed": 606,
+          "swapped": false,
+          "candidateCountry": "Arabs",
+          "baselineCountry": "French",
+          "result": "candidate-win",
+          "ticks": 5025
+        },
+        {
+          "map": "mp08t2.map",
+          "seed": 606,
+          "swapped": true,
+          "candidateCountry": "Arabs",
+          "baselineCountry": "French",
+          "result": "candidate-win",
+          "ticks": 5535
+        },
+        {
+          "map": "mp08t2.map",
+          "seed": 606,
+          "swapped": false,
+          "candidateCountry": "Arabs",
+          "baselineCountry": "Americans",
+          "result": "candidate-win",
+          "ticks": 5025
+        },
+        {
+          "map": "mp08t2.map",
+          "seed": 606,
+          "swapped": true,
+          "candidateCountry": "Arabs",
+          "baselineCountry": "Americans",
+          "result": "candidate-win",
+          "ticks": 5535
+        },
+        {
+          "map": "mp08t2.map",
+          "seed": 606,
+          "swapped": false,
+          "candidateCountry": "Arabs",
+          "baselineCountry": "British",
+          "result": "candidate-win",
+          "ticks": 5025
+        },
+        {
+          "map": "mp08t2.map",
+          "seed": 606,
+          "swapped": true,
+          "candidateCountry": "Arabs",
+          "baselineCountry": "British",
+          "result": "candidate-win",
+          "ticks": 5535
+        }
+      ]
+    },
+    {
+      "candidate": {
+        "commit": "62128b20c2d8a01f6b603ea1c592fc81f2d10054",
+        "profile": "brutal",
+        "source": "62128b2",
+        "dirty": false,
+        "workingTreeStatus": null,
+        "diffSha256": null,
+        "sourceSha256": null
+      },
+      "baseline": {
+        "commit": "04a9f7ae57053e3f7f108afd14f830c293cac47a",
+        "profile": "brutal"
+      },
+      "settings": {
+        "maxTicks": 27000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "gameSpeed": 3,
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true,
+        "simulationTicksPerSecond": 15,
+        "shortGame": true,
+        "superWeapons": false,
+        "crates": false,
+        "engineStalemateDetection": false
+      },
+      "summary": {
+        "total": 6,
+        "candidateWins": 1,
+        "baselineWins": 4,
+        "draws": 1,
+        "invalid": 0
+      },
+      "name": "national-v1-france",
+      "rawReportSha256": "7db6efc050e7814c1d463af3b286625107708f1a789c2b9121bbf64e0971a540",
+      "matches": [
+        {
+          "map": "mp08t2.map",
+          "seed": 606,
+          "swapped": false,
+          "candidateCountry": "French",
+          "baselineCountry": "Arabs",
+          "result": "baseline-win",
+          "ticks": 5505
+        },
+        {
+          "map": "mp08t2.map",
+          "seed": 606,
+          "swapped": true,
+          "candidateCountry": "French",
+          "baselineCountry": "Arabs",
+          "result": "baseline-win",
+          "ticks": 4860
+        },
+        {
+          "map": "mp08t2.map",
+          "seed": 606,
+          "swapped": false,
+          "candidateCountry": "French",
+          "baselineCountry": "Russians",
+          "result": "baseline-win",
+          "ticks": 5505
+        },
+        {
+          "map": "mp08t2.map",
+          "seed": 606,
+          "swapped": true,
+          "candidateCountry": "French",
+          "baselineCountry": "Russians",
+          "result": "baseline-win",
+          "ticks": 4860
+        },
+        {
+          "map": "mp08t2.map",
+          "seed": 606,
+          "swapped": false,
+          "candidateCountry": "French",
+          "baselineCountry": "Germans",
+          "result": "draw",
+          "ticks": 27000
+        },
+        {
+          "map": "mp08t2.map",
+          "seed": 606,
+          "swapped": true,
+          "candidateCountry": "French",
+          "baselineCountry": "Germans",
+          "result": "candidate-win",
+          "ticks": 15444
+        }
+      ]
+    },
+    {
+      "candidate": {
+        "commit": "62128b20c2d8a01f6b603ea1c592fc81f2d10054",
+        "profile": "brutal",
+        "source": "62128b2",
+        "dirty": false,
+        "workingTreeStatus": null,
+        "diffSha256": null,
+        "sourceSha256": null
+      },
+      "baseline": {
+        "commit": "04a9f7ae57053e3f7f108afd14f830c293cac47a",
+        "profile": "brutal"
+      },
+      "settings": {
+        "maxTicks": 27000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "gameSpeed": 3,
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true,
+        "simulationTicksPerSecond": 15,
+        "shortGame": true,
+        "superWeapons": false,
+        "crates": false,
+        "engineStalemateDetection": false
+      },
+      "summary": {
+        "total": 8,
+        "candidateWins": 4,
+        "baselineWins": 4,
+        "draws": 0,
+        "invalid": 0
+      },
+      "name": "national-v1-midmap",
+      "rawReportSha256": "2bff7d1a475e5d5da5bf9b073f46374551e32e6145e407c09d09731827a1c949",
+      "matches": [
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": false,
+          "candidateCountry": "Arabs",
+          "baselineCountry": "French",
+          "result": "candidate-win",
+          "ticks": 5310
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": true,
+          "candidateCountry": "Arabs",
+          "baselineCountry": "French",
+          "result": "candidate-win",
+          "ticks": 14148
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": false,
+          "candidateCountry": "French",
+          "baselineCountry": "Arabs",
+          "result": "baseline-win",
+          "ticks": 13268
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": true,
+          "candidateCountry": "French",
+          "baselineCountry": "Arabs",
+          "result": "baseline-win",
+          "ticks": 5085
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": false,
+          "candidateCountry": "Americans",
+          "baselineCountry": "Russians",
+          "result": "baseline-win",
+          "ticks": 13268
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": true,
+          "candidateCountry": "Americans",
+          "baselineCountry": "Russians",
+          "result": "baseline-win",
+          "ticks": 5085
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": false,
+          "candidateCountry": "Russians",
+          "baselineCountry": "Americans",
+          "result": "candidate-win",
+          "ticks": 5310
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": true,
+          "candidateCountry": "Russians",
+          "baselineCountry": "Americans",
+          "result": "candidate-win",
+          "ticks": 14148
+        }
+      ]
+    },
+    {
+      "candidate": {
+        "commit": "62128b20c2d8a01f6b603ea1c592fc81f2d10054",
+        "profile": "brutal",
+        "source": "62128b2",
+        "dirty": false,
+        "workingTreeStatus": null,
+        "diffSha256": null,
+        "sourceSha256": null
+      },
+      "baseline": {
+        "commit": "04a9f7ae57053e3f7f108afd14f830c293cac47a",
+        "profile": "brutal"
+      },
+      "settings": {
+        "maxTicks": 27000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "gameSpeed": 3,
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true,
+        "simulationTicksPerSecond": 15,
+        "shortGame": true,
+        "superWeapons": false,
+        "crates": false,
+        "engineStalemateDetection": false
+      },
+      "summary": {
+        "total": 8,
+        "candidateWins": 0,
+        "baselineWins": 0,
+        "draws": 8,
+        "invalid": 0
+      },
+      "name": "national-v1-longmap",
+      "rawReportSha256": "83b893b6f655317c118d0dc1117a89b5d21cd7d050780238aa3278fbec3510b9",
+      "matches": [
+        {
+          "map": "mp11t2.map",
+          "seed": 808,
+          "swapped": false,
+          "candidateCountry": "Arabs",
+          "baselineCountry": "French",
+          "result": "draw",
+          "ticks": 27000
+        },
+        {
+          "map": "mp11t2.map",
+          "seed": 808,
+          "swapped": true,
+          "candidateCountry": "Arabs",
+          "baselineCountry": "French",
+          "result": "draw",
+          "ticks": 27000
+        },
+        {
+          "map": "mp11t2.map",
+          "seed": 808,
+          "swapped": false,
+          "candidateCountry": "French",
+          "baselineCountry": "British",
+          "result": "draw",
+          "ticks": 27000
+        },
+        {
+          "map": "mp11t2.map",
+          "seed": 808,
+          "swapped": true,
+          "candidateCountry": "French",
+          "baselineCountry": "British",
+          "result": "draw",
+          "ticks": 27000
+        },
+        {
+          "map": "mp11t2.map",
+          "seed": 808,
+          "swapped": false,
+          "candidateCountry": "British",
+          "baselineCountry": "Germans",
+          "result": "draw",
+          "ticks": 27000
+        },
+        {
+          "map": "mp11t2.map",
+          "seed": 808,
+          "swapped": true,
+          "candidateCountry": "British",
+          "baselineCountry": "Germans",
+          "result": "draw",
+          "ticks": 27000
+        },
+        {
+          "map": "mp11t2.map",
+          "seed": 808,
+          "swapped": false,
+          "candidateCountry": "Germans",
+          "baselineCountry": "Russians",
+          "result": "draw",
+          "ticks": 27000
+        },
+        {
+          "map": "mp11t2.map",
+          "seed": 808,
+          "swapped": true,
+          "candidateCountry": "Germans",
+          "baselineCountry": "Russians",
+          "result": "draw",
+          "ticks": 27000
+        }
+      ]
+    },
+    {
+      "candidate": {
+        "commit": "bd4cc1c36fd271e4763b040ef2fa8092b1fca2c6",
+        "profile": "brutal",
+        "source": "bd4cc1c",
+        "dirty": false,
+        "workingTreeStatus": null,
+        "diffSha256": null,
+        "sourceSha256": null
+      },
+      "baseline": {
+        "commit": "04a9f7ae57053e3f7f108afd14f830c293cac47a",
+        "profile": "brutal"
+      },
+      "settings": {
+        "maxTicks": 27000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "gameSpeed": 3,
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true,
+        "simulationTicksPerSecond": 15,
+        "shortGame": true,
+        "superWeapons": false,
+        "crates": false,
+        "engineStalemateDetection": false
+      },
+      "summary": {
+        "total": 4,
+        "candidateWins": 1,
+        "baselineWins": 2,
+        "draws": 1,
+        "invalid": 0
+      },
+      "name": "national-v2-france",
+      "rawReportSha256": "5685a2584e558c8ec302edcacb7b5a03e1b7d2bb0ba823a11c09cf1d64f5c952",
+      "matches": [
+        {
+          "map": "mp08t2.map",
+          "seed": 606,
+          "swapped": false,
+          "candidateCountry": "French",
+          "baselineCountry": "Arabs",
+          "result": "baseline-win",
+          "ticks": 5340
+        },
+        {
+          "map": "mp08t2.map",
+          "seed": 606,
+          "swapped": true,
+          "candidateCountry": "French",
+          "baselineCountry": "Arabs",
+          "result": "baseline-win",
+          "ticks": 5085
+        },
+        {
+          "map": "mp08t2.map",
+          "seed": 606,
+          "swapped": false,
+          "candidateCountry": "French",
+          "baselineCountry": "Germans",
+          "result": "draw",
+          "ticks": 27000
+        },
+        {
+          "map": "mp08t2.map",
+          "seed": 606,
+          "swapped": true,
+          "candidateCountry": "French",
+          "baselineCountry": "Germans",
+          "result": "candidate-win",
+          "ticks": 8532
+        }
+      ]
+    },
+    {
+      "candidate": {
+        "commit": "bd4cc1c36fd271e4763b040ef2fa8092b1fca2c6",
+        "profile": "brutal",
+        "source": "bd4cc1c",
+        "dirty": false,
+        "workingTreeStatus": null,
+        "diffSha256": null,
+        "sourceSha256": null
+      },
+      "baseline": {
+        "commit": "04a9f7ae57053e3f7f108afd14f830c293cac47a",
+        "profile": "brutal"
+      },
+      "settings": {
+        "maxTicks": 27000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "gameSpeed": 3,
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true,
+        "simulationTicksPerSecond": 15,
+        "shortGame": true,
+        "superWeapons": false,
+        "crates": false,
+        "engineStalemateDetection": false
+      },
+      "summary": {
+        "total": 4,
+        "candidateWins": 0,
+        "baselineWins": 0,
+        "draws": 4,
+        "invalid": 0
+      },
+      "name": "national-v2-long",
+      "rawReportSha256": "538e5c75424153df95c88b5fafc064661940525d83343f10826e1d8137323972",
+      "matches": [
+        {
+          "map": "mp11t2.map",
+          "seed": 808,
+          "swapped": false,
+          "candidateCountry": "French",
+          "baselineCountry": "British",
+          "result": "draw",
+          "ticks": 27000
+        },
+        {
+          "map": "mp11t2.map",
+          "seed": 808,
+          "swapped": true,
+          "candidateCountry": "French",
+          "baselineCountry": "British",
+          "result": "draw",
+          "ticks": 27000
+        },
+        {
+          "map": "mp11t2.map",
+          "seed": 808,
+          "swapped": false,
+          "candidateCountry": "Arabs",
+          "baselineCountry": "French",
+          "result": "draw",
+          "ticks": 27000
+        },
+        {
+          "map": "mp11t2.map",
+          "seed": 808,
+          "swapped": true,
+          "candidateCountry": "Arabs",
+          "baselineCountry": "French",
+          "result": "draw",
+          "ticks": 27000
+        }
+      ]
+    },
+    {
+      "candidate": {
+        "commit": "bd4cc1c36fd271e4763b040ef2fa8092b1fca2c6",
+        "profile": "brutal",
+        "source": "bd4cc1c",
+        "dirty": false,
+        "workingTreeStatus": null,
+        "diffSha256": null,
+        "sourceSha256": null
+      },
+      "baseline": {
+        "commit": "62128b20c2d8a01f6b603ea1c592fc81f2d10054",
+        "profile": "brutal"
+      },
+      "settings": {
+        "maxTicks": 27000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "gameSpeed": 3,
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true,
+        "simulationTicksPerSecond": 15,
+        "shortGame": true,
+        "superWeapons": false,
+        "crates": false,
+        "engineStalemateDetection": false
+      },
+      "summary": {
+        "total": 4,
+        "candidateWins": 4,
+        "baselineWins": 0,
+        "draws": 0,
+        "invalid": 0
+      },
+      "name": "national-v2-vs-v1",
+      "rawReportSha256": "a678ce4d548026bb436000b7bb560b269aa89f7f73907e9391c03758d77347de",
+      "matches": [
+        {
+          "map": "mp08t2.map",
+          "seed": 606,
+          "swapped": false,
+          "candidateCountry": "French",
+          "baselineCountry": "French",
+          "result": "candidate-win",
+          "ticks": 17142
+        },
+        {
+          "map": "mp08t2.map",
+          "seed": 606,
+          "swapped": true,
+          "candidateCountry": "French",
+          "baselineCountry": "French",
+          "result": "candidate-win",
+          "ticks": 9780
+        },
+        {
+          "map": "mp08t2.map",
+          "seed": 606,
+          "swapped": false,
+          "candidateCountry": "Arabs",
+          "baselineCountry": "Arabs",
+          "result": "candidate-win",
+          "ticks": 18972
+        },
+        {
+          "map": "mp08t2.map",
+          "seed": 606,
+          "swapped": true,
+          "candidateCountry": "Arabs",
+          "baselineCountry": "Arabs",
+          "result": "candidate-win",
+          "ticks": 22452
+        }
+      ]
+    },
+    {
+      "candidate": {
+        "commit": "bd4cc1c36fd271e4763b040ef2fa8092b1fca2c6",
+        "profile": "brutal",
+        "source": "bd4cc1c",
+        "dirty": false,
+        "workingTreeStatus": null,
+        "diffSha256": null,
+        "sourceSha256": null
+      },
+      "baseline": {
+        "commit": "04a9f7ae57053e3f7f108afd14f830c293cac47a",
+        "profile": "brutal"
+      },
+      "settings": {
+        "maxTicks": 18000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "gameSpeed": 3,
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true,
+        "simulationTicksPerSecond": 15,
+        "shortGame": true,
+        "superWeapons": false,
+        "crates": false,
+        "engineStalemateDetection": false
+      },
+      "summary": {
+        "total": 4,
+        "candidateWins": 0,
+        "baselineWins": 2,
+        "draws": 2,
+        "invalid": 0
+      },
+      "name": "national-defence-control",
+      "rawReportSha256": "0f9bdde193d92f438920317beb961c4488dd56275ca8fd6f625f2b4fa646815d",
+      "matches": [
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": false,
+          "candidateCountry": "Americans",
+          "baselineCountry": "British",
+          "result": "baseline-win",
+          "ticks": 16572
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": true,
+          "candidateCountry": "Americans",
+          "baselineCountry": "British",
+          "result": "baseline-win",
+          "ticks": 6330
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": false,
+          "candidateCountry": "French",
+          "baselineCountry": "Germans",
+          "result": "draw",
+          "ticks": 18000
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": true,
+          "candidateCountry": "French",
+          "baselineCountry": "Germans",
+          "result": "draw",
+          "ticks": 18000
+        }
+      ]
+    },
+    {
+      "candidate": {
+        "commit": "7ebc4e3427b81b87c572f378dc3201907d10b6aa",
+        "profile": "brutal",
+        "source": "experiment/defence-reserve",
+        "dirty": false,
+        "workingTreeStatus": null,
+        "diffSha256": null,
+        "sourceSha256": null
+      },
+      "baseline": {
+        "commit": "04a9f7ae57053e3f7f108afd14f830c293cac47a",
+        "profile": "brutal"
+      },
+      "settings": {
+        "maxTicks": 18000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "gameSpeed": 3,
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true,
+        "simulationTicksPerSecond": 15,
+        "shortGame": true,
+        "superWeapons": false,
+        "crates": false,
+        "engineStalemateDetection": false
+      },
+      "summary": {
+        "total": 4,
+        "candidateWins": 0,
+        "baselineWins": 2,
+        "draws": 2,
+        "invalid": 0
+      },
+      "name": "national-defence-probe",
+      "rawReportSha256": "e31f8d3a18a5e9d5505953af3ae52c4bd47b39484329ed63adf514aa71291bc1",
+      "matches": [
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": false,
+          "candidateCountry": "Americans",
+          "baselineCountry": "British",
+          "result": "baseline-win",
+          "ticks": 16572
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": true,
+          "candidateCountry": "Americans",
+          "baselineCountry": "British",
+          "result": "baseline-win",
+          "ticks": 6330
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": false,
+          "candidateCountry": "French",
+          "baselineCountry": "Germans",
+          "result": "draw",
+          "ticks": 18000
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": true,
+          "candidateCountry": "French",
+          "baselineCountry": "Germans",
+          "result": "draw",
+          "ticks": 18000
+        }
+      ]
+    },
+    {
+      "candidate": {
+        "commit": "3a0c46523b22b6d84ecc0e0a076e06afa7fc771a",
+        "profile": "brutal",
+        "source": "experiment/vehicle-retreat",
+        "dirty": false,
+        "workingTreeStatus": null,
+        "diffSha256": null,
+        "sourceSha256": null
+      },
+      "baseline": {
+        "commit": "04a9f7ae57053e3f7f108afd14f830c293cac47a",
+        "profile": "brutal"
+      },
+      "settings": {
+        "maxTicks": 18000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "gameSpeed": 3,
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true,
+        "simulationTicksPerSecond": 15,
+        "shortGame": true,
+        "superWeapons": false,
+        "crates": false,
+        "engineStalemateDetection": false
+      },
+      "summary": {
+        "total": 4,
+        "candidateWins": 0,
+        "baselineWins": 3,
+        "draws": 1,
+        "invalid": 0
+      },
+      "name": "national-infantry-stand-probe",
+      "rawReportSha256": "f615edae00b91a71d98553d697eef351492a63411542cb640cbd00e04d7e3244",
+      "matches": [
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": false,
+          "candidateCountry": "Americans",
+          "baselineCountry": "British",
+          "result": "baseline-win",
+          "ticks": 16377
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": true,
+          "candidateCountry": "Americans",
+          "baselineCountry": "British",
+          "result": "baseline-win",
+          "ticks": 6360
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": false,
+          "candidateCountry": "French",
+          "baselineCountry": "Germans",
+          "result": "draw",
+          "ticks": 18000
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": true,
+          "candidateCountry": "French",
+          "baselineCountry": "Germans",
+          "result": "baseline-win",
+          "ticks": 6420
+        }
+      ]
+    },
+    {
+      "candidate": {
+        "commit": "c1bccd0377792fa1812d2ada7d36971d1c9cc66b",
+        "profile": "brutal",
+        "source": "experiment/legacy-combat",
+        "dirty": false,
+        "workingTreeStatus": null,
+        "diffSha256": null,
+        "sourceSha256": null
+      },
+      "baseline": {
+        "commit": "04a9f7ae57053e3f7f108afd14f830c293cac47a",
+        "profile": "brutal"
+      },
+      "settings": {
+        "maxTicks": 18000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "gameSpeed": 3,
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true,
+        "simulationTicksPerSecond": 15,
+        "shortGame": true,
+        "superWeapons": false,
+        "crates": false,
+        "engineStalemateDetection": false
+      },
+      "summary": {
+        "total": 4,
+        "candidateWins": 1,
+        "baselineWins": 0,
+        "draws": 3,
+        "invalid": 0
+      },
+      "name": "national-legacy-combat-probe",
+      "rawReportSha256": "b81a64688547a7a6dd26a9ad9354c787c2252e57d50203d03e3481be17675a25",
+      "matches": [
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": false,
+          "candidateCountry": "Americans",
+          "baselineCountry": "British",
+          "result": "draw",
+          "ticks": 18000
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": true,
+          "candidateCountry": "Americans",
+          "baselineCountry": "British",
+          "result": "draw",
+          "ticks": 18000
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": false,
+          "candidateCountry": "French",
+          "baselineCountry": "Germans",
+          "result": "draw",
+          "ticks": 18000
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": true,
+          "candidateCountry": "French",
+          "baselineCountry": "Germans",
+          "result": "candidate-win",
+          "ticks": 12468
+        }
+      ]
+    },
+    {
+      "candidate": {
+        "commit": "c4253231b04339e0b3b8f71a32db3ded3f5a1ea2",
+        "profile": "brutal",
+        "source": "experiment/legacy-target-scoring",
+        "dirty": false,
+        "workingTreeStatus": null,
+        "diffSha256": null,
+        "sourceSha256": null
+      },
+      "baseline": {
+        "commit": "04a9f7ae57053e3f7f108afd14f830c293cac47a",
+        "profile": "brutal"
+      },
+      "settings": {
+        "maxTicks": 18000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "gameSpeed": 3,
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true,
+        "simulationTicksPerSecond": 15,
+        "shortGame": true,
+        "superWeapons": false,
+        "crates": false,
+        "engineStalemateDetection": false
+      },
+      "summary": {
+        "total": 4,
+        "candidateWins": 2,
+        "baselineWins": 0,
+        "draws": 2,
+        "invalid": 0
+      },
+      "name": "national-target-score-probe",
+      "rawReportSha256": "ebafd16c0740440378956ab69470248277faac0e3983b8ad2647130d74200a7c",
+      "matches": [
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": false,
+          "candidateCountry": "Americans",
+          "baselineCountry": "British",
+          "result": "draw",
+          "ticks": 18000
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": true,
+          "candidateCountry": "Americans",
+          "baselineCountry": "British",
+          "result": "candidate-win",
+          "ticks": 16437
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": false,
+          "candidateCountry": "French",
+          "baselineCountry": "Germans",
+          "result": "draw",
+          "ticks": 18000
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": true,
+          "candidateCountry": "French",
+          "baselineCountry": "Germans",
+          "result": "candidate-win",
+          "ticks": 11012
+        }
+      ]
+    },
+    {
+      "candidate": {
+        "commit": "baaa43d8ce7987d08a005bcd2ca46c5c3f44f6a4",
+        "profile": "brutal",
+        "source": "experiment/no-range-filter",
+        "dirty": false,
+        "workingTreeStatus": null,
+        "diffSha256": null,
+        "sourceSha256": null
+      },
+      "baseline": {
+        "commit": "04a9f7ae57053e3f7f108afd14f830c293cac47a",
+        "profile": "brutal"
+      },
+      "settings": {
+        "maxTicks": 18000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "gameSpeed": 3,
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true,
+        "simulationTicksPerSecond": 15,
+        "shortGame": true,
+        "superWeapons": false,
+        "crates": false,
+        "engineStalemateDetection": false
+      },
+      "summary": {
+        "total": 4,
+        "candidateWins": 1,
+        "baselineWins": 0,
+        "draws": 3,
+        "invalid": 0
+      },
+      "name": "national-no-range-filter-probe",
+      "rawReportSha256": "70225931023398a56f3e4fc065e17988fc359930dadff0354d9c2773ff862401",
+      "matches": [
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": false,
+          "candidateCountry": "Americans",
+          "baselineCountry": "British",
+          "result": "draw",
+          "ticks": 18000
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": true,
+          "candidateCountry": "Americans",
+          "baselineCountry": "British",
+          "result": "candidate-win",
+          "ticks": 16932
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": false,
+          "candidateCountry": "French",
+          "baselineCountry": "Germans",
+          "result": "draw",
+          "ticks": 18000
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": true,
+          "candidateCountry": "French",
+          "baselineCountry": "Germans",
+          "result": "draw",
+          "ticks": 18000
+        }
+      ]
+    },
+    {
+      "candidate": {
+        "commit": "15df117ac227ff777fc1b345d4de2a9b730325c2",
+        "profile": "brutal",
+        "source": "experiment/gi-deployment-planning",
+        "dirty": false,
+        "workingTreeStatus": null,
+        "diffSha256": null,
+        "sourceSha256": null
+      },
+      "baseline": {
+        "commit": "04a9f7ae57053e3f7f108afd14f830c293cac47a",
+        "profile": "brutal"
+      },
+      "settings": {
+        "maxTicks": 18000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "gameSpeed": 3,
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true,
+        "simulationTicksPerSecond": 15,
+        "shortGame": true,
+        "superWeapons": false,
+        "crates": false,
+        "engineStalemateDetection": false
+      },
+      "summary": {
+        "total": 4,
+        "candidateWins": 2,
+        "baselineWins": 0,
+        "draws": 2,
+        "invalid": 0
+      },
+      "name": "national-gi-planning-probe",
+      "rawReportSha256": "befefcee6d18ff37b8bb14260e581296de59d7682ff60802d8e924f5a49201cf",
+      "matches": [
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": false,
+          "candidateCountry": "Americans",
+          "baselineCountry": "British",
+          "result": "candidate-win",
+          "ticks": 13876
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": true,
+          "candidateCountry": "Americans",
+          "baselineCountry": "British",
+          "result": "draw",
+          "ticks": 18000
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": false,
+          "candidateCountry": "French",
+          "baselineCountry": "Germans",
+          "result": "draw",
+          "ticks": 18000
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": true,
+          "candidateCountry": "French",
+          "baselineCountry": "Germans",
+          "result": "candidate-win",
+          "ticks": 16347
+        }
+      ]
+    },
+    {
+      "candidate": {
+        "commit": "c4253231b04339e0b3b8f71a32db3ded3f5a1ea2",
+        "profile": "brutal",
+        "source": "c425323",
+        "dirty": false,
+        "workingTreeStatus": null,
+        "diffSha256": null,
+        "sourceSha256": null
+      },
+      "baseline": {
+        "commit": "bd4cc1c36fd271e4763b040ef2fa8092b1fca2c6",
+        "profile": "brutal"
+      },
+      "settings": {
+        "maxTicks": 18000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "gameSpeed": 3,
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true,
+        "simulationTicksPerSecond": 15,
+        "shortGame": true,
+        "superWeapons": false,
+        "crates": false,
+        "engineStalemateDetection": false
+      },
+      "summary": {
+        "total": 4,
+        "candidateWins": 2,
+        "baselineWins": 2,
+        "draws": 0,
+        "invalid": 0
+      },
+      "name": "national-v3-vs-v2-short",
+      "rawReportSha256": "c3256e2536cbe1b850a1924cfcd333a921e1170ecc77992bf629125d31c6e969",
+      "matches": [
+        {
+          "map": "mp08t2.map",
+          "seed": 606,
+          "swapped": false,
+          "candidateCountry": "Americans",
+          "baselineCountry": "British",
+          "result": "baseline-win",
+          "ticks": 7275
+        },
+        {
+          "map": "mp08t2.map",
+          "seed": 606,
+          "swapped": true,
+          "candidateCountry": "Americans",
+          "baselineCountry": "British",
+          "result": "candidate-win",
+          "ticks": 8516
+        },
+        {
+          "map": "mp08t2.map",
+          "seed": 606,
+          "swapped": false,
+          "candidateCountry": "French",
+          "baselineCountry": "Germans",
+          "result": "baseline-win",
+          "ticks": 7575
+        },
+        {
+          "map": "mp08t2.map",
+          "seed": 606,
+          "swapped": true,
+          "candidateCountry": "French",
+          "baselineCountry": "Germans",
+          "result": "candidate-win",
+          "ticks": 8516
+        }
+      ]
+    },
+    {
+      "candidate": {
+        "commit": "c4253231b04339e0b3b8f71a32db3ded3f5a1ea2",
+        "profile": "brutal",
+        "source": "c425323",
+        "dirty": false,
+        "workingTreeStatus": null,
+        "diffSha256": null,
+        "sourceSha256": null
+      },
+      "baseline": {
+        "commit": "bd4cc1c36fd271e4763b040ef2fa8092b1fca2c6",
+        "profile": "brutal"
+      },
+      "settings": {
+        "maxTicks": 18000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "gameSpeed": 3,
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true,
+        "simulationTicksPerSecond": 15,
+        "shortGame": true,
+        "superWeapons": false,
+        "crates": false,
+        "engineStalemateDetection": false
+      },
+      "summary": {
+        "total": 4,
+        "candidateWins": 2,
+        "baselineWins": 0,
+        "draws": 2,
+        "invalid": 0
+      },
+      "name": "national-v3-vs-v2-mid",
+      "rawReportSha256": "cd73b60b34634aa3de5ae8e3367e90adb059923d9e36ebd81bec15dcb0699eb1",
+      "matches": [
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": false,
+          "candidateCountry": "Americans",
+          "baselineCountry": "British",
+          "result": "candidate-win",
+          "ticks": 10548
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": true,
+          "candidateCountry": "Americans",
+          "baselineCountry": "British",
+          "result": "draw",
+          "ticks": 18000
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": false,
+          "candidateCountry": "French",
+          "baselineCountry": "Germans",
+          "result": "candidate-win",
+          "ticks": 11124
+        },
+        {
+          "map": "tn01t2.map",
+          "seed": 707,
+          "swapped": true,
+          "candidateCountry": "French",
+          "baselineCountry": "Germans",
+          "result": "draw",
+          "ticks": 18000
+        }
+      ]
+    }
+  ],
+  "stoppedSecondVersion": {
+    "scope": "Stopped early after regressions. Not a completed 432-game matrix. Never pooled with final third version.",
+    "summary": {
+      "format": 1,
+      "fingerprint": "ded9042b5dfa7dc9e2c6e854fa917d53a3383c131d86ec23d5113065f06d1bbb",
+      "updatedAt": "2026-10-25T07:17:53.904Z",
+      "completedJobs": 142,
+      "expectedJobs": 216,
+      "activeJobs": [],
+      "failedJobs": {
+        "mp11t2-3033__Americans-vs-French": "Error: ENOENT: no such file or directory, open '/workspace/ra2web/ts-redalert2/.artifacts/ai-tournament/national-v2/jobs/mp11t2-3033__Americans-vs-French.json'",
+        "tn01t2-2022__Russians-vs-Arabs": "Error: incomplete paired report (exit 143)",
+        "mp11t2-3033__Americans-vs-Alliance": "Error: incomplete paired report (exit 143)",
+        "tn01t2-2022__Russians-vs-Confederation": "Error: incomplete paired report (exit 143)"
+      },
+      "rateDefinitions": {
+        "winRateValid": "wins / (wins + losses + draws); primary rate, invalid error games reported separately",
+        "winRateAllRecorded": "wins / (wins + losses + draws + errors); unplayed games are pending, never wins",
+        "winRateDecisive": "wins / (wins + losses); excludes both draws and errors; null when no decisive games"
+      },
+      "total": {
+        "wins": 103,
+        "losses": 141,
+        "draws": 40,
+        "errors": 0,
+        "total": 284,
+        "expectedGames": 432,
+        "pending": 148,
+        "winRateValid": 0.3626760563380282,
+        "winRateAllRecorded": 0.3626760563380282,
+        "winRateDecisive": 0.42213114754098363
+      },
+      "byCountry": {
+        "Americans": {
+          "wins": 4,
+          "losses": 24,
+          "draws": 4,
+          "errors": 0,
+          "total": 32,
+          "expectedGames": 48,
+          "pending": 16,
+          "winRateValid": 0.125,
+          "winRateAllRecorded": 0.125,
+          "winRateDecisive": 0.14285714285714285
+        },
+        "Alliance": {
+          "wins": 4,
+          "losses": 24,
+          "draws": 4,
+          "errors": 0,
+          "total": 32,
+          "expectedGames": 48,
+          "pending": 16,
+          "winRateValid": 0.125,
+          "winRateAllRecorded": 0.125,
+          "winRateDecisive": 0.14285714285714285
+        },
+        "French": {
+          "wins": 4,
+          "losses": 24,
+          "draws": 4,
+          "errors": 0,
+          "total": 32,
+          "expectedGames": 48,
+          "pending": 16,
+          "winRateValid": 0.125,
+          "winRateAllRecorded": 0.125,
+          "winRateDecisive": 0.14285714285714285
+        },
+        "Germans": {
+          "wins": 4,
+          "losses": 28,
+          "draws": 0,
+          "errors": 0,
+          "total": 32,
+          "expectedGames": 48,
+          "pending": 16,
+          "winRateValid": 0.125,
+          "winRateAllRecorded": 0.125,
+          "winRateDecisive": 0.125
+        },
+        "British": {
+          "wins": 4,
+          "losses": 24,
+          "draws": 4,
+          "errors": 0,
+          "total": 32,
+          "expectedGames": 48,
+          "pending": 16,
+          "winRateValid": 0.125,
+          "winRateAllRecorded": 0.125,
+          "winRateDecisive": 0.14285714285714285
+        },
+        "Africans": {
+          "wins": 20,
+          "losses": 6,
+          "draws": 6,
+          "errors": 0,
+          "total": 32,
+          "expectedGames": 48,
+          "pending": 16,
+          "winRateValid": 0.625,
+          "winRateAllRecorded": 0.625,
+          "winRateDecisive": 0.7692307692307693
+        },
+        "Arabs": {
+          "wins": 23,
+          "losses": 3,
+          "draws": 6,
+          "errors": 0,
+          "total": 32,
+          "expectedGames": 48,
+          "pending": 16,
+          "winRateValid": 0.71875,
+          "winRateAllRecorded": 0.71875,
+          "winRateDecisive": 0.8846153846153846
+        },
+        "Confederation": {
+          "wins": 20,
+          "losses": 6,
+          "draws": 6,
+          "errors": 0,
+          "total": 32,
+          "expectedGames": 48,
+          "pending": 16,
+          "winRateValid": 0.625,
+          "winRateAllRecorded": 0.625,
+          "winRateDecisive": 0.7692307692307693
+        },
+        "Russians": {
+          "wins": 20,
+          "losses": 2,
+          "draws": 6,
+          "errors": 0,
+          "total": 28,
+          "expectedGames": 48,
+          "pending": 20,
+          "winRateValid": 0.7142857142857143,
+          "winRateAllRecorded": 0.7142857142857143,
+          "winRateDecisive": 0.9090909090909091
+        }
+      },
+      "matrix": {
+        "Americans": {
+          "Alliance": {
+            "wins": 1,
+            "losses": 2,
+            "draws": 1,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0.25,
+            "winRateAllRecorded": 0.25,
+            "winRateDecisive": 0.3333333333333333
+          },
+          "French": {
+            "wins": 1,
+            "losses": 2,
+            "draws": 1,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0.25,
+            "winRateAllRecorded": 0.25,
+            "winRateDecisive": 0.3333333333333333
+          },
+          "Germans": {
+            "wins": 1,
+            "losses": 2,
+            "draws": 1,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0.25,
+            "winRateAllRecorded": 0.25,
+            "winRateDecisive": 0.3333333333333333
+          },
+          "British": {
+            "wins": 1,
+            "losses": 2,
+            "draws": 1,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0.25,
+            "winRateAllRecorded": 0.25,
+            "winRateDecisive": 0.3333333333333333
+          },
+          "Africans": {
+            "wins": 0,
+            "losses": 4,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0,
+            "winRateAllRecorded": 0,
+            "winRateDecisive": 0
+          },
+          "Arabs": {
+            "wins": 0,
+            "losses": 4,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0,
+            "winRateAllRecorded": 0,
+            "winRateDecisive": 0
+          },
+          "Confederation": {
+            "wins": 0,
+            "losses": 4,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0,
+            "winRateAllRecorded": 0,
+            "winRateDecisive": 0
+          },
+          "Russians": {
+            "wins": 0,
+            "losses": 4,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0,
+            "winRateAllRecorded": 0,
+            "winRateDecisive": 0
+          }
+        },
+        "Alliance": {
+          "Americans": {
+            "wins": 1,
+            "losses": 2,
+            "draws": 1,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0.25,
+            "winRateAllRecorded": 0.25,
+            "winRateDecisive": 0.3333333333333333
+          },
+          "French": {
+            "wins": 1,
+            "losses": 2,
+            "draws": 1,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0.25,
+            "winRateAllRecorded": 0.25,
+            "winRateDecisive": 0.3333333333333333
+          },
+          "Germans": {
+            "wins": 1,
+            "losses": 2,
+            "draws": 1,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0.25,
+            "winRateAllRecorded": 0.25,
+            "winRateDecisive": 0.3333333333333333
+          },
+          "British": {
+            "wins": 1,
+            "losses": 2,
+            "draws": 1,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0.25,
+            "winRateAllRecorded": 0.25,
+            "winRateDecisive": 0.3333333333333333
+          },
+          "Africans": {
+            "wins": 0,
+            "losses": 4,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0,
+            "winRateAllRecorded": 0,
+            "winRateDecisive": 0
+          },
+          "Arabs": {
+            "wins": 0,
+            "losses": 4,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0,
+            "winRateAllRecorded": 0,
+            "winRateDecisive": 0
+          },
+          "Confederation": {
+            "wins": 0,
+            "losses": 4,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0,
+            "winRateAllRecorded": 0,
+            "winRateDecisive": 0
+          },
+          "Russians": {
+            "wins": 0,
+            "losses": 4,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0,
+            "winRateAllRecorded": 0,
+            "winRateDecisive": 0
+          }
+        },
+        "French": {
+          "Americans": {
+            "wins": 1,
+            "losses": 2,
+            "draws": 1,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0.25,
+            "winRateAllRecorded": 0.25,
+            "winRateDecisive": 0.3333333333333333
+          },
+          "Alliance": {
+            "wins": 1,
+            "losses": 2,
+            "draws": 1,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0.25,
+            "winRateAllRecorded": 0.25,
+            "winRateDecisive": 0.3333333333333333
+          },
+          "Germans": {
+            "wins": 1,
+            "losses": 2,
+            "draws": 1,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0.25,
+            "winRateAllRecorded": 0.25,
+            "winRateDecisive": 0.3333333333333333
+          },
+          "British": {
+            "wins": 1,
+            "losses": 2,
+            "draws": 1,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0.25,
+            "winRateAllRecorded": 0.25,
+            "winRateDecisive": 0.3333333333333333
+          },
+          "Africans": {
+            "wins": 0,
+            "losses": 4,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0,
+            "winRateAllRecorded": 0,
+            "winRateDecisive": 0
+          },
+          "Arabs": {
+            "wins": 0,
+            "losses": 4,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0,
+            "winRateAllRecorded": 0,
+            "winRateDecisive": 0
+          },
+          "Confederation": {
+            "wins": 0,
+            "losses": 4,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0,
+            "winRateAllRecorded": 0,
+            "winRateDecisive": 0
+          },
+          "Russians": {
+            "wins": 0,
+            "losses": 4,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0,
+            "winRateAllRecorded": 0,
+            "winRateDecisive": 0
+          }
+        },
+        "Germans": {
+          "Americans": {
+            "wins": 1,
+            "losses": 3,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0.25,
+            "winRateAllRecorded": 0.25,
+            "winRateDecisive": 0.25
+          },
+          "Alliance": {
+            "wins": 1,
+            "losses": 3,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0.25,
+            "winRateAllRecorded": 0.25,
+            "winRateDecisive": 0.25
+          },
+          "French": {
+            "wins": 1,
+            "losses": 3,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0.25,
+            "winRateAllRecorded": 0.25,
+            "winRateDecisive": 0.25
+          },
+          "British": {
+            "wins": 1,
+            "losses": 3,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0.25,
+            "winRateAllRecorded": 0.25,
+            "winRateDecisive": 0.25
+          },
+          "Africans": {
+            "wins": 0,
+            "losses": 4,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0,
+            "winRateAllRecorded": 0,
+            "winRateDecisive": 0
+          },
+          "Arabs": {
+            "wins": 0,
+            "losses": 4,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0,
+            "winRateAllRecorded": 0,
+            "winRateDecisive": 0
+          },
+          "Confederation": {
+            "wins": 0,
+            "losses": 4,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0,
+            "winRateAllRecorded": 0,
+            "winRateDecisive": 0
+          },
+          "Russians": {
+            "wins": 0,
+            "losses": 4,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0,
+            "winRateAllRecorded": 0,
+            "winRateDecisive": 0
+          }
+        },
+        "British": {
+          "Americans": {
+            "wins": 1,
+            "losses": 2,
+            "draws": 1,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0.25,
+            "winRateAllRecorded": 0.25,
+            "winRateDecisive": 0.3333333333333333
+          },
+          "Alliance": {
+            "wins": 1,
+            "losses": 2,
+            "draws": 1,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0.25,
+            "winRateAllRecorded": 0.25,
+            "winRateDecisive": 0.3333333333333333
+          },
+          "French": {
+            "wins": 1,
+            "losses": 2,
+            "draws": 1,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0.25,
+            "winRateAllRecorded": 0.25,
+            "winRateDecisive": 0.3333333333333333
+          },
+          "Germans": {
+            "wins": 1,
+            "losses": 2,
+            "draws": 1,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0.25,
+            "winRateAllRecorded": 0.25,
+            "winRateDecisive": 0.3333333333333333
+          },
+          "Africans": {
+            "wins": 0,
+            "losses": 4,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0,
+            "winRateAllRecorded": 0,
+            "winRateDecisive": 0
+          },
+          "Arabs": {
+            "wins": 0,
+            "losses": 4,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0,
+            "winRateAllRecorded": 0,
+            "winRateDecisive": 0
+          },
+          "Confederation": {
+            "wins": 0,
+            "losses": 4,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0,
+            "winRateAllRecorded": 0,
+            "winRateDecisive": 0
+          },
+          "Russians": {
+            "wins": 0,
+            "losses": 4,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0,
+            "winRateAllRecorded": 0,
+            "winRateDecisive": 0
+          }
+        },
+        "Africans": {
+          "Americans": {
+            "wins": 4,
+            "losses": 0,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 1,
+            "winRateAllRecorded": 1,
+            "winRateDecisive": 1
+          },
+          "Alliance": {
+            "wins": 4,
+            "losses": 0,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 1,
+            "winRateAllRecorded": 1,
+            "winRateDecisive": 1
+          },
+          "French": {
+            "wins": 4,
+            "losses": 0,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 1,
+            "winRateAllRecorded": 1,
+            "winRateDecisive": 1
+          },
+          "Germans": {
+            "wins": 4,
+            "losses": 0,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 1,
+            "winRateAllRecorded": 1,
+            "winRateDecisive": 1
+          },
+          "British": {
+            "wins": 4,
+            "losses": 0,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 1,
+            "winRateAllRecorded": 1,
+            "winRateDecisive": 1
+          },
+          "Arabs": {
+            "wins": 0,
+            "losses": 2,
+            "draws": 2,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0,
+            "winRateAllRecorded": 0,
+            "winRateDecisive": 0
+          },
+          "Confederation": {
+            "wins": 0,
+            "losses": 2,
+            "draws": 2,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0,
+            "winRateAllRecorded": 0,
+            "winRateDecisive": 0
+          },
+          "Russians": {
+            "wins": 0,
+            "losses": 2,
+            "draws": 2,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0,
+            "winRateAllRecorded": 0,
+            "winRateDecisive": 0
+          }
+        },
+        "Arabs": {
+          "Americans": {
+            "wins": 4,
+            "losses": 0,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 1,
+            "winRateAllRecorded": 1,
+            "winRateDecisive": 1
+          },
+          "Alliance": {
+            "wins": 4,
+            "losses": 0,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 1,
+            "winRateAllRecorded": 1,
+            "winRateDecisive": 1
+          },
+          "French": {
+            "wins": 4,
+            "losses": 0,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 1,
+            "winRateAllRecorded": 1,
+            "winRateDecisive": 1
+          },
+          "Germans": {
+            "wins": 4,
+            "losses": 0,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 1,
+            "winRateAllRecorded": 1,
+            "winRateDecisive": 1
+          },
+          "British": {
+            "wins": 4,
+            "losses": 0,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 1,
+            "winRateAllRecorded": 1,
+            "winRateDecisive": 1
+          },
+          "Africans": {
+            "wins": 1,
+            "losses": 1,
+            "draws": 2,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0.25,
+            "winRateAllRecorded": 0.25,
+            "winRateDecisive": 0.5
+          },
+          "Confederation": {
+            "wins": 1,
+            "losses": 1,
+            "draws": 2,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0.25,
+            "winRateAllRecorded": 0.25,
+            "winRateDecisive": 0.5
+          },
+          "Russians": {
+            "wins": 1,
+            "losses": 1,
+            "draws": 2,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0.25,
+            "winRateAllRecorded": 0.25,
+            "winRateDecisive": 0.5
+          }
+        },
+        "Confederation": {
+          "Americans": {
+            "wins": 4,
+            "losses": 0,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 1,
+            "winRateAllRecorded": 1,
+            "winRateDecisive": 1
+          },
+          "Alliance": {
+            "wins": 4,
+            "losses": 0,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 1,
+            "winRateAllRecorded": 1,
+            "winRateDecisive": 1
+          },
+          "French": {
+            "wins": 4,
+            "losses": 0,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 1,
+            "winRateAllRecorded": 1,
+            "winRateDecisive": 1
+          },
+          "Germans": {
+            "wins": 4,
+            "losses": 0,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 1,
+            "winRateAllRecorded": 1,
+            "winRateDecisive": 1
+          },
+          "British": {
+            "wins": 4,
+            "losses": 0,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 1,
+            "winRateAllRecorded": 1,
+            "winRateDecisive": 1
+          },
+          "Africans": {
+            "wins": 0,
+            "losses": 2,
+            "draws": 2,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0,
+            "winRateAllRecorded": 0,
+            "winRateDecisive": 0
+          },
+          "Arabs": {
+            "wins": 0,
+            "losses": 2,
+            "draws": 2,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0,
+            "winRateAllRecorded": 0,
+            "winRateDecisive": 0
+          },
+          "Russians": {
+            "wins": 0,
+            "losses": 2,
+            "draws": 2,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0,
+            "winRateAllRecorded": 0,
+            "winRateDecisive": 0
+          }
+        },
+        "Russians": {
+          "Americans": {
+            "wins": 4,
+            "losses": 0,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 1,
+            "winRateAllRecorded": 1,
+            "winRateDecisive": 1
+          },
+          "Alliance": {
+            "wins": 4,
+            "losses": 0,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 1,
+            "winRateAllRecorded": 1,
+            "winRateDecisive": 1
+          },
+          "French": {
+            "wins": 4,
+            "losses": 0,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 1,
+            "winRateAllRecorded": 1,
+            "winRateDecisive": 1
+          },
+          "Germans": {
+            "wins": 4,
+            "losses": 0,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 1,
+            "winRateAllRecorded": 1,
+            "winRateDecisive": 1
+          },
+          "British": {
+            "wins": 4,
+            "losses": 0,
+            "draws": 0,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 1,
+            "winRateAllRecorded": 1,
+            "winRateDecisive": 1
+          },
+          "Africans": {
+            "wins": 0,
+            "losses": 2,
+            "draws": 2,
+            "errors": 0,
+            "total": 4,
+            "expectedGames": 6,
+            "pending": 2,
+            "winRateValid": 0,
+            "winRateAllRecorded": 0,
+            "winRateDecisive": 0
+          },
+          "Arabs": {
+            "wins": 0,
+            "losses": 0,
+            "draws": 2,
+            "errors": 0,
+            "total": 2,
+            "expectedGames": 6,
+            "pending": 4,
+            "winRateValid": 0,
+            "winRateAllRecorded": 0,
+            "winRateDecisive": null
+          },
+          "Confederation": {
+            "wins": 0,
+            "losses": 0,
+            "draws": 2,
+            "errors": 0,
+            "total": 2,
+            "expectedGames": 6,
+            "pending": 4,
+            "winRateValid": 0,
+            "winRateAllRecorded": 0,
+            "winRateDecisive": null
+          }
+        }
+      }
+    }
+  },
+  "manualMatrixCandidateCommit": "39679b2",
+  "latestImplementationCommit": "0a46d527995adc2411c04484de7336d63d4b0c5f",
+  "ci": {
+    "validatedRegressionRun": "https://github.com/chenxuan520/ra2web/actions/runs/40175660324",
+    "regressionConclusion": "success",
+    "fullMatrixRun": "https://github.com/chenxuan520/ra2web/actions/runs/40176058250",
+    "fullMatrixStatusAtHandoff": "in_progress",
+    "note": "The CI matrix includes engineer capture. The separate local matrix remains frozen at 39679b2; do not pool their results."
+  },
+  "engineerCapture": {
+    "source": "working tree subsequently committed as 3da4b4a; AI code unchanged in 0a46d52",
+    "rawReportSha256": "5762ebb16a0e9eb933bf8cc2f3750572551d386c756c5adfee22dd920771af8a",
+    "passed": true,
+    "scenarios": [
+      {
+        "guarded": false,
+        "ticks": 425,
+        "initialOwner": "@@AI2@@",
+        "finalOwner": "@@AI1@@",
+        "captureOrders": 1,
+        "checks": {
+          "visibleTarget": true,
+          "actualEngineerAvailable": true,
+          "controllerOutcome": true
+        }
+      },
+      {
+        "guarded": true,
+        "ticks": 100,
+        "initialOwner": "@@AI2@@",
+        "finalOwner": "@@AI2@@",
+        "captureOrders": 0,
+        "checks": {
+          "visibleTarget": true,
+          "actualEngineerAvailable": true,
+          "controllerOutcome": true
+        }
+      }
+    ]
+  }
+}
