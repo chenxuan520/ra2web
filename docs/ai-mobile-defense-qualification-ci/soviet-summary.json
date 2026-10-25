@@ -1,0 +1,484 @@
+{
+  "games": 576,
+  "combatBothSides": [
+    {
+      "games": 576,
+      "produced": {
+        "E2": {
+          "coveredGames": 576,
+          "total": 28513,
+          "median": 51.0
+        },
+        "DOG": {
+          "coveredGames": 576,
+          "total": 1019,
+          "median": 2.0
+        },
+        "HTNK": {
+          "coveredGames": 576,
+          "total": 2064,
+          "median": 3.0
+        },
+        "HARV": {
+          "coveredGames": 576,
+          "total": 828,
+          "median": 1.0
+        },
+        "HTK": {
+          "coveredGames": 576,
+          "total": 1229,
+          "median": 2.0
+        },
+        "JUMPJET": {
+          "coveredGames": 576,
+          "total": 0,
+          "median": 0.0
+        }
+      },
+      "tankShots": {
+        "coveredGames": 576,
+        "total": 45981,
+        "median": 24.0
+      },
+      "dogShots": {
+        "coveredGames": 576,
+        "total": 157,
+        "median": 0.0
+      },
+      "firstTankTick": {
+        "coveredGames": 436,
+        "total": 2645275,
+        "median": 6179.0
+      },
+      "firstTankShotTick": {
+        "coveredGames": 395,
+        "total": 3134018,
+        "median": 7638
+      },
+      "firstFlakTrackTick": {
+        "coveredGames": 462,
+        "total": 2987738,
+        "median": 4259.0
+      },
+      "flakTrackAirShots": {
+        "coveredGames": 576,
+        "total": 8612,
+        "median": 9.0
+      },
+      "sampledEscort": {
+        "gamesWithSampledAssignment": 0,
+        "gamesWithOnlyZeroUnitMissionRows": 0,
+        "gamesWithNoDogEscortMissionRows": 576,
+        "maximum": null
+      },
+      "dogTankDistance": {
+        "sampledDistances": 0,
+        "mean": null
+      },
+      "damageBySourceType": {
+        "E2": {
+          "enemyHitPoints": 2861329,
+          "enemyKills": 11606,
+          "friendlyHitPoints": 1738,
+          "friendlyKills": 0
+        },
+        "DOG": {
+          "enemyHitPoints": 10006,
+          "enemyKills": 121,
+          "friendlyHitPoints": 0,
+          "friendlyKills": 0
+        },
+        "HTNK": {
+          "enemyHitPoints": 2142408,
+          "enemyKills": 8697,
+          "friendlyHitPoints": 4801,
+          "friendlyKills": 4
+        },
+        "HTK": {
+          "enemyHitPoints": 336976,
+          "enemyKills": 2805,
+          "friendlyHitPoints": 11464,
+          "friendlyKills": 34
+        },
+        "JUMPJET": {
+          "enemyHitPoints": 0,
+          "enemyKills": 0,
+          "friendlyHitPoints": 0,
+          "friendlyKills": 0
+        }
+      },
+      "damageCoveredGames": 576,
+      "finalForce": {
+        "E2": {
+          "count": 8886,
+          "hitPoints": 1026732
+        },
+        "DOG": {
+          "count": 247,
+          "hitPoints": 24015
+        },
+        "HTNK": {
+          "count": 1075,
+          "hitPoints": 311516
+        },
+        "HARV": {
+          "count": 1250,
+          "hitPoints": 1241899
+        },
+        "HTK": {
+          "count": 448,
+          "hitPoints": 53308
+        },
+        "JUMPJET": {
+          "count": 0,
+          "hitPoints": 0
+        }
+      },
+      "forceCoveredGames": 576
+    },
+    {
+      "games": 576,
+      "produced": {
+        "E2": {
+          "coveredGames": 576,
+          "total": 12089,
+          "median": 0.0
+        },
+        "DOG": {
+          "coveredGames": 576,
+          "total": 383,
+          "median": 0.0
+        },
+        "HTNK": {
+          "coveredGames": 576,
+          "total": 1191,
+          "median": 0.0
+        },
+        "HARV": {
+          "coveredGames": 576,
+          "total": 330,
+          "median": 0.0
+        },
+        "HTK": {
+          "coveredGames": 576,
+          "total": 155,
+          "median": 0.0
+        },
+        "JUMPJET": {
+          "coveredGames": 576,
+          "total": 1397,
+          "median": 3.0
+        }
+      },
+      "tankShots": {
+        "coveredGames": 576,
+        "total": 27396,
+        "median": 0.0
+      },
+      "dogShots": {
+        "coveredGames": 576,
+        "total": 118,
+        "median": 0.0
+      },
+      "firstTankTick": {
+        "coveredGames": 216,
+        "total": 982188,
+        "median": 3663.0
+      },
+      "firstTankShotTick": {
+        "coveredGames": 216,
+        "total": 1153257,
+        "median": 4183.5
+      },
+      "firstFlakTrackTick": {
+        "coveredGames": 105,
+        "total": 1522464,
+        "median": 13763
+      },
+      "flakTrackAirShots": {
+        "coveredGames": 576,
+        "total": 525,
+        "median": 0.0
+      },
+      "sampledEscort": {
+        "gamesWithSampledAssignment": 0,
+        "gamesWithOnlyZeroUnitMissionRows": 0,
+        "gamesWithNoDogEscortMissionRows": 576,
+        "maximum": null
+      },
+      "dogTankDistance": {
+        "sampledDistances": 0,
+        "mean": null
+      },
+      "damageBySourceType": {
+        "E2": {
+          "enemyHitPoints": 950470,
+          "enemyKills": 5842,
+          "friendlyHitPoints": 902,
+          "friendlyKills": 0
+        },
+        "DOG": {
+          "enemyHitPoints": 6557,
+          "enemyKills": 82,
+          "friendlyHitPoints": 0,
+          "friendlyKills": 0
+        },
+        "HTNK": {
+          "enemyHitPoints": 1181348,
+          "enemyKills": 5833,
+          "friendlyHitPoints": 3875,
+          "friendlyKills": 4
+        },
+        "HTK": {
+          "enemyHitPoints": 33647,
+          "enemyKills": 384,
+          "friendlyHitPoints": 360,
+          "friendlyKills": 4
+        },
+        "JUMPJET": {
+          "enemyHitPoints": 1237613,
+          "enemyKills": 6379,
+          "friendlyHitPoints": 0,
+          "friendlyKills": 0
+        }
+      },
+      "damageCoveredGames": 576,
+      "finalForce": {
+        "E2": {
+          "count": 2680,
+          "hitPoints": 308221
+        },
+        "DOG": {
+          "count": 93,
+          "hitPoints": 9006
+        },
+        "HTNK": {
+          "count": 500,
+          "hitPoints": 126223
+        },
+        "HARV": {
+          "count": 443,
+          "hitPoints": 438007
+        },
+        "HTK": {
+          "count": 64,
+          "hitPoints": 6745
+        },
+        "JUMPJET": {
+          "count": 418,
+          "hitPoints": 51126
+        }
+      },
+      "forceCoveredGames": 576
+    }
+  ],
+  "mobileEvidenceBothSides": [
+    {
+      "games": 576,
+      "firstFlakTrackAirShotTick": {
+        "coveredGames": 309,
+        "total": 1432357,
+        "median": 3841
+      },
+      "lostValue": {
+        "coveredGames": 576,
+        "total": 6237800,
+        "median": 5700.0
+      },
+      "tankInventory": {
+        "initialOwned": {
+          "coveredGames": 576,
+          "total": 0,
+          "median": 0.0
+        },
+        "factoryProduced": {
+          "coveredGames": 576,
+          "total": 2064,
+          "median": 3.0
+        },
+        "finalOwned": {
+          "coveredGames": 576,
+          "total": 1075,
+          "median": 1.0
+        },
+        "netInventoryReduction": {
+          "coveredGames": 576,
+          "total": 989,
+          "median": 0.0
+        },
+        "ownershipChangeEvents": {
+          "coveredGames": 576,
+          "total": 0,
+          "median": 0.0
+        },
+        "transportEvents": {
+          "coveredGames": 576,
+          "total": 0,
+          "median": 0.0
+        }
+      },
+      "opponentJumpjetToHarv": {
+        "damageHitPoints": {
+          "coveredGames": 576,
+          "total": 69442,
+          "median": 0.0
+        },
+        "kills": {
+          "coveredGames": 576,
+          "total": 51,
+          "median": 0.0
+        }
+      },
+      "opponentSourceTankVictimTypeKills": {
+        "coveredGames": 576,
+        "total": 986,
+        "median": 0.0
+      },
+      "flakTrackAAWeaponShots": {
+        "FlakTrackAAGun": 8582,
+        "FlakTrackAAGunE": 30
+      },
+      "flakTrackShotsCoveredGames": 576,
+      "role30TickTelemetry": {
+        "coveredGames": 576,
+        "controllerSampleGames": 576,
+        "fullCadenceCoverageGames": 576,
+        "expectedSamples": 301844,
+        "totals": {
+          "sampleTicks": 301844,
+          "mobileConscriptSamples": 2156319,
+          "homeConscriptSamples": 0,
+          "tankSamples": 342569,
+          "movingTankSamples": 102513,
+          "firingTankSamples": 1452,
+          "idleTankSamples": 137069,
+          "stationaryNonFiringTankSamples": 238942,
+          "escortDogSamples": 0,
+          "dogTankDistanceSamples": 0,
+          "dogTankDistanceSum": 0,
+          "dogBeyondFourTileSamples": 0
+        },
+        "gamesWithRoleTankSamples": 436,
+        "gamesWithEscortDogSamples": 0,
+        "firstTankBeyondHome20Tick": {
+          "coveredGames": 404,
+          "total": 3079200,
+          "median": 7680.0
+        },
+        "maximumMobileConscripts": 23,
+        "maximumEscortDogTankDistance": 0,
+        "meanEscortDogTankDistance": null
+      },
+      "notes": [
+        "Net tank inventory reduction is initial owned plus factory-produced minus final owned, not a pure combat-death attribution.",
+        "Source killedTypes are not separated by enemy/friendly relation for each target type; do not silently call all opponent-source tank target kills enemy combat deaths.",
+        "Opponent JUMPJET-to-HARV values come from damageBySourceType[opponent].JUMPJET.damagedTypes/killedTypes.HARV.",
+        "30-tick counters cover named mission roles. Stationary tanks are not proof of waiting for dogs; absent roles are not absent units.",
+        "Role-specific escort distances exclude scouts; general DOG production/damage and 900-tick dog distances include them."
+      ]
+    },
+    {
+      "games": 576,
+      "firstFlakTrackAirShotTick": {
+        "coveredGames": 3,
+        "total": 56295,
+        "median": 18765
+      },
+      "lostValue": {
+        "coveredGames": 576,
+        "total": 9730300,
+        "median": 17500.0
+      },
+      "tankInventory": {
+        "initialOwned": {
+          "coveredGames": 576,
+          "total": 0,
+          "median": 0.0
+        },
+        "factoryProduced": {
+          "coveredGames": 576,
+          "total": 1191,
+          "median": 0.0
+        },
+        "finalOwned": {
+          "coveredGames": 576,
+          "total": 500,
+          "median": 0.0
+        },
+        "netInventoryReduction": {
+          "coveredGames": 576,
+          "total": 691,
+          "median": 0.0
+        },
+        "ownershipChangeEvents": {
+          "coveredGames": 576,
+          "total": 0,
+          "median": 0.0
+        },
+        "transportEvents": {
+          "coveredGames": 576,
+          "total": 0,
+          "median": 0.0
+        }
+      },
+      "opponentJumpjetToHarv": {
+        "damageHitPoints": {
+          "coveredGames": 576,
+          "total": 0,
+          "median": 0.0
+        },
+        "kills": {
+          "coveredGames": 576,
+          "total": 0,
+          "median": 0.0
+        }
+      },
+      "opponentSourceTankVictimTypeKills": {
+        "coveredGames": 576,
+        "total": 691,
+        "median": 0.0
+      },
+      "flakTrackAAWeaponShots": {
+        "FlakTrackAAGun": 525
+      },
+      "flakTrackShotsCoveredGames": 576,
+      "role30TickTelemetry": {
+        "coveredGames": 576,
+        "controllerSampleGames": 576,
+        "fullCadenceCoverageGames": 576,
+        "expectedSamples": 301844,
+        "totals": {
+          "sampleTicks": 301844,
+          "mobileConscriptSamples": 799414,
+          "homeConscriptSamples": 0,
+          "tankSamples": 339967,
+          "movingTankSamples": 109851,
+          "firingTankSamples": 1359,
+          "idleTankSamples": 134634,
+          "stationaryNonFiringTankSamples": 229145,
+          "escortDogSamples": 0,
+          "dogTankDistanceSamples": 0,
+          "dogTankDistanceSum": 0,
+          "dogBeyondFourTileSamples": 0
+        },
+        "gamesWithRoleTankSamples": 447,
+        "gamesWithEscortDogSamples": 0,
+        "firstTankBeyondHome20Tick": {
+          "coveredGames": 354,
+          "total": 2045160,
+          "median": 4560.0
+        },
+        "maximumMobileConscripts": 23,
+        "maximumEscortDogTankDistance": 0,
+        "meanEscortDogTankDistance": null
+      },
+      "notes": [
+        "Net tank inventory reduction is initial owned plus factory-produced minus final owned, not a pure combat-death attribution.",
+        "Source killedTypes are not separated by enemy/friendly relation for each target type; do not silently call all opponent-source tank target kills enemy combat deaths.",
+        "Opponent JUMPJET-to-HARV values come from damageBySourceType[opponent].JUMPJET.damagedTypes/killedTypes.HARV.",
+        "30-tick counters cover named mission roles. Stationary tanks are not proof of waiting for dogs; absent roles are not absent units.",
+        "Role-specific escort distances exclude scouts; general DOG production/damage and 900-tick dog distances include them."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1481 @@
+{
+  "at": "2026-10-25T22:28:07.742Z",
+  "runs": [
+    {
+      "run_id": 40227208347,
+      "jobs": {
+        "jobs": [
+          {
+            "id": 121271005706,
+            "name": "regression",
+            "status": "completed",
+            "conclusion": "success",
+            "run_id": 40227208347,
+            "logs_url": null,
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 1
+              },
+              {
+                "name": "Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 2
+              },
+              {
+                "name": "Run oven-sh/setup-bun@v2",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 3
+              },
+              {
+                "name": "Install dependencies",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 4
+              },
+              {
+                "name": "Validate report integrity checks",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 5
+              },
+              {
+                "name": "Run actions/cache@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 6
+              },
+              {
+                "name": "Prepare real game resources",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 7
+              },
+              {
+                "name": "Regression and real-engine mechanism tests",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 8
+              },
+              {
+                "name": "Run actions/upload-artifact@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 9
+              },
+              {
+                "name": "Post Run actions/cache@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 16
+              },
+              {
+                "name": "Post Run oven-sh/setup-bun@v2",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 17
+              },
+              {
+                "name": "Post Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 18
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 19
+              }
+            ]
+          },
+          {
+            "id": 121271600504,
+            "name": "country-matrix (medium)",
+            "status": "completed",
+            "conclusion": "success",
+            "run_id": 40227208347,
+            "logs_url": null,
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 1
+              },
+              {
+                "name": "Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 2
+              },
+              {
+                "name": "Run oven-sh/setup-bun@v2",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 3
+              },
+              {
+                "name": "Run actions/cache@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 4
+              },
+              {
+                "name": "Prepare resources and dependencies",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 5
+              },
+              {
+                "name": "Real country matches",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 6
+              },
+              {
+                "name": "Run actions/upload-artifact@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 7
+              },
+              {
+                "name": "Post Run actions/cache@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 12
+              },
+              {
+                "name": "Post Run oven-sh/setup-bun@v2",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 13
+              },
+              {
+                "name": "Post Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 14
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 15
+              }
+            ]
+          },
+          {
+            "id": 121271600521,
+            "name": "country-matrix (long)",
+            "status": "completed",
+            "conclusion": "success",
+            "run_id": 40227208347,
+            "logs_url": null,
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 1
+              },
+              {
+                "name": "Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 2
+              },
+              {
+                "name": "Run oven-sh/setup-bun@v2",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 3
+              },
+              {
+                "name": "Run actions/cache@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 4
+              },
+              {
+                "name": "Prepare resources and dependencies",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 5
+              },
+              {
+                "name": "Real country matches",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 6
+              },
+              {
+                "name": "Run actions/upload-artifact@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 7
+              },
+              {
+                "name": "Post Run actions/cache@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 12
+              },
+              {
+                "name": "Post Run oven-sh/setup-bun@v2",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 13
+              },
+              {
+                "name": "Post Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 14
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 15
+              }
+            ]
+          },
+          {
+            "id": 121271600576,
+            "name": "country-matrix (short)",
+            "status": "completed",
+            "conclusion": "success",
+            "run_id": 40227208347,
+            "logs_url": null,
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 1
+              },
+              {
+                "name": "Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 2
+              },
+              {
+                "name": "Run oven-sh/setup-bun@v2",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 3
+              },
+              {
+                "name": "Run actions/cache@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 4
+              },
+              {
+                "name": "Prepare resources and dependencies",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 5
+              },
+              {
+                "name": "Real country matches",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 6
+              },
+              {
+                "name": "Run actions/upload-artifact@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 7
+              },
+              {
+                "name": "Post Run actions/cache@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 12
+              },
+              {
+                "name": "Post Run oven-sh/setup-bun@v2",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 13
+              },
+              {
+                "name": "Post Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 14
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 15
+              }
+            ]
+          },
+          {
+            "id": 121271601910,
+            "name": "tactic-report",
+            "status": "completed",
+            "conclusion": "skipped",
+            "run_id": 40227208347,
+            "logs_url": null,
+            "steps": null
+          },
+          {
+            "id": 121271602040,
+            "name": "tactic-screen",
+            "status": "completed",
+            "conclusion": "skipped",
+            "run_id": 40227208347,
+            "logs_url": null,
+            "steps": null
+          },
+          {
+            "id": 121283576463,
+            "name": "report",
+            "status": "completed",
+            "conclusion": "success",
+            "run_id": 40227208347,
+            "logs_url": null,
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 1
+              },
+              {
+                "name": "Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 2
+              },
+              {
+                "name": "Run actions/download-artifact@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 3
+              },
+              {
+                "name": "Verify complete matrix and strength thresholds",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 4
+              },
+              {
+                "name": "Run actions/upload-artifact@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 5
+              },
+              {
+                "name": "Post Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 10
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 11
+              }
+            ]
+          }
+        ]
+      },
+      "artifacts": {
+        "artifacts": [
+          {
+            "id": 12613421665,
+            "name": "ai-country-long",
+            "size_in_bytes": 2096094,
+            "url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12613421665",
+            "archive_download_url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12613421665/zip",
+            "expired": false,
+            "created_at": "2026-10-25T20:33:44Z",
+            "expires_at": "2026-11-08T20:33:42Z",
+            "updated_at": "2026-10-25T20:33:44Z",
+            "digest": "sha256:f08b216230bf4674ccb2de978f9438d53765634766598cb2c2798ca21a299d59",
+            "workflow_run": {
+              "id": 40227208347,
+              "repository_id": 1429377314,
+              "head_repository_id": 1429377314,
+              "head_branch": "feature/ai-rhino-dog",
+              "head_sha": "11ea91441e332a3643a17f2011a92f8a9eeaf43d"
+            }
+          },
+          {
+            "id": 12612972206,
+            "name": "ai-country-report",
+            "size_in_bytes": 9372,
+            "url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12612972206",
+            "archive_download_url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12612972206/zip",
+            "expired": false,
+            "created_at": "2026-10-25T20:33:57Z",
+            "expires_at": "2026-11-24T20:33:57Z",
+            "updated_at": "2026-10-25T20:33:57Z",
+            "digest": "sha256:7919d677e020023d196690586b9d54d21457d13d7e28699aaa7a49327148d43d",
+            "workflow_run": {
+              "id": 40227208347,
+              "repository_id": 1429377314,
+              "head_repository_id": 1429377314,
+              "head_branch": "feature/ai-rhino-dog",
+              "head_sha": "11ea91441e332a3643a17f2011a92f8a9eeaf43d"
+            }
+          },
+          {
+            "id": 12612169398,
+            "name": "ai-country-medium",
+            "size_in_bytes": 1930459,
+            "url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12612169398",
+            "archive_download_url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12612169398/zip",
+            "expired": false,
+            "created_at": "2026-10-25T20:14:09Z",
+            "expires_at": "2026-11-08T20:14:08Z",
+            "updated_at": "2026-10-25T20:14:09Z",
+            "digest": "sha256:c20cacb218fe6456ab568ee134214f681650d965a4b76766c3e6a417948ee786",
+            "workflow_run": {
+              "id": 40227208347,
+              "repository_id": 1429377314,
+              "head_repository_id": 1429377314,
+              "head_branch": "feature/ai-rhino-dog",
+              "head_sha": "11ea91441e332a3643a17f2011a92f8a9eeaf43d"
+            }
+          },
+          {
+            "id": 12611848252,
+            "name": "ai-country-short",
+            "size_in_bytes": 2053112,
+            "url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12611848252",
+            "archive_download_url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12611848252/zip",
+            "expired": false,
+            "created_at": "2026-10-25T20:09:43Z",
+            "expires_at": "2026-11-08T20:09:42Z",
+            "updated_at": "2026-10-25T20:09:43Z",
+            "digest": "sha256:771fa41cfb573449350054470deb5c89654ce064c75556d7773f87e524ca04bf",
+            "workflow_run": {
+              "id": 40227208347,
+              "repository_id": 1429377314,
+              "head_repository_id": 1429377314,
+              "head_branch": "feature/ai-rhino-dog",
+              "head_sha": "11ea91441e332a3643a17f2011a92f8a9eeaf43d"
+            }
+          },
+          {
+            "id": 12611449169,
+            "name": "ai-regression",
+            "size_in_bytes": 31264,
+            "url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12611449169",
+            "archive_download_url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12611449169/zip",
+            "expired": false,
+            "created_at": "2026-10-25T19:43:46Z",
+            "expires_at": "2026-11-08T19:43:45Z",
+            "updated_at": "2026-10-25T19:43:46Z",
+            "digest": "sha256:cd9ed3e3e7edd4fed6cf3b0cb3cfc6fbe7b8517d54cfc78370312176281513eb",
+            "workflow_run": {
+              "id": 40227208347,
+              "repository_id": 1429377314,
+              "head_repository_id": 1429377314,
+              "head_branch": "feature/ai-rhino-dog",
+              "head_sha": "11ea91441e332a3643a17f2011a92f8a9eeaf43d"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "run_id": 40227243447,
+      "jobs": {
+        "jobs": [
+          {
+            "id": 121271114162,
+            "name": "regression",
+            "status": "completed",
+            "conclusion": "success",
+            "run_id": 40227243447,
+            "logs_url": null,
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 1
+              },
+              {
+                "name": "Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 2
+              },
+              {
+                "name": "Run oven-sh/setup-bun@v2",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 3
+              },
+              {
+                "name": "Install dependencies",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 4
+              },
+              {
+                "name": "Validate report integrity checks",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 5
+              },
+              {
+                "name": "Run actions/cache@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 6
+              },
+              {
+                "name": "Prepare real game resources",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 7
+              },
+              {
+                "name": "Regression and real-engine mechanism tests",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 8
+              },
+              {
+                "name": "Run actions/upload-artifact@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 9
+              },
+              {
+                "name": "Post Run actions/cache@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 16
+              },
+              {
+                "name": "Post Run oven-sh/setup-bun@v2",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 17
+              },
+              {
+                "name": "Post Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 18
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 19
+              }
+            ]
+          },
+          {
+            "id": 121271749844,
+            "name": "country-matrix (short)",
+            "status": "completed",
+            "conclusion": "success",
+            "run_id": 40227243447,
+            "logs_url": null,
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 1
+              },
+              {
+                "name": "Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 2
+              },
+              {
+                "name": "Run oven-sh/setup-bun@v2",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 3
+              },
+              {
+                "name": "Run actions/cache@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 4
+              },
+              {
+                "name": "Prepare resources and dependencies",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 5
+              },
+              {
+                "name": "Real country matches",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 6
+              },
+              {
+                "name": "Run actions/upload-artifact@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 7
+              },
+              {
+                "name": "Post Run actions/cache@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 12
+              },
+              {
+                "name": "Post Run oven-sh/setup-bun@v2",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 13
+              },
+              {
+                "name": "Post Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 14
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 15
+              }
+            ]
+          },
+          {
+            "id": 121271749850,
+            "name": "country-matrix (long)",
+            "status": "completed",
+            "conclusion": "success",
+            "run_id": 40227243447,
+            "logs_url": null,
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 1
+              },
+              {
+                "name": "Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 2
+              },
+              {
+                "name": "Run oven-sh/setup-bun@v2",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 3
+              },
+              {
+                "name": "Run actions/cache@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 4
+              },
+              {
+                "name": "Prepare resources and dependencies",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 5
+              },
+              {
+                "name": "Real country matches",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 6
+              },
+              {
+                "name": "Run actions/upload-artifact@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 7
+              },
+              {
+                "name": "Post Run actions/cache@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 12
+              },
+              {
+                "name": "Post Run oven-sh/setup-bun@v2",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 13
+              },
+              {
+                "name": "Post Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 14
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 15
+              }
+            ]
+          },
+          {
+            "id": 121271749867,
+            "name": "country-matrix (medium)",
+            "status": "completed",
+            "conclusion": "success",
+            "run_id": 40227243447,
+            "logs_url": null,
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 1
+              },
+              {
+                "name": "Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 2
+              },
+              {
+                "name": "Run oven-sh/setup-bun@v2",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 3
+              },
+              {
+                "name": "Run actions/cache@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 4
+              },
+              {
+                "name": "Prepare resources and dependencies",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 5
+              },
+              {
+                "name": "Real country matches",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 6
+              },
+              {
+                "name": "Run actions/upload-artifact@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 7
+              },
+              {
+                "name": "Post Run actions/cache@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 12
+              },
+              {
+                "name": "Post Run oven-sh/setup-bun@v2",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 13
+              },
+              {
+                "name": "Post Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 14
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 15
+              }
+            ]
+          },
+          {
+            "id": 121271751016,
+            "name": "tactic-screen",
+            "status": "completed",
+            "conclusion": "skipped",
+            "run_id": 40227243447,
+            "logs_url": null,
+            "steps": null
+          },
+          {
+            "id": 121271752045,
+            "name": "tactic-report",
+            "status": "completed",
+            "conclusion": "skipped",
+            "run_id": 40227243447,
+            "logs_url": null,
+            "steps": null
+          },
+          {
+            "id": 121285646386,
+            "name": "report",
+            "status": "completed",
+            "conclusion": "success",
+            "run_id": 40227243447,
+            "logs_url": null,
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 1
+              },
+              {
+                "name": "Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 2
+              },
+              {
+                "name": "Run actions/download-artifact@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 3
+              },
+              {
+                "name": "Verify complete matrix and strength thresholds",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 4
+              },
+              {
+                "name": "Run actions/upload-artifact@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 5
+              },
+              {
+                "name": "Post Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 10
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 11
+              }
+            ]
+          }
+        ]
+      },
+      "artifacts": {
+        "artifacts": [
+          {
+            "id": 12613711481,
+            "name": "ai-country-report",
+            "size_in_bytes": 9665,
+            "url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12613711481",
+            "archive_download_url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12613711481/zip",
+            "expired": false,
+            "created_at": "2026-10-25T20:42:50Z",
+            "expires_at": "2026-11-24T20:42:50Z",
+            "updated_at": "2026-10-25T20:42:50Z",
+            "digest": "sha256:24e37c99b436c60acbe96f6e220aeca72aa5c0be1db42a6bf5acea9817d9326d",
+            "workflow_run": {
+              "id": 40227243447,
+              "repository_id": 1429377314,
+              "head_repository_id": 1429377314,
+              "head_branch": "feature/ai-rhino-dog",
+              "head_sha": "11ea91441e332a3643a17f2011a92f8a9eeaf43d"
+            }
+          },
+          {
+            "id": 12612947089,
+            "name": "ai-country-long",
+            "size_in_bytes": 2392061,
+            "url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12612947089",
+            "archive_download_url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12612947089/zip",
+            "expired": false,
+            "created_at": "2026-10-25T20:42:37Z",
+            "expires_at": "2026-11-08T20:42:35Z",
+            "updated_at": "2026-10-25T20:42:37Z",
+            "digest": "sha256:82e38281c6b91fdd7fc629b2336d49c2c53d42c34f1278ca776e8de248b47087",
+            "workflow_run": {
+              "id": 40227243447,
+              "repository_id": 1429377314,
+              "head_repository_id": 1429377314,
+              "head_branch": "feature/ai-rhino-dog",
+              "head_sha": "11ea91441e332a3643a17f2011a92f8a9eeaf43d"
+            }
+          },
+          {
+            "id": 12612254731,
+            "name": "ai-country-short",
+            "size_in_bytes": 2281639,
+            "url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12612254731",
+            "archive_download_url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12612254731/zip",
+            "expired": false,
+            "created_at": "2026-10-25T20:16:55Z",
+            "expires_at": "2026-11-08T20:16:53Z",
+            "updated_at": "2026-10-25T20:16:55Z",
+            "digest": "sha256:48a9523219ae591b7d86908a35795f1889d6ccfb5788cf1ce2f66e2a56232d6b",
+            "workflow_run": {
+              "id": 40227243447,
+              "repository_id": 1429377314,
+              "head_repository_id": 1429377314,
+              "head_branch": "feature/ai-rhino-dog",
+              "head_sha": "11ea91441e332a3643a17f2011a92f8a9eeaf43d"
+            }
+          },
+          {
+            "id": 12611900795,
+            "name": "ai-regression",
+            "size_in_bytes": 31264,
+            "url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12611900795",
+            "archive_download_url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12611900795/zip",
+            "expired": false,
+            "created_at": "2026-10-25T19:44:25Z",
+            "expires_at": "2026-11-08T19:44:24Z",
+            "updated_at": "2026-10-25T19:44:25Z",
+            "digest": "sha256:e26a3cc8bafba5c15e907ad24c56cc9c336c6bc6ab042754c57cc42f3b031b62",
+            "workflow_run": {
+              "id": 40227243447,
+              "repository_id": 1429377314,
+              "head_repository_id": 1429377314,
+              "head_branch": "feature/ai-rhino-dog",
+              "head_sha": "11ea91441e332a3643a17f2011a92f8a9eeaf43d"
+            }
+          },
+          {
+            "id": 12611618525,
+            "name": "ai-country-medium",
+            "size_in_bytes": 1808950,
+            "url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12611618525",
+            "archive_download_url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12611618525/zip",
+            "expired": false,
+            "created_at": "2026-10-25T20:07:14Z",
+            "expires_at": "2026-11-08T20:07:12Z",
+            "updated_at": "2026-10-25T20:07:14Z",
+            "digest": "sha256:9b2e3319175cb706196dd7241bcfefeb990e15e398cfc18bafb2aa988cfacba2",
+            "workflow_run": {
+              "id": 40227243447,
+              "repository_id": 1429377314,
+              "head_repository_id": 1429377314,
+              "head_branch": "feature/ai-rhino-dog",
+              "head_sha": "11ea91441e332a3643a17f2011a92f8a9eeaf43d"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "run_id": 40227337951,
+      "jobs": {
+        "jobs": [
+          {
+            "id": 121271398874,
+            "name": "regression",
+            "status": "completed",
+            "conclusion": "success",
+            "run_id": 40227337951,
+            "logs_url": null,
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 1
+              },
+              {
+                "name": "Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 2
+              },
+              {
+                "name": "Run oven-sh/setup-bun@v2",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 3
+              },
+              {
+                "name": "Install dependencies",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 4
+              },
+              {
+                "name": "Validate report integrity checks",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 5
+              },
+              {
+                "name": "Run actions/cache@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 6
+              },
+              {
+                "name": "Prepare real game resources",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 7
+              },
+              {
+                "name": "Regression and real-engine mechanism tests",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 8
+              },
+              {
+                "name": "Run actions/upload-artifact@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 9
+              },
+              {
+                "name": "Post Run actions/cache@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 16
+              },
+              {
+                "name": "Post Run oven-sh/setup-bun@v2",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 17
+              },
+              {
+                "name": "Post Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 18
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 19
+              }
+            ]
+          },
+          {
+            "id": 121272014006,
+            "name": "country-matrix (long)",
+            "status": "completed",
+            "conclusion": "success",
+            "run_id": 40227337951,
+            "logs_url": null,
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 1
+              },
+              {
+                "name": "Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 2
+              },
+              {
+                "name": "Run oven-sh/setup-bun@v2",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 3
+              },
+              {
+                "name": "Run actions/cache@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 4
+              },
+              {
+                "name": "Prepare resources and dependencies",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 5
+              },
+              {
+                "name": "Real country matches",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 6
+              },
+              {
+                "name": "Run actions/upload-artifact@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 7
+              },
+              {
+                "name": "Post Run actions/cache@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 12
+              },
+              {
+                "name": "Post Run oven-sh/setup-bun@v2",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 13
+              },
+              {
+                "name": "Post Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 14
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 15
+              }
+            ]
+          },
+          {
+            "id": 121272014030,
+            "name": "country-matrix (medium)",
+            "status": "completed",
+            "conclusion": "success",
+            "run_id": 40227337951,
+            "logs_url": null,
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 1
+              },
+              {
+                "name": "Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 2
+              },
+              {
+                "name": "Run oven-sh/setup-bun@v2",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 3
+              },
+              {
+                "name": "Run actions/cache@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 4
+              },
+              {
+                "name": "Prepare resources and dependencies",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 5
+              },
+              {
+                "name": "Real country matches",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 6
+              },
+              {
+                "name": "Run actions/upload-artifact@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 7
+              },
+              {
+                "name": "Post Run actions/cache@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 12
+              },
+              {
+                "name": "Post Run oven-sh/setup-bun@v2",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 13
+              },
+              {
+                "name": "Post Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 14
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 15
+              }
+            ]
+          },
+          {
+            "id": 121272014107,
+            "name": "country-matrix (short)",
+            "status": "completed",
+            "conclusion": "success",
+            "run_id": 40227337951,
+            "logs_url": null,
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 1
+              },
+              {
+                "name": "Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 2
+              },
+              {
+                "name": "Run oven-sh/setup-bun@v2",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 3
+              },
+              {
+                "name": "Run actions/cache@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 4
+              },
+              {
+                "name": "Prepare resources and dependencies",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 5
+              },
+              {
+                "name": "Real country matches",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 6
+              },
+              {
+                "name": "Run actions/upload-artifact@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 7
+              },
+              {
+                "name": "Post Run actions/cache@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 12
+              },
+              {
+                "name": "Post Run oven-sh/setup-bun@v2",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 13
+              },
+              {
+                "name": "Post Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 14
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 15
+              }
+            ]
+          },
+          {
+            "id": 121272015345,
+            "name": "tactic-screen",
+            "status": "completed",
+            "conclusion": "skipped",
+            "run_id": 40227337951,
+            "logs_url": null,
+            "steps": null
+          },
+          {
+            "id": 121272015643,
+            "name": "tactic-report",
+            "status": "completed",
+            "conclusion": "skipped",
+            "run_id": 40227337951,
+            "logs_url": null,
+            "steps": null
+          },
+          {
+            "id": 121282209468,
+            "name": "report",
+            "status": "completed",
+            "conclusion": "success",
+            "run_id": 40227337951,
+            "logs_url": null,
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 1
+              },
+              {
+                "name": "Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 2
+              },
+              {
+                "name": "Run actions/download-artifact@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 3
+              },
+              {
+                "name": "Verify complete matrix and strength thresholds",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 4
+              },
+              {
+                "name": "Run actions/upload-artifact@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 5
+              },
+              {
+                "name": "Post Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 10
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 11
+              }
+            ]
+          }
+        ]
+      },
+      "artifacts": {
+        "artifacts": [
+          {
+            "id": 12613640367,
+            "name": "ai-country-medium",
+            "size_in_bytes": 2093569,
+            "url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12613640367",
+            "archive_download_url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12613640367/zip",
+            "expired": false,
+            "created_at": "2026-10-25T20:27:19Z",
+            "expires_at": "2026-11-08T20:27:18Z",
+            "updated_at": "2026-10-25T20:27:19Z",
+            "digest": "sha256:72b3b2ccd60f7798f3124ecb1c693cfc792d9169ba8fe0d0a3792fad489c4eeb",
+            "workflow_run": {
+              "id": 40227337951,
+              "repository_id": 1429377314,
+              "head_repository_id": 1429377314,
+              "head_branch": "feature/ai-rhino-dog",
+              "head_sha": "11ea91441e332a3643a17f2011a92f8a9eeaf43d"
+            }
+          },
+          {
+            "id": 12613320400,
+            "name": "ai-country-long",
+            "size_in_bytes": 2433848,
+            "url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12613320400",
+            "archive_download_url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12613320400/zip",
+            "expired": false,
+            "created_at": "2026-10-25T20:28:06Z",
+            "expires_at": "2026-11-08T20:28:04Z",
+            "updated_at": "2026-10-25T20:28:06Z",
+            "digest": "sha256:4a158f39402263bb147aacd769bac10b915f116db1af8a51b950a10b5ac3293c",
+            "workflow_run": {
+              "id": 40227337951,
+              "repository_id": 1429377314,
+              "head_repository_id": 1429377314,
+              "head_branch": "feature/ai-rhino-dog",
+              "head_sha": "11ea91441e332a3643a17f2011a92f8a9eeaf43d"
+            }
+          },
+          {
+            "id": 12613116217,
+            "name": "ai-country-report",
+            "size_in_bytes": 9710,
+            "url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12613116217",
+            "archive_download_url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12613116217/zip",
+            "expired": false,
+            "created_at": "2026-10-25T20:28:16Z",
+            "expires_at": "2026-11-24T20:28:16Z",
+            "updated_at": "2026-10-25T20:28:16Z",
+            "digest": "sha256:c66fcff55597b9362f64a4ef447428e1659a941910853b4217520beff2302aa9",
+            "workflow_run": {
+              "id": 40227337951,
+              "repository_id": 1429377314,
+              "head_repository_id": 1429377314,
+              "head_branch": "feature/ai-rhino-dog",
+              "head_sha": "11ea91441e332a3643a17f2011a92f8a9eeaf43d"
+            }
+          },
+          {
+            "id": 12612663961,
+            "name": "ai-country-short",
+            "size_in_bytes": 1960184,
+            "url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12612663961",
+            "archive_download_url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12612663961/zip",
+            "expired": false,
+            "created_at": "2026-10-25T20:19:54Z",
+            "expires_at": "2026-11-08T20:19:53Z",
+            "updated_at": "2026-10-25T20:19:54Z",
+            "digest": "sha256:bbae19368f637034fe62e0a0061360e0ae6685857939cdd74c0b1fa9f01d980d",
+            "workflow_run": {
+              "id": 40227337951,
+              "repository_id": 1429377314,
+              "head_repository_id": 1429377314,
+              "head_branch": "feature/ai-rhino-dog",
+              "head_sha": "11ea91441e332a3643a17f2011a92f8a9eeaf43d"
+            }
+          },
+          {
+            "id": 12611666329,
+            "name": "ai-regression",
+            "size_in_bytes": 31270,
+            "url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12611666329",
+            "archive_download_url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12611666329/zip",
+            "expired": false,
+            "created_at": "2026-10-25T19:45:30Z",
+            "expires_at": "2026-11-08T19:45:29Z",
+            "updated_at": "2026-10-25T19:45:30Z",
+            "digest": "sha256:6671142b717b3063e4a355724215d340105b5fcb353d7879cc2c2a6a0190f8ba",
+            "workflow_run": {
+              "id": 40227337951,
+              "repository_id": 1429377314,
+              "head_repository_id": 1429377314,
+              "head_branch": "feature/ai-rhino-dog",
+              "head_sha": "11ea91441e332a3643a17f2011a92f8a9eeaf43d"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

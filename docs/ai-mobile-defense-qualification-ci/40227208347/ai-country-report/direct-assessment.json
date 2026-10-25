@@ -1,0 +1,126 @@
+{
+  "kind": "direct-current-bot",
+  "candidate": "356d35b7271d14a37380585f4f809ccd19703757",
+  "baseline": "c18f77650e40b668064bdb913a75bebfa278f42b",
+  "totals": {
+    "wins": 280,
+    "losses": 133,
+    "draws": 19,
+    "games": 432,
+    "winRate": 0.6481481481481481,
+    "decisiveWinRate": 0.6779661016949152
+  },
+  "scoreWithHalfDraws": 0.6701388888888888,
+  "scoreInterval": null,
+  "scenarioBlocks": 3,
+  "qualificationSchedule": false,
+  "qualified": false,
+  "screeningPositive": true,
+  "verdict": "development-positive",
+  "byCountry": {
+    "Americans": {
+      "wins": 32,
+      "losses": 16,
+      "draws": 0,
+      "games": 48,
+      "winRate": 0.6666666666666666,
+      "decisiveWinRate": 0.6666666666666666
+    },
+    "Alliance": {
+      "wins": 32,
+      "losses": 16,
+      "draws": 0,
+      "games": 48,
+      "winRate": 0.6666666666666666,
+      "decisiveWinRate": 0.6666666666666666
+    },
+    "French": {
+      "wins": 32,
+      "losses": 16,
+      "draws": 0,
+      "games": 48,
+      "winRate": 0.6666666666666666,
+      "decisiveWinRate": 0.6666666666666666
+    },
+    "Germans": {
+      "wins": 32,
+      "losses": 16,
+      "draws": 0,
+      "games": 48,
+      "winRate": 0.6666666666666666,
+      "decisiveWinRate": 0.6666666666666666
+    },
+    "British": {
+      "wins": 32,
+      "losses": 16,
+      "draws": 0,
+      "games": 48,
+      "winRate": 0.6666666666666666,
+      "decisiveWinRate": 0.6666666666666666
+    },
+    "Africans": {
+      "wins": 31,
+      "losses": 12,
+      "draws": 5,
+      "games": 48,
+      "winRate": 0.6458333333333334,
+      "decisiveWinRate": 0.7209302325581395
+    },
+    "Arabs": {
+      "wins": 27,
+      "losses": 17,
+      "draws": 4,
+      "games": 48,
+      "winRate": 0.5625,
+      "decisiveWinRate": 0.6136363636363636
+    },
+    "Confederation": {
+      "wins": 31,
+      "losses": 12,
+      "draws": 5,
+      "games": 48,
+      "winRate": 0.6458333333333334,
+      "decisiveWinRate": 0.7209302325581395
+    },
+    "Russians": {
+      "wins": 31,
+      "losses": 12,
+      "draws": 5,
+      "games": 48,
+      "winRate": 0.6458333333333334,
+      "decisiveWinRate": 0.7209302325581395
+    }
+  },
+  "byMap": {
+    "mp08t2.map": {
+      "wins": 88,
+      "losses": 50,
+      "draws": 6,
+      "games": 144,
+      "winRate": 0.6111111111111112,
+      "decisiveWinRate": 0.6376811594202898
+    },
+    "mp11t2.map": {
+      "wins": 87,
+      "losses": 57,
+      "draws": 0,
+      "games": 144,
+      "winRate": 0.6041666666666666,
+      "decisiveWinRate": 0.6041666666666666
+    },
+    "tn01t2.map": {
+      "wins": 105,
+      "losses": 26,
+      "draws": 13,
+      "games": 144,
+      "winRate": 0.7291666666666666,
+      "decisiveWinRate": 0.8015267175572519
+    }
+  },
+  "notes": [
+    "Input must first pass raw manifest/report/receipt verification; this command does not replace it.",
+    "The primary win rate includes draws. Score with half draws is a separately named direct-match metric.",
+    "Development-positive is a screening signal, not evidence of qualification or human strength.",
+    "Historical 80/70/70 thresholds are retained for old-opponent regressions, not reused for peer matches."
+  ]
+}

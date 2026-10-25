@@ -1,0 +1,71 @@
+{
+  "enemyAcquiredByName": {},
+  "enemyCoreBuildingAcquisitions": [],
+  "events": [
+    {
+      "identity": [
+        "Alliance",
+        "Arabs",
+        "mp08t2.map",
+        710101,
+        false
+      ],
+      "tick": 8968,
+      "id": 863,
+      "name": "GACNST",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "French",
+        "Arabs",
+        "mp08t2.map",
+        710101,
+        false
+      ],
+      "tick": 8968,
+      "id": 863,
+      "name": "GACNST",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Germans",
+        "Arabs",
+        "mp08t2.map",
+        710101,
+        false
+      ],
+      "tick": 8968,
+      "id": 863,
+      "name": "GACNST",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "British",
+        "Arabs",
+        "mp08t2.map",
+        710101,
+        false
+      ],
+      "tick": 8968,
+      "id": 863,
+      "name": "GACNST",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 0,
+      "newSide": 1
+    }
+  ],
+  "note": "Ownership has no captor/mission/source field. No engineer or Sneak attribution is inferred; technical oil wells are separate from core buildings."
+}

@@ -1,0 +1,62 @@
+{
+  "candidateCommit": "356d35b7271d14a37380585f4f809ccd19703757",
+  "baselineCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+  "engineWorkflowCommit": "11ea91441e332a3643a17f2011a92f8a9eeaf43d",
+  "candidateTsRedalert2Tree": "ae5e9e32216d37c9c8bdcd2594656b0d39a948b6",
+  "engineTsRedalert2Tree": "ae5e9e32216d37c9c8bdcd2594656b0d39a948b6",
+  "readOnlyGitObjectCheck": true,
+  "checkedAt": "2026-10-25T20:47:06.588Z",
+  "runs": [
+    {
+      "run_id": 40227208347,
+      "set": "qualification_a",
+      "seeds": [
+        710101,
+        710202,
+        710303
+      ],
+      "candidate": "356d35b7271d14a37380585f4f809ccd19703757",
+      "baseline": "c18f77650e40b668064bdb913a75bebfa278f42b",
+      "engine": "11ea91441e332a3643a17f2011a92f8a9eeaf43d",
+      "candidateProfile": "brutal",
+      "baselineProfile": "brutal"
+    },
+    {
+      "run_id": 40227243447,
+      "set": "qualification_b",
+      "seeds": [
+        720101,
+        720202,
+        720303
+      ],
+      "candidate": "356d35b7271d14a37380585f4f809ccd19703757",
+      "baseline": "c18f77650e40b668064bdb913a75bebfa278f42b",
+      "engine": "11ea91441e332a3643a17f2011a92f8a9eeaf43d",
+      "candidateProfile": "brutal",
+      "baselineProfile": "brutal"
+    },
+    {
+      "run_id": 40227337951,
+      "set": "qualification_c",
+      "seeds": [
+        730101,
+        730202,
+        730303
+      ],
+      "candidate": "356d35b7271d14a37380585f4f809ccd19703757",
+      "baseline": "c18f77650e40b668064bdb913a75bebfa278f42b",
+      "engine": "11ea91441e332a3643a17f2011a92f8a9eeaf43d",
+      "candidateProfile": "brutal",
+      "baselineProfile": "brutal"
+    }
+  ],
+  "bootstrap": {
+    "replicates": 5000,
+    "seed": 20261025,
+    "confidence": 0.95,
+    "mapSeedBlocks": 9
+  },
+  "scope": "Independent direct qualification against C18 only; not release approval.",
+  "noSourceChanges": true,
+  "noAutomationModified": true
+}

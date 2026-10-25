@@ -1,0 +1,228 @@
+{
+  "files": {
+    "40227208347/ai-country-long/manifest.json": {
+      "bytes": 15106,
+      "sha256": "851911e1b2ed4fa9697ebaed8b173870f9a2c7a95d7d26733c87d83a1cebe979"
+    },
+    "40227208347/ai-country-long/summary.json": {
+      "bytes": 23063,
+      "sha256": "eefd154aa5c7da18f518e9bcfa3c374d0f7b78e83794854b79f9b1864f34abdc"
+    },
+    "40227208347/ai-country-medium/manifest.json": {
+      "bytes": 15106,
+      "sha256": "47d07169c30a099dc51aa2746b9a15f4e4f27f5e3335ff09caa16963c20a5c8e"
+    },
+    "40227208347/ai-country-medium/summary.json": {
+      "bytes": 23020,
+      "sha256": "d5b60cb50f13c57b60bdc9b7732da6c4364fa5e5347728d1115f895e0d07f84a"
+    },
+    "40227208347/ai-country-report/direct-assessment.json": {
+      "bytes": 3182,
+      "sha256": "c5ceaae57b01248b21e06eabcac00e5b4fbab1af798aace4e32e5809ad9aece2"
+    },
+    "40227208347/ai-country-report/matrix.csv": {
+      "bytes": 2844,
+      "sha256": "642efcb950a69235c2421fd7f53dd81087372ed200985b87d1a6b2503d35ea7b"
+    },
+    "40227208347/ai-country-report/report.md": {
+      "bytes": 3250,
+      "sha256": "60b3ae85935996eed74eccaea4453ff5234c721cac07e5abf1e0d133af6f4794"
+    },
+    "40227208347/ai-country-report/results.json": {
+      "bytes": 354991,
+      "sha256": "a8b88d4bd197a0495e0865dd8aaea9b3e212cdf2de4e5b7774c7fe178d54d8d0"
+    },
+    "40227208347/ai-country-report/strength-assessment.json": {
+      "bytes": 187,
+      "sha256": "2ce43c643a18665fe14860953dcc83770c375ad4a6e1c39cb3a0cf6754907d75"
+    },
+    "40227208347/ai-country-short/manifest.json": {
+      "bytes": 15106,
+      "sha256": "66a40618c122b6fba47bfe55e7fc59002d144bc63268d9f613e60cb4f209babc"
+    },
+    "40227208347/ai-country-short/summary.json": {
+      "bytes": 23072,
+      "sha256": "d92195653b6c0032c9f9b2ffc948b2f99552ef1c547c55d95ad67d254e8b768b"
+    },
+    "40227208347/compact-games.jsonl": {
+      "bytes": 3675666,
+      "sha256": "c0f823619db7550db21e31d355a33e2f9a2cd8af8390817cade70b1035c8a51e"
+    },
+    "40227208347/compact-metadata.json": {
+      "bytes": 361488,
+      "sha256": "3348db5b765e1e0ed3df274caaafe3fc5fcce7ee1cd95810608b5c5f9f162103"
+    },
+    "40227208347/ownership-review.json": {
+      "bytes": 1440,
+      "sha256": "60169b461cfff41eb4bcedbc44a778db4d0dcb022b8ab60d92ad97c121fc1f70"
+    },
+    "40227208347/verification-summary.json": {
+      "bytes": 7635,
+      "sha256": "47f5a0cc829c36e23601bdd063e15c68200caa2a617b7a3e1e8cb5998412bfda"
+    },
+    "40227243447/ai-country-long/manifest.json": {
+      "bytes": 15106,
+      "sha256": "af9fc55df13117aab4b4f3623c73601575788563fd29ce29941eb7afaa941c92"
+    },
+    "40227243447/ai-country-long/summary.json": {
+      "bytes": 23059,
+      "sha256": "4e19835f75edb405627c6a04cc001d95a6fad2f60cc6fe45784827a2dc0d0085"
+    },
+    "40227243447/ai-country-medium/manifest.json": {
+      "bytes": 15106,
+      "sha256": "41eb83be1f87b65052135e65b863026c6474a684a5849c6f8119e17eee94ae3e"
+    },
+    "40227243447/ai-country-medium/summary.json": {
+      "bytes": 23022,
+      "sha256": "27d56f1407812981f7c4684597882715379681ba394796f1c0778d82167dabb0"
+    },
+    "40227243447/ai-country-report/direct-assessment.json": {
+      "bytes": 3151,
+      "sha256": "8b842889f4f2586cbda97ba0232c81da79d35882c62447ee8a137b41a39c3962"
+    },
+    "40227243447/ai-country-report/matrix.csv": {
+      "bytes": 2981,
+      "sha256": "6dec6f6e912a69a35eea157e2725c81a62136ebb221a7ca37ad6ced336b5e904"
+    },
+    "40227243447/ai-country-report/report.md": {
+      "bytes": 3252,
+      "sha256": "635b9a22865d6148eaba2eadd1b8ac483018b073481305d0eac60e94db3bf8b2"
+    },
+    "40227243447/ai-country-report/results.json": {
+      "bytes": 355068,
+      "sha256": "b21858090966a9d0f65b5fafc4ad402c4c5a1fc098a2babb9a4a396cbaa7ef98"
+    },
+    "40227243447/ai-country-report/strength-assessment.json": {
+      "bytes": 187,
+      "sha256": "2ce43c643a18665fe14860953dcc83770c375ad4a6e1c39cb3a0cf6754907d75"
+    },
+    "40227243447/ai-country-short/manifest.json": {
+      "bytes": 15106,
+      "sha256": "77681a1bac28a3d92859377480d081a6869e0539486141ed9e62ae41bb6aadca"
+    },
+    "40227243447/ai-country-short/summary.json": {
+      "bytes": 23125,
+      "sha256": "8f52d33f6620c10607e7c86265a6b8cf49e46d1fd27df0a13be0de4d64e738ab"
+    },
+    "40227243447/compact-games.jsonl": {
+      "bytes": 3713052,
+      "sha256": "b1811aa386b812161317d406817f26963bd6ccb5bbb52ee9052d8df703525b06"
+    },
+    "40227243447/compact-metadata.json": {
+      "bytes": 364279,
+      "sha256": "c5f1853fe79e8aab90373cc221ded1454585fa80eff01c8ff39905d89b25137a"
+    },
+    "40227243447/ownership-review.json": {
+      "bytes": 4182,
+      "sha256": "cf27fc82943d33f6e7d16cb32802a705cfee0881af6b2f893fb8a378042dd853"
+    },
+    "40227243447/verification-summary.json": {
+      "bytes": 7550,
+      "sha256": "2ddb40c8c32912b43e3758c5e429cffac4aad9d50eaff93f7d33827ec5a0d0e0"
+    },
+    "40227337951/ai-country-long/manifest.json": {
+      "bytes": 15106,
+      "sha256": "8e892de011908f41aa4524eb0c598d152c04c8132b3b1bd3fdb6c71ca29dfe06"
+    },
+    "40227337951/ai-country-long/summary.json": {
+      "bytes": 23094,
+      "sha256": "2ed321b42fd5bd71a2d9a0c8235a1e8a6b9e97d5afa504076cd748c287e59890"
+    },
+    "40227337951/ai-country-medium/manifest.json": {
+      "bytes": 15106,
+      "sha256": "65265b945ce1135370970ffbf8656022256b6c4d187953e9982cac7dd951da87"
+    },
+    "40227337951/ai-country-medium/summary.json": {
+      "bytes": 22932,
+      "sha256": "5fcec44bc7c5d46501e56240f002d1462d4b7a127a3010e9eaf87a1f414e4e9b"
+    },
+    "40227337951/ai-country-report/direct-assessment.json": {
+      "bytes": 3133,
+      "sha256": "42eb1193c06ee21eac3d3d79e001f1dd14a5a03dea25132c7201a0b4810f57ce"
+    },
+    "40227337951/ai-country-report/matrix.csv": {
+      "bytes": 2926,
+      "sha256": "6bc17cb36f47254a7ae715ff02020a26e9710b4820ca7160fe9d04e61d6f9dcb"
+    },
+    "40227337951/ai-country-report/report.md": {
+      "bytes": 3257,
+      "sha256": "f193bbd579d1309d800a7ff4f1340370075e30aa5d983e4d9642288f87592a72"
+    },
+    "40227337951/ai-country-report/results.json": {
+      "bytes": 354907,
+      "sha256": "0d0ef2a48146cb8f9321c4d8d91c7761b8bfe327330d1a090b14488014006ed2"
+    },
+    "40227337951/ai-country-report/strength-assessment.json": {
+      "bytes": 187,
+      "sha256": "2ce43c643a18665fe14860953dcc83770c375ad4a6e1c39cb3a0cf6754907d75"
+    },
+    "40227337951/ai-country-short/manifest.json": {
+      "bytes": 15106,
+      "sha256": "0cadb98b2f8baf47bb9bf18793311dee45b514fae2229ad6b6da2c8b584e707b"
+    },
+    "40227337951/ai-country-short/summary.json": {
+      "bytes": 23102,
+      "sha256": "f13c8a609a74131d4385c2a71ef7036102a47f7380cd73228a19c99fa769e65d"
+    },
+    "40227337951/compact-games.jsonl": {
+      "bytes": 3714333,
+      "sha256": "d04c8f7c7819a7a7fff351cabc527d403b85f49faa471152e00e0513597aa253"
+    },
+    "40227337951/compact-metadata.json": {
+      "bytes": 360398,
+      "sha256": "96b8c457b3bb5262bc651149d872f7d89f2803bd460c6f0033c1bffef763cb91"
+    },
+    "40227337951/ownership-review.json": {
+      "bytes": 246,
+      "sha256": "9145afa666973932b2dea9862b0ac4e274ab965febaf2944a4d3687b29ea1796"
+    },
+    "40227337951/verification-summary.json": {
+      "bytes": 7514,
+      "sha256": "5400ab2a1251a5dd1a3172d329304faa8f162558b9be6e8fb0aaabc87b29d7a3"
+    },
+    "batch-summary.json": {
+      "bytes": 293171,
+      "sha256": "8e0d69f371b444bec609da7791ab6a4b2c647eebd433845996308e889d908c3b"
+    },
+    "bootstrap-check.json": {
+      "bytes": 1633,
+      "sha256": "851b736e0ee1388144cffd4ce0273eb8a656d0f8d27794bfaeda651b2ecf44b1"
+    },
+    "direct-assessment.json": {
+      "bytes": 3260,
+      "sha256": "521b8d3029278883b8eb24a019d512901f3c3c70b9f7be76d4649d0c2ac7214c"
+    },
+    "frozen-provenance.json": {
+      "bytes": 1907,
+      "sha256": "debe7f2cdc537eab5b23c7f452c0c486a29682e274b1c1dd0ba990052c60a2b9"
+    },
+    "github-snapshot.json": {
+      "bytes": 50656,
+      "sha256": "90f66a8b0845e1d1a27007caf639af3658fcefc2780ea0e72b78996c655e4123"
+    },
+    "ownership-review.json": {
+      "bytes": 5388,
+      "sha256": "3dce44700f6a17d112286dc5670ae4dc913532b177f7abffb0434e7719ce842c"
+    },
+    "report.md": {
+      "bytes": 9008,
+      "sha256": "9422523c98b281d4aebbdb13e60ae7f4fad18c9758b017bd09ac04cfc9183140"
+    },
+    "root-independent-verification.json": {
+      "bytes": 4737,
+      "sha256": "4acd2e133e14148d9a8960d1c0b36bcba2a6771b46ef6a01f8eca8f7821c0a05"
+    },
+    "soviet-summary.json": {
+      "bytes": 12797,
+      "sha256": "95d9d6a04735c884080d09290aa9e8abc10eff2ff11e6c7bee24aa3d3ef1c5f4"
+    }
+  },
+  "rawPairedReports": 648,
+  "verifiedReceipts": 648,
+  "originalZipDigests": 15,
+  "rootVerified": true,
+  "notes": [
+    "All original raw/report/receipt/ZIP digests are retained in each compact-metadata.json.",
+    "Game and metadata paths are normalized; source compact hashes are separate from published-file hashes."
+  ]
+}
