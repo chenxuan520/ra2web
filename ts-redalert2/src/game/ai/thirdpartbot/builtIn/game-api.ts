@@ -13,6 +13,8 @@ export { OrderType } from '@/game/order/OrderType';
 export { SideType } from '@/game/SideType';
 export { QueueType } from '@/game/player/production/ProductionQueue';
 export { QueueStatus } from '@/game/player/production/ProductionQueue';
+export { SuperWeaponType } from '@/game/type/SuperWeaponType';
+export { SuperWeaponStatus } from '@/game/SuperWeapon';
 export { GameMath } from '@/game/math/GameMath';
 export { Box2 } from '@/game/math/Box2';
 export { Vector2 } from '@/game/math/Vector2';

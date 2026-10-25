@@ -16,6 +16,7 @@ function fixture(difficulty?: "normal" | "brutal") {
     const legalLocations = new Set(["AMRADR:6:0"]);
     const placementChecks: string[] = [];
     const game = {
+        getCurrentTick: () => 0,
         getPlayerData: () => ({ name: "bot", credits: 10000, startLocation: new Vector2(), power: { total: 200, drain: 85 } }),
         getVisibleUnits: (_name: string, _relation: string, predicate: (rules: any) => boolean) => units.filter(u => predicate(u.rules)).map(u => u.id),
         getUnitData: (id: number) => units.find(u => u.id === id),
@@ -31,7 +32,7 @@ function fixture(difficulty?: "normal" | "brutal") {
     };
     const context = {
         difficulty, game,
-        player: { name: "bot", production: { getAvailableObjects: (queue: QueueType) => {
+        player: { name: "bot", production: { getQueueData: () => ({ items: [] }), getAvailableObjects: (queue: QueueType) => {
             expect(queue).toBe(QueueType.Structures);
             return options;
         } } },
@@ -42,6 +43,19 @@ function fixture(difficulty?: "normal" | "brutal") {
 }
 
 describe("brutal building placement fallback", () => {
+    test.each([18, 30, 50])("an ongoing investment survives a new priority %i request unless it is urgent", newPriority => {
+        const mission = new BaseBuildingMission(QueueType.Structures, () => {});
+        (mission as any).getPriorityForBuildingOption = (option: any) => option.name === "AMRADR" ? 18 : newPriority;
+        (mission as any).getBestLocationForStructure = () => ({ rx: 1, ry: 1 });
+        const context = { difficulty: "brutal", game: { getPlayerData: () => ({}) },
+            matchAwareness: { getThreatCache: () => null }, player: { name: "bot", production: {
+                getAvailableObjects: () => [{ name: "GAREFN" }, { name: "AMRADR" }],
+                getQueueData: () => ({ items: [{ rules: { name: "AMRADR" } }] }),
+            } } };
+        for (let update = 0; update < 3; update++) {
+            expect(mission._onAiUpdate(context as any)).toMatchObject({ rulesName: newPriority > 36 ? "GAREFN" : "AMRADR" });
+        }
+    });
     test("a blocked second war factory does not prevent a legal radar request", () => {
         const f = fixture("brutal");
         expect(f.run()).toEqual({ type: "buildStructureAtLocation", rulesName: "AMRADR", priority: 10, rx: 6, ry: 0 });

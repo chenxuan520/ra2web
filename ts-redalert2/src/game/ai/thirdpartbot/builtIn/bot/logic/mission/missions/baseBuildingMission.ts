@@ -9,6 +9,8 @@ import {
     getDefaultPlacementLocation,
 } from "../../building/buildingRules";
 import { queueTypeToName } from "../../building/queueController";
+import { getGrandCannonPlacement, getStrategicBuildingPriority } from "../../building/strategicBuildings";
+import { getCompactFirstFactoryPlacement } from "../../building/firstFactoryPlacement";
 
 // Legacy mission encompassing the old "build queue" logic.
 export class BaseBuildingMission extends Mission {
@@ -28,11 +30,14 @@ export class BaseBuildingMission extends Mission {
 
         const { game, matchAwareness } = context;
         const threatCache = matchAwareness.getThreatCache();
+        const committedNames = context.difficulty === "brutal"
+            ? new Set(context.player.production.getQueueData(this.queueType).items.map(item => item.rules.name))
+            : new Set<string>();
 
         const optionWithPriority = options.map((option) => {
             return {
                 option,
-                priority: this.getPriorityForBuildingOption(option, game, playerData, threatCache),
+                priority: this.getPriorityForBuildingOption(option, game, playerData, threatCache, context.difficulty, committedNames.has(option.name)),
             };
         });
 
@@ -42,8 +47,14 @@ export class BaseBuildingMission extends Mission {
             const candidates = optionWithPriority
                 .filter((candidate) => candidate.priority > 0)
                 .sort((a, b) => b.priority - a.priority);
+            const committedIndex = candidates.findIndex(candidate => committedNames.has(candidate.option.name));
+            if (committedIndex > 0 && candidates[0].priority <= candidates[committedIndex].priority * 2) {
+                // Refresh the in-progress request before a similar-priority new
+                // investment can make it decay and trigger a cancellation.
+                candidates.unshift(candidates.splice(committedIndex, 1)[0]);
+            }
             for (const candidate of candidates) {
-                const location = this.getBestLocationForStructure(game, playerData, candidate.option);
+                const location = this.getBestLocationForStructure(game, playerData, candidate.option, context.difficulty);
                 if (location) {
                     return buildStructureAtLocation(candidate.option.name, candidate.priority, location.rx, location.ry);
                 }
@@ -79,7 +90,13 @@ export class BaseBuildingMission extends Mission {
         game: GameApi,
         playerStatus: PlayerData,
         threatCache: GlobalThreat | null,
+        difficulty?: "normal" | "brutal",
+        committed = false,
     ) {
+        if (difficulty === "brutal") {
+            const priority = getStrategicBuildingPriority(game, playerStatus, option, threatCache, committed);
+            if (priority !== undefined) return priority;
+        }
         if (BUILDING_NAME_TO_RULES.has(option.name)) {
             let logic = BUILDING_NAME_TO_RULES.get(option.name)!;
             return logic.getPriority(game, playerStatus, option, threatCache);
@@ -95,10 +112,15 @@ export class BaseBuildingMission extends Mission {
         game: GameApi,
         playerData: PlayerData,
         objectReady: TechnoRules,
+        difficulty?: "normal" | "brutal",
     ): { rx: number; ry: number } | undefined {
+        if (difficulty === "brutal" && objectReady.name === "GTGCAN") {
+            return getGrandCannonPlacement(game, playerData, objectReady);
+        }
         if (BUILDING_NAME_TO_RULES.has(objectReady.name)) {
             let logic = BUILDING_NAME_TO_RULES.get(objectReady.name)!;
-            return logic.getPlacementLocation(game, playerData, objectReady);
+            const location = logic.getPlacementLocation(game, playerData, objectReady);
+            return location ?? (difficulty === "brutal" ? getCompactFirstFactoryPlacement(game, playerData, objectReady) : undefined);
         } else {
             // fallback placement logic
             return getDefaultPlacementLocation(game, playerData, playerData.startLocation, objectReady);

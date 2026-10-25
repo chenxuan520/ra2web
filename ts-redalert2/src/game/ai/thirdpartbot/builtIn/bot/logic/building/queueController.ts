@@ -12,6 +12,7 @@ import { GlobalThreat } from "../threat/threat";
 import { BUILDING_NAME_TO_RULES, TechnoRulesWithPriority, getDefaultPlacementLocation } from "./buildingRules";
 import { SupabotContext } from "../common/context";
 import { UnitRequest } from "../mission/missionController";
+import { NATIONAL_SUPPORT_LIMITS } from "../../strategy/nationalComposition";
 
 export const QUEUES = [
     QueueType.Structures,
@@ -75,6 +76,15 @@ export class QueueController {
         // Economic units do not belong to combat missions. Keep a separate request
         // so losing miners cannot permanently starve an otherwise healthy base.
         const requests = new Map(unitTypeRequests);
+        const cappedSupport = new Set<string>();
+        if (context.difficulty === "brutal") {
+            for (const [name, cap] of Object.entries(NATIONAL_SUPPORT_LIMITS)) {
+                if (game.getVisibleUnits(player.name, "self", rules => rules.name === name).length >= cap) {
+                    requests.delete(name);
+                    cappedSupport.add(name);
+                }
+            }
+        }
         for (const option of productionApi.getAvailableObjects(QueueType.Vehicles)) {
             if (!option.harvester) continue;
             const logic = BUILDING_NAME_TO_RULES.get(option.name);
@@ -115,6 +125,7 @@ export class QueueController {
                 totalWeightAcrossQueues,
                 totalCostAcrossQueues,
                 logger,
+                cappedSupport,
             );
         });
 
@@ -145,6 +156,7 @@ export class QueueController {
         totalWeightAcrossQueues: number,
         totalCostAcrossQueues: number,
         logger: (message: string) => void,
+        cappedSupport: ReadonlySet<string>,
     ): void {
         const myCredits = playerData.credits;
         // With five or six queues, every queue can fall below 25%. Always
@@ -153,6 +165,13 @@ export class QueueController {
         const minimumPriority = Math.min(totalWeightAcrossQueues * 0.25, highestPriority);
 
         const queueData = productionApi.getQueueData(queueType);
+        const currentItem = queueData.items[0];
+        if (currentItem && cappedSupport.has(currentItem.rules.name)) {
+            // Concurrent waves and decaying mission requests must not exceed
+            // the global specialist cap once another factory delivers a unit.
+            actionsApi.unqueueFromProduction(queueType, currentItem.rules.name, currentItem.rules.type, currentItem.quantity);
+            return;
+        }
         if (queueData.status == QueueStatus.Idle) {
             // Start building the decided item.
             if (decision !== undefined && !(totalCostAcrossQueues > myCredits && decision.priority < minimumPriority)) {

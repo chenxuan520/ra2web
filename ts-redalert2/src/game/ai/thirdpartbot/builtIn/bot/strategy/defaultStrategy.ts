@@ -2,13 +2,15 @@ import { Strategy } from "./strategy";
 import { selectAdaptiveComposition } from "./adaptiveComposition";
 import { ExpansionMissionFactory } from "../logic/mission/missions/expansionMission";
 import { ScoutingMissionFactory } from "../logic/mission/missions/scoutingMission";
-import { AttackMissionFactory } from "../logic/mission/missions/attackMission";
+import { AttackMission, AttackMissionFactory } from "../logic/mission/missions/attackMission";
 import { DefenceMissionFactory } from "../logic/mission/missions/defenceMission";
 import { EngineerMissionFactory } from "../logic/mission/missions/engineerMission";
+import { ParaDropSupport } from "../logic/mission/missions/paraDropSupport";
 import { SupabotContext } from "../logic/common/context";
 import { MissionController } from "../logic/mission/missionController";
 import { DebugLogger } from "../logic/common/utils";
 import { Compositions, getValidCompositions, SideComposition } from "./compositionUtils";
+import { readStrategicSituation, selectNationalComposition } from "./nationalComposition";
 
 // These could be loaded from ai.ini
 export const DEFAULT_COMPOSITIONS: Compositions = {
@@ -96,12 +98,14 @@ export class DefaultStrategy implements Strategy {
     private attackFactory = new AttackMissionFactory();
     private defenceFactory = new DefenceMissionFactory();
     private engineerFactory = new EngineerMissionFactory();
+    private paraDropSupport = new ParaDropSupport();
 
     onAiUpdate(context: SupabotContext, missionController: MissionController, logger: DebugLogger) {
+        this.paraDropSupport.onAiUpdate(context);
         this.expansionFactory.maybeCreateMissions(context, missionController, logger);
         this.scoutingFactory.maybeCreateMissions(context, missionController, logger);
 
-        const composition = this.selectRandomAttackComposition(context, logger);
+        const composition = this.selectRandomAttackComposition(context, logger, missionController);
         if (composition) {
             this.attackFactory.maybeCreateMissions(context, missionController, logger, composition);
         }
@@ -112,7 +116,7 @@ export class DefaultStrategy implements Strategy {
         return this;
     }
 
-    private selectRandomAttackComposition(context: SupabotContext, logger: DebugLogger): SideComposition | null {
+    private selectRandomAttackComposition(context: SupabotContext, logger: DebugLogger, missionController: MissionController): SideComposition | null {
         const playerData = context.game.getPlayerData(context.player.name);
         const side = playerData.country?.side;
         if (side === undefined) {
@@ -128,10 +132,20 @@ export class DefaultStrategy implements Strategy {
         logger(`Valid compositions: ${validCompositions.join(", ")}`);
 
         if (context.difficulty === "brutal") {
-            const harvesters = context.game.getVisibleUnits(context.player.name, "self", rules => rules.harvester).length;
-            return selectAdaptiveComposition(
-                DEFAULT_COMPOSITIONS, validCompositions, context.matchAwareness.getThreatCache(), harvesters,
+            const situation = readStrategicSituation(context.game, playerData);
+            const reservedSupport: Record<string, number> = {};
+            for (const mission of missionController.getMissions()) {
+                if (mission instanceof AttackMission) {
+                    for (const [name, count] of Object.entries(mission.getPendingSupportUnits(context.game))) {
+                        reservedSupport[name] = (reservedSupport[name] ?? 0) + count;
+                    }
+                }
+            }
+            const core = selectAdaptiveComposition(
+                DEFAULT_COMPOSITIONS, validCompositions, context.matchAwareness.getThreatCache(), situation.harvesters,
             );
+            return core ? selectNationalComposition(core,
+                new Set(context.player.production.getAvailableObjects().map(option => option.name)), situation, reservedSupport) : null;
         }
 
         const randomIndex = context.game.generateRandomInt(0, validCompositions.length - 1);
