@@ -213,6 +213,36 @@ describe("residual radiation movement", () => {
 
 describe("tank and artillery coordination", () => {
     const map = { getTile: (rx: number, ry: number) => ({ rx, ry }), isPassableTile: () => true } as any;
+    test("recognizes the engine's PrepareToFire recovery without cancelling an initial or active shot", () => {
+        const firing = tank(1, 5, 0, { attackState: AttackState.PrepareToFire, isFiring: false });
+        expect(isFiringBurst(firing)).toBe(true);
+        firing.primaryWeapon.cooldownTicks = 40;
+        expect(isFiringBurst(firing)).toBe(false);
+        firing.primaryWeapon.cooldownTicks = 6;
+        expect(isFiringBurst(firing)).toBe(true);
+        firing.primaryWeapon.cooldownTicks = 40;
+        firing.isFiring = undefined;
+        expect(isFiringBurst(firing)).toBe(true);
+        firing.isFiring = true;
+        expect(isFiringBurst(firing)).toBe(true);
+        firing.isFiring = false;
+        for (const state of [AttackState.FireUp, AttackState.Firing]) {
+            firing.attackState = state as any;
+            expect(isFiringBurst(firing)).toBe(true);
+        }
+    });
+    test("keeps burst weapons, missile launch sequences and deploy animations protected", () => {
+        const firing = tank(1, 5, 0, { attackState: AttackState.PrepareToFire, isFiring: false });
+        firing.primaryWeapon.cooldownTicks = 40;
+        firing.primaryWeapon.rules.burst = 2;
+        expect(isFiringBurst(firing)).toBe(true);
+        firing.primaryWeapon.rules.burst = 1;
+        firing.primaryWeapon.rules.spawner = true;
+        expect(isFiringBurst(firing)).toBe(true);
+        const deso = desolator(); deso.isFiring = true;
+        deso.primaryWeapon.cooldownTicks = 40;
+        expect(isFiringBurst(deso)).toBe(true);
+    });
     test("shoots an available target instead of marching after an attractive target outside range", () => {
         const attacker = tank(1, 0), near = tank(2, 5), far = tank(3, 10, 0, { hitPoints: 1, rules: { armor: 0, harvester: true } });
         expect(chooseTacticalTarget(attacker, [far, near], new Map())?.id).toBe(near.id);

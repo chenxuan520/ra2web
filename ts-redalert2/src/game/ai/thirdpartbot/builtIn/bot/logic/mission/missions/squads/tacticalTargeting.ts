@@ -42,7 +42,17 @@ export function isMissileArtillery(unit: UnitData): boolean {
 }
 
 export function isFiringBurst(unit: UnitData): boolean {
-    return !!unit.isFiring || [AttackState.PrepareToFire, AttackState.FireUp, AttackState.Firing].includes(unit.attackState as any);
+    if (unit.isFiring || [AttackState.FireUp, AttackState.Firing].includes(unit.attackState as any)) return true;
+    if ((unit.attackState as any) !== AttackState.PrepareToFire) return false;
+    // AttackTask stays in PrepareToFire for the entire ROF cooldown. A real
+    // positive cooldown proves the first shot has fired; zero/unknown cooldown
+    // still protects initial aiming. Keep multishot bursts and missile launches
+    // protected because the API does not expose their remaining sub-shots.
+    const weapons = [unit.primaryWeapon, unit.secondaryWeapon].filter(weapon => weapon && !weapon.rules?.areaFire);
+    const knownRecovery = unit.isFiring === false && weapons.length > 0 &&
+        weapons.every(weapon => !weapon.rules?.spawner && (weapon.rules?.burst ?? 1) <= 1) &&
+        weapons.some(weapon => Number.isFinite(weapon.cooldownTicks) && weapon.cooldownTicks > 6);
+    return !knownRecovery;
 }
 
 /** Deterministic, armor-aware focus fire with a per-update volley reservation. */

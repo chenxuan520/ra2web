@@ -8,7 +8,7 @@ const LABS = new Set(["GATECH", "NATECH"]);
 const REFINERIES = new Set(["GAREFN", "NAREFN"]);
 const distance = (x1: number, y1: number, x2: number, y2: number) => GameMath.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
 
-function findThreatenedAnchor(game: GameApi, player: PlayerData) {
+function findThreatenedAnchor(game: GameApi, player: PlayerData, radius = 30) {
     const anchors = game.getVisibleUnits(player.name, "self", rules => rules.refinery || rules.constructionYard || rules.weaponsFactory)
         .map(id => game.getUnitData(id)).filter((unit): unit is UnitData => !!unit);
     const enemies = game.getVisibleUnits(player.name, "enemy", rules => rules.isSelectableCombatant &&
@@ -17,7 +17,7 @@ function findThreatenedAnchor(game: GameApi, player: PlayerData) {
     let best: { anchor: UnitData; enemy: UnitData; distance: number } | undefined;
     for (const anchor of anchors) for (const enemy of enemies) {
         const separation = distance(anchor.tile.rx, anchor.tile.ry, enemy.tile.rx, enemy.tile.ry);
-        if (separation <= 30 && (!best || separation < best.distance)) best = { anchor, enemy, distance: separation };
+        if (separation <= radius && (!best || separation < best.distance)) best = { anchor, enemy, distance: separation };
     }
     return best;
 }
@@ -32,10 +32,17 @@ export function getStrategicBuildingPriority(
     const { own, enemy, credits, harvesters, country } = situation;
     const core = countCoreTanks(situation);
     const owned = own[option.name] ?? 0;
+    // A French defensive opening must be admitted before the four-tank late
+    // investment gate. Require actual scouted pressure, income and close guards.
+    const frenchPressure = country === "French" && !(own.GTGCAN > 0) && harvesters >= 1 &&
+        ((own.E1 ?? 0) >= 4 || core >= 1) && (enemy.infantry >= 6 || enemy.vehicles >= 3) &&
+        !!findThreatenedAnchor(game, player, 45);
     // Admission checks reserve funds for starting an investment. Once production
     // spends those funds, retain its request instead of repeatedly cancelling it.
     if (committed && !owned && (RADARS.has(option.name) || LABS.has(option.name))) return 18;
     if (committed && REFINERIES.has(option.name) && owned === 1) return 18;
+    if (RADARS.has(option.name) && owned === 0 && frenchPressure &&
+        credits >= option.cost + 600 && !player.power.isLowPower) return 32;
     if (RADARS.has(option.name) && owned === 0 && harvesters >= 2 &&
         ((core >= 3 && credits >= 300) || (core >= 1 && credits >= option.cost + 500))) {
         const needsSpecialist = country === "Arabs" ? enemy.infantry >= 3 || enemy.vehicles >= 4
@@ -60,6 +67,8 @@ export function getStrategicBuildingPriority(
         const cap = harvesters >= 4 && core >= 8 && enemy.infantry + enemy.vehicles >= 8 ? 2 : 1;
         const powerNeeded = Math.max(0, -option.power);
         if (committed && country === "French") return owned === 0 ? 24 : 16;
+        if (owned === 0 && frenchPressure && credits >= 600 &&
+            player.power.total - player.power.drain >= powerNeeded) return 30;
         if (country !== "French" || owned >= cap || harvesters < 2 || core < 4 ||
             credits < option.cost + 600 || player.power.total - player.power.drain < powerNeeded ||
             enemy.infantry + enemy.vehicles < 4 || !findThreatenedAnchor(game, player)) return 0;

@@ -106,4 +106,19 @@ describe("staged technology and national base defence", () => {
         f.setTick(9002);
         expect(f.priority({ ...f.cannon, name: "GATECH" })).toBe(0);
     });
+
+    test("French scouted pressure admits radar and a first cannon before a four-tank army", () => {
+        const f = fixture();
+        f.own.splice(5); // income and base, no tanks
+        f.own.push(...Array.from({ length: 4 }, () => f.unit("E1")));
+        f.enemies.push(...f.enemies.map(enemy => ({ ...enemy })));
+        f.player.credits = 1700;
+        expect(f.priority({ ...f.cannon, name: "GAAIRC", cost: 1000 })).toBe(32);
+        f.player.credits = 600;
+        f.setTick(6002);
+        expect(f.priority()).toBe(30);
+        f.enemies.length = 0;
+        f.setTick(6004);
+        expect(f.priority()).toBe(0);
+    });
 });

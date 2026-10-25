@@ -1,0 +1,4 @@
+{
+  "extends": "./tsconfig.ai-benchmark.json",
+  "include": ["ai-harassment-scenario.ts", "../src/types/**/*.d.ts"]
+}

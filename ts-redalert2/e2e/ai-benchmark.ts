@@ -24,6 +24,7 @@ import { AppLogger } from '../src/util/logger';
 import { EventType } from '../src/game/event/EventType';
 import { loadBaselineBot } from './ai-baseline';
 import { observeBuildingMissions } from './ai-building-probe';
+import { observeSpecialtyCombat, readForceComposition } from './ai-specialty-telemetry';
 
 const projectRoot = fileURLToPath(new URL('../', import.meta.url));
 const repositoryRoot = resolve(projectRoot, '..');
@@ -38,6 +39,7 @@ const { values: args } = parseArgs({ options: {
     'candidate-profile': { type: 'string', default: 'brutal' },
     'baseline-profile': { type: 'string', default: 'normal' },
     'no-swap': { type: 'boolean', default: false },
+    'no-specialty-telemetry': { type: 'boolean', default: false },
     credits: { type: 'string', default: '10000' },
     units: { type: 'string', default: '0' },
     cdn: { type: 'string', default: process.env.RA2_BENCHMARK_CDN ?? resolve(repositoryRoot, '.cache/ai-resources/cdn') },
@@ -57,6 +59,7 @@ if (args.help) {
   --candidate-profile brutal  Bot profile only; engine player difficulty is Normal for both
   --baseline-profile normal   Use same refs/profiles for self-play sanity checks
   --no-swap                   Disable paired swaps of spawn position and player update order
+  --no-specialty-telemetry    Disable specialty observers for state-equivalence checks
   --credits 10000 --units 0   Identical starting resources and units for both players
   --out PATH                  Incremental JSON report; errors are recorded, never counted as wins
 Resources are prepared with deploy/prepare-resources.ts; no download is performed by this runner.`);
@@ -99,6 +102,8 @@ function capture(level: string, messages: unknown[], loggerName?: string) {
         if (side >= 0) activeTelemetry.noTargetDisbandsByPlayer[side]++;
     }
     if (activeTelemetry && side >= 0) {
+        if (/Harassment .* detached/.test(message)) activeTelemetry.harassmentLaunches[side]++;
+        if (message.includes('harassment_')) activeTelemetry.harassmentLifecycle[side].push({ tick: activeGame?.currentTick, message });
         if (message.includes('reason: UnableToAcquireUnits')) activeTelemetry.unableToAcquireDisbands[side]++;
         const cancellation = /Dequeueing queue (\w+) unit (\w+) because (\w+)/.exec(message);
         if (cancellation) {
@@ -167,6 +172,7 @@ const report: any = {
         lostValue: 'Sum of rule costs of owned ObjectDestroy events; may include noncombat destruction.',
         lowCreditTicks: 'Ticks ending with credits below 100.',
         processedActions: 'Processed actions with a nonempty engine action log; not a count of units ordered.',
+        specialty: 'Production separates queue completion, factory unit creation, placement and building readiness. Source damage uses actual HP loss. Periodic radiation is ownerless and reported by victim only.',
     },
     startupIssues, matches: [],
 };
@@ -236,6 +242,7 @@ for (const mapName of args.map!.split(',')) {
         const label = `${filename} ${candidateCountry}:${baselineCountry} seed=${seed} swap=${swapped}`;
         writeProgress(`Starting ${label}`);
         const telemetry: any = { errorCount: 0, warningCount: 0, issues: [], noTargetDisbands: 0, noTargetDisbandsByPlayer: [0, 0],
+            harassmentLaunches: [0, 0], harassmentLifecycle: [[], []],
             unableToAcquireDisbands: [0, 0], productionCancellations: [{}, {}], productionCancellationSamples: [[], []],
             weaponShots: [0, 0], firstShotTick: [null, null], firstAttackOrderTick: [null, null], ordersByType: [{}, {}],
             damageDealt: [0, 0], lostValue: [0, 0], producedUnits: [0, 0], processedActions: [0, 0], lowCreditTicks: [0, 0] };
@@ -246,6 +253,7 @@ for (const mapName of args.map!.split(',')) {
         const bots = new Map<string, any>();
         const economy = [{ received: 0, spent: 0 }, { received: 0, spent: 0 }];
         let game: any;
+        let specialtyObserver: ReturnType<typeof observeSpecialtyCombat> | undefined;
         const startedAt = performance.now();
         const samples: any[] = [];
         const match: any = { map: filename, mapSha256: hash(mapBytes), terrainSha256: hash(tileBytes),
@@ -289,6 +297,7 @@ for (const mapName of args.map!.split(',')) {
             game.init(undefined);
             // All arrays in the report remain [candidate, baseline], including swapped games.
             const players = [game.getPlayerByName(candidatePlayerName), game.getPlayerByName(baselinePlayerName)];
+            if (!args['no-specialty-telemetry']) specialtyObserver = observeSpecialtyCombat(game, players);
             match.startingLocations = players.map((player: any) => map.startingLocations[player.startLocation]);
             // Observe the original credit accessor without changing its validation or value.
             for (const [side, player] of players.entries()) {
@@ -323,6 +332,7 @@ for (const mapName of args.map!.split(',')) {
             const sample = () => {
                 const playerSamples = players.map((player: any, side: number) => ({
                     ...recordPlayer(player, bots.get(player.name), economy[side]), buildingPlanning: buildingObservers[side](),
+                    ...(!args['no-specialty-telemetry'] ? { forceComposition: readForceComposition(player) } : {}),
                 }));
                 samples.push({ tick: game.currentTick, players: playerSamples });
                 writeProgress(`  tick=${game.currentTick} ${playerSamples.map((player: any, side: number) => `${side === 0 ? 'candidate' : 'baseline'} credits=${player.credits} miners=${player.harvesters} army=${player.army} buildings=${player.buildings}`).join(' | ')}`);
@@ -346,6 +356,7 @@ for (const mapName of args.map!.split(',')) {
             if (game) match.ticks = game.currentTick;
         } finally {
             match.wallSeconds = (performance.now() - startedAt) / 1000;
+            if (specialtyObserver) { telemetry.specialty = specialtyObserver.snapshot(); specialtyObserver.dispose(); }
             try { game?.dispose(); } catch (error) { match.disposeError = String(error); match.result = 'error'; match.reason = 'dispose-runtime-error'; }
             if (telemetry.errorCount && match.result !== 'error') { match.result = 'error'; match.reason = 'logged-runtime-errors'; }
             activeGame = undefined;

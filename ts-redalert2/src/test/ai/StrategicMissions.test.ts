@@ -7,7 +7,7 @@ import { DefenceMission } from '../../game/ai/thirdpartbot/builtIn/bot/logic/mis
 import { HarassmentMission, HarassmentMissionFactory } from '../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/harassmentMission';
 
 class MainForce extends Mission {
-    constructor(private target: Vector2) { super('main-force', () => {}); }
+    constructor(private target: Vector2, name = 'main-force') { super(name, () => {}); }
     _onAiUpdate() { return noop(); }
     getPriority() { return 1; }
     getGlobalDebugText() { return undefined; }
@@ -60,7 +60,7 @@ function fixture(mainCount = 6, freeCount = 3, difficulty: 'brutal' | 'normal' =
     const factory = new HarassmentMissionFactory();
     return {
         context, controller, main, target, orders, objects, unit, weapon,
-        launch(nextTick = 0) { tick = nextTick; factory.maybeCreateMissions(context, controller, () => {}, [main]); },
+        launch(nextTick = 0, forces: MainForce[] = [main]) { tick = nextTick; factory.maybeCreateMissions(context, controller, () => {}, forces); },
         step(nextTick: number) { tick = nextTick; controller.onAiUpdate(context); },
         raids: () => controller.getMissions().filter((mission): mission is HarassmentMission => mission instanceof HarassmentMission),
     };
@@ -88,6 +88,37 @@ describe('surplus armor harassment', () => {
         const allIds = f.controller.getMissions().flatMap(mission => mission.getUnitIds());
         expect(new Set(allIds).size).toBe(allIds.length);
         expect(f.controller.getRequestedUnitTypes().size).toBe(0);
+    });
+
+    test('pools surplus from two smaller attacking waves without emptying either wave', () => {
+        const f = fixture(5, 4);
+        const second = new MainForce(new Vector2(60, -10), 'second-main');
+        for (const id of [6, 7, 8, 9]) second.addUnit(id);
+        f.controller.addMission(second);
+        f.launch(0, [f.main, second]);
+        expect(f.main.getUnitIds()).toHaveLength(3);
+        expect(second.getUnitIds()).toHaveLength(3);
+        f.step(0);
+        expect(f.raids()[0].getUnitIds()).toEqual([4, 5, 9]);
+        const ids = f.controller.getMissions().flatMap(mission => mission.getUnitIds());
+        expect(new Set(ids).size).toBe(9);
+        expect(ids).toHaveLength(9);
+        expect(f.controller.getRequestedUnitTypes().size).toBe(0);
+    });
+
+    test('never borrows the last core tanks from a support-heavy donor or any preparing wave', () => {
+        const f = fixture(5, 4);
+        const preparing = new MainForce(new Vector2(60, -10), 'preparing');
+        for (const id of [6, 7, 8, 9]) preparing.addUnit(id);
+        f.controller.addMission(preparing);
+        // Only attacking waves are offered; preparing ownership excludes the free pool.
+        f.launch();
+        expect(f.raids()).toEqual([]);
+        expect(preparing.getUnitIds()).toEqual([6, 7, 8, 9]);
+        for (const id of [1, 2, 3]) f.objects.get(id).name = 'FV';
+        f.launch(60, [f.main, preparing]);
+        expect(f.raids()).toEqual([]);
+        expect(f.main.getUnitIds()).toHaveLength(5);
     });
 
     test('will not cannibalize a small main force or split at normal difficulty', () => {
@@ -158,6 +189,21 @@ describe('surplus armor harassment', () => {
         f.step(2);
         f.step(902);
         expect(f.raids()).toEqual([]);
+    });
+
+    test('returning tanks keep their active path and retry only an idle unit after ninety ticks', () => {
+        const f = fixture();
+        f.launch(); f.step(0);
+        f.objects.delete(f.target.id);
+        f.step(2);
+        for (const id of [7, 8, 9]) f.objects.get(id).isIdle = false;
+        f.step(32);
+        f.objects.get(7).isIdle = true;
+        f.step(60);
+        expect(f.orders).toHaveLength(1);
+        f.step(92);
+        expect(f.orders).toHaveLength(2);
+        expect(f.orders[1]).toEqual([[7], OrderType.Move, 0, 0]);
     });
 });
 

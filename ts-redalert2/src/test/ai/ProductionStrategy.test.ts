@@ -8,7 +8,7 @@ import type { UnitRequest } from "../../game/ai/thirdpartbot/builtIn/bot/logic/m
 import { BasicBuilding } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/basicBuilding";
 import { ResourceCollectionBuilding } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/resourceCollectionBuilding";
 
-function productionScenario(credits = 100) {
+function productionScenario(credits = 100, difficulty?: "normal" | "brutal") {
     const available = new Map<number, any[]>();
     const queues = new Map(QUEUES.map(type => [type, { type, status: QueueStatus.Idle, items: [] as any[], size: 0 }]));
     const owned: any[] = [];
@@ -18,6 +18,7 @@ function productionScenario(credits = 100) {
         pauseProduction: mock(() => {}), resumeProduction: mock(() => {}),
     };
     const context = {
+        difficulty,
         player: {
             name: "bot", actions,
             production: { getAvailableObjects: (type: number) => available.get(type) ?? [], getQueueData: (type: number) => queues.get(type)! },
@@ -38,6 +39,14 @@ function productionScenario(credits = 100) {
 }
 
 describe("AI production economy", () => {
+    test.each(["normal", "brutal"] as const)("%s enforces specialist limits only for the brutal profile", difficulty => {
+        const s = productionScenario(2000, difficulty);
+        s.owned.push({ name: "DESO" }, { name: "DESO" });
+        s.request(QueueType.Infantry, "DESO", 50, 600, QueueStatus.Active);
+        s.run();
+        if (difficulty === "brutal") expect(s.actions.unqueueFromProduction).toHaveBeenCalledWith(QueueType.Infantry, "DESO", ObjectType.Vehicle, 1);
+        else expect(s.actions.unqueueFromProduction).not.toHaveBeenCalled();
+    });
     test("a cash-starved opening reserves income before starting low priority infantry", () => {
         const s = productionScenario(100);
         s.request(QueueType.Structures, "GAPOWR", 100, 800);

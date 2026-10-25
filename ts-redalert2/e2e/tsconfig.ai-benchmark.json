@@ -1,6 +1,6 @@
 {
   "extends": "../tsconfig.build.json",
   "compilerOptions": { "types": ["bun", "vite/client"] },
-  "include": ["ai-benchmark.ts", "ai-baseline.ts", "../src/types/**/*.d.ts"],
+  "include": ["ai-*.ts", "../src/types/**/*.d.ts"],
   "exclude": []
 }
