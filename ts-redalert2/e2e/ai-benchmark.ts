@@ -136,6 +136,10 @@ const candidateDiff = args['candidate-ref'] === 'working-tree'
     ? await git('diff', 'HEAD', '--', 'ts-redalert2/src/game/ai/thirdpartbot/builtIn') : '';
 const candidateStatus = args['candidate-ref'] === 'working-tree'
     ? await git('status', '--porcelain', '--untracked-files=all', '--', 'ts-redalert2/src/game/ai/thirdpartbot/builtIn') : '';
+const engineStatus = await git('status', '--porcelain', '--untracked-files=all', '--', 'ts-redalert2/src',
+    ':(exclude)ts-redalert2/src/game/ai/thirdpartbot/builtIn', ':(exclude)ts-redalert2/src/test');
+const engineDiff = await git('diff', 'HEAD', '--', 'ts-redalert2/src',
+    ':(exclude)ts-redalert2/src/game/ai/thirdpartbot/builtIn', ':(exclude)ts-redalert2/src/test');
 async function hashBotSources() {
     const directory = resolve(projectRoot, 'src/game/ai/thirdpartbot/builtIn');
     const filenames = (await readdir(directory, { recursive: true })).filter(filename => filename.endsWith('.ts')).sort();
@@ -146,13 +150,14 @@ async function hashBotSources() {
 const report: any = {
     format: 1, engine: 'GameFactory/Game.update (same engine, physics, economy and fog of war for both bots)',
     engineCommit: await git('rev-parse', 'HEAD'),
+    engineDirty: !!engineStatus, engineWorkingTreeStatus: engineStatus || null, engineDiffSha256: engineDiff ? hash(engineDiff) : null,
     candidate: { commit: candidate.commit, profile: args['candidate-profile'], source: args['candidate-ref'],
         dirty: !!candidateStatus, workingTreeStatus: candidateStatus || null, diffSha256: candidateDiff ? hash(candidateDiff) : null,
         sourceSha256: args['candidate-ref'] === 'working-tree' ? await hashBotSources() : null },
     baseline: { commit: baseline.commit, profile: args['baseline-profile'] },
     settings: { maxTicks, sampleTicks, credits, unitCount, gameSpeed: 3, engineDifficulty: AiDifficulty.Normal,
         pairedSpawnSwap: !args['no-swap'], pairedPlayerOrderSwap: !args['no-swap'], simulationTicksPerSecond: GameSpeed.BASE_TICKS_PER_SECOND,
-        shortGame: true, superWeapons: false, crates: false },
+        shortGame: true, superWeapons: false, crates: false, engineStalemateDetection: false },
     resources: { iniSha256: hash(baseBytes), customIniSha256: hash(customBytes) },
     metricNotes: {
         playerOrder: 'Every player array is [candidate, baseline], including swapped games.',
@@ -338,6 +343,7 @@ for (const mapName of args.map!.split(',')) {
         } finally {
             match.wallSeconds = (performance.now() - startedAt) / 1000;
             try { game?.dispose(); } catch (error) { match.disposeError = String(error); match.result = 'error'; match.reason = 'dispose-runtime-error'; }
+            if (telemetry.errorCount && match.result !== 'error') { match.result = 'error'; match.reason = 'logged-runtime-errors'; }
             activeGame = undefined;
             activeTelemetry = undefined;
         }

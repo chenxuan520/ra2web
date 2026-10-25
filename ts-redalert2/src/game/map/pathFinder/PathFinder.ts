@@ -47,12 +47,11 @@ export class PathFinder {
     }
     find(fromId: string, toId: string): any[] {
         const fromNode = this.graph.getNode(fromId);
-        if (!fromNode) {
-            throw new Error(`fromId is not defined in this graph: ${fromId}`);
-        }
         const toNode = this.graph.getNode(toId);
-        if (!toNode) {
-            throw new Error(`toId is not defined in this graph: ${toId}`);
+        // A terrain fallback or invalidated tile may have no passable node.
+        // Report an unreachable route so movement can recover normally.
+        if (!fromNode || !toNode) {
+            return [];
         }
         if (fromNode === toNode) {
             return [];
