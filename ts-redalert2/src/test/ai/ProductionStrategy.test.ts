@@ -1,6 +1,6 @@
 import { describe, expect, mock, test } from "bun:test";
 import { QueueController, QUEUES } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/queueController";
-import { QueueStatus, QueueType, ObjectType } from "../../game/ai/thirdpartbot/builtIn/game-api";
+import { QueueStatus, QueueType, ObjectType, MovementZone } from "../../game/ai/thirdpartbot/builtIn/game-api";
 import { DEFAULT_COMPOSITIONS } from "../../game/ai/thirdpartbot/builtIn/bot/strategy/defaultStrategy";
 import { selectAdaptiveComposition } from "../../game/ai/thirdpartbot/builtIn/bot/strategy/adaptiveComposition";
 import { GlobalThreat } from "../../game/ai/thirdpartbot/builtIn/bot/logic/threat/threat";
@@ -12,6 +12,9 @@ function productionScenario(credits = 100, difficulty?: "normal" | "brutal") {
     const available = new Map<number, any[]>();
     const queues = new Map(QUEUES.map(type => [type, { type, status: QueueStatus.Idle, items: [] as any[], size: 0 }]));
     const owned: any[] = [];
+    const hostiles: any[] = [];
+    let tick = 0, country = "Russians";
+    const controller = new QueueController();
     const requests = new Map<string, UnitRequest>();
     const actions = {
         queueForProduction: mock(() => {}), unqueueFromProduction: mock(() => {}),
@@ -24,8 +27,9 @@ function productionScenario(credits = 100, difficulty?: "normal" | "brutal") {
             production: { getAvailableObjects: (type: number) => available.get(type) ?? [], getQueueData: (type: number) => queues.get(type)! },
         },
         game: {
-            getPlayerData: () => ({ name: "bot", credits }), getCurrentTick: () => 0,
-            getVisibleUnits: (_name: string, _relation: string, predicate: (rules: any) => boolean) => owned.filter(predicate).map((_, i) => i),
+            getPlayerData: () => ({ name: "bot", credits, country: { name: country } }), getCurrentTick: () => tick,
+            getVisibleUnits: (_name: string, relation: string, predicate: (rules: any) => boolean) =>
+                (relation === "enemy" ? hostiles : owned).filter(predicate).map((_, i) => i),
         },
     };
     function request(type: number, name: string, priority: number, cost: number, status = QueueStatus.Idle) {
@@ -35,10 +39,49 @@ function productionScenario(credits = 100, difficulty?: "normal" | "brutal") {
         queues.set(type, { type, status, items: status === QueueStatus.Idle ? [] : [{ rules: { ...rules }, quantity: 1 }], size: status === QueueStatus.Idle ? 0 : 1 });
         return rules;
     }
-    return { available, queues, owned, requests, actions, request, run: () => new QueueController().onAiUpdate(context as any, null, requests, () => {}) };
+    return { available, queues, owned, hostiles, requests, actions, request,
+        at(value: number) { tick = value; }, country(value: string) { country = value; },
+        run: () => controller.onAiUpdate(context as any, null, requests, () => {}) };
 }
 
 describe("AI production economy", () => {
+    test.each(["normal", "brutal"] as const)("%s responds to visible air with funded flak only in brutal", difficulty => {
+        const s = productionScenario(2000, difficulty);
+        s.owned.push({ refinery: true }, { refinery: true }, { harvester: true }, { harvester: true });
+        for (let i = 0; i < 8; i++) s.hostiles.push({ name: "JUMPJET", type: ObjectType.Infantry,
+            movementZone: MovementZone.Fly, isSelectableCombatant: true });
+        Object.assign(s.request(QueueType.Vehicles, "HARV", 15, 1400), { harvester: true });
+        s.request(QueueType.Vehicles, "HTK", 0, 500);
+        s.run();
+        if (difficulty === "brutal") expect(s.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTK", ObjectType.Vehicle, 1);
+        else expect(s.actions.queueForProduction).not.toHaveBeenCalledWith(QueueType.Vehicles, "HTK", ObjectType.Vehicle, 1);
+    });
+    test("air response remembers a recent sighting but stops at its bounded counter target", () => {
+        const s = productionScenario(2000, "brutal");
+        s.request(QueueType.Vehicles, "HTK", 0, 500);
+        for (let i = 0; i < 8; i++) s.hostiles.push({ name: "JUMPJET", type: ObjectType.Infantry,
+            movementZone: MovementZone.Fly, isSelectableCombatant: true });
+        s.run(); s.actions.queueForProduction.mockClear();
+        s.hostiles.length = 0; s.at(60); s.run();
+        expect(s.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTK", ObjectType.Vehicle, 1);
+        s.actions.queueForProduction.mockClear();
+        for (let i = 0; i < 4; i++) s.owned.push({ name: "HTK" });
+        s.at(120); s.run(); expect(s.actions.queueForProduction).not.toHaveBeenCalled();
+        s.owned.length = 0; s.at(601); s.run(); expect(s.actions.queueForProduction).not.toHaveBeenCalled();
+    });
+    test("the Soviet emergency policy does not change an allied bot with a captured flak factory", () => {
+        const s = productionScenario(2000, "brutal"); s.country("Americans");
+        s.request(QueueType.Vehicles, "HTK", 0, 500);
+        s.hostiles.push({ name: "JUMPJET", type: ObjectType.Infantry, movementZone: MovementZone.Fly, isSelectableCombatant: true });
+        s.run(); expect(s.actions.queueForProduction).not.toHaveBeenCalled();
+    });
+    test("air response waits for the real flak prerequisite before starting its paid queue", () => {
+        const s = productionScenario(2000, "brutal");
+        s.hostiles.push({ name: "JUMPJET", type: ObjectType.Infantry, movementZone: MovementZone.Fly, isSelectableCombatant: true });
+        s.run(); expect(s.actions.queueForProduction).not.toHaveBeenCalled();
+        s.hostiles.length = 0; s.at(30); s.request(QueueType.Vehicles, "HTK", 0, 500); s.run();
+        expect(s.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTK", ObjectType.Vehicle, 1);
+    });
     test.each(["normal", "brutal"] as const)("%s keeps the restored C18 conscript cap explicit", difficulty => {
         const s = productionScenario(2000, difficulty);
         for (let i = 0; i < 32; i++) s.owned.push({ name: "E2" });

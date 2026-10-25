@@ -14,7 +14,7 @@ import { SupabotContext } from "../common/context";
 import { UnitRequest } from "../mission/missionController";
 import { NATIONAL_SUPPORT_LIMITS } from "../../strategy/nationalComposition";
 import { readStrategicSituation } from "../../strategy/nationalComposition";
-import { getBasicInfantryBudget } from "../../strategy/basicInfantryBudget";
+import { getBasicInfantryBudget, isSovietCountry } from "../../strategy/basicInfantryBudget";
 
 export const QUEUES = [
     QueueType.Structures,
@@ -62,6 +62,8 @@ const PLACEMENT_FAILURE_CANCEL_THRESHOLD = 10;
 export class QueueController {
     private queueStates: QueueState[] = [];
     private lastRepairCheckAt = 0;
+    private airResponseUntil = -Infinity;
+    private airResponseTarget = 0;
     private placementFailures: Map<string, number> = new Map();
 
     constructor() {}
@@ -108,6 +110,20 @@ export class QueueController {
         }
         if (context.difficulty === "brutal") {
             const situation = readStrategicSituation(game, playerData);
+            if (isSovietCountry(playerData.country?.name)) {
+                const tick = game.getCurrentTick();
+                if (situation.enemy.aircraft > 0) {
+                    this.airResponseTarget = Math.max(this.airResponseTarget,
+                        Math.min(6, Math.max(2, Math.ceil(situation.enemy.aircraft / 2))));
+                    this.airResponseUntil = tick + 600;
+                } else if (tick >= this.airResponseUntil) this.airResponseTarget = 0;
+                const aa = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === "HTK");
+                if (aa && (situation.own.HTK ?? 0) < this.airResponseTarget && (requests.get(aa.name)?.priority ?? 0) < 100) {
+                    // Visible air pressure needs actual counters before another
+                    // miner is sent out. Retain the observation briefly across fog.
+                    requests.set(aa.name, { priority: 100, specificLocation: null });
+                }
+            }
             if (situation.harvesters >= 1 && situation.enemy.infantry >= 8 &&
                 (situation.own.MTNK ?? 0) + (situation.own.HTNK ?? 0) < 2) {
                 const tank = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === "MTNK" || option.name === "HTNK");
