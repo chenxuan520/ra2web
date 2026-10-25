@@ -4,6 +4,7 @@ import { getEconomyBuildingPriority } from "../../game/ai/thirdpartbot/builtIn/b
 function scenario(names: string[], credits = 5000) {
     const owned = names.map(name => ({ name, harvester: ["HARV", "CMIN"].includes(name) }));
     const game: any = { getCurrentTick: () => 6000,
+        mapApi: { getStartingLocations: () => [{ distanceTo: () => 120 }] },
         getVisibleUnits: (_: string, relation: string, filter: any) => relation === "self" ? owned.filter(filter).map((_, i) => i) : [] };
     const player: any = { name: "bot", country: { name: "Arabs" }, credits };
     return (name: string, extra = {}) => getEconomyBuildingPriority(game, player, { name, ...extra } as any, false);

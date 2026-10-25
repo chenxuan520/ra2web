@@ -22,7 +22,7 @@ import { MissionContext } from "../../../common/context";
 import { chooseTacticalTarget, getCombatWeapon, getTacticalRetreatPoint, isFiringBurst, isMissileArtillery } from "./tacticalTargeting";
 import { DesolatorTactics } from "./desolatorTactics";
 import { getInfantryCrushPoint } from "./infantryCrushing";
-import { antiAirThreats, getAirEvasionPoint, isAirAttackApproachSafe } from "./airSafety";
+import { antiAirThreats, getAirEvasionPoint, getAirTransitWaypoint, isAirAttackApproachSafe } from "./airSafety";
 
 const TARGET_UPDATE_INTERVAL_TICKS = 10;
 
@@ -53,6 +53,7 @@ export class CombatSquad implements Squad {
     private maneuverUntil = new Map<number, number>();
     private injuredReserveUntil = new Map<number, number>();
     private desolatorTactics = new DesolatorTactics();
+    private protectAir = true;
 
     /**
      *
@@ -74,6 +75,8 @@ export class CombatSquad implements Squad {
     public setAttackArea(targetArea: Vector2) {
         this.targetArea = targetArea;
     }
+
+    public setAirSafety(enabled: boolean) { this.protectAir = enabled; }
 
     public setDefensiveRadius(radius: number | undefined) {
         this.defendArea = radius !== undefined;
@@ -190,7 +193,7 @@ export class CombatSquad implements Squad {
                         this.maneuverUntil.set(unit.id, tick + 36);
                         continue;
                     }
-                    const airEscape = brutal && !unit.isFiring && ![AttackState.FireUp, AttackState.Firing].includes(unit.attackState as any)
+                    const airEscape = brutal && this.protectAir && !unit.isFiring && ![AttackState.FireUp, AttackState.Firing].includes(unit.attackState as any)
                         && tick >= (this.maneuverUntil.get(unit.id) ?? 0) ? getAirEvasionPoint(unit, hostiles, targetPoint, game.mapApi) : null;
                     if (airEscape) {
                         this.submitActionIfNew(actionBatcher, BatchableAction.toPoint(unit.id, OrderType.Move, airEscape), unit, tick);
@@ -231,7 +234,7 @@ export class CombatSquad implements Squad {
                         const weapon = getCombatWeapon(unit, target, true);
                         const distance = ownPoint.distanceTo(new Vector2(target.tile.rx, target.tile.ry));
                         return weapon && distance <= weapon.range && distance >= (weapon.weapon.minRange ?? 0);
-                    }) : brutal ? hostiles.filter(target => isAirAttackApproachSafe(unit, target, hostiles)) : hostiles;
+                    }) : brutal && this.protectAir ? hostiles.filter(target => isAirAttackApproachSafe(unit, target, hostiles)) : hostiles;
                     // Filter null weights before maxBy: it returns an element even when all weights are null.
                     const bestUnit = brutal
                         ? chooseTacticalTarget(unit, availableTargets, committedDamage, this.lastOrderGiven[unit.id]?.targetId)
@@ -256,8 +259,10 @@ export class CombatSquad implements Squad {
                             this.followTankEscort(context, unit, units, targetPoint, tick);
                         } else if (holdingReserve) {
                             if (!unit.isIdle) this.submitActionIfNew(actionBatcher, BatchableAction.noTarget(unit.id, OrderType.Stop), unit, tick);
-                        } else if (brutal && antiAirThreats(unit, hostiles).length) {
-                            if (!unit.isIdle) this.submitActionIfNew(actionBatcher, BatchableAction.noTarget(unit.id, OrderType.Stop), unit, tick);
+                        } else if (brutal && this.protectAir && antiAirThreats(unit, hostiles).length) {
+                            const waypoint = getAirTransitWaypoint(unit, targetPoint, hostiles, game.mapApi);
+                            if (waypoint) this.submitActionIfNew(actionBatcher, BatchableAction.toPoint(unit.id, OrderType.Move, waypoint), unit, tick);
+                            else if (!unit.isIdle) this.submitActionIfNew(actionBatcher, BatchableAction.noTarget(unit.id, OrderType.Stop), unit, tick);
                         } else this.submitMovement(context, unit, targetPoint, tick);
                         this.debugLastTarget = `@${targetPoint.x},${targetPoint.y}`;
                     }

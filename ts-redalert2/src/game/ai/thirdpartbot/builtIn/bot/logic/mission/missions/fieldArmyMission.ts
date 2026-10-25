@@ -1,6 +1,7 @@
 import { GameApi, ObjectType, UnitData, Vector2, ZoneType } from "../../../../game-api";
 import { SideComposition } from "../../../strategy/compositionUtils";
 import { readStrategicSituation } from "../../../strategy/nationalComposition";
+import { getOpeningAirBudget } from "../../../strategy/openingAirBudget";
 import { MissionContext } from "../../common/context";
 import { DebugLogger } from "../../common/utils";
 import { Mission, requestSpecificUnits, requestUnits } from "../mission";
@@ -45,6 +46,7 @@ export class FieldArmyMission extends Mission {
             anchors.some(base => location(base).distanceTo(location(enemy)) <= 22));
         const rally = matchAwareness.getMainRallyPoint();
         this.squad ??= new CombatSquad(rally, rally, 15);
+        this.squad.setAirSafety(getOpeningAirBudget(game, playerData) === 2);
         if (armor.length >= 4 || air.length >= 2 || units.some(unit => unit.name === "ZEP") || infantry.length >= 20) this.attacking = true;
         if (units.length < 3 && !air.length) this.attacking = false;
         const center = this.getCenterOfMass() ?? rally;
@@ -97,7 +99,8 @@ export class FieldArmyMission extends Mission {
         if (core >= 4 || airThreat > 0) want(aa, airThreat > 0 ? Math.max(2, Math.ceil(core / 3)) : Math.max(1, Math.ceil(core / 8)), 45);
         for (const name of Object.keys(this.plan?.composition ?? {})) {
             if (name === tank || name === aa || name === "E1" || name === "E2" || name === "DESO") continue;
-            const cap = name === "JUMPJET" ? s.harvesters < 2 ? 2 : s.harvesters < 4 ? 4 : 8
+            const openingAir = name === "JUMPJET" ? getOpeningAirBudget(game, playerData) : 0;
+            const cap = name === "JUMPJET" ? s.harvesters < 2 ? openingAir : s.harvesters < 4 ? Math.max(openingAir, 4) : 8
                 : name === "ZEP" ? 2 : name === "V3" || name === "SREF" ? 3 : 2;
             want(name, cap, name === "ZEP" && !(s.own.ZEP > 0) && s.harvesters >= 2 ? 100 : 40);
         }

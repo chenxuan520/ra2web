@@ -1,5 +1,6 @@
 import { GameApi, PlayerData, TechnoRules } from "../../../game-api";
 import { readStrategicSituation } from "../../strategy/nationalComposition";
+import { getOpeningAirBudget } from "../../strategy/openingAirBudget";
 
 /** Fund income before duplicating production capacity that the miners cannot supply. */
 export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, rules: TechnoRules, committed: boolean): number | undefined {
@@ -10,7 +11,7 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
     if (rules.refinery) {
         if (!refineries) return 50;
         if (refineries === 1) return (factories > 0 && s.harvesters >= 2) ||
-            (!factories && (s.own.JUMPJET ?? 0) >= 2) ? 50 : 0;
+            (!factories && (s.own.JUMPJET ?? 0) >= 2 && getOpeningAirBudget(game, player) === 2) ? 50 : 0;
         return refineries < 4 && s.harvesters >= refineries * 2 ? 18 : 0;
     }
     if (rules.name === "GAPILE" || rules.name === "NAHAND") return count ? 0 : 55;

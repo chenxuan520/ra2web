@@ -91,6 +91,7 @@ function fieldFixture() {
         getPlayers: () => ["bot"],
         rulesApi: { vehicleRules: new Map(), infantryRules: new Map(), aircraftRules: new Map(), buildingRules: new Map() },
         mapApi: { getTile: (rx: number, ry: number) => ({ rx, ry }), isVisibleTile: () => false,
+            getStartingLocations: () => [new Vector2(), new Vector2(120, 0)],
             getRealMapSize: () => ({ width: 60, height: 60 }) },
     };
     const context = { difficulty: "brutal", game, player: { name: "bot", production: {

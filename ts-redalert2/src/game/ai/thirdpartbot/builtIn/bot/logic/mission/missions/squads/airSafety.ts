@@ -44,3 +44,20 @@ export function isAirAttackApproachSafe(unit: UnitData, target: UnitData, enemie
     const firingPosition = from.clone().add(direction);
     return threats.every(({ enemy, weapon }) => distanceToSegment(point(enemy), from, firingPosition) >= weapon!.range + 2);
 }
+
+/** Nearby flak must not pin a safe flyer in place when its objective is away from the guns. */
+export function getAirTransitWaypoint(unit: UnitData, destination: Vector2, enemies: UnitData[], map: MapApi): Vector2 | null {
+    const threats = antiAirThreats(unit, enemies), from = point(unit);
+    const options: Vector2[] = [];
+    const direct = destination.clone().sub(from);
+    if (direct.length() <= 1) return null;
+    direct.multiplyScalar(Math.min(4, direct.length()) / direct.length());
+    for (const direction of [direct, ...[[1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1], [0, -1], [1, -1]]
+        .map(([x, y]) => new Vector2(x, y).multiplyScalar(4 / Math.hypot(x, y)))]) {
+        const to = from.clone().add(direction);
+        to.set(Math.round(to.x), Math.round(to.y));
+        if (!map.getTile(to.x, to.y) || to.distanceTo(destination) >= from.distanceTo(destination) - 0.25) continue;
+        if (threats.every(({ enemy, weapon }) => distanceToSegment(point(enemy), from, to) >= weapon!.range + 2)) options.push(to);
+    }
+    return options.sort((a, b) => a.distanceTo(destination) - b.distanceTo(destination) || a.x - b.x || a.y - b.y)[0] ?? null;
+}
