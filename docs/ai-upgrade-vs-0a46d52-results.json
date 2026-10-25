@@ -1,0 +1,4023 @@
+{
+  "runId": 40195981546,
+  "ci": "https://github.com/chenxuan520/ra2web/actions/runs/40195981546",
+  "candidate": "c18f77650e40b668064bdb913a75bebfa278f42b",
+  "baseline": "0a46d527995adc2411c04484de7336d63d4b0c5f",
+  "config": {
+    "candidateCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+    "baselineCommit": "0a46d527995adc2411c04484de7336d63d4b0c5f",
+    "candidateProfile": "brutal",
+    "baselineProfile": "brutal",
+    "engineCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+    "engineSourceSha256": "3a38cade03ab27d195d33cf85a6d8c60b969568664766fd2e537b1a2f17e2ab6",
+    "runnerSourceSha256": "3de75e1172bab130c1575818364c60f5458c1cfbb1144a9e587cbc5feff2bae5",
+    "bunVersion": "1.3.14",
+    "lockfileSha256": "23854cfbf8ade38e0244ce53a42396be18a819983f3f5d6372b2d6224b939cf9",
+    "resourceLoaderSha256": "c89bd9944ce017136bb46d440924b9a7ce8e2a5c868b36292721b11e90a7712d",
+    "countries": [
+      "Americans",
+      "Alliance",
+      "French",
+      "Germans",
+      "British",
+      "Africans",
+      "Arabs",
+      "Confederation",
+      "Russians"
+    ],
+    "maxTicks": 27000,
+    "sampleTicks": 900,
+    "credits": 10000,
+    "unitCount": 0,
+    "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+    "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66",
+    "engineDifficulty": 4,
+    "pairedSpawnSwap": true,
+    "pairedPlayerOrderSwap": true
+  },
+  "scenarios": [
+    [
+      "mp08t2",
+      10111
+    ],
+    [
+      "mp11t2",
+      30333
+    ],
+    [
+      "tn01t2",
+      20222
+    ]
+  ],
+  "totals": {
+    "wins": 375,
+    "losses": 29,
+    "draws": 28,
+    "games": 432,
+    "winRate": 0.8680555555555556
+  },
+  "byCountry": {
+    "Americans": {
+      "wins": 48,
+      "losses": 0,
+      "draws": 0,
+      "games": 48,
+      "winRate": 1.0
+    },
+    "Alliance": {
+      "wins": 37,
+      "losses": 7,
+      "draws": 4,
+      "games": 48,
+      "winRate": 0.7708333333333334
+    },
+    "French": {
+      "wins": 36,
+      "losses": 8,
+      "draws": 4,
+      "games": 48,
+      "winRate": 0.75
+    },
+    "Germans": {
+      "wins": 37,
+      "losses": 7,
+      "draws": 4,
+      "games": 48,
+      "winRate": 0.7708333333333334
+    },
+    "British": {
+      "wins": 37,
+      "losses": 7,
+      "draws": 4,
+      "games": 48,
+      "winRate": 0.7708333333333334
+    },
+    "Africans": {
+      "wins": 44,
+      "losses": 0,
+      "draws": 4,
+      "games": 48,
+      "winRate": 0.9166666666666666
+    },
+    "Arabs": {
+      "wins": 48,
+      "losses": 0,
+      "draws": 0,
+      "games": 48,
+      "winRate": 1.0
+    },
+    "Confederation": {
+      "wins": 44,
+      "losses": 0,
+      "draws": 4,
+      "games": 48,
+      "winRate": 0.9166666666666666
+    },
+    "Russians": {
+      "wins": 44,
+      "losses": 0,
+      "draws": 4,
+      "games": 48,
+      "winRate": 0.9166666666666666
+    }
+  },
+  "byMap": {
+    "mp08t2.map": {
+      "wins": 115,
+      "losses": 13,
+      "draws": 16,
+      "games": 144,
+      "winRate": 0.7986111111111112
+    },
+    "mp11t2.map": {
+      "wins": 144,
+      "losses": 0,
+      "draws": 0,
+      "games": 144,
+      "winRate": 1.0
+    },
+    "tn01t2.map": {
+      "wins": 116,
+      "losses": 16,
+      "draws": 12,
+      "games": 144,
+      "winRate": 0.8055555555555556
+    }
+  },
+  "features": {
+    "captureOrders": {
+      "events": 910,
+      "gamesWithEvents": 43,
+      "coveredGames": 432
+    },
+    "desolatorDeployments": {
+      "events": 0,
+      "gamesWithEvents": 0,
+      "coveredGames": 432
+    },
+    "desolatorUnloadsFromIntactTransport": {
+      "events": 0,
+      "gamesWithEvents": 0,
+      "coveredGames": 432
+    },
+    "desolatorsBoarded": {
+      "events": 0,
+      "gamesWithEvents": 0,
+      "coveredGames": 432
+    },
+    "desolatorsProduced": {
+      "events": 3,
+      "gamesWithEvents": 3,
+      "coveredGames": 432
+    },
+    "enemyCrushKills": {
+      "events": 3163,
+      "gamesWithEvents": 304,
+      "coveredGames": 432
+    },
+    "enemyObjectsAcquiredCauseUnspecified": {
+      "events": 3,
+      "gamesWithEvents": 3,
+      "coveredGames": 432
+    },
+    "grandCannonShots": {
+      "events": 0,
+      "gamesWithEvents": 0,
+      "coveredGames": 432
+    },
+    "grandCannonsReady": {
+      "events": 0,
+      "gamesWithEvents": 0,
+      "coveredGames": 432
+    },
+    "neutralObjectsAcquiredCauseUnspecified": {
+      "events": 22,
+      "gamesWithEvents": 22,
+      "coveredGames": 432
+    },
+    "ownerlessRadiationDamageToBaseline": {
+      "events": 0,
+      "gamesWithEvents": 0,
+      "coveredGames": 432
+    },
+    "ownerlessRadiationDamageToCandidate": {
+      "events": 0,
+      "gamesWithEvents": 0,
+      "coveredGames": 432
+    },
+    "surplusRaidDetachments": {
+      "events": 16,
+      "gamesWithEvents": 16,
+      "coveredGames": 432
+    }
+  },
+  "featuresByCountry": {
+    "Americans": {
+      "captureOrders": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "desolatorDeployments": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "desolatorUnloadsFromIntactTransport": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "desolatorsBoarded": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "desolatorsProduced": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "enemyCrushKills": {
+        "events": 264,
+        "gamesWithEvents": 32,
+        "coveredGames": 48
+      },
+      "enemyObjectsAcquiredCauseUnspecified": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "grandCannonShots": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "grandCannonsReady": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "neutralObjectsAcquiredCauseUnspecified": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "ownerlessRadiationDamageToBaseline": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "ownerlessRadiationDamageToCandidate": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "surplusRaidDetachments": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      }
+    },
+    "Alliance": {
+      "captureOrders": {
+        "events": 148,
+        "gamesWithEvents": 4,
+        "coveredGames": 48
+      },
+      "desolatorDeployments": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "desolatorUnloadsFromIntactTransport": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "desolatorsBoarded": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "desolatorsProduced": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "enemyCrushKills": {
+        "events": 488,
+        "gamesWithEvents": 36,
+        "coveredGames": 48
+      },
+      "enemyObjectsAcquiredCauseUnspecified": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "grandCannonShots": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "grandCannonsReady": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "neutralObjectsAcquiredCauseUnspecified": {
+        "events": 4,
+        "gamesWithEvents": 4,
+        "coveredGames": 48
+      },
+      "ownerlessRadiationDamageToBaseline": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "ownerlessRadiationDamageToCandidate": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "surplusRaidDetachments": {
+        "events": 4,
+        "gamesWithEvents": 4,
+        "coveredGames": 48
+      }
+    },
+    "French": {
+      "captureOrders": {
+        "events": 148,
+        "gamesWithEvents": 4,
+        "coveredGames": 48
+      },
+      "desolatorDeployments": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "desolatorUnloadsFromIntactTransport": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "desolatorsBoarded": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "desolatorsProduced": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "enemyCrushKills": {
+        "events": 488,
+        "gamesWithEvents": 36,
+        "coveredGames": 48
+      },
+      "enemyObjectsAcquiredCauseUnspecified": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "grandCannonShots": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "grandCannonsReady": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "neutralObjectsAcquiredCauseUnspecified": {
+        "events": 4,
+        "gamesWithEvents": 4,
+        "coveredGames": 48
+      },
+      "ownerlessRadiationDamageToBaseline": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "ownerlessRadiationDamageToCandidate": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "surplusRaidDetachments": {
+        "events": 4,
+        "gamesWithEvents": 4,
+        "coveredGames": 48
+      }
+    },
+    "Germans": {
+      "captureOrders": {
+        "events": 148,
+        "gamesWithEvents": 4,
+        "coveredGames": 48
+      },
+      "desolatorDeployments": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "desolatorUnloadsFromIntactTransport": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "desolatorsBoarded": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "desolatorsProduced": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "enemyCrushKills": {
+        "events": 488,
+        "gamesWithEvents": 36,
+        "coveredGames": 48
+      },
+      "enemyObjectsAcquiredCauseUnspecified": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "grandCannonShots": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "grandCannonsReady": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "neutralObjectsAcquiredCauseUnspecified": {
+        "events": 4,
+        "gamesWithEvents": 4,
+        "coveredGames": 48
+      },
+      "ownerlessRadiationDamageToBaseline": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "ownerlessRadiationDamageToCandidate": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "surplusRaidDetachments": {
+        "events": 4,
+        "gamesWithEvents": 4,
+        "coveredGames": 48
+      }
+    },
+    "British": {
+      "captureOrders": {
+        "events": 148,
+        "gamesWithEvents": 4,
+        "coveredGames": 48
+      },
+      "desolatorDeployments": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "desolatorUnloadsFromIntactTransport": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "desolatorsBoarded": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "desolatorsProduced": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "enemyCrushKills": {
+        "events": 488,
+        "gamesWithEvents": 36,
+        "coveredGames": 48
+      },
+      "enemyObjectsAcquiredCauseUnspecified": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "grandCannonShots": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "grandCannonsReady": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "neutralObjectsAcquiredCauseUnspecified": {
+        "events": 4,
+        "gamesWithEvents": 4,
+        "coveredGames": 48
+      },
+      "ownerlessRadiationDamageToBaseline": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "ownerlessRadiationDamageToCandidate": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "surplusRaidDetachments": {
+        "events": 4,
+        "gamesWithEvents": 4,
+        "coveredGames": 48
+      }
+    },
+    "Africans": {
+      "captureOrders": {
+        "events": 7,
+        "gamesWithEvents": 7,
+        "coveredGames": 48
+      },
+      "desolatorDeployments": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "desolatorUnloadsFromIntactTransport": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "desolatorsBoarded": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "desolatorsProduced": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "enemyCrushKills": {
+        "events": 226,
+        "gamesWithEvents": 33,
+        "coveredGames": 48
+      },
+      "enemyObjectsAcquiredCauseUnspecified": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "grandCannonShots": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "grandCannonsReady": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "neutralObjectsAcquiredCauseUnspecified": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "ownerlessRadiationDamageToBaseline": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "ownerlessRadiationDamageToCandidate": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "surplusRaidDetachments": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      }
+    },
+    "Arabs": {
+      "captureOrders": {
+        "events": 297,
+        "gamesWithEvents": 6,
+        "coveredGames": 48
+      },
+      "desolatorDeployments": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "desolatorUnloadsFromIntactTransport": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "desolatorsBoarded": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "desolatorsProduced": {
+        "events": 3,
+        "gamesWithEvents": 3,
+        "coveredGames": 48
+      },
+      "enemyCrushKills": {
+        "events": 275,
+        "gamesWithEvents": 29,
+        "coveredGames": 48
+      },
+      "enemyObjectsAcquiredCauseUnspecified": {
+        "events": 3,
+        "gamesWithEvents": 3,
+        "coveredGames": 48
+      },
+      "grandCannonShots": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "grandCannonsReady": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "neutralObjectsAcquiredCauseUnspecified": {
+        "events": 6,
+        "gamesWithEvents": 6,
+        "coveredGames": 48
+      },
+      "ownerlessRadiationDamageToBaseline": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "ownerlessRadiationDamageToCandidate": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "surplusRaidDetachments": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      }
+    },
+    "Confederation": {
+      "captureOrders": {
+        "events": 7,
+        "gamesWithEvents": 7,
+        "coveredGames": 48
+      },
+      "desolatorDeployments": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "desolatorUnloadsFromIntactTransport": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "desolatorsBoarded": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "desolatorsProduced": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "enemyCrushKills": {
+        "events": 226,
+        "gamesWithEvents": 33,
+        "coveredGames": 48
+      },
+      "enemyObjectsAcquiredCauseUnspecified": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "grandCannonShots": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "grandCannonsReady": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "neutralObjectsAcquiredCauseUnspecified": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "ownerlessRadiationDamageToBaseline": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "ownerlessRadiationDamageToCandidate": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "surplusRaidDetachments": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      }
+    },
+    "Russians": {
+      "captureOrders": {
+        "events": 7,
+        "gamesWithEvents": 7,
+        "coveredGames": 48
+      },
+      "desolatorDeployments": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "desolatorUnloadsFromIntactTransport": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "desolatorsBoarded": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "desolatorsProduced": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "enemyCrushKills": {
+        "events": 220,
+        "gamesWithEvents": 33,
+        "coveredGames": 48
+      },
+      "enemyObjectsAcquiredCauseUnspecified": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "grandCannonShots": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "grandCannonsReady": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "neutralObjectsAcquiredCauseUnspecified": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "ownerlessRadiationDamageToBaseline": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "ownerlessRadiationDamageToCandidate": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "surplusRaidDetachments": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      }
+    }
+  },
+  "reportArtifactSha256": {
+    "report.md": "aab4a38defe7734cdef7daa9088228238e9f11657b49a754f6623a3b824c856a",
+    "results.json": "dda99fa6d8a834ff42236673db79e61ec8cee78cb42b5ef8545b1ed88e0749d4",
+    "matrix.csv": "8f162f5b16427ea252d5a0420de4a1a9de77475b508cd837f70dc8fff04ccc39",
+    "strength-assessment.json": "384a1a550f4ac9e646bbb074646c7df0df9e69f360801736e8ce626c6e31cb38"
+  },
+  "invariants": {
+    "validGames": 432,
+    "uniqueGames": 432,
+    "rawPairedReports": 216,
+    "countries": 9,
+    "otherCountriesPerCandidate": 8,
+    "gamesPerCountryPair": 6,
+    "errors": 0,
+    "missing": 0,
+    "mixedVersions": false,
+    "receiptsVerified": true,
+    "regressionSmokeExcluded": true,
+    "independentReportBytesIdentical": true
+  },
+  "strength": {
+    "minimumOverall": 0.8,
+    "minimumCountry": 0.7,
+    "minimumMap": 0.7,
+    "overallPassed": true,
+    "countryFailures": {},
+    "mapFailures": {},
+    "runtimeErrors": 0,
+    "passed": true,
+    "ciAssessment": {
+      "passed": true,
+      "thresholds": {
+        "overall": 0.8,
+        "country": 0.7,
+        "map": 0.7
+      },
+      "failures": []
+    }
+  },
+  "ciJobs": [
+    {
+      "id": 121176789603,
+      "name": "regression",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 121177383586,
+      "name": "country-matrix (medium, tn01t2:20222)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 121177383637,
+      "name": "country-matrix (long, mp11t2:30333)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 121177383700,
+      "name": "country-matrix (short, mp08t2:10111)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 121186902713,
+      "name": "report",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "logReceipts": [
+    {
+      "jobId": 121176789603,
+      "name": "regression",
+      "sha256": "7a875cb5d1a5b61c63ec29349559b69b0736e694a82d1ee128f7a924d2c4e85d",
+      "source": "Connected GitHub fetch_workflow_job_logs"
+    },
+    {
+      "jobId": 121177383586,
+      "name": "country-matrix (medium, tn01t2:20222)",
+      "sha256": "98464aa75059c7947aef8afdde982329d3b44083375e2de28f1358b67ef37855",
+      "source": "Connected GitHub fetch_workflow_job_logs"
+    },
+    {
+      "jobId": 121177383637,
+      "name": "country-matrix (long, mp11t2:30333)",
+      "sha256": "5d71b012bd83d218219466ea71b0bfa364afe233d8132dd6e3b83ba218ae4410",
+      "source": "Connected GitHub fetch_workflow_job_logs"
+    },
+    {
+      "jobId": 121177383700,
+      "name": "country-matrix (short, mp08t2:10111)",
+      "sha256": "0940927f2eb2cda5e1846fb141bc953ce5a23b5e1a257173337d99821fca8fb9",
+      "source": "Connected GitHub fetch_workflow_job_logs"
+    },
+    {
+      "jobId": 121186902713,
+      "name": "report",
+      "sha256": "cfccd0d39a6c3b466e48cf745ea2dd798902231d92f0b4d68ce48c2248756052",
+      "source": "Connected GitHub fetch_workflow_job_logs"
+    }
+  ],
+  "manifestReceipts": [
+    {
+      "shard": "ai-country-short",
+      "sha256": "51afaf9df82ec9ea186c4292290110f813e50a30ba759b5b937b2c363c12b743",
+      "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+      "config": {
+        "candidateCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+        "baselineCommit": "0a46d527995adc2411c04484de7336d63d4b0c5f",
+        "candidateProfile": "brutal",
+        "baselineProfile": "brutal",
+        "engineCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+        "engineSourceSha256": "3a38cade03ab27d195d33cf85a6d8c60b969568664766fd2e537b1a2f17e2ab6",
+        "runnerSourceSha256": "3de75e1172bab130c1575818364c60f5458c1cfbb1144a9e587cbc5feff2bae5",
+        "bunVersion": "1.3.14",
+        "lockfileSha256": "23854cfbf8ade38e0244ce53a42396be18a819983f3f5d6372b2d6224b939cf9",
+        "resourceLoaderSha256": "c89bd9944ce017136bb46d440924b9a7ce8e2a5c868b36292721b11e90a7712d",
+        "countries": [
+          "Americans",
+          "Alliance",
+          "French",
+          "Germans",
+          "British",
+          "Africans",
+          "Arabs",
+          "Confederation",
+          "Russians"
+        ],
+        "scenarios": [
+          {
+            "map": "mp08t2",
+            "seed": 10111,
+            "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+            "terrainFile": "isotemp.mix",
+            "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+          }
+        ],
+        "maxTicks": 27000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66",
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true
+      },
+      "countryLabels": {
+        "Americans": "美国",
+        "Alliance": "韩国",
+        "French": "法国",
+        "Germans": "德国",
+        "British": "英国",
+        "Africans": "利比亚",
+        "Arabs": "伊拉克",
+        "Confederation": "古巴",
+        "Russians": "苏俄"
+      },
+      "pairedReportCount": 72
+    },
+    {
+      "shard": "ai-country-medium",
+      "sha256": "e98820c5aa72b0a0987dba8d1d5d9785623f06705eb50f77578bd905c44dfd42",
+      "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+      "config": {
+        "candidateCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+        "baselineCommit": "0a46d527995adc2411c04484de7336d63d4b0c5f",
+        "candidateProfile": "brutal",
+        "baselineProfile": "brutal",
+        "engineCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+        "engineSourceSha256": "3a38cade03ab27d195d33cf85a6d8c60b969568664766fd2e537b1a2f17e2ab6",
+        "runnerSourceSha256": "3de75e1172bab130c1575818364c60f5458c1cfbb1144a9e587cbc5feff2bae5",
+        "bunVersion": "1.3.14",
+        "lockfileSha256": "23854cfbf8ade38e0244ce53a42396be18a819983f3f5d6372b2d6224b939cf9",
+        "resourceLoaderSha256": "c89bd9944ce017136bb46d440924b9a7ce8e2a5c868b36292721b11e90a7712d",
+        "countries": [
+          "Americans",
+          "Alliance",
+          "French",
+          "Germans",
+          "British",
+          "Africans",
+          "Arabs",
+          "Confederation",
+          "Russians"
+        ],
+        "scenarios": [
+          {
+            "map": "tn01t2",
+            "seed": 20222,
+            "mapSha256": "95a836a2b42728d2c7d5c606902619b98afe428cb54eaf8b489e2d83819213e3",
+            "terrainFile": "isotemp.mix",
+            "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+          }
+        ],
+        "maxTicks": 27000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66",
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true
+      },
+      "countryLabels": {
+        "Americans": "美国",
+        "Alliance": "韩国",
+        "French": "法国",
+        "Germans": "德国",
+        "British": "英国",
+        "Africans": "利比亚",
+        "Arabs": "伊拉克",
+        "Confederation": "古巴",
+        "Russians": "苏俄"
+      },
+      "pairedReportCount": 72
+    },
+    {
+      "shard": "ai-country-long",
+      "sha256": "18bf048c5ffc0d9656e9dff6e3b5e091911ed2bbe02512d6e36968acfbad2162",
+      "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+      "config": {
+        "candidateCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+        "baselineCommit": "0a46d527995adc2411c04484de7336d63d4b0c5f",
+        "candidateProfile": "brutal",
+        "baselineProfile": "brutal",
+        "engineCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+        "engineSourceSha256": "3a38cade03ab27d195d33cf85a6d8c60b969568664766fd2e537b1a2f17e2ab6",
+        "runnerSourceSha256": "3de75e1172bab130c1575818364c60f5458c1cfbb1144a9e587cbc5feff2bae5",
+        "bunVersion": "1.3.14",
+        "lockfileSha256": "23854cfbf8ade38e0244ce53a42396be18a819983f3f5d6372b2d6224b939cf9",
+        "resourceLoaderSha256": "c89bd9944ce017136bb46d440924b9a7ce8e2a5c868b36292721b11e90a7712d",
+        "countries": [
+          "Americans",
+          "Alliance",
+          "French",
+          "Germans",
+          "British",
+          "Africans",
+          "Arabs",
+          "Confederation",
+          "Russians"
+        ],
+        "scenarios": [
+          {
+            "map": "mp11t2",
+            "seed": 30333,
+            "mapSha256": "b84570fd81afddc88ecfd19b9a93b46c0b7007c56b94aebd2ad434db6dd19476",
+            "terrainFile": "isotemp.mix",
+            "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+          }
+        ],
+        "maxTicks": 27000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66",
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true
+      },
+      "countryLabels": {
+        "Americans": "美国",
+        "Alliance": "韩国",
+        "French": "法国",
+        "Germans": "德国",
+        "British": "英国",
+        "Africans": "利比亚",
+        "Arabs": "伊拉克",
+        "Confederation": "古巴",
+        "Russians": "苏俄"
+      },
+      "pairedReportCount": 72
+    }
+  ],
+  "reportReceipts": [
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Americans-vs-Alliance",
+      "sha256": "ca61635a3f307c4fccf8efd3b8b62ba013218e1ba3a6610e84f4f53582fc81eb",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "ca61635a3f307c4fccf8efd3b8b62ba013218e1ba3a6610e84f4f53582fc81eb",
+        "verifiedAt": "2026-10-25T13:09:32.700Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Americans-vs-French",
+      "sha256": "9f6aab0e0ac600952f3fddd293237ae7a47038778e0829b6c437ad5feb28e82c",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "9f6aab0e0ac600952f3fddd293237ae7a47038778e0829b6c437ad5feb28e82c",
+        "verifiedAt": "2026-10-25T13:09:12.019Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Americans-vs-Germans",
+      "sha256": "08d18b8029b5bdf32c43482759bdf1a75db6e69bb131e0ad5a3bcacde7b7d614",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "08d18b8029b5bdf32c43482759bdf1a75db6e69bb131e0ad5a3bcacde7b7d614",
+        "verifiedAt": "2026-10-25T13:09:29.695Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Americans-vs-British",
+      "sha256": "b360540c8b705bd25950a8175dce27bd374232db1edeaff2403bbb7cef6bffaa",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "b360540c8b705bd25950a8175dce27bd374232db1edeaff2403bbb7cef6bffaa",
+        "verifiedAt": "2026-10-25T13:09:30.158Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Americans-vs-Africans",
+      "sha256": "76673b6255f72ecb75c37923df51fdbbc857a482fb1937d06f8327486ef83843",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "76673b6255f72ecb75c37923df51fdbbc857a482fb1937d06f8327486ef83843",
+        "verifiedAt": "2026-10-25T13:11:00.421Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Americans-vs-Arabs",
+      "sha256": "20797a4d79d1aef80f0f0fabcad3f95a31d127d5bb3e842dc72dfef4b41584b0",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "20797a4d79d1aef80f0f0fabcad3f95a31d127d5bb3e842dc72dfef4b41584b0",
+        "verifiedAt": "2026-10-25T13:11:17.291Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Americans-vs-Confederation",
+      "sha256": "6cd0802b512991b29183604a5293b62a2b95deb132ab321ff22623264a786513",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "6cd0802b512991b29183604a5293b62a2b95deb132ab321ff22623264a786513",
+        "verifiedAt": "2026-10-25T13:11:17.265Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Americans-vs-Russians",
+      "sha256": "956d76e9df3373a47b11ae5db1cf461af04f99a1f34bb74448f3965bb2d277a0",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "956d76e9df3373a47b11ae5db1cf461af04f99a1f34bb74448f3965bb2d277a0",
+        "verifiedAt": "2026-10-25T13:11:24.646Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Alliance-vs-Americans",
+      "sha256": "fab75b4f290dac8844baaaa42a91499723bd0a4a10d0b0c63d0334c457cfe13c",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "fab75b4f290dac8844baaaa42a91499723bd0a4a10d0b0c63d0334c457cfe13c",
+        "verifiedAt": "2026-10-25T13:12:58.454Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Alliance-vs-French",
+      "sha256": "f275951a114a2e928e851fb3d6dc19823cdb04bb346f2fa0ae5bf1c52b620512",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "f275951a114a2e928e851fb3d6dc19823cdb04bb346f2fa0ae5bf1c52b620512",
+        "verifiedAt": "2026-10-25T13:12:57.360Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Alliance-vs-Germans",
+      "sha256": "ffeb49ddcb21543995b0f5bd884bb83225737072d64db3f7f88eeed721aa3088",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "ffeb49ddcb21543995b0f5bd884bb83225737072d64db3f7f88eeed721aa3088",
+        "verifiedAt": "2026-10-25T13:13:15.684Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Alliance-vs-British",
+      "sha256": "5cac3cc5bf25da8825dae0d6facb9c2492c25a13c62a4e429df2fd965c74bcee",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "5cac3cc5bf25da8825dae0d6facb9c2492c25a13c62a4e429df2fd965c74bcee",
+        "verifiedAt": "2026-10-25T13:13:27.816Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Alliance-vs-Africans",
+      "sha256": "e9b951a146e7b4b1a0993334b0b277b3dd880e39d19b4434039bf2b4bf7ee81b",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "e9b951a146e7b4b1a0993334b0b277b3dd880e39d19b4434039bf2b4bf7ee81b",
+        "verifiedAt": "2026-10-25T13:17:05.475Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Alliance-vs-Arabs",
+      "sha256": "eba7b2c680ffb1f8180e5a608446c1fee1e6b00d61449bab74166f0335275af1",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "eba7b2c680ffb1f8180e5a608446c1fee1e6b00d61449bab74166f0335275af1",
+        "verifiedAt": "2026-10-25T13:17:05.934Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Alliance-vs-Confederation",
+      "sha256": "3ff09e8bed9d4a191b429377a2df22cded0903d175b04e93ede71250730b26c4",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "3ff09e8bed9d4a191b429377a2df22cded0903d175b04e93ede71250730b26c4",
+        "verifiedAt": "2026-10-25T13:17:15.970Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Alliance-vs-Russians",
+      "sha256": "ef4ca1dd34a4a6ba1a580a3bac6071da5bd953b387b061e5d6157191b730190e",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "ef4ca1dd34a4a6ba1a580a3bac6071da5bd953b387b061e5d6157191b730190e",
+        "verifiedAt": "2026-10-25T13:17:33.492Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__French-vs-Americans",
+      "sha256": "9eb1151c84bffeef5e72b893888082561b3e1cbf62e1c29ddc2efb15b94a7351",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "9eb1151c84bffeef5e72b893888082561b3e1cbf62e1c29ddc2efb15b94a7351",
+        "verifiedAt": "2026-10-25T13:19:09.165Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__French-vs-Alliance",
+      "sha256": "e7eeed2528e614b4691991e03a9cf4a38fc8185a6cfa3740e94c16e671d4cd3a",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "e7eeed2528e614b4691991e03a9cf4a38fc8185a6cfa3740e94c16e671d4cd3a",
+        "verifiedAt": "2026-10-25T13:19:10.346Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__French-vs-Germans",
+      "sha256": "da19213861825cc2817a03bb5535ddaeba5af34c367a3f55cec4fe9ccab924c1",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "da19213861825cc2817a03bb5535ddaeba5af34c367a3f55cec4fe9ccab924c1",
+        "verifiedAt": "2026-10-25T13:19:20.120Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__French-vs-British",
+      "sha256": "4a790d40327efb3aa5a0faea5bda4f813c6e643df8268be080d18b63551e8e9b",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "4a790d40327efb3aa5a0faea5bda4f813c6e643df8268be080d18b63551e8e9b",
+        "verifiedAt": "2026-10-25T13:19:39.750Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__French-vs-Africans",
+      "sha256": "a6033d567a5ba8c544414467042c143674c953d29ec408bd2120afadf2f67279",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "a6033d567a5ba8c544414467042c143674c953d29ec408bd2120afadf2f67279",
+        "verifiedAt": "2026-10-25T13:23:09.754Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__French-vs-Arabs",
+      "sha256": "0837bfb8d2fbb868096c78899dfe8a186830c639bd81243cc75f345bb5019cc3",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "0837bfb8d2fbb868096c78899dfe8a186830c639bd81243cc75f345bb5019cc3",
+        "verifiedAt": "2026-10-25T13:23:09.022Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__French-vs-Confederation",
+      "sha256": "488dab786f304898e11b40799ab07d5de5068137dbb620f4a1cd78060554e4d7",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "488dab786f304898e11b40799ab07d5de5068137dbb620f4a1cd78060554e4d7",
+        "verifiedAt": "2026-10-25T13:23:19.911Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__French-vs-Russians",
+      "sha256": "fc8f4ea890828348a8d48a097cd8c7008b8dc52cfc5de5ae862deb9b4f3ba97f",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "fc8f4ea890828348a8d48a097cd8c7008b8dc52cfc5de5ae862deb9b4f3ba97f",
+        "verifiedAt": "2026-10-25T13:23:39.937Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Germans-vs-Americans",
+      "sha256": "c044d0aec309d991dcb5ecc82f5a40cf9f48047314e0f6e1ed5c0b7fae11ca66",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "c044d0aec309d991dcb5ecc82f5a40cf9f48047314e0f6e1ed5c0b7fae11ca66",
+        "verifiedAt": "2026-10-25T13:25:08.321Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Germans-vs-Alliance",
+      "sha256": "4498af18f6038fc15def0d219acd5b983fec2595377eb373b950fdaa80af2d84",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "4498af18f6038fc15def0d219acd5b983fec2595377eb373b950fdaa80af2d84",
+        "verifiedAt": "2026-10-25T13:25:16.185Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Germans-vs-French",
+      "sha256": "f66c29f30211f2f7d3b630b4962755d5456066ad93a8a54d2b1a9853bf34a2e8",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "f66c29f30211f2f7d3b630b4962755d5456066ad93a8a54d2b1a9853bf34a2e8",
+        "verifiedAt": "2026-10-25T13:25:03.842Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Germans-vs-British",
+      "sha256": "f19e08e1156700b53f97886688e3a24990ab38a267dcea18d03dcf4b91c6870f",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "f19e08e1156700b53f97886688e3a24990ab38a267dcea18d03dcf4b91c6870f",
+        "verifiedAt": "2026-10-25T13:25:44.294Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Germans-vs-Africans",
+      "sha256": "0a93b34109fcb3cf31c1712d1576f8123e87506b1b544f082414d0ded2098da4",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "0a93b34109fcb3cf31c1712d1576f8123e87506b1b544f082414d0ded2098da4",
+        "verifiedAt": "2026-10-25T13:29:06.652Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Germans-vs-Arabs",
+      "sha256": "7423ed098f05871c0e5441cbd7619df577063709fe1b503e1ad5be30b1d1b1b4",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "7423ed098f05871c0e5441cbd7619df577063709fe1b503e1ad5be30b1d1b1b4",
+        "verifiedAt": "2026-10-25T13:29:12.267Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Germans-vs-Confederation",
+      "sha256": "100baea4a3c454e59ab3c605fd97400f680d40b883600c37ca9e82ccadc2f0bc",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "100baea4a3c454e59ab3c605fd97400f680d40b883600c37ca9e82ccadc2f0bc",
+        "verifiedAt": "2026-10-25T13:29:15.990Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Germans-vs-Russians",
+      "sha256": "715e25fad4ba23a38370da092ec0510b2d5e1d502af3ab6252288af3d712d454",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "715e25fad4ba23a38370da092ec0510b2d5e1d502af3ab6252288af3d712d454",
+        "verifiedAt": "2026-10-25T13:29:44.920Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__British-vs-Americans",
+      "sha256": "a3b1e4435b3f318fe50f7ef712f688cf4d974edbbfa9b96e7f9ea375009716ef",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "a3b1e4435b3f318fe50f7ef712f688cf4d974edbbfa9b96e7f9ea375009716ef",
+        "verifiedAt": "2026-10-25T13:31:13.265Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__British-vs-Alliance",
+      "sha256": "88e041cc96118f3487e096e127867289a52ef0af9c6764b92584159aa49b168e",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "88e041cc96118f3487e096e127867289a52ef0af9c6764b92584159aa49b168e",
+        "verifiedAt": "2026-10-25T13:31:19.591Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__British-vs-French",
+      "sha256": "c814649269a289d63cd0404a0b2f86722e8134fc1a102d8fc6cc732af6c7fa9f",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "c814649269a289d63cd0404a0b2f86722e8134fc1a102d8fc6cc732af6c7fa9f",
+        "verifiedAt": "2026-10-25T13:31:00.830Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__British-vs-Germans",
+      "sha256": "05ce26713ff173b8e01f9554bbe7d928ae61d1626410e45578861650f02fea75",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "05ce26713ff173b8e01f9554bbe7d928ae61d1626410e45578861650f02fea75",
+        "verifiedAt": "2026-10-25T13:31:49.526Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__British-vs-Africans",
+      "sha256": "5c5d7b1cd4625c975b4eb26b8b2781ab4301c48c65308a88ff1ea57e973bf066",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "5c5d7b1cd4625c975b4eb26b8b2781ab4301c48c65308a88ff1ea57e973bf066",
+        "verifiedAt": "2026-10-25T13:35:08.213Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__British-vs-Arabs",
+      "sha256": "5292b3cbae2a9ca1552be7563eb1440a3b3d38334458c70be0ef0f36179b847d",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "5292b3cbae2a9ca1552be7563eb1440a3b3d38334458c70be0ef0f36179b847d",
+        "verifiedAt": "2026-10-25T13:35:26.889Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__British-vs-Confederation",
+      "sha256": "e9551f35f96ec69077ab42c5be71b675cb1eee4beaa9d437de3ba997b7c9678c",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "e9551f35f96ec69077ab42c5be71b675cb1eee4beaa9d437de3ba997b7c9678c",
+        "verifiedAt": "2026-10-25T13:35:25.658Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__British-vs-Russians",
+      "sha256": "ea1e9f8e33f8f1610b5d99588ac4be84a3810f1bf29829339cbfccee4d5d32b5",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "ea1e9f8e33f8f1610b5d99588ac4be84a3810f1bf29829339cbfccee4d5d32b5",
+        "verifiedAt": "2026-10-25T13:35:54.106Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Africans-vs-Americans",
+      "sha256": "ee10e7c48a0a2beb2e06ccbfc143491042cefa47e0dd2ffb96365b34650d65c0",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "ee10e7c48a0a2beb2e06ccbfc143491042cefa47e0dd2ffb96365b34650d65c0",
+        "verifiedAt": "2026-10-25T13:36:21.455Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Africans-vs-Alliance",
+      "sha256": "bf9691995897fefbcc2476a4d4878c49c96b0b2519dde9ff5fcce68011b7d46d",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "bf9691995897fefbcc2476a4d4878c49c96b0b2519dde9ff5fcce68011b7d46d",
+        "verifiedAt": "2026-10-25T13:36:40.519Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Africans-vs-French",
+      "sha256": "e43076996e7ad2137b2516530a98a879c37d7c028846c937e7fc678353d5726c",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "e43076996e7ad2137b2516530a98a879c37d7c028846c937e7fc678353d5726c",
+        "verifiedAt": "2026-10-25T13:36:45.823Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Africans-vs-Germans",
+      "sha256": "e168aff2cf2f262826274325058bf6c180c1633d98a70e35823e0240fa006a00",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "e168aff2cf2f262826274325058bf6c180c1633d98a70e35823e0240fa006a00",
+        "verifiedAt": "2026-10-25T13:37:07.619Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Africans-vs-British",
+      "sha256": "2053991b7e499f5db13cf57e6e32b7cd0af8a69e6707eb7cb2605157b905c9bf",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "2053991b7e499f5db13cf57e6e32b7cd0af8a69e6707eb7cb2605157b905c9bf",
+        "verifiedAt": "2026-10-25T13:37:33.712Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Africans-vs-Arabs",
+      "sha256": "3a095f22fad71c6a28d1edb1e38f62ad72e058fa02c42ef54c2129cd8c3fe918",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "3a095f22fad71c6a28d1edb1e38f62ad72e058fa02c42ef54c2129cd8c3fe918",
+        "verifiedAt": "2026-10-25T13:39:14.063Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Africans-vs-Confederation",
+      "sha256": "95783614e5fc9b002174bfff80c5a3625750cabf70f7d6293b7f7dfa75f0a55a",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "95783614e5fc9b002174bfff80c5a3625750cabf70f7d6293b7f7dfa75f0a55a",
+        "verifiedAt": "2026-10-25T13:39:18.111Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Africans-vs-Russians",
+      "sha256": "87b96cb213dd3efefba64b60011e0666d83bc3c843ad02811023074ef8d9e460",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "87b96cb213dd3efefba64b60011e0666d83bc3c843ad02811023074ef8d9e460",
+        "verifiedAt": "2026-10-25T13:39:42.401Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Arabs-vs-Americans",
+      "sha256": "0f992ae5a04cea03c45e80b00160aa3a381535f9d757a5c1891dbe529c56d1bd",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "0f992ae5a04cea03c45e80b00160aa3a381535f9d757a5c1891dbe529c56d1bd",
+        "verifiedAt": "2026-10-25T13:38:39.273Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Arabs-vs-Alliance",
+      "sha256": "ebf888c3fddf5b42d4b0d02fb07fb497575463cce1bb4fb9a3382ad90fe812a8",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "ebf888c3fddf5b42d4b0d02fb07fb497575463cce1bb4fb9a3382ad90fe812a8",
+        "verifiedAt": "2026-10-25T13:39:49.873Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Arabs-vs-French",
+      "sha256": "93810c56ef99634b0e5013f6681c06867f38a2e03645ea8a15abd2e57d6637a1",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "93810c56ef99634b0e5013f6681c06867f38a2e03645ea8a15abd2e57d6637a1",
+        "verifiedAt": "2026-10-25T13:40:29.882Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Arabs-vs-Germans",
+      "sha256": "0ba56ae8a76f251d62f615a973bf7959fd3d0aaabb4e00b4a12f48e04b4a243e",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "0ba56ae8a76f251d62f615a973bf7959fd3d0aaabb4e00b4a12f48e04b4a243e",
+        "verifiedAt": "2026-10-25T13:40:32.515Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Arabs-vs-British",
+      "sha256": "29d5174587c7403980bbbca49d03e51f371da2ac8783f70488141ac188051d77",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "29d5174587c7403980bbbca49d03e51f371da2ac8783f70488141ac188051d77",
+        "verifiedAt": "2026-10-25T13:40:55.091Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Arabs-vs-Africans",
+      "sha256": "a6fa82507b576988591e2cd13dbf2b34aab9b8eaf31d90e6bc88bf564a28078b",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "a6fa82507b576988591e2cd13dbf2b34aab9b8eaf31d90e6bc88bf564a28078b",
+        "verifiedAt": "2026-10-25T13:41:23.065Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Arabs-vs-Confederation",
+      "sha256": "4585626d64e00f391d7eb26b1d8af57434c8f910375809b0dc986a96efda9609",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "4585626d64e00f391d7eb26b1d8af57434c8f910375809b0dc986a96efda9609",
+        "verifiedAt": "2026-10-25T13:42:04.007Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Arabs-vs-Russians",
+      "sha256": "4711c52bf763c354c03d6cdd8b4ec5fc8a4bc87f4a00b3b2de8f5af09876a3fd",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "4711c52bf763c354c03d6cdd8b4ec5fc8a4bc87f4a00b3b2de8f5af09876a3fd",
+        "verifiedAt": "2026-10-25T13:42:06.678Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Confederation-vs-Americans",
+      "sha256": "2ba9266f16288d55e405abc58cf10989583e029652892e4ec6e7037fe42a6f8a",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "2ba9266f16288d55e405abc58cf10989583e029652892e4ec6e7037fe42a6f8a",
+        "verifiedAt": "2026-10-25T13:42:04.009Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Confederation-vs-Alliance",
+      "sha256": "150069bca382f23d76760832a853fb1674fd5018e865a435d2994a556658cb59",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "150069bca382f23d76760832a853fb1674fd5018e865a435d2994a556658cb59",
+        "verifiedAt": "2026-10-25T13:42:33.222Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Confederation-vs-French",
+      "sha256": "0b221ac42cb51ddf3619442afea127f6bd61645baeab86f744915733983ef72b",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "0b221ac42cb51ddf3619442afea127f6bd61645baeab86f744915733983ef72b",
+        "verifiedAt": "2026-10-25T13:43:23.679Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Confederation-vs-Germans",
+      "sha256": "9f7535b6778cc15007bea7512b399a18e29aaa8aa61b09404537cbc5737ba320",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "9f7535b6778cc15007bea7512b399a18e29aaa8aa61b09404537cbc5737ba320",
+        "verifiedAt": "2026-10-25T13:43:14.901Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Confederation-vs-British",
+      "sha256": "c35e8587fa8e3f8c64f909f44421979aaece8b4302f02d12ae2ddcfddcfe7327",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "c35e8587fa8e3f8c64f909f44421979aaece8b4302f02d12ae2ddcfddcfe7327",
+        "verifiedAt": "2026-10-25T13:43:19.596Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Confederation-vs-Africans",
+      "sha256": "5f0e93b78b1bc133385d9ebb1eda79ae6f24c412df31ac45b50ad5e85d3aa69e",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "5f0e93b78b1bc133385d9ebb1eda79ae6f24c412df31ac45b50ad5e85d3aa69e",
+        "verifiedAt": "2026-10-25T13:45:07.335Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Confederation-vs-Arabs",
+      "sha256": "067bab4379db6bb04abcd4bbb97f15910c1baf8b09307f1a6e91a08fb54e3b37",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "067bab4379db6bb04abcd4bbb97f15910c1baf8b09307f1a6e91a08fb54e3b37",
+        "verifiedAt": "2026-10-25T13:45:51.080Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Confederation-vs-Russians",
+      "sha256": "8c24ee6af9c712ee38cdfab4eddb448ee14cbf515390fe964e97338e3a840793",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "8c24ee6af9c712ee38cdfab4eddb448ee14cbf515390fe964e97338e3a840793",
+        "verifiedAt": "2026-10-25T13:45:58.116Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Russians-vs-Americans",
+      "sha256": "4a784375b07e728f6a906358a63857141cbf6f81250c1d03690bf5d7220fe47e",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "4a784375b07e728f6a906358a63857141cbf6f81250c1d03690bf5d7220fe47e",
+        "verifiedAt": "2026-10-25T13:44:33.131Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Russians-vs-Alliance",
+      "sha256": "497efce32393b3456b3035fd7a6670f369d9c504df020a0622b49be31d2a4b8c",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "497efce32393b3456b3035fd7a6670f369d9c504df020a0622b49be31d2a4b8c",
+        "verifiedAt": "2026-10-25T13:45:39.442Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Russians-vs-French",
+      "sha256": "95cf6a21d6622932a156341cabaffb14b1fe8627ad54dc3937768e4f1d4f9652",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "95cf6a21d6622932a156341cabaffb14b1fe8627ad54dc3937768e4f1d4f9652",
+        "verifiedAt": "2026-10-25T13:46:23.204Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Russians-vs-Germans",
+      "sha256": "3e72e556d8b4f267f2968af301b7ce34eef405332c57467331776cff0bb18025",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "3e72e556d8b4f267f2968af301b7ce34eef405332c57467331776cff0bb18025",
+        "verifiedAt": "2026-10-25T13:46:49.539Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Russians-vs-British",
+      "sha256": "73197b57fa48b6ef9c6a0ef1c9aa2ce498a690bcac50015b28062c4a81f09b8f",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "73197b57fa48b6ef9c6a0ef1c9aa2ce498a690bcac50015b28062c4a81f09b8f",
+        "verifiedAt": "2026-10-25T13:47:04.388Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Russians-vs-Africans",
+      "sha256": "817de860d318df3fb42f6dc886b7e59e1480287e58028bab2a8244e46a051f83",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "817de860d318df3fb42f6dc886b7e59e1480287e58028bab2a8244e46a051f83",
+        "verifiedAt": "2026-10-25T13:48:11.335Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Russians-vs-Arabs",
+      "sha256": "46a9a959851591c7896b3a47b31ea33002f0373290fe1bab29d8fb3a607445cf",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "46a9a959851591c7896b3a47b31ea33002f0373290fe1bab29d8fb3a607445cf",
+        "verifiedAt": "2026-10-25T13:48:19.309Z"
+      }
+    },
+    {
+      "shard": "ai-country-short",
+      "job": "mp08t2-10111__Russians-vs-Confederation",
+      "sha256": "7380506956d16f974c0fbf98805d3451eaca806ea7efbd38efded62cd881e5bc",
+      "receipt": {
+        "fingerprint": "9e16381d56cf7af5974434b51b07429642197f5d70548d575940baaa6b8eea3f",
+        "reportSha256": "7380506956d16f974c0fbf98805d3451eaca806ea7efbd38efded62cd881e5bc",
+        "verifiedAt": "2026-10-25T13:48:37.351Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Americans-vs-Alliance",
+      "sha256": "6fce891a84a80332b985821726b0ca90ef9eb5e5be759bd0f1b29d059a328dc1",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "6fce891a84a80332b985821726b0ca90ef9eb5e5be759bd0f1b29d059a328dc1",
+        "verifiedAt": "2026-10-25T13:09:29.944Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Americans-vs-French",
+      "sha256": "eaac3ff64d42d05f9636eaf096bf2518454bbe4c18e003caacacce0f02e40e39",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "eaac3ff64d42d05f9636eaf096bf2518454bbe4c18e003caacacce0f02e40e39",
+        "verifiedAt": "2026-10-25T13:09:31.712Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Americans-vs-Germans",
+      "sha256": "d9f8d9a96a1b6ff8ee4e8a3ab67809987add21fe1830eaaea551fb2ba644d76d",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "d9f8d9a96a1b6ff8ee4e8a3ab67809987add21fe1830eaaea551fb2ba644d76d",
+        "verifiedAt": "2026-10-25T13:09:30.962Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Americans-vs-British",
+      "sha256": "0b265bd1f342e7b01fa78656c778aa0de053760fe775e4c36ec6439f8f0cc568",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "0b265bd1f342e7b01fa78656c778aa0de053760fe775e4c36ec6439f8f0cc568",
+        "verifiedAt": "2026-10-25T13:09:30.965Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Americans-vs-Africans",
+      "sha256": "2734ddd6de2205f7a34c12b4cad72e3e1f74c5c961bafbb927ff2ef635ce0405",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "2734ddd6de2205f7a34c12b4cad72e3e1f74c5c961bafbb927ff2ef635ce0405",
+        "verifiedAt": "2026-10-25T13:11:07.630Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Americans-vs-Arabs",
+      "sha256": "c6567faf9e1bed2c7bb0c6fdd44173347b90c2bf7836399445df5e2a9449bf29",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "c6567faf9e1bed2c7bb0c6fdd44173347b90c2bf7836399445df5e2a9449bf29",
+        "verifiedAt": "2026-10-25T13:11:08.321Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Americans-vs-Confederation",
+      "sha256": "b75086190a70c40a410d29c572c656df9517f8faabc541298193ebce429c7fa0",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "b75086190a70c40a410d29c572c656df9517f8faabc541298193ebce429c7fa0",
+        "verifiedAt": "2026-10-25T13:11:10.871Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Americans-vs-Russians",
+      "sha256": "bb9a295f79b336e5195071d9f800c7869e5efcb28fb1207c03c3e5715e6ec88c",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "bb9a295f79b336e5195071d9f800c7869e5efcb28fb1207c03c3e5715e6ec88c",
+        "verifiedAt": "2026-10-25T13:11:09.471Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Alliance-vs-Americans",
+      "sha256": "18fa4aa81dce9c5f069cca94b4f444842b018519842b64a4304f7003e278e12b",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "18fa4aa81dce9c5f069cca94b4f444842b018519842b64a4304f7003e278e12b",
+        "verifiedAt": "2026-10-25T13:13:07.060Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Alliance-vs-French",
+      "sha256": "425f21ba25893c3e4898df52b553972dc7e50b0fbb41775d5380c71921db8871",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "425f21ba25893c3e4898df52b553972dc7e50b0fbb41775d5380c71921db8871",
+        "verifiedAt": "2026-10-25T13:13:07.820Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Alliance-vs-Germans",
+      "sha256": "f1d1d6e8eb43c76e30bb2e871f983dbdba184e40146653e5a1918b7d7e013a7e",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "f1d1d6e8eb43c76e30bb2e871f983dbdba184e40146653e5a1918b7d7e013a7e",
+        "verifiedAt": "2026-10-25T13:13:10.374Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Alliance-vs-British",
+      "sha256": "42f1f5efd72638997552e252891ac99e55a3fae0acc8c0ed50e51b30a6899ab6",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "42f1f5efd72638997552e252891ac99e55a3fae0acc8c0ed50e51b30a6899ab6",
+        "verifiedAt": "2026-10-25T13:13:15.167Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Alliance-vs-Africans",
+      "sha256": "bc726b9c8d8230295e8c2a3c8fbbb5de3816a3e6769647f9b762525621801c45",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "bc726b9c8d8230295e8c2a3c8fbbb5de3816a3e6769647f9b762525621801c45",
+        "verifiedAt": "2026-10-25T13:15:14.060Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Alliance-vs-Arabs",
+      "sha256": "d58798c99f9bc4375dfc9d9d09aa29860134cdcaf60456c93f62cbd7ac2a3e34",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "d58798c99f9bc4375dfc9d9d09aa29860134cdcaf60456c93f62cbd7ac2a3e34",
+        "verifiedAt": "2026-10-25T13:15:18.461Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Alliance-vs-Confederation",
+      "sha256": "a2a945ae05691e9412c51d9a0fcc38c3f18bf3a910d955908735b829f29fe9bf",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "a2a945ae05691e9412c51d9a0fcc38c3f18bf3a910d955908735b829f29fe9bf",
+        "verifiedAt": "2026-10-25T13:15:17.612Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Alliance-vs-Russians",
+      "sha256": "8656fcc46194c7f9c4025537c5600f48f87369547d73612883aeac5476e9154e",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "8656fcc46194c7f9c4025537c5600f48f87369547d73612883aeac5476e9154e",
+        "verifiedAt": "2026-10-25T13:15:24.256Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__French-vs-Americans",
+      "sha256": "523feecbf8bb70ae77718af3fa5a6281c5b1b01c6bbf685019f11637c0cf6ca9",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "523feecbf8bb70ae77718af3fa5a6281c5b1b01c6bbf685019f11637c0cf6ca9",
+        "verifiedAt": "2026-10-25T13:17:11.345Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__French-vs-Alliance",
+      "sha256": "faa92a3321874fe09cddabd7c04be7b00b37904e2b4dd1031d7d1c7a128cbc86",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "faa92a3321874fe09cddabd7c04be7b00b37904e2b4dd1031d7d1c7a128cbc86",
+        "verifiedAt": "2026-10-25T13:17:16.001Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__French-vs-Germans",
+      "sha256": "54256ff6ba49164ad41ca33fe629a08f04ca90238c4f9c2ac105736d68751a5b",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "54256ff6ba49164ad41ca33fe629a08f04ca90238c4f9c2ac105736d68751a5b",
+        "verifiedAt": "2026-10-25T13:17:19.837Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__French-vs-British",
+      "sha256": "134a081ff2b9e0d046f712511dfeb6fe3fa37712112f28456f6af205228911c5",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "134a081ff2b9e0d046f712511dfeb6fe3fa37712112f28456f6af205228911c5",
+        "verifiedAt": "2026-10-25T13:17:27.198Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__French-vs-Africans",
+      "sha256": "f711b4bfc9e7572a074e1d6efc0ff032f7c33fd229493358906db92c868a80e5",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "f711b4bfc9e7572a074e1d6efc0ff032f7c33fd229493358906db92c868a80e5",
+        "verifiedAt": "2026-10-25T13:19:14.138Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__French-vs-Arabs",
+      "sha256": "1d685a9cd03ce56cf485b3c9413de603a4d8f32605ce18264b9399fef4d8dd3a",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "1d685a9cd03ce56cf485b3c9413de603a4d8f32605ce18264b9399fef4d8dd3a",
+        "verifiedAt": "2026-10-25T13:19:22.245Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__French-vs-Confederation",
+      "sha256": "ce0d93b186f10abccfe4d4cbfb871c0c752b3a2416ed4353f5fc64fecbe33282",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "ce0d93b186f10abccfe4d4cbfb871c0c752b3a2416ed4353f5fc64fecbe33282",
+        "verifiedAt": "2026-10-25T13:19:24.529Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__French-vs-Russians",
+      "sha256": "d449d183e2f57a761d5f52d249de5d9a1fa36ec67c637ee30de65640ac8b34dc",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "d449d183e2f57a761d5f52d249de5d9a1fa36ec67c637ee30de65640ac8b34dc",
+        "verifiedAt": "2026-10-25T13:19:29.876Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Germans-vs-Americans",
+      "sha256": "dbe000049d732c9e2a396f785f5f1870d23e5dd3f8cd35012dd77cf4084f5e30",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "dbe000049d732c9e2a396f785f5f1870d23e5dd3f8cd35012dd77cf4084f5e30",
+        "verifiedAt": "2026-10-25T13:21:09.851Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Germans-vs-Alliance",
+      "sha256": "6fe0ece0a9e593eb4a957a98349d71bab40dd37f3f6144fdfcc4df9e3c84e6cf",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "6fe0ece0a9e593eb4a957a98349d71bab40dd37f3f6144fdfcc4df9e3c84e6cf",
+        "verifiedAt": "2026-10-25T13:21:20.478Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Germans-vs-French",
+      "sha256": "8022e7647fa6b09398b29230ee4e4cf410d1195e20acb226c072007c3bf2b90d",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "8022e7647fa6b09398b29230ee4e4cf410d1195e20acb226c072007c3bf2b90d",
+        "verifiedAt": "2026-10-25T13:21:26.278Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Germans-vs-British",
+      "sha256": "7753d769953b84f7c92d3d4efed6d98b8ee486ef0717960e958f213a236567da",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "7753d769953b84f7c92d3d4efed6d98b8ee486ef0717960e958f213a236567da",
+        "verifiedAt": "2026-10-25T13:21:22.796Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Germans-vs-Africans",
+      "sha256": "0990153d381e113b45ba382750e37e172f3344d39713a2ce983e3ddfb1397f71",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "0990153d381e113b45ba382750e37e172f3344d39713a2ce983e3ddfb1397f71",
+        "verifiedAt": "2026-10-25T13:23:12.725Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Germans-vs-Arabs",
+      "sha256": "90870e573db8c78aef503e37d0d801a7c72dff2e12dfcbde5bc60c58ae3ace6c",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "90870e573db8c78aef503e37d0d801a7c72dff2e12dfcbde5bc60c58ae3ace6c",
+        "verifiedAt": "2026-10-25T13:23:23.066Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Germans-vs-Confederation",
+      "sha256": "58bbe9440c2f136ae92d1beba40d3862756537bf054443899c062c2d38e27dbe",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "58bbe9440c2f136ae92d1beba40d3862756537bf054443899c062c2d38e27dbe",
+        "verifiedAt": "2026-10-25T13:23:29.227Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Germans-vs-Russians",
+      "sha256": "8686328dd40314d027a68672fff9ee0bd3f132c284653f4c0f5499e30991fc1f",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "8686328dd40314d027a68672fff9ee0bd3f132c284653f4c0f5499e30991fc1f",
+        "verifiedAt": "2026-10-25T13:23:32.586Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__British-vs-Americans",
+      "sha256": "f4df1d7ee08a99adbb2b2853609a6e651678d467cbc39b5f62f1bc3512aad2b7",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "f4df1d7ee08a99adbb2b2853609a6e651678d467cbc39b5f62f1bc3512aad2b7",
+        "verifiedAt": "2026-10-25T13:25:05.738Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__British-vs-Alliance",
+      "sha256": "2c134d48e9336edb08deed523eb30d259099ad93b30cea09f03f7e8d281d64f9",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "2c134d48e9336edb08deed523eb30d259099ad93b30cea09f03f7e8d281d64f9",
+        "verifiedAt": "2026-10-25T13:25:19.598Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__British-vs-French",
+      "sha256": "abe5dccf343419332e368542a218dad21b625d700b8f4bd327f71fff64ad76be",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "abe5dccf343419332e368542a218dad21b625d700b8f4bd327f71fff64ad76be",
+        "verifiedAt": "2026-10-25T13:25:20.960Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__British-vs-Germans",
+      "sha256": "ea02d7dba4907ffb2816ab3906bb81904fbc059d83b90ca9e2b5866f5e6ca1bc",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "ea02d7dba4907ffb2816ab3906bb81904fbc059d83b90ca9e2b5866f5e6ca1bc",
+        "verifiedAt": "2026-10-25T13:25:24.269Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__British-vs-Africans",
+      "sha256": "8bfa199d0a32dd8e773ed9ef44888472e05bbaea1f37cba8f76ebde94ab9e1d2",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "8bfa199d0a32dd8e773ed9ef44888472e05bbaea1f37cba8f76ebde94ab9e1d2",
+        "verifiedAt": "2026-10-25T13:27:09.229Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__British-vs-Arabs",
+      "sha256": "94fc47245b6daca003cbcb9172cac56899bbff4753e273d37d47665feee6f2e0",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "94fc47245b6daca003cbcb9172cac56899bbff4753e273d37d47665feee6f2e0",
+        "verifiedAt": "2026-10-25T13:27:21.576Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__British-vs-Confederation",
+      "sha256": "9d5ab79059f3419bb145cd8174fd5d9f7e2d7910afeb84a26afafb4a05e1030f",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "9d5ab79059f3419bb145cd8174fd5d9f7e2d7910afeb84a26afafb4a05e1030f",
+        "verifiedAt": "2026-10-25T13:27:23.010Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__British-vs-Russians",
+      "sha256": "7206fb0324152d148b674815bfab0a9d9afd5d31e173a843cde3d57de4ad5c35",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "7206fb0324152d148b674815bfab0a9d9afd5d31e173a843cde3d57de4ad5c35",
+        "verifiedAt": "2026-10-25T13:27:31.498Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Africans-vs-Americans",
+      "sha256": "5001411d1a56a90b9c6cfa333e9f0dcb3ad398c682948517304e6aa7dac3a64a",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "5001411d1a56a90b9c6cfa333e9f0dcb3ad398c682948517304e6aa7dac3a64a",
+        "verifiedAt": "2026-10-25T13:29:31.329Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Africans-vs-Alliance",
+      "sha256": "afaea58f4ff8e09c943db3c4502b998a145736e518178a7fe794a1f4d610e7d6",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "afaea58f4ff8e09c943db3c4502b998a145736e518178a7fe794a1f4d610e7d6",
+        "verifiedAt": "2026-10-25T13:29:42.532Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Africans-vs-French",
+      "sha256": "e777de5495fdf806be7bf89df4af7e8f7c337edd6209c862c987839ac27d8a18",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "e777de5495fdf806be7bf89df4af7e8f7c337edd6209c862c987839ac27d8a18",
+        "verifiedAt": "2026-10-25T13:28:30.014Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Africans-vs-Germans",
+      "sha256": "347b7619d05136f023576b37a400c3d58b6ab4d29fc1d9b48c8ec04faa64188e",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "347b7619d05136f023576b37a400c3d58b6ab4d29fc1d9b48c8ec04faa64188e",
+        "verifiedAt": "2026-10-25T13:29:55.053Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Africans-vs-British",
+      "sha256": "6aa1093ed2a6203911e446aa872ce55d665f3a6c4f72b1e600c1db0eecffd89c",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "6aa1093ed2a6203911e446aa872ce55d665f3a6c4f72b1e600c1db0eecffd89c",
+        "verifiedAt": "2026-10-25T13:30:56.691Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Africans-vs-Arabs",
+      "sha256": "ba81c30fd77ffdd5c9d0731afa1420fd1dab2407638b55c1cfa46bcaca7843db",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "ba81c30fd77ffdd5c9d0731afa1420fd1dab2407638b55c1cfa46bcaca7843db",
+        "verifiedAt": "2026-10-25T13:30:52.162Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Africans-vs-Confederation",
+      "sha256": "2650885a71ce67b0465a04e5afd52fa7a85ae46be54d021d557965cfc647f3c4",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "2650885a71ce67b0465a04e5afd52fa7a85ae46be54d021d557965cfc647f3c4",
+        "verifiedAt": "2026-10-25T13:31:07.418Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Africans-vs-Russians",
+      "sha256": "0d3eab854bafecfb67d7d16cc049497817a18bc0aa168fa0e5a65b4896991f23",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "0d3eab854bafecfb67d7d16cc049497817a18bc0aa168fa0e5a65b4896991f23",
+        "verifiedAt": "2026-10-25T13:31:18.997Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Arabs-vs-Americans",
+      "sha256": "2a5a19a4a61c47a99ed4ef8a4a743bacd44fb5ed68d2e95e963eda9598f1cd1b",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "2a5a19a4a61c47a99ed4ef8a4a743bacd44fb5ed68d2e95e963eda9598f1cd1b",
+        "verifiedAt": "2026-10-25T13:32:06.777Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Arabs-vs-Alliance",
+      "sha256": "60658363c12fbbbe83396500d74cf0e47a28099c4f420268794d050de3cf4eb5",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "60658363c12fbbbe83396500d74cf0e47a28099c4f420268794d050de3cf4eb5",
+        "verifiedAt": "2026-10-25T13:32:13.105Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Arabs-vs-French",
+      "sha256": "101bb766d4c152fa4ae63cea63753fcffc5e08ca89f7f06707db4b59fe2bb4bb",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "101bb766d4c152fa4ae63cea63753fcffc5e08ca89f7f06707db4b59fe2bb4bb",
+        "verifiedAt": "2026-10-25T13:32:32.257Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Arabs-vs-Germans",
+      "sha256": "a957a6116a654ff5e332a95cb02de5cc940a56c4db24ef2212be856f4a953b12",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "a957a6116a654ff5e332a95cb02de5cc940a56c4db24ef2212be856f4a953b12",
+        "verifiedAt": "2026-10-25T13:32:35.279Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Arabs-vs-British",
+      "sha256": "9496ade92fc2a12c107fc9e1e5dc7bc21406489c76d42cd2cda923f718a663a3",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "9496ade92fc2a12c107fc9e1e5dc7bc21406489c76d42cd2cda923f718a663a3",
+        "verifiedAt": "2026-10-25T13:33:21.289Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Arabs-vs-Africans",
+      "sha256": "ce69268b50d65fff29aefc3921518f431f451b0b89f05089aa4355b7f23766b3",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "ce69268b50d65fff29aefc3921518f431f451b0b89f05089aa4355b7f23766b3",
+        "verifiedAt": "2026-10-25T13:34:14.906Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Arabs-vs-Confederation",
+      "sha256": "38ff8d288dd18fd2f15612c6411d33740207ea0549748a1660bc80a9b5a934ec",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "38ff8d288dd18fd2f15612c6411d33740207ea0549748a1660bc80a9b5a934ec",
+        "verifiedAt": "2026-10-25T13:34:30.539Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Arabs-vs-Russians",
+      "sha256": "593a1819f778c3d3e9128c9d03627865c4205b5d66f886da100f10fd8bf84ff6",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "593a1819f778c3d3e9128c9d03627865c4205b5d66f886da100f10fd8bf84ff6",
+        "verifiedAt": "2026-10-25T13:34:32.857Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Confederation-vs-Americans",
+      "sha256": "94e8524176d66eb7fb93676f7a2510fe6733f9f738db235d8833020b28b4d6cc",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "94e8524176d66eb7fb93676f7a2510fe6733f9f738db235d8833020b28b4d6cc",
+        "verifiedAt": "2026-10-25T13:35:48.491Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Confederation-vs-Alliance",
+      "sha256": "0383be152b996c7502369f682e3f6a240cb6c31c2e26ae6f27912dd556f7420f",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "0383be152b996c7502369f682e3f6a240cb6c31c2e26ae6f27912dd556f7420f",
+        "verifiedAt": "2026-10-25T13:36:37.238Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Confederation-vs-French",
+      "sha256": "78b61f93f3ede63ff2ce5003e42513a35de834da107d90ea7e296f425fabd886",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "78b61f93f3ede63ff2ce5003e42513a35de834da107d90ea7e296f425fabd886",
+        "verifiedAt": "2026-10-25T13:35:33.603Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Confederation-vs-Germans",
+      "sha256": "d3c5aa8bdc0cb90aeba3b61eb49ac2e036b3dabaf7b6e67ea2e3ec036a6fec4c",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "d3c5aa8bdc0cb90aeba3b61eb49ac2e036b3dabaf7b6e67ea2e3ec036a6fec4c",
+        "verifiedAt": "2026-10-25T13:36:59.349Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Confederation-vs-British",
+      "sha256": "fe37f217444ca348e0eb7870ead4add4b42ffdb80d1e52e2ef89b3b17a910485",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "fe37f217444ca348e0eb7870ead4add4b42ffdb80d1e52e2ef89b3b17a910485",
+        "verifiedAt": "2026-10-25T13:37:58.027Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Confederation-vs-Africans",
+      "sha256": "f0535667de52bd280d98127b9d719cf879572ba6b95470ec71eed7d59d728408",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "f0535667de52bd280d98127b9d719cf879572ba6b95470ec71eed7d59d728408",
+        "verifiedAt": "2026-10-25T13:37:11.358Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Confederation-vs-Arabs",
+      "sha256": "4d273e3d1a658bfe267fc6eb1b7854dc43ba56b8741434b0f1b8c5747fac2a27",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "4d273e3d1a658bfe267fc6eb1b7854dc43ba56b8741434b0f1b8c5747fac2a27",
+        "verifiedAt": "2026-10-25T13:37:59.064Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Confederation-vs-Russians",
+      "sha256": "514d80cb01b22da40d23921ded5ee41832ba8667508bb62cfb307c1bd0e483cf",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "514d80cb01b22da40d23921ded5ee41832ba8667508bb62cfb307c1bd0e483cf",
+        "verifiedAt": "2026-10-25T13:38:24.055Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Russians-vs-Americans",
+      "sha256": "4d1363bb0c63235b4ef4a82eebfa90bb779884645ff368659a4516755f487560",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "4d1363bb0c63235b4ef4a82eebfa90bb779884645ff368659a4516755f487560",
+        "verifiedAt": "2026-10-25T13:39:41.373Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Russians-vs-Alliance",
+      "sha256": "0a6f279e67d40cb0668f8536f906652c05c7667bb37d03c60358fac93312c29a",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "0a6f279e67d40cb0668f8536f906652c05c7667bb37d03c60358fac93312c29a",
+        "verifiedAt": "2026-10-25T13:40:20.051Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Russians-vs-French",
+      "sha256": "a55d7a4677bbf56d6ddbb25dcef633b595f5aaa5c2b65a1425dae97d540fe7f1",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "a55d7a4677bbf56d6ddbb25dcef633b595f5aaa5c2b65a1425dae97d540fe7f1",
+        "verifiedAt": "2026-10-25T13:39:07.510Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Russians-vs-Germans",
+      "sha256": "3609b6aa6d7d9bee02739ad8ecb59c550c7201a642108e60600da0ae76bcd062",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "3609b6aa6d7d9bee02739ad8ecb59c550c7201a642108e60600da0ae76bcd062",
+        "verifiedAt": "2026-10-25T13:40:47.818Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Russians-vs-British",
+      "sha256": "c6906c98d06e8cabfa9592ba8b5dec4dafe6508fc4cfd2e433e4e484332a7767",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "c6906c98d06e8cabfa9592ba8b5dec4dafe6508fc4cfd2e433e4e484332a7767",
+        "verifiedAt": "2026-10-25T13:41:25.169Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Russians-vs-Africans",
+      "sha256": "67c0b1d12c59f56ef4c58273d36f38aa682bfcfff6988cf8c8e63cbcab96a5c7",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "67c0b1d12c59f56ef4c58273d36f38aa682bfcfff6988cf8c8e63cbcab96a5c7",
+        "verifiedAt": "2026-10-25T13:41:01.161Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Russians-vs-Arabs",
+      "sha256": "fab5f307b241d2d212cdb0ee9db876a51a2023039d82fc92a1f439094bd9df99",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "fab5f307b241d2d212cdb0ee9db876a51a2023039d82fc92a1f439094bd9df99",
+        "verifiedAt": "2026-10-25T13:41:30.702Z"
+      }
+    },
+    {
+      "shard": "ai-country-medium",
+      "job": "tn01t2-20222__Russians-vs-Confederation",
+      "sha256": "43923a4f899840742892119386746ddeed0452d9d654949773dae7b425600fe0",
+      "receipt": {
+        "fingerprint": "63e7615a7ad148e3315571a416e11d21463d1b6b8e8af7a1781d4ab167520fdd",
+        "reportSha256": "43923a4f899840742892119386746ddeed0452d9d654949773dae7b425600fe0",
+        "verifiedAt": "2026-10-25T13:41:40.525Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Americans-vs-Alliance",
+      "sha256": "c2745449b191398d64cbdb5ce54ea865440cb8aa700be8bfd0c04288a15dac6c",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "c2745449b191398d64cbdb5ce54ea865440cb8aa700be8bfd0c04288a15dac6c",
+        "verifiedAt": "2026-10-25T13:09:24.467Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Americans-vs-French",
+      "sha256": "fb862aaf044e6170fcd991ae37d270a814f6c8162482767f2b37d55a1964e3af",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "fb862aaf044e6170fcd991ae37d270a814f6c8162482767f2b37d55a1964e3af",
+        "verifiedAt": "2026-10-25T13:09:28.201Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Americans-vs-Germans",
+      "sha256": "3dbb16c3201697f150235ed41d5b4ab03efc7ab03d01241eaf0a5a224de1f83a",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "3dbb16c3201697f150235ed41d5b4ab03efc7ab03d01241eaf0a5a224de1f83a",
+        "verifiedAt": "2026-10-25T13:09:21.935Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Americans-vs-British",
+      "sha256": "9be89a590016a1c4d542a16974303920fb369d8981cb85c2229221642ca24af8",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "9be89a590016a1c4d542a16974303920fb369d8981cb85c2229221642ca24af8",
+        "verifiedAt": "2026-10-25T13:09:30.897Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Americans-vs-Africans",
+      "sha256": "02894219463f7882a0adb8f77a7c2815abacda673dd1eb90af324a39e47f6d6b",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "02894219463f7882a0adb8f77a7c2815abacda673dd1eb90af324a39e47f6d6b",
+        "verifiedAt": "2026-10-25T13:11:32.326Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Americans-vs-Arabs",
+      "sha256": "60cee1265de40a7f08c3e9a912f5939f2d068c8ff866f1eccafd08eeed58d01e",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "60cee1265de40a7f08c3e9a912f5939f2d068c8ff866f1eccafd08eeed58d01e",
+        "verifiedAt": "2026-10-25T13:11:32.972Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Americans-vs-Confederation",
+      "sha256": "4f1b79d4553c2e5d71fa39d1af514edaf9414da191037f48de13921cadbec6ba",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "4f1b79d4553c2e5d71fa39d1af514edaf9414da191037f48de13921cadbec6ba",
+        "verifiedAt": "2026-10-25T13:11:39.412Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Americans-vs-Russians",
+      "sha256": "038dccf3a755cccfb33230daf72a3dee21edd7e7bfaf931d8bd8e1531a84269a",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "038dccf3a755cccfb33230daf72a3dee21edd7e7bfaf931d8bd8e1531a84269a",
+        "verifiedAt": "2026-10-25T13:11:39.956Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Alliance-vs-Americans",
+      "sha256": "c7693e87a857e2969408541d2a5dbe271b77aa3a78eb5fc102591b0ecb34ecfd",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "c7693e87a857e2969408541d2a5dbe271b77aa3a78eb5fc102591b0ecb34ecfd",
+        "verifiedAt": "2026-10-25T13:13:08.296Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Alliance-vs-French",
+      "sha256": "2c212b4c2c53b56cc58cfed892ab6f69548d73070b8bd401c2b4367044080776",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "2c212b4c2c53b56cc58cfed892ab6f69548d73070b8bd401c2b4367044080776",
+        "verifiedAt": "2026-10-25T13:13:12.034Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Alliance-vs-Germans",
+      "sha256": "74dbfbab7dde6181c4b407458d9864bf6599665e7fcfb00df2ae1e07ab80ef29",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "74dbfbab7dde6181c4b407458d9864bf6599665e7fcfb00df2ae1e07ab80ef29",
+        "verifiedAt": "2026-10-25T13:13:14.576Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Alliance-vs-British",
+      "sha256": "c2117ab072b5d6a5a50e4ed44e882e02af90c924c005f7a8cd543ce9c555470c",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "c2117ab072b5d6a5a50e4ed44e882e02af90c924c005f7a8cd543ce9c555470c",
+        "verifiedAt": "2026-10-25T13:13:19.565Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Alliance-vs-Africans",
+      "sha256": "c3ca3c82945afd8b4539991f0daf6c78587c89cee7a7b89eb03757067626f514",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "c3ca3c82945afd8b4539991f0daf6c78587c89cee7a7b89eb03757067626f514",
+        "verifiedAt": "2026-10-25T13:15:22.952Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Alliance-vs-Arabs",
+      "sha256": "6462b7a00531ad1a410e38b1d11d5a8e538676ff7ba39bc93c99cff3e93803da",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "6462b7a00531ad1a410e38b1d11d5a8e538676ff7ba39bc93c99cff3e93803da",
+        "verifiedAt": "2026-10-25T13:15:24.990Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Alliance-vs-Confederation",
+      "sha256": "996d9833eeb9bb93634b10515f53781321e69a518fd1f375613f588d9b540580",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "996d9833eeb9bb93634b10515f53781321e69a518fd1f375613f588d9b540580",
+        "verifiedAt": "2026-10-25T13:15:32.940Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Alliance-vs-Russians",
+      "sha256": "8dc7157b4480136c5df93546603ae1f860b8b6137260871db15f90235837f16b",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "8dc7157b4480136c5df93546603ae1f860b8b6137260871db15f90235837f16b",
+        "verifiedAt": "2026-10-25T13:15:34.706Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__French-vs-Americans",
+      "sha256": "131cd6efd82a1f610a283b1a7f25ec10faf661aa659a04ca559845660c6ce3bc",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "131cd6efd82a1f610a283b1a7f25ec10faf661aa659a04ca559845660c6ce3bc",
+        "verifiedAt": "2026-10-25T13:17:27.601Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__French-vs-Alliance",
+      "sha256": "9b56d3060843028842b3aa44644f500ff2456df282789927361ae6a3d289a248",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "9b56d3060843028842b3aa44644f500ff2456df282789927361ae6a3d289a248",
+        "verifiedAt": "2026-10-25T13:17:27.190Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__French-vs-Germans",
+      "sha256": "ed9c007b0383c043c4ec92912bedc96216ebfdf115c0250319700ad558d401f6",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "ed9c007b0383c043c4ec92912bedc96216ebfdf115c0250319700ad558d401f6",
+        "verifiedAt": "2026-10-25T13:17:29.657Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__French-vs-British",
+      "sha256": "075ed2d7267605f25385161ea1c79d98ad0cc33c569cec16d2efbb3cbbc21141",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "075ed2d7267605f25385161ea1c79d98ad0cc33c569cec16d2efbb3cbbc21141",
+        "verifiedAt": "2026-10-25T13:17:40.587Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__French-vs-Africans",
+      "sha256": "23859433e15ecffd544c3d1fc31a99da1a62eeae498a06bbd61b482141a1e3c0",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "23859433e15ecffd544c3d1fc31a99da1a62eeae498a06bbd61b482141a1e3c0",
+        "verifiedAt": "2026-10-25T13:19:41.851Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__French-vs-Arabs",
+      "sha256": "23ede9850968f580cd7db4411b48b1d2c1e95b8194b17f54cef99ef2bb1dc2fb",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "23ede9850968f580cd7db4411b48b1d2c1e95b8194b17f54cef99ef2bb1dc2fb",
+        "verifiedAt": "2026-10-25T13:19:50.957Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__French-vs-Confederation",
+      "sha256": "4a3b465445fc97bdf8a5c19b27240a212656c71e03e8b5fa6b1213483ae50453",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "4a3b465445fc97bdf8a5c19b27240a212656c71e03e8b5fa6b1213483ae50453",
+        "verifiedAt": "2026-10-25T13:19:51.982Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__French-vs-Russians",
+      "sha256": "98d7e343cc23fcb1265669cd2cfdf6bba28c65808cd1907aa8607df0ab190af9",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "98d7e343cc23fcb1265669cd2cfdf6bba28c65808cd1907aa8607df0ab190af9",
+        "verifiedAt": "2026-10-25T13:19:59.482Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Germans-vs-Americans",
+      "sha256": "b08fb2ed15de6d14832af4f5759097655a9d8cf9a0561e28cbb64a41adcb4f64",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "b08fb2ed15de6d14832af4f5759097655a9d8cf9a0561e28cbb64a41adcb4f64",
+        "verifiedAt": "2026-10-25T13:21:26.570Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Germans-vs-Alliance",
+      "sha256": "beab541679b8a54176aca5908c699e776f55b93ae01419d50a6a6e23eddcd012",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "beab541679b8a54176aca5908c699e776f55b93ae01419d50a6a6e23eddcd012",
+        "verifiedAt": "2026-10-25T13:21:31.230Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Germans-vs-French",
+      "sha256": "4196a28f9a68582a2df0cf0c67c800fa1a27ec1867f3fa9dfa111b14b02d11f9",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "4196a28f9a68582a2df0cf0c67c800fa1a27ec1867f3fa9dfa111b14b02d11f9",
+        "verifiedAt": "2026-10-25T13:21:37.380Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Germans-vs-British",
+      "sha256": "58b28384654b202f38e474054624456c930d4c4c675e9401d0710e8a68ec3a7e",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "58b28384654b202f38e474054624456c930d4c4c675e9401d0710e8a68ec3a7e",
+        "verifiedAt": "2026-10-25T13:21:38.851Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Germans-vs-Africans",
+      "sha256": "00afa950d49c7848e4019aa5bad75c9edc02a9df43c03f9bb370076278a5dc85",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "00afa950d49c7848e4019aa5bad75c9edc02a9df43c03f9bb370076278a5dc85",
+        "verifiedAt": "2026-10-25T13:23:33.272Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Germans-vs-Arabs",
+      "sha256": "0681a6f9c3ad596b15238261733235625da9c5e502fe487a3ea2374755425749",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "0681a6f9c3ad596b15238261733235625da9c5e502fe487a3ea2374755425749",
+        "verifiedAt": "2026-10-25T13:23:33.847Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Germans-vs-Confederation",
+      "sha256": "f13e751bceb03d047dc2dfb52cbd855cdccf3d4d0323a9c334388ed1761e23e4",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "f13e751bceb03d047dc2dfb52cbd855cdccf3d4d0323a9c334388ed1761e23e4",
+        "verifiedAt": "2026-10-25T13:23:46.559Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Germans-vs-Russians",
+      "sha256": "0004ccd07dd56474919f571991c7c966e966a4629ba8400a28504fa100803293",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "0004ccd07dd56474919f571991c7c966e966a4629ba8400a28504fa100803293",
+        "verifiedAt": "2026-10-25T13:23:46.585Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__British-vs-Americans",
+      "sha256": "504ecbcc9bfab70312b9a9966400dd31a481e9257dc02218b7d7b7dfc3ff5f91",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "504ecbcc9bfab70312b9a9966400dd31a481e9257dc02218b7d7b7dfc3ff5f91",
+        "verifiedAt": "2026-10-25T13:25:12.617Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__British-vs-Alliance",
+      "sha256": "6fd998d0902dad0fc40adbae48268184cc61a34bc76994bcb636e747aa766337",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "6fd998d0902dad0fc40adbae48268184cc61a34bc76994bcb636e747aa766337",
+        "verifiedAt": "2026-10-25T13:25:11.674Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__British-vs-French",
+      "sha256": "5833960df8b73c0765aee35bb2835bcaf2c0dffa9cdc2ceb91fbf255b82eb367",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "5833960df8b73c0765aee35bb2835bcaf2c0dffa9cdc2ceb91fbf255b82eb367",
+        "verifiedAt": "2026-10-25T13:25:24.965Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__British-vs-Germans",
+      "sha256": "6b063c65bb4c19117a81933249e9ad03e4a306ab9cc5d808934de80288f7d2d9",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "6b063c65bb4c19117a81933249e9ad03e4a306ab9cc5d808934de80288f7d2d9",
+        "verifiedAt": "2026-10-25T13:25:22.554Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__British-vs-Africans",
+      "sha256": "d77acb641709d878936168e58058768346fa456ee084e1b9a2a47273ca770db8",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "d77acb641709d878936168e58058768346fa456ee084e1b9a2a47273ca770db8",
+        "verifiedAt": "2026-10-25T13:27:20.509Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__British-vs-Arabs",
+      "sha256": "ed66f3850a5a8c564dd4330e4006ffc25a0730db6650cb520bbdffc92edfc044",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "ed66f3850a5a8c564dd4330e4006ffc25a0730db6650cb520bbdffc92edfc044",
+        "verifiedAt": "2026-10-25T13:27:16.394Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__British-vs-Confederation",
+      "sha256": "58beffa3c22be86230ac1731e66a54b372a62e5b28c999e84dbf1bf8255942a2",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "58beffa3c22be86230ac1731e66a54b372a62e5b28c999e84dbf1bf8255942a2",
+        "verifiedAt": "2026-10-25T13:27:22.877Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__British-vs-Russians",
+      "sha256": "4db4dfe644c785c5db183d6d3a8d59faa16956ad9aee3a97a9243f00f627ab52",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "4db4dfe644c785c5db183d6d3a8d59faa16956ad9aee3a97a9243f00f627ab52",
+        "verifiedAt": "2026-10-25T13:27:36.147Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Africans-vs-Americans",
+      "sha256": "aa6dab4c547fc1d4d4e85d3616da21b8609fbbc8f4a72f060b93200ba06e7779",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "aa6dab4c547fc1d4d4e85d3616da21b8609fbbc8f4a72f060b93200ba06e7779",
+        "verifiedAt": "2026-10-25T13:28:38.134Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Africans-vs-Alliance",
+      "sha256": "9c688de0a6b1d1a34370bf5c12e03e29501f6a82c96c15aebc65b9e66a5ae913",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "9c688de0a6b1d1a34370bf5c12e03e29501f6a82c96c15aebc65b9e66a5ae913",
+        "verifiedAt": "2026-10-25T13:28:42.896Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Africans-vs-French",
+      "sha256": "26693ee0330ce01a8afd5077366ff42ed607921eae9b8ebf84357656ab65f274",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "26693ee0330ce01a8afd5077366ff42ed607921eae9b8ebf84357656ab65f274",
+        "verifiedAt": "2026-10-25T13:28:46.897Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Africans-vs-Germans",
+      "sha256": "ce028b4ba353be239e8b6117401e190276909fbed6d91bb66c42e83be395f8a3",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "ce028b4ba353be239e8b6117401e190276909fbed6d91bb66c42e83be395f8a3",
+        "verifiedAt": "2026-10-25T13:28:58.269Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Africans-vs-British",
+      "sha256": "6148eb798137467cc01f7d5400b9f7d9d05dc02c03d6eaf9638e8099f496409e",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "6148eb798137467cc01f7d5400b9f7d9d05dc02c03d6eaf9638e8099f496409e",
+        "verifiedAt": "2026-10-25T13:29:55.212Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Africans-vs-Arabs",
+      "sha256": "443c06cec6d7a63a6b20971ec67605722df100615380eb4d943916d9d15f7474",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "443c06cec6d7a63a6b20971ec67605722df100615380eb4d943916d9d15f7474",
+        "verifiedAt": "2026-10-25T13:30:45.975Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Africans-vs-Confederation",
+      "sha256": "4d9fef6b692b1751dcbea5c5a37f6ff61605b9118517dc8ba6aff0ddd3d95d24",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "4d9fef6b692b1751dcbea5c5a37f6ff61605b9118517dc8ba6aff0ddd3d95d24",
+        "verifiedAt": "2026-10-25T13:30:45.557Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Africans-vs-Russians",
+      "sha256": "21effa885cb4fc285af44170025931b6a7ea750e3f5f8bbd22dc06e47797633e",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "21effa885cb4fc285af44170025931b6a7ea750e3f5f8bbd22dc06e47797633e",
+        "verifiedAt": "2026-10-25T13:30:57.984Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Arabs-vs-Americans",
+      "sha256": "4cafeb9f449adb1d55893cb08a36711f3c560418b22939daba1e2bd1971f306f",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "4cafeb9f449adb1d55893cb08a36711f3c560418b22939daba1e2bd1971f306f",
+        "verifiedAt": "2026-10-25T13:31:10.091Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Arabs-vs-Alliance",
+      "sha256": "8ce2251d89284f9cb3e34c56f73f5a36b8f6f2b7f329ef4a30d2f9fba767eb47",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "8ce2251d89284f9cb3e34c56f73f5a36b8f6f2b7f329ef4a30d2f9fba767eb47",
+        "verifiedAt": "2026-10-25T13:32:05.532Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Arabs-vs-French",
+      "sha256": "af65e219b793cf52044519d524c61949fe5bc1ba1a991aea41503be831a7238c",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "af65e219b793cf52044519d524c61949fe5bc1ba1a991aea41503be831a7238c",
+        "verifiedAt": "2026-10-25T13:32:04.368Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Arabs-vs-Germans",
+      "sha256": "2cf4747842aa4dae632cd92dab39093052245614c781152e2ef93dffe27343a4",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "2cf4747842aa4dae632cd92dab39093052245614c781152e2ef93dffe27343a4",
+        "verifiedAt": "2026-10-25T13:32:14.939Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Arabs-vs-British",
+      "sha256": "c8c8cc237a621731c805d5a769abf2a9b0b965eddb6f0e4f5f2725c0e0f1f187",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "c8c8cc237a621731c805d5a769abf2a9b0b965eddb6f0e4f5f2725c0e0f1f187",
+        "verifiedAt": "2026-10-25T13:32:29.983Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Arabs-vs-Africans",
+      "sha256": "12cd6b9ffd05bcab9fd86a0a22e724105457de178f28c4cf47f33ce8a70a9fb6",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "12cd6b9ffd05bcab9fd86a0a22e724105457de178f28c4cf47f33ce8a70a9fb6",
+        "verifiedAt": "2026-10-25T13:34:32.702Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Arabs-vs-Confederation",
+      "sha256": "d4b8899a255a3c8bff576a07c1fad44c47564f3204de3ed211c3abcc720639e5",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "d4b8899a255a3c8bff576a07c1fad44c47564f3204de3ed211c3abcc720639e5",
+        "verifiedAt": "2026-10-25T13:34:36.797Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Arabs-vs-Russians",
+      "sha256": "e48b5c7fbc3ed08f586b462579d1e2badb92a09a4a024fae0a5a13d46f723c4d",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "e48b5c7fbc3ed08f586b462579d1e2badb92a09a4a024fae0a5a13d46f723c4d",
+        "verifiedAt": "2026-10-25T13:34:50.742Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Confederation-vs-Americans",
+      "sha256": "7d474b7c603b005d87df43a460027bd565c8c7a7f4a36b2f73252f92e06b788a",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "7d474b7c603b005d87df43a460027bd565c8c7a7f4a36b2f73252f92e06b788a",
+        "verifiedAt": "2026-10-25T13:33:40.879Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Confederation-vs-Alliance",
+      "sha256": "f586490caed22fc255a9f84d53217721bf76f1a54ddeaa94a2c257858a8259f7",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "f586490caed22fc255a9f84d53217721bf76f1a54ddeaa94a2c257858a8259f7",
+        "verifiedAt": "2026-10-25T13:34:54.831Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Confederation-vs-French",
+      "sha256": "f706fe3900d70881c3f96343b56ef7ceb03774b75edf6832cec8329d87bacaac",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "f706fe3900d70881c3f96343b56ef7ceb03774b75edf6832cec8329d87bacaac",
+        "verifiedAt": "2026-10-25T13:35:46.558Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Confederation-vs-Germans",
+      "sha256": "3b24a8d57845eabd3b4eb4eedb137c79c20a593ec7612f27add1a11441b964ed",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "3b24a8d57845eabd3b4eb4eedb137c79c20a593ec7612f27add1a11441b964ed",
+        "verifiedAt": "2026-10-25T13:35:49.411Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Confederation-vs-British",
+      "sha256": "ff586beb350af7466843cee7bd528f5765af7cb3f45513905c57cd5d02ad84e6",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "ff586beb350af7466843cee7bd528f5765af7cb3f45513905c57cd5d02ad84e6",
+        "verifiedAt": "2026-10-25T13:35:59.514Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Confederation-vs-Africans",
+      "sha256": "56aaf19f1530a98c3dc04ec99e5c36e90552120c2bde0f5f8cf7173086b105f9",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "56aaf19f1530a98c3dc04ec99e5c36e90552120c2bde0f5f8cf7173086b105f9",
+        "verifiedAt": "2026-10-25T13:36:51.519Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Confederation-vs-Arabs",
+      "sha256": "a9717d02aca2f42baf14a4a007dcdb4876eedff0bea5b6661c4ed9aaec503cdd",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "a9717d02aca2f42baf14a4a007dcdb4876eedff0bea5b6661c4ed9aaec503cdd",
+        "verifiedAt": "2026-10-25T13:37:47.252Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Confederation-vs-Russians",
+      "sha256": "1292e590d8ebd1f359f0532ddacc7b63f3bd8902f1425c596f770baa9e1b152f",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "1292e590d8ebd1f359f0532ddacc7b63f3bd8902f1425c596f770baa9e1b152f",
+        "verifiedAt": "2026-10-25T13:37:47.870Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Russians-vs-Americans",
+      "sha256": "9f7b222c93bdab73c34b7390d1704017c42288dd97bf913ceb0bc302e1749174",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "9f7b222c93bdab73c34b7390d1704017c42288dd97bf913ceb0bc302e1749174",
+        "verifiedAt": "2026-10-25T13:37:11.024Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Russians-vs-Alliance",
+      "sha256": "60c75dae32e63b1a3233ea92f3cf437f1ed8f386334dbbbcddab5766caf1f947",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "60c75dae32e63b1a3233ea92f3cf437f1ed8f386334dbbbcddab5766caf1f947",
+        "verifiedAt": "2026-10-25T13:38:07.136Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Russians-vs-French",
+      "sha256": "b944d6ab6fc573e715e2f64d04a5130a7b449425c6dcfbc7108dca64251ebebf",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "b944d6ab6fc573e715e2f64d04a5130a7b449425c6dcfbc7108dca64251ebebf",
+        "verifiedAt": "2026-10-25T13:38:28.912Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Russians-vs-Germans",
+      "sha256": "995551ba7af7d5f48e922015fa961b214c1c79c3784942df21a54d6b3d69ccdc",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "995551ba7af7d5f48e922015fa961b214c1c79c3784942df21a54d6b3d69ccdc",
+        "verifiedAt": "2026-10-25T13:39:06.186Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Russians-vs-British",
+      "sha256": "f06a73f3ab6d41e7d489624ed8e1e75d57c76ad9c9ceaae787f64183aaea66e0",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "f06a73f3ab6d41e7d489624ed8e1e75d57c76ad9c9ceaae787f64183aaea66e0",
+        "verifiedAt": "2026-10-25T13:39:09.407Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Russians-vs-Africans",
+      "sha256": "337314ef29b04a60feaf72eb86b055fcc3058fa5e26eec5c5487cea35410a443",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "337314ef29b04a60feaf72eb86b055fcc3058fa5e26eec5c5487cea35410a443",
+        "verifiedAt": "2026-10-25T13:40:01.537Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Russians-vs-Arabs",
+      "sha256": "4428ebb002a10eb4a567430cc1130fec4c7909b0ea8371325f084600e316512a",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "4428ebb002a10eb4a567430cc1130fec4c7909b0ea8371325f084600e316512a",
+        "verifiedAt": "2026-10-25T13:40:17.034Z"
+      }
+    },
+    {
+      "shard": "ai-country-long",
+      "job": "mp11t2-30333__Russians-vs-Confederation",
+      "sha256": "adfe038e7aec6f4ee4707ac19f6ffcff28a2a2b2800deac29e6d2de001d0afe7",
+      "receipt": {
+        "fingerprint": "2aa6e32dd7095a3fa1827e20f276f9bd8c85ad125899a7098a454017a9afbee7",
+        "reportSha256": "adfe038e7aec6f4ee4707ac19f6ffcff28a2a2b2800deac29e6d2de001d0afe7",
+        "verifiedAt": "2026-10-25T13:40:30.955Z"
+      }
+    }
+  ],
+  "zipReceipts": [
+    {
+      "artifactId": 12601731016,
+      "name": "ai-country-short",
+      "includedInCountryMatrix": true,
+      "sha256": "51370c445c159fef2e373f6d9ae40b9fd68f0426c7684c99901e2ad7ec03613f",
+      "githubDigest": "sha256:51370c445c159fef2e373f6d9ae40b9fd68f0426c7684c99901e2ad7ec03613f",
+      "archiveSource": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12601731016/zip",
+      "artifactPage": "https://github.com/chenxuan520/ra2web/actions/runs/40195981546/artifacts/12601731016"
+    },
+    {
+      "artifactId": 12601400200,
+      "name": "ai-country-long",
+      "includedInCountryMatrix": true,
+      "sha256": "cfca846e950ad4360d550a228fb1a1550054632dd4332d33522eba82a9f396aa",
+      "githubDigest": "sha256:cfca846e950ad4360d550a228fb1a1550054632dd4332d33522eba82a9f396aa",
+      "archiveSource": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12601400200/zip",
+      "artifactPage": "https://github.com/chenxuan520/ra2web/actions/runs/40195981546/artifacts/12601400200"
+    },
+    {
+      "artifactId": 12601151626,
+      "name": "ai-country-report",
+      "includedInCountryMatrix": false,
+      "sha256": "e1d8c0a1d789d29cf4ea5681b8cc291ff26cfade94abe869ec0d597c111e526e",
+      "githubDigest": "sha256:e1d8c0a1d789d29cf4ea5681b8cc291ff26cfade94abe869ec0d597c111e526e",
+      "archiveSource": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12601151626/zip",
+      "artifactPage": "https://github.com/chenxuan520/ra2web/actions/runs/40195981546/artifacts/12601151626"
+    },
+    {
+      "artifactId": 12600906111,
+      "name": "ai-country-medium",
+      "includedInCountryMatrix": true,
+      "sha256": "8f77901e129b6eebf3af5ef9fa65968325089aa7cd6c97c16f7abd813312604e",
+      "githubDigest": "sha256:8f77901e129b6eebf3af5ef9fa65968325089aa7cd6c97c16f7abd813312604e",
+      "archiveSource": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12600906111/zip",
+      "artifactPage": "https://github.com/chenxuan520/ra2web/actions/runs/40195981546/artifacts/12600906111"
+    },
+    {
+      "artifactId": 12600375796,
+      "name": "ai-regression",
+      "includedInCountryMatrix": false,
+      "sha256": "f1ea6ee08fce54d4750862290a2faf3ea22574e3fa574ea411212be4f26caced",
+      "githubDigest": "sha256:f1ea6ee08fce54d4750862290a2faf3ea22574e3fa574ea411212be4f26caced",
+      "archiveSource": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12600375796/zip",
+      "artifactPage": "https://github.com/chenxuan520/ra2web/actions/runs/40195981546/artifacts/12600375796"
+    }
+  ],
+  "gamesFile": "ai-upgrade-vs-0a46d52-games.jsonl",
+  "archivedCsv": "ai-upgrade-vs-0a46d52-matrix.csv",
+  "archivedFilesSha256": {
+    "ai-upgrade-vs-0a46d52-games.jsonl": "4a3a362cce3cad7052201ca7a0b69a578803ff15ca9470a77d8b3dee849c156d",
+    "ai-upgrade-vs-0a46d52-matrix.csv": "49bc7925d302ad7e0f55b94c25fa49274b0d027b1cf024e4eec976f880c5069d"
+  },
+  "ciFilesSha256": {
+    "report.md": "aab4a38defe7734cdef7daa9088228238e9f11657b49a754f6623a3b824c856a",
+    "results.json": "dda99fa6d8a834ff42236673db79e61ec8cee78cb42b5ef8545b1ed88e0749d4",
+    "matrix.csv": "8f162f5b16427ea252d5a0420de4a1a9de77475b508cd837f70dc8fff04ccc39"
+  },
+  "notes": [
+    "CSV line endings are normalized to LF; original and archived hashes are recorded separately.",
+    "Compact game rows are observations, not complete engine samples. Raw artifacts remain the primary evidence.",
+    "No signed download URL, workspace path, game resource, dependency or credential is archived."
+  ],
+  "supplementalFeatures": {
+    "americanParadropActivations": {
+      "events": 103,
+      "gamesWithEvents": 48,
+      "coveredGames": 432
+    },
+    "paradropInfantrySpawned": {
+      "events": 792,
+      "gamesWithEvents": 48,
+      "coveredGames": 432
+    },
+    "factoryProducedByType": {
+      "ADOG": 734,
+      "CMIN": 312,
+      "DESO": 3,
+      "DOG": 378,
+      "E1": 1720,
+      "E2": 6864,
+      "FV": 36,
+      "HARV": 241,
+      "HTK": 45,
+      "HTNK": 397,
+      "JUMPJET": 1658,
+      "MTNK": 811,
+      "SENGINEER": 30,
+      "ZEP": 6
+    },
+    "buildingsReadyByType": {
+      "AMRADR": 48,
+      "GAAIRC": 192,
+      "GACNST": 240,
+      "GAPILE": 240,
+      "GAPILL": 120,
+      "GAPOWR": 308,
+      "GAREFN": 368,
+      "GATECH": 4,
+      "GAWEAP": 320,
+      "NACNST": 195,
+      "NAHAND": 192,
+      "NALASR": 27,
+      "NAPOWR": 228,
+      "NARADR": 27,
+      "NAREFN": 269,
+      "NATECH": 9,
+      "NAWEAP": 219
+    },
+    "weaponShotsByType": {
+      "ADOG": 816,
+      "CAOILD": 16,
+      "DOG": 349,
+      "E1": 38883,
+      "E2": 205314,
+      "FV": 2592,
+      "GAPILL": 2296,
+      "HARV": 1285,
+      "HTK": 801,
+      "HTNK": 9693,
+      "JUMPJET": 158250,
+      "MTNK": 16480,
+      "NALASR": 18
+    },
+    "enemyDamageBySourceType": {
+      "ADOG": {
+        "hitPoints": 94088,
+        "kills": 816
+      },
+      "CMIN": {
+        "hitPoints": 0,
+        "kills": 680
+      },
+      "DOG": {
+        "hitPoints": 38165,
+        "kills": 320
+      },
+      "E1": {
+        "hitPoints": 342022,
+        "kills": 1717
+      },
+      "E2": {
+        "hitPoints": 1844604,
+        "kills": 8768
+      },
+      "FV": {
+        "hitPoints": 43264,
+        "kills": 128
+      },
+      "GAPILL": {
+        "hitPoints": 56368,
+        "kills": 356
+      },
+      "HARV": {
+        "hitPoints": 20457,
+        "kills": 160
+      },
+      "HTK": {
+        "hitPoints": 4308,
+        "kills": 72
+      },
+      "HTNK": {
+        "hitPoints": 457116,
+        "kills": 1775
+      },
+      "JUMPJET": {
+        "hitPoints": 2307905,
+        "kills": 8935
+      },
+      "MTNK": {
+        "hitPoints": 596740,
+        "kills": 2632
+      },
+      "NALASR": {
+        "hitPoints": 630,
+        "kills": 0
+      }
+    }
+  },
+  "supplementalFeaturesByCountry": {
+    "Americans": {
+      "americanParadropActivations": {
+        "events": 103,
+        "gamesWithEvents": 48,
+        "coveredGames": 48
+      },
+      "paradropInfantrySpawned": {
+        "events": 792,
+        "gamesWithEvents": 48,
+        "coveredGames": 48
+      },
+      "factoryProducedByType": {
+        "ADOG": 132,
+        "CMIN": 43,
+        "E1": 316,
+        "FV": 4,
+        "JUMPJET": 253,
+        "MTNK": 75
+      },
+      "buildingsReadyByType": {
+        "AMRADR": 48,
+        "GACNST": 48,
+        "GAPILE": 48,
+        "GAPILL": 24,
+        "GAPOWR": 52,
+        "GAREFN": 64,
+        "GATECH": 4,
+        "GAWEAP": 52
+      },
+      "weaponShotsByType": {
+        "ADOG": 160,
+        "E1": 22460,
+        "GAPILL": 376,
+        "JUMPJET": 25317,
+        "MTNK": 1756
+      },
+      "enemyDamageBySourceType": {
+        "ADOG": {
+          "hitPoints": 18600,
+          "kills": 160
+        },
+        "CMIN": {
+          "hitPoints": 0,
+          "kills": 136
+        },
+        "E1": {
+          "hitPoints": 194480,
+          "kills": 723
+        },
+        "GAPILL": {
+          "hitPoints": 9408,
+          "kills": 68
+        },
+        "JUMPJET": {
+          "hitPoints": 374784,
+          "kills": 1442
+        },
+        "MTNK": {
+          "hitPoints": 64148,
+          "kills": 264
+        }
+      }
+    },
+    "Alliance": {
+      "americanParadropActivations": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "paradropInfantrySpawned": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "factoryProducedByType": {
+        "ADOG": 150,
+        "CMIN": 67,
+        "E1": 352,
+        "FV": 8,
+        "JUMPJET": 351,
+        "MTNK": 184
+      },
+      "buildingsReadyByType": {
+        "GAAIRC": 48,
+        "GACNST": 48,
+        "GAPILE": 48,
+        "GAPILL": 24,
+        "GAPOWR": 64,
+        "GAREFN": 76,
+        "GAWEAP": 68
+      },
+      "weaponShotsByType": {
+        "ADOG": 164,
+        "CAOILD": 4,
+        "E1": 4106,
+        "FV": 648,
+        "GAPILL": 480,
+        "JUMPJET": 33492,
+        "MTNK": 3681
+      },
+      "enemyDamageBySourceType": {
+        "ADOG": {
+          "hitPoints": 18872,
+          "kills": 164
+        },
+        "CMIN": {
+          "hitPoints": 0,
+          "kills": 136
+        },
+        "E1": {
+          "hitPoints": 36925,
+          "kills": 250
+        },
+        "FV": {
+          "hitPoints": 10816,
+          "kills": 32
+        },
+        "GAPILL": {
+          "hitPoints": 11740,
+          "kills": 72
+        },
+        "JUMPJET": {
+          "hitPoints": 487955,
+          "kills": 1891
+        },
+        "MTNK": {
+          "hitPoints": 133148,
+          "kills": 592
+        }
+      }
+    },
+    "French": {
+      "americanParadropActivations": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "paradropInfantrySpawned": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "factoryProducedByType": {
+        "ADOG": 152,
+        "CMIN": 68,
+        "E1": 348,
+        "FV": 8,
+        "JUMPJET": 352,
+        "MTNK": 184
+      },
+      "buildingsReadyByType": {
+        "GAAIRC": 48,
+        "GACNST": 48,
+        "GAPILE": 48,
+        "GAPILL": 24,
+        "GAPOWR": 64,
+        "GAREFN": 76,
+        "GAWEAP": 64
+      },
+      "weaponShotsByType": {
+        "ADOG": 164,
+        "CAOILD": 4,
+        "E1": 4105,
+        "FV": 648,
+        "GAPILL": 480,
+        "JUMPJET": 32457,
+        "MTNK": 3681
+      },
+      "enemyDamageBySourceType": {
+        "ADOG": {
+          "hitPoints": 18872,
+          "kills": 164
+        },
+        "CMIN": {
+          "hitPoints": 0,
+          "kills": 136
+        },
+        "E1": {
+          "hitPoints": 36767,
+          "kills": 244
+        },
+        "FV": {
+          "hitPoints": 10816,
+          "kills": 32
+        },
+        "GAPILL": {
+          "hitPoints": 11740,
+          "kills": 72
+        },
+        "JUMPJET": {
+          "hitPoints": 469256,
+          "kills": 1820
+        },
+        "MTNK": {
+          "hitPoints": 133148,
+          "kills": 592
+        }
+      }
+    },
+    "Germans": {
+      "americanParadropActivations": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "paradropInfantrySpawned": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "factoryProducedByType": {
+        "ADOG": 150,
+        "CMIN": 67,
+        "E1": 352,
+        "FV": 8,
+        "JUMPJET": 351,
+        "MTNK": 184
+      },
+      "buildingsReadyByType": {
+        "GAAIRC": 48,
+        "GACNST": 48,
+        "GAPILE": 48,
+        "GAPILL": 24,
+        "GAPOWR": 64,
+        "GAREFN": 76,
+        "GAWEAP": 68
+      },
+      "weaponShotsByType": {
+        "ADOG": 164,
+        "CAOILD": 4,
+        "E1": 4106,
+        "FV": 648,
+        "GAPILL": 480,
+        "JUMPJET": 33492,
+        "MTNK": 3681
+      },
+      "enemyDamageBySourceType": {
+        "ADOG": {
+          "hitPoints": 18872,
+          "kills": 164
+        },
+        "CMIN": {
+          "hitPoints": 0,
+          "kills": 136
+        },
+        "E1": {
+          "hitPoints": 36925,
+          "kills": 250
+        },
+        "FV": {
+          "hitPoints": 10816,
+          "kills": 32
+        },
+        "GAPILL": {
+          "hitPoints": 11740,
+          "kills": 72
+        },
+        "JUMPJET": {
+          "hitPoints": 487955,
+          "kills": 1891
+        },
+        "MTNK": {
+          "hitPoints": 133148,
+          "kills": 592
+        }
+      }
+    },
+    "British": {
+      "americanParadropActivations": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "paradropInfantrySpawned": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "factoryProducedByType": {
+        "ADOG": 150,
+        "CMIN": 67,
+        "E1": 352,
+        "FV": 8,
+        "JUMPJET": 351,
+        "MTNK": 184
+      },
+      "buildingsReadyByType": {
+        "GAAIRC": 48,
+        "GACNST": 48,
+        "GAPILE": 48,
+        "GAPILL": 24,
+        "GAPOWR": 64,
+        "GAREFN": 76,
+        "GAWEAP": 68
+      },
+      "weaponShotsByType": {
+        "ADOG": 164,
+        "CAOILD": 4,
+        "E1": 4106,
+        "FV": 648,
+        "GAPILL": 480,
+        "JUMPJET": 33492,
+        "MTNK": 3681
+      },
+      "enemyDamageBySourceType": {
+        "ADOG": {
+          "hitPoints": 18872,
+          "kills": 164
+        },
+        "CMIN": {
+          "hitPoints": 0,
+          "kills": 136
+        },
+        "E1": {
+          "hitPoints": 36925,
+          "kills": 250
+        },
+        "FV": {
+          "hitPoints": 10816,
+          "kills": 32
+        },
+        "GAPILL": {
+          "hitPoints": 11740,
+          "kills": 72
+        },
+        "JUMPJET": {
+          "hitPoints": 487955,
+          "kills": 1891
+        },
+        "MTNK": {
+          "hitPoints": 133148,
+          "kills": 592
+        }
+      }
+    },
+    "Africans": {
+      "americanParadropActivations": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "paradropInfantrySpawned": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "factoryProducedByType": {
+        "DOG": 92,
+        "E2": 1713,
+        "HARV": 61,
+        "HTK": 13,
+        "HTNK": 99,
+        "SENGINEER": 7,
+        "ZEP": 3
+      },
+      "buildingsReadyByType": {
+        "NACNST": 48,
+        "NAHAND": 48,
+        "NALASR": 6,
+        "NAPOWR": 58,
+        "NARADR": 7,
+        "NAREFN": 66,
+        "NATECH": 3,
+        "NAWEAP": 55
+      },
+      "weaponShotsByType": {
+        "DOG": 84,
+        "E2": 50617,
+        "HARV": 406,
+        "HTK": 198,
+        "HTNK": 2495
+      },
+      "enemyDamageBySourceType": {
+        "DOG": {
+          "hitPoints": 9194,
+          "kills": 76
+        },
+        "E2": {
+          "hitPoints": 457567,
+          "kills": 2178
+        },
+        "HARV": {
+          "hitPoints": 6318,
+          "kills": 45
+        },
+        "HTK": {
+          "hitPoints": 960,
+          "kills": 13
+        },
+        "HTNK": {
+          "hitPoints": 121650,
+          "kills": 447
+        }
+      }
+    },
+    "Arabs": {
+      "americanParadropActivations": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "paradropInfantrySpawned": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "factoryProducedByType": {
+        "DESO": 3,
+        "DOG": 102,
+        "E2": 1729,
+        "HARV": 58,
+        "HTK": 6,
+        "HTNK": 100,
+        "SENGINEER": 9
+      },
+      "buildingsReadyByType": {
+        "NACNST": 51,
+        "NAHAND": 48,
+        "NALASR": 9,
+        "NAPOWR": 54,
+        "NARADR": 6,
+        "NAREFN": 71,
+        "NAWEAP": 54
+      },
+      "weaponShotsByType": {
+        "DOG": 97,
+        "E2": 53586,
+        "HARV": 67,
+        "HTK": 210,
+        "HTNK": 2246,
+        "NALASR": 18
+      },
+      "enemyDamageBySourceType": {
+        "DOG": {
+          "hitPoints": 10583,
+          "kills": 92
+        },
+        "E2": {
+          "hitPoints": 473151,
+          "kills": 2240
+        },
+        "HARV": {
+          "hitPoints": 1503,
+          "kills": 25
+        },
+        "HTK": {
+          "hitPoints": 1488,
+          "kills": 36
+        },
+        "HTNK": {
+          "hitPoints": 96069,
+          "kills": 431
+        },
+        "NALASR": {
+          "hitPoints": 630,
+          "kills": 0
+        }
+      }
+    },
+    "Confederation": {
+      "americanParadropActivations": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "paradropInfantrySpawned": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "factoryProducedByType": {
+        "DOG": 92,
+        "E2": 1713,
+        "HARV": 61,
+        "HTK": 13,
+        "HTNK": 99,
+        "SENGINEER": 7,
+        "ZEP": 3
+      },
+      "buildingsReadyByType": {
+        "NACNST": 48,
+        "NAHAND": 48,
+        "NALASR": 6,
+        "NAPOWR": 58,
+        "NARADR": 7,
+        "NAREFN": 66,
+        "NATECH": 3,
+        "NAWEAP": 55
+      },
+      "weaponShotsByType": {
+        "DOG": 84,
+        "E2": 50617,
+        "HARV": 406,
+        "HTK": 198,
+        "HTNK": 2495
+      },
+      "enemyDamageBySourceType": {
+        "DOG": {
+          "hitPoints": 9194,
+          "kills": 76
+        },
+        "E2": {
+          "hitPoints": 457567,
+          "kills": 2178
+        },
+        "HARV": {
+          "hitPoints": 6318,
+          "kills": 45
+        },
+        "HTK": {
+          "hitPoints": 960,
+          "kills": 13
+        },
+        "HTNK": {
+          "hitPoints": 121650,
+          "kills": 447
+        }
+      }
+    },
+    "Russians": {
+      "americanParadropActivations": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "paradropInfantrySpawned": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 48
+      },
+      "factoryProducedByType": {
+        "DOG": 92,
+        "E2": 1709,
+        "HARV": 61,
+        "HTK": 13,
+        "HTNK": 99,
+        "SENGINEER": 7
+      },
+      "buildingsReadyByType": {
+        "NACNST": 48,
+        "NAHAND": 48,
+        "NALASR": 6,
+        "NAPOWR": 58,
+        "NARADR": 7,
+        "NAREFN": 66,
+        "NATECH": 3,
+        "NAWEAP": 55
+      },
+      "weaponShotsByType": {
+        "DOG": 84,
+        "E2": 50494,
+        "HARV": 406,
+        "HTK": 195,
+        "HTNK": 2457
+      },
+      "enemyDamageBySourceType": {
+        "DOG": {
+          "hitPoints": 9194,
+          "kills": 76
+        },
+        "E2": {
+          "hitPoints": 456319,
+          "kills": 2172
+        },
+        "HARV": {
+          "hitPoints": 6318,
+          "kills": 45
+        },
+        "HTK": {
+          "hitPoints": 900,
+          "kills": 10
+        },
+        "HTNK": {
+          "hitPoints": 117747,
+          "kills": 450
+        }
+      }
+    }
+  },
+  "supplementalNotes": [
+    "American paradrop is real engine type 6. Infantry spawn events do not prove safe landing or combat success.",
+    "Unit production, building readiness, actual weapon shots and source-attributed damage are distinct events. Ownerless radiation remains victim-only in the main metrics."
+  ]
+}
