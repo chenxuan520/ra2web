@@ -36,6 +36,21 @@ export class BaseBuildingMission extends Mission {
             };
         });
 
+        if (context.difficulty === "brutal") {
+            // A large building with no legal site must not block smaller useful
+            // buildings. Stable sorting preserves the API order for equal priorities.
+            const candidates = optionWithPriority
+                .filter((candidate) => candidate.priority > 0)
+                .sort((a, b) => b.priority - a.priority);
+            for (const candidate of candidates) {
+                const location = this.getBestLocationForStructure(game, playerData, candidate.option);
+                if (location) {
+                    return buildStructureAtLocation(candidate.option.name, candidate.priority, location.rx, location.ry);
+                }
+            }
+            return noop();
+        }
+
         const bestOption = maxBy(optionWithPriority, (option) => option.priority);
 
         if (!bestOption || bestOption.priority === 0) {
