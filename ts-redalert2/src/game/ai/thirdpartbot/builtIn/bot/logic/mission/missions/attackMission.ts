@@ -9,7 +9,6 @@ import { manageMoveMicro } from "./squads/common";
 import { MissionContext, SupabotContext } from "../../common/context";
 import { UnitComposition } from "../../../strategy/strategy";
 import { SideComposition } from "../../../strategy/compositionUtils";
-import { StationaryGiGuard } from "./squads/stationaryGiGuard";
 
 export enum AttackFailReason {
     NoTargets = "NoTargets",
@@ -52,7 +51,6 @@ export class AttackMission extends Mission<AttackFailReason> {
     private preparationStartedAt: number | null = null;
     private lastReinforcementAt: number | null = null;
     private previousPreparingUnitCount = 0;
-    private stationaryGuard = new StationaryGiGuard();
 
     constructor(
         uniqueName: string,
@@ -115,7 +113,6 @@ export class AttackMission extends Mission<AttackFailReason> {
                 (tick - this.lastReinforcementAt >= REINFORCEMENT_TIMEOUT_TICKS && !pendingReinforcements)) {
                 return disbandMission(AttackFailReason.UnableToAcquireUnits);
             }
-            this.stationaryGuard.onAiUpdate(context, this.getUnits(game));
         }
         if (missingUnits.length > 0) {
             this.priority = Math.min(this.priority * ATTACK_MISSION_PRIORITY_RAMP, ATTACK_MISSION_MAX_PRIORITY);
