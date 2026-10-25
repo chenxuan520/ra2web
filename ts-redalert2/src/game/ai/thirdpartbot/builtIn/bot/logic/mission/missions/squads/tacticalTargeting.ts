@@ -127,7 +127,8 @@ export function getTacticalRetreatPoint(attacker: UnitData, targets: UnitData[],
     }
     if (!nearestThreat) return null;
     const ownWeapon = getCombatWeapon(attacker, nearestThreat, true);
-    const injured = (attacker.hitPoints ?? Infinity) < (attacker.maxHitPoints ?? 0) * 0.3;
+    const injured = (attacker.type as any) === ObjectType.Vehicle &&
+        (attacker.hitPoints ?? Infinity) < (attacker.maxHitPoints ?? 0) * 0.3;
     const canKite = ownWeapon && ownWeapon.range >= threatRange + 1.5 &&
         ownWeapon.weapon.cooldownTicks > 6 && nearestDistance < ownWeapon.range - 0.5;
     const insideMinimumRange = ownWeapon && nearestDistance < (ownWeapon.weapon.minRange ?? 0);
