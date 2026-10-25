@@ -20,4 +20,12 @@
 
 这只是独立直接对照的第一阶段。上一原型/消融、独立战术对手、镜像补测、普通难度回归，以及原始14(normal)、04(brutal)、0a(brutal)各432局80%总/70%每国每图/零错历史回归与共同对手非退步比较仍要单独完成；不能用本阶段一项过关直接推广。所有主分支他人改动保留，当前master不改。
 
-实际workflow/引擎提交和精确run链接在提交及派发后补录，候选提交始终为356，不随文档提交变化。使用同一个“RA2 对战完成汇报”任务继续监控，不新建重复任务；正常运行静默，全部完成后中文报告并继续推进。
+三条共用workflow/engine `11ea91441e332a3643a17f2011a92f8a9eeaf43d`，其`ts-redalert2`树与候选356、上一开发引擎d2相同；候选始终为356，不随文档提交变化。
+
+| 集合 | 精确run |
+| --- | --- |
+| qualification_a | [40227208347](https://github.com/chenxuan520/ra2web/actions/runs/40227208347) |
+| qualification_b | [40227243447](https://github.com/chenxuan520/ra2web/actions/runs/40227243447) |
+| qualification_c | [40227337951](https://github.com/chenxuan520/ra2web/actions/runs/40227337951) |
+
+这是派发记录，不代表已经完成或取得资格。使用同一个“RA2 对战完成汇报”任务继续监控，不新建重复任务；正常运行静默，全部完成后中文报告并继续推进。
