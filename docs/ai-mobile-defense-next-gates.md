@@ -17,4 +17,15 @@ qualification_a/b/c使用原已登记种子710101/710202/710303、720101/720202/
 
 上一原型三条使用comparison_mode=direct，逐条W>L只是筛选，须三套完整核验后合并；历史三条使用historical，80/70/70不降低。report仅强度门槛失败与真正运行/资源错误分开，保留全部败局、超时平局与实际错误。错误、缺局不作平局填充。
 
-六条共用一个在归档后冻结的workflow/引擎；实际提交和精确run派发后补录。候选始终356，不把workflow或后续文档提交混写成AI候选。沿用同一个“RA2 对战完成汇报”任务和已授权只读监控，不新建重复任务；正常运行静默。独立战术对手、消融、镜像、普通难度、共同对手非退步以及未来合并引擎验证等其余条件仍待完成，master不因本阶段绿灯自动推广。
+六条共用workflow/engine `562ebc71daba86c4ea0ea28e49ff5c28a2825932`，`ts-redalert2`树与356及上一资格引擎11e相同。候选始终356，不把workflow或后续文档提交混写成AI候选。
+
+| 用途 | 精确CI |
+| --- | --- |
+| 对635，qualification_a | [40241153672](https://github.com/chenxuan520/ra2web/actions/runs/40241153672) |
+| 对635，qualification_b | [40241240910](https://github.com/chenxuan520/ra2web/actions/runs/40241240910) |
+| 对635，qualification_c | [40241320276](https://github.com/chenxuan520/ra2web/actions/runs/40241320276) |
+| 对原始14，normal，regression | [40241346363](https://github.com/chenxuan520/ra2web/actions/runs/40241346363) |
+| 对04，brutal，regression | [40241433799](https://github.com/chenxuan520/ra2web/actions/runs/40241433799) |
+| 对0a，brutal，regression | [40241436421](https://github.com/chenxuan520/ra2web/actions/runs/40241436421) |
+
+这是派发记录，不代表已经完成或达标。沿用同一个“RA2 对战完成汇报”任务和已授权只读监控，不新建重复任务；正常运行静默。独立战术对手、消融、镜像、普通难度、共同对手非退步以及未来合并引擎验证等其余条件仍待完成，master不因本阶段绿灯自动推广。
