@@ -62,28 +62,18 @@ export function chooseTacticalTarget(
     committedDamage: Map<number, number>,
     currentTargetId?: number,
 ): UnitData | null {
-    if (isMissileArtillery(attacker)) targets = targets.filter(target => (target.type as any) === ObjectType.Building);
     const currentTarget = targets.find(target => target.id === currentTargetId);
-    if (currentTarget && isFiringBurst(attacker) && getCombatWeapon(attacker, currentTarget, true)) return currentTarget;
-
-    const canShootNow = (target: UnitData) => {
-        const weapon = getCombatWeapon(attacker, target, true);
-        const distance = getDistanceBetweenUnits(attacker, target);
-        return weapon && distance <= weapon.range && distance >= (weapon.weapon.minRange ?? 0) &&
-            (committedDamage.get(target.id) ?? 0) < (target.hitPoints ?? target.maxHitPoints ?? 100);
-    };
-    const hasImmediateTarget = targets.some(canShootNow);
+    if (currentTarget && isFiringBurst(attacker) && getCombatWeapon(attacker, currentTarget)) return currentTarget;
 
     let best: UnitData | null = null;
     let bestScore = -Infinity;
     for (const target of targets) {
-        const attack = getCombatWeapon(attacker, target, true);
+        const attack = getCombatWeapon(attacker, target);
         if (!attack) continue;
-        if (hasImmediateTarget && !canShootNow(target)) continue;
         const distance = getDistanceBetweenUnits(attacker, target);
         const committed = committedDamage.get(target.id) ?? 0;
         const remainingHealth = Math.max(1, (target.hitPoints ?? target.maxHitPoints ?? 100) - committed);
-        const threat = getCombatWeapon(target, attacker, true);
+        const threat = getCombatWeapon(target, attacker);
         const damageEfficiency = attack.damage / Math.max(1,
             Math.abs(attack.weapon.rules?.damage ?? attack.damage) * Math.max(1, attack.weapon.rules?.burst ?? 1));
         let score = 40 * Math.min(2, damageEfficiency) + 60 * Math.min(1, attack.damage / remainingHealth);
