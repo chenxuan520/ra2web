@@ -1,4 +1,4 @@
-import { ObjectType, OrderType, UnitData, Vector2, ZoneType } from "../../../../game-api";
+import { ObjectType, OrderType, QueueType, UnitData, Vector2, ZoneType } from "../../../../game-api";
 import { MissionContext } from "../../common/context";
 import { DebugLogger } from "../../common/utils";
 import { Mission, noop, requestUnits } from "../mission";
@@ -76,9 +76,10 @@ export class DogEscortMission extends Mission {
         const available = player.production.getAvailableObjects().find(rule => rule.name === "DOG");
         const miners = game.getVisibleUnits(player.name, "self", rule => rule.harvester).length;
         const totalDogs = game.getVisibleUnits(player.name, "self", rule => rule.name === "DOG").length;
-        const desired = Math.min(6, Math.floor(tanks.length / 2));
-        return available && miners >= 2 && tanks.length >= 2 && dogs.length < desired && totalDogs < 8 &&
-            playerData.credits >= available.cost + 500 ? requestUnits({ DOG: 25 }) : noop();
+        const desired = tanks.length ? Math.min(6, Math.max(1, Math.floor(tanks.length / 2))) : 0;
+        const committed = player.production.getQueueData?.(QueueType.Infantry).items[0]?.rules.name === "DOG";
+        return available && miners >= 1 && tanks.length >= 1 && dogs.length < desired && totalDogs < 8 &&
+            (committed || playerData.credits >= available.cost) ? requestUnits({ DOG: 25 }) : noop();
     }
 
     private submit(context: MissionContext, unit: UnitData, action: BatchableAction) {

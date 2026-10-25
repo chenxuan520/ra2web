@@ -49,10 +49,15 @@ describe("rhino dog escort", () => {
     test("funds a bounded screen after income and armor, not before the first tank", () => {
         const f = fixture();
         expect(f.step()).toMatchObject({ type: "request", unitNameToPriority: { DOG: 25 } });
-        f.cash(699);
+        f.cash(199);
         expect(f.step(12).type).toBe("noop");
-        f.cash(1000); f.army.removeUnit(2);
+        f.cash(1000); f.army.removeUnit(2); f.army.removeUnit(1);
         expect(f.step(24).type).toBe("noop");
+    });
+    test("finishes a paid dog when cash drops instead of canceling and refunding it", () => {
+        const f = fixture(); f.cash(0);
+        f.context.player.production.getQueueData = () => ({ items: [{ rules: { name: "DOG" } }] });
+        expect(f.step()).toMatchObject({ type: "request", unitNameToPriority: { DOG: 25 } });
     });
     test("normal profile never requests or commands an escort", () => {
         const f = fixture(); f.context.difficulty = "normal"; f.mission.addUnit(3);
