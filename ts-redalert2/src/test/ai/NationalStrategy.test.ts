@@ -10,10 +10,9 @@ const soviet = { composition: { HTNK: 5, HTK: 1 }, minimumUnits: 4, maximumUnits
 const allied = { composition: { MTNK: 5, FV: 1 }, minimumUnits: 4, maximumUnits: 6 };
 
 describe("national and late-game army composition", () => {
-    test("Iraq requests one explicit desolator slot with a tank/AA core against infantry", () => {
+    test("Iraq leaves desolators to the independent positional defence mission", () => {
         const result = selectNationalComposition(soviet, new Set(["HTNK", "HTK", "DESO"]), situation());
-        expect(result.supportUnits).toEqual({ DESO: 1 });
-        expect(result.composition).toEqual({ HTNK: 5, HTK: 1, DESO: 1 });
+        expect(result).toBe(soviet);
         expect(soviet.composition).toEqual({ HTNK: 5, HTK: 1 });
     });
 

@@ -32,6 +32,7 @@ export class FieldArmyMission extends Mission {
         const units = this.getUnits(game);
         const armor = units.filter(unit => ["MTNK", "HTNK", "MGTK", "APOC"].includes(unit.name));
         const air = units.filter(unit => unit.zone === ZoneType.Air);
+        const infantry = units.filter(unit => (unit.type as any) === ObjectType.Infantry);
         const enemies = game.getVisibleUnits(player.name, "enemy").map(id => game.getUnitData(id))
             .filter((unit): unit is UnitData => !!unit && unit.hitPoints > 0);
         const anchors = game.getVisibleUnits(player.name, "self", rules => rules.constructionYard || rules.refinery || rules.weaponsFactory)
@@ -40,17 +41,20 @@ export class FieldArmyMission extends Mission {
             anchors.some(base => location(base).distanceTo(location(enemy)) <= 22));
         const rally = matchAwareness.getMainRallyPoint();
         this.squad ??= new CombatSquad(rally, rally, 15);
-        if (armor.length >= 4 || air.length >= 2 || units.some(unit => unit.name === "ZEP") || units.length >= 12) this.attacking = true;
+        if (armor.length >= 4 || air.length >= 2 || units.some(unit => unit.name === "ZEP") || infantry.length >= 20) this.attacking = true;
         if (units.length < 3 && !air.length) this.attacking = false;
         const center = this.getCenterOfMass() ?? rally;
         if (tick >= this.nextTargetCheck) {
             this.nextTargetCheck = tick + 30;
-            if (homeThreats.length && (center.distanceTo(rally) < 40 || homeThreats.length >= 6)) {
+            if (!this.attacking) {
+                const forward = rally.clone().sub(playerData.startLocation);
+                if (forward.length() > 4) forward.multiplyScalar(4 / forward.length());
+                this.attackArea = playerData.startLocation.clone().add(forward);
+            } else if (homeThreats.length && (center.distanceTo(rally) < 40 || homeThreats.length >= 6)) {
                 const enemy = [...homeThreats].sort((a, b) => location(a).distanceTo(rally) - location(b).distanceTo(rally) || a.id - b.id)[0];
                 this.attackArea = location(enemy);
                 this.targetId = undefined;
-            } else if (!this.attacking) this.attackArea = rally;
-            else {
+            } else {
                 const previous = enemies.find(enemy => enemy.id === this.targetId);
                 const objective = previous ?? enemies.map(enemy => {
                     let value = enemy.rules.refinery ? 110 : enemy.rules.constructionYard ? 100 : enemy.rules.weaponsFactory ? 90
@@ -67,6 +71,7 @@ export class FieldArmyMission extends Mission {
                 }
             }
         }
+        this.squad.setDefensiveRadius(this.attacking ? undefined : 7);
         this.squad.setAttackArea(this.attackArea);
         this.squad.onAiUpdate(context, this, this.logger);
 
@@ -76,6 +81,7 @@ export class FieldArmyMission extends Mission {
             if (available.has(name) && (s.own[name] ?? 0) < count) requests[name] = priority;
         };
         const allied = available.has("MTNK");
+        if (s.harvesters && !allied) want("E2", 32, 20);
         const tank = allied ? "MTNK" : "HTNK", aa = allied ? "FV" : "HTK";
         const core = (s.own.MTNK ?? 0) + (s.own.HTNK ?? 0) + (s.own.MGTK ?? 0) + (s.own.APOC ?? 0);
         const airPlan = this.plan?.composition.JUMPJET || this.plan?.composition.ZEP;

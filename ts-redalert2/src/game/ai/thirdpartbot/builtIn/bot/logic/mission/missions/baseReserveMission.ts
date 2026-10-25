@@ -25,13 +25,13 @@ export class BaseReserveMission extends Mission {
         const available = context.player.production.getAvailableObjects();
         const infantry = available.find(rules => rules.name === "E1" || rules.name === "E2");
         if (!infantry) return noop();
-        const desired = infantry.name === "E1" ? 5 : game.getPlayerData(player.name).country?.name === "Arabs" ? 6 : 12;
+        const desired = infantry.name === "E1" ? 5 : 12;
         if (this.getUnitIds().length >= desired) return noop();
         const owned = game.getVisibleUnits(player.name, "self", rules => rules.name === infantry.name).length;
         // Other defensive missions may temporarily borrow this reserve. Do not
         // replace borrowed soldiers with an unbounded stream of reinforcements.
         if (this.getMissingUnits(game, { [infantry.name]: desired }).length && owned < desired) {
-            return requestUnits({ [infantry.name]: 12 });
+            return requestUnits({ [infantry.name]: infantry.name === "E2" ? 50 : 12 });
         }
         return requestUnits({ [infantry.name]: 1 });
     }

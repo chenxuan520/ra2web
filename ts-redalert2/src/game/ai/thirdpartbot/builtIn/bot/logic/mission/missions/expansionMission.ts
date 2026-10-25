@@ -8,6 +8,7 @@ import {
     ObjectType,
     OrderType,
     PlayerData,
+    QueueType,
     Rectangle,
     Tile,
     UnitData,
@@ -361,7 +362,7 @@ export class ExpansionMissionFactory {
             const nearbyOre = yard && game.mapApi.getAllTilesResourceData().some(resource =>
                 (resource.ore > 0 || resource.gems > 0 || resource.spawnsOre) && game.mapApi.isVisibleTile(resource.tile, player.name) &&
                 Math.hypot(resource.tile.rx - yard.tile.rx, resource.tile.ry - yard.tile.ry) <= 25);
-            if (nearbyOre || context.player.production.getQueueData(0).items.length) return;
+            if (nearbyOre || context.player.production.getQueueData(QueueType.Structures).items.length) return;
         }
         const selectedConyard = game.getGameObjectData(conYards[0])!;
         const refineryNearconyard = game

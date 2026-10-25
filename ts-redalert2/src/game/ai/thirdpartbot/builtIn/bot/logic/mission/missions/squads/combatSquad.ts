@@ -74,6 +74,11 @@ export class CombatSquad implements Squad {
         this.targetArea = targetArea;
     }
 
+    public setDefensiveRadius(radius: number | undefined) {
+        this.defendArea = radius !== undefined;
+        if (radius !== undefined) this.radius = radius;
+    }
+
     public onAiUpdate(context: MissionContext, mission: Mission<any>, logger: DebugLogger): MissionAction {
         const { game, actionBatcher, matchAwareness } = context;
         const brutal = context.difficulty === "brutal";

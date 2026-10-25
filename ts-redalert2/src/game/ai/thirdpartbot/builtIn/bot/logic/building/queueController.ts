@@ -81,7 +81,7 @@ export class QueueController {
         if (context.difficulty === "brutal") {
             for (const name of ["E1", "E2"]) {
                 const count = game.getVisibleUnits(player.name, "self", rules => rules.name === name).length;
-                if (count >= (name === "E1" ? 9 : 12)) requests.delete(name);
+                if (count >= (name === "E1" ? 9 : 32)) requests.delete(name);
             }
             for (const [name, cap] of Object.entries(NATIONAL_SUPPORT_LIMITS)) {
                 if (game.getVisibleUnits(player.name, "self", rules => rules.name === name).length >= cap) {

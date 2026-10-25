@@ -14,7 +14,6 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
     }
     if (rules.name === "GAPILE" || rules.name === "NAHAND") return count ? 0 : 55;
     if ((rules.name === "GAAIRC" || rules.name === "AMRADR") && refineries && !count && !factories) return 45;
-    if (rules.name === "NARADR" && s.country === "Arabs" && refineries && !count && !factories) return 45;
     const armor = (s.own.MTNK ?? 0) + (s.own.HTNK ?? 0);
     if (rules.name === "NARADR" && !count && s.harvesters >= 3 && armor >= 2) return 24;
     if (rules.name === "NATECH" && !count && s.harvesters >= 3 && armor >= 2) return 30;
