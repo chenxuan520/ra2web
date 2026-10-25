@@ -112,6 +112,17 @@ function fieldFixture() {
 }
 
 describe("persistent field army", () => {
+    test("shares the conscript cap with production and leaves the smaller home reserve unclaimed", () => {
+        const f = fieldFixture();
+        for (let id = 1; id <= 6; id++) f.add(id, "E2");
+        expect(f.step().type).toBe("request");
+        f.add(7, "E2");
+        expect(f.step(2).type).toBe("requestSpecific");
+        for (let id = 1; id <= 12; id++) { f.add(id, "E2"); f.mission.addUnit(id); }
+        const capped = f.step(4);
+        expect(capped.type).toBe("request");
+        if (capped.type === "request") expect(capped.unitNameToPriority.E2).toBeUndefined();
+    });
     test("the opening does not fund more than two rocketeers before its second miner", () => {
         const f = fieldFixture();
         f.context.player.production.getAvailableObjects = () => ["MTNK", "JUMPJET"].map(name => ({ name }));
