@@ -1,0 +1,162 @@
+{
+  "date": "2026-10-26",
+  "scope": "original RA2 only; first numbered game of each of three organizer-linked finals selected before viewing",
+  "primaryTournamentIndex": "https://www.ra2match.com/ybxxzl4/",
+  "videos": [
+    {
+      "bvid": "BV1Zmedz4EJ7",
+      "url": "https://www.bilibili.com/video/BV1Zmedz4EJ7/?p=1",
+      "title": "【红警2025冰天王总决赛】威龙 vs 85hui 抢13 + 赛后采访",
+      "cid": 31937398398,
+      "part": "第一局",
+      "duration": 185,
+      "quality": 16,
+      "bytes": 8785668,
+      "sha256": "9893ffb22f1c7bb66a21147e060850f3c678a6a9aab5d98600c8c36f9342e1a1",
+      "source": "Organizer original RA2 tournament archive",
+      "owner": "牛牛牛牛牛牛弟",
+      "sampledVideoSeconds": [
+        0,
+        20,
+        40,
+        60,
+        80,
+        100,
+        120,
+        140,
+        160,
+        180
+      ],
+      "observationMethod": "Exact-seek key frames, overview and selected detail; not a complete action log or continuous viewing"
+    },
+    {
+      "bvid": "BV1hgPTzeEfb",
+      "url": "https://www.bilibili.com/video/BV1hgPTzeEfb/?p=1",
+      "title": "【红警2025全能王总决赛】威龙 vs 85 抢13 + 赛后采访",
+      "cid": 36378117630,
+      "part": "1",
+      "duration": 536,
+      "quality": 16,
+      "bytes": 40552995,
+      "sha256": "feb001be0036cc6133ef5440b6c7eb417a9fb8bf5efcb1958761856a94dea3a8",
+      "source": "Organizer original RA2 tournament archive",
+      "owner": "牛牛牛牛牛牛弟",
+      "sampledVideoSeconds": [
+        0,
+        30,
+        60,
+        90,
+        120,
+        180,
+        240,
+        300,
+        360,
+        420,
+        480,
+        520
+      ],
+      "observationMethod": "Exact-seek key frames, overview and selected detail; not a complete action log or continuous viewing"
+    },
+    {
+      "bvid": "BV1hitn6jEVK",
+      "url": "https://www.bilibili.com/video/BV1hitn6jEVK/?p=1",
+      "title": "【红警2026冰天王总决赛】土豆 vs 85hui 抢13 + 赛后采访",
+      "cid": 41434810548,
+      "part": "1",
+      "duration": 208,
+      "quality": 16,
+      "bytes": 11946511,
+      "sha256": "04a56e51da6c01d1c926b2d86fe956a7ad84f774350e452309663d7fa16cac64",
+      "source": "Organizer original RA2 tournament archive",
+      "owner": "红警大蚂蚁",
+      "sampledVideoSeconds": [
+        0,
+        20,
+        40,
+        60,
+        80,
+        100,
+        120,
+        140,
+        160,
+        180,
+        200
+      ],
+      "observationMethod": "Exact-seek key frames, overview and selected detail; not a complete action log or continuous viewing"
+    },
+    {
+      "bvid": "BV11B4y1A71e",
+      "url": "https://www.bilibili.com/video/BV11B4y1A71e/",
+      "title": "红警顶尖高手巅峰对决，面对月亮3的猛烈进攻，两坦克惊险获胜~！",
+      "cid": 313470812,
+      "duration": 578,
+      "quality": 16,
+      "bytes": 24769519,
+      "sha256": "aa4821004149ebc878ae7d1969fb8e1641aba20196ae95930b4de580fbffd639",
+      "owner": "红警HBK08",
+      "source": "Player-owned public upload; not certified tournament",
+      "sampledVideoSeconds": [
+        0,
+        30,
+        60,
+        90,
+        120,
+        180,
+        240,
+        300,
+        360,
+        420,
+        480,
+        550
+      ],
+      "observationMethod": "Exact-seek key frames, overview and selected detail; not a complete action log or continuous viewing"
+    }
+  ],
+  "writtenSources": [
+    {
+      "url": "https://www.ra2match.com/moon3/",
+      "role": "original-player identity and event history, not a build-order source"
+    },
+    {
+      "url": "https://www.ra2match.com/lm2/97.html",
+      "role": "2018 original event classification"
+    },
+    {
+      "url": "https://egameinsider.com/p/m4rn09786b09/",
+      "role": "secondary written 2018 final recap; author claims not independently timed from video; some transcription errors"
+    },
+    {
+      "url": "https://www.ra2match.com/bisaisaicheng/269.html",
+      "role": "2025-named all-round event ended in March 2026"
+    }
+  ],
+  "exclusions": [
+    {
+      "source": "Bing search RSS/HTML",
+      "reason": "returned unrelated results; discarded"
+    },
+    {
+      "source": "XWIS RA2 Players Guide",
+      "reason": "HTTP503 body unavailable; search snippet not treated as reading"
+    },
+    {
+      "source": "YouTube",
+      "reason": "network returned403; no claim of viewing"
+    },
+    {
+      "source": "generic 2026 guides and YR World Series",
+      "reason": "mixed versions or unsupported claims; not used"
+    },
+    {
+      "source": "secondary recap image CDN",
+      "reason": "unreliable image mapping; retrieved GTA advertisement, discarded as match evidence"
+    }
+  ],
+  "limitations": [
+    "Videos are selected examples, not a representative tournament statistic.",
+    "Video seconds are not simulation ticks; camera cuts hide production/ownership decisions.",
+    "Unit counts and exact build order are only claimed where visually confirmed.",
+    "No full videos, signed media URLs, cookies or game resources stored in repository.",
+    "Derived AI priorities are engineering hypotheses, not player-endorsed algorithms or measured improvements."
+  ]
+}
