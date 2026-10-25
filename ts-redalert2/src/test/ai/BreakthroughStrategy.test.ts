@@ -114,6 +114,24 @@ function fieldFixture() {
 }
 
 describe("persistent field army", () => {
+    test("real mission allocation fills the original reserve before the new home contingent", () => {
+        const f = fieldFixture();
+        const reserve = new BaseReserveMission(() => {}), home = new InfantryHomeMission(f.controller, () => {});
+        f.controller.addMission(reserve); f.controller.addMission(home);
+        const context = { ...f.context, player: { ...f.context.player,
+            actions: { orderUnits() {}, setUnitDebugText() {} } } };
+        for (let id = 1; id <= 12; id++) {
+            f.add(id, "E2"); f.controller.onAiUpdate(context as any);
+        }
+        expect(reserve.getUnitIds()).toHaveLength(12);
+        expect(home.getUnitIds()).toHaveLength(0);
+        f.add(13, "E2"); f.controller.onAiUpdate(context as any);
+        expect(home.getUnitIds()).toEqual([13]);
+        f.objects.delete(1); f.controller.onAiUpdate(context as any);
+        expect(reserve.getUnitIds()).toHaveLength(12);
+        expect(reserve.getUnitIds()).toContain(13);
+        expect(home.getUnitIds()).toHaveLength(0);
+    });
     test("two tanks can pressure only after actual home defenders are assigned and nearby", () => {
         const f = fieldFixture();
         for (let id = 1; id <= 2; id++) { f.add(id, "HTNK"); f.mission.addUnit(id); }

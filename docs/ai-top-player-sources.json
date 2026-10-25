@@ -27,7 +27,12 @@
         160,
         180
       ],
-      "observationMethod": "Exact-seek key frames, overview and selected detail; not a complete action log or continuous viewing"
+      "observationMethod": "Exact-seek key frames, overview and selected detail; not a complete action log or continuous viewing",
+      "higherResolutionMedia": {
+        "quality": 64,
+        "bytes": 34833580,
+        "sha256": "f8a22491a15a0e7008b9913fd4925916c3e05bcfbd348f53f6ae99ebfc997255"
+      }
     },
     {
       "bvid": "BV1hgPTzeEfb",
@@ -55,7 +60,12 @@
         480,
         520
       ],
-      "observationMethod": "Exact-seek key frames, overview and selected detail; not a complete action log or continuous viewing"
+      "observationMethod": "Exact-seek key frames, overview and selected detail; not a complete action log or continuous viewing",
+      "higherResolutionMedia": {
+        "quality": 64,
+        "bytes": 129425148,
+        "sha256": "618e47500fd9f79c2efa4b1fad146e6000d8fabb25d0e2468f3c906c4ecd462c"
+      }
     },
     {
       "bvid": "BV1hitn6jEVK",
@@ -82,7 +92,12 @@
         180,
         200
       ],
-      "observationMethod": "Exact-seek key frames, overview and selected detail; not a complete action log or continuous viewing"
+      "observationMethod": "Exact-seek key frames, overview and selected detail; not a complete action log or continuous viewing",
+      "higherResolutionMedia": {
+        "quality": 64,
+        "bytes": 46480685,
+        "sha256": "1cb86fe1eb8daaf82631bf170949fb20d71a612a67a9b2cc41a1af2911f129e4"
+      }
     },
     {
       "bvid": "BV11B4y1A71e",
@@ -157,6 +172,7 @@
     "Video seconds are not simulation ticks; camera cuts hide production/ownership decisions.",
     "Unit counts and exact build order are only claimed where visually confirmed.",
     "No full videos, signed media URLs, cookies or game resources stored in repository.",
-    "Derived AI priorities are engineering hypotheses, not player-endorsed algorithms or measured improvements."
+    "Derived AI priorities are engineering hypotheses, not player-endorsed algorithms or measured improvements.",
+    "Modern tournament initial funds and starting army were not fully read from lobby; do not assume exact equality with CI from the video title."
   ]
 }

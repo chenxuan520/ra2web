@@ -1,7 +1,7 @@
 import { MissionContext, SupabotContext } from "../../common/context";
 import { DebugLogger } from "../../common/utils";
 import { getBasicInfantryBudget, isSovietCountry } from "../../../strategy/basicInfantryBudget";
-import { Mission, noop, requestSpecificUnits, requestUnits } from "../mission";
+import { Mission, noop, releaseUnits, requestSpecificUnits, requestUnits } from "../mission";
 import { MissionController } from "../missionController";
 import { CombatSquad } from "./squads/combatSquad";
 
@@ -17,6 +17,17 @@ export class InfantryHomeMission extends Mission {
         const { game, player, matchAwareness } = context;
         const data = game.getPlayerData(player.name);
         if (context.difficulty !== "brutal" || !isSovietCountry(data.country?.name)) return noop();
+        const budget = getBasicInfantryBudget("E2", context.difficulty);
+        const reserve = this.controller.getMissions().find(m => m.getUniqueName() === "baseReserve");
+        const reserved = reserve?.getUnitsOfTypes(game, "E2").filter(u => u.owner === player.name && u.hitPoints > 0).length ?? 0;
+        if (reserve && reserved < budget.reserve) {
+            // Specific-ID claims run before type requests. Leave recruits to the
+            // original reserve, and replenish it from this existing contingent
+            // after casualties rather than starving its low-priority request.
+            const replacements = this.getUnitsOfTypes(game, "E2").filter(u => u.owner === player.name && u.hitPoints > 0)
+                .sort((a, b) => a.id - b.id).slice(0, budget.reserve - reserved).map(u => u.id);
+            return replacements.length ? releaseUnits(replacements) : noop();
+        }
         // Stay near the same public home approach as the assembling field army.
         // Do not chase visible enemies beyond this defensive radius.
         const forward = matchAwareness.getMainRallyPoint().clone().sub(data.startLocation);
@@ -34,7 +45,7 @@ export class InfantryHomeMission extends Mission {
         const hasIncome = game.getVisibleUnits(player.name, "self", r => r.harvester).length > 0;
         // Preserve the former field-army request and global cap. The original
         // twelve-man reserve still requests at priority 50 before this priority 20.
-        return hasIncome && conscripts.length < getBasicInfantryBudget("E2", context.difficulty).total &&
+        return hasIncome && conscripts.length < budget.total &&
             player.production.getAvailableObjects().some(r => r.name === "E2")
             ? requestUnits({ E2: 20 }) : noop();
     }
