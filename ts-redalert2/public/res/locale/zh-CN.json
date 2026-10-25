@@ -117,6 +117,8 @@
     "gui:aidummy": "AI-弱智",
     "gui:ainormal": "AI-普通",
     "gui:ainormal:tooltip": "普通难度AI，会建设基地、训练部队并发起进攻。",
+    "gui:aibrutal": "AI-冷酷",
+    "gui:aibrutal:tooltip": "最高难度AI：更快决策，根据敌军调整兵力，并精确集火与撤退。",
     "gui:aicustom": "AI-自定义",
     "gui:aicustom:tooltip": "使用上传的自定义AI机器人脚本。",
     "gui:botupload": "上传AI机器人",

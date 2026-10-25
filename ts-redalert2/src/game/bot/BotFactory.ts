@@ -44,10 +44,12 @@ export class BotFactory {
         if (player.aiDifficulty === AiDifficulty.Normal) {
             return new BuiltInBotAdapter(player.name, player.country.name);
         }
+        if (player.aiDifficulty === AiDifficulty.Brutal) {
+            return new BuiltInBotAdapter(player.name, player.country.name, 'brutal');
+        }
         if (player.aiDifficulty === AiDifficulty.Easy ||
             player.aiDifficulty === AiDifficulty.Medium ||
-            player.aiDifficulty === AiDifficulty.MediumSea ||
-            player.aiDifficulty === AiDifficulty.Brutal) {
+            player.aiDifficulty === AiDifficulty.MediumSea) {
             return new DummyBot(player.name, player.country.name);
         }
         throw new Error(`Unsupported AI difficulty "${player.aiDifficulty}"`);

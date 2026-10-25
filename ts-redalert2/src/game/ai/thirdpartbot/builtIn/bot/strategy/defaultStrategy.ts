@@ -1,4 +1,5 @@
 import { Strategy } from "./strategy";
+import { selectAdaptiveComposition } from "./adaptiveComposition";
 import { ExpansionMissionFactory } from "../logic/mission/missions/expansionMission";
 import { ScoutingMissionFactory } from "../logic/mission/missions/scoutingMission";
 import { AttackMissionFactory } from "../logic/mission/missions/attackMission";
@@ -10,7 +11,7 @@ import { DebugLogger } from "../logic/common/utils";
 import { Compositions, getValidCompositions, SideComposition } from "./compositionUtils";
 
 // These could be loaded from ai.ini
-const DEFAULT_COMPOSITIONS: Compositions = {
+export const DEFAULT_COMPOSITIONS: Compositions = {
     conscripts: {
         composition: {
             E2: 1,
@@ -43,7 +44,7 @@ const DEFAULT_COMPOSITIONS: Compositions = {
     },
     kirovs: {
         composition: {
-            KIROV: 1,
+            ZEP: 1,
         },
         minimumUnits: 1,
         maximumUnits: 3,
@@ -125,6 +126,13 @@ export class DefaultStrategy implements Strategy {
         }
 
         logger(`Valid compositions: ${validCompositions.join(", ")}`);
+
+        if (context.difficulty === "brutal") {
+            const harvesters = context.game.getVisibleUnits(context.player.name, "self", rules => rules.harvester).length;
+            return selectAdaptiveComposition(
+                DEFAULT_COMPOSITIONS, validCompositions, context.matchAwareness.getThreatCache(), harvesters,
+            );
+        }
 
         const randomIndex = context.game.generateRandomInt(0, validCompositions.length - 1);
         const compositionId = validCompositions[randomIndex];

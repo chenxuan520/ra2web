@@ -9,7 +9,7 @@ import {
     Vector2,
 } from "../../../game-api";
 import { GlobalThreat } from "../threat/threat";
-import { TechnoRulesWithPriority, getDefaultPlacementLocation } from "./buildingRules";
+import { BUILDING_NAME_TO_RULES, TechnoRulesWithPriority, getDefaultPlacementLocation } from "./buildingRules";
 import { SupabotContext } from "../common/context";
 import { UnitRequest } from "../mission/missionController";
 
@@ -72,9 +72,21 @@ export class QueueController {
         const { game, player } = context;
         const { production: productionApi, actions: actionsApi } = player;
         const playerData = game.getPlayerData(player.name);
+        // Economic units do not belong to combat missions. Keep a separate request
+        // so losing miners cannot permanently starve an otherwise healthy base.
+        const requests = new Map(unitTypeRequests);
+        for (const option of productionApi.getAvailableObjects(QueueType.Vehicles)) {
+            if (!option.harvester) continue;
+            const logic = BUILDING_NAME_TO_RULES.get(option.name);
+            if (!logic) continue;
+            const priority = logic.getPriority(game, playerData, option, threatCache);
+            if (priority > (requests.get(option.name)?.priority ?? 0)) {
+                requests.set(option.name, { priority, specificLocation: null });
+            }
+        }
         this.queueStates = QUEUES.map((queueType) => {
             const options = productionApi.getAvailableObjects(queueType);
-            const items = QueueController.getPrioritiesForBuildingOptions(options, unitTypeRequests);
+            const items = QueueController.getPrioritiesForBuildingOptions(options, requests);
             const topItem = items.length > 0 ? items[items.length - 1] : undefined;
             return {
                 queue: queueType,
@@ -84,10 +96,10 @@ export class QueueController {
             };
         });
         const totalWeightAcrossQueues = this.queueStates
-            .map((decision) => decision.topItem?.priority!)
+            .map((decision) => decision.topItem?.priority ?? 0)
             .reduce((pV, cV) => pV + cV, 0);
         const totalCostAcrossQueues = this.queueStates
-            .map((decision) => decision.topItem?.unit.cost!)
+            .map((decision) => decision.topItem?.unit.cost ?? 0)
             .reduce((pV, cV) => pV + cV, 0);
 
         this.queueStates.forEach((decision) => {
@@ -97,7 +109,7 @@ export class QueueController {
                 actionsApi,
                 playerData,
                 threatCache,
-                unitTypeRequests,
+                requests,
                 decision.queue,
                 decision.topItem,
                 totalWeightAcrossQueues,
@@ -135,11 +147,15 @@ export class QueueController {
         logger: (message: string) => void,
     ): void {
         const myCredits = playerData.credits;
+        // With five or six queues, every queue can fall below 25%. Always
+        // let the highest-priority queue progress rather than holding all of them.
+        const highestPriority = Math.max(0, ...this.queueStates.map(state => state.topItem?.priority ?? 0));
+        const minimumPriority = Math.min(totalWeightAcrossQueues * 0.25, highestPriority);
 
         const queueData = productionApi.getQueueData(queueType);
         if (queueData.status == QueueStatus.Idle) {
             // Start building the decided item.
-            if (decision !== undefined) {
+            if (decision !== undefined && !(totalCostAcrossQueues > myCredits && decision.priority < minimumPriority)) {
                 logger(`Decision (${queueTypeToName(queueType)}): ${decision.unit.name}`);
                 actionsApi.queueForProduction(queueType, decision.unit.name, decision.unit.type, 1);
             }
@@ -214,7 +230,7 @@ export class QueueController {
             // Consider cancelling if something else is significantly higher priority than what is currently being produced.
 
             const currentProduction = queueData.items[0].rules;
-            if (decision.unit != currentProduction) {
+            if (decision.unit.name !== currentProduction.name || decision.unit.type !== currentProduction.type) {
                 // Changing our mind.
                 const currentRequest = unitTypeRequests.get(currentProduction.name);
                 const currentItemPriority = currentRequest ? currentRequest.priority : 0;
@@ -229,7 +245,7 @@ export class QueueController {
                 }
             } else {
                 // Not changing our mind, but maybe other queues are more important for now.
-                if (totalCostAcrossQueues > myCredits && decision.priority < totalWeightAcrossQueues * 0.25) {
+                if (totalCostAcrossQueues > myCredits && decision.priority < minimumPriority) {
                     logger(
                         `Pausing queue ${queueTypeToName(queueData.type)} because weight is low (${
                             decision.priority
@@ -240,10 +256,10 @@ export class QueueController {
             }
         } else if (queueData.status == QueueStatus.OnHold) {
             // Consider resuming queue if priority is high relative to other queues.
-            if (myCredits >= totalCostAcrossQueues) {
+            if (totalWeightAcrossQueues === 0 || myCredits >= totalCostAcrossQueues) {
                 logger(`Resuming queue ${queueTypeToName(queueData.type)} because credits are high`);
                 actionsApi.resumeProduction(queueData.type);
-            } else if (decision && decision.priority >= totalWeightAcrossQueues * 0.25) {
+            } else if (decision && decision.priority >= minimumPriority) {
                 logger(
                     `Resuming queue ${queueTypeToName(queueData.type)} because weight is high (${
                         decision.priority

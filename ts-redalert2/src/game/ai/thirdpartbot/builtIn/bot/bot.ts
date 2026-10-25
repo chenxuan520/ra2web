@@ -38,16 +38,15 @@ export class BuiltInBot extends Bot {
         private tryAllyWith: string[] = [],
         private enableLogging = true,
         private strategy: Strategy = new DefaultStrategy(),
+        private difficulty: 'normal' | 'brutal' = 'normal',
     ) {
         super(name, country);
         this.queueController = new QueueController();
     }
 
     override onGameStart(game: GameApi) {
-        const gameRate = game.getTickRate();
-        const botApm = 300;
-        const botRate = botApm / 60;
-        this.tickRatio = Math.ceil(gameRate / botRate);
+        // Decisions follow simulation ticks, so game speed cannot change AI strength.
+        this.tickRatio = this.difficulty === 'brutal' ? 2 : 3;
 
         const myPlayer = game.getPlayerData(this.name);
 
@@ -95,7 +94,7 @@ export class BuiltInBot extends Bot {
         }
 
         // Periodic heartbeat log
-        if (game.getCurrentTick() % 300 === 0) {
+        if (this.getDebugMode() && game.getCurrentTick() % 300 === 0) {
             const myPlayer = game.getPlayerData(this.name);
             const conYards = game.getVisibleUnits(this.name, 'self', (r) => r.constructionYard);
             const allUnits = game.getVisibleUnits(this.name, 'self');
@@ -121,6 +120,7 @@ export class BuiltInBot extends Bot {
             const fullContext: SupabotContext = {
                 ...this.context,
                 matchAwareness: this.matchAwareness,
+                difficulty: this.difficulty,
             };
 
             // hacky resign condition
@@ -138,15 +138,14 @@ export class BuiltInBot extends Bot {
             if (armyUnits.length == 0 && productionBuildings.length == 0 && mcvUnits.length == 0) {
                 this.logBotStatus(`No army or production left, quitting.`);
                 this.context.player.actions.quitGame();
+                return;
             }
 
-            // Mission/strategy logic every 3 ticks.
-            if (this.context.game.getCurrentTick() % 3 === 0) {
-                this.missionController.onAiUpdate(fullContext);
-                this.strategy = this.strategy.onAiUpdate(fullContext, this.missionController, (message, sayInGame) =>
-                    this.logBotStatus(message, sayInGame),
-                );
-            }
+            // Use a single cadence; nesting modulo gates can slow down faster profiles.
+            this.missionController.onAiUpdate(fullContext);
+            this.strategy = this.strategy.onAiUpdate(fullContext, this.missionController, (message, sayInGame) =>
+                this.logBotStatus(message, sayInGame),
+            );
 
             const unitTypeRequests = this.missionController.getRequestedUnitTypes();
 
@@ -172,7 +171,7 @@ export class BuiltInBot extends Bot {
             this.name,
             "self",
             (r) => !!r.deploysInto && game.getGeneralRules().baseUnit.includes(r.name),
-        );
+        ).filter((id) => !this.missionController?.getMissions().some((mission) => mission.getUnitIds().includes(id)));
 
         if (mcvUnits.length === 0) {
             return;
@@ -192,7 +191,8 @@ export class BuiltInBot extends Bot {
                             if (Math.abs(dx) !== radius && Math.abs(dy) !== radius) continue;
                             try {
                                 if (game.canPlaceBuilding(this.name, mcvData.rules.deploysInto, { rx: cx + dx, ry: cy + dy })) {
-                                    this.actionsApi.orderUnits([mcvUnits[0]], OrderType.Move, cx + dx, cy + dy);
+                                    const center = game.getBuildingPlacementData(mcvData.rules.deploysInto).foundationCenter;
+                                    this.actionsApi.orderUnits([mcvUnits[0]], OrderType.Move, cx + dx + center.x, cy + dy + center.y);
                                     this.deployAttemptCount = 0;
                                     this.lastDeployAttemptTick = game.getCurrentTick();
                                     return;
@@ -219,7 +219,7 @@ export class BuiltInBot extends Bot {
         if (!this.enableLogging) {
             return;
         }
-        this.logger.info(message);
+        this.logger?.debug?.(message);
         const timestamp = this.getHumanTimestamp(this.gameApi);
         if (sayInGame) {
             this.actionsApi.sayAll(`${timestamp}: ${message}`);

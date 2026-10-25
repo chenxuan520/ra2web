@@ -1,6 +1,7 @@
 import { AttackState, ObjectType, OrderType, StanceType, UnitData, Vector2, ZoneType } from "../../../../../game-api";
 import { getDistanceBetweenPoints, getDistanceBetweenUnits } from "../../../map/map";
 import { BatchableAction } from "../../actionBatcher";
+import { getCombatWeapon } from "./tacticalTargeting";
 
 const NONCE_GI_DEPLOY = 0;
 const NONCE_GI_UNDEPLOY = 1;
@@ -51,13 +52,7 @@ export function getAttackWeight(attacker: UnitData, target: UnitData): number | 
     const { rx: x, ry: y } = attacker.tile;
     const { rx: hX, ry: hY } = target.tile;
 
-    if (!attacker.primaryWeapon?.projectileRules.isAntiAir && target.zone === ZoneType.Air) {
-        return null;
-    }
-
-    if (!attacker.primaryWeapon?.projectileRules.isAntiGround && target.zone === ZoneType.Ground) {
-        return null;
-    }
+    if (!getCombatWeapon(attacker, target)) return null;
 
     return 1000000 - getDistanceBetweenPoints(new Vector2(x, y), new Vector2(hX, hY));
 }

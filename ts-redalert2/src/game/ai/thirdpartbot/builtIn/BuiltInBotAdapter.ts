@@ -17,6 +17,9 @@ export class BuiltInBotAdapter extends Bot {
     private failSafePendingBuildingType: string | null = null;
     private lastFailSafeDeployTick: number = -9999;
     private failSafeDeployAttempts: number = 0;
+    private lastStructureProgressTick: number = 0;
+    private lastStructureState: string = '';
+    private initializationFailed: boolean = false;
 
     private static readonly ALLIED_COUNTRIES = [
         'Americans', 'British', 'French', 'Germans', 'Koreans', 'Alliance',
@@ -25,9 +28,9 @@ export class BuiltInBotAdapter extends Bot {
     private static readonly FAIL_SAFE_BUILD_ORDER_ALLIED = ['GAPOWR', 'GAREFN', 'GAPILE', 'GAWEAP'];
     private static readonly FAIL_SAFE_BUILD_ORDER_SOVIET = ['NAPOWR', 'NAREFN', 'NAHAND', 'NAWEAP'];
 
-    constructor(name: string, country: string) {
+    constructor(name: string, country: string, difficulty: 'normal' | 'brutal' = 'normal') {
         super(name, country);
-        this.innerBot = new BuiltInBot(name, country as Countries);
+        this.innerBot = new BuiltInBot(name, country as Countries, [], true, undefined, difficulty);
     }
 
     override setGameApi(api: any): void {
@@ -57,11 +60,15 @@ export class BuiltInBotAdapter extends Bot {
     }
 
     override onGameStart(event: any): void {
+        this.initializationFailed = false;
+        this.lastStructureProgressTick = event.getCurrentTick();
+        this.lastStructureState = '';
         console.log(`[BuiltInBotAdapter] onGameStart called for "${this.name}" country="${this.country}"`);
         try {
             this.innerBot.onGameStart(event);
             console.log(`[BuiltInBotAdapter] onGameStart completed for "${this.name}"`);
         } catch (e) {
+            this.initializationFailed = true;
             console.error(`[BuiltInBotAdapter] onGameStart FAILED for "${this.name}":`, e);
             throw e;
         }
@@ -74,11 +81,11 @@ export class BuiltInBotAdapter extends Bot {
             this.logger?.error?.('BuiltInBot tick error:', e);
             console.error(`[BuiltInBotAdapter] tick error for "${this.name}":`, e);
             // Keep the AI alive even if the imported bot throws.
-            this.runFailSafeTick(event);
+            this.runFailSafeTick(event, true);
             return;
         }
         // Non-invasive safety net for "AI stands still" scenarios.
-        this.runFailSafeTick(event);
+        this.runFailSafeTick(event, this.initializationFailed);
     }
 
     override onGameEvent(event: any): void {
@@ -89,7 +96,7 @@ export class BuiltInBotAdapter extends Bot {
         }
     }
 
-    private runFailSafeTick(gameApi: any): void {
+    private runFailSafeTick(gameApi: any, botFailed = false): void {
         if (!this.productionApi || !this.actionsApi || !gameApi) {
             if (gameApi?.getCurrentTick?.() % 150 === 0) {
                 console.warn(`[BuiltInBotAdapter] "${this.name}" failsafe skipped: productionApi=${!!this.productionApi} actionsApi=${!!this.actionsApi} gameApi=${!!gameApi}`);
@@ -104,6 +111,8 @@ export class BuiltInBotAdapter extends Bot {
 
         const conYards = gameApi.getVisibleUnits(this.name, 'self', (r: any) => r.constructionYard);
         if (conYards.length === 0) {
+            // The inner bot owns normal MCV deployment and relocation.
+            if (!botFailed) return;
             if (gameApi.getCurrentTick() < this.lastFailSafeDeployTick + 30) {
                 return;
             }
@@ -129,7 +138,8 @@ export class BuiltInBotAdapter extends Bot {
                                     const ty = cy + dy;
                                     try {
                                         if (gameApi.canPlaceBuilding(this.name, mcvData.rules.deploysInto, { rx: tx, ry: ty })) {
-                                            this.actionsApi.orderUnits([mcvs[0]], OrderType.Move, tx, ty);
+                                            const center = gameApi.getBuildingPlacementData(mcvData.rules.deploysInto).foundationCenter;
+                                            this.actionsApi.orderUnits([mcvs[0]], OrderType.Move, tx + center.x, ty + center.y);
                                             this.failSafeDeployAttempts = 0;
                                             found = true;
                                         }
@@ -155,8 +165,25 @@ export class BuiltInBotAdapter extends Bot {
 
         const queueData = this.productionApi.getQueueData(QueueType.Structures);
 
+        const ownedBuildingNames = new Set<string>(
+            gameApi.getVisibleUnits(this.name, 'self', (r: any) => r.type === ObjectType.Building)
+                .map((id: any) => gameApi.getGameObjectData(id)?.name)
+                .filter((name: any) => !!name),
+        );
+        const state = `${queueData.status}:${queueData.items[0]?.rules?.name ?? ''}:${[...ownedBuildingNames].sort().join(',')}`;
+        const tick = gameApi.getCurrentTick();
+        if (state !== this.lastStructureState || queueData.status === QueueStatus.Active) {
+            this.lastStructureState = state;
+            this.lastStructureProgressTick = tick;
+        }
+        // Actions are processed on the next tick. Give the strategy time to act before
+        // adding fallback orders, and respect deliberately paused production budgets.
+        if (!botFailed && tick - this.lastStructureProgressTick < 150) return;
+        this.lastStructureProgressTick = tick;
+
         if (queueData.status === QueueStatus.OnHold) {
-            this.actionsApi.resumeProduction(QueueType.Structures);
+            if (botFailed) this.actionsApi.resumeProduction(QueueType.Structures);
+            return;
         }
 
         if (queueData.status === QueueStatus.Ready && queueData.items.length > 0) {
@@ -187,28 +214,16 @@ export class BuiltInBotAdapter extends Bot {
             ? BuiltInBotAdapter.FAIL_SAFE_BUILD_ORDER_ALLIED
             : BuiltInBotAdapter.FAIL_SAFE_BUILD_ORDER_SOVIET;
 
-        const ownedBuildingNames = new Set(
-            gameApi
-                .getVisibleUnits(this.name, 'self', (r: any) => r.type === ObjectType.Building)
-                .map((id: any) => gameApi.getGameObjectData(id)?.name)
-                .filter((n: any) => !!n),
-        );
-
-        let nextBuild = buildOrder.find((name) => {
+        const power = gameApi.getPlayerData(this.name).power;
+        const nextBuild = buildOrder.find((name) => {
             if (!available.includes(name)) {
                 return false;
             }
-            // Allow building extra power if needed.
             if (name.endsWith('POWR')) {
-                return true;
+                return !ownedBuildingNames.has(name) || power.isLowPower || power.total <= power.drain;
             }
             return !ownedBuildingNames.has(name);
         });
-
-        // If predefined order is unavailable for this ruleset/mod, build any available structure to avoid deadlock.
-        if (!nextBuild) {
-            nextBuild = available[0];
-        }
 
         if (nextBuild) {
             try {

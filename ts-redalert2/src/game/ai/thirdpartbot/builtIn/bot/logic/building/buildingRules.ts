@@ -47,7 +47,7 @@ export interface AiBuildingRules {
 }
 
 export function numBuildingsOwnedOfType(game: GameApi, playerData: PlayerData, technoRules: TechnoRules): number {
-    return game.getVisibleUnits(playerData.name, "self", (r) => r == technoRules).length;
+    return game.getVisibleUnits(playerData.name, "self", (r) => r.name === technoRules.name && r.type === technoRules.type).length;
 }
 
 export function numBuildingsOwnedOfName(game: GameApi, playerData: PlayerData, name: string): number {

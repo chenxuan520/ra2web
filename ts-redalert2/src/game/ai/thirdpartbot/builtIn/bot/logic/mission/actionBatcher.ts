@@ -19,7 +19,7 @@ export class BatchableAction {
     }
 
     static toPoint(unitId: number, orderType: OrderType, point: Vector2, nonce: number = 0) {
-        return new BatchableAction(unitId, orderType, point, undefined);
+        return new BatchableAction(unitId, orderType, new Vector2(point.x, point.y), undefined, nonce);
     }
 
     static toTargetId(unitId: number, orderType: OrderType, targetId: number, nonce: number = 0) {
@@ -49,7 +49,7 @@ export class BatchableAction {
         if (this._orderType !== other._orderType) {
             return false;
         }
-        if (this._point !== other._point) {
+        if (this._point?.x !== other._point?.x || this._point?.y !== other._point?.y) {
             return false;
         }
         if (this._targetId !== other._targetId) {
@@ -87,7 +87,7 @@ export class ActionBatcher {
             const commandType: OrderType = parseInt(commandValue) as OrderType;
             // Group by command target ID.
             const byTarget = groupBy(
-                commands.filter((command) => !!command.targetId),
+                commands.filter((command) => command.targetId !== undefined),
                 (command) => command.targetId?.toString()!,
             );
             Object.entries(byTarget).forEach(([targetId, unitCommands]) => {
@@ -112,7 +112,7 @@ export class ActionBatcher {
                 );
             });
             // Actions with no targets
-            const noTargets = commands.filter((command) => !command.targetId && !command.point);
+            const noTargets = commands.filter((command) => command.targetId === undefined && !command.point);
             if (noTargets.length > 0) {
                 actionsApi.orderUnits(
                     noTargets.map((action) => action.unitId),

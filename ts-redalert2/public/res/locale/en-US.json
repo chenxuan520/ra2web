@@ -127,6 +127,8 @@
     "gui:aidummy": "Training Dummy",
     "gui:ainormal": "AI - Normal",
     "gui:ainormal:tooltip": "Normal difficulty AI. Builds base, trains units and attacks.",
+    "gui:aibrutal": "AI - Brutal",
+    "gui:aibrutal:tooltip": "Strongest AI: faster decisions, adaptive army composition, focused attacks and tactical retreats.",
     "gui:aicustom": "AI - Custom",
     "gui:aicustom:tooltip": "Uses uploaded custom AI bot script.",
     "gui:botupload": "Upload AI Bot",

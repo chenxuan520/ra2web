@@ -32,11 +32,12 @@ export class ResourceCollectionBuilding extends BasicBuilding {
         var closeOreDist: number | undefined;
         let selectedLocation: Vector2 = conyardVectors[0];
 
+        const allTileResourceData = game.mapApi.getAllTilesResourceData()
+            .filter(resource => game.mapApi.isVisibleTile(resource.tile, playerData.name));
         for (const conyard of conyardVectors) {
-            let allTileResourceData = game.mapApi.getAllTilesResourceData();
             for (let i = 0; i < allTileResourceData.length; ++i) {
                 let tileResourceData = allTileResourceData[i];
-                if (tileResourceData.spawnsOre) {
+                if (tileResourceData.spawnsOre || tileResourceData.ore > 0 || tileResourceData.gems > 0) {
                     let dist = GameMath.sqrt(
                         (conyard.x - tileResourceData.tile.rx) ** 2 + (conyard.y - tileResourceData.tile.ry) ** 2,
                     );
@@ -70,9 +71,10 @@ export class ResourceCollectionBuilding extends BasicBuilding {
             .map((v) => new Box2(v.clone().subScalar(NO_REFINERY_DISTANCE), v.clone().addScalar(NO_REFINERY_DISTANCE)));
         const conyardsWithRefineries = conyardBoxes
             .map((b) => game.getUnitsInArea(b))
-            .filter((unitIds) => unitIds.some((unitId) => getCachedTechnoRules(game, unitId)?.refinery));
+            .filter((unitIds) => unitIds.some((unitId) =>
+                game.getUnitData(unitId)?.owner === playerData.name && getCachedTechnoRules(game, unitId)?.refinery));
         const conyardsWithoutRefineries = conyardBoxes.length - conyardsWithRefineries.length;
 
-        return Math.max(1, Math.min(REFINERY_HARD_LIMIT, 2 * harvesters * (conyardsWithoutRefineries + 1)));
+        return Math.max(1, Math.min(REFINERY_HARD_LIMIT, Math.ceil(harvesters / 2) + 1 + conyardsWithoutRefineries));
     }
 }

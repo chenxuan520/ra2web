@@ -34,7 +34,7 @@ export class DefenceMission extends Mission<CombatSquad> {
         const foundTargets = matchAwareness
             .getHostilesNearPoint2d(this.defenceArea, this.radius)
             .map((unit) => game.getUnitData(unit.unitId))
-            .filter((unit) => !isOwnedByNeutral(unit)) as UnitData[];
+            .filter((unit): unit is UnitData => !!unit && !isOwnedByNeutral(unit));
 
         const update = this.squad.onAiUpdate(context, this, this.logger);
 
@@ -97,12 +97,13 @@ export class DefenceMissionFactory {
         const defendablePoints = this.getDefendablePoints(context);
 
         const defendableRadius =
-            DEFENCE_STARTING_RADIUS + DEFENCE_RADIUS_INCREASE_PER_GAME_TICK * game.getCurrentTick();
+            (context.difficulty === "brutal" ? 12 : DEFENCE_STARTING_RADIUS) +
+            DEFENCE_RADIUS_INCREASE_PER_GAME_TICK * game.getCurrentTick();
         for (const defendablePoint of defendablePoints) {
             const enemiesNearPoint = matchAwareness
                 .getHostilesNearPoint2d(defendablePoint, defendableRadius)
                 .map((unit) => game.getUnitData(unit.unitId))
-                .filter((unit) => !isOwnedByNeutral(unit)) as UnitData[];
+                .filter((unit): unit is UnitData => !!unit && !isOwnedByNeutral(unit));
 
             if (enemiesNearPoint.length > 0) {
                 logger(
@@ -127,7 +128,8 @@ export class DefenceMissionFactory {
     private getDefendablePoints(context: SupabotContext) {
         const { game, player } = context;
         return game
-            .getVisibleUnits(player.name, "self", (r) => r.constructionYard || r.name === "AMCV" || r.name === "SMCV")
+            .getVisibleUnits(player.name, "self", (r) => r.constructionYard || r.name === "AMCV" || r.name === "SMCV" ||
+                (context.difficulty === "brutal" && (r.refinery || r.weaponsFactory)))
             .map((unitId) => game.getGameObjectData(unitId))
             .filter((unit): unit is GameObjectData => unit != null)
             .map((unit) => toVector2(unit.tile));

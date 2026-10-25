@@ -4,6 +4,7 @@ import { ActionBatcher } from "../mission/actionBatcher";
 
 export interface SupabotContext extends BotContext {
     readonly matchAwareness: MatchAwareness;
+    readonly difficulty?: 'normal' | 'brutal';
 }
 
 export interface MissionContext extends SupabotContext {

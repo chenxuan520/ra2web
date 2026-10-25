@@ -308,6 +308,7 @@ export class PregameController {
         const names = new Map<string, string>();
         names.set('Easy', aiUiNames.get(AiDifficulty.Easy)!);
         names.set('Normal', aiUiNames.get(AiDifficulty.Normal)!);
+        names.set('Brutal', aiUiNames.get(AiDifficulty.Brutal)!);
         const uploadedBots = BotRegistry.getInstance().getUploadedBots();
         if (uploadedBots.length > 0) {
             for (const bot of uploadedBots) {
@@ -631,7 +632,8 @@ export class PregameController {
             if (!ai) {
                 continue;
             }
-            if (ai.difficulty !== AiDifficulty.Easy && ai.difficulty !== AiDifficulty.Normal && ai.difficulty !== AiDifficulty.Custom) {
+            if (ai.difficulty !== AiDifficulty.Easy && ai.difficulty !== AiDifficulty.Normal &&
+                ai.difficulty !== AiDifficulty.Brutal && ai.difficulty !== AiDifficulty.Custom) {
                 ai.difficulty = AiDifficulty.Easy;
             }
             if (ai.countryId !== undefined && ai.countryId >= this.getAvailablePlayerCountries().length) {
