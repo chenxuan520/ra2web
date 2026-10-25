@@ -5,12 +5,10 @@ import {
     GameApi,
     GameMath,
     MovementZone,
-    ObjectType,
     OrderType,
     PlayerData,
     UnitData,
     Vector2,
-    ZoneType,
 } from "../../../../../game-api";
 import { MatchAwareness } from "../../../awareness";
 import { getAttackWeight, manageAttackMicro, manageMoveMicro } from "./common";
@@ -19,8 +17,7 @@ import { ActionBatcher, BatchableAction } from "../../actionBatcher";
 import { Squad } from "./squad";
 import { Mission, MissionAction, grabCombatants, noop } from "../../mission";
 import { MissionContext } from "../../../common/context";
-import { chooseTacticalTarget, getCombatWeapon, getTacticalRetreatPoint, isFiringBurst, isMissileArtillery } from "./tacticalTargeting";
-import { DesolatorTactics } from "./desolatorTactics";
+import { chooseTacticalTarget, getCombatWeapon, getTacticalRetreatPoint, isFiringBurst } from "./tacticalTargeting";
 
 const TARGET_UPDATE_INTERVAL_TICKS = 10;
 
@@ -49,8 +46,6 @@ export class CombatSquad implements Squad {
     private lastOrderGiven: { [unitId: number]: BatchableAction } = {};
     private lastOrderTick = new Map<number, number>();
     private maneuverUntil = new Map<number, number>();
-    private injuredReserveUntil = new Map<number, number>();
-    private desolatorTactics = new DesolatorTactics();
 
     /**
      *
@@ -86,14 +81,12 @@ export class CombatSquad implements Squad {
             const maxDistance = mission.getMaxDistanceToCenterOfMass();
             const unitIds = mission.getUnitsMatchingByRule(game, (r) => r.isSelectableCombatant);
             const units = unitIds.map((unitId) => game.getUnitData(unitId)).filter((unit): unit is UnitData => !!unit);
-            if (brutal) this.desolatorTactics.observe(context, units);
             const livingIds = new Set(unitIds);
             for (const id of this.lastOrderTick.keys()) {
                 if (!livingIds.has(id)) {
                     delete this.lastOrderGiven[id];
                     this.lastOrderTick.delete(id);
                     this.maneuverUntil.delete(id);
-                    this.injuredReserveUntil.delete(id);
                 }
             }
 
@@ -117,14 +110,7 @@ export class CombatSquad implements Squad {
                 ) {
                     units.forEach((unit) => {
                         if (brutal && isFiringBurst(unit)) return;
-                        if (brutal) {
-                            const deployment = this.desolatorTactics.decide(context, unit, [], units, centerOfMass);
-                            if (deployment.handled) {
-                                if (deployment.action) this.submitActionIfNew(actionBatcher, deployment.action, unit, tick);
-                                return;
-                            }
-                        }
-                        this.submitMovement(context, unit, centerOfMass, tick);
+                        this.submitActionIfNew(actionBatcher, manageMoveMicro(unit, centerOfMass), unit, tick);
                     });
                 } else {
                     logger(`CombatSquad ${mission.getUniqueName()} switching back to attack mode (${maxDistance})`);
@@ -170,108 +156,34 @@ export class CombatSquad implements Squad {
                             if (!unitDataCache.has(unitId)) unitDataCache.set(unitId, game.getUnitData(unitId));
                             return unitDataCache.get(unitId);
                         }).filter((target): target is UnitData => !!target && !isOwnedByNeutral(target)) : nearbyHostiles;
-                    if (brutal) {
-                        const deployment = this.desolatorTactics.decide(context, unit, hostiles, units, targetPoint);
-                        if (deployment.handled) {
-                            if (deployment.action) this.submitActionIfNew(actionBatcher, deployment.action, unit, tick);
-                            continue;
-                        }
-                    }
                     if (brutal && tick < (this.maneuverUntil.get(unit.id) ?? 0)) continue;
-                    const ownPoint = new Vector2(unit.tile.rx, unit.tile.ry);
-                    if (brutal && !this.desolatorTactics.isSafeMove(unit, ownPoint)) {
-                        const escape = this.desolatorTactics.getSafeWaypoint(unit, ownPoint, game);
-                        if (escape && unit.canMove) {
-                            this.submitActionIfNew(actionBatcher, BatchableAction.toPoint(unit.id, OrderType.Move, escape), unit, tick);
-                            this.maneuverUntil.set(unit.id, tick + 12);
-                            continue;
-                        }
-                    }
-                    const retreat = brutal ? getTacticalRetreatPoint(unit, hostiles, game.mapApi,
-                        point => this.desolatorTactics.isSafeMove(unit, point)) : null;
+                    const retreat = brutal ? getTacticalRetreatPoint(unit, hostiles, game.mapApi) : null;
                     if (retreat) {
                         this.submitActionIfNew(actionBatcher, BatchableAction.toPoint(unit.id, OrderType.Move, retreat), unit, tick);
                         this.maneuverUntil.set(unit.id, tick + 12);
-                        if ((unit.hitPoints ?? Infinity) < (unit.maxHitPoints ?? 0) * 0.3) {
-                            this.injuredReserveUntil.set(unit.id, tick + 90);
-                        }
                         continue;
                     }
-                    const holdingReserve = brutal && (unit.hitPoints ?? Infinity) < (unit.maxHitPoints ?? 0) * 0.3 &&
-                        tick < (this.injuredReserveUntil.get(unit.id) ?? 0);
-                    const availableTargets = holdingReserve ? hostiles.filter(target => {
-                        const weapon = getCombatWeapon(unit, target, true);
-                        const distance = ownPoint.distanceTo(new Vector2(target.tile.rx, target.tile.ry));
-                        return weapon && distance <= weapon.range && distance >= (weapon.weapon.minRange ?? 0);
-                    }) : hostiles;
                     // Filter null weights before maxBy: it returns an element even when all weights are null.
                     const bestUnit = brutal
-                        ? chooseTacticalTarget(unit, availableTargets, committedDamage, this.lastOrderGiven[unit.id]?.targetId)
+                        ? chooseTacticalTarget(unit, hostiles, committedDamage, this.lastOrderGiven[unit.id]?.targetId)
                         : maxBy(hostiles.filter(target => getAttackWeight(unit, target) !== null), target => getAttackWeight(unit, target));
                     if (bestUnit) {
-                        const weapon = getCombatWeapon(unit, bestUnit, brutal);
-                        const targetLocation = new Vector2(bestUnit.tile.rx, bestUnit.tile.ry);
-                        if (brutal && weapon && ownPoint.distanceTo(targetLocation) > weapon.range &&
-                            !this.desolatorTactics.isSafeMove(unit, targetLocation)) {
-                            this.submitMovement(context, unit, targetLocation, tick);
-                            continue;
-                        }
                         const action = manageAttackMicro(unit, bestUnit);
                         this.submitActionIfNew(actionBatcher, action, unit, tick);
-                        if (brutal && action.orderType === OrderType.Attack && weapon?.damageKnown &&
+                        const weapon = getCombatWeapon(unit, bestUnit);
+                        if (brutal && action.orderType === OrderType.Attack && weapon &&
                             new Vector2(unit.tile.rx, unit.tile.ry).distanceTo(new Vector2(bestUnit.tile.rx, bestUnit.tile.ry)) <= weapon.range) {
                             committedDamage.set(bestUnit.id, (committedDamage.get(bestUnit.id) ?? 0) + weapon.damage);
                         }
                         this.debugLastTarget = `Unit ${bestUnit.id.toString()}`;
                     } else {
-                        if (brutal && isMissileArtillery(unit)) {
-                            this.followTankEscort(context, unit, units, targetPoint, tick);
-                        } else if (holdingReserve) {
-                            if (!unit.isIdle) this.submitActionIfNew(actionBatcher, BatchableAction.noTarget(unit.id, OrderType.Stop), unit, tick);
-                        } else this.submitMovement(context, unit, targetPoint, tick);
+                        this.submitActionIfNew(actionBatcher, manageMoveMicro(unit, targetPoint), unit, tick);
                         this.debugLastTarget = `@${targetPoint.x},${targetPoint.y}`;
                     }
                 }
             }
         }
         return noop();
-    }
-
-    private followTankEscort(context: MissionContext, unit: UnitData, units: UnitData[], target: Vector2, tick: number) {
-        const origin = new Vector2(unit.tile.rx, unit.tile.ry);
-        const escort = units.filter(other => other.id !== unit.id && (other.type as any) === ObjectType.Vehicle &&
-            !isMissileArtillery(other) && other.zone !== ZoneType.Air && other.primaryWeapon && !other.rules.harvester)
-            .sort((a, b) => origin.distanceTo(new Vector2(a.tile.rx, a.tile.ry)) -
-                origin.distanceTo(new Vector2(b.tile.rx, b.tile.ry)) || a.id - b.id)[0];
-        if (escort) {
-            const escortPoint = new Vector2(escort.tile.rx, escort.tile.ry);
-            const away = escortPoint.clone().sub(target);
-            if (away.length() > 0) away.multiplyScalar(3 / away.length());
-            const rear = escortPoint.clone().add(away);
-            rear.set(Math.round(rear.x), Math.round(rear.y));
-            if (origin.distanceTo(rear) > 2) {
-                this.submitMovement(context, unit, rear, tick, false);
-                return;
-            }
-        }
-        if (!unit.isIdle) this.submitActionIfNew(context.actionBatcher, BatchableAction.noTarget(unit.id, OrderType.Stop), unit, tick);
-    }
-
-    private submitMovement(context: MissionContext, unit: UnitData, destination: Vector2, tick: number, attackMove = true) {
-        if (context.difficulty === "brutal") {
-            const safePoint = this.desolatorTactics.getSafeWaypoint(unit, destination, context.game);
-            if (!safePoint) {
-                if (!unit.isIdle) this.submitActionIfNew(context.actionBatcher, BatchableAction.noTarget(unit.id, OrderType.Stop), unit, tick);
-                return;
-            }
-            if (!safePoint.equals(destination)) {
-                this.submitActionIfNew(context.actionBatcher, BatchableAction.toPoint(unit.id, OrderType.Move, safePoint), unit, tick);
-                this.maneuverUntil.set(unit.id, tick + 12);
-                return;
-            }
-        }
-        this.submitActionIfNew(context.actionBatcher, attackMove ? manageMoveMicro(unit, destination) :
-            BatchableAction.toPoint(unit.id, OrderType.Move, destination), unit, tick);
     }
 
     /**
