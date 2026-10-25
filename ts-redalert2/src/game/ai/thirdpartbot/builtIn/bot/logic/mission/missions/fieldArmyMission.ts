@@ -1,4 +1,4 @@
-import { ObjectType, UnitData, Vector2, ZoneType } from "../../../../game-api";
+import { GameApi, ObjectType, UnitData, Vector2, ZoneType } from "../../../../game-api";
 import { SideComposition } from "../../../strategy/compositionUtils";
 import { readStrategicSituation } from "../../../strategy/nationalComposition";
 import { MissionContext } from "../../common/context";
@@ -16,6 +16,10 @@ export class FieldArmyMission extends Mission {
     private attackArea = new Vector2();
     private nextTargetCheck = 0;
     private targetId?: number;
+    private searchArea?: Vector2;
+    private searchProgressAt = 0;
+    private searchDistance = Infinity;
+    private failedSearches = new Map<string, number>();
 
     constructor(private plan: SideComposition | null, private controller: MissionController, logger: DebugLogger) { super("fieldArmy", logger); }
 
@@ -66,8 +70,11 @@ export class FieldArmyMission extends Mission {
                     this.targetId = objective.id;
                     this.attackArea = location(objective);
                 } else {
-                    this.attackArea = game.getPlayers().filter(name => name !== player.name && !game.areAlliedPlayers(player.name, name))
+                    const enemyStart = game.getPlayers().filter(name => name !== player.name && !game.areAlliedPlayers(player.name, name))
                         .map(name => game.getPlayerData(name)).find(other => other.isCombatant)?.startLocation ?? rally;
+                    const startTile = game.mapApi.getTile(enemyStart.x, enemyStart.y);
+                    this.attackArea = startTile && game.mapApi.isVisibleTile(startTile, player.name)
+                        ? this.searchUnexplored(game, player.name, center, enemyStart) : enemyStart;
                 }
             }
         }
@@ -102,5 +109,35 @@ export class FieldArmyMission extends Mission {
             .filter(id => !assigned.has(id));
         if (free.length) return requestSpecificUnits(free, 50);
         return requestUnits(requests);
+    }
+
+    private searchUnexplored(game: GameApi, player: string, center: Vector2, fallback: Vector2): Vector2 {
+        const tick = game.getCurrentTick();
+        if (this.searchArea) {
+            const tile = game.mapApi.getTile(this.searchArea.x, this.searchArea.y);
+            const distance = center.distanceTo(this.searchArea);
+            if (distance < this.searchDistance - 1) {
+                this.searchDistance = distance;
+                this.searchProgressAt = tick;
+            }
+            const visible = tile && game.mapApi.isVisibleTile(tile, player);
+            if (!visible && tick < this.searchProgressAt + 900) return this.searchArea;
+            if (!visible) this.failedSearches.set(`${this.searchArea.x},${this.searchArea.y}`, tick);
+        }
+        const size = game.mapApi.getRealMapSize();
+        const options: { point: Vector2; distance: number }[] = [];
+        for (let x = 4; x < size.width; x += 8) for (let y = 4; y < size.height; y += 8) {
+            if (tick < (this.failedSearches.get(`${x},${y}`) ?? -Infinity) + 3600) continue;
+            const tile = game.mapApi.getTile(x, y);
+            // Selecting a public coordinate to explore is legal. No hidden unit,
+            // resource or terrain property is read to choose this destination.
+            if (!tile || game.mapApi.isVisibleTile(tile, player)) continue;
+            const point = new Vector2(x, y);
+            options.push({ point, distance: center.distanceTo(point) + fallback.distanceTo(point) * 0.15 });
+        }
+        this.searchArea = options.sort((a, b) => a.distance - b.distance || a.point.x - b.point.x || a.point.y - b.point.y)[0]?.point;
+        this.searchDistance = Infinity;
+        this.searchProgressAt = tick;
+        return this.searchArea ?? fallback;
     }
 }

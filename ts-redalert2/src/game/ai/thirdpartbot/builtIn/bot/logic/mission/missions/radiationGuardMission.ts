@@ -62,6 +62,8 @@ export function selectRadiationGuardPoint(context: SupabotContext, radius: numbe
 export function getRadiationGuardWaypoint(context: SupabotContext, unit: UnitData, destination: Vector2): Vector2 | undefined {
     const { game, player } = context;
     const from = point(unit);
+    const speed = unit.rules.speedType;
+    if (speed === undefined) return;
     const start = game.mapApi.getTile(from.x, from.y), end = game.mapApi.getTile(destination.x, destination.y);
     if (!start || !end || !game.mapApi.findPath) return;
     const threats = game.getVisibleUnits(player.name, "enemy").map(id => game.getUnitData(id))
@@ -76,7 +78,7 @@ export function getRadiationGuardWaypoint(context: SupabotContext, unit: UnitDat
             return next < reach && (current >= reach || next < current - 0.1);
         });
     };
-    const path = game.mapApi.findPath(SpeedType.Foot, { tile: start, onBridge: false }, { tile: end, onBridge: false },
+    const path = game.mapApi.findPath(speed, { tile: start, onBridge: false }, { tile: end, onBridge: false },
         { bestEffort: false, maxExpandedNodes: 512, excludeNodes: ({ tile }: any) => unsafe(tile) }).slice().reverse();
     const last = path.at(-1)?.tile;
     if (!last || last.rx !== end.rx || last.ry !== end.ry) return;
@@ -85,7 +87,7 @@ export function getRadiationGuardWaypoint(context: SupabotContext, unit: UnitDat
         const at = new Vector2(node.tile.rx, node.tile.ry);
         if (at.equals(from)) continue;
         if (node.onBridge || from.distanceTo(at) > 4 || unsafe(node.tile)) break;
-        const short = game.mapApi.findPath(SpeedType.Foot, { tile: start, onBridge: false }, { tile: node.tile, onBridge: false },
+        const short = game.mapApi.findPath(speed, { tile: start, onBridge: false }, { tile: node.tile, onBridge: false },
             { bestEffort: false, maxExpandedNodes: 64 });
         if (!short.length || short.some(step => step.onBridge || unsafe(step.tile))) break;
         waypoint = at;

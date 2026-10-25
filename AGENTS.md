@@ -17,6 +17,8 @@
 - Preserve numeric enums, packet formats and shared simulation behavior used by online games and replays. Consider effects on saved lobby options when changing difficulty choices.
 - Keep normal and highest-difficulty behavior explicit. Stronger AI needs scenario-based evidence; do not claim unbeatable behavior based on unit tests alone.
 - Evaluate AI upgrades against a frozen historical bot and previous candidates in the real simulation. Use fixed seeds, swap starting positions, keep resources and game handicaps identical, and retain per-game metrics. Report time limits as draws, runtime failures as errors, and compare more than one map before generalizing win rates.
+- Use Iraqi desolators primarily for positional defence and area denial. Keep radioactive ground clear of friendly infantry and production exits. Transport insertion is a separate flank tactic; follow real boarding/unloading and preserve a passenger's identity while it is removed from the world. Read the actual unit rules: the shipped HARV and CMIN are immune to radiation.
+- Report actual matrix feature events separately from preplaced mechanics fixtures. A deployment, detachment or Capture command alone does not prove damage, a successful raid or an enemy engineer capture. Preserve missing telemetry as missing data rather than a recorded zero.
 - Do not commit game resource archives, dependencies, build outputs, credentials or local runtime data. Preserve existing license and attribution notices.
 
 ## Verification

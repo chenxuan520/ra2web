@@ -7,6 +7,7 @@ import { CombatSquad } from "../../game/ai/thirdpartbot/builtIn/bot/logic/missio
 import { DesolatorTactics, getRadiationDeployment } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/squads/desolatorTactics";
 import { chooseTacticalTarget, getCombatWeapon, getTacticalRetreatPoint, isFiringBurst } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/squads/tacticalTargeting";
 import { manageAttackMicro } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/squads/common";
+import { getInfantryCrushPoint } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/squads/infantryCrushing";
 
 function weapon(damage = 90, range = 6, minRange = 0) {
     return { rules: { damage, rof: 60, burst: 1 }, maxRange: range, minRange, cooldownTicks: 0,
@@ -54,6 +55,33 @@ function fixture(allies = [desolator()], enemies = [infantry(20, 4, 1, { owner: 
             return tactics.decide(context, unit, enemies, members, destination);
         } };
 }
+
+describe("deliberate infantry crushing", () => {
+    const map: any = { getTile: (rx: number, ry: number) => ({ rx, ry, z: 0 }), hasBridgeOnTile: () => false, isPassableTile: () => true };
+    const crusher = () => tank(1, 0, 0, { tile: { rx: 0, ry: 0, z: 0 }, rules: { ...tank(1, 0).rules, crusher: true } });
+    const victims = () => [2, 3].map(id => infantry(id, 6, id - 2, { owner: "enemy", rules: { ...infantry(id, 6).rules, crushable: true } }));
+    test("a healthy empty tank charges through an infantry group, with a legal exit beyond it", () => {
+        expect(getInfantryCrushPoint(crusher(), victims(), map)).toEqual(new Vector2(8, 0));
+        for (const update of [{ hitPoints: 100 }, { passengerSlotCount: 1 }, { onBridge: true }, { canMove: false }]) {
+            expect(getInfantryCrushPoint({ ...crusher(), ...update }, victims(), map)).toBeNull();
+        }
+        expect(getInfantryCrushPoint(crusher(), victims().slice(0, 1), map)).toBeNull();
+        expect(getInfantryCrushPoint(crusher(), [...victims(), tank(4, 7, 0, { owner: "enemy" })], map)).toBeNull();
+        expect(getInfantryCrushPoint(crusher(), victims(), { ...map, hasBridgeOnTile: () => true })).toBeNull();
+    });
+    test.each([AttackState.PrepareToFire, AttackState.FireUp, AttackState.Firing])("crush micro preserves the actual firing phase %i", attackState => {
+        const unit = { ...crusher(), attackState }, enemies = victims();
+        const f = fixture([unit], enemies), orders: any[] = [];
+        f.game.mapApi = map;
+        const squad = new CombatSquad(new Vector2(), new Vector2(30, 0), 10);
+        const mission = { getUnitIds: () => [1], getUnitsMatchingByRule: () => [1], getCenterOfMass: () => new Vector2(),
+            getMaxDistanceToCenterOfMass: () => 0, getUniqueName: () => "crush-test" };
+        const batcher = new ActionBatcher(); f.at(0);
+        squad.onAiUpdate({ ...f.context, actionBatcher: batcher }, mission as any, () => {});
+        batcher.resolve({ orderUnits: (...args: any[]) => orders.push(args) } as any);
+        expect(orders.some(order => order[1] === OrderType.Move)).toBe(attackState === AttackState.PrepareToFire);
+    });
+});
 
 describe("desolator deployment", () => {
     test("uses cell spread, real decay timing and current stance's actual weapon", () => {

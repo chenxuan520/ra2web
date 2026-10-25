@@ -37,7 +37,7 @@ export class MissionController {
     private unitIdToMission: Map<number, Mission<any>> = new Map();
 
     // A mapping of unit types to the highest priority requested for a mission.
-    // This decays over time if requests are not 'refreshed' by mission.
+    // Brutal uses the current mission snapshot; normal retains decaying requests.
     private requestedUnitTypes: Map<string, UnitRequest> = new Map();
 
     // Tracks missions to be externally disbanded the next time the mission update loop occurs.
@@ -329,10 +329,11 @@ export class MissionController {
         this.missions = this.missions.filter((missions) => !disbandedMissions.has(missions.getUniqueName()));
     }
 
-    private updateRequestedUnitTypes(missingUnitTypeToHighestRequest: Record<string, UnitRequestWithMission>, expirePlacements = false) {
-        // Decay the priority over time.
+    private updateRequestedUnitTypes(missingUnitTypeToHighestRequest: Record<string, UnitRequestWithMission>, replaceSnapshot = false) {
+        // Fulfilled requests must not start another building/unit or outweigh
+        // a newly missing counter. Preserve historical decay for normal bots.
         for (const [unitType, currentRequest] of this.requestedUnitTypes.entries()) {
-            if (expirePlacements) {
+            if (replaceSnapshot) {
                 this.requestedUnitTypes.delete(unitType);
                 continue;
             }

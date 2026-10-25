@@ -35,12 +35,16 @@ import { ParaDropSupport } from '../src/game/ai/thirdpartbot/builtIn/bot/logic/m
 import { SuperWeaponStatus } from '../src/game/SuperWeapon';
 import { SuperWeaponType } from '../src/game/type/SuperWeaponType';
 import { StanceType } from '../src/game/gameobject/infantry/StanceType';
+import { RadiationGuardMission } from '../src/game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/radiationGuardMission';
+import { DeathType } from '../src/game/gameobject/common/DeathType';
+import { RadiationTransportMission } from '../src/game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/radiationTransportMission';
+import { MissionController } from '../src/game/ai/thirdpartbot/builtIn/bot/logic/mission/missionController';
 
 const projectRoot = fileURLToPath(new URL('../', import.meta.url));
 const defaultCdn = resolve(projectRoot, '../.cache/ai-resources/cdn');
 const hash = (bytes: string | Uint8Array) => createHash('sha256').update(bytes).digest('hex');
-type SceneName = 'desolator-radiation' | 'grand-cannon' | 'tank-duel' | 'ai-desolator-safe' | 'ai-desolator-blocked' | 'ai-radiation-detour' | 'ai-american-paradrop' | 'ai-injured-tank-retreat';
-const sceneNames: SceneName[] = ['desolator-radiation', 'grand-cannon', 'tank-duel', 'ai-desolator-safe', 'ai-desolator-blocked', 'ai-radiation-detour', 'ai-american-paradrop', 'ai-injured-tank-retreat'];
+type SceneName = 'desolator-radiation' | 'grand-cannon' | 'tank-duel' | 'ai-desolator-safe' | 'ai-desolator-blocked' | 'ai-radiation-detour' | 'ai-american-paradrop' | 'ai-injured-tank-retreat' | 'ai-radiation-guard' | 'ai-infantry-crush' | 'ai-radiation-transport';
+const sceneNames: SceneName[] = ['desolator-radiation', 'grand-cannon', 'tank-duel', 'ai-desolator-safe', 'ai-desolator-blocked', 'ai-radiation-detour', 'ai-american-paradrop', 'ai-injured-tank-retreat', 'ai-radiation-guard', 'ai-infantry-crush', 'ai-radiation-transport'];
 type UnitSpec = { label: string; name: string; type: ObjectType; player: number; x: number; y: number; hitPoints?: number };
 type ScenarioOptions = { cdn?: string; map?: string; seed?: number; maxTicks?: number; scenarios?: SceneName[]; observe?: boolean };
 
@@ -142,6 +146,27 @@ export function spawnSpecialtyObject(game: any, spec: UnitSpec, origin: { rx: nu
 }
 
 function specifications(name: SceneName): UnitSpec[] {
+    if (name === 'ai-radiation-transport') return [
+        { label: 'transport', name: 'HTK', type: ObjectType.Vehicle, player: 0, x: 0, y: 0 },
+        { label: 'desolator', name: 'DESO', type: ObjectType.Infantry, player: 0, x: -1, y: 0 },
+        { label: 'vision-radar', name: 'NARADR', type: ObjectType.Building, player: 0, x: 10, y: -6 },
+        { label: 'friendly-engineer', name: 'ENGINEER', type: ObjectType.Infantry, player: 0, x: -4, y: 0 },
+        ...[0, 1, 2, 3, 4, 5].map(index => ({ label: `enemy-engineer-${index}`, name: 'ENGINEER',
+            type: ObjectType.Infantry, player: 1, x: 23 + Math.floor(index / 3), y: index % 3 })),
+    ];
+    if (name === 'ai-radiation-guard') return [
+        { label: 'base', name: 'NACNST', type: ObjectType.Building, player: 0, x: 0, y: 0 },
+        { label: 'vision-radar', name: 'NARADR', type: ObjectType.Building, player: 0, x: 20, y: -8 },
+        { label: 'desolator', name: 'DESO', type: ObjectType.Infantry, player: 0, x: 16, y: 0 },
+        { label: 'friendly-engineer', name: 'ENGINEER', type: ObjectType.Infantry, player: 0, x: -3, y: 0 },
+        ...[0, 1, 2].map(y => ({ label: `approaching-conscript-${y}`, name: 'E2', type: ObjectType.Infantry,
+            player: 1, x: 24, y })),
+    ];
+    if (name === 'ai-infantry-crush') return [
+        { label: 'crushing-tank', name: 'HTNK', type: ObjectType.Vehicle, player: 0, x: 0, y: 0 },
+        ...[0, 1, 2, 3, 4, 5].map(index => ({ label: `enemy-conscript-${index}`, name: 'E2', type: ObjectType.Infantry,
+            player: 1, x: 4 + Math.floor(index / 3), y: index % 3 - 1 })),
+    ];
     if (name === 'ai-american-paradrop') return [
         { label: 'power', name: 'GAPOWR', type: ObjectType.Building, player: 0, x: 0, y: 0 },
         { label: 'radar', name: 'AMRADR', type: ObjectType.Building, player: 0, x: 3, y: 0 },
@@ -190,6 +215,7 @@ function findClearSite(game: any, specs: UnitSpec[]) {
     const isRetreat = specs.some(spec => spec.label === 'injured-rhino');
     const minX = Math.min(...specs.map(spec => spec.x)) - (isRetreat ? 4 : 1);
     const isDetour = specs.some(spec => spec.label === 'detour-tank');
+    const isGuard = specs.some(spec => spec.label === 'vision-radar');
     const maxX = Math.max(isDetour ? 13 : -Infinity, ...specs.map(spec => spec.x)) + 3;
     const minY = Math.min(...specs.map(spec => spec.y)) - (isRetreat ? 3 : 1);
     const maxY = Math.max(...specs.map(spec => spec.y)) + 3;
@@ -205,8 +231,14 @@ function findClearSite(game: any, specs: UnitSpec[]) {
             // The detour fixture intentionally leaves the intervening terrain
             // to real pathfinding; require legal starts, target and local steps.
             if (isDetour && ![...specs, { x: 13, y: 0 }].some(point => Math.abs(x - point.x) <= 1 && Math.abs(y - point.y) <= 1)) continue;
+            // The guard fixture spans a base and its forward flank. Validate
+            // spawn footprints; movement between them uses the real terrain.
+            if (isGuard && !specs.some(spec => x >= spec.x && x <= spec.x + (spec.type === ObjectType.Building ? 2 : 0) &&
+                y >= spec.y && y <= spec.y + (spec.type === ObjectType.Building ? 2 : 0)) &&
+                !(x >= 14 && x <= 25 && y >= -1 && y <= 3)) continue;
             const tile = game.map.tiles.getByMapCoords(origin.rx + x, origin.ry + y);
-            if (!tile || tile.z !== origin.z || tile.onBridgeLandType !== undefined
+            const level = isGuard ? game.map.tiles.getByMapCoords(origin.rx + 16, origin.ry)?.z : origin.z;
+            if (!tile || ((!isGuard || (x >= 14 && y >= -1 && y <= 3)) && tile.z !== level) || tile.onBridgeLandType !== undefined
                 || game.map.terrain.getPassableSpeed(tile, SpeedType.Track, false, false) <= 0
                 || game.map.terrain.getPassableSpeed(tile, SpeedType.Foot, true, false) <= 0
                 || game.map.getObjectsOnTile(tile).some((object: any) => object.isTechno() || object.isTerrain())) return false;
@@ -252,7 +284,9 @@ export async function runSpecialtyScenarios(options: ScenarioOptions = {}) {
             const units = new Map<string, any>();
             const fixtureIds = new Set<number>();
             const aiControlled = name.startsWith('ai-');
-            const result: any = { name, controller: name === 'ai-american-paradrop' ? 'actual ParaDropSupport'
+            const result: any = { name, controller: name === 'ai-radiation-transport' ? 'actual RadiationTransportMission with MissionController'
+                : name === 'ai-radiation-guard' ? 'actual RadiationGuardMission'
+                : name === 'ai-american-paradrop' ? 'actual ParaDropSupport'
                 : aiControlled ? 'actual Brutal CombatSquad' : 'documented manual action',
                 origin: { x: origin.rx, y: origin.ry }, setup: [], commands: [], controllerUpdates: 0, tankControllerUpdates: 0,
                 deployEvents: [], weaponFireEvents: [], damageEvents: [], destroyEvents: [], snapshots: [],
@@ -270,7 +304,8 @@ export async function runSpecialtyScenarios(options: ScenarioOptions = {}) {
                         damage: event.damageHitPoints, previousHealth: event.prevHealth, health: event.currentHealth,
                         radiationLevel: game.mapRadiationTrait.getRadLevel(event.target.tile) ?? 0 });
                 } else if (event.type === EventType.ObjectDestroy && fixtureIds.has(event.target.id)) {
-                    result.destroyEvents.push({ tick: game.currentTick, id: event.target.id, name: event.target.name });
+                    result.destroyEvents.push({ tick: game.currentTick, id: event.target.id, name: event.target.name,
+                        deathType: DeathType[event.target.deathType] ?? null });
                 } else if (name === 'ai-american-paradrop' && event.type === EventType.SuperWeaponActivate) {
                     result.superWeaponActivations.push({ tick: game.currentTick, type: event.target, owner: event.owner.name,
                         tile: { x: event.atTile.rx, y: event.atTile.ry } });
@@ -331,10 +366,17 @@ export async function runSpecialtyScenarios(options: ScenarioOptions = {}) {
                 };
             } else if (aiControlled) {
                 const bot = bots.get(players[0].name)!;
-                const mission = new ScenarioCombatMission(new CombatSquad(new Vector2(origin.rx, origin.ry),
-                    new Vector2(origin.rx + 3, origin.ry), 10));
-                const controlledLabel = name === 'ai-injured-tank-retreat' ? 'injured-rhino' : 'desolator';
+                const mission = name === 'ai-radiation-transport'
+                    ? new RadiationTransportMission(new Vector2(origin.rx + 18, origin.ry), new Vector2(origin.rx, origin.ry), 0, () => {})
+                    : name === 'ai-radiation-guard' ? new RadiationGuardMission(() => {})
+                    : new ScenarioCombatMission(new CombatSquad(new Vector2(origin.rx, origin.ry),
+                        new Vector2(origin.rx + 3, origin.ry), 10));
+                const controlledLabel = name === 'ai-injured-tank-retreat' ? 'injured-rhino'
+                    : name === 'ai-infantry-crush' ? 'crushing-tank' : 'desolator';
                 mission.addUnit(units.get(controlledLabel).id);
+                if (name === 'ai-radiation-transport') mission.addUnit(units.get('transport').id);
+                const transportController = name === 'ai-radiation-transport' ? new MissionController(() => {}) : undefined;
+                transportController?.addMission(mission);
                 const tankMission = name === 'ai-radiation-detour'
                     ? new ScenarioCombatMission(new CombatSquad(new Vector2(origin.rx - 13, origin.ry),
                         new Vector2(origin.rx + 13, origin.ry), 10)) : undefined;
@@ -352,7 +394,8 @@ export async function runSpecialtyScenarios(options: ScenarioOptions = {}) {
                         } },
                     };
                     result.controllerUpdates++;
-                    mission.onAiUpdate(context as any);
+                    if (transportController) transportController.onAiUpdate(context as any);
+                    else mission.onAiUpdate(context as any);
                     if (tankMission && game.currentTick >= 120) {
                         result.tankControllerUpdates++;
                         tankMission.onAiUpdate(context as any);
@@ -388,6 +431,15 @@ export async function runSpecialtyScenarios(options: ScenarioOptions = {}) {
                     order('rhino', OrderType.Attack, 'grizzly');
                     order('grizzly', OrderType.Attack, 'rhino');
                 }
+                if (game.currentTick === 120 && name === 'ai-radiation-guard') {
+                    // Scripted attackers cross a preplaced defensive position;
+                    // the defender chooses its own position and deployment orders.
+                    for (let index = 0; index < 3; index++) {
+                        const unit = units.get(`approaching-conscript-${index}`);
+                        bots.get(players[1].name)!.actionsApi.orderUnits([unit.id], OrderType.Move,
+                            origin.rx + 18, origin.ry + index);
+                    }
+                }
                 game.update();
                 if (game.currentTick % 30 === 0) snapshot();
             }
@@ -395,7 +447,35 @@ export async function runSpecialtyScenarios(options: ScenarioOptions = {}) {
             result.ticks = game.currentTick;
             result.specialty = telemetry?.snapshot() ?? null;
             const isDeploymentOrder = (command: any) => command.order === 'DeploySelected' || command.order === 'Deploy';
-            result.checks = name === 'ai-american-paradrop' ? {
+            result.checks = name === 'ai-radiation-transport' ? {
+                actualControllerRan: result.controllerUpdates > 0,
+                realBoardingOrder: result.commands.some((command: any) => command.order === 'EnterTransport'),
+                realUnloadOrder: result.commands.some((command: any) => command.unitIds?.includes(units.get('transport').id)
+                    && command.order === 'DeploySelected'),
+                payloadDelivered: result.snapshots.some((sample: any) => sample.units.some((unit: any) =>
+                    unit.label === 'desolator' && unit.alive && unit.tile.x >= origin.rx + 15)),
+                plumeAfterDelivery: result.deployEvents.some((event: any) => event.name === 'DESO' && event.deployed),
+                enemyInfantryDamagedInRadiation: result.damageEvents.some((event: any) => event.name === 'ENGINEER'
+                    && event.radiationLevel > 0 && event.attackerId === null),
+                friendlyInfantrySpared: !result.damageEvents.some((event: any) => event.id === units.get('friendly-engineer').id
+                    && event.radiationLevel > 0 && event.attackerId === null),
+            } : name === 'ai-radiation-guard' ? {
+                actualControllerRan: result.controllerUpdates > 0,
+                defenderDeployed: result.deployEvents.some((event: any) => event.name === 'DESO' && event.deployed),
+                enemyDamagedInRadiation: result.damageEvents.some((event: any) =>
+                    event.name === 'E2' && event.radiationLevel > 0 && event.attackerId === null),
+                noFriendlyRadiationDamage: !result.damageEvents.some((event: any) =>
+                    event.id === units.get('friendly-engineer').id && event.radiationLevel > 0 && event.attackerId === null),
+                noAssaultOrders: !result.commands.some((command: any) => command.player === players[0].name
+                    && command.order === 'AttackMove'),
+            } : name === 'ai-infantry-crush' ? {
+                actualControllerRan: result.controllerUpdates > 0,
+                deliberateMoveIssued: result.commands.some((command: any) => command.player === players[0].name && command.order === 'Move'),
+                tankCrossedInfantryLine: result.snapshots.some((sample: any) => sample.units.some((unit: any) =>
+                    unit.label === 'crushing-tank' && unit.alive && unit.tile.x >= origin.rx + 4)),
+                // Read the real engine death type independently of the optional observer.
+                infantryCrushed: result.destroyEvents.some((event: any) => event.name === 'E2' && event.deathType === 'Crush'),
+            } : name === 'ai-american-paradrop' ? {
                 actualControllerRan: result.controllerUpdates > 0,
                 allowedWithSuperWeaponsDisabled: result.superWeaponsEnabled === false,
                 actualEngineActivated: result.superWeaponActivations.some((event: any) => event.type === SuperWeaponType.AmerParaDrop),

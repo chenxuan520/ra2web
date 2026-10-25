@@ -39,6 +39,9 @@ function fixture(difficulty?: "normal" | "brutal") {
         matchAwareness: { getThreatCache: () => null },
     };
     const mission = new BaseBuildingMission(QueueType.Structures, () => {});
+    // These cases isolate placement fallback from the independently tested
+    // economic policy. Both options have the same explicit priority.
+    (mission as any).getPriorityForBuildingOption = (option: any) => ["GAWEAP", "AMRADR", "GAAIRC"].includes(option.name) ? 10 : 0;
     return { options, rules, legalLocations, placementChecks, run: () => mission._onAiUpdate(context as unknown as MissionContext) };
 }
 

@@ -10,6 +10,7 @@ import { SneakCaptureMissionFactory } from "../logic/mission/missions/sneakCaptu
 import { ensureBaseReserve } from "../logic/mission/missions/baseReserveMission";
 import { MinerDefence } from "../logic/mission/missions/minerDefence";
 import { ensureRadiationGuard } from "../logic/mission/missions/radiationGuardMission";
+import { RadiationTransportFactory } from "../logic/mission/missions/radiationTransportMission";
 import { FieldArmyMission } from "../logic/mission/missions/fieldArmyMission";
 import { HarassmentMissionFactory } from "../logic/mission/missions/harassmentMission";
 import { SupabotContext } from "../logic/common/context";
@@ -109,12 +110,14 @@ export class DefaultStrategy implements Strategy {
     private minerDefence = new MinerDefence();
     private fieldArmy?: FieldArmyMission;
     private fieldHarassment = new HarassmentMissionFactory();
+    private radiationTransport = new RadiationTransportFactory();
 
     onAiUpdate(context: SupabotContext, missionController: MissionController, logger: DebugLogger) {
         this.paraDropSupport.onAiUpdate(context);
         this.minerDefence.onAiUpdate(context);
         ensureBaseReserve(context, missionController, logger);
         ensureRadiationGuard(context, missionController, logger);
+        this.radiationTransport.maybeCreateMissions(context, missionController, logger);
         this.expansionFactory.maybeCreateMissions(context, missionController, logger);
         this.scoutingFactory.maybeCreateMissions(context, missionController, logger);
 

@@ -213,13 +213,12 @@ test('retreat uses a move command and holds it long enough to avoid attack/move 
     const injured = unit(1, 5, { hitPoints: 40 });
     const harness = squadHarness('brutal', [injured], [unit(2, 1)]);
     harness.step(0);
-    harness.step(6);
     expect(harness.orders).toEqual([[[1], OrderType.Move, 8, 0]]);
     // The retreat is still active even if the next update would prefer an attack.
     injured.hitPoints = 200;
-    harness.step(12);
+    harness.step(6);
     expect(harness.orders).toHaveLength(1);
-    harness.step(18);
+    harness.step(12);
     expect(harness.orders[1]).toEqual([[1], OrderType.Attack, 2]);
 });
 

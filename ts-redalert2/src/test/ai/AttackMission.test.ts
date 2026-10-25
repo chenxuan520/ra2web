@@ -56,6 +56,7 @@ function fixture(difficulty: 'normal' | 'brutal' = 'brutal') {
             }
         },
         setQueue(status: QueueStatus) { queueStatus = status; },
+        moveTo(x: number, y: number) { for (const unit of own.values()) unit.tile = { rx: x, ry: y }; },
         setEnemy(x: number, y: number) { enemies = [{ id: 100, name: 'target', owner: 'enemy', tile: { rx: x, ry: y },
             rules: {}, type: ObjectType.Building, maxHitPoints: 1000, hitPoints: 1000 }]; },
     };
@@ -123,13 +124,32 @@ describe('attack mission preparation', () => {
 });
 
 describe('attack target lifetime', () => {
-    test('a late-game attack gets its own observation timeout', () => {
+    test('a stalled distant attack eventually releases its units', () => {
         const f = fixture();
         f.add('MTNK', 5);
         f.add('FV');
         f.step(9000);
         expect(f.step(9002).type).toBe('noop');
         expect(f.step(9599).type).toBe('noop');
+        expect(f.step(9602).type).toBe('noop');
+        expect(f.step(10802)).toEqual({ type: 'disband', reason: AttackFailReason.NoTargets });
+    });
+
+    test('a distant army making progress is not abandoned at the old observation timeout', () => {
+        const f = fixture();
+        f.add('MTNK', 5); f.add('FV');
+        f.step(9000); f.step(9002);
+        f.moveTo(8, 8);
+        expect(f.step(10600).type).toBe('noop');
+        f.moveTo(16, 16);
+        expect(f.step(12100).type).toBe('noop');
+        expect(f.step(13900)).toEqual({ type: 'disband', reason: AttackFailReason.NoTargets });
+    });
+
+    test('normal difficulty retains the original observation timeout', () => {
+        const f = fixture('normal');
+        f.add('MTNK', 5); f.add('FV');
+        f.step(9000); f.step(9002);
         expect(f.step(9602)).toEqual({ type: 'disband', reason: AttackFailReason.NoTargets });
     });
 

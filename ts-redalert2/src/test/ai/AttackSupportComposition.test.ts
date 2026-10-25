@@ -33,6 +33,8 @@ describe('national support slots in attack waves', () => {
 
     test('pending support counts only unfilled reservations and stops after departure', () => {
         const mission = new AttackMission('supported', 1, new Vector2(), new Vector2(20, 20), 10, plan, () => {});
+        // Reservation accounting does not require running combat micro.
+        (mission as any).preparingSquad.onAiUpdate = () => ({ type: 'noop' });
         const units = new Map<number, any>();
         const game = { getGameObjectData: (id: number) => units.get(id), getCurrentTick: () => 0 } as any;
         expect(mission.getPendingSupportUnits(game)).toEqual({ DESO: 1 });
@@ -46,7 +48,8 @@ describe('national support slots in attack waves', () => {
             units.set(id, { id, name, tile: { rx: 0, ry: 0 } });
             mission.addUnit(id);
         }
-        expect(mission.onAiUpdate({ game, difficulty: 'brutal' } as any)).toEqual({ type: 'noop' });
+        expect(mission.onAiUpdate({ game, difficulty: 'brutal',
+            matchAwareness: { getMainRallyPoint: () => new Vector2() } } as any)).toEqual({ type: 'noop' });
         mission.removeUnit(1);
         expect(mission.getPendingSupportUnits(game)).toEqual({});
     });

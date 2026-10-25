@@ -41,6 +41,7 @@ export function observeSpecialtyCombat(game: any, players: any[]) {
         paradropSpawns: [] as { tick: number; player: number; id: number; name: string; x: number; y: number }[],
         ownershipChanges: [] as { tick: number; id: number; name: string; previousOwner: string; newOwner: string; previousSide: number; newSide: number }[],
         crushKills: [] as { tick: number; player: number; sourceId: number; sourceName: string; targetId: number; targetName: string; victimSide: number }[],
+        transportEvents: [] as { tick: number; player: number; event: string; id: number; name: string; destroyed: boolean; passengers: { id: number; name: string }[] }[],
         radiation: {
             // Rad sites are ownerless in the engine. Never attribute their damage to a guessed DESO/player.
             attribution: 'ownerless engine radiation; recorded by victim only',
@@ -130,7 +131,14 @@ export function observeSpecialtyCombat(game: any, players: any[]) {
 
     const listener = (event: any) => {
         const tick = game.currentTick;
-        if (event.type === EventType.ObjectOwnerChange) {
+        if ((event.type === EventType.EnterObject && event.target.transportTrait) || event.type === EventType.LeaveTransport) {
+            const transport = event.target;
+            data.transportEvents.push({ tick, player: sideOf(transport.owner), event: EventType[event.type],
+                id: transport.id, name: transport.name, destroyed: !!transport.isDestroyed,
+                passengers: (event.type === EventType.EnterObject ? [event.source]
+                    : transport.isDestroyed ? transport.transportTrait?.units ?? [] : (transport.transportTrait?.units ?? []).slice(-1))
+                    .map((unit: any) => ({ id: unit.id, name: unit.name })) });
+        } else if (event.type === EventType.ObjectOwnerChange) {
             data.ownershipChanges.push({ tick, id: event.target.id, name: event.target.name,
                 previousOwner: event.prevOwner.name, newOwner: event.target.owner.name,
                 previousSide: sideOf(event.prevOwner), newSide: sideOf(event.target.owner) });

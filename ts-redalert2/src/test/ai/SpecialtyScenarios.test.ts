@@ -29,7 +29,7 @@ const resourcesAvailable = existsSync(resolve(cdn, 'maps/mp08t2.map')) && exists
         expect(observed.issues).toEqual([]);
         expect(observed.scenarios.map((scene: any) => scene.name)).toEqual([
             'desolator-radiation', 'grand-cannon', 'tank-duel', 'ai-desolator-safe', 'ai-desolator-blocked', 'ai-radiation-detour',
-            'ai-american-paradrop', 'ai-injured-tank-retreat',
+            'ai-american-paradrop', 'ai-injured-tank-retreat', 'ai-radiation-guard', 'ai-infantry-crush', 'ai-radiation-transport',
         ]);
         for (const [index, scene] of observed.scenarios.entries()) {
             const { specialty, ...state } = scene;
@@ -54,6 +54,16 @@ const resourcesAvailable = existsSync(resolve(cdn, 'maps/mp08t2.map')) && exists
         expect(paradrop.snapshots.at(-1).landedGis.length).toBe(8);
         const retreat = observed.scenarios.find((scene: any) => scene.name === 'ai-injured-tank-retreat');
         expect(retreat.checks.retreatMoveIssued).toBe(true);
+        const guard = observed.scenarios.find((scene: any) => scene.name === 'ai-radiation-guard');
+        expect(guard.controller).toBe('actual RadiationGuardMission');
+        expect(guard.specialty.radiation.damageHitPointsByVictim[1]).toBeGreaterThan(0);
+        expect(guard.specialty.radiation.damageHitPointsByVictim[0]).toBe(0);
+        const crush = observed.scenarios.find((scene: any) => scene.name === 'ai-infantry-crush');
+        expect(crush.specialty.crushKills.some((kill: any) => kill.sourceName === 'HTNK' && kill.targetName === 'E2')).toBe(true);
+        const transport = observed.scenarios.find((scene: any) => scene.name === 'ai-radiation-transport');
+        expect(transport.specialty.transportEvents.some((event: any) => event.event === 'EnterObject'
+            && event.passengers.some((unit: any) => unit.name === 'DESO'))).toBe(true);
+        expect(transport.specialty.transportEvents.some((event: any) => event.event === 'LeaveTransport' && !event.destroyed)).toBe(true);
     } finally {
         await rm(directory, { recursive: true, force: true });
     }

@@ -7,7 +7,9 @@ function fixture() {
     const player = { name: "bot", credits: 6000, startLocation: new Vector2(10, 10) };
     const factory = { name: "NAWEAP", type: ObjectType.Building, adjacent: 2 };
     const objects: any[] = [{ id: 1, name: "NACNST", tile: { rx: 10, ry: 10, z: 0 }, foundation: { width: 3, height: 3 },
-        rules: { name: "NACNST", type: ObjectType.Building, constructionYard: true, baseNormal: true } }];
+        rules: { name: "NACNST", type: ObjectType.Building, constructionYard: true, baseNormal: true } },
+        { id: 99, name: "NAREFN", tile: { rx: 40, ry: 40, z: 0 }, foundation: { width: 3, height: 3 },
+            rules: { name: "NAREFN", type: ObjectType.Building, refinery: true, baseNormal: true } }];
     const candidates = [{ id: "wrong-door", rx: 4, ry: 10, z: 0 }, { id: "clear-door", rx: 14, ry: 10, z: 0 }];
     const blocked = new Set<string>();
     const hidden = new Set<string>();
@@ -16,6 +18,7 @@ function fixture() {
     const speedChecks: number[] = [];
     let legal = true;
     const game = {
+        getCurrentTick: () => 0,
         getPlayerData: () => player,
         getVisibleUnits: (_name: string, _side: string, filter: (rules: any) => boolean) => objects.filter(object => filter(object.rules)).map(object => object.id),
         getGameObjectData: (id: number) => objects.find(object => object.id === id),

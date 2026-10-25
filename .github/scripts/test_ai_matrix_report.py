@@ -55,6 +55,35 @@ class CountryReportTest(unittest.TestCase):
         data = json.loads((self.root / 'result/results.json').read_text())
         self.assertEqual(data['totals'], dict(wins=432, losses=0, draws=0, games=432, winRate=1.0))
         self.assertEqual(data['matrix']['Americans']['French']['games'], 6)
+        self.assertEqual(data['byMap']['mp08t2.map']['games'], 144)
+        self.assertEqual(data['byCountry']['Americans']['games'], 48)
+        self.assertEqual(data['features']['desolatorsBoarded']['coveredGames'], 0)
+        self.assertIn('not provided', (self.root / 'result/report.md').read_text())
+
+    def test_feature_events_keep_side_and_causality_distinctions(self):
+        telemetry = dict(harassmentLaunches=[3, 99], ordersByType=[dict(Capture=12), {}], specialty=dict(
+            production=[dict(DESO=dict(factoryProducedTicks=[1, 2]), GTGCAN=dict(readyTicks=[3])), {}],
+            shots=[dict(GTGCAN=dict(GrandCannonWeapon=dict(count=8))), {}],
+            deployments=[dict(player=0, name='DESO', deployed=True), dict(player=0, name='DESO', deployed=False),
+                         dict(player=1, name='DESO', deployed=True)],
+            ownershipChanges=[dict(newSide=0, previousSide=1), dict(newSide=0, previousSide=-1), dict(newSide=1, previousSide=0)],
+            crushKills=[dict(player=0, victimSide=1), dict(player=0, victimSide=0)],
+            transportEvents=[dict(player=0, event=event, destroyed=destroyed, passengers=[dict(name='DESO')])
+                             for event, destroyed in [('EnterObject', False), ('LeaveTransport', False), ('LeaveTransport', True)]],
+            radiation=dict(damageHitPointsByVictim=[3, 7])))
+        values = report.feature_observations(dict(telemetry=telemetry))
+        self.assertEqual(values['desolatorsProduced'], 2)
+        self.assertEqual(values['desolatorDeployments'], 1)
+        self.assertEqual(values['grandCannonShots'], 8)
+        self.assertEqual(values['surplusRaidDetachments'], 3)
+        self.assertEqual(values['captureOrders'], 12)
+        self.assertEqual(values['enemyObjectsAcquiredCauseUnspecified'], 1)
+        self.assertEqual(values['neutralObjectsAcquiredCauseUnspecified'], 1)
+        self.assertEqual(values['enemyCrushKills'], 1)
+        self.assertEqual(values['desolatorsBoarded'], 1)
+        self.assertEqual(values['desolatorUnloadsFromIntactTransport'], 1)
+        self.assertEqual(values['ownerlessRadiationDamageToCandidate'], 3)
+        self.assertEqual(values['ownerlessRadiationDamageToBaseline'], 7)
 
     def test_missing_scenario_is_rejected(self):
         (self.root / 'shard-1/manifest.json').unlink()
