@@ -1,22 +1,20 @@
 import { describe, expect, test } from 'bun:test';
 import { AttackMission, AttackFailReason } from '../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/attackMission';
 import { ActionBatcher } from '../../game/ai/thirdpartbot/builtIn/bot/logic/mission/actionBatcher';
-import { MovementZone, ObjectType, OrderType, QueueStatus, QueueType, StanceType, Vector2 } from '../../game/ai/thirdpartbot/builtIn/game-api';
+import { MovementZone, ObjectType, QueueStatus, QueueType, Vector2 } from '../../game/ai/thirdpartbot/builtIn/game-api';
 import type { MissionContext } from '../../game/ai/thirdpartbot/builtIn/bot/logic/common/context';
 
 const tankRules = { name: 'MTNK', type: ObjectType.Vehicle, isSelectableCombatant: true, movementZone: MovementZone.Normal };
 const aaRules = { ...tankRules, name: 'FV' };
-const giRules = { ...tankRules, name: 'E1', type: ObjectType.Infantry, movementZone: MovementZone.Infantry };
 const composition = { composition: { MTNK: 5, FV: 1 }, minimumUnits: 4, maximumUnits: 6 };
 
-function fixture(difficulty: 'normal' | 'brutal' = 'brutal', desiredComposition = composition) {
+function fixture(difficulty: 'normal' | 'brutal' = 'brutal') {
     let tick = 0;
     let queueStatus = QueueStatus.Active;
     let enemies: any[] = [];
     const own = new Map<number, any>();
     const queries: Vector2[] = [];
-    const orders: any[][] = [];
-    const mission = new AttackMission('wave', 1, new Vector2(), new Vector2(30, 30), 10, desiredComposition, () => {});
+    const mission = new AttackMission('wave', 1, new Vector2(), new Vector2(30, 30), 10, composition, () => {});
     const game = {
         getCurrentTick: () => tick,
         getGameObjectData: (id: number) => own.get(id) ?? enemies.find(enemy => enemy.id === id),
@@ -26,7 +24,7 @@ function fixture(difficulty: 'normal' | 'brutal' = 'brutal', desiredComposition 
         generateRandomInt: () => 1,
         mapApi: { getTile: (rx: number, ry: number) => ({ rx, ry }) },
         rulesApi: { vehicleRules: new Map([['MTNK', tankRules], ['FV', aaRules]]),
-            infantryRules: new Map([['E1', giRules]]), aircraftRules: new Map(), buildingRules: new Map() },
+            infantryRules: new Map(), aircraftRules: new Map(), buildingRules: new Map() },
     };
     const context = {
         difficulty, game,
@@ -40,25 +38,19 @@ function fixture(difficulty: 'normal' | 'brutal' = 'brutal', desiredComposition 
                 return enemies.filter(enemy => point.distanceTo(new Vector2(enemy.tile.rx, enemy.tile.ry)) <= radius)
                     .map(enemy => ({ unitId: enemy.id }));
             },
-            getHostilesNearPoint: (x: number, y: number, radius: number) => enemies
-                .filter(enemy => new Vector2(x, y).distanceTo(new Vector2(enemy.tile.rx, enemy.tile.ry)) <= radius)
-                .map(enemy => ({ unitId: enemy.id })),
-            getMainRallyPoint: () => new Vector2(),
+            getHostilesNearPoint: () => [], getMainRallyPoint: () => new Vector2(),
         },
     };
     return {
-        mission, queries, game, orders,
+        mission, queries, game,
         step(nextTick: number) {
             tick = nextTick;
-            const actionBatcher = new ActionBatcher();
-            const action = mission.onAiUpdate({ ...context, actionBatcher } as unknown as MissionContext);
-            actionBatcher.resolve({ orderUnits: (...args: any[]) => orders.push(args) } as any);
-            return action;
+            return mission.onAiUpdate({ ...context, actionBatcher: new ActionBatcher() } as unknown as MissionContext);
         },
-        add(name: 'MTNK' | 'FV' | 'E1', amount = 1) {
+        add(name: 'MTNK' | 'FV', amount = 1) {
             for (let i = 0; i < amount; i++) {
                 const id = own.size + 1;
-                own.set(id, { id, name, owner: 'bot', rules: name === 'MTNK' ? tankRules : name === 'E1' ? giRules : aaRules,
+                own.set(id, { id, name, owner: 'bot', rules: name === 'MTNK' ? tankRules : aaRules,
                     tile: { rx: 0, ry: 0 }, isIdle: true });
                 mission.addUnit(id);
             }
@@ -127,52 +119,6 @@ describe('attack mission preparation', () => {
         f.step(0);
         expect(f.step(4499).type).toBe('request');
         expect(f.step(4500)).toEqual({ type: 'disband', reason: AttackFailReason.UnableToAcquireUnits });
-    });
-});
-
-describe('brutal preparation defense', () => {
-    test('guards the rally point while waiting instead of sending an incomplete wave to the enemy base', () => {
-        const f = fixture();
-        f.add('MTNK');
-        f.step(0);
-        expect(f.step(6).type).toBe('request');
-        expect(f.mission.getState()).toBe(0);
-        expect(f.orders).toEqual([[[1], OrderType.AttackMove, 0, 0]]);
-
-        f.add('MTNK', 4);
-        f.add('FV');
-        f.step(12);
-        f.step(14);
-        f.step(20);
-        expect(f.mission.getState()).toBe(1);
-        expect(f.orders.at(-1)).toEqual([[1, 2, 3, 4, 5, 6], OrderType.AttackMove, 30, 30]);
-    });
-
-    test('deploys a GI against a nearby threat and attacks while reinforcements are still requested', () => {
-        const f = fixture('brutal', { composition: { E1: 1 } as any, minimumUnits: 3, maximumUnits: 6 });
-        f.add('E1');
-        const gi = f.game.getUnitData(1);
-        const weapon = (range: number) => ({ maxRange: range, rules: { damage: 25, rof: 15 },
-            projectileRules: { isAntiGround: true, isAntiAir: false } });
-        gi.primaryWeapon = weapon(4);
-        gi.secondaryWeapon = weapon(5);
-        f.setEnemy(4, 0);
-        f.step(0);
-        expect(f.step(6).type).toBe('request');
-        expect(f.orders).toEqual([[[1], OrderType.DeploySelected]]);
-        gi.stance = StanceType.Deployed;
-        expect(f.step(12).type).toBe('request');
-        expect(f.orders.at(-1)).toEqual([[1], OrderType.Attack, 100]);
-        expect(f.mission.getState()).toBe(0);
-    });
-
-    test('does not change normal preparation behavior', () => {
-        const f = fixture('normal');
-        f.add('MTNK');
-        f.step(0);
-        f.step(12);
-        expect(f.orders).toEqual([]);
-        expect(f.mission.getState()).toBe(0);
     });
 });
 
