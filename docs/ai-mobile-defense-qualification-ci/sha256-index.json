@@ -1,5 +1,9 @@
 {
   "files": {
+    ".gitattributes": {
+      "bytes": 185,
+      "sha256": "b83ef33984b59db37171451afdc113dcac24328e26dfe4b738aed0a4fdd03610"
+    },
     "40227208347/ai-country-long/manifest.json": {
       "bytes": 15106,
       "sha256": "851911e1b2ed4fa9697ebaed8b173870f9a2c7a95d7d26733c87d83a1cebe979"

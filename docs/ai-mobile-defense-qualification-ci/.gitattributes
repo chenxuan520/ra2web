@@ -1,0 +1,2 @@
+# Preserve original CI CSV bytes, including CRLF, for artifact digest verification.
+*/ai-country-report/matrix.csv -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
