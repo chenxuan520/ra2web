@@ -79,6 +79,9 @@ export class CombatSquad implements Squad {
         const brutal = context.difficulty === "brutal";
         const tick = game.getCurrentTick();
         const playerData = game.getPlayerData(context.player.name);
+        // Preparation is handled by the mission. Reinforcements must join the
+        // battle without repeatedly pulling an established army back to its centroid.
+        if (brutal) this.state = SquadState.Attacking;
         if (
             mission.getUnitIds().length > 0 &&
             (this.lastCommand === null || tick >= this.lastCommand + (brutal ? 6 : TARGET_UPDATE_INTERVAL_TICKS))
@@ -104,14 +107,15 @@ export class CombatSquad implements Squad {
                 game,
                 (r) =>
                     r.isSelectableCombatant &&
+                    (brutal ? r.movementZone !== MovementZone.Fly && r.movementZone !== MovementZone.Water :
                     (r.movementZone === MovementZone.Infantry ||
                         r.movementZone === MovementZone.Normal ||
-                        r.movementZone === MovementZone.InfantryDestroyer),
+                        r.movementZone === MovementZone.InfantryDestroyer)),
             );
 
             if (this.state === SquadState.Gathering) {
                 const requiredGatherRadius = GameMath.sqrt(groundUnitIds.length) * GATHER_RATIO + MIN_GATHER_RADIUS;
-                if (
+                if (!brutal &&
                     centerOfMass &&
                     maxDistance &&
                     game.mapApi.getTile(centerOfMass.x, centerOfMass.y) !== undefined &&
@@ -135,7 +139,7 @@ export class CombatSquad implements Squad {
             } else {
                 const targetPoint = this.targetArea || playerData.startLocation;
                 const requiredGatherRadius = GameMath.sqrt(groundUnitIds.length) * GATHER_RATIO + MAX_GATHER_RADIUS;
-                if (
+                if (!brutal &&
                     centerOfMass &&
                     maxDistance &&
                     game.mapApi.getTile(centerOfMass.x, centerOfMass.y) !== undefined &&
@@ -164,7 +168,6 @@ export class CombatSquad implements Squad {
                 for (const unit of brutal ? [...units].sort((a, b) => a.id - b.id) : units) {
                     // AttackMove may have acquired a target autonomously. The API does
                     // not expose it, so preserve the live firing sequence before retargeting.
-                    if (brutal && isFiringBurst(unit)) continue;
                     // Each unit scans its own flank; a distant short-range leader must not blind artillery or AA.
                     const hostiles = brutal ? matchAwareness.getHostilesNearPoint(unit.tile.rx, unit.tile.ry,
                         Math.max(ATTACK_SCAN_AREA, unit.primaryWeapon?.maxRange ?? 0, unit.secondaryWeapon?.maxRange ?? 0))
@@ -173,6 +176,15 @@ export class CombatSquad implements Squad {
                             return unitDataCache.get(unitId);
                         }).filter((target): target is UnitData => !!target && !isOwnedByNeutral(target) &&
                             (!this.defendArea || targetPoint.distanceTo(new Vector2(target.tile.rx, target.tile.ry)) <= this.radius)) : nearbyHostiles;
+                    const crush = brutal && !unit.isFiring &&
+                        ![AttackState.FireUp, AttackState.Firing].includes(unit.attackState as any)
+                        ? getInfantryCrushPoint(unit, hostiles, game.mapApi) : null;
+                    if (crush && tick >= (this.maneuverUntil.get(unit.id) ?? 0) && this.desolatorTactics.isSafeMove(unit, crush)) {
+                        this.submitActionIfNew(actionBatcher, BatchableAction.toPoint(unit.id, OrderType.Move, crush), unit, tick);
+                        this.maneuverUntil.set(unit.id, tick + 36);
+                        continue;
+                    }
+                    if (brutal && isFiringBurst(unit)) continue;
                     if (brutal) {
                         const deployment = this.desolatorTactics.decide(context, unit, hostiles, units, targetPoint);
                         if (deployment.handled) {
@@ -181,12 +193,6 @@ export class CombatSquad implements Squad {
                         }
                     }
                     if (brutal && tick < (this.maneuverUntil.get(unit.id) ?? 0)) continue;
-                    const crush = brutal ? getInfantryCrushPoint(unit, hostiles, game.mapApi) : null;
-                    if (crush && this.desolatorTactics.isSafeMove(unit, crush)) {
-                        this.submitActionIfNew(actionBatcher, BatchableAction.toPoint(unit.id, OrderType.Move, crush), unit, tick);
-                        this.maneuverUntil.set(unit.id, tick + 18);
-                        continue;
-                    }
                     const ownPoint = new Vector2(unit.tile.rx, unit.tile.ry);
                     if (brutal && !this.desolatorTactics.isSafeMove(unit, ownPoint)) {
                         const escape = this.desolatorTactics.getSafeWaypoint(unit, ownPoint, game);

@@ -4,10 +4,10 @@ import { getCombatWeapon } from "./tacticalTargeting";
 /** Use tracked armor against a local infantry mass instead of trading cannon shells with rifles. */
 export function getInfantryCrushPoint(unit: UnitData, enemies: UnitData[], map: MapApi): Vector2 | null {
     if (!unit.rules.crusher || !unit.canMove || unit.zone === ZoneType.Air || unit.onBridge ||
-        unit.hitPoints < unit.maxHitPoints * 0.55) return null;
+        (unit.passengerSlotCount ?? 0) > 0 || unit.hitPoints < unit.maxHitPoints * 0.55) return null;
     const origin = new Vector2(unit.tile.rx, unit.tile.ry);
     const infantry = enemies.filter(enemy => (enemy.type as any) === ObjectType.Infantry && enemy.rules.crushable &&
-        enemy.zone !== ZoneType.Air && !enemy.onBridge && origin.distanceTo(new Vector2(enemy.tile.rx, enemy.tile.ry)) <= 6);
+        enemy.zone !== ZoneType.Air && !enemy.onBridge && origin.distanceTo(new Vector2(enemy.tile.rx, enemy.tile.ry)) <= 8);
     if (infantry.length < 2) return null;
     if (enemies.some(enemy => (enemy.type as any) !== ObjectType.Infantry && !enemy.rules.harvester && getCombatWeapon(enemy, unit, true) &&
         origin.distanceTo(new Vector2(enemy.tile.rx, enemy.tile.ry)) <= 9)) return null;

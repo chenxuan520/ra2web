@@ -356,6 +356,13 @@ export class ExpansionMissionFactory {
         if (conYards.length === 0 || warFactories.length === 0 || refineries.length === 0 || !isSafeToExpand) {
             return;
         }
+        if (context.difficulty === "brutal" && conYards.length === 1) {
+            const yard = game.getGameObjectData(conYards[0]);
+            const nearbyOre = yard && game.mapApi.getAllTilesResourceData().some(resource =>
+                (resource.ore > 0 || resource.gems > 0 || resource.spawnsOre) && game.mapApi.isVisibleTile(resource.tile, player.name) &&
+                Math.hypot(resource.tile.rx - yard.tile.rx, resource.tile.ry - yard.tile.ry) <= 25);
+            if (nearbyOre || context.player.production.getQueueData(0).items.length) return;
+        }
         const selectedConyard = game.getGameObjectData(conYards[0])!;
         const refineryNearconyard = game
             .getUnitsInArea(

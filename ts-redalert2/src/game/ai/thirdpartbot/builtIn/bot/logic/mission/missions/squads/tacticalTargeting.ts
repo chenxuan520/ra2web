@@ -63,6 +63,9 @@ export function chooseTacticalTarget(
     currentTargetId?: number,
 ): UnitData | null {
     if (isMissileArtillery(attacker)) targets = targets.filter(target => (target.type as any) === ObjectType.Building);
+    if (attacker.name === "ZEP") targets = targets.filter(target => (target.type as any) === ObjectType.Building ||
+        getDistanceBetweenUnits(attacker, target) <= (attacker.primaryWeapon?.maxRange ?? 0) + 0.5 ||
+        !!getCombatWeapon(target, attacker, true));
     const currentTarget = targets.find(target => target.id === currentTargetId);
     if (currentTarget && isFiringBurst(attacker) && getCombatWeapon(attacker, currentTarget)) return currentTarget;
 

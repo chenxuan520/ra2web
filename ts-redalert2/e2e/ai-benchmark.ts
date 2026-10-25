@@ -214,11 +214,15 @@ function recordPlayer(player: any, bot: any, economy: any) {
         ...(args['unit-details'] ? { unitDetails: objects.map((object: any) => ({
             id: object.id, name: object.name, x: object.tile.rx, y: object.tile.ry,
             hp: object.healthTrait?.getHitPoints(), stance: object.stance,
+            attackState: object.attackTrait?.attackState, isFiring: object.isFiring,
+            movementZone: object.rules.movementZone, velocity: object.moveTrait?.velocity,
             tasks: object.unitOrderTrait?.getTasks().map((task: any) => ({ name: task.constructor.name,
                 status: task.status, targetId: task.target?.obj?.id,
+                targetTile: task.targetTile && { x: task.targetTile.rx, y: task.targetTile.ry },
                 children: task.children.map((child: any) => child.constructor.name) })),
         })) } : {}),
         missions: missions.map((mission: any) => ({ name: mission.getUniqueName(), state: mission.getState?.(),
+            combatState: mission.squad?.state,
             units: mission.getUnitIds().length, target: mission.squad?.targetArea ?? mission.attackArea ?? mission.defenceArea,
             center: mission.getCenterOfMass?.(), requestedUnitCount: mission.requestedUnitCount })),
     };
