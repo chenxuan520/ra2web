@@ -2880,5 +2880,29 @@
         }
       }
     ]
+  },
+  "completedManualMatrix": {
+    "candidateCommit": "39679b2103ba372def2f9ddb5d7cf4dfa463fe06",
+    "baselineCommit": "04a9f7ae57053e3f7f108afd14f830c293cac47a",
+    "fingerprint": "4238b38e3333e88378b07e3f56a34e0af04e942a096a41ad93a69813cf993694",
+    "summary": {
+      "wins": 140,
+      "losses": 132,
+      "draws": 160,
+      "errors": 0,
+      "total": 432,
+      "expectedGames": 432,
+      "pending": 0,
+      "winRateValid": 0.32407407407407407,
+      "winRateAllRecorded": 0.32407407407407407,
+      "winRateDecisive": 0.5147058823529411
+    },
+    "report": "ai-country-evaluation.md",
+    "files": {
+      "ai-country-results.json": "3ca606f096a47394c6977efeab5990adb1617ce2169c286aefe8642ab004e3aa",
+      "ai-country-games.jsonl": "5bde3c61b5973d1c5c4e727db6914f1fad80ba9d9796f5b0ddae4e2ac15f055f",
+      "ai-country-matrix.csv": "2813955a1bdcedef4ba0db0614f69f1f82861b06efd75d07a6c22db787f280ef"
+    },
+    "scope": "Frozen 39679b2 before engineer capture. Complete local 432-game matrix; separate from later CI candidate 0a46d52."
   }
 }
