@@ -66,20 +66,11 @@ export function chooseTacticalTarget(
     const currentTarget = targets.find(target => target.id === currentTargetId);
     if (currentTarget && isFiringBurst(attacker) && getCombatWeapon(attacker, currentTarget, true)) return currentTarget;
 
-    const canShootNow = (target: UnitData) => {
-        const weapon = getCombatWeapon(attacker, target, true);
-        const distance = getDistanceBetweenUnits(attacker, target);
-        return weapon && distance <= weapon.range && distance >= (weapon.weapon.minRange ?? 0) &&
-            (committedDamage.get(target.id) ?? 0) < (target.hitPoints ?? target.maxHitPoints ?? 100);
-    };
-    const hasImmediateTarget = targets.some(canShootNow);
-
     let best: UnitData | null = null;
     let bestScore = -Infinity;
     for (const target of targets) {
         const attack = getCombatWeapon(attacker, target, true);
         if (!attack) continue;
-        if (hasImmediateTarget && !canShootNow(target)) continue;
         const distance = getDistanceBetweenUnits(attacker, target);
         const committed = committedDamage.get(target.id) ?? 0;
         const remainingHealth = Math.max(1, (target.hitPoints ?? target.maxHitPoints ?? 100) - committed);
