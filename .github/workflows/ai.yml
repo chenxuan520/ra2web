@@ -115,6 +115,14 @@ jobs:
     if: github.event_name == 'workflow_dispatch' && inputs.tactic_schedule && inputs.tactic_schedule != 'none'
     runs-on: ubuntu-24.04
     timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - id: short
+            map: mp08t2
+          - id: medium
+            map: tn01t2
     steps:
       - uses: actions/checkout@v4
         with:
@@ -135,6 +143,9 @@ jobs:
           bash .github/scripts/prepare-ai-resources.sh
       - name: Direct normal-economy matches, preserving raw results
         working-directory: ts-redalert2
+        env:
+          AI_TACTIC_MAP: ${{ matrix.map }}
+          AI_TACTIC_SHARD: ${{ matrix.id }}
         run: |
           if [ "$AI_TACTIC_SCHEDULE" = pilot ]; then
             tactic_seeds=610101
@@ -144,24 +155,42 @@ jobs:
             tactic_pairs=Arabs:Arabs,Russians:Russians,Arabs:Russians,Russians:Arabs,Arabs:Americans,Russians:Americans,Americans:Arabs,Americans:Russians
           fi
           bun e2e/ai-benchmark.ts --candidate-ref "$AI_CANDIDATE_REF" --baseline-ref "$AI_BASELINE_REF" \
-            --candidate-profile brutal --baseline-profile brutal --map mp08t2,tn01t2 \
+            --candidate-profile brutal --baseline-profile brutal --map "$AI_TACTIC_MAP" \
             --seeds "$tactic_seeds" --matchups "$tactic_pairs" --max-ticks 27000 --unit-details \
-            --out .artifacts/ai-tactic/raw.json
+            --out ".artifacts/ai-tactic/raw-$AI_TACTIC_SHARD.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ai-tactic-raw-${{ matrix.id }}
+          path: ts-redalert2/.artifacts/ai-tactic/
+          retention-days: 30
+
+  tactic-report:
+    needs: tactic-screen
+    if: always() && needs.tactic-screen.result != 'skipped'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: ai-tactic-raw-*
+          path: collected
       - name: Verify direct schedule and assess development signal
         run: |
           tactic_exit=0
-          python -B .github/scripts/summarize-ai-tactic.py ts-redalert2/.artifacts/ai-tactic/raw.json \
+          python -B .github/scripts/summarize-ai-tactic.py \
+            collected/ai-tactic-raw-short/raw-short.json collected/ai-tactic-raw-medium/raw-medium.json \
             --candidate-ref "$AI_CANDIDATE_REF" --baseline-ref "$AI_BASELINE_REF" \
-            --schedule "$AI_TACTIC_SCHEDULE" --out ts-redalert2/.artifacts/ai-tactic --require-positive || tactic_exit=$?
-          if [ -f ts-redalert2/.artifacts/ai-tactic/report.md ]; then
-            cat ts-redalert2/.artifacts/ai-tactic/report.md >> "$GITHUB_STEP_SUMMARY"
+            --schedule "$AI_TACTIC_SCHEDULE" --out ai-tactic-report --require-positive || tactic_exit=$?
+          if [ -f ai-tactic-report/report.md ]; then
+            cat ai-tactic-report/report.md >> "$GITHUB_STEP_SUMMARY"
           fi
           exit "$tactic_exit"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: ai-tactic-screen
-          path: ts-redalert2/.artifacts/ai-tactic/
+          name: ai-tactic-report
+          path: ai-tactic-report/
           retention-days: 30
 
   country-matrix:
