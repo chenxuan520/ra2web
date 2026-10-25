@@ -39,9 +39,9 @@ function productionScenario(credits = 100, difficulty?: "normal" | "brutal") {
 }
 
 describe("AI production economy", () => {
-    test.each(["normal", "brutal"] as const)("%s applies the experimental conscript budget only to brutal", difficulty => {
+    test.each(["normal", "brutal"] as const)("%s keeps the restored C18 conscript cap explicit", difficulty => {
         const s = productionScenario(2000, difficulty);
-        for (let i = 0; i < 12; i++) s.owned.push({ name: "E2" });
+        for (let i = 0; i < 32; i++) s.owned.push({ name: "E2" });
         s.request(QueueType.Infantry, "E2", 20, 100);
         s.run();
         if (difficulty === "brutal") expect(s.actions.queueForProduction).not.toHaveBeenCalled();

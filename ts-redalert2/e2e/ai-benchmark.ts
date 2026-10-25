@@ -25,6 +25,7 @@ import { EventType } from '../src/game/event/EventType';
 import { loadBaselineBot } from './ai-baseline';
 import { observeBuildingMissions } from './ai-building-probe';
 import { observeSpecialtyCombat, readForceComposition } from './ai-specialty-telemetry';
+import { AiMobilityProbe } from './ai-mobility-probe';
 
 const projectRoot = fileURLToPath(new URL('../', import.meta.url));
 const repositoryRoot = resolve(projectRoot, '..');
@@ -222,6 +223,7 @@ function recordPlayer(player: any, bot: any, economy: any) {
                 children: task.children.map((child: any) => child.constructor.name) })),
         })) } : {}),
         missions: missions.map((mission: any) => ({ name: mission.getUniqueName(), state: mission.getState?.(),
+            ...(args['unit-details'] ? { unitIds: [...mission.getUnitIds()] } : {}),
             combatState: mission.squad?.state,
             units: mission.getUnitIds().length, target: mission.squad?.targetArea ?? mission.attackArea ?? mission.defenceArea,
             center: mission.getCenterOfMass?.(), requestedUnitCount: mission.requestedUnitCount })),
@@ -269,6 +271,7 @@ for (const mapName of args.map!.split(',')) {
         let specialtyObserver: ReturnType<typeof observeSpecialtyCombat> | undefined;
         const startedAt = performance.now();
         const samples: any[] = [];
+        const mobility = new AiMobilityProbe();
         const match: any = { map: filename, mapSha256: hash(mapBytes), terrainSha256: hash(tileBytes),
             seed, swapped, candidateCountry, baselineCountry, candidatePlayerName, baselinePlayerName, result: 'error', telemetry, samples };
         try {
@@ -353,11 +356,13 @@ for (const mapName of args.map!.split(',')) {
             sample();
             while (game.currentTick < maxTicks && game.status !== GameStatus.Ended) {
                 game.update();
+                if (game.currentTick % 30 === 0) mobility.sample(game.currentTick, players, bots, match.startingLocations);
                 players.forEach((player: any, side: number) => { if (player.credits < 100) telemetry.lowCreditTicks[side]++; });
                 if (game.currentTick % sampleTicks === 0) sample();
             }
             if (samples.at(-1)?.tick !== game.currentTick) sample();
             match.ticks = game.currentTick;
+            telemetry.mobility = mobility.snapshot();
             match.simulationSeconds = game.currentTick / GameSpeed.BASE_TICKS_PER_SECOND;
             const survivors = players.map((player: any, side: number) => ({ side, alive: !player.defeated && !player.resigned })).filter((player: any) => player.alive);
             match.result = telemetry.errorCount ? 'error' : game.status === GameStatus.Ended && survivors.length === 1

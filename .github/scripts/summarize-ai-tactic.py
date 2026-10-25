@@ -56,7 +56,7 @@ def observations(match, side):
         tanks = [u for u in sample.get('unitDetails', []) if u['name'] == 'HTNK']
         distances.extend(min(((d['x'] - t['x']) ** 2 + (d['y'] - t['y']) ** 2) ** .5 for t in tanks)
                          for d in dogs if tanks)
-    return dict(produced={name: len(production[side].get(name, {}).get('factoryProducedTicks', []))
+    result = dict(produced={name: len(production[side].get(name, {}).get('factoryProducedTicks', []))
                           if production is not None else None for name in ('E2', 'DOG', 'HTNK', 'HARV')},
                 firstTankTick=min(production[side].get('HTNK', {}).get('factoryProducedTicks', []), default=None)
                     if production is not None else None,
@@ -70,6 +70,9 @@ def observations(match, side):
                 sampledDogTankDistances=len(distances),
                 meanSampledDogTankDistance=sum(distances) / len(distances) if distances else None,
                 finalSampleForce=samples[-1].get('forceComposition') if samples else None)
+    if 'mobility' in match['telemetry']:
+        result['mobility'] = match['telemetry']['mobility']['players'][side]
+    return result
 
 
 def verify(paths, candidate, baseline=CONTROL, schedule='pilot'):

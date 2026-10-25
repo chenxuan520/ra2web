@@ -20,6 +20,7 @@ import { Compositions, getValidCompositions, SideComposition } from "./compositi
 import { readStrategicSituation, selectNationalComposition } from "./nationalComposition";
 import { getOpeningAirBudget } from "./openingAirBudget";
 import { DogEscortMission } from "../logic/mission/missions/dogEscortMission";
+import { ensureInfantryHome } from "../logic/mission/missions/infantryHomeMission";
 
 // These could be loaded from ai.ini
 export const DEFAULT_COMPOSITIONS: Compositions = {
@@ -119,6 +120,7 @@ export class DefaultStrategy implements Strategy {
         this.paraDropSupport.onAiUpdate(context);
         this.minerDefence.onAiUpdate(context);
         ensureBaseReserve(context, missionController, logger);
+        ensureInfantryHome(context, missionController, logger);
         ensureRadiationGuard(context, missionController, logger);
         this.radiationTransport.maybeCreateMissions(context, missionController, logger);
         this.expansionFactory.maybeCreateMissions(context, missionController, logger);
