@@ -23,6 +23,7 @@ import { BoxedVar } from '../src/util/BoxedVar';
 import { AppLogger } from '../src/util/logger';
 import { EventType } from '../src/game/event/EventType';
 import { loadBaselineBot } from './ai-baseline';
+import { observeBuildingMissions } from './ai-building-probe';
 
 const projectRoot = fileURLToPath(new URL('../', import.meta.url));
 const repositoryRoot = resolve(projectRoot, '..');
@@ -318,8 +319,11 @@ for (const mapName of args.map!.split(',')) {
             game.start();
             // Capture AI diagnostic messages without enabling gameplay debug mode.
             for (const player of players) AppLogger.get(player.name).setLevel(AppLogger.DEBUG);
+            const buildingObservers = players.map(player => observeBuildingMissions(bots.get(player.name), () => game.currentTick));
             const sample = () => {
-                const playerSamples = players.map((player: any, side: number) => recordPlayer(player, bots.get(player.name), economy[side]));
+                const playerSamples = players.map((player: any, side: number) => ({
+                    ...recordPlayer(player, bots.get(player.name), economy[side]), buildingPlanning: buildingObservers[side](),
+                }));
                 samples.push({ tick: game.currentTick, players: playerSamples });
                 writeProgress(`  tick=${game.currentTick} ${playerSamples.map((player: any, side: number) => `${side === 0 ? 'candidate' : 'baseline'} credits=${player.credits} miners=${player.harvesters} army=${player.army} buildings=${player.buildings}`).join(' | ')}`);
             };

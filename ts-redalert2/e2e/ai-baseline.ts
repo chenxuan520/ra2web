@@ -1,4 +1,5 @@
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, writeFile, rename, rm } from 'node:fs/promises';
+import { randomUUID } from 'node:crypto';
 import { dirname, join, relative } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import type { BuiltInBotAdapter } from '../src/game/ai/thirdpartbot/builtIn/BuiltInBotAdapter';
@@ -6,6 +7,18 @@ import type { BuiltInBotAdapter } from '../src/game/ai/thirdpartbot/builtIn/Buil
 const projectRoot = fileURLToPath(new URL('../', import.meta.url));
 const repoRoot = dirname(projectRoot.replace(/\/$/, ''));
 const sourcePrefix = 'ts-redalert2/src/game/ai/thirdpartbot/builtIn/';
+
+async function writeSnapshotFile(path: string, source: string) {
+    // Parallel tournament workers may load the same commit. Never expose a
+    // truncated source file to another worker's module loader.
+    const temporary = `${path}.${randomUUID()}.tmp`;
+    try {
+        await writeFile(temporary, source);
+        await rename(temporary, path);
+    } finally {
+        await rm(temporary, { force: true });
+    }
+}
 
 async function git(...args: string[]): Promise<string> {
     const process = Bun.spawn(['git', ...args], { cwd: repoRoot, stdout: 'pipe', stderr: 'pipe' });
@@ -42,9 +55,9 @@ export async function loadBaselineBot(ref: string): Promise<{
                 .replaceAll("'../BotRegistry'", "'@/game/ai/thirdpartbot/BotRegistry'");
         }
         await mkdir(dirname(destination), { recursive: true });
-        await writeFile(destination, source);
+        await writeSnapshotFile(destination, source);
     }
-    await writeFile(join(snapshotRoot, 'snapshot.json'), JSON.stringify({ commit, sourcePrefix,
+    await writeSnapshotFile(join(snapshotRoot, 'snapshot.json'), JSON.stringify({ commit, sourcePrefix,
         sharedEngine: 'current checkout', adaptation: 'engine API shim and external adapter import paths only' }, null, 2));
     const module = await import(pathToFileURL(join(snapshotRoot, 'BuiltInBotAdapter.ts')).href);
     return { BotAdapter: module.BuiltInBotAdapter, commit };
