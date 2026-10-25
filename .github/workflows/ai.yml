@@ -18,6 +18,15 @@ on:
         description: Frozen baseline bot commit
         type: string
         default: '04a9f7a'
+      candidate_ref:
+        description: Frozen candidate bot commit (empty uses this workflow commit)
+        type: string
+        default: ''
+      baseline_profile:
+        description: Baseline bot strategy (use normal for the original 14ffd36 bot)
+        type: choice
+        options: [brutal, normal]
+        default: brutal
 
 permissions:
   contents: read
@@ -30,6 +39,8 @@ env:
   BUN_VERSION: '1.3.14'
   RA2_BENCHMARK_CDN: ${{ github.workspace }}/.cache/ai-resources/cdn
   AI_BASELINE_REF: ${{ inputs.baseline_ref || '04a9f7a' }}
+  AI_CANDIDATE_REF: ${{ inputs.candidate_ref || github.sha }}
+  AI_BASELINE_PROFILE: ${{ inputs.baseline_profile || 'brutal' }}
   AI_TOURNAMENT_WORKERS: ${{ github.event.repository.private && '2' || '4' }}
 
 jobs:
@@ -68,7 +79,8 @@ jobs:
           bun run build
           bun e2e/ai-harassment-scenario.ts --out .artifacts/ai-ci/harassment.json
           bun e2e/ai-sneak-capture-scenario.ts --out .artifacts/ai-ci/sneak-capture.json
-          bun e2e/ai-tournament.ts --candidate-ref "$GITHUB_SHA" --baseline-ref "$AI_BASELINE_REF" \
+          bun e2e/ai-tournament.ts --candidate-ref "$AI_CANDIDATE_REF" --baseline-ref "$AI_BASELINE_REF" \
+            --baseline-profile "$AI_BASELINE_PROFILE" \
             --countries Americans,Russians --scenarios mp08t2:909 --max-ticks 3000 \
             --concurrency 2 --out .artifacts/ai-ci/smoke
       - uses: actions/upload-artifact@v4
@@ -117,7 +129,8 @@ jobs:
           AI_SCENARIO: ${{ matrix.scenario }}
           AI_SHARD: ${{ matrix.id }}
         run: |
-          bun e2e/ai-tournament.ts --candidate-ref "$GITHUB_SHA" --baseline-ref "$AI_BASELINE_REF" \
+          bun e2e/ai-tournament.ts --candidate-ref "$AI_CANDIDATE_REF" --baseline-ref "$AI_BASELINE_REF" \
+            --baseline-profile "$AI_BASELINE_PROFILE" \
             --scenarios "$AI_SCENARIO" --concurrency "$AI_TOURNAMENT_WORKERS" --out ".artifacts/ai-ci/country-$AI_SHARD"
       - uses: actions/upload-artifact@v4
         if: always()

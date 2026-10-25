@@ -25,7 +25,14 @@ gh workflow run ai.yml --repo chenxuan520/ra2web \
   -f full_matrix=true -f baseline_ref=04a9f7a
 ```
 
-候选固定为触发工作流的提交；旧版默认固定为 `04a9f7a`。完整赛程按三张地图并行，每张地图144局，合计432局：
+候选默认固定为触发工作流的提交，也可通过 `candidate_ref` 指定冻结 Bot；引擎和 runner 仍来自工作流提交并记录各自版本与源码摘要。旧版默认固定为 `04a9f7a`，`baseline_profile` 默认为 `brutal`。对升级前原始 Bot `14ffd36` 应明确使用 `normal`，保留其原始策略。完整赛程按三张地图并行，每张地图144局，合计432局：
+
+```bash
+# 同一冻结候选直接对原始 Bot；不要用后续冻结旧版的胜率代替此结果。
+gh workflow run ai.yml --repo chenxuan520/ra2web --ref validation/ai-adaptive-opening-original \
+  -f full_matrix=true -f candidate_ref=c18f77650e40b668064bdb913a75bebfa278f42b \
+  -f baseline_ref=14ffd3613663a0e1a373593922e0f5e1c5f20f40 -f baseline_profile=normal
+```
 
 | 分组 | 地图 | 种子 | 每局上限 |
 | --- | --- | ---: | ---: |
@@ -33,7 +40,7 @@ gh workflow run ai.yml --repo chenxuan520/ra2web \
 | medium | tn01t2 | 20222 | 27000 tick |
 | long | mp11t2 | 30333 | 27000 tick |
 
-9国分别对其余8国，每组配置交换出生点和玩家槽位，每个国家配对共6局，每个候选国家48局。双方使用相同10000初始资金、零额外初始部队和 Normal 游戏加成；Bot策略均为 brutal。达到上限记平局，运行异常单列。
+9国分别对其余8国，每组配置交换出生点和玩家槽位，每个国家配对共6局，每个候选国家48局。双方使用相同10000初始资金、零额外初始部队和 Normal 游戏加成；候选策略为 brutal，对手策略由 `baseline_profile` 明确记录。策略选项不改变引擎经济和战斗加成。达到上限记平局，运行异常单列。
 
 ## 结果与失败处理
 
