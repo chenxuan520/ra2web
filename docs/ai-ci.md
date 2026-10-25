@@ -2,6 +2,8 @@
 
 工作流：`.github/workflows/ai.yml`，GitHub Actions 中显示为 **AI validation**。
 
+首次完整运行 [40176058250](https://github.com/chenxuan520/ra2web/actions/runs/40176058250) 已全部通过，候选固定为含工程师策略的 `0a46d52`：432局140胜132负160平，零运行错误。三个原始分组经本地独立重算，与CI发布报告一致。[完整国家矩阵及实际使用情况](ai-ci-country-evaluation.md)已归档；CI绿色表示功能和数据完整性通过，本批新增工程师策略没有改变任何对局的胜负平结果。
+
 ## PR 和 master 提交
 
 相关源码、测试、资源准备或工作流修改会触发：
@@ -38,6 +40,8 @@ gh workflow run ai.yml --repo chenxuan520/ra2web \
 - `ai-regression`：机制场景和短烟测记录。
 - `ai-country-short`、`ai-country-medium`、`ai-country-long`：固定配置、逐局遥测、日志及哈希校验凭据。
 - `ai-country-report`：汇总后的 `report.md`、`matrix.csv` 和 `results.json`，并显示在工作流 Summary 中。
+
+原始分组和回归 artifacts 保留14天，汇总报告保留30天。上述首次赛程的CSV、精简逐局遥测、配置与原始报告哈希索引已提交到 `docs/ai-ci-country-*`，供 artifacts 到期后复核摘要；它们不代替完整原始采样。
 
 汇总器要求三个分组的候选、旧版、引擎和资源一致，检查原始报告哈希、432个唯一对局，以及每个国家配对的6局；缺局、重复、混版本或运行错误会使验证失败。六项 Python 回归覆盖报告完整性检查。
 

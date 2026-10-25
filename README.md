@@ -78,7 +78,7 @@ git push -u origin feature/my-change
 
 ## AI 难度与策略
 
-已完成的本地432局国家交叉赛程为140胜132负160平、零运行错误；详见[逐国胜率、矩阵与实际触发记录](docs/ai-country-evaluation.md)。该赛程固定在加入工程师策略之前的版本；包含工程师策略的新版本由[独立 CI 赛程](https://github.com/chenxuan520/ra2web/actions/runs/40176058250)评测。
+包含工程师策略的新版本已完成[独立 CI 赛程](https://github.com/chenxuan520/ra2web/actions/runs/40176058250)：432局140胜132负160平、零运行错误，详见[最新逐国胜率、矩阵与实际触发记录](docs/ai-ci-country-evaluation.md)。长图144局全部超时平局，新增工程师策略尚未提高这批赛程胜率；加入工程师之前的[本地冻结版记录](docs/ai-country-evaluation.md)单独保留。
 
 在遭遇战大厅的电脑玩家下拉菜单中选择 **AI-冷酷**，启用最高难度内置策略；选择会随大厅设置保存。普通难度继续使用内置 AI，简单难度保留训练靶机行为。
 
