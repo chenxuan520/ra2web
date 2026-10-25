@@ -119,6 +119,39 @@ class CountryReportTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'Invalid game'):
             report.aggregate(self.root, self.root / 'result')
 
+    def rewrite_matches(self, paths, change):
+        for path in paths:
+            if path.name.endswith('.verified.json'):
+                continue
+            data = json.loads(path.read_text())
+            for match in data['matches']:
+                change(match)
+            path.write_text(json.dumps(data))
+            receipt = path.with_suffix('.verified.json')
+            proof = json.loads(receipt.read_text())
+            proof['reportSha256'] = hashlib.sha256(path.read_bytes()).hexdigest()
+            receipt.write_text(json.dumps(proof))
+
+    def test_country_strength_gate_does_not_hide_weak_countries_in_a_high_overall_rate(self):
+        self.rewrite_matches(self.root.glob('shard-*/jobs/French-vs-*.json'),
+                             lambda match: match.update(result='baseline-win'))
+        with self.assertRaisesRegex(ValueError, 'Country French: 0.0%'):
+            report.aggregate(self.root, self.root / 'result', .8, .7, .7)
+        data = json.loads((self.root / 'result/results.json').read_text())
+        self.assertEqual(data['totals']['games'], 432)
+        self.assertGreater(data['totals']['winRate'], .8)
+        self.assertFalse(json.loads((self.root / 'result/strength-assessment.json').read_text())['passed'])
+
+    def test_map_strength_gate_retains_every_game_instead_of_dropping_the_weak_map(self):
+        self.rewrite_matches(self.root.glob('shard-0/jobs/*.json'),
+                             lambda match: match.update(result='baseline-win') if not match['swapped'] else None)
+        with self.assertRaisesRegex(ValueError, 'Map mp08t2.map: 50.0%'):
+            report.aggregate(self.root, self.root / 'result', .8, .7, .7)
+        data = json.loads((self.root / 'result/results.json').read_text())
+        self.assertGreater(data['totals']['winRate'], .8)
+        self.assertTrue(all(row['winRate'] >= .7 for row in data['byCountry'].values()))
+        self.assertEqual(data['byMap']['mp08t2.map']['games'], 144)
+
 
 if __name__ == '__main__':
     unittest.main()

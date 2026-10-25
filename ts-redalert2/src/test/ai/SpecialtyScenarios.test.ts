@@ -29,7 +29,7 @@ const resourcesAvailable = existsSync(resolve(cdn, 'maps/mp08t2.map')) && exists
         expect(observed.issues).toEqual([]);
         expect(observed.scenarios.map((scene: any) => scene.name)).toEqual([
             'desolator-radiation', 'grand-cannon', 'tank-duel', 'ai-desolator-safe', 'ai-desolator-blocked', 'ai-radiation-detour',
-            'ai-american-paradrop', 'ai-injured-tank-retreat', 'ai-radiation-guard', 'ai-infantry-crush', 'ai-radiation-transport',
+            'ai-american-paradrop', 'ai-injured-tank-retreat', 'ai-radiation-guard', 'ai-infantry-crush', 'ai-radiation-transport', 'ai-rocketeer-evasion',
         ]);
         for (const [index, scene] of observed.scenarios.entries()) {
             const { specialty, ...state } = scene;

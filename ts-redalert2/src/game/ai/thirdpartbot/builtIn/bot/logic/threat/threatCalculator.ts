@@ -23,7 +23,7 @@ export function calculateGlobalThreat(game: GameApi, playerData: PlayerData, vis
         .getVisibleUnits(playerData.name, "enemy", (r) => r.type == ObjectType.Building)
         .filter((unitId) => isAntiGround(game, unitId));
     let antiAirPower = game
-        .getVisibleUnits(playerData.name, "enemy", (r) => r.type != ObjectType.Building)
+        .getVisibleUnits(playerData.name, "enemy", (r) => accurateWeapons || r.type != ObjectType.Building)
         .filter((unitId) => isAntiAir(game, unitId, accurateWeapons));
 
     let ourAntiGroundUnits = game

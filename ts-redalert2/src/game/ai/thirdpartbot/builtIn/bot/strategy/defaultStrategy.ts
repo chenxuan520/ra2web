@@ -159,7 +159,7 @@ export class DefaultStrategy implements Strategy {
             const situation = readStrategicSituation(context.game, playerData);
             const threat = context.matchAwareness.getThreatCache();
             if (validCompositions.includes("rocketeers") && (situation.own.JUMPJET ?? 0) < 8 &&
-                (threat?.totalOffensiveAntiAirThreat ?? 0) < Math.max(3, (threat?.totalAvailableAirPower ?? 0) * 0.6)) {
+                (threat?.totalOffensiveAntiAirThreat ?? 0) < Math.max(0.1, (threat?.totalAvailableAirPower ?? 0) * 0.25)) {
                 return { ...DEFAULT_COMPOSITIONS.rocketeers, maximumUnits: 4 };
             }
             if (validCompositions.includes("kirovs") && (situation.own.ZEP ?? 0) < 2 &&

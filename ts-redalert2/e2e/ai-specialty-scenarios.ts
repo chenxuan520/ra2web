@@ -43,8 +43,8 @@ import { MissionController } from '../src/game/ai/thirdpartbot/builtIn/bot/logic
 const projectRoot = fileURLToPath(new URL('../', import.meta.url));
 const defaultCdn = resolve(projectRoot, '../.cache/ai-resources/cdn');
 const hash = (bytes: string | Uint8Array) => createHash('sha256').update(bytes).digest('hex');
-type SceneName = 'desolator-radiation' | 'grand-cannon' | 'tank-duel' | 'ai-desolator-safe' | 'ai-desolator-blocked' | 'ai-radiation-detour' | 'ai-american-paradrop' | 'ai-injured-tank-retreat' | 'ai-radiation-guard' | 'ai-infantry-crush' | 'ai-radiation-transport';
-const sceneNames: SceneName[] = ['desolator-radiation', 'grand-cannon', 'tank-duel', 'ai-desolator-safe', 'ai-desolator-blocked', 'ai-radiation-detour', 'ai-american-paradrop', 'ai-injured-tank-retreat', 'ai-radiation-guard', 'ai-infantry-crush', 'ai-radiation-transport'];
+type SceneName = 'desolator-radiation' | 'grand-cannon' | 'tank-duel' | 'ai-desolator-safe' | 'ai-desolator-blocked' | 'ai-radiation-detour' | 'ai-american-paradrop' | 'ai-injured-tank-retreat' | 'ai-radiation-guard' | 'ai-infantry-crush' | 'ai-radiation-transport' | 'ai-rocketeer-evasion';
+const sceneNames: SceneName[] = ['desolator-radiation', 'grand-cannon', 'tank-duel', 'ai-desolator-safe', 'ai-desolator-blocked', 'ai-radiation-detour', 'ai-american-paradrop', 'ai-injured-tank-retreat', 'ai-radiation-guard', 'ai-infantry-crush', 'ai-radiation-transport', 'ai-rocketeer-evasion'];
 type UnitSpec = { label: string; name: string; type: ObjectType; player: number; x: number; y: number; hitPoints?: number };
 type ScenarioOptions = { cdn?: string; map?: string; seed?: number; maxTicks?: number; scenarios?: SceneName[]; observe?: boolean };
 
@@ -146,6 +146,10 @@ export function spawnSpecialtyObject(game: any, spec: UnitSpec, origin: { rx: nu
 }
 
 function specifications(name: SceneName): UnitSpec[] {
+    if (name === 'ai-rocketeer-evasion') return [
+        { label: 'rocketeer', name: 'JUMPJET', type: ObjectType.Infantry, player: 0, x: 0, y: 0 },
+        { label: 'enemy-flak', name: 'HTK', type: ObjectType.Vehicle, player: 1, x: 8, y: 0 },
+    ];
     if (name === 'ai-radiation-transport') return [
         { label: 'transport', name: 'HTK', type: ObjectType.Vehicle, player: 0, x: 0, y: 0 },
         { label: 'desolator', name: 'DESO', type: ObjectType.Infantry, player: 0, x: -1, y: 0 },
@@ -213,7 +217,7 @@ function findClearSite(game: any, specs: UnitSpec[]) {
     // Clear the full encounter rectangle, so terrain does not conceal a blocked
     // spawn or an unintended cliff between the participating units.
     const isRetreat = specs.some(spec => spec.label === 'injured-rhino');
-    const minX = Math.min(...specs.map(spec => spec.x)) - (isRetreat ? 4 : 1);
+    const minX = Math.min(...specs.map(spec => spec.x)) - (isRetreat || specs.some(spec => spec.label === 'rocketeer') ? 6 : 1);
     const isDetour = specs.some(spec => spec.label === 'detour-tank');
     const isGuard = specs.some(spec => spec.label === 'vision-radar');
     const maxX = Math.max(isDetour ? 13 : -Infinity, ...specs.map(spec => spec.x)) + 3;
@@ -372,7 +376,7 @@ export async function runSpecialtyScenarios(options: ScenarioOptions = {}) {
                     : new ScenarioCombatMission(new CombatSquad(new Vector2(origin.rx, origin.ry),
                         new Vector2(origin.rx + 3, origin.ry), 10));
                 const controlledLabel = name === 'ai-injured-tank-retreat' ? 'injured-rhino'
-                    : name === 'ai-infantry-crush' ? 'crushing-tank' : 'desolator';
+                    : name === 'ai-infantry-crush' ? 'crushing-tank' : name === 'ai-rocketeer-evasion' ? 'rocketeer' : 'desolator';
                 mission.addUnit(units.get(controlledLabel).id);
                 if (name === 'ai-radiation-transport') mission.addUnit(units.get('transport').id);
                 const transportController = name === 'ai-radiation-transport' ? new MissionController(() => {}) : undefined;
@@ -447,7 +451,14 @@ export async function runSpecialtyScenarios(options: ScenarioOptions = {}) {
             result.ticks = game.currentTick;
             result.specialty = telemetry?.snapshot() ?? null;
             const isDeploymentOrder = (command: any) => command.order === 'DeploySelected' || command.order === 'Deploy';
-            result.checks = name === 'ai-radiation-transport' ? {
+            result.checks = name === 'ai-rocketeer-evasion' ? {
+                actualControllerRan: result.controllerUpdates > 0,
+                evasionMoveIssued: result.commands.some((command: any) => command.unitIds?.includes(units.get('rocketeer').id)
+                    && command.order === 'Move'),
+                escapedKnownFlakRange: result.snapshots.some((sample: any) => sample.units.some((unit: any) => unit.label === 'rocketeer'
+                    && unit.alive && Math.hypot(unit.tile.x - origin.rx - 8, unit.tile.y - origin.ry) >= 10)),
+                rocketeerSurvives: !units.get('rocketeer').isDestroyed,
+            } : name === 'ai-radiation-transport' ? {
                 actualControllerRan: result.controllerUpdates > 0,
                 realBoardingOrder: result.commands.some((command: any) => command.order === 'EnterTransport'),
                 realUnloadOrder: result.commands.some((command: any) => command.unitIds?.includes(units.get('transport').id)

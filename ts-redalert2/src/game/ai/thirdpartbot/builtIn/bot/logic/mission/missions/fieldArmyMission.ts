@@ -97,7 +97,8 @@ export class FieldArmyMission extends Mission {
         if (core >= 4 || airThreat > 0) want(aa, airThreat > 0 ? Math.max(2, Math.ceil(core / 3)) : Math.max(1, Math.ceil(core / 8)), 45);
         for (const name of Object.keys(this.plan?.composition ?? {})) {
             if (name === tank || name === aa || name === "E1" || name === "E2" || name === "DESO") continue;
-            const cap = name === "JUMPJET" ? 8 : name === "ZEP" ? 2 : name === "V3" || name === "SREF" ? 3 : 2;
+            const cap = name === "JUMPJET" ? s.harvesters < 2 ? 2 : s.harvesters < 4 ? 4 : 8
+                : name === "ZEP" ? 2 : name === "V3" || name === "SREF" ? 3 : 2;
             want(name, cap, name === "ZEP" && !(s.own.ZEP > 0) && s.harvesters >= 2 ? 100 : 40);
         }
         // Take command of free paradrops and returning units. The queue controller

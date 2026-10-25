@@ -44,7 +44,9 @@ def outcome_counts(games):
     return dict(wins=wins, losses=losses, draws=draws, games=len(games), winRate=wins / len(games))
 
 
-def aggregate(source, destination):
+def aggregate(source, destination, minimum_win_rate=0, minimum_country_win_rate=0, minimum_map_win_rate=0):
+    if any(not 0 <= value <= 1 for value in (minimum_win_rate, minimum_country_win_rate, minimum_map_win_rate)):
+        raise ValueError('Win-rate thresholds must be between zero and one')
     manifests = sorted(source.rglob('manifest.json'))
     if len(manifests) != 3:
         raise ValueError(f'Expected three scenario manifests, found {len(manifests)}')
@@ -167,11 +169,34 @@ def aggregate(source, destination):
         lines.append(f"| {name} | {value} | {counts['gamesWithEvents']} | {counts['coveredGames']}/432 |")
     lines += ['', 'Timeouts are draws. Errors and missing games fail the report. Country effects, maps and spawn positions limit generalization; these are not human win rates.']
     (destination / 'report.md').write_text('\n'.join(lines) + '\n')
+    failures = []
+    if totals['winRate'] < minimum_win_rate:
+        failures.append(f"Overall {totals['winRate']:.1%} < {minimum_win_rate:.1%}")
+    for name, counts in by_country.items():
+        if counts['winRate'] < minimum_country_win_rate:
+            failures.append(f"Country {name}: {counts['winRate']:.1%} < {minimum_country_win_rate:.1%}")
+    for name, counts in by_map.items():
+        if counts['winRate'] < minimum_map_win_rate:
+            failures.append(f"Map {name}: {counts['winRate']:.1%} < {minimum_map_win_rate:.1%}")
+    assessment = dict(passed=not failures, thresholds=dict(overall=minimum_win_rate, country=minimum_country_win_rate,
+                      map=minimum_map_win_rate), failures=failures)
+    (destination / 'strength-assessment.json').write_text(json.dumps(assessment, indent=2) + '\n')
+    with (destination / 'report.md').open('a') as stream:
+        stream.write('\nStrength thresholds (wins including draws): ' +
+                     f"overall {minimum_win_rate:.0%}, each country {minimum_country_win_rate:.0%}, each map {minimum_map_win_rate:.0%}.\n")
+        stream.write('Strength assessment: ' + ('passed.' if not failures else 'failed: ' + '; '.join(failures)) + '\n')
+    # Publish the complete evidence before failing a strength gate. Runtime and
+    # integrity failures above remain distinct from a valid but weak candidate.
+    if failures:
+        raise ValueError('Strength gate failed (reports retained): ' + '; '.join(failures))
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('input', type=Path)
     parser.add_argument('output', type=Path)
+    parser.add_argument('--minimum-win-rate', type=float, default=0)
+    parser.add_argument('--minimum-country-win-rate', type=float, default=0)
+    parser.add_argument('--minimum-map-win-rate', type=float, default=0)
     args = parser.parse_args()
-    aggregate(args.input, args.output)
+    aggregate(args.input, args.output, args.minimum_win_rate, args.minimum_country_win_rate, args.minimum_map_win_rate)

@@ -39,6 +39,7 @@ test("a NeverUse dog scanner does not count as Brutal anti-air, while real flak 
     const rules = new Map<string, any>([
         ["DOG", { name: "DOG", type: ObjectType.Infantry, primary: "Teeth", secondary: "Scanner" }],
         ["HTK", { name: "HTK", type: ObjectType.Vehicle, primary: "FlakGround", secondary: "FlakAir" }],
+        ["NASAM", { name: "NASAM", type: ObjectType.Building, primary: "FlakAir" }],
     ]);
     const weapons = new Map<string, any>([
         ["Teeth", { damage: 30, range: 1.5, rof: 30, projectile: "ground" }],
@@ -51,12 +52,15 @@ test("a NeverUse dog scanner does not count as Brutal anti-air, while real flak 
         getVisibleUnits: (_name: string, relation: string, filter: any) => relation === "enemy" ? enemy.filter(u => filter(rules.get(u.name))).map(u => u.id) : [],
         getGameObjectData: (id: number) => enemy.find(u => u.id === id),
         rulesApi: { infantryRules: new Map([["DOG", rules.get("DOG")]]), vehicleRules: new Map([["HTK", rules.get("HTK")]]),
-            aircraftRules: new Map(), buildingRules: new Map(), getWeapon: (name: string) => weapons.get(name),
+            aircraftRules: new Map(), buildingRules: new Map([["NASAM", rules.get("NASAM")]]), getWeapon: (name: string) => weapons.get(name),
             getProjectile: (name: string) => ({ isAntiGround: name !== "air", isAntiAir: name !== "ground" }) },
     };
     expect(calculateGlobalThreat(game, { name: "bot" } as any, 1).totalOffensiveAntiAirThreat).toBeGreaterThan(0);
     expect(calculateGlobalThreat(game, { name: "bot" } as any, 1, true).totalOffensiveAntiAirThreat).toBe(0);
     enemy.push({ id: 2, name: "HTK", hitPoints: 180, maxHitPoints: 180 });
+    expect(calculateGlobalThreat(game, { name: "bot" } as any, 1, true).totalOffensiveAntiAirThreat).toBeGreaterThan(0);
+    enemy.splice(0, enemy.length, { id: 3, name: "NASAM", hitPoints: 180, maxHitPoints: 180 });
+    expect(calculateGlobalThreat(game, { name: "bot" } as any, 1).totalOffensiveAntiAirThreat).toBe(0);
     expect(calculateGlobalThreat(game, { name: "bot" } as any, 1, true).totalOffensiveAntiAirThreat).toBeGreaterThan(0);
 });
 
@@ -93,7 +97,7 @@ function fieldFixture() {
         getAvailableObjects: () => ["HTNK", "HTK", "E2"].map(name => ({ name })) } },
         matchAwareness: { getMainRallyPoint: () => new Vector2(10, 0), getThreatCache: () => null,
             getHostilesNearPoint: () => [...objects.values()].filter(u => u.owner === "enemy").map(u => ({ unitId: u.id })) } };
-    return { mission, add, objects, orders, game, step(at = 0) {
+    return { mission, add, objects, orders, game, context, step(at = 0) {
         tick = at;
         for (const unit of objects.values()) {
             const map = unit.type === ObjectType.Infantry ? game.rulesApi.infantryRules : game.rulesApi.vehicleRules;
@@ -107,6 +111,19 @@ function fieldFixture() {
 }
 
 describe("persistent field army", () => {
+    test("the opening does not fund more than two rocketeers before its second miner", () => {
+        const f = fieldFixture();
+        f.context.player.production.getAvailableObjects = () => ["MTNK", "JUMPJET"].map(name => ({ name }));
+        f.mission.setPlan({ composition: { JUMPJET: 1 }, minimumUnits: 2, maximumUnits: 4 });
+        for (let id = 1; id <= 2; id++) { f.add(id, "JUMPJET"); f.mission.addUnit(id); }
+        const opening = f.step();
+        expect(opening.type).toBe("request");
+        if (opening.type === "request") expect(opening.unitNameToPriority.JUMPJET).toBeUndefined();
+        f.add(102, "HARV");
+        const funded = f.step(2);
+        expect(funded.type).toBe("request");
+        if (funded.type === "request") expect(funded.unitNameToPriority.JUMPJET).toBeGreaterThan(0);
+    });
     test("assembling armor defends a short home perimeter instead of chasing the first infantry wave", () => {
         const f = fieldFixture();
         f.add(1, "HTNK"); f.mission.addUnit(1);

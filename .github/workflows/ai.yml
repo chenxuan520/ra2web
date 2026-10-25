@@ -136,10 +136,15 @@ jobs:
         with:
           pattern: ai-country-*
           path: collected
-      - name: Verify complete matrix and build report
+      - name: Verify complete matrix and strength thresholds
         run: |
-          python .github/scripts/summarize-ai-matrix.py collected ai-report
-          cat ai-report/report.md >> "$GITHUB_STEP_SUMMARY"
+          ai_report_exit=0
+          python .github/scripts/summarize-ai-matrix.py collected ai-report \
+            --minimum-win-rate 0.8 --minimum-country-win-rate 0.7 --minimum-map-win-rate 0.7 || ai_report_exit=$?
+          if [ -f ai-report/report.md ]; then
+            cat ai-report/report.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+          exit "$ai_report_exit"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
