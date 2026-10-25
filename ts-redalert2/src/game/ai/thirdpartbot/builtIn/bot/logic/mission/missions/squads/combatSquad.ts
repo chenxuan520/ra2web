@@ -21,6 +21,7 @@ import { Mission, MissionAction, grabCombatants, noop } from "../../mission";
 import { MissionContext } from "../../../common/context";
 import { chooseTacticalTarget, getCombatWeapon, getTacticalRetreatPoint, isFiringBurst, isMissileArtillery } from "./tacticalTargeting";
 import { DesolatorTactics } from "./desolatorTactics";
+import { getInfantryCrushPoint } from "./infantryCrushing";
 
 const TARGET_UPDATE_INTERVAL_TICKS = 10;
 
@@ -178,6 +179,12 @@ export class CombatSquad implements Squad {
                         }
                     }
                     if (brutal && tick < (this.maneuverUntil.get(unit.id) ?? 0)) continue;
+                    const crush = brutal ? getInfantryCrushPoint(unit, hostiles, game.mapApi) : null;
+                    if (crush && this.desolatorTactics.isSafeMove(unit, crush)) {
+                        this.submitActionIfNew(actionBatcher, BatchableAction.toPoint(unit.id, OrderType.Move, crush), unit, tick);
+                        this.maneuverUntil.set(unit.id, tick + 18);
+                        continue;
+                    }
                     const ownPoint = new Vector2(unit.tile.rx, unit.tile.ry);
                     if (brutal && !this.desolatorTactics.isSafeMove(unit, ownPoint)) {
                         const escape = this.desolatorTactics.getSafeWaypoint(unit, ownPoint, game);

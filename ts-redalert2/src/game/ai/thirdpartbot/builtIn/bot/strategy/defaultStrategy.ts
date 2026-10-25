@@ -7,6 +7,7 @@ import { DefenceMissionFactory } from "../logic/mission/missions/defenceMission"
 import { EngineerMissionFactory } from "../logic/mission/missions/engineerMission";
 import { ParaDropSupport } from "../logic/mission/missions/paraDropSupport";
 import { SneakCaptureMissionFactory } from "../logic/mission/missions/sneakCaptureMission";
+import { ensureBaseReserve } from "../logic/mission/missions/baseReserveMission";
 import { SupabotContext } from "../logic/common/context";
 import { MissionController } from "../logic/mission/missionController";
 import { DebugLogger } from "../logic/common/utils";
@@ -104,6 +105,7 @@ export class DefaultStrategy implements Strategy {
 
     onAiUpdate(context: SupabotContext, missionController: MissionController, logger: DebugLogger) {
         this.paraDropSupport.onAiUpdate(context);
+        ensureBaseReserve(context, missionController, logger);
         this.expansionFactory.maybeCreateMissions(context, missionController, logger);
         this.scoutingFactory.maybeCreateMissions(context, missionController, logger);
 
@@ -147,6 +149,7 @@ export class DefaultStrategy implements Strategy {
             const core = selectAdaptiveComposition(
                 DEFAULT_COMPOSITIONS, validCompositions, context.matchAwareness.getThreatCache(), situation.harvesters,
             );
+            if (core?.composition.E1 || core?.composition.E2) return null;
             return core ? selectNationalComposition(core,
                 new Set(context.player.production.getAvailableObjects().map(option => option.name)), situation, reservedSupport) : null;
         }

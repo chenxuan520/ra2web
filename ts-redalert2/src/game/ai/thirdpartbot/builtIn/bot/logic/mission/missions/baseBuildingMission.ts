@@ -11,6 +11,7 @@ import {
 import { queueTypeToName } from "../../building/queueController";
 import { getGrandCannonPlacement, getStrategicBuildingPriority } from "../../building/strategicBuildings";
 import { getCompactFirstFactoryPlacement } from "../../building/firstFactoryPlacement";
+import { getEconomyBuildingPriority } from "../../building/economyPlan";
 
 // Legacy mission encompassing the old "build queue" logic.
 export class BaseBuildingMission extends Mission {
@@ -94,6 +95,8 @@ export class BaseBuildingMission extends Mission {
         committed = false,
     ) {
         if (difficulty === "brutal") {
+            const economyPriority = getEconomyBuildingPriority(game, playerStatus, option, committed);
+            if (economyPriority !== undefined) return economyPriority;
             const priority = getStrategicBuildingPriority(game, playerStatus, option, threatCache, committed);
             if (priority !== undefined) return priority;
         }

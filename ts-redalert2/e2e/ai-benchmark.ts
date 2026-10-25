@@ -40,6 +40,7 @@ const { values: args } = parseArgs({ options: {
     'baseline-profile': { type: 'string', default: 'normal' },
     'no-swap': { type: 'boolean', default: false },
     'no-specialty-telemetry': { type: 'boolean', default: false },
+    'unit-details': { type: 'boolean', default: false },
     credits: { type: 'string', default: '10000' },
     units: { type: 'string', default: '0' },
     cdn: { type: 'string', default: process.env.RA2_BENCHMARK_CDN ?? resolve(repositoryRoot, '.cache/ai-resources/cdn') },
@@ -60,6 +61,7 @@ if (args.help) {
   --baseline-profile normal   Use same refs/profiles for self-play sanity checks
   --no-swap                   Disable paired swaps of spawn position and player update order
   --no-specialty-telemetry    Disable specialty observers for state-equivalence checks
+  --unit-details             Include sampled unit positions and engine task names for diagnosis
   --credits 10000 --units 0   Identical starting resources and units for both players
   --out PATH                  Incremental JSON report; errors are recorded, never counted as wins
 Resources are prepared with deploy/prepare-resources.ts; no download is performed by this runner.`);
@@ -209,6 +211,13 @@ function recordPlayer(player: any, bot: any, economy: any) {
         power: { available: player.powerTrait.power, used: player.powerTrait.drain }, counts,
         queues: player.production.getAllQueues().map((queue: any) => ({ type: queue.type, status: queue.status,
             items: queue.getAll().map((item: any) => ({ name: item.rules.name, quantity: item.quantity, progress: item.progress })) })),
+        ...(args['unit-details'] ? { unitDetails: objects.map((object: any) => ({
+            id: object.id, name: object.name, x: object.tile.rx, y: object.tile.ry,
+            hp: object.healthTrait?.getHitPoints(), stance: object.stance,
+            tasks: object.unitOrderTrait?.getTasks().map((task: any) => ({ name: task.constructor.name,
+                status: task.status, targetId: task.target?.obj?.id,
+                children: task.children.map((child: any) => child.constructor.name) })),
+        })) } : {}),
         missions: missions.map((mission: any) => ({ name: mission.getUniqueName(), state: mission.getState?.(),
             units: mission.getUnitIds().length, target: mission.squad?.targetArea ?? mission.attackArea ?? mission.defenceArea,
             center: mission.getCenterOfMass?.(), requestedUnitCount: mission.requestedUnitCount })),

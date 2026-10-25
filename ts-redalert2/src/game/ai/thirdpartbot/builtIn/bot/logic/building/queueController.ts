@@ -13,6 +13,7 @@ import { BUILDING_NAME_TO_RULES, TechnoRulesWithPriority, getDefaultPlacementLoc
 import { SupabotContext } from "../common/context";
 import { UnitRequest } from "../mission/missionController";
 import { NATIONAL_SUPPORT_LIMITS } from "../../strategy/nationalComposition";
+import { readStrategicSituation } from "../../strategy/nationalComposition";
 
 export const QUEUES = [
     QueueType.Structures,
@@ -78,6 +79,10 @@ export class QueueController {
         const requests = new Map(unitTypeRequests);
         const cappedSupport = new Set<string>();
         if (context.difficulty === "brutal") {
+            for (const name of ["E1", "E2"]) {
+                const count = game.getVisibleUnits(player.name, "self", rules => rules.name === name).length;
+                if (count >= (name === "E1" ? 9 : 12)) requests.delete(name);
+            }
             for (const [name, cap] of Object.entries(NATIONAL_SUPPORT_LIMITS)) {
                 if (game.getVisibleUnits(player.name, "self", rules => rules.name === name).length >= cap) {
                     requests.delete(name);
@@ -92,6 +97,14 @@ export class QueueController {
             const priority = logic.getPriority(game, playerData, option, threatCache);
             if (priority > (requests.get(option.name)?.priority ?? 0)) {
                 requests.set(option.name, { priority, specificLocation: null });
+            }
+        }
+        if (context.difficulty === "brutal") {
+            const situation = readStrategicSituation(game, playerData);
+            if (situation.harvesters >= 1 && situation.enemy.infantry >= 8 &&
+                (situation.own.MTNK ?? 0) + (situation.own.HTNK ?? 0) === 0) {
+                const tank = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === "MTNK" || option.name === "HTNK");
+                if (tank) requests.set(tank.name, { priority: 80, specificLocation: null });
             }
         }
         this.queueStates = QUEUES.map((queueType) => {

@@ -3,6 +3,7 @@ import { QueueStatus } from '../src/game/player/production/ProductionQueue';
 import { BuildStatus } from '../src/game/gameobject/Building';
 import { StanceType } from '../src/game/gameobject/infantry/StanceType';
 import { SuperWeaponType } from '../src/game/type/SuperWeaponType';
+import { DeathType } from '../src/game/gameobject/common/DeathType';
 
 type TypeProduction = { queueReadyTicks: number[]; factoryProducedTicks: number[]; placedTicks: number[]; readyTicks: number[] };
 type ShotCount = { count: number; firstTick: number; lastTick: number };
@@ -38,6 +39,8 @@ export function observeSpecialtyCombat(game: any, players: any[]) {
         specialtyShots: [] as { tick: number; player: number; id: number; name: string; weapon: string }[],
         superWeaponActivations: [] as { tick: number; player: number; type: number; name: string; x: number; y: number }[],
         paradropSpawns: [] as { tick: number; player: number; id: number; name: string; x: number; y: number }[],
+        ownershipChanges: [] as { tick: number; id: number; name: string; previousOwner: string; newOwner: string; previousSide: number; newSide: number }[],
+        crushKills: [] as { tick: number; player: number; sourceId: number; sourceName: string; targetId: number; targetName: string; victimSide: number }[],
         radiation: {
             // Rad sites are ownerless in the engine. Never attribute their damage to a guessed DESO/player.
             attribution: 'ownerless engine radiation; recorded by victim only',
@@ -127,7 +130,11 @@ export function observeSpecialtyCombat(game: any, players: any[]) {
 
     const listener = (event: any) => {
         const tick = game.currentTick;
-        if (event.type === EventType.ObjectSpawn) {
+        if (event.type === EventType.ObjectOwnerChange) {
+            data.ownershipChanges.push({ tick, id: event.target.id, name: event.target.name,
+                previousOwner: event.prevOwner.name, newOwner: event.target.owner.name,
+                previousSide: sideOf(event.prevOwner), newSide: sideOf(event.target.owner) });
+        } else if (event.type === EventType.ObjectSpawn) {
             const object = event.gameObject;
             observeDeployer(object);
             const side = sideOf(object.owner);
@@ -189,6 +196,8 @@ export function observeSpecialtyCombat(game: any, players: any[]) {
                 const owner = event.attackerInfo?.player ?? source?.owner;
                 const side = sideOf(owner);
                 if (side < 0 || !source?.name) return;
+                if (event.target.deathType === DeathType.Crush) data.crushKills.push({ tick, player: side,
+                    sourceId: source.id, sourceName: source.name, targetId: event.target.id, targetName: event.target.name, victimSide: victim });
                 const entry = getDamage(side, source.name);
                 entry[`${relation(owner, event.target.owner)}Kills`]++;
                 entry.killedTypes[event.target.name] = (entry.killedTypes[event.target.name] ?? 0) + 1;

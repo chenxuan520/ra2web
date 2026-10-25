@@ -313,7 +313,7 @@ export class MissionController {
             }
         });
 
-        this.updateRequestedUnitTypes(unitTypeToHighestRequest);
+        this.updateRequestedUnitTypes(unitTypeToHighestRequest, context.difficulty === "brutal");
 
         // Send all actions that can be batched together.
         actionBatcher.resolve(context.player.actions);
@@ -329,9 +329,13 @@ export class MissionController {
         this.missions = this.missions.filter((missions) => !disbandedMissions.has(missions.getUniqueName()));
     }
 
-    private updateRequestedUnitTypes(missingUnitTypeToHighestRequest: Record<string, UnitRequestWithMission>) {
+    private updateRequestedUnitTypes(missingUnitTypeToHighestRequest: Record<string, UnitRequestWithMission>, expirePlacements = false) {
         // Decay the priority over time.
         for (const [unitType, currentRequest] of this.requestedUnitTypes.entries()) {
+            if (expirePlacements && currentRequest.specificLocation) {
+                this.requestedUnitTypes.delete(unitType);
+                continue;
+            }
             const newPriority =
                 currentRequest.priority * MISSING_UNIT_TYPE_REQUEST_DECAY_MULT_RATE -
                 MISSING_UNIT_TYPE_REQUEST_DECAY_FLAT_RATE;
