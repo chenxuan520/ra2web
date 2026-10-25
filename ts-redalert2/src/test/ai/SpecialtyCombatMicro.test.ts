@@ -6,6 +6,7 @@ import { ActionBatcher, BatchableAction } from "../../game/ai/thirdpartbot/built
 import { CombatSquad } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/squads/combatSquad";
 import { DesolatorTactics, getRadiationDeployment } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/squads/desolatorTactics";
 import { chooseTacticalTarget, getCombatWeapon, getTacticalRetreatPoint, isFiringBurst } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/squads/tacticalTargeting";
+import { manageAttackMicro } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/squads/common";
 
 function weapon(damage = 90, range = 6, minRange = 0) {
     return { rules: { damage, rof: 60, burst: 1 }, maxRange: range, minRange, cooldownTicks: 0,
@@ -243,9 +244,17 @@ describe("tank and artillery coordination", () => {
         deso.primaryWeapon.cooldownTicks = 40;
         expect(isFiringBurst(deso)).toBe(true);
     });
-    test("shoots an available target instead of marching after an attractive target outside range", () => {
-        const attacker = tank(1, 0), near = tank(2, 5), far = tank(3, 10, 0, { hitPoints: 1, rules: { armor: 0, harvester: true } });
+    test("prefers an in-range target over an equally dangerous distant target", () => {
+        const attacker = tank(1, 0), near = tank(2, 5), far = tank(3, 10);
         expect(chooseTacticalTarget(attacker, [far, near], new Map())?.id).toBe(near.id);
+    });
+    test("plans GI deployment without mistaking its handheld range for its only engagement option", () => {
+        const gi = infantry(1, 0, 0, { primaryWeapon: weapon(15, 4), secondaryWeapon: weapon(25, 5),
+            rules: { armor: 0, deployFire: true, deployFireWeapon: 1 } });
+        const armor = tank(2, 3), enemyInfantry = infantry(3, 5, 0, { owner: "enemy" });
+        expect(getCombatWeapon(gi, enemyInfantry, true)?.range).toBe(4);
+        expect(chooseTacticalTarget(gi, [armor, enemyInfantry], new Map())?.id).toBe(enemyInfantry.id);
+        expect(manageAttackMicro(gi, enemyInfantry).orderType).toBe(OrderType.DeploySelected);
     });
     test("keeps firing artillery in place and only uses cooldown to restore its range margin", () => {
         const artillery = tank(1, 5, 0, { primaryWeapon: weapon(100, 10, 3) });

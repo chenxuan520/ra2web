@@ -62,12 +62,17 @@ export function chooseTacticalTarget(
     committedDamage: Map<number, number>,
     currentTargetId?: number,
 ): UnitData | null {
+    if (isMissileArtillery(attacker)) targets = targets.filter(target => (target.type as any) === ObjectType.Building);
     const currentTarget = targets.find(target => target.id === currentTargetId);
     if (currentTarget && isFiringBurst(attacker) && getCombatWeapon(attacker, currentTarget)) return currentTarget;
 
     let best: UnitData | null = null;
     let bestScore = -Infinity;
     for (const target of targets) {
+        // Rank an engagement, including a GI's available deployment. Do not
+        // discard every alternative merely because one target is within a
+        // nominal range: terrain and stance can still prevent that shot.
+        // Command execution and volley reservation validate the current stance.
         const attack = getCombatWeapon(attacker, target);
         if (!attack) continue;
         const distance = getDistanceBetweenUnits(attacker, target);
