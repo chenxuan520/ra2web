@@ -19,8 +19,6 @@ import { DebugLogger } from "../logic/common/utils";
 import { Compositions, getValidCompositions, SideComposition } from "./compositionUtils";
 import { readStrategicSituation, selectNationalComposition } from "./nationalComposition";
 import { getOpeningAirBudget } from "./openingAirBudget";
-import { DogEscortMission } from "../logic/mission/missions/dogEscortMission";
-import { ensureInfantryHome } from "../logic/mission/missions/infantryHomeMission";
 
 // These could be loaded from ai.ini
 export const DEFAULT_COMPOSITIONS: Compositions = {
@@ -112,7 +110,6 @@ export class DefaultStrategy implements Strategy {
     private sneakCaptureFactory = new SneakCaptureMissionFactory();
     private minerDefence = new MinerDefence();
     private fieldArmy?: FieldArmyMission;
-    private dogEscort?: DogEscortMission;
     private fieldHarassment = new HarassmentMissionFactory();
     private radiationTransport = new RadiationTransportFactory();
 
@@ -120,7 +117,6 @@ export class DefaultStrategy implements Strategy {
         this.paraDropSupport.onAiUpdate(context);
         this.minerDefence.onAiUpdate(context);
         ensureBaseReserve(context, missionController, logger);
-        ensureInfantryHome(context, missionController, logger);
         ensureRadiationGuard(context, missionController, logger);
         this.radiationTransport.maybeCreateMissions(context, missionController, logger);
         this.expansionFactory.maybeCreateMissions(context, missionController, logger);
@@ -133,10 +129,6 @@ export class DefaultStrategy implements Strategy {
                 missionController.addMission(this.fieldArmy);
             }
             this.fieldArmy.setPlan(composition);
-            if (!this.dogEscort && context.player.production.getAvailableObjects().some(rule => rule.name === "HTNK")) {
-                this.dogEscort = new DogEscortMission(this.fieldArmy, logger);
-                missionController.addMission(this.dogEscort);
-            }
             this.fieldHarassment.maybeCreateMissions(context, missionController, logger, [this.fieldArmy]);
         } else if (composition) {
             this.attackFactory.maybeCreateMissions(context, missionController, logger, composition);

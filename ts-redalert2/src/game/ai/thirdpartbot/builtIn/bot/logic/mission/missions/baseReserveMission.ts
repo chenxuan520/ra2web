@@ -3,7 +3,6 @@ import { DebugLogger } from "../../common/utils";
 import { Mission, noop, requestUnits } from "../mission";
 import { MissionController } from "../missionController";
 import { CombatSquad } from "./squads/combatSquad";
-import { getBasicInfantryBudget } from "../../../strategy/basicInfantryBudget";
 
 /** A small standing infantry reserve buys time for the first miners and tanks. */
 export class BaseReserveMission extends Mission {
@@ -26,7 +25,7 @@ export class BaseReserveMission extends Mission {
         const available = context.player.production.getAvailableObjects();
         const infantry = available.find(rules => rules.name === "E1" || rules.name === "E2");
         if (!infantry) return noop();
-        const desired = getBasicInfantryBudget(infantry.name, context.difficulty).reserve;
+        const desired = infantry.name === "E1" ? 5 : 12;
         if (this.getUnitIds().length >= desired) return noop();
         const owned = game.getVisibleUnits(player.name, "self", rules => rules.name === infantry.name).length;
         // Other defensive missions may temporarily borrow this reserve. Do not

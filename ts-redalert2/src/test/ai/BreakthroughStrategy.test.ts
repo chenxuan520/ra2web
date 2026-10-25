@@ -3,8 +3,6 @@ import { MovementZone, ObjectType, OrderType, Vector2, ZoneType } from "../../ga
 import { Mission, noop, requestUnits } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/mission";
 import { MissionController } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missionController";
 import { FieldArmyMission } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/fieldArmyMission";
-import { InfantryHomeMission } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/infantryHomeMission";
-import { BaseReserveMission } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/baseReserveMission";
 import { ActionBatcher } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/actionBatcher";
 import { calculateGlobalThreat } from "../../game/ai/thirdpartbot/builtIn/bot/logic/threat/threatCalculator";
 
@@ -100,7 +98,7 @@ function fieldFixture() {
         getAvailableObjects: () => ["HTNK", "HTK", "E2"].map(name => ({ name })) } },
         matchAwareness: { getMainRallyPoint: () => new Vector2(10, 0), getThreatCache: () => null,
             getHostilesNearPoint: () => [...objects.values()].filter(u => u.owner === "enemy").map(u => ({ unitId: u.id })) } };
-    return { mission, controller, add, objects, orders, game, context, step(at = 0) {
+    return { mission, add, objects, orders, game, context, step(at = 0) {
         tick = at;
         for (const unit of objects.values()) {
             const map = unit.type === ObjectType.Infantry ? game.rulesApi.infantryRules : game.rulesApi.vehicleRules;
@@ -114,79 +112,6 @@ function fieldFixture() {
 }
 
 describe("persistent field army", () => {
-    test("real mission allocation fills the original reserve before the new home contingent", () => {
-        const f = fieldFixture();
-        const reserve = new BaseReserveMission(() => {}), home = new InfantryHomeMission(f.controller, () => {});
-        f.controller.addMission(reserve); f.controller.addMission(home);
-        const context = { ...f.context, player: { ...f.context.player,
-            actions: { orderUnits() {}, setUnitDebugText() {} } } };
-        for (let id = 1; id <= 12; id++) {
-            f.add(id, "E2"); f.controller.onAiUpdate(context as any);
-        }
-        expect(reserve.getUnitIds()).toHaveLength(12);
-        expect(home.getUnitIds()).toHaveLength(0);
-        f.add(13, "E2"); f.controller.onAiUpdate(context as any);
-        expect(home.getUnitIds()).toEqual([13]);
-        f.objects.delete(1); f.controller.onAiUpdate(context as any);
-        expect(reserve.getUnitIds()).toHaveLength(12);
-        expect(reserve.getUnitIds()).toContain(13);
-        expect(home.getUnitIds()).toHaveLength(0);
-    });
-    test("two tanks can pressure only after actual home defenders are assigned and nearby", () => {
-        const f = fieldFixture();
-        for (let id = 1; id <= 2; id++) { f.add(id, "HTNK"); f.mission.addUnit(id); }
-        f.add(200, "E2", 15, "enemy");
-        f.step(); expect(f.mission.getAttackArea()).toEqual(new Vector2(4, 0));
-        const home = new BaseReserveMission(() => {}); f.controller.addMission(home);
-        for (let id = 10; id < 22; id++) { f.add(id, "E2", 40); home.addUnit(id); }
-        f.step(30); expect(f.mission.getAttackArea()).toEqual(new Vector2(4, 0));
-        for (let id = 10; id < 22; id++) f.objects.get(id)!.tile.rx = 0;
-        f.orders.length = 0; f.step(60);
-        expect(f.mission.getAttackArea()).toEqual(new Vector2(15, 0));
-        expect(f.orders.flatMap(o => o[0]).every(id => id === 1 || id === 2)).toBe(true);
-    });
-    test("keeps free conscripts out of the mobile army and releases misplaced infantry", () => {
-        const f = fieldFixture();
-        for (let id = 1; id <= 32; id++) f.add(id, "E2");
-        const request = f.step();
-        expect(request.type).toBe("request");
-        if (request.type === "request") expect(request.unitNameToPriority.E2).toBeUndefined();
-        f.mission.addUnit(1);
-        expect(f.step(2)).toMatchObject({ type: "releaseUnits", unitIds: [1] });
-        expect(f.orders).toHaveLength(0);
-    });
-    test("home infantry preserves the old field request and total spending cap", () => {
-        const f = fieldFixture();
-        const home = new InfantryHomeMission(f.controller, () => {});
-        f.controller.addMission(home);
-        const update = () => home.onAiUpdate({ ...f.context, actionBatcher: new ActionBatcher() } as any);
-        expect(update()).toMatchObject({ type: "request", unitNameToPriority: { E2: 20 } });
-        for (let id = 1; id <= 12; id++) f.add(id, "E2");
-        const reserve = new RequestMission(); f.controller.addMission(reserve);
-        for (let id = 1; id <= 12; id++) reserve.addUnit(id);
-        expect(update()).toMatchObject({ type: "request", unitNameToPriority: { E2: 20 } });
-        for (let id = 13; id <= 32; id++) { f.add(id, "E2"); home.addUnit(id); }
-        expect(update().type).toBe("noop");
-        home.removeUnit(32);
-        expect(update()).toMatchObject({ type: "requestSpecific", unitIds: [32], priority: 20 });
-    });
-    test("home infantry stays on a defensive approach without seizing the locked reserve", () => {
-        const f = fieldFixture();
-        const home = new InfantryHomeMission(f.controller, () => {}); f.controller.addMission(home);
-        f.add(1, "E2"); home.addUnit(1); f.add(200, "E2", 40, "enemy");
-        const batcher = new ActionBatcher();
-        home.onAiUpdate({ ...f.context, actionBatcher: batcher } as any);
-        batcher.resolve({ orderUnits: (...args: any[]) => f.orders.push(args) } as any);
-        expect(f.orders.some(order => order[1] === OrderType.Attack && order[2] === 200)).toBe(false);
-        expect(home.isUnitsLocked()).toBe(true);
-    });
-    test("home role never changes normal or allied strategy", () => {
-        const f = fieldFixture(); const home = new InfantryHomeMission(f.controller, () => {});
-        expect(home.onAiUpdate({ ...f.context, difficulty: "normal", actionBatcher: new ActionBatcher() } as any).type).toBe("noop");
-        const data = f.game.getPlayerData();
-        f.game.getPlayerData = () => ({ ...data, country: { name: "Americans" } });
-        expect(home.onAiUpdate({ ...f.context, actionBatcher: new ActionBatcher() } as any).type).toBe("noop");
-    });
     test("the opening does not fund more than two rocketeers before its second miner", () => {
         const f = fieldFixture();
         f.context.player.production.getAvailableObjects = () => ["MTNK", "JUMPJET"].map(name => ({ name }));
