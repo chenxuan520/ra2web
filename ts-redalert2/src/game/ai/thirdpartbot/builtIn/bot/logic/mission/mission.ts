@@ -124,10 +124,8 @@ export abstract class Mission<FailureReasons = undefined> {
     protected getMissingUnits(gameApi: GameApi, targetComposition: UnitComposition): [string, number][] {
         const currentComposition: UnitComposition = countBy(this.getUnitsGameObjectData(gameApi), (unit) => unit.name);
         return Object.entries(targetComposition)
-            .filter(([unitType, targetAmount]) => {
-                return !currentComposition[unitType] || currentComposition[unitType] < targetAmount;
-            })
-            .filter(([unitType, targetAmount]) => targetAmount > 0);
+            .map(([unitType, targetAmount]): [string, number] => [unitType, targetAmount - (currentComposition[unitType] ?? 0)])
+            .filter(([, missingAmount]) => missingAmount > 0);
     }
 
     public getCenterOfMass() {

@@ -1,4 +1,4 @@
-import { GameApi, ObjectType, PlayerData, UnitData, Vector2 } from "../../../../game-api";
+import { GameApi, ObjectType, PlayerData, QueueStatus, UnitData, Vector2 } from "../../../../game-api";
 import { CombatSquad } from "./squads/combatSquad";
 import { Mission, MissionAction, disbandMission, noop, requestUnits } from "../mission";
 import { MatchAwareness } from "../../awareness";
@@ -30,6 +30,11 @@ const ATTACK_MISSION_PRIORITY_RAMP = 1.01;
 const ATTACK_MISSION_MAX_PRIORITY = 50;
 // While preparing the squad, how many ticks to wait before dropping one unit from the desired squad size. If the squad size drops below the minimum, the attack mission is aborted.
 const REQUESTED_UNIT_COUNT_DECAY_TICKS = 120;
+// A tank needs longer than the old 24-second six-to-four-unit mission lifetime.
+// Preserve its production request while it is being built instead of restarting the wave.
+const MINIMUM_WAVE_WAIT_TICKS = 30 * 15;
+const REINFORCEMENT_TIMEOUT_TICKS = 90 * 15;
+const MAX_PREPARATION_TICKS = 5 * 60 * 15;
 
 /**
  * A mission that tries to attack a certain area.
@@ -43,6 +48,9 @@ export class AttackMission extends Mission<AttackFailReason> {
     private state: AttackMissionState = AttackMissionState.Preparing;
     private requestedUnitCount: number;
     private lastRequestedUnitCountDecayAt: number | null = null;
+    private preparationStartedAt: number | null = null;
+    private lastReinforcementAt: number | null = null;
+    private previousPreparingUnitCount = 0;
 
     constructor(
         uniqueName: string,
@@ -71,13 +79,41 @@ export class AttackMission extends Mission<AttackFailReason> {
 
     private handlePreparingState(context: MissionContext) {
         const { game } = context;
-        this.decayDesiredCompositionIfNeeded(game);
+        const tick = game.getCurrentTick();
+        const brutal = context.difficulty === "brutal";
+        if (!brutal) this.decayDesiredCompositionIfNeeded(game);
         if (this.requestedUnitCount < this.composition.minimumUnits) {
             return disbandMission(AttackFailReason.UnableToAcquireUnits);
         }
 
         const desiredComposition = this.getDesiredComposition();
         const missingUnits = this.getMissingUnits(game, desiredComposition);
+        if (brutal && missingUnits.length > 0) {
+            this.preparationStartedAt ??= tick;
+            this.lastReinforcementAt ??= tick;
+            const receivedUnits = this.getUnitIds().length;
+            if (receivedUnits > this.previousPreparingUnitCount) this.lastReinforcementAt = tick;
+            this.previousPreparingUnitCount = receivedUnits;
+
+            // Start with the intended minimum mixed force once it is available;
+            // do not erase the request just because producing it takes time.
+            if (tick - this.preparationStartedAt >= MINIMUM_WAVE_WAIT_TICKS &&
+                this.getMissingUnits(game, this.getDesiredComposition(this.composition.minimumUnits)).length === 0) {
+                this.requestedUnitCount = this.composition.minimumUnits;
+                return this.startAttack(tick);
+            }
+            const missingNames = new Set(missingUnits.map(([name]) => name));
+            const pendingReinforcements = context.player.production.getAvailableObjects()
+                .filter(option => missingNames.has(option.name))
+                .some(option => {
+                    const queue = context.player.production.getQueueData(context.player.production.getQueueTypeForObject(option));
+                    return queue.status !== QueueStatus.Idle && queue.items.some(item => missingNames.has(item.rules.name));
+                });
+            if (tick - this.preparationStartedAt >= MAX_PREPARATION_TICKS ||
+                (tick - this.lastReinforcementAt >= REINFORCEMENT_TIMEOUT_TICKS && !pendingReinforcements)) {
+                return disbandMission(AttackFailReason.UnableToAcquireUnits);
+            }
+        }
         if (missingUnits.length > 0) {
             this.priority = Math.min(this.priority * ATTACK_MISSION_PRIORITY_RAMP, ATTACK_MISSION_MAX_PRIORITY);
             // distribute the priority among the amount of missing units of each type
@@ -90,10 +126,16 @@ export class AttackMission extends Mission<AttackFailReason> {
             );
             return requestUnits(unitPriorities);
         } else {
-            this.priority = ATTACK_MISSION_INITIAL_PRIORITY;
-            this.state = AttackMissionState.Attacking;
-            return noop();
+            return this.startAttack(tick);
         }
+    }
+
+    private startAttack(tick: number): MissionAction {
+        this.priority = ATTACK_MISSION_INITIAL_PRIORITY;
+        this.state = AttackMissionState.Attacking;
+        this.lastTargetSeenAt = tick;
+        this.hasPickedNewTarget = false;
+        return noop();
     }
 
     private handleAttackingState(context: MissionContext) {
@@ -108,7 +150,7 @@ export class AttackMission extends Mission<AttackFailReason> {
         const foundTargets = matchAwareness
             .getHostilesNearPoint2d(this.attackArea, this.radius)
             .map((unit) => game.getUnitData(unit.unitId))
-            .filter((unit) => !isOwnedByNeutral(unit)) as UnitData[];
+            .filter((unit): unit is UnitData => !!unit && !isOwnedByNeutral(unit));
 
         const update = this.squad.onAiUpdate(context, this, this.logger);
 
@@ -127,7 +169,9 @@ export class AttackMission extends Mission<AttackFailReason> {
         ) {
             const newTarget = generateTarget(game, playerData, matchAwareness);
             if (newTarget) {
+                this.attackArea = newTarget;
                 this.squad.setAttackArea(newTarget);
+                this.lastTargetSeenAt = game.getCurrentTick();
                 this.hasPickedNewTarget = true;
             }
         }
@@ -176,7 +220,7 @@ export class AttackMission extends Mission<AttackFailReason> {
         this.requestedUnitCount--;
     }
 
-    private getDesiredComposition(): UnitComposition {
+    private getDesiredComposition(unitCount = this.requestedUnitCount): UnitComposition {
         const compositionWeights = this.composition.composition;
         const totalWeights = Object.values(compositionWeights).reduce((a, b) => a + b, 0);
         if (totalWeights <= 0) {
@@ -186,7 +230,7 @@ export class AttackMission extends Mission<AttackFailReason> {
         return Object.fromEntries(
             Object.entries(compositionWeights).map(([unitName, weight]) => [
                 unitName,
-                Math.round((weight * this.requestedUnitCount) / totalWeights),
+                Math.round((weight * unitCount) / totalWeights),
             ]),
         );
     }
