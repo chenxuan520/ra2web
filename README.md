@@ -87,18 +87,20 @@ git push -u origin feature/my-change
 - 每个单位独立搜索附近目标，按武器与装甲匹配、威胁、剩余生命分配集火，减少对同一目标的过量火力。
 - 残血单位尝试撤离；具备射程优势且武器处于冷却时尝试拉扯，避免打断正在进行的攻击。
 - 提前防守矿厂和兵工厂，抑制重复命令，并对因阻塞而空闲的单位重试命令。
+- 集结期间保持生产请求，避免坦克尚未造好就解散任务、反复取消订单；换目标时同步更新进攻区域。
+- 优先建筑没有合法落点时，尝试其他可建候选，避免一个放不下的重工堵住后续建设。
 
 决策使用模拟 tick，普通每 3 tick、冷酷每 2 tick 更新；冷酷小队战术每 6 tick 更新。通过现有游戏 API 生产和下达命令，本次改动没有增加金钱或伤害加成。
 
 AI 专项回归命令（在 `ts-redalert2/` 下运行）：
 
 ```bash
-bun test src/test/BrutalAiIntegration.test.ts src/test/BuiltInAiRuntime.test.ts src/test/BuiltInCombatMicro.test.ts src/test/ai/ProductionStrategy.test.ts
+bun test src/test/BrutalAiIntegration.test.ts src/test/BuiltInAiRuntime.test.ts src/test/BuiltInCombatMicro.test.ts src/test/ai
 ```
 
 这些测试覆盖难度接入、经济恢复、兵种选择、集火和命令行为，不代表真人对战胜率。实战评估应固定地图、阵营、初始资金和游戏版本，分别验证快攻、空袭、矿车骚扰和阵地战；尚未建立“人类无法获胜”的对局证据。
 
-真实引擎对战与历史版本比较见 [AI 实战基准](ts-redalert2/e2e/README-ai.md)，攻略来源与待验证假设见 [AI 策略研究](docs/ai-research.md)。
+已完成的逐轮对照、失败实验和独立种子复测见 [AI 对战评估](docs/ai-evaluation.md)。复现命令见 [AI 实战基准](ts-redalert2/e2e/README-ai.md)，攻略来源与待验证假设见 [AI 策略研究](docs/ai-research.md)。
 
 ## 许可与资源说明
 

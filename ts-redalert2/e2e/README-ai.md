@@ -17,10 +17,17 @@ CDN 目录须包含 `maps/` 和 `game-res/v2/`。基准默认读取上述位置�
 
 ```bash
 # 与升级前的仓库 Bot 比较，默认自动交换双方出生点和玩家槽位。
-bun run test:ai --candidate-ref 3497729 --baseline-ref 14ffd36 \
+bun run test:ai --candidate-ref 04a9f7a --baseline-ref 14ffd36 \
   --map mp08t2,tn01t2 --seeds 101,202 \
   --matchups Americans:Americans,Russians:Russians \
-  --max-ticks 18000 --out .artifacts/ai-benchmark/round1.json
+  --max-ticks 18000 --out .artifacts/ai-benchmark/round4.json
+
+# 与上一轮有效候选比较，两边都使用 brutal 策略。
+bun run test:ai --candidate-ref 04a9f7a --baseline-ref 8fc9fc6 \
+  --candidate-profile brutal --baseline-profile brutal \
+  --map mp08t2,tn01t2 --seeds 101,202 \
+  --matchups Americans:Americans,Russians:Russians \
+  --max-ticks 18000 --out .artifacts/ai-benchmark/round4-vs-round2.json
 
 # 校验基准：相同版本、相同策略自对打。
 bun run test:ai --candidate-ref 3497729 --baseline-ref 3497729 \
@@ -42,4 +49,4 @@ bun run test:ai --candidate-ref 3497729 --baseline-ref 3497729 \
 
 先检验同版本自对打是否按换边镜像，再看不同版本胜/平/负与产能、战损。单个种子、单一地图或只有低资金时间改善，都不足以证明普遍胜率提升。
 
-策略研究来源见 [研究记录](../../docs/ai-research.md)。完整参数使用 `bun run test:ai --help` 查看。
+已完成的对战与局限见 [评估报告](../../docs/ai-evaluation.md)，策略来源见 [研究记录](../../docs/ai-research.md)。完整参数使用 `bun run test:ai --help` 查看。
