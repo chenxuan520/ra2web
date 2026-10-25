@@ -10,6 +10,8 @@ export interface UnitData extends GameObjectData {
     secondaryWeapon?: any;
     deathWeapon?: any;
     attackState?: string;
+    /** Includes firing animations driven by deploy weapons, outside AttackTrait. */
+    isFiring?: boolean;
     direction: number;
     onBridge?: boolean;
     zone?: any;

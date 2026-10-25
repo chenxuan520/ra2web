@@ -202,6 +202,7 @@ export class GameApi {
                     ? this.getWeaponData(unit.armedTrait.deathWeapon)
                     : undefined,
                 attackState: unit.attackTrait?.attackState,
+                isFiring: unit.isFiring,
                 direction: unit.direction,
                 onBridge: unit.isInfantry() || unit.isVehicle() ? unit.onBridge : undefined,
                 zone: unit.isUnit() ? unit.zone : undefined,
