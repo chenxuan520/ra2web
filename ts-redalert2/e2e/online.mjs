@@ -29,7 +29,7 @@ const api = (page, method, value) => page.evaluate(({ method, value }) => window
 
 async function enterOnline(page) {
     await page.goto(url);
-    await page.getByRole('button', { name: 'Close', exact: true }).click();
+    await page.getByRole('button', { name: '从服务端加载', exact: true }).click();
     await page.waitForFunction(() => {
         const controller = window.__ra2debug?.mainMenuController;
         return controller?.screens.has(22) && controller.getCurrentScreenType() === 0;

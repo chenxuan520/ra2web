@@ -41,6 +41,12 @@ async function hasGameFiles(directory: string): Promise<boolean> {
 }
 
 async function prepareAssets(): Promise<void> {
+    const sourceDir = process.env.GAME_FILES_DIR;
+    const rawSource = sourceDir && await hasGameFiles(sourceDir);
+    if (!rawSource && await stat(join(appDir, 'deploy/game-res.7z')).then(entry => entry.isFile(), () => false)) {
+        await run([process.execPath, join(appDir, 'deploy/prepare-resources.ts'), '--bundled', assetDir]);
+        return;
+    }
     const version = createHash('sha256');
     for (const filename of ['deploy/prepare-resources.ts', 'public/ini.mix', 'public/res/ra2cd.mix']) version.update(await readFile(join(appDir, filename)));
     const currentVersion = version.digest('hex');
@@ -49,13 +55,12 @@ async function prepareAssets(): Promise<void> {
     if (cachedVersion === currentVersion && await stat(join(assetDir, 'game-res/v2/manifest.json')).then(() => true, () => false)) {
         return;
     }
-    const sourceDir = process.env.GAME_FILES_DIR;
-    if (sourceDir && await hasGameFiles(sourceDir)) {
+    if (rawSource) {
         await run([process.execPath, join(appDir, 'deploy/prepare-resources.ts'), sourceDir, assetDir]);
         await writeFile(versionPath, currentVersion);
         return;
     }
-    if (process.env.AUTO_DOWNLOAD_ASSETS === 'false') {
+    if (process.env.AUTO_DOWNLOAD_ASSETS !== 'true') {
         console.info('未挂载游戏资源；请通过游戏页面导入本地游戏副本。');
         return;
     }

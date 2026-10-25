@@ -306,7 +306,6 @@ export class PregameController {
 
     private buildAvailableAiNames(): Map<string, string> {
         const names = new Map<string, string>();
-        names.set('Easy', aiUiNames.get(AiDifficulty.Easy)!);
         names.set('Normal', aiUiNames.get(AiDifficulty.Normal)!);
         names.set('Brutal', aiUiNames.get(AiDifficulty.Brutal)!);
         const uploadedBots = BotRegistry.getInstance().getUploadedBots();
@@ -531,7 +530,7 @@ export class PregameController {
         }
 
         const lastBots = savedBots ? this.parseSavedBots(savedBots) : undefined;
-        const defaultAiDifficulty = AiDifficulty.Easy;
+        const defaultAiDifficulty = AiDifficulty.Brutal;
         const humanCountryId = savedCountry !== undefined &&
             Number(savedCountry) < this.getAvailablePlayerCountries().length
             ? Number(savedCountry)
@@ -632,9 +631,9 @@ export class PregameController {
             if (!ai) {
                 continue;
             }
-            if (ai.difficulty !== AiDifficulty.Easy && ai.difficulty !== AiDifficulty.Normal &&
+            if (ai.difficulty !== AiDifficulty.Normal &&
                 ai.difficulty !== AiDifficulty.Brutal && ai.difficulty !== AiDifficulty.Custom) {
-                ai.difficulty = AiDifficulty.Easy;
+                ai.difficulty = AiDifficulty.Brutal;
             }
             if (ai.countryId !== undefined && ai.countryId >= this.getAvailablePlayerCountries().length) {
                 ai.countryId = RANDOM_COUNTRY_ID;

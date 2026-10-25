@@ -14,6 +14,12 @@ import { Engine } from '../../engine/Engine';
 import { GameRes } from '../../engine/gameRes/GameRes';
 import { GameResConfig } from '../../engine/gameRes/GameResConfig';
 import { GameResSource } from '../../engine/gameRes/GameResSource';
+import { GameResBoxApi } from '../../gui/component/GameResBoxApi';
+import { GameResForm, type GameResFormProps } from '../../gui/component/GameResForm';
+import { HtmlReactElement } from '../../gui/HtmlReactElement';
+import { GameResImporter } from '../../engine/gameRes/GameResImporter';
+import React from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 import { SoundKey } from '../../engine/sound/SoundKey';
 import { Sound } from '../../engine/sound/Sound';
 import { ChannelType } from '../../engine/sound/ChannelType';
@@ -173,6 +179,222 @@ test('CDN startup loads maps and core archives when browser filesystem storage i
         ui.mockRestore();
         Engine.destroy();
     }
+});
+
+function initFixture(modName?: string) {
+    const root = {};
+    const gameRes = Object.assign(Object.create(GameRes.prototype), {
+        appConfig: { gameresBaseUrl: 'https://resources.invalid/game-res/v2/' },
+        strings: { get: (key: string) => key }, rootEl: {}, viewport: {},
+        fsAccessLib: { support: { adapter: {} }, adapters: {} },
+        splashScreen: { setLoadingText() {}, setBackgroundImage() {} },
+        localPrefs: { getItem: () => undefined }, modName,
+    }) as any;
+    return { gameRes, rfs: { getRootDirectory: () => root } };
+}
+
+test('resource selection presents an explicit server choice and keeps local uploads available', () => {
+    const props = { strings: { get: (key: string) => key }, onDownloadArchive() {}, onBrowseFolder() {}, onBrowseArchive() {}, onDrop() {}, onClose() {} } as any;
+    const markup = renderToStaticMarkup(React.createElement(GameResForm, { ...props, closable: true }));
+    expect(markup).toContain('ts:gameres_use_server');
+    expect(markup).toContain('ts:gameres_browse_folder');
+    expect(markup).toContain('ts:gameres_browse_archive');
+    expect(markup).not.toContain('close-button');
+    expect(markup).not.toContain('full-pack.7z');
+    const localOnly = renderToStaticMarkup(React.createElement(GameResForm, { ...props, closable: false }));
+    expect(localOnly).not.toContain('ts:gameres_use_server');
+    expect(localOnly).toContain('ts:gameres_browse_archive');
+});
+
+for (const cancellation of ['AbortError', 'empty', 'null'] as const) {
+    for (const closable of [true, false]) {
+        test(`cancelled archive picker ${cancellation} leaves the ${closable ? 'server/local' : 'local-only'} resource chooser open`, async () => {
+            let form!: GameResFormProps;
+            const element = {};
+            const dialog = { setSize() {}, render() {}, getElement: () => element, unrender() {} };
+            const root = { appendChild() {}, contains: () => true, removeChild() {} };
+            const fsAccessLib = {
+                async polyfillDataTransferItem() {}, async showDirectoryPicker() { return {} as FileSystemDirectoryHandle; },
+                async showOpenFilePicker(): Promise<any> {
+                    if (cancellation === 'AbortError') throw new DOMException('Cancelled', 'AbortError');
+                    return cancellation === 'empty' ? [] : null;
+                },
+            };
+            const factory = spyOn(HtmlReactElement, 'factory').mockImplementation((_component, props: any) => {
+                form = props.children.props;
+                return dialog as any;
+            });
+            const unrender = spyOn(dialog, 'unrender');
+            const remove = spyOn(root, 'removeChild');
+            const picker = spyOn(fsAccessLib, 'showOpenFilePicker');
+            try {
+                const api = new GameResBoxApi({ value: { x: 0, y: 0, width: 800, height: 600 } } as any, { get: (key: string) => key } as any, root as any, fsAccessLib);
+                let resolved = false;
+                const selection = api.promptForGameRes(undefined, closable);
+                void selection.then(() => { resolved = true; });
+                await Promise.resolve();
+                await form.onBrowseArchive();
+                expect(picker).toHaveBeenCalledTimes(1);
+                expect(resolved).toBe(false);
+                expect(unrender).not.toHaveBeenCalled();
+                expect(remove).not.toHaveBeenCalled();
+                const archive = { kind: 'file', name: 'local-game.7z' };
+                if (closable) form.onClose!();
+                else {
+                    picker.mockResolvedValueOnce([archive]);
+                    await form.onBrowseArchive();
+                }
+                expect(await selection).toBe(closable ? undefined : archive);
+                expect(unrender).toHaveBeenCalledTimes(1);
+                expect(remove).toHaveBeenCalledTimes(1);
+            }
+            finally { factory.mockRestore(); unrender.mockRestore(); remove.mockRestore(); picker.mockRestore(); }
+        });
+    }
+}
+
+test('an explicit server selection loads the existing CDN without importing an archive or requiring browser storage', async () => {
+    const { gameRes } = initFixture();
+    const loader = {};
+    const prompt = spyOn(GameResBoxApi.prototype, 'promptForGameRes').mockResolvedValue(undefined);
+    const load = spyOn(gameRes, 'loadResources').mockResolvedValue(loader);
+    const importer = spyOn(GameResImporter.prototype, 'import');
+    Engine.destroy();
+    try {
+        const result = await gameRes.init(undefined, () => { throw new Error('Unexpected load error'); }, () => { throw new Error('Unexpected import error'); });
+        expect(prompt.mock.calls).toEqual([[undefined, true]]);
+        expect(result.configToPersist.source).toBe(GameResSource.Cdn);
+        expect(result.configToPersist.getCdnBaseUrl()).toBe('https://resources.invalid/game-res/v2/');
+        expect(result.cdnResLoader).toBe(loader);
+        expect(load.mock.calls[0][0]).toBeUndefined();
+        expect(importer).not.toHaveBeenCalled();
+    }
+    finally { prompt.mockRestore(); load.mockRestore(); importer.mockRestore(); Engine.destroy(); }
+});
+
+test('a failed server selection falls back to a local resource upload without offering the broken server again', async () => {
+    const { gameRes, rfs } = initFixture();
+    const localDirectory = { kind: 'directory', name: 'game-files' };
+    const prompt = spyOn(GameResBoxApi.prototype, 'promptForGameRes').mockResolvedValueOnce(undefined).mockResolvedValueOnce(localDirectory as any);
+    const load = spyOn(gameRes, 'loadResources').mockRejectedValueOnce(new Error('Missing server manifest')).mockResolvedValueOnce(undefined);
+    const initRfs = spyOn(Engine, 'initRfs').mockResolvedValue(rfs as any);
+    const importer = spyOn(GameResImporter.prototype, 'import').mockResolvedValue(undefined);
+    const failures: string[] = [];
+    Engine.destroy();
+    try {
+        const result = await gameRes.init(undefined, (error: Error) => { failures.push(error.message); }, () => { throw new Error('Unexpected import error'); });
+        expect(prompt.mock.calls).toEqual([[undefined, true], [undefined, false]]);
+        expect(failures).toEqual(['Missing server manifest']);
+        expect(result.configToPersist.source).toBe(GameResSource.Local);
+        expect(initRfs.mock.calls[0][0]).toBe(localDirectory);
+        expect(importer.mock.calls[0][0]).toBe(localDirectory);
+    }
+    finally { prompt.mockRestore(); load.mockRestore(); initRfs.mockRestore(); importer.mockRestore(); Engine.destroy(); }
+});
+
+test('a client archive selection is imported into browser storage rather than fetched from the server', async () => {
+    const { gameRes, rfs } = initFixture();
+    const archive = { kind: 'file', name: 'local-game.7z' };
+    const storage = spyOn(gameRes, 'getBrowserFsHandle').mockResolvedValue(undefined);
+    storage.mockResolvedValueOnce(undefined).mockResolvedValueOnce({});
+    const initRfs = spyOn(Engine, 'initRfs').mockResolvedValue(rfs as any);
+    const files = spyOn(gameRes, 'lookForGameFiles').mockResolvedValue(false);
+    const prompt = spyOn(GameResBoxApi.prototype, 'promptForGameRes').mockResolvedValue(archive as any);
+    const importer = spyOn(GameResImporter.prototype, 'import').mockResolvedValue(undefined);
+    const load = spyOn(gameRes, 'loadResources').mockResolvedValue(undefined);
+    Engine.destroy();
+    try {
+        const result = await gameRes.init(undefined, () => { throw new Error('Unexpected load error'); }, () => { throw new Error('Unexpected import error'); });
+        expect(result.configToPersist.source).toBe(GameResSource.Archive);
+        expect(importer.mock.calls[0][0]).toBe(archive);
+        expect(load.mock.calls[0][1].source).toBe(GameResSource.Archive);
+    }
+    finally { storage.mockRestore(); initRfs.mockRestore(); files.mockRestore(); prompt.mockRestore(); importer.mockRestore(); load.mockRestore(); Engine.destroy(); }
+});
+
+for (const source of [GameResSource.Local, GameResSource.Archive, GameResSource.Cdn]) {
+    test(`a saved resource source ${source} is respected without forcing another source selection`, async () => {
+        const { gameRes } = initFixture();
+        const config = new GameResConfig('https://resources.invalid/game-res/v2/');
+        config.source = source;
+        const prompt = spyOn(GameResBoxApi.prototype, 'promptForGameRes');
+        const load = spyOn(gameRes, 'loadResources').mockResolvedValue(undefined);
+        const splash = spyOn(gameRes, 'loadSplashScreenBackground').mockResolvedValue(undefined);
+        Engine.destroy();
+        try {
+            await gameRes.init(config, () => { throw new Error('Unexpected load error'); }, () => { throw new Error('Unexpected import error'); });
+            expect(prompt).not.toHaveBeenCalled();
+            expect(load.mock.calls[0][1]).toBe(config);
+        }
+        finally { prompt.mockRestore(); load.mockRestore(); splash.mockRestore(); Engine.destroy(); }
+    });
+}
+
+test('an installed MOD does not reuse a saved server source instead of compatible local game assets', async () => {
+    const { gameRes, rfs } = initFixture('example-mod');
+    const saved = new GameResConfig('https://resources.invalid/game-res/v2/');
+    saved.source = GameResSource.Cdn;
+    const directory = { kind: 'directory', name: 'game-files' };
+    const storage = spyOn(gameRes, 'getBrowserFsHandle').mockResolvedValueOnce(undefined).mockResolvedValueOnce({});
+    const initRfs = spyOn(Engine, 'initRfs').mockResolvedValue(rfs as any);
+    const files = spyOn(gameRes, 'lookForGameFiles').mockResolvedValue(false);
+    const modDir = spyOn(Engine, 'getModDir').mockResolvedValue({} as any);
+    const mapDir = spyOn(Engine, 'getMapDir').mockResolvedValue(undefined);
+    const mod = spyOn(gameRes, 'loadMod').mockResolvedValue({});
+    const prompt = spyOn(GameResBoxApi.prototype, 'promptForGameRes').mockResolvedValue(directory as any);
+    const load = spyOn(gameRes, 'loadResources').mockResolvedValue(undefined);
+    const splash = spyOn(gameRes, 'loadSplashScreenBackground').mockResolvedValue(undefined);
+    const importer = spyOn(GameResImporter.prototype, 'import').mockResolvedValue(undefined);
+    Engine.destroy();
+    try {
+        const result = await gameRes.init(saved, () => { throw new Error('Unexpected load error'); }, () => { throw new Error('Unexpected import error'); });
+        expect(mod).toHaveBeenCalledTimes(1);
+        expect(prompt.mock.calls).toEqual([[undefined, false]]);
+        expect(result.configToPersist.source).toBe(GameResSource.Local);
+        expect(load.mock.calls[0][1].source).toBe(GameResSource.Local);
+        expect(importer.mock.calls[0][0]).toBe(directory);
+    }
+    finally {
+        for (const mock of [storage, initRfs, files, modDir, mapDir, mod, prompt, load, splash, importer]) mock.mockRestore();
+        Engine.destroy();
+    }
+});
+
+test('an obsolete custom CDN failure leaves the current server source available', async () => {
+    const { gameRes } = initFixture();
+    const saved = new GameResConfig('https://resources.invalid/game-res/v2/');
+    saved.source = GameResSource.Cdn;
+    saved.cdnUrl = 'https://obsolete.invalid/game-res/v2/';
+    const prompt = spyOn(GameResBoxApi.prototype, 'promptForGameRes').mockResolvedValue(undefined);
+    const load = spyOn(gameRes, 'loadResources').mockRejectedValueOnce(new Error('Obsolete CDN unavailable')).mockResolvedValueOnce({});
+    const splash = spyOn(gameRes, 'loadSplashScreenBackground').mockResolvedValue(undefined);
+    const failures: string[] = [];
+    Engine.destroy();
+    try {
+        const result = await gameRes.init(saved, (error: Error) => { failures.push(error.message); }, () => { throw new Error('Unexpected import error'); });
+        expect(failures).toEqual(['Obsolete CDN unavailable']);
+        expect(prompt.mock.calls).toEqual([[undefined, true]]);
+        expect(result.configToPersist.source).toBe(GameResSource.Cdn);
+        expect(result.configToPersist.getCdnBaseUrl()).toBe('https://resources.invalid/game-res/v2/');
+    }
+    finally { prompt.mockRestore(); load.mockRestore(); splash.mockRestore(); Engine.destroy(); }
+});
+
+test('a selected MOD only offers local upload and preserves the local import path', async () => {
+    const { gameRes, rfs } = initFixture('example-mod');
+    const directory = { kind: 'directory', name: 'game-files' };
+    const prompt = spyOn(GameResBoxApi.prototype, 'promptForGameRes').mockResolvedValue(directory as any);
+    const load = spyOn(gameRes, 'loadResources').mockResolvedValue(undefined);
+    const initRfs = spyOn(Engine, 'initRfs').mockResolvedValue(rfs as any);
+    const importer = spyOn(GameResImporter.prototype, 'import').mockResolvedValue(undefined);
+    Engine.destroy();
+    try {
+        const result = await gameRes.init(undefined, () => { throw new Error('Unexpected load error'); }, () => { throw new Error('Unexpected import error'); });
+        expect(prompt.mock.calls).toEqual([[undefined, false]]);
+        expect(result.configToPersist.source).toBe(GameResSource.Local);
+        expect(importer.mock.calls[0][0]).toBe(directory);
+    }
+    finally { prompt.mockRestore(); load.mockRestore(); initRfs.mockRestore(); importer.mockRestore(); Engine.destroy(); }
 });
 
 const cdnFolder = process.env.RA2_PREPARED_CDN;

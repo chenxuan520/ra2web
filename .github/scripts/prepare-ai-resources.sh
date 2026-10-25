@@ -4,6 +4,10 @@ set -euo pipefail
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 resource_cache="$repo_root/.cache/ai-resources"
 resource_cdn="$resource_cache/cdn"
+if [[ -f "$repo_root/ts-redalert2/deploy/game-res.7z" ]]; then
+  bun --cwd "$repo_root/ts-redalert2" deploy/prepare-resources.ts --bundled "$resource_cdn"
+  exit 0
+fi
 if [[ -f "$resource_cdn/maps/mp08t2.map" && -f "$resource_cdn/game-res/v2/isotemp.mix" ]]; then
   exit 0
 fi

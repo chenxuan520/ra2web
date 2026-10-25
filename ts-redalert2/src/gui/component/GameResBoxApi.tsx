@@ -67,7 +67,7 @@ export class GameResBoxApi {
                         console.log('[GameResBoxApi] onBrowseArchive called');
                         try {
                             const handle = await FileSystemUtil.showArchivePicker(this.fsAccessLib as any);
-                            handleResolve(handle as FileSystemFileHandle);
+                            if (handle) handleResolve(handle);
                         }
                         catch (e) {
                             console.error("Error browsing archive:", e);

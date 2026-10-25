@@ -8,6 +8,9 @@ import { PlayerList } from '../game/PlayerList';
 import { World } from '../game/World';
 import { GameObject } from '../game/gameobject/GameObject';
 import { MapSupport } from '../engine/MapSupport';
+import { Engine } from '../engine/Engine';
+import { GameAnimationLoop } from '../engine/GameAnimationLoop';
+import { IniFile } from '../data/IniFile';
 import { VirtualFile } from '../data/vfs/VirtualFile';
 import { MapDigest } from '../engine/MapDigest';
 import { fixtureSources } from './resources/fixtures';
@@ -365,22 +368,49 @@ test('losing the local online connection releases a pending quit without inventi
     finally { pair.dispose(); }
 }, 10000);
 
-test('leaving the game screen cancels pending online quit and releases the original match listener', async () => {
+test('leaving the game screen cancels pending online quit and releases all original match listeners', async () => {
     const pair = await onlinePair(1);
+    const globals = globalThis as any;
+    const previousWindow = globals.window;
+    const ini = spyOn(Engine, 'getIni').mockReturnValue(new IniFile('[DialogList]\n'));
+    const animation = spyOn(GameAnimationLoop.prototype, 'start').mockImplementation(() => {});
     try {
+        globals.window = {};
         const host = pair.states[0];
+        Object.assign(host.screen, {
+            renderer: { onFrame: new EventDispatcher(), getScenes: () => [], addScene() {}, flush() {} },
+            uiAnimationLoop: { start() {}, stop() {} }, initUi() {},
+        });
+        host.game.botManager.init = () => {};
+        Object.assign(host.game.map, {
+            getInitialMapObjects: () => ({ technos: [] }), getCellTags: () => [],
+            getVariables: () => new Map(), getTriggers: () => [],
+        });
+        host.screen.onGameStart(host.game.localPlayer, host.game, { worldViewInitResult: {} }, host.actions, host.factory, host.screen.replay);
+        const debug = globals.window.__ra2debug;
+        expect(debug.lanMatch).toEqual(host.match.getSnapshot());
+        expect((host.match.onSnapshotChange as any).listeners.size).toBe(1);
         host.manager.doGameTurn(0);
         pair.flush();
         const quitting = host.quit();
-        expect((host.match.onSnapshotChange as any).listeners.size).toBe(1);
-        host.screen.clearDebugBridge = () => {};
+        expect((host.match.onSnapshotChange as any).listeners.size).toBe(2);
         await host.screen.onLeave();
         await quitting;
+        expect(host.screen.lanMatchSession).toBeUndefined();
         expect((host.match.onSnapshotChange as any).listeners.size).toBe(0);
         expect((host.game.onEnd as any).listeners.size).toBe(1);
         expect(host.navigations).toHaveLength(0);
+        expect(host.replaySaves).toHaveLength(0);
+        const lastSnapshot = debug.lanMatch;
+        host.match.onSnapshotChange.dispatch(host.match, host.match.getSnapshot());
+        expect(debug.lanMatch).toBe(lastSnapshot);
     }
-    finally { pair.dispose(); }
+    finally {
+        pair.dispose();
+        ini.mockRestore();
+        animation.mockRestore();
+        globals.window = previousWindow;
+    }
 });
 
 test('LAN action factories retain the existing local resignation and drop guards', async () => {

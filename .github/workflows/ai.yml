@@ -68,7 +68,7 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: .cache/ai-resources/cdn
-          key: ai-resources-541828fa-${{ hashFiles('ts-redalert2/deploy/prepare-resources.ts') }}
+          key: ai-resources-${{ hashFiles('ts-redalert2/deploy/prepare-resources.ts', 'ts-redalert2/deploy/game-res.7z') }}
       - name: Prepare real game resources
         run: |
           command -v 7z >/dev/null || { sudo apt-get update && sudo apt-get install -y p7zip-full; }
@@ -118,7 +118,7 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: .cache/ai-resources/cdn
-          key: ai-resources-541828fa-${{ hashFiles('ts-redalert2/deploy/prepare-resources.ts') }}
+          key: ai-resources-${{ hashFiles('ts-redalert2/deploy/prepare-resources.ts', 'ts-redalert2/deploy/game-res.7z') }}
       - name: Prepare resources and dependencies
         run: |
           command -v 7z >/dev/null || { sudo apt-get update && sudo apt-get install -y p7zip-full; }

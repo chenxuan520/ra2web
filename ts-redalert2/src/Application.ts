@@ -558,12 +558,7 @@ export class Application {
                 console.warn('[Diag] VFS ownership diagnostics failed:', e);
             }
             if (configToPersist) {
-                if (configToPersist.isCdn()) {
-                    this.localPrefs.removeItem(StorageKey.GameRes);
-                }
-                else {
-                    this.localPrefs.setItem(StorageKey.GameRes, configToPersist.serialize());
-                }
+                this.localPrefs.setItem(StorageKey.GameRes, configToPersist.serialize());
                 gameResConfig = configToPersist;
             }
             this.gameResConfig = gameResConfig;

@@ -137,7 +137,7 @@ export class GameRes {
                 throw e;
             console.warn("No storage adapters available.");
         }
-        let currentConfig = persistedConfig;
+        let currentConfig = this.modName && persistedConfig?.isCdn() ? undefined : persistedConfig;
         if (!currentConfig && rfs) {
             const rootDir = rfs.getRootDirectory();
             console.log('[GameRes] Checking for existing game files. RFS rootDir:', rootDir);
@@ -166,6 +166,7 @@ export class GameRes {
                 rfs.addDirectory(mapRfsDir);
             }
         }
+        let serverResourcesAvailable = !!this.appConfig.gameresBaseUrl && !this.modName;
         if (currentConfig) {
             const splashBg = await this.loadSplashScreenBackground(rfs?.getRootDirectory(), modRfsDir, currentConfig);
             if (typeof splashBg === 'string') {
@@ -192,6 +193,7 @@ export class GameRes {
                 });
                 this.splashScreen.setLoadingText("");
                 this.splashScreen.setBackgroundImage("");
+                if (currentConfig.isCdn() && currentConfig.getCdnBaseUrl() === this.appConfig.gameresBaseUrl) serverResourcesAvailable = false;
                 await onFatalError(e, this.strings);
             }
         }
@@ -206,7 +208,7 @@ export class GameRes {
                 createdBlobUrl = undefined;
             }
             console.log('[GameRes] Calling gameResBoxApi.promptForGameRes');
-            const userSelection = await gameResBoxApi.promptForGameRes(archiveUrlFallback, !!this.appConfig.gameresBaseUrl && !this.modName);
+            const userSelection = await gameResBoxApi.promptForGameRes(archiveUrlFallback, serverResourcesAvailable);
             console.log('[GameRes] User selection from prompt:', userSelection);
             currentConfig = new GameResConfig(this.appConfig.gameresBaseUrl ?? "");
             configRequiresSave = true;
@@ -289,6 +291,7 @@ export class GameRes {
                 });
                 this.splashScreen.setLoadingText("");
                 this.splashScreen.setBackgroundImage("");
+                if (currentConfig.isCdn() && currentConfig.getCdnBaseUrl() === this.appConfig.gameresBaseUrl) serverResourcesAvailable = false;
                 await onFatalError(e, this.strings);
             }
         }
