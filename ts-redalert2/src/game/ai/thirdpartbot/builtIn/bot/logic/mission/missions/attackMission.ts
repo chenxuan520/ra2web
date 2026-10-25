@@ -41,6 +41,7 @@ const MAX_PREPARATION_TICKS = 5 * 60 * 15;
  */
 export class AttackMission extends Mission<AttackFailReason> {
     private squad: CombatSquad;
+    private preparationSquad: CombatSquad;
 
     private lastTargetSeenAt = 0;
     private hasPickedNewTarget: boolean = false;
@@ -63,6 +64,7 @@ export class AttackMission extends Mission<AttackFailReason> {
     ) {
         super(uniqueName, logger);
         this.squad = new CombatSquad(rallyArea, attackArea, radius);
+        this.preparationSquad = new CombatSquad(rallyArea, rallyArea, radius);
         this.requestedUnitCount = composition.maximumUnits;
     }
 
@@ -113,6 +115,10 @@ export class AttackMission extends Mission<AttackFailReason> {
                 (tick - this.lastReinforcementAt >= REINFORCEMENT_TIMEOUT_TICKS && !pendingReinforcements)) {
                 return disbandMission(AttackFailReason.UnableToAcquireUnits);
             }
+            // Waiting for reinforcements must not leave existing soldiers idle.
+            // Guard the rally point with the same combat micro, while keeping the
+            // offensive destination reserved for the completed wave.
+            this.preparationSquad.onAiUpdate(context, this, this.logger);
         }
         if (missingUnits.length > 0) {
             this.priority = Math.min(this.priority * ATTACK_MISSION_PRIORITY_RAMP, ATTACK_MISSION_MAX_PRIORITY);
