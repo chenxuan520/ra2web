@@ -8,6 +8,7 @@ import { EngineerMissionFactory } from "../logic/mission/missions/engineerMissio
 import { ParaDropSupport } from "../logic/mission/missions/paraDropSupport";
 import { SneakCaptureMissionFactory } from "../logic/mission/missions/sneakCaptureMission";
 import { ensureBaseReserve } from "../logic/mission/missions/baseReserveMission";
+import { MinerDefence } from "../logic/mission/missions/minerDefence";
 import { SupabotContext } from "../logic/common/context";
 import { MissionController } from "../logic/mission/missionController";
 import { DebugLogger } from "../logic/common/utils";
@@ -102,9 +103,11 @@ export class DefaultStrategy implements Strategy {
     private engineerFactory = new EngineerMissionFactory();
     private paraDropSupport = new ParaDropSupport();
     private sneakCaptureFactory = new SneakCaptureMissionFactory();
+    private minerDefence = new MinerDefence();
 
     onAiUpdate(context: SupabotContext, missionController: MissionController, logger: DebugLogger) {
         this.paraDropSupport.onAiUpdate(context);
+        this.minerDefence.onAiUpdate(context);
         ensureBaseReserve(context, missionController, logger);
         this.expansionFactory.maybeCreateMissions(context, missionController, logger);
         this.scoutingFactory.maybeCreateMissions(context, missionController, logger);
