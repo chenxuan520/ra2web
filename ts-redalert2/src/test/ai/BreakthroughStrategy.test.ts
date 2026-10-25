@@ -4,6 +4,7 @@ import { Mission, noop, requestUnits } from "../../game/ai/thirdpartbot/builtIn/
 import { MissionController } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missionController";
 import { FieldArmyMission } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/fieldArmyMission";
 import { InfantryHomeMission } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/infantryHomeMission";
+import { BaseReserveMission } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/baseReserveMission";
 import { ActionBatcher } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/actionBatcher";
 import { calculateGlobalThreat } from "../../game/ai/thirdpartbot/builtIn/bot/logic/threat/threatCalculator";
 
@@ -113,6 +114,19 @@ function fieldFixture() {
 }
 
 describe("persistent field army", () => {
+    test("two tanks can pressure only after actual home defenders are assigned and nearby", () => {
+        const f = fieldFixture();
+        for (let id = 1; id <= 2; id++) { f.add(id, "HTNK"); f.mission.addUnit(id); }
+        f.add(200, "E2", 15, "enemy");
+        f.step(); expect(f.mission.getAttackArea()).toEqual(new Vector2(4, 0));
+        const home = new BaseReserveMission(() => {}); f.controller.addMission(home);
+        for (let id = 10; id < 22; id++) { f.add(id, "E2", 40); home.addUnit(id); }
+        f.step(30); expect(f.mission.getAttackArea()).toEqual(new Vector2(4, 0));
+        for (let id = 10; id < 22; id++) f.objects.get(id)!.tile.rx = 0;
+        f.orders.length = 0; f.step(60);
+        expect(f.mission.getAttackArea()).toEqual(new Vector2(15, 0));
+        expect(f.orders.flatMap(o => o[0]).every(id => id === 1 || id === 2)).toBe(true);
+    });
     test("keeps free conscripts out of the mobile army and releases misplaced infantry", () => {
         const f = fieldFixture();
         for (let id = 1; id <= 32; id++) f.add(id, "E2");

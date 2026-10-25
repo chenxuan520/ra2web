@@ -51,8 +51,18 @@ export class FieldArmyMission extends Mission {
         const rally = matchAwareness.getMainRallyPoint();
         this.squad ??= new CombatSquad(rally, rally, 15);
         this.squad.setAirSafety(getOpeningAirBudget(game, playerData) === 2);
-        if (armor.length >= 4 || air.length >= 2 || units.some(unit => unit.name === "ZEP") || infantry.length >= 20) this.attacking = true;
-        if (units.length < 3 && !air.length) this.attacking = false;
+        const homeDefenders = mobileRoles ? new Set(this.controller.getMissions()
+            .filter(m => ["baseReserve", "infantryHome"].includes(m.getUniqueName()))
+            .flatMap(m => m.getUnitIds()).filter(id => {
+                const unit = game.getUnitData(id);
+                return unit?.name === "E2" && unit.owner === player.name && unit.hitPoints > 0 &&
+                    location(unit).distanceTo(playerData.startLocation) <= 18;
+            })).size : 0;
+        // Once a real home reserve is present, the mobile force can pressure
+        // with two tanks. It no longer waits for the former infantry column.
+        const launchArmor = mobileRoles && homeDefenders >= getBasicInfantryBudget("E2", context.difficulty).reserve ? 2 : 4;
+        if (armor.length >= launchArmor || air.length >= 2 || units.some(unit => unit.name === "ZEP") || infantry.length >= 20) this.attacking = true;
+        if (units.length < (mobileRoles ? 2 : 3) && !air.length) this.attacking = false;
         const center = this.getCenterOfMass() ?? rally;
         if (tick >= this.nextTargetCheck) {
             this.nextTargetCheck = tick + 30;
