@@ -37,6 +37,11 @@ on:
         type: choice
         options: [historical, direct]
         default: historical
+      tactic_schedule:
+        description: P1 direct C18 tactic screen, including mirrored Soviet countries
+        type: choice
+        options: [none, pilot, development]
+        default: none
 
 permissions:
   contents: read
@@ -53,6 +58,7 @@ env:
   AI_BASELINE_PROFILE: ${{ inputs.baseline_profile || 'brutal' }}
   AI_EVALUATION_SET: ${{ inputs.evaluation_set || 'regression' }}
   AI_COMPARISON_MODE: ${{ inputs.comparison_mode || 'historical' }}
+  AI_TACTIC_SCHEDULE: ${{ inputs.tactic_schedule || 'none' }}
   AI_TOURNAMENT_WORKERS: ${{ github.event.repository.private && '2' || '4' }}
 
 jobs:
@@ -103,6 +109,60 @@ jobs:
           name: ai-regression
           path: ts-redalert2/.artifacts/ai-ci/
           retention-days: 14
+
+  tactic-screen:
+    needs: regression
+    if: github.event_name == 'workflow_dispatch' && inputs.tactic_schedule && inputs.tactic_schedule != 'none'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+      - uses: actions/cache@v4
+        with:
+          path: .cache/ai-resources/cdn
+          key: ai-resources-541828fa-${{ hashFiles('ts-redalert2/deploy/prepare-resources.ts') }}
+      - name: Prepare resources and dependencies
+        run: |
+          command -v 7z >/dev/null || { sudo apt-get update && sudo apt-get install -y p7zip-full; }
+          cd ts-redalert2
+          bun install --frozen-lockfile
+          cd ..
+          bash .github/scripts/prepare-ai-resources.sh
+      - name: Direct normal-economy matches, preserving raw results
+        working-directory: ts-redalert2
+        run: |
+          if [ "$AI_TACTIC_SCHEDULE" = pilot ]; then
+            tactic_seeds=610101
+            tactic_pairs=Arabs:Arabs,Russians:Russians
+          else
+            tactic_seeds=610101,610202,610303
+            tactic_pairs=Arabs:Arabs,Russians:Russians,Arabs:Russians,Russians:Arabs,Arabs:Americans,Russians:Americans,Americans:Arabs,Americans:Russians
+          fi
+          bun e2e/ai-benchmark.ts --candidate-ref "$AI_CANDIDATE_REF" --baseline-ref "$AI_BASELINE_REF" \
+            --candidate-profile brutal --baseline-profile brutal --map mp08t2,tn01t2 \
+            --seeds "$tactic_seeds" --matchups "$tactic_pairs" --max-ticks 27000 --unit-details \
+            --out .artifacts/ai-tactic/raw.json
+      - name: Verify direct schedule and assess development signal
+        run: |
+          tactic_exit=0
+          python -B .github/scripts/summarize-ai-tactic.py ts-redalert2/.artifacts/ai-tactic/raw.json \
+            --candidate-ref "$AI_CANDIDATE_REF" --baseline-ref "$AI_BASELINE_REF" \
+            --schedule "$AI_TACTIC_SCHEDULE" --out ts-redalert2/.artifacts/ai-tactic --require-positive || tactic_exit=$?
+          if [ -f ts-redalert2/.artifacts/ai-tactic/report.md ]; then
+            cat ts-redalert2/.artifacts/ai-tactic/report.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+          exit "$tactic_exit"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ai-tactic-screen
+          path: ts-redalert2/.artifacts/ai-tactic/
+          retention-days: 30
 
   country-matrix:
     needs: regression
