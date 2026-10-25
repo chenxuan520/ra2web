@@ -1,0 +1,206 @@
+{
+  "checkedUsing": "connected GitHub",
+  "runs": [
+    {
+      "runId": 40208830355,
+      "jobs": [
+        {
+          "id": 121215490006,
+          "name": "regression",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 121216103990,
+          "name": "tactic-screen (short, mp08t2)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 121216103991,
+          "name": "tactic-screen (medium, tn01t2)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 121216105285,
+          "name": "report",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 121216105556,
+          "name": "country-matrix",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 121223081011,
+          "name": "tactic-report",
+          "status": "completed",
+          "conclusion": "failure"
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 12606200352,
+          "name": "ai-tactic-raw-short",
+          "digest": "sha256:0def437f59b6d0edcc32538a009e7216d08db95b797e997df153e9175e5f3577",
+          "expired": false
+        },
+        {
+          "id": 12605951899,
+          "name": "ai-tactic-report",
+          "digest": "sha256:07950ce9b3ab270b5915c1951d64ef1907680b5bbbe8fa439bbc78bdd1539d32",
+          "expired": false
+        },
+        {
+          "id": 12605647505,
+          "name": "ai-tactic-raw-medium",
+          "digest": "sha256:61348871cf85728546ab300b769420c33daa12454e3b105a883824f3df1509a1",
+          "expired": false
+        },
+        {
+          "id": 12604362800,
+          "name": "ai-regression",
+          "digest": "sha256:e08a70bb3b0e26803c8b28bda9ccb32d7d1a9de2d8d0fa231b1d77a4403c5e68",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "runId": 40208845586,
+      "jobs": [
+        {
+          "id": 121215534476,
+          "name": "regression",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 121216200140,
+          "name": "tactic-screen (short, mp08t2)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 121216200286,
+          "name": "tactic-screen (medium, tn01t2)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 121216201566,
+          "name": "country-matrix",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 121216201568,
+          "name": "report",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 121224220545,
+          "name": "tactic-report",
+          "status": "completed",
+          "conclusion": "failure"
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 12605921485,
+          "name": "ai-tactic-raw-short",
+          "digest": "sha256:0f57b463bc9b743c9b1c15c961adc8c488bc1b2eefac5741055f792fa9b0da13",
+          "expired": false
+        },
+        {
+          "id": 12605672954,
+          "name": "ai-tactic-report",
+          "digest": "sha256:01674c1ae5b91c36577cae64f39fcad4d7c912545ae040cec3b67f376513a7ea",
+          "expired": false
+        },
+        {
+          "id": 12605373473,
+          "name": "ai-tactic-raw-medium",
+          "digest": "sha256:c5f6eb39b3af77919e2d299b87ef6791f0e1688032b9b38275fde1bb29812e3a",
+          "expired": false
+        },
+        {
+          "id": 12604843418,
+          "name": "ai-regression",
+          "digest": "sha256:62b0f224e1446a59a2ec49659dd70bfbb17d52a0cce539a5a74024000f54bf19",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "runId": 40208864202,
+      "jobs": [
+        {
+          "id": 121215592869,
+          "name": "regression",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 121216213771,
+          "name": "tactic-screen (medium, tn01t2)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 121216213802,
+          "name": "tactic-screen (short, mp08t2)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 121216215102,
+          "name": "country-matrix",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 121216215548,
+          "name": "report",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 121222068119,
+          "name": "tactic-report",
+          "status": "completed",
+          "conclusion": "failure"
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 12605966201,
+          "name": "ai-tactic-report",
+          "digest": "sha256:47ba8f150304f37c62040d66df9a2be6dd37c728d9a6ee6d8fd633558d088a95",
+          "expired": false
+        },
+        {
+          "id": 12605492059,
+          "name": "ai-tactic-raw-medium",
+          "digest": "sha256:59e0884a9ae221761720e2727857455c3d477ab9bbe96201f1159888fb3d3380",
+          "expired": false
+        },
+        {
+          "id": 12605436224,
+          "name": "ai-tactic-raw-short",
+          "digest": "sha256:880d928ac686b53d6a61f47e8ae038ce9bf99a6c5bac2debcb2112b2d6d92ba6",
+          "expired": false
+        },
+        {
+          "id": 12605043081,
+          "name": "ai-regression",
+          "digest": "sha256:467a203dad3d898836bbd1699a66c5ed71cd42b19936866c38046dbd202c052a",
+          "expired": false
+        }
+      ]
+    }
+  ]
+}

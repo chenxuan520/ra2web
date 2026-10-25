@@ -1,0 +1,125 @@
+{
+  "kind": "single-unit-equal-path-mechanics-only",
+  "route": {
+    "x": 39,
+    "y": 120
+  },
+  "lengthTiles": 12,
+  "seed": 610101,
+  "resources": {
+    "mapSha256": "b84570fd81afddc88ecfd19b9a93b46c0b7007c56b94aebd2ad434db6dd19476",
+    "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4",
+    "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+    "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+  },
+  "results": [
+    {
+      "name": "E2",
+      "iniSpeed": 4,
+      "parsedSpeed": 10.24,
+      "baseSpeed": 10.24,
+      "ticksToDestinationTile": 310,
+      "samples": [
+        {
+          "tick": 60,
+          "distanceInTiles": 2.234375,
+          "tile": [
+            41,
+            120
+          ]
+        },
+        {
+          "tick": 120,
+          "distanceInTiles": 4.46875,
+          "tile": [
+            43,
+            120
+          ]
+        },
+        {
+          "tick": 180,
+          "distanceInTiles": 6.703125,
+          "tile": [
+            46,
+            120
+          ]
+        },
+        {
+          "tick": 240,
+          "distanceInTiles": 8.9375,
+          "tile": [
+            48,
+            120
+          ]
+        },
+        {
+          "tick": 300,
+          "distanceInTiles": 11.1171875,
+          "tile": [
+            50,
+            120
+          ]
+        }
+      ]
+    },
+    {
+      "name": "DOG",
+      "iniSpeed": 8,
+      "parsedSpeed": 20.48,
+      "baseSpeed": 20.48,
+      "ticksToDestinationTile": 161,
+      "samples": [
+        {
+          "tick": 60,
+          "distanceInTiles": 4.3125,
+          "tile": [
+            43,
+            120
+          ]
+        },
+        {
+          "tick": 120,
+          "distanceInTiles": 8.625,
+          "tile": [
+            48,
+            120
+          ]
+        }
+      ]
+    },
+    {
+      "name": "HTNK",
+      "iniSpeed": 6,
+      "parsedSpeed": 23.630769230769232,
+      "baseSpeed": 23.630769230769232,
+      "ticksToDestinationTile": 142,
+      "samples": [
+        {
+          "tick": 60,
+          "distanceInTiles": 4.1328125,
+          "tile": [
+            43,
+            120
+          ]
+        },
+        {
+          "tick": 120,
+          "distanceInTiles": 9.5234375,
+          "tile": [
+            49,
+            120
+          ]
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Independent games, identical clear flat path, terrain speed multiplier 1 for foot and track.",
+    "This measures travel to a tile, not tactical cohesion or combat effectiveness. No engine or unit rules changed."
+  ],
+  "engineSourceCommit": "885e4b6546c4ca235bdfab23bb63ba95647fc3de",
+  "qualification": false,
+  "originalRunnerSha256": "8913928855489dca1b81df01a541c37f9a4f2250b36eac3c73b282d3f154946a",
+  "reproductionRunnerSha256": "f423d0e2c36e17fa20147682cfa45b77fb056c9318ffa4834b486b648370410d",
+  "reproductionRunner": "mobility-check-runner.ts"
+}

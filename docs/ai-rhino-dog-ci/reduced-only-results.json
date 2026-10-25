@@ -1,0 +1,1141 @@
+{
+  "kind": "direct-current-bot-tactic",
+  "schedule": "development",
+  "candidateCommit": "11a21f01f151b81bcb09c96730f450c54be580b6",
+  "baselineCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+  "profiles": [
+    "brutal",
+    "brutal"
+  ],
+  "config": {
+    "engineCommit": "abc7f7eafad0e4c64eb1abb54cbc6c3e12761746",
+    "settings": {
+      "maxTicks": 27000,
+      "sampleTicks": 900,
+      "credits": 10000,
+      "unitCount": 0,
+      "gameSpeed": 3,
+      "engineDifficulty": 4,
+      "pairedSpawnSwap": true,
+      "pairedPlayerOrderSwap": true,
+      "simulationTicksPerSecond": 15,
+      "shortGame": true,
+      "superWeapons": false,
+      "crates": false,
+      "engineStalemateDetection": false
+    },
+    "resources": {
+      "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+      "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+    }
+  },
+  "mapResources": {
+    "mp08t2": {
+      "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+      "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+    },
+    "tn01t2": {
+      "mapSha256": "95a836a2b42728d2c7d5c606902619b98afe428cb54eaf8b489e2d83819213e3",
+      "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+    }
+  },
+  "totals": {
+    "games": 96,
+    "wins": 36,
+    "losses": 55,
+    "draws": 5,
+    "errors": 0,
+    "winRate": 0.375,
+    "decisiveWinRate": 0.3956043956043956,
+    "scoreWithHalfDraws": 0.4010416666666667
+  },
+  "byCountry": {
+    "Americans": {
+      "games": 24,
+      "wins": 19,
+      "losses": 5,
+      "draws": 0,
+      "errors": 0,
+      "winRate": 0.7916666666666666,
+      "decisiveWinRate": 0.7916666666666666,
+      "scoreWithHalfDraws": 0.7916666666666666
+    },
+    "Arabs": {
+      "games": 36,
+      "wins": 8,
+      "losses": 25,
+      "draws": 3,
+      "errors": 0,
+      "winRate": 0.2222222222222222,
+      "decisiveWinRate": 0.24242424242424243,
+      "scoreWithHalfDraws": 0.2638888888888889
+    },
+    "Russians": {
+      "games": 36,
+      "wins": 9,
+      "losses": 25,
+      "draws": 2,
+      "errors": 0,
+      "winRate": 0.25,
+      "decisiveWinRate": 0.2647058823529412,
+      "scoreWithHalfDraws": 0.2777777777777778
+    }
+  },
+  "byMap": {
+    "mp08t2": {
+      "games": 48,
+      "wins": 17,
+      "losses": 30,
+      "draws": 1,
+      "errors": 0,
+      "winRate": 0.3541666666666667,
+      "decisiveWinRate": 0.3617021276595745,
+      "scoreWithHalfDraws": 0.3645833333333333
+    },
+    "tn01t2": {
+      "games": 48,
+      "wins": 19,
+      "losses": 25,
+      "draws": 4,
+      "errors": 0,
+      "winRate": 0.3958333333333333,
+      "decisiveWinRate": 0.4318181818181818,
+      "scoreWithHalfDraws": 0.4375
+    }
+  },
+  "screeningPositive": false,
+  "qualified": false,
+  "notes": [
+    "Development only; exposed seeds and at most two maps cannot establish qualification.",
+    "Dog counts, damage and distances include scouts, not only escorts; production may diverge after micro changes.",
+    "Max escort and force state are sampled every 900 ticks. No sampled escort does not prove zero assignment.",
+    "Missing observations remain null. Dog death does not establish tank-shot interception."
+  ],
+  "runId": 40208864202,
+  "variant": "reduced-only",
+  "ci": "https://github.com/chenxuan520/ra2web/actions/runs/40208864202",
+  "invariants": {
+    "validGames": 96,
+    "uniqueGames": 96,
+    "errors": 0,
+    "missing": 0,
+    "gamesPerMap": 48,
+    "seeds": [
+      610101,
+      610202,
+      610303
+    ],
+    "pairedCountryCases": 8,
+    "swapsPerCase": 2,
+    "expectedSkippedJobs": [
+      "country-matrix",
+      "report"
+    ],
+    "independentReportBytesIdentical": true,
+    "rawSha256Verified": true
+  },
+  "bySeed": {
+    "610101": {
+      "games": 32,
+      "wins": 11,
+      "losses": 20,
+      "draws": 1,
+      "errors": 0,
+      "winRate": 0.34375,
+      "decisiveWinRate": 0.3548387096774194,
+      "scoreWithHalfDraws": 0.359375
+    },
+    "610202": {
+      "games": 32,
+      "wins": 12,
+      "losses": 19,
+      "draws": 1,
+      "errors": 0,
+      "winRate": 0.375,
+      "decisiveWinRate": 0.3870967741935484,
+      "scoreWithHalfDraws": 0.390625
+    },
+    "610303": {
+      "games": 32,
+      "wins": 13,
+      "losses": 16,
+      "draws": 3,
+      "errors": 0,
+      "winRate": 0.40625,
+      "decisiveWinRate": 0.4482758620689655,
+      "scoreWithHalfDraws": 0.453125
+    }
+  },
+  "byMapSeed": {
+    "mp08t2": {
+      "610101": {
+        "games": 16,
+        "wins": 5,
+        "losses": 11,
+        "draws": 0,
+        "errors": 0,
+        "winRate": 0.3125,
+        "decisiveWinRate": 0.3125,
+        "scoreWithHalfDraws": 0.3125
+      },
+      "610202": {
+        "games": 16,
+        "wins": 6,
+        "losses": 10,
+        "draws": 0,
+        "errors": 0,
+        "winRate": 0.375,
+        "decisiveWinRate": 0.375,
+        "scoreWithHalfDraws": 0.375
+      },
+      "610303": {
+        "games": 16,
+        "wins": 6,
+        "losses": 9,
+        "draws": 1,
+        "errors": 0,
+        "winRate": 0.375,
+        "decisiveWinRate": 0.4,
+        "scoreWithHalfDraws": 0.40625
+      }
+    },
+    "tn01t2": {
+      "610101": {
+        "games": 16,
+        "wins": 6,
+        "losses": 9,
+        "draws": 1,
+        "errors": 0,
+        "winRate": 0.375,
+        "decisiveWinRate": 0.4,
+        "scoreWithHalfDraws": 0.40625
+      },
+      "610202": {
+        "games": 16,
+        "wins": 6,
+        "losses": 9,
+        "draws": 1,
+        "errors": 0,
+        "winRate": 0.375,
+        "decisiveWinRate": 0.4,
+        "scoreWithHalfDraws": 0.40625
+      },
+      "610303": {
+        "games": 16,
+        "wins": 7,
+        "losses": 7,
+        "draws": 2,
+        "errors": 0,
+        "winRate": 0.4375,
+        "decisiveWinRate": 0.5,
+        "scoreWithHalfDraws": 0.5
+      }
+    }
+  },
+  "byPair": {
+    "Arabs:Arabs": {
+      "games": 12,
+      "wins": 3,
+      "losses": 6,
+      "draws": 3,
+      "errors": 0,
+      "winRate": 0.25,
+      "decisiveWinRate": 0.3333333333333333,
+      "scoreWithHalfDraws": 0.375
+    },
+    "Russians:Russians": {
+      "games": 12,
+      "wins": 5,
+      "losses": 6,
+      "draws": 1,
+      "errors": 0,
+      "winRate": 0.4166666666666667,
+      "decisiveWinRate": 0.45454545454545453,
+      "scoreWithHalfDraws": 0.4583333333333333
+    },
+    "Arabs:Russians": {
+      "games": 12,
+      "wins": 5,
+      "losses": 7,
+      "draws": 0,
+      "errors": 0,
+      "winRate": 0.4166666666666667,
+      "decisiveWinRate": 0.4166666666666667,
+      "scoreWithHalfDraws": 0.4166666666666667
+    },
+    "Russians:Arabs": {
+      "games": 12,
+      "wins": 4,
+      "losses": 7,
+      "draws": 1,
+      "errors": 0,
+      "winRate": 0.3333333333333333,
+      "decisiveWinRate": 0.36363636363636365,
+      "scoreWithHalfDraws": 0.375
+    },
+    "Arabs:Americans": {
+      "games": 12,
+      "wins": 0,
+      "losses": 12,
+      "draws": 0,
+      "errors": 0,
+      "winRate": 0.0,
+      "decisiveWinRate": 0.0,
+      "scoreWithHalfDraws": 0.0
+    },
+    "Russians:Americans": {
+      "games": 12,
+      "wins": 0,
+      "losses": 12,
+      "draws": 0,
+      "errors": 0,
+      "winRate": 0.0,
+      "decisiveWinRate": 0.0,
+      "scoreWithHalfDraws": 0.0
+    },
+    "Americans:Arabs": {
+      "games": 12,
+      "wins": 10,
+      "losses": 2,
+      "draws": 0,
+      "errors": 0,
+      "winRate": 0.8333333333333334,
+      "decisiveWinRate": 0.8333333333333334,
+      "scoreWithHalfDraws": 0.8333333333333334
+    },
+    "Americans:Russians": {
+      "games": 12,
+      "wins": 9,
+      "losses": 3,
+      "draws": 0,
+      "errors": 0,
+      "winRate": 0.75,
+      "decisiveWinRate": 0.75,
+      "scoreWithHalfDraws": 0.75
+    }
+  },
+  "bySwap": {
+    "False": {
+      "games": 48,
+      "wins": 9,
+      "losses": 36,
+      "draws": 3,
+      "errors": 0,
+      "winRate": 0.1875,
+      "decisiveWinRate": 0.2,
+      "scoreWithHalfDraws": 0.21875
+    },
+    "True": {
+      "games": 48,
+      "wins": 27,
+      "losses": 19,
+      "draws": 2,
+      "errors": 0,
+      "winRate": 0.5625,
+      "decisiveWinRate": 0.5869565217391305,
+      "scoreWithHalfDraws": 0.5833333333333334
+    }
+  },
+  "sovietOnly": {
+    "games": 72,
+    "wins": 17,
+    "losses": 50,
+    "draws": 5,
+    "errors": 0,
+    "winRate": 0.2361111111111111,
+    "decisiveWinRate": 0.2537313432835821,
+    "scoreWithHalfDraws": 0.2708333333333333
+  },
+  "combatBothSides": [
+    {
+      "games": 96,
+      "produced": {
+        "E2": {
+          "coveredGames": 96,
+          "total": 2201,
+          "median": 21.0
+        },
+        "DOG": {
+          "coveredGames": 96,
+          "total": 197,
+          "median": 2.0
+        },
+        "HTNK": {
+          "coveredGames": 96,
+          "total": 381,
+          "median": 2.0
+        },
+        "HARV": {
+          "coveredGames": 96,
+          "total": 128,
+          "median": 1.0
+        }
+      },
+      "tankShots": {
+        "coveredGames": 96,
+        "total": 8687,
+        "median": 13.5
+      },
+      "dogShots": {
+        "coveredGames": 96,
+        "total": 122,
+        "median": 0.0
+      },
+      "firstTankTick": {
+        "coveredGames": 72,
+        "total": 284520,
+        "median": 3663.0
+      },
+      "firstTankShotTick": {
+        "coveredGames": 69,
+        "total": 402333,
+        "median": 4753
+      },
+      "sampledEscort": {
+        "gamesWithSampledAssignment": 0,
+        "gamesWithOnlyZeroUnitMissionRows": 0,
+        "gamesWithNoDogEscortMissionRows": 96,
+        "maximum": null
+      },
+      "dogTankDistance": {
+        "sampledDistances": 210,
+        "mean": 28.76262600809311
+      },
+      "damageBySourceType": {
+        "E2": {
+          "enemyHitPoints": 97358,
+          "enemyKills": 418,
+          "friendlyHitPoints": 253,
+          "friendlyKills": 0
+        },
+        "DOG": {
+          "enemyHitPoints": 13439,
+          "enemyKills": 122,
+          "friendlyHitPoints": 0,
+          "friendlyKills": 0
+        },
+        "HTNK": {
+          "enemyHitPoints": 428681,
+          "enemyKills": 1988,
+          "friendlyHitPoints": 1112,
+          "friendlyKills": 0
+        }
+      },
+      "damageCoveredGames": 96,
+      "finalForce": {
+        "E2": {
+          "count": 220,
+          "hitPoints": 24722
+        },
+        "DOG": {
+          "count": 12,
+          "hitPoints": 1103
+        },
+        "HTNK": {
+          "count": 103,
+          "hitPoints": 24233
+        },
+        "HARV": {
+          "count": 83,
+          "hitPoints": 81235
+        }
+      },
+      "forceCoveredGames": 96
+    },
+    {
+      "games": 96,
+      "produced": {
+        "E2": {
+          "coveredGames": 96,
+          "total": 4249,
+          "median": 52.5
+        },
+        "DOG": {
+          "coveredGames": 96,
+          "total": 121,
+          "median": 1.0
+        },
+        "HTNK": {
+          "coveredGames": 96,
+          "total": 368,
+          "median": 2.5
+        },
+        "HARV": {
+          "coveredGames": 96,
+          "total": 131,
+          "median": 2.0
+        }
+      },
+      "tankShots": {
+        "coveredGames": 96,
+        "total": 7312,
+        "median": 8.0
+      },
+      "dogShots": {
+        "coveredGames": 96,
+        "total": 30,
+        "median": 0.0
+      },
+      "firstTankTick": {
+        "coveredGames": 69,
+        "total": 359764,
+        "median": 5202
+      },
+      "firstTankShotTick": {
+        "coveredGames": 63,
+        "total": 579818,
+        "median": 9016
+      },
+      "sampledEscort": {
+        "gamesWithSampledAssignment": 0,
+        "gamesWithOnlyZeroUnitMissionRows": 0,
+        "gamesWithNoDogEscortMissionRows": 96,
+        "maximum": null
+      },
+      "dogTankDistance": {
+        "sampledDistances": 322,
+        "mean": 32.16352248798155
+      },
+      "damageBySourceType": {
+        "E2": {
+          "enemyHitPoints": 268675,
+          "enemyKills": 989,
+          "friendlyHitPoints": 118,
+          "friendlyKills": 0
+        },
+        "DOG": {
+          "enemyHitPoints": 2806,
+          "enemyKills": 30,
+          "friendlyHitPoints": 0,
+          "friendlyKills": 0
+        },
+        "HTNK": {
+          "enemyHitPoints": 388430,
+          "enemyKills": 1280,
+          "friendlyHitPoints": 423,
+          "friendlyKills": 0
+        }
+      },
+      "damageCoveredGames": 96,
+      "finalForce": {
+        "E2": {
+          "count": 758,
+          "hitPoints": 84383
+        },
+        "DOG": {
+          "count": 32,
+          "hitPoints": 2911
+        },
+        "HTNK": {
+          "count": 129,
+          "hitPoints": 30932
+        },
+        "HARV": {
+          "count": 129,
+          "hitPoints": 126352
+        }
+      },
+      "forceCoveredGames": 96
+    }
+  ],
+  "sovietCombatBothSides": [
+    {
+      "games": 72,
+      "produced": {
+        "E2": {
+          "coveredGames": 72,
+          "total": 2201,
+          "median": 27.0
+        },
+        "DOG": {
+          "coveredGames": 72,
+          "total": 197,
+          "median": 2.0
+        },
+        "HTNK": {
+          "coveredGames": 72,
+          "total": 381,
+          "median": 5.5
+        },
+        "HARV": {
+          "coveredGames": 72,
+          "total": 128,
+          "median": 2.0
+        }
+      },
+      "tankShots": {
+        "coveredGames": 72,
+        "total": 8687,
+        "median": 59.0
+      },
+      "dogShots": {
+        "coveredGames": 72,
+        "total": 122,
+        "median": 1.0
+      },
+      "firstTankTick": {
+        "coveredGames": 72,
+        "total": 284520,
+        "median": 3663.0
+      },
+      "firstTankShotTick": {
+        "coveredGames": 69,
+        "total": 402333,
+        "median": 4753
+      },
+      "sampledEscort": {
+        "gamesWithSampledAssignment": 0,
+        "gamesWithOnlyZeroUnitMissionRows": 0,
+        "gamesWithNoDogEscortMissionRows": 72,
+        "maximum": null
+      },
+      "dogTankDistance": {
+        "sampledDistances": 210,
+        "mean": 28.76262600809311
+      },
+      "damageBySourceType": {
+        "E2": {
+          "enemyHitPoints": 97358,
+          "enemyKills": 418,
+          "friendlyHitPoints": 253,
+          "friendlyKills": 0
+        },
+        "DOG": {
+          "enemyHitPoints": 13439,
+          "enemyKills": 122,
+          "friendlyHitPoints": 0,
+          "friendlyKills": 0
+        },
+        "HTNK": {
+          "enemyHitPoints": 428681,
+          "enemyKills": 1988,
+          "friendlyHitPoints": 1112,
+          "friendlyKills": 0
+        }
+      },
+      "damageCoveredGames": 72,
+      "finalForce": {
+        "E2": {
+          "count": 220,
+          "hitPoints": 24722
+        },
+        "DOG": {
+          "count": 12,
+          "hitPoints": 1103
+        },
+        "HTNK": {
+          "count": 103,
+          "hitPoints": 24233
+        },
+        "HARV": {
+          "count": 83,
+          "hitPoints": 81235
+        }
+      },
+      "forceCoveredGames": 72
+    },
+    {
+      "games": 72,
+      "produced": {
+        "E2": {
+          "coveredGames": 72,
+          "total": 2917,
+          "median": 52.0
+        },
+        "DOG": {
+          "coveredGames": 72,
+          "total": 95,
+          "median": 1.0
+        },
+        "HTNK": {
+          "coveredGames": 72,
+          "total": 324,
+          "median": 3.0
+        },
+        "HARV": {
+          "coveredGames": 72,
+          "total": 102,
+          "median": 2.0
+        }
+      },
+      "tankShots": {
+        "coveredGames": 72,
+        "total": 6837,
+        "median": 21.5
+      },
+      "dogShots": {
+        "coveredGames": 72,
+        "total": 29,
+        "median": 0.0
+      },
+      "firstTankTick": {
+        "coveredGames": 48,
+        "total": 247203,
+        "median": 5228.5
+      },
+      "firstTankShotTick": {
+        "coveredGames": 48,
+        "total": 454519,
+        "median": 9070.5
+      },
+      "sampledEscort": {
+        "gamesWithSampledAssignment": 0,
+        "gamesWithOnlyZeroUnitMissionRows": 0,
+        "gamesWithNoDogEscortMissionRows": 72,
+        "maximum": null
+      },
+      "dogTankDistance": {
+        "sampledDistances": 278,
+        "mean": 33.743102481323106
+      },
+      "damageBySourceType": {
+        "E2": {
+          "enemyHitPoints": 219846,
+          "enemyKills": 795,
+          "friendlyHitPoints": 118,
+          "friendlyKills": 0
+        },
+        "DOG": {
+          "enemyHitPoints": 2706,
+          "enemyKills": 29,
+          "friendlyHitPoints": 0,
+          "friendlyKills": 0
+        },
+        "HTNK": {
+          "enemyHitPoints": 366073,
+          "enemyKills": 1187,
+          "friendlyHitPoints": 358,
+          "friendlyKills": 0
+        }
+      },
+      "damageCoveredGames": 72,
+      "finalForce": {
+        "E2": {
+          "count": 618,
+          "hitPoints": 68133
+        },
+        "DOG": {
+          "count": 27,
+          "hitPoints": 2511
+        },
+        "HTNK": {
+          "count": 108,
+          "hitPoints": 24418
+        },
+        "HARV": {
+          "count": 109,
+          "hitPoints": 106352
+        }
+      },
+      "forceCoveredGames": 72
+    }
+  ],
+  "drawReasons": {
+    "tick-limit": 5
+  },
+  "rawReceipts": [
+    {
+      "shard": "short",
+      "sourceFile": "raw-short.json",
+      "sha256": "a2580f89333043ce29a412e93397cfda3c2e3fe2de0a868af2e47f3f1c8f7cc5",
+      "bytes": 32687152
+    },
+    {
+      "shard": "medium",
+      "sourceFile": "raw-medium.json",
+      "sha256": "0502e911f4a24db0a8dbab866df0d95a1cfe8ae006a08385488b386e0d872f8f",
+      "bytes": 36486316
+    }
+  ],
+  "reportArtifactSha256": {
+    "report.md": "6c2dfeccb21e8fc181b0f6e22ad09ab7f14849a3e2c739783d66f663a0eb167e",
+    "results.json": "8469a7fd5b6bceaffc675d1d761a6b9f281f229ab3bfac737894904f3be8cf36",
+    "strength-assessment.json": "9b27e44e3073c15f53e395644674868b36ed7c32d467dca0d649656447f5337e"
+  },
+  "zipReceipts": [
+    {
+      "artifactId": 12605966201,
+      "name": "ai-tactic-report",
+      "sourceFile": "run40208864202-ai-tactic-report.zip",
+      "sha256": "47ba8f150304f37c62040d66df9a2be6dd37c728d9a6ee6d8fd633558d088a95",
+      "source": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12605966201/zip",
+      "downloadMethod": "Connected GitHub artifact download and returned file-reference URL"
+    },
+    {
+      "artifactId": 12605492059,
+      "name": "ai-tactic-raw-medium",
+      "sourceFile": "run40208864202-ai-tactic-raw-medium.zip",
+      "sha256": "59e0884a9ae221761720e2727857455c3d477ab9bbe96201f1159888fb3d3380",
+      "source": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12605492059/zip",
+      "downloadMethod": "Connected GitHub artifact download and returned file-reference URL"
+    },
+    {
+      "artifactId": 12605436224,
+      "name": "ai-tactic-raw-short",
+      "sourceFile": "run40208864202-ai-tactic-raw-short.zip",
+      "sha256": "880d928ac686b53d6a61f47e8ae038ce9bf99a6c5bac2debcb2112b2d6d92ba6",
+      "source": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12605436224/zip",
+      "downloadMethod": "Connected GitHub artifact download and returned file-reference URL"
+    },
+    {
+      "artifactId": 12605043081,
+      "name": "ai-regression",
+      "sourceFile": "run40208864202-ai-regression.zip",
+      "sha256": "467a203dad3d898836bbd1699a66c5ed71cd42b19936866c38046dbd202c052a",
+      "source": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12605043081/zip",
+      "downloadMethod": "Connected GitHub artifact download and returned file-reference URL"
+    }
+  ],
+  "verificationTools": {
+    "frozenAggregatorCommit": "abc7f7eafad0e4c64eb1abb54cbc6c3e12761746",
+    "frozenAggregatorSha256": "38c5d49e24ddec7749a235d3698462b53962bdb2f49469ee91f65e459b024207",
+    "independentVerifierSha256": "9c8fce2bc1fa5102440054c3a27deb481172a394f3d2c223c37a81ada8bfb74d"
+  },
+  "jobs": [
+    {
+      "id": 121215592869,
+      "name": "regression",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 40208864202,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run oven-sh/setup-bun@v2",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Validate report integrity checks",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Run actions/cache@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Prepare real game resources",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Regression and real-engine mechanism tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Post Run actions/cache@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16
+        },
+        {
+          "name": "Post Run oven-sh/setup-bun@v2",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19
+        }
+      ]
+    },
+    {
+      "id": 121216213771,
+      "name": "tactic-screen (medium, tn01t2)",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 40208864202,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run oven-sh/setup-bun@v2",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Run actions/cache@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Prepare resources and dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Direct normal-economy matches, preserving raw results",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Post Run actions/cache@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Post Run oven-sh/setup-bun@v2",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        }
+      ]
+    },
+    {
+      "id": 121216213802,
+      "name": "tactic-screen (short, mp08t2)",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 40208864202,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run oven-sh/setup-bun@v2",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Run actions/cache@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Prepare resources and dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Direct normal-economy matches, preserving raw results",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Post Run actions/cache@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Post Run oven-sh/setup-bun@v2",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        }
+      ]
+    },
+    {
+      "id": 121216215102,
+      "name": "country-matrix",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 40208864202,
+      "logs_url": null,
+      "steps": null
+    },
+    {
+      "id": 121216215548,
+      "name": "report",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 40208864202,
+      "logs_url": null,
+      "steps": null
+    },
+    {
+      "id": 121222068119,
+      "name": "tactic-report",
+      "status": "completed",
+      "conclusion": "failure",
+      "run_id": 40208864202,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/download-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Verify direct schedule and assess development signal",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 4
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        }
+      ]
+    }
+  ],
+  "jobLogReceipts": [
+    {
+      "jobId": 121215592869,
+      "sourceFile": "job-121215592869.log",
+      "sha256": "fd2e047ff3c63099522f5484aa1d5582c560f12e1cc570fbe0b5a822b39aa691"
+    },
+    {
+      "jobId": 121216213771,
+      "sourceFile": "job-121216213771.log",
+      "sha256": "ff83a945ebdb35d187461f53a51cf6ae561d838c8d6bcf9c634a2b814877fae3"
+    },
+    {
+      "jobId": 121216213802,
+      "sourceFile": "job-121216213802.log",
+      "sha256": "ea5f73f01b5b5be2af99b32c7da5c7b15d19226dcc39123d2d3b39de4c0b4e23"
+    },
+    {
+      "jobId": 121222068119,
+      "sourceFile": "job-121222068119.log",
+      "sha256": "3041c718ff82d28cd782d77a58eb97ca0fbe749990f0481e3bff48640bd68859"
+    }
+  ],
+  "limitations": [
+    "Three variants independently face C18; these are not head-to-head wins over each other.",
+    "Only development data, not qualification, release approval, or human strength evidence.",
+    "Dog damage/counts/distances include scouts. Same production policy may yield different actual production after losses.",
+    "900-tick samples can miss assignments; deaths are not proof of tank-shot interception.",
+    "Baseline report records frozen commit/profile, not a separate dirty flag."
+  ],
+  "gamesFile": "reduced-only-games.jsonl",
+  "archivedFilesSha256": {
+    "reduced-only-games.jsonl": "94cc70bdb3d14e2d5ac25c4f9523e48e8b09fbaeb6dc8f9df7dc7f3d35c6b798"
+  },
+  "sourceCompactMetadataSha256": "d41729acdeaeb38a072d314202ee8fdc2c9edabf75bd48d6b69eedf555503304",
+  "rawAndZipFilesStoredInRepository": false
+}
