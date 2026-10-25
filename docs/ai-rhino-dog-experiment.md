@@ -45,6 +45,12 @@
 
 下一步冻结上述三个P1b版本，CI各自运行96局直接C18开发赛程，完成后按相同地图/种子/国家配对逐局对齐比较；至少要回答是否胜过C18、是否优于普通狗控制、是否优于只减兵。按两张地图拆成两个48局job以控制时长，原始报告分别保存在`ai-tactic-raw-short`/`ai-tactic-raw-medium`，`tactic-report`汇总核验全部96局后上传`ai-tactic-report`。报告失败若仅为`Candidate wins do not exceed current C18 wins`，表示完整有效对局但开发筛选未过，不能写成引擎错误。资格集仍未运行；当前master继续保留C18行为。
 
+2026-10-25已提交后台开发CI，三条共用workflow/engine `abc7f7eafad0e4c64eb1abb54cbc6c3e12761746`（与本地冻结版本共享模拟与benchmark无差异），各自的candidate_ref仍是表中冻结提交。下列为启动链接，**不代表已完成或达标**；结果必须等两个分片及汇总完整核验后另行归档，不与上表开发试验混合。
+
+- [减兵＋护卫狗：40208830355](https://github.com/chenxuan520/ra2web/actions/runs/40208830355)，candidate `af9360defba88d3a64d8b9f933480094b283f17f`。
+- [减兵＋普通进攻狗：40208845586](https://github.com/chenxuan520/ra2web/actions/runs/40208845586)，candidate `4ce57ad14bd5f546273b0bf1c624096b6ab0c3f1`。
+- [只减少动员兵：40208864202](https://github.com/chenxuan520/ra2web/actions/runs/40208864202)，candidate `11a21f01f151b81bcb09c96730f450c54be580b6`。
+
 ## 预先登记的开发步骤
 
 1. 同兵数真实引擎场景：双方各4犀牛2狗；DOG-MOVE和DOG-ESCORT分别面对普通AttackMove、C18原样CombatSquad，交换物理两侧。预置军队只验证机制与控制效果，不是完整经济胜率。保留不利结果。
