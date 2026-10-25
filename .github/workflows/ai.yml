@@ -47,7 +47,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: ai-${{ github.workflow }}-${{ github.ref }}
+  group: ai-${{ github.workflow }}-${{ github.ref }}-${{ inputs.candidate_ref || '' }}-${{ inputs.baseline_ref || '' }}-${{ inputs.baseline_profile || '' }}-${{ inputs.evaluation_set || '' }}-${{ inputs.comparison_mode || '' }}-${{ inputs.tactic_schedule || '' }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
