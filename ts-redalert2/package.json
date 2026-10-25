@@ -9,6 +9,7 @@
     "dev:bun": "bun --bun vite",
     "build": "bun --bun vite build",
     "test": "bun test",
+    "test:ai": "bun e2e/ai-benchmark.ts",
     "typecheck:entry": "bun --bun tsc -p tsconfig.build.json",
     "typecheck:server": "bun --bun tsc -p tsconfig.server.json",
     "start": "bun server/index.ts",

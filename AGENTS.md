@@ -16,6 +16,7 @@
 - Issue AI commands through the existing actions/production APIs. Preserve visibility rules, resource costs, prerequisites and unit ownership. Avoid repeatedly interrupting attack animations or pathfinding with redundant orders.
 - Preserve numeric enums, packet formats and shared simulation behavior used by online games and replays. Consider effects on saved lobby options when changing difficulty choices.
 - Keep normal and highest-difficulty behavior explicit. Stronger AI needs scenario-based evidence; do not claim unbeatable behavior based on unit tests alone.
+- Evaluate AI upgrades against a frozen historical bot and previous candidates in the real simulation. Use fixed seeds, swap starting positions, keep resources and game handicaps identical, and retain per-game metrics. Report time limits as draws, runtime failures as errors, and compare more than one map before generalizing win rates.
 - Do not commit game resource archives, dependencies, build outputs, credentials or local runtime data. Preserve existing license and attribution notices.
 
 ## Verification

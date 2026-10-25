@@ -98,6 +98,8 @@ bun test src/test/BrutalAiIntegration.test.ts src/test/BuiltInAiRuntime.test.ts 
 
 这些测试覆盖难度接入、经济恢复、兵种选择、集火和命令行为，不代表真人对战胜率。实战评估应固定地图、阵营、初始资金和游戏版本，分别验证快攻、空袭、矿车骚扰和阵地战；尚未建立“人类无法获胜”的对局证据。
 
+真实引擎对战与历史版本比较见 [AI 实战基准](ts-redalert2/e2e/README-ai.md)，攻略来源与待验证假设见 [AI 策略研究](docs/ai-research.md)。
+
 ## 许可与资源说明
 
 客户端的权利声明见 [客户端 README](ts-redalert2/README.md) 和 [客户端 LICENSE](ts-redalert2/LICENSE)；PvPGN 的许可见 [PvPGN LICENSE](pvpgn-server/LICENSE)。游戏资源的使用须遵循相应许可。
