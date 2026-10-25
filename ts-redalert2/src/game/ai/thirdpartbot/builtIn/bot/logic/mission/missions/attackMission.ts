@@ -107,8 +107,11 @@ export class AttackMission extends Mission<AttackFailReason> {
 
             // Start with the intended minimum mixed force once it is available;
             // do not erase the request just because producing it takes time.
+            const armor = this.getUnits(game).filter(unit => ["MTNK", "HTNK", "MGTK", "APOC"].includes(unit.name)).length;
+            const needsAirCover = (context.matchAwareness.getThreatCache?.()?.totalOffensiveAirThreat ?? 0) > 0;
             if (tick - this.preparationStartedAt >= MINIMUM_WAVE_WAIT_TICKS &&
-                this.getMissingUnits(game, this.getDesiredComposition(this.composition.minimumUnits, false)).length === 0) {
+                (this.getMissingUnits(game, this.getDesiredComposition(this.composition.minimumUnits, false)).length === 0 ||
+                    (!needsAirCover && armor >= Math.max(4, this.composition.minimumUnits)))) {
                 this.requestedUnitCount = this.composition.minimumUnits;
                 return this.startAttack(tick);
             }
@@ -170,14 +173,12 @@ export class AttackMission extends Mission<AttackFailReason> {
             return update;
         }
 
+        const approaching = context.difficulty === "brutal" && this.isApproachingTarget(game.getCurrentTick());
         if (foundTargets.length > 0) {
             this.lastTargetSeenAt = game.getCurrentTick();
             this.hasPickedNewTarget = false;
-        } else if (context.difficulty === "brutal" && this.isApproachingTarget(game.getCurrentTick())) {
-            // Large maps take longer to cross than the old 40-second timeout.
-            // Keep a progressing army en route; still release a genuinely stuck one.
-            return noop();
-        } else if (game.getCurrentTick() > this.lastTargetSeenAt + NO_TARGET_IDLE_TIMEOUT_TICKS) {
+        } else if (game.getCurrentTick() > this.lastTargetSeenAt + NO_TARGET_IDLE_TIMEOUT_TICKS &&
+            !approaching) {
             return disbandMission(AttackFailReason.NoTargets);
         } else if (
             !this.hasPickedNewTarget &&

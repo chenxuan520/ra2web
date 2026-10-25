@@ -94,7 +94,13 @@ export class QueueController {
             if (!option.harvester) continue;
             const logic = BUILDING_NAME_TO_RULES.get(option.name);
             if (!logic) continue;
-            const priority = logic.getPriority(game, playerData, option, threatCache);
+            let priority = logic.getPriority(game, playerData, option, threatCache);
+            if (context.difficulty === "brutal") {
+                const miners = game.getVisibleUnits(player.name, "self", rules => rules.harvester).length;
+                const refineries = game.getVisibleUnits(player.name, "self", rules => rules.refinery).length;
+                const desired = Math.min(6, refineries * 2);
+                if (miners < desired) priority = Math.max(priority, miners < 4 ? 80 : 60);
+            }
             if (priority > (requests.get(option.name)?.priority ?? 0)) {
                 requests.set(option.name, { priority, specificLocation: null });
             }
@@ -104,7 +110,7 @@ export class QueueController {
             if (situation.harvesters >= 1 && situation.enemy.infantry >= 8 &&
                 (situation.own.MTNK ?? 0) + (situation.own.HTNK ?? 0) < 2) {
                 const tank = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === "MTNK" || option.name === "HTNK");
-                if (tank) requests.set(tank.name, { priority: 80, specificLocation: null });
+                if (tank) requests.set(tank.name, { priority: 100, specificLocation: null });
             }
         }
         this.queueStates = QUEUES.map((queueType) => {

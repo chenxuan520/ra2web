@@ -71,6 +71,7 @@ export class BuiltInBot extends Bot {
             null,
             myPlayer.startLocation,
             (message, sayInGame) => this.logBotStatus(message, sayInGame),
+            this.difficulty === "brutal",
         );
 
         this._debugGridCaches = [

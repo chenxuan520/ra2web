@@ -332,7 +332,7 @@ export class MissionController {
     private updateRequestedUnitTypes(missingUnitTypeToHighestRequest: Record<string, UnitRequestWithMission>, expirePlacements = false) {
         // Decay the priority over time.
         for (const [unitType, currentRequest] of this.requestedUnitTypes.entries()) {
-            if (expirePlacements && currentRequest.specificLocation) {
+            if (expirePlacements) {
                 this.requestedUnitTypes.delete(unitType);
                 continue;
             }

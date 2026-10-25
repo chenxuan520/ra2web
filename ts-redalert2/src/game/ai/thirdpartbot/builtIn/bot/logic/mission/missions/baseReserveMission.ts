@@ -15,7 +15,9 @@ export class BaseReserveMission extends Mission {
         const start = game.getPlayerData(player.name).startLocation;
         const forward = matchAwareness.getMainRallyPoint().clone().sub(start);
         if (forward.length() > 4) forward.multiplyScalar(4 / forward.length());
-        const rally = start.clone().add(forward);
+        const rally = start.clone();
+        if (game.getPlayerData(player.name).country?.name === "Arabs") rally.sub(forward);
+        else rally.add(forward);
         rally.set(Math.round(rally.x), Math.round(rally.y));
         this.squad ??= new CombatSquad(rally, rally, 6, true);
         this.squad.setAttackArea(rally);
@@ -23,7 +25,8 @@ export class BaseReserveMission extends Mission {
         const available = context.player.production.getAvailableObjects();
         const infantry = available.find(rules => rules.name === "E1" || rules.name === "E2");
         if (!infantry) return noop();
-        const desired = infantry.name === "E1" ? 9 : 12;
+        const desired = infantry.name === "E1" ? 5 : game.getPlayerData(player.name).country?.name === "Arabs" ? 6 : 12;
+        if (this.getUnitIds().length >= desired) return noop();
         const owned = game.getVisibleUnits(player.name, "self", rules => rules.name === infantry.name).length;
         // Other defensive missions may temporarily borrow this reserve. Do not
         // replace borrowed soldiers with an unbounded stream of reinforcements.

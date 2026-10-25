@@ -12,7 +12,7 @@ import {
 import { GlobalThreat } from "./threat";
 import { getCachedTechnoRules } from "../common/rulesCache";
 
-export function calculateGlobalThreat(game: GameApi, playerData: PlayerData, visibleAreaPercent: number): GlobalThreat {
+export function calculateGlobalThreat(game: GameApi, playerData: PlayerData, visibleAreaPercent: number, accurateWeapons = false): GlobalThreat {
     let groundUnits = game.getVisibleUnits(
         playerData.name,
         "enemy",
@@ -24,14 +24,14 @@ export function calculateGlobalThreat(game: GameApi, playerData: PlayerData, vis
         .filter((unitId) => isAntiGround(game, unitId));
     let antiAirPower = game
         .getVisibleUnits(playerData.name, "enemy", (r) => r.type != ObjectType.Building)
-        .filter((unitId) => isAntiAir(game, unitId));
+        .filter((unitId) => isAntiAir(game, unitId, accurateWeapons));
 
     let ourAntiGroundUnits = game
         .getVisibleUnits(playerData.name, "self", (r) => r.isSelectableCombatant)
         .filter((unitId) => isAntiGround(game, unitId));
     let ourAntiAirUnits = game
         .getVisibleUnits(playerData.name, "self", (r) => r.isSelectableCombatant || r.type === ObjectType.Building)
-        .filter((unitId) => isAntiAir(game, unitId));
+        .filter((unitId) => isAntiAir(game, unitId, accurateWeapons));
     let ourGroundDefence = game
         .getVisibleUnits(playerData.name, "self", (r) => r.type === ObjectType.Building)
         .filter((unitId) => isAntiGround(game, unitId));
@@ -69,11 +69,11 @@ export function calculateGlobalThreat(game: GameApi, playerData: PlayerData, vis
 function isAntiGround(gameApi: GameApi, unitId: any): boolean {
     return testProjectile(gameApi, unitId, (p) => p.isAntiGround);
 }
-function isAntiAir(gameApi: GameApi, unitId: any): boolean {
-    return testProjectile(gameApi, unitId, (p) => p.isAntiAir);
+function isAntiAir(gameApi: GameApi, unitId: any, accurateWeapons = false): boolean {
+    return testProjectile(gameApi, unitId, (p) => p.isAntiAir, accurateWeapons);
 }
 
-function testProjectile(gameApi: GameApi, unitId: any, test: (p: ProjectileRules) => boolean) {
+function testProjectile(gameApi: GameApi, unitId: any, test: (p: ProjectileRules) => boolean, accurateWeapons = false) {
     const rules = getCachedTechnoRules(gameApi, unitId);
     if (!rules || !(rules.primary || rules.secondary)) {
         return false;
@@ -81,13 +81,13 @@ function testProjectile(gameApi: GameApi, unitId: any, test: (p: ProjectileRules
 
     const primaryWeapon = rules.primary ? gameApi.rulesApi.getWeapon(rules.primary) : null;
     const primaryProjectile = getProjectileRules(gameApi, primaryWeapon);
-    if (primaryProjectile && test(primaryProjectile)) {
+    if (primaryProjectile && test(primaryProjectile) && (!accurateWeapons || !primaryWeapon?.neverUse)) {
         return true;
     }
 
     const secondaryWeapon = rules.secondary ? gameApi.rulesApi.getWeapon(rules.secondary) : null;
     const secondaryProjectile = getProjectileRules(gameApi, secondaryWeapon);
-    if (secondaryProjectile && test(secondaryProjectile)) {
+    if (secondaryProjectile && test(secondaryProjectile) && (!accurateWeapons || !secondaryWeapon?.neverUse)) {
         return true;
     }
 

@@ -101,6 +101,7 @@ export class MatchAwarenessImpl implements MatchAwareness {
         private threatCache: GlobalThreat | null,
         private mainRallyPoint: Vector2,
         private logger: (message: string, sayInGame?: boolean) => void,
+        private accurateWeapons = false,
     ) {
         const mapSize = gameApi.mapApi.getRealMapSize();
         const diagonalBounds = getDiagonalMapBounds(gameApi.mapApi);
@@ -228,7 +229,7 @@ export class MatchAwarenessImpl implements MatchAwareness {
             if (visibility) {
                 this.logger(`${Math.round(visibility * 1000.0) / 10}% of tiles visible. Calculating threat.`);
                 // Update the global threat cache
-                this.threatCache = calculateGlobalThreat(game, playerData, visibility);
+                this.threatCache = calculateGlobalThreat(game, playerData, visibility, this.accurateWeapons);
 
                 // As the game approaches 2 hours, be more willing to attack. (15 ticks per second)
                 const gameLengthFactor = Math.max(0, 1.0 - game.getCurrentTick() / (15 * 7200.0));

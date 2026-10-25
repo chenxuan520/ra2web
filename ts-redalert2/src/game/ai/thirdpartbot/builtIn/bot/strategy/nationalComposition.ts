@@ -82,9 +82,7 @@ export function selectNationalComposition(
     const canSupport = (name: string) => available.has(name) &&
         (own[name] ?? 0) + (reservedSupport[name] ?? 0) < NATIONAL_SUPPORT_LIMITS[name];
     let specialist: string | undefined;
-    if (country === "Arabs" && canSupport("DESO") && (enemy.infantry >= 3 || enemy.vehicles >= 4)) {
-        specialist = "DESO";
-    } else if (country === "British" && canSupport("SNIPE") && enemy.infantry >= 3) {
+    if (country === "British" && canSupport("SNIPE") && enemy.infantry >= 3) {
         specialist = "SNIPE";
     } else if (country === "Germans" && canSupport("TNKD") && enemy.vehicles >= 3 && enemy.vehicles >= enemy.infantry) {
         specialist = "TNKD";

@@ -9,6 +9,7 @@ import { ParaDropSupport } from "../logic/mission/missions/paraDropSupport";
 import { SneakCaptureMissionFactory } from "../logic/mission/missions/sneakCaptureMission";
 import { ensureBaseReserve } from "../logic/mission/missions/baseReserveMission";
 import { MinerDefence } from "../logic/mission/missions/minerDefence";
+import { ensureRadiationGuard } from "../logic/mission/missions/radiationGuardMission";
 import { SupabotContext } from "../logic/common/context";
 import { MissionController } from "../logic/mission/missionController";
 import { DebugLogger } from "../logic/common/utils";
@@ -109,6 +110,7 @@ export class DefaultStrategy implements Strategy {
         this.paraDropSupport.onAiUpdate(context);
         this.minerDefence.onAiUpdate(context);
         ensureBaseReserve(context, missionController, logger);
+        ensureRadiationGuard(context, missionController, logger);
         this.expansionFactory.maybeCreateMissions(context, missionController, logger);
         this.scoutingFactory.maybeCreateMissions(context, missionController, logger);
 
@@ -141,6 +143,15 @@ export class DefaultStrategy implements Strategy {
 
         if (context.difficulty === "brutal") {
             const situation = readStrategicSituation(context.game, playerData);
+            const threat = context.matchAwareness.getThreatCache();
+            if (validCompositions.includes("rocketeers") && (situation.own.JUMPJET ?? 0) < 8 &&
+                (threat?.totalOffensiveAntiAirThreat ?? 0) < Math.max(3, (threat?.totalAvailableAirPower ?? 0) * 0.6)) {
+                return { ...DEFAULT_COMPOSITIONS.rocketeers, maximumUnits: 4 };
+            }
+            if (validCompositions.includes("kirovs") && (situation.own.ZEP ?? 0) < 2 &&
+                (threat?.totalOffensiveAntiAirThreat ?? 0) < Math.max(6, (threat?.totalAvailableAirPower ?? 0) * 0.8)) {
+                return { ...DEFAULT_COMPOSITIONS.kirovs, maximumUnits: 2 };
+            }
             const reservedSupport: Record<string, number> = {};
             for (const mission of missionController.getMissions()) {
                 if (mission instanceof AttackMission) {
