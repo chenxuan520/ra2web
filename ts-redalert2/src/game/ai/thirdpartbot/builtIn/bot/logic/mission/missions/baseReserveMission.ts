@@ -17,7 +17,7 @@ export class BaseReserveMission extends Mission {
         if (forward.length() > 4) forward.multiplyScalar(4 / forward.length());
         const rally = start.clone().add(forward);
         rally.set(Math.round(rally.x), Math.round(rally.y));
-        this.squad ??= new CombatSquad(rally, rally, 20);
+        this.squad ??= new CombatSquad(rally, rally, 6, true);
         this.squad.setAttackArea(rally);
         this.squad.onAiUpdate(context, this, this.logger);
         const available = context.player.production.getAvailableObjects();
@@ -33,7 +33,7 @@ export class BaseReserveMission extends Mission {
         return requestUnits({ [infantry.name]: 1 });
     }
 
-    isUnitsLocked() { return false; }
+    isUnitsLocked() { return true; }
     getPriority() { return 12; }
     getGlobalDebugText() { return this.squad?.getGlobalDebugText() ?? "base reserve"; }
 }

@@ -102,7 +102,7 @@ export class QueueController {
         if (context.difficulty === "brutal") {
             const situation = readStrategicSituation(game, playerData);
             if (situation.harvesters >= 1 && situation.enemy.infantry >= 8 &&
-                (situation.own.MTNK ?? 0) + (situation.own.HTNK ?? 0) === 0) {
+                (situation.own.MTNK ?? 0) + (situation.own.HTNK ?? 0) < 2) {
                 const tank = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === "MTNK" || option.name === "HTNK");
                 if (tank) requests.set(tank.name, { priority: 80, specificLocation: null });
             }

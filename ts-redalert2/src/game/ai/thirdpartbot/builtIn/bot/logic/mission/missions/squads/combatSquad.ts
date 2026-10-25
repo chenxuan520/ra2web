@@ -63,6 +63,7 @@ export class CombatSquad implements Squad {
         private rallyArea: Vector2,
         private targetArea: Vector2,
         private radius: number,
+        private defendArea = false,
     ) {}
 
     public getGlobalDebugText(): string | undefined {
@@ -170,7 +171,8 @@ export class CombatSquad implements Squad {
                         .map(({ unitId }) => {
                             if (!unitDataCache.has(unitId)) unitDataCache.set(unitId, game.getUnitData(unitId));
                             return unitDataCache.get(unitId);
-                        }).filter((target): target is UnitData => !!target && !isOwnedByNeutral(target)) : nearbyHostiles;
+                        }).filter((target): target is UnitData => !!target && !isOwnedByNeutral(target) &&
+                            (!this.defendArea || targetPoint.distanceTo(new Vector2(target.tile.rx, target.tile.ry)) <= this.radius)) : nearbyHostiles;
                     if (brutal) {
                         const deployment = this.desolatorTactics.decide(context, unit, hostiles, units, targetPoint);
                         if (deployment.handled) {

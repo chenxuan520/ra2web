@@ -43,6 +43,7 @@ const MAX_PREPARATION_TICKS = 5 * 60 * 15;
  */
 export class AttackMission extends Mission<AttackFailReason> {
     private squad: CombatSquad;
+    private preparingSquad: CombatSquad;
 
     private lastTargetSeenAt = 0;
     private hasPickedNewTarget: boolean = false;
@@ -53,6 +54,8 @@ export class AttackMission extends Mission<AttackFailReason> {
     private preparationStartedAt: number | null = null;
     private lastReinforcementAt: number | null = null;
     private previousPreparingUnitCount = 0;
+    private closestApproach = Infinity;
+    private lastApproachProgressAt = 0;
 
     constructor(
         uniqueName: string,
@@ -65,6 +68,7 @@ export class AttackMission extends Mission<AttackFailReason> {
     ) {
         super(uniqueName, logger);
         this.squad = new CombatSquad(rallyArea, attackArea, radius);
+        this.preparingSquad = new CombatSquad(rallyArea, rallyArea, 18, true);
         this.requestedUnitCount = composition.maximumUnits;
     }
 
@@ -83,6 +87,10 @@ export class AttackMission extends Mission<AttackFailReason> {
         const { game } = context;
         const tick = game.getCurrentTick();
         const brutal = context.difficulty === "brutal";
+        if (brutal && this.getUnitIds().length) {
+            this.preparingSquad.setAttackArea(context.matchAwareness.getMainRallyPoint());
+            this.preparingSquad.onAiUpdate(context, this, this.logger);
+        }
         if (!brutal) this.decayDesiredCompositionIfNeeded(game);
         if (this.requestedUnitCount < this.composition.minimumUnits) {
             return disbandMission(AttackFailReason.UnableToAcquireUnits);
@@ -137,6 +145,8 @@ export class AttackMission extends Mission<AttackFailReason> {
         this.state = AttackMissionState.Attacking;
         this.lastTargetSeenAt = tick;
         this.hasPickedNewTarget = false;
+        this.closestApproach = Infinity;
+        this.lastApproachProgressAt = tick;
         return noop();
     }
 
@@ -163,6 +173,10 @@ export class AttackMission extends Mission<AttackFailReason> {
         if (foundTargets.length > 0) {
             this.lastTargetSeenAt = game.getCurrentTick();
             this.hasPickedNewTarget = false;
+        } else if (context.difficulty === "brutal" && this.isApproachingTarget(game.getCurrentTick())) {
+            // Large maps take longer to cross than the old 40-second timeout.
+            // Keep a progressing army en route; still release a genuinely stuck one.
+            return noop();
         } else if (game.getCurrentTick() > this.lastTargetSeenAt + NO_TARGET_IDLE_TIMEOUT_TICKS) {
             return disbandMission(AttackFailReason.NoTargets);
         } else if (
@@ -175,10 +189,23 @@ export class AttackMission extends Mission<AttackFailReason> {
                 this.squad.setAttackArea(newTarget);
                 this.lastTargetSeenAt = game.getCurrentTick();
                 this.hasPickedNewTarget = true;
+                this.closestApproach = Infinity;
+                this.lastApproachProgressAt = game.getCurrentTick();
             }
         }
 
         return noop();
+    }
+
+    private isApproachingTarget(tick: number) {
+        const center = this.getCenterOfMass();
+        if (!center) return false;
+        const distance = center.distanceTo(this.attackArea);
+        if (distance < this.closestApproach - 1) {
+            this.closestApproach = distance;
+            this.lastApproachProgressAt = tick;
+        }
+        return distance > this.radius && tick - this.lastApproachProgressAt < 1800;
     }
 
     private handleRetreatingState(context: MissionContext) {
