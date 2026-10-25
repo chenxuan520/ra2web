@@ -6,6 +6,7 @@ import { AttackMission, AttackMissionFactory } from "../logic/mission/missions/a
 import { DefenceMissionFactory } from "../logic/mission/missions/defenceMission";
 import { EngineerMissionFactory } from "../logic/mission/missions/engineerMission";
 import { ParaDropSupport } from "../logic/mission/missions/paraDropSupport";
+import { SneakCaptureMissionFactory } from "../logic/mission/missions/sneakCaptureMission";
 import { SupabotContext } from "../logic/common/context";
 import { MissionController } from "../logic/mission/missionController";
 import { DebugLogger } from "../logic/common/utils";
@@ -99,6 +100,7 @@ export class DefaultStrategy implements Strategy {
     private defenceFactory = new DefenceMissionFactory();
     private engineerFactory = new EngineerMissionFactory();
     private paraDropSupport = new ParaDropSupport();
+    private sneakCaptureFactory = new SneakCaptureMissionFactory();
 
     onAiUpdate(context: SupabotContext, missionController: MissionController, logger: DebugLogger) {
         this.paraDropSupport.onAiUpdate(context);
@@ -112,6 +114,7 @@ export class DefaultStrategy implements Strategy {
 
         this.defenceFactory.maybeCreateMissions(context, missionController, logger);
         this.engineerFactory.maybeCreateMissions(context, missionController, logger);
+        this.sneakCaptureFactory.maybeCreateMissions(context, missionController, logger);
 
         return this;
     }

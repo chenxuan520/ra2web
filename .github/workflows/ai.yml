@@ -1,0 +1,147 @@
+name: AI validation
+
+on:
+  push:
+    branches: [master]
+    paths: ['ts-redalert2/**', '.github/workflows/ai.yml', '.github/scripts/**']
+  pull_request:
+    paths: ['ts-redalert2/**', '.github/workflows/ai.yml', '.github/scripts/**']
+  schedule:
+    - cron: '0 3 * * 1'
+  workflow_dispatch:
+    inputs:
+      full_matrix:
+        description: Run all 432 country games
+        type: boolean
+        default: true
+      baseline_ref:
+        description: Frozen baseline bot commit
+        type: string
+        default: '04a9f7a'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ai-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  BUN_VERSION: '1.3.14'
+  RA2_BENCHMARK_CDN: ${{ github.workspace }}/.cache/ai-resources/cdn
+  AI_BASELINE_REF: ${{ inputs.baseline_ref || '04a9f7a' }}
+
+jobs:
+  regression:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+      - name: Install dependencies
+        working-directory: ts-redalert2
+        run: bun install --frozen-lockfile
+      - name: Validate report integrity checks
+        run: python -B -m unittest discover -s .github/scripts -p 'test_*.py'
+      - uses: actions/cache@v4
+        with:
+          path: .cache/ai-resources/cdn
+          key: ai-resources-541828fa-${{ hashFiles('ts-redalert2/deploy/prepare-resources.ts') }}
+      - name: Prepare real game resources
+        run: |
+          command -v 7z >/dev/null || { sudo apt-get update && sudo apt-get install -y p7zip-full; }
+          bash .github/scripts/prepare-ai-resources.sh
+      - name: Regression and real-engine mechanism tests
+        working-directory: ts-redalert2
+        run: |
+          mkdir -p /tmp/opencode
+          bun test
+          bun run typecheck:entry
+          bun run typecheck:server
+          bun --bun tsc -p e2e/tsconfig.ai-benchmark.json
+          bun --bun tsc -p e2e/tsconfig.ai-sneak-capture-scenario.json
+          bun run build
+          bun e2e/ai-harassment-scenario.ts --out .artifacts/ai-ci/harassment.json
+          bun e2e/ai-sneak-capture-scenario.ts --out .artifacts/ai-ci/sneak-capture.json
+          bun e2e/ai-tournament.ts --candidate-ref "$GITHUB_SHA" --baseline-ref "$AI_BASELINE_REF" \
+            --countries Americans,Russians --scenarios mp08t2:909 --max-ticks 3000 \
+            --concurrency 2 --out .artifacts/ai-ci/smoke
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ai-regression
+          path: ts-redalert2/.artifacts/ai-ci/
+          retention-days: 14
+
+  country-matrix:
+    needs: regression
+    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.full_matrix)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - id: short
+            scenario: mp08t2:10111
+          - id: medium
+            scenario: tn01t2:20222
+          - id: long
+            scenario: mp11t2:30333
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+      - uses: actions/cache@v4
+        with:
+          path: .cache/ai-resources/cdn
+          key: ai-resources-541828fa-${{ hashFiles('ts-redalert2/deploy/prepare-resources.ts') }}
+      - name: Prepare resources and dependencies
+        run: |
+          command -v 7z >/dev/null || { sudo apt-get update && sudo apt-get install -y p7zip-full; }
+          cd ts-redalert2
+          bun install --frozen-lockfile
+          cd ..
+          bash .github/scripts/prepare-ai-resources.sh
+      - name: Real country matches
+        working-directory: ts-redalert2
+        env:
+          AI_SCENARIO: ${{ matrix.scenario }}
+          AI_SHARD: ${{ matrix.id }}
+        run: |
+          bun e2e/ai-tournament.ts --candidate-ref "$GITHUB_SHA" --baseline-ref "$AI_BASELINE_REF" \
+            --scenarios "$AI_SCENARIO" --concurrency 2 --out ".artifacts/ai-ci/country-$AI_SHARD"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ai-country-${{ matrix.id }}
+          path: ts-redalert2/.artifacts/ai-ci/country-${{ matrix.id }}/
+          retention-days: 14
+
+  report:
+    needs: country-matrix
+    if: always() && needs.country-matrix.result != 'skipped'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: ai-country-*
+          path: collected
+      - name: Verify complete matrix and build report
+        run: |
+          python .github/scripts/summarize-ai-matrix.py collected ai-report
+          cat ai-report/report.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ai-country-report
+          path: ai-report/
+          retention-days: 30
