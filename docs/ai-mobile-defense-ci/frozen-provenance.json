@@ -1,0 +1,39 @@
+{
+  "engineWorkflowCommit": "d2b35e17636775cdecc445254c6a6215f5f371d1",
+  "candidateCommit": "356d35b7271d14a37380585f4f809ccd19703757",
+  "candidateTsRedalert2Tree": "ae5e9e32216d37c9c8bdcd2594656b0d39a948b6",
+  "engineTsRedalert2Tree": "ae5e9e32216d37c9c8bdcd2594656b0d39a948b6",
+  "source": "Read-only git rev-parse COMMIT:ts-redalert2 in repository",
+  "checkedAt": "2026-10-25T19:06:03.091Z",
+  "runConfigurations": [
+    {
+      "run_id": 40220773947,
+      "name": "mobile-defense-vs-C18",
+      "candidate": "356d35b7271d14a37380585f4f809ccd19703757",
+      "baseline": "c18f77650e40b668064bdb913a75bebfa278f42b",
+      "engine": "d2b35e17636775cdecc445254c6a6215f5f371d1",
+      "candidateProfile": "brutal",
+      "baselineProfile": "brutal"
+    },
+    {
+      "run_id": 40220791598,
+      "name": "mobile-defense-vs-prototype",
+      "candidate": "356d35b7271d14a37380585f4f809ccd19703757",
+      "baseline": "635c3f08f1e7117bd8b50f96e91d4c03a059f00a",
+      "engine": "d2b35e17636775cdecc445254c6a6215f5f371d1",
+      "candidateProfile": "brutal",
+      "baselineProfile": "brutal"
+    },
+    {
+      "run_id": 40220807793,
+      "name": "C18-self-control",
+      "candidate": "c18f77650e40b668064bdb913a75bebfa278f42b",
+      "baseline": "c18f77650e40b668064bdb913a75bebfa278f42b",
+      "engine": "d2b35e17636775cdecc445254c6a6215f5f371d1",
+      "candidateProfile": "brutal",
+      "baselineProfile": "brutal"
+    }
+  ],
+  "qualification": false,
+  "noAutomationModified": true
+}

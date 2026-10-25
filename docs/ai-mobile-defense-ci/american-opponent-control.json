@@ -1,0 +1,11 @@
+{
+  "games": 24,
+  "equalSelectedObservationGames": 24,
+  "fieldsCompared": [
+    "result",
+    "ticks",
+    "observations",
+    "mobileEvidence"
+  ],
+  "interpretation": "Same N5 candidate faces American opponents in separate C18 and635 archived bot snapshots; descriptive equality only."
+}

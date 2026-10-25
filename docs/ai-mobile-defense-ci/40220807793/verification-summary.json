@@ -1,0 +1,136 @@
+{
+  "runId": 40220807793,
+  "variant": "C18-self-control",
+  "candidateCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+  "baselineCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+  "totals": {
+    "games": 96,
+    "wins": 43,
+    "losses": 43,
+    "draws": 10,
+    "errors": 0,
+    "winRate": 0.4479166666666667,
+    "decisiveWinRate": 0.5,
+    "scoreWithHalfDraws": 0.5
+  },
+  "byCountry": {
+    "Americans": {
+      "games": 24,
+      "wins": 19,
+      "losses": 5,
+      "draws": 0,
+      "errors": 0,
+      "winRate": 0.7916666666666666,
+      "decisiveWinRate": 0.7916666666666666,
+      "scoreWithHalfDraws": 0.7916666666666666
+    },
+    "Arabs": {
+      "games": 36,
+      "wins": 15,
+      "losses": 17,
+      "draws": 4,
+      "errors": 0,
+      "winRate": 0.4166666666666667,
+      "decisiveWinRate": 0.46875,
+      "scoreWithHalfDraws": 0.4722222222222222
+    },
+    "Russians": {
+      "games": 36,
+      "wins": 9,
+      "losses": 21,
+      "draws": 6,
+      "errors": 0,
+      "winRate": 0.25,
+      "decisiveWinRate": 0.3,
+      "scoreWithHalfDraws": 0.3333333333333333
+    }
+  },
+  "byMap": {
+    "mp08t2": {
+      "games": 48,
+      "wins": 24,
+      "losses": 24,
+      "draws": 0,
+      "errors": 0,
+      "winRate": 0.5,
+      "decisiveWinRate": 0.5,
+      "scoreWithHalfDraws": 0.5
+    },
+    "tn01t2": {
+      "games": 48,
+      "wins": 19,
+      "losses": 19,
+      "draws": 10,
+      "errors": 0,
+      "winRate": 0.3958333333333333,
+      "decisiveWinRate": 0.5,
+      "scoreWithHalfDraws": 0.5
+    }
+  },
+  "bySeed": {
+    "610101": {
+      "games": 32,
+      "wins": 14,
+      "losses": 14,
+      "draws": 4,
+      "errors": 0,
+      "winRate": 0.4375,
+      "decisiveWinRate": 0.5,
+      "scoreWithHalfDraws": 0.5
+    },
+    "610202": {
+      "games": 32,
+      "wins": 14,
+      "losses": 14,
+      "draws": 4,
+      "errors": 0,
+      "winRate": 0.4375,
+      "decisiveWinRate": 0.5,
+      "scoreWithHalfDraws": 0.5
+    },
+    "610303": {
+      "games": 32,
+      "wins": 15,
+      "losses": 15,
+      "draws": 2,
+      "errors": 0,
+      "winRate": 0.46875,
+      "decisiveWinRate": 0.5,
+      "scoreWithHalfDraws": 0.5
+    }
+  },
+  "sovietOnly": {
+    "games": 72,
+    "wins": 24,
+    "losses": 38,
+    "draws": 10,
+    "errors": 0,
+    "winRate": 0.3333333333333333,
+    "decisiveWinRate": 0.3870967741935484,
+    "scoreWithHalfDraws": 0.4027777777777778
+  },
+  "screeningPositive": false,
+  "qualified": false,
+  "invariants": {
+    "validGames": 96,
+    "uniqueGames": 96,
+    "errors": 0,
+    "missing": 0,
+    "gamesPerMap": 48,
+    "seeds": [
+      610101,
+      610202,
+      610303
+    ],
+    "pairedCountryCases": 8,
+    "swapsPerCase": 2,
+    "expectedSkippedJobs": [
+      "country-matrix",
+      "report"
+    ],
+    "independentReportBytesIdentical": true,
+    "rawSha256Verified": true
+  },
+  "controlSanity": true,
+  "selfControlReversedIdentityMismatchCount": 0
+}

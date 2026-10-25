@@ -1,0 +1,128 @@
+{
+  "files": {
+    "40220773947/compact-games.jsonl": {
+      "bytes": 679031,
+      "sha256": "4e56c4fdde8ca2b7a57e383163f3a6456103c96a53c9fbb9123b21c91ecb170e"
+    },
+    "40220773947/compact-metadata.json": {
+      "bytes": 73046,
+      "sha256": "b5e1af966efbc8b05c1454e61c7fb5ddbcd4bf54190a6b235814217ec0e55854"
+    },
+    "40220773947/features.games.jsonl": {
+      "bytes": 90486,
+      "sha256": "40e58f6f773f66bd4a80e735a8222576a68871881a86a493a9446d7e576e53e0"
+    },
+    "40220773947/verification-summary.json": {
+      "bytes": 3008,
+      "sha256": "f4eada71b75fd2ac392b6ae67295f89aa411b0f6c2831245700a8e3a87569fd4"
+    },
+    "40220791598/compact-games.jsonl": {
+      "bytes": 701316,
+      "sha256": "ff4fcce234a4ba2b15efce40e185dd46930b6dcb3687c50264236ddb8ba8289b"
+    },
+    "40220791598/compact-metadata.json": {
+      "bytes": 73539,
+      "sha256": "1a99a84d3d3a9404a4066719a335d3af456d4cb8ded6cb61574f6b6fe090a7aa"
+    },
+    "40220791598/features.games.jsonl": {
+      "bytes": 90492,
+      "sha256": "80c9d2b5a18849188c2f1adea8370bd285ec2c70cd48e80ef7a6a2827eff6ca0"
+    },
+    "40220791598/verification-summary.json": {
+      "bytes": 3005,
+      "sha256": "2a893b091ace776e45f326f71b596920484fe0543205301da35bc9011f7d6c0b"
+    },
+    "40220807793/compact-games.jsonl": {
+      "bytes": 668121,
+      "sha256": "e0fe87bd8daa884c7d00dec61208328507d6cf9cfa5958261482c1d850249542"
+    },
+    "40220807793/compact-metadata.json": {
+      "bytes": 72744,
+      "sha256": "7e5c55d3f4d3bcd2b6ec257eda1c0f7cddf96777b37f78bb225a4abb2654f33c"
+    },
+    "40220807793/features.games.jsonl": {
+      "bytes": 90488,
+      "sha256": "65758bdddba17709f368ec0c73e62c1943d7ccdc7fe89ad573d1e314f2acdcb5"
+    },
+    "40220807793/verification-summary.json": {
+      "bytes": 2921,
+      "sha256": "8790cd1826e75d4e7f766b4efc07a5d7d18198af3928c17e3a6294761eb13879"
+    },
+    "american-opponent-control.json": {
+      "bytes": 292,
+      "sha256": "534ea52ac2eee7bee72b6bd7ea9e6ae8c2383438e410c9bf45849f88b06d6e80"
+    },
+    "batch-summary.json": {
+      "bytes": 241668,
+      "sha256": "5a72a3ed2c3c5fe0d2212ddba23719479aa524bbdeb0645305de4d2a763ed77a"
+    },
+    "feature-summary.json": {
+      "bytes": 7561,
+      "sha256": "eccf547862da01eb1f911f07f918e9eb18a19ac8883b95665858f01aa23b97cf"
+    },
+    "frozen-provenance.json": {
+      "bytes": 1495,
+      "sha256": "066373c67673dbec7af69ea8a145db1111d1aedc36794a27ae00363835f8624a"
+    },
+    "github-snapshot.json": {
+      "bytes": 38498,
+      "sha256": "172bdfbabdfe558054e205aa77d26e8393b0a353f97ed45fc187acc891102ed8"
+    },
+    "matched-comparisons.json": {
+      "bytes": 213396,
+      "sha256": "07cd97dc22181ae6bdbf1ebbfd5c044b3d34afc15e54e10d83945fb7615d5834"
+    },
+    "report.md": {
+      "bytes": 8987,
+      "sha256": "7c9448df5e9273166a2f47eef8045df39000ed649c6361d8522b5040fa9f86b6"
+    }
+  },
+  "rawReportsAndZipReceipts": {
+    "40220773947": [
+      {
+        "shard": "short",
+        "path": "40220773947/ai-tactic-raw-short/raw-short.json",
+        "sha256": "a8a3617503b033e9fce6ccfeabecbb25cc9bb9e197ddd3e4a0c1b7a012257270",
+        "bytes": 33643635
+      },
+      {
+        "shard": "medium",
+        "path": "40220773947/ai-tactic-raw-medium/raw-medium.json",
+        "sha256": "18c39921ff767c3a8d02c643a62eb94ea0d95da0e472598461809fc0a667b391",
+        "bytes": 41209825
+      }
+    ],
+    "40220791598": [
+      {
+        "shard": "short",
+        "path": "40220791598/ai-tactic-raw-short/raw-short.json",
+        "sha256": "5d7b728d6a3636d295e1a340c8016f713bf86e8d9c641588b112152b3fc95cdf",
+        "bytes": 51901038
+      },
+      {
+        "shard": "medium",
+        "path": "40220791598/ai-tactic-raw-medium/raw-medium.json",
+        "sha256": "c82042374bab9a6be3a6297ad90ea1d47e725c0a26948b4a48697f0f53bb03bc",
+        "bytes": 48856896
+      }
+    ],
+    "40220807793": [
+      {
+        "shard": "short",
+        "path": "40220807793/ai-tactic-raw-short/raw-short.json",
+        "sha256": "1e5503924ea0cbaab0e73073457c7e32778133b6eac807990ab6c0b32956cd45",
+        "bytes": 30593213
+      },
+      {
+        "shard": "medium",
+        "path": "40220807793/ai-tactic-raw-medium/raw-medium.json",
+        "sha256": "bd4008fea9a728e13c20ee80c6411877c1c9fc3b59eb6663f3eb79a14c652a2f",
+        "bytes": 40030574
+      }
+    ]
+  },
+  "notes": [
+    "Compact game bytes are unchanged from the independently verified child archive.",
+    "Metadata local path prefixes are normalized; raw report and original ZIP/report digests are retained unchanged."
+  ]
+}

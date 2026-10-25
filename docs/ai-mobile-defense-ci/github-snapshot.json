@@ -1,0 +1,1184 @@
+{
+  "fetchedAt": "2026-10-25T19:33:55.757Z",
+  "runs": [
+    {
+      "runId": 40220773947,
+      "jobs": [
+        {
+          "id": 121251672561,
+          "name": "regression",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 40220773947,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Install dependencies",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Validate report integrity checks",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Run actions/cache@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Prepare real game resources",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Regression and real-engine mechanism tests",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Post Run actions/cache@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 16
+            },
+            {
+              "name": "Post Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 17
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 18
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 19
+            }
+          ]
+        },
+        {
+          "id": 121252358833,
+          "name": "tactic-screen (short, mp08t2)",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 40220773947,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/cache@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Prepare resources and dependencies",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Direct normal-economy matches, preserving raw results",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Post Run actions/cache@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Post Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            }
+          ]
+        },
+        {
+          "id": 121252358878,
+          "name": "tactic-screen (medium, tn01t2)",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 40220773947,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/cache@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Prepare resources and dependencies",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Direct normal-economy matches, preserving raw results",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Post Run actions/cache@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Post Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            }
+          ]
+        },
+        {
+          "id": 121252360058,
+          "name": "country-matrix",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 40220773947,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 121252360513,
+          "name": "report",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 40220773947,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 121259998465,
+          "name": "tactic-report",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 40220773947,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/download-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Verify direct schedule and assess development signal",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            }
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 12610377435,
+          "name": "ai-tactic-raw-medium",
+          "size_in_bytes": 2061665,
+          "url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12610377435",
+          "archive_download_url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12610377435/zip",
+          "expired": false,
+          "created_at": "2026-10-25T18:55:05Z",
+          "expires_at": "2026-11-24T18:55:04Z",
+          "updated_at": "2026-10-25T18:55:05Z",
+          "digest": "sha256:ae85ee1f3549509f1f9eaca86fa4c6bc5ed0b49dcd3bad9ebd6a031a91d42f34",
+          "workflow_run": {
+            "id": 40220773947,
+            "repository_id": 1429377314,
+            "head_repository_id": 1429377314,
+            "head_branch": "feature/ai-rhino-dog",
+            "head_sha": "d2b35e17636775cdecc445254c6a6215f5f371d1"
+          }
+        },
+        {
+          "id": 12610178154,
+          "name": "ai-tactic-report",
+          "size_in_bytes": 44096,
+          "url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12610178154",
+          "archive_download_url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12610178154/zip",
+          "expired": false,
+          "created_at": "2026-10-25T18:55:13Z",
+          "expires_at": "2026-11-24T18:55:13Z",
+          "updated_at": "2026-10-25T18:55:13Z",
+          "digest": "sha256:7b1f02dec638191e756246b4e468667942f673f238cae14e1c7e5f08044f8f67",
+          "workflow_run": {
+            "id": 40220773947,
+            "repository_id": 1429377314,
+            "head_repository_id": 1429377314,
+            "head_branch": "feature/ai-rhino-dog",
+            "head_sha": "d2b35e17636775cdecc445254c6a6215f5f371d1"
+          }
+        },
+        {
+          "id": 12609697192,
+          "name": "ai-tactic-raw-short",
+          "size_in_bytes": 1799937,
+          "url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12609697192",
+          "archive_download_url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12609697192/zip",
+          "expired": false,
+          "created_at": "2026-10-25T18:42:06Z",
+          "expires_at": "2026-11-24T18:42:05Z",
+          "updated_at": "2026-10-25T18:42:06Z",
+          "digest": "sha256:3094b1e02b85ba37c2d055ebdfa63882d79e38266123a25c3d019f81acb76798",
+          "workflow_run": {
+            "id": 40220773947,
+            "repository_id": 1429377314,
+            "head_repository_id": 1429377314,
+            "head_branch": "feature/ai-rhino-dog",
+            "head_sha": "d2b35e17636775cdecc445254c6a6215f5f371d1"
+          }
+        },
+        {
+          "id": 12608837980,
+          "name": "ai-regression",
+          "size_in_bytes": 31273,
+          "url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12608837980",
+          "archive_download_url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12608837980/zip",
+          "expired": false,
+          "created_at": "2026-10-25T18:23:17Z",
+          "expires_at": "2026-11-08T18:23:15Z",
+          "updated_at": "2026-10-25T18:23:17Z",
+          "digest": "sha256:4d3211bc3f3e017ef0ab61d737b444733dc4fa6dcfc4e1a7e2dff26bdc4b9929",
+          "workflow_run": {
+            "id": 40220773947,
+            "repository_id": 1429377314,
+            "head_repository_id": 1429377314,
+            "head_branch": "feature/ai-rhino-dog",
+            "head_sha": "d2b35e17636775cdecc445254c6a6215f5f371d1"
+          }
+        }
+      ]
+    },
+    {
+      "runId": 40220791598,
+      "jobs": [
+        {
+          "id": 121251723173,
+          "name": "regression",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 40220791598,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Install dependencies",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Validate report integrity checks",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Run actions/cache@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Prepare real game resources",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Regression and real-engine mechanism tests",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Post Run actions/cache@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 16
+            },
+            {
+              "name": "Post Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 17
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 18
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 19
+            }
+          ]
+        },
+        {
+          "id": 121252345006,
+          "name": "tactic-screen (short, mp08t2)",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 40220791598,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/cache@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Prepare resources and dependencies",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Direct normal-economy matches, preserving raw results",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Post Run actions/cache@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Post Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            }
+          ]
+        },
+        {
+          "id": 121252345014,
+          "name": "tactic-screen (medium, tn01t2)",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 40220791598,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/cache@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Prepare resources and dependencies",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Direct normal-economy matches, preserving raw results",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Post Run actions/cache@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Post Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            }
+          ]
+        },
+        {
+          "id": 121252346421,
+          "name": "country-matrix",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 40220791598,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 121252347078,
+          "name": "report",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 40220791598,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 121261889151,
+          "name": "tactic-report",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 40220791598,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/download-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Verify direct schedule and assess development signal",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            }
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 12610477163,
+          "name": "ai-tactic-report",
+          "size_in_bytes": 57406,
+          "url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12610477163",
+          "archive_download_url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12610477163/zip",
+          "expired": false,
+          "created_at": "2026-10-25T19:03:15Z",
+          "expires_at": "2026-11-24T19:03:15Z",
+          "updated_at": "2026-10-25T19:03:15Z",
+          "digest": "sha256:5f14f8ecb159f3f7f6b6d19a0c784115b6517853553dd815020d4a8048c04df2",
+          "workflow_run": {
+            "id": 40220791598,
+            "repository_id": 1429377314,
+            "head_repository_id": 1429377314,
+            "head_branch": "feature/ai-rhino-dog",
+            "head_sha": "d2b35e17636775cdecc445254c6a6215f5f371d1"
+          }
+        },
+        {
+          "id": 12610321611,
+          "name": "ai-tactic-raw-medium",
+          "size_in_bytes": 2497589,
+          "url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12610321611",
+          "archive_download_url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12610321611/zip",
+          "expired": false,
+          "created_at": "2026-10-25T18:48:05Z",
+          "expires_at": "2026-11-24T18:48:04Z",
+          "updated_at": "2026-10-25T18:48:05Z",
+          "digest": "sha256:2de43355213e99d4370cf03ec8f1b07415a96baadef904e73b37f0cc44d05c1e",
+          "workflow_run": {
+            "id": 40220791598,
+            "repository_id": 1429377314,
+            "head_repository_id": 1429377314,
+            "head_branch": "feature/ai-rhino-dog",
+            "head_sha": "d2b35e17636775cdecc445254c6a6215f5f371d1"
+          }
+        },
+        {
+          "id": 12610293811,
+          "name": "ai-tactic-raw-short",
+          "size_in_bytes": 2805255,
+          "url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12610293811",
+          "archive_download_url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12610293811/zip",
+          "expired": false,
+          "created_at": "2026-10-25T19:03:04Z",
+          "expires_at": "2026-11-24T19:03:02Z",
+          "updated_at": "2026-10-25T19:03:04Z",
+          "digest": "sha256:500639e4cccfeb73d1d669a54e8bc058148fe4313325acc116b0b62c4b35b90c",
+          "workflow_run": {
+            "id": 40220791598,
+            "repository_id": 1429377314,
+            "head_repository_id": 1429377314,
+            "head_branch": "feature/ai-rhino-dog",
+            "head_sha": "d2b35e17636775cdecc445254c6a6215f5f371d1"
+          }
+        },
+        {
+          "id": 12608807857,
+          "name": "ai-regression",
+          "size_in_bytes": 31506,
+          "url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12608807857",
+          "archive_download_url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12608807857/zip",
+          "expired": false,
+          "created_at": "2026-10-25T18:23:15Z",
+          "expires_at": "2026-11-08T18:23:14Z",
+          "updated_at": "2026-10-25T18:23:15Z",
+          "digest": "sha256:d736b0da4f46fe8763f12fe0c057394919697d4823c9de9a256e65ddda06eae1",
+          "workflow_run": {
+            "id": 40220791598,
+            "repository_id": 1429377314,
+            "head_repository_id": 1429377314,
+            "head_branch": "feature/ai-rhino-dog",
+            "head_sha": "d2b35e17636775cdecc445254c6a6215f5f371d1"
+          }
+        }
+      ]
+    },
+    {
+      "runId": 40220807793,
+      "jobs": [
+        {
+          "id": 121251767650,
+          "name": "regression",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 40220807793,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Install dependencies",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Validate report integrity checks",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Run actions/cache@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Prepare real game resources",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Regression and real-engine mechanism tests",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Post Run actions/cache@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 16
+            },
+            {
+              "name": "Post Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 17
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 18
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 19
+            }
+          ]
+        },
+        {
+          "id": 121252428447,
+          "name": "tactic-screen (short, mp08t2)",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 40220807793,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/cache@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Prepare resources and dependencies",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Direct normal-economy matches, preserving raw results",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Post Run actions/cache@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Post Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            }
+          ]
+        },
+        {
+          "id": 121252428494,
+          "name": "tactic-screen (medium, tn01t2)",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 40220807793,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/cache@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Prepare resources and dependencies",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Direct normal-economy matches, preserving raw results",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Post Run actions/cache@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Post Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            }
+          ]
+        },
+        {
+          "id": 121252429806,
+          "name": "country-matrix",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 40220807793,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 121252430334,
+          "name": "report",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 40220807793,
+          "logs_url": null,
+          "steps": null
+        },
+        {
+          "id": 121257390637,
+          "name": "tactic-report",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 40220807793,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/download-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Verify direct schedule and assess development signal",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            }
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 12610520227,
+          "name": "ai-tactic-report",
+          "size_in_bytes": 40236,
+          "url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12610520227",
+          "archive_download_url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12610520227/zip",
+          "expired": false,
+          "created_at": "2026-10-25T18:44:20Z",
+          "expires_at": "2026-11-24T18:44:19Z",
+          "updated_at": "2026-10-25T18:44:20Z",
+          "digest": "sha256:8dfb09d2f0527791a9bcaf4ce194a43ba181de63a20635a3d26d6392f0cc8048",
+          "workflow_run": {
+            "id": 40220807793,
+            "repository_id": 1429377314,
+            "head_repository_id": 1429377314,
+            "head_branch": "feature/ai-rhino-dog",
+            "head_sha": "d2b35e17636775cdecc445254c6a6215f5f371d1"
+          }
+        },
+        {
+          "id": 12610495184,
+          "name": "ai-tactic-raw-medium",
+          "size_in_bytes": 2008083,
+          "url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12610495184",
+          "archive_download_url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12610495184/zip",
+          "expired": false,
+          "created_at": "2026-10-25T18:40:37Z",
+          "expires_at": "2026-11-24T18:40:36Z",
+          "updated_at": "2026-10-25T18:40:37Z",
+          "digest": "sha256:7dbccc95577cd44c89551c114e420a8e221c08bc9ff75b0e20d875c55bac37b5",
+          "workflow_run": {
+            "id": 40220807793,
+            "repository_id": 1429377314,
+            "head_repository_id": 1429377314,
+            "head_branch": "feature/ai-rhino-dog",
+            "head_sha": "d2b35e17636775cdecc445254c6a6215f5f371d1"
+          }
+        },
+        {
+          "id": 12609941940,
+          "name": "ai-tactic-raw-short",
+          "size_in_bytes": 1633841,
+          "url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12609941940",
+          "archive_download_url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12609941940/zip",
+          "expired": false,
+          "created_at": "2026-10-25T18:44:10Z",
+          "expires_at": "2026-11-24T18:44:09Z",
+          "updated_at": "2026-10-25T18:44:10Z",
+          "digest": "sha256:02309fd105c700631a90d2416c949456039e7e761a067dd868cb47b072f10732",
+          "workflow_run": {
+            "id": 40220807793,
+            "repository_id": 1429377314,
+            "head_repository_id": 1429377314,
+            "head_branch": "feature/ai-rhino-dog",
+            "head_sha": "d2b35e17636775cdecc445254c6a6215f5f371d1"
+          }
+        },
+        {
+          "id": 12608704851,
+          "name": "ai-regression",
+          "size_in_bytes": 31179,
+          "url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12608704851",
+          "archive_download_url": "https://api.github.com/repos/chenxuan520/ra2web/actions/artifacts/12608704851/zip",
+          "expired": false,
+          "created_at": "2026-10-25T18:23:36Z",
+          "expires_at": "2026-11-08T18:23:35Z",
+          "updated_at": "2026-10-25T18:23:36Z",
+          "digest": "sha256:70fb479262cdbbe950ba98cf5139331bff3621e819d4272bf27d0cf2a4d268ce",
+          "workflow_run": {
+            "id": 40220807793,
+            "repository_id": 1429377314,
+            "head_repository_id": 1429377314,
+            "head_branch": "feature/ai-rhino-dog",
+            "head_sha": "d2b35e17636775cdecc445254c6a6215f5f371d1"
+          }
+        }
+      ]
+    }
+  ]
+}
