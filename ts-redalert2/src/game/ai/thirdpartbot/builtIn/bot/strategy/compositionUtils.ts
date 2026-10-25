@@ -5,6 +5,8 @@ export type SideComposition = {
     composition: UnitComposition;
     minimumUnits: number;
     maximumUnits: number;
+    /** Exact support slots in a full wave; the minimum core may depart first. */
+    supportUnits?: UnitComposition;
 };
 
 export type Compositions = Record<string, SideComposition>;

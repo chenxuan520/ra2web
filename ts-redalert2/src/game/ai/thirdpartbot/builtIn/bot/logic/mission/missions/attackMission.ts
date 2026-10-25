@@ -9,6 +9,8 @@ import { manageMoveMicro } from "./squads/common";
 import { MissionContext, SupabotContext } from "../../common/context";
 import { UnitComposition } from "../../../strategy/strategy";
 import { SideComposition } from "../../../strategy/compositionUtils";
+import { allocateAttackComposition } from "./attackComposition";
+import { HarassmentMissionFactory } from "./harassmentMission";
 
 export enum AttackFailReason {
     NoTargets = "NoTargets",
@@ -98,7 +100,7 @@ export class AttackMission extends Mission<AttackFailReason> {
             // Start with the intended minimum mixed force once it is available;
             // do not erase the request just because producing it takes time.
             if (tick - this.preparationStartedAt >= MINIMUM_WAVE_WAIT_TICKS &&
-                this.getMissingUnits(game, this.getDesiredComposition(this.composition.minimumUnits)).length === 0) {
+                this.getMissingUnits(game, this.getDesiredComposition(this.composition.minimumUnits, false)).length === 0) {
                 this.requestedUnitCount = this.composition.minimumUnits;
                 return this.startAttack(tick);
             }
@@ -205,6 +207,20 @@ export class AttackMission extends Mission<AttackFailReason> {
         return this.priority;
     }
 
+    public getAttackArea(): Vector2 {
+        return this.attackArea;
+    }
+
+    /** Undelivered slots reserved by this fixed plan; used only when choosing a new wave. */
+    public getPendingSupportUnits(game: GameApi): UnitComposition {
+        if (!this.isActive() || this.state !== AttackMissionState.Preparing || !this.composition.supportUnits) return {};
+        const desired = this.getDesiredComposition();
+        const support = Object.fromEntries(Object.keys(this.composition.supportUnits)
+            .filter(name => desired[name] > 0)
+            .map(name => [name, desired[name]]));
+        return Object.fromEntries(this.getMissingUnits(game, support));
+    }
+
     private decayDesiredCompositionIfNeeded(game: GameApi): void {
         const currentTick = game.getCurrentTick();
         if (this.lastRequestedUnitCountDecayAt === null) {
@@ -220,19 +236,8 @@ export class AttackMission extends Mission<AttackFailReason> {
         this.requestedUnitCount--;
     }
 
-    private getDesiredComposition(unitCount = this.requestedUnitCount): UnitComposition {
-        const compositionWeights = this.composition.composition;
-        const totalWeights = Object.values(compositionWeights).reduce((a, b) => a + b, 0);
-        if (totalWeights <= 0) {
-            return {};
-        }
-
-        return Object.fromEntries(
-            Object.entries(compositionWeights).map(([unitName, weight]) => [
-                unitName,
-                Math.round((weight * unitCount) / totalWeights),
-            ]),
-        );
+    private getDesiredComposition(unitCount = this.requestedUnitCount, includeSupport = true): UnitComposition {
+        return allocateAttackComposition(this.composition, unitCount, includeSupport);
     }
 }
 
@@ -301,6 +306,7 @@ const BASE_ATTACK_COOLDOWN_TICKS = 600;
 const ATTACK_MISSION_INITIAL_PRIORITY = 1;
 
 export class AttackMissionFactory {
+    private harassmentFactory = new HarassmentMissionFactory();
     constructor(private lastAttackAt: number = -VISIBLE_TARGET_ATTACK_COOLDOWN_TICKS) {}
 
     getName(): string {
@@ -317,6 +323,12 @@ export class AttackMissionFactory {
         const playerData = game.getPlayerData(context.player.name);
         if (!composition) {
             return;
+        }
+
+        if (context.difficulty === "brutal") {
+            this.harassmentFactory.maybeCreateMissions(context, missionController, logger,
+                missionController.getMissions().filter((mission): mission is AttackMission =>
+                    mission instanceof AttackMission && mission.isActive() && mission.getState() === AttackMissionState.Attacking));
         }
 
         if (game.getCurrentTick() < this.lastAttackAt + VISIBLE_TARGET_ATTACK_COOLDOWN_TICKS) {

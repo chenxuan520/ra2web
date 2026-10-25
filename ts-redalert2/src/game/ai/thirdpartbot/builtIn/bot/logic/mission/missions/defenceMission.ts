@@ -59,7 +59,7 @@ export class DefenceMission extends Mission<CombatSquad> {
         );
         this.squad.setAttackArea(new Vector2(foundTargets[0].tile.rx, foundTargets[0].tile.ry));
         this.priority = MAX_PRIORITY;
-        return grabCombatants(this.defenceArea, this.priority);
+        return grabCombatants(this.defenceArea, context.difficulty === "brutal" ? this.radius : this.priority);
     }
 
     public getGlobalDebugText(): string | undefined {
