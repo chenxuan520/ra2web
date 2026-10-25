@@ -32,6 +32,11 @@ on:
         type: choice
         options: [regression, development, qualification_a, qualification_b, qualification_c]
         default: regression
+      comparison_mode:
+        description: Historical strength gates or direct current-bot screening
+        type: choice
+        options: [historical, direct]
+        default: historical
 
 permissions:
   contents: read
@@ -47,6 +52,7 @@ env:
   AI_CANDIDATE_REF: ${{ inputs.candidate_ref || github.sha }}
   AI_BASELINE_PROFILE: ${{ inputs.baseline_profile || 'brutal' }}
   AI_EVALUATION_SET: ${{ inputs.evaluation_set || 'regression' }}
+  AI_COMPARISON_MODE: ${{ inputs.comparison_mode || 'historical' }}
   AI_TOURNAMENT_WORKERS: ${{ github.event.repository.private && '2' || '4' }}
 
 jobs:
@@ -158,8 +164,15 @@ jobs:
       - name: Verify complete matrix and strength thresholds
         run: |
           ai_report_exit=0
-          python .github/scripts/summarize-ai-matrix.py collected ai-report \
-            --minimum-win-rate 0.8 --minimum-country-win-rate 0.7 --minimum-map-win-rate 0.7 || ai_report_exit=$?
+          if [ "$AI_COMPARISON_MODE" = direct ]; then
+            python .github/scripts/summarize-ai-matrix.py collected ai-report || ai_report_exit=$?
+            if [ "$ai_report_exit" = 0 ]; then
+              python .github/scripts/summarize-ai-direct.py ai-report || ai_report_exit=$?
+            fi
+          else
+            python .github/scripts/summarize-ai-matrix.py collected ai-report \
+              --minimum-win-rate 0.8 --minimum-country-win-rate 0.7 --minimum-map-win-rate 0.7 || ai_report_exit=$?
+          fi
           if [ -f ai-report/report.md ]; then
             cat ai-report/report.md >> "$GITHUB_STEP_SUMMARY"
           fi
