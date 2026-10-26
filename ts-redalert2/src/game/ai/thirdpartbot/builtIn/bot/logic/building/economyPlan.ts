@@ -15,7 +15,13 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
         return refineries < 4 && s.harvesters >= refineries * 2 ? 18 : 0;
     }
     if (rules.name === "GAPILE" || rules.name === "NAHAND") return count ? 0 : 55;
-    if ((rules.name === "GAAIRC" || rules.name === "AMRADR") && refineries && !count && !factories) return 45;
+    if ((rules.name === "GAAIRC" || rules.name === "AMRADR") && refineries && !count && !factories) {
+        const allied = ["Americans", "Alliance", "French", "Germans", "British"].includes(s.country);
+        // Nearby public starts need a funded ground production chain first.
+        // Keep an already started radar, including after losing a factory.
+        const groundFirst = allied && getOpeningAirBudget(game, player) > 2;
+        return committed || !groundFirst ? 45 : 0;
+    }
     const armor = (s.own.MTNK ?? 0) + (s.own.HTNK ?? 0);
     if (rules.name === "NARADR" && !count && s.harvesters >= 3 && armor >= 2) return 24;
     if (rules.name === "NATECH" && !count && s.harvesters >= 3 && armor >= 2) return 30;

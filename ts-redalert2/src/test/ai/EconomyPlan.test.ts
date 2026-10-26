@@ -1,14 +1,37 @@
 import { expect, test } from "bun:test";
 import { getEconomyBuildingPriority } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/economyPlan";
 
-function scenario(names: string[], credits = 5000) {
+function scenario(names: string[], credits = 5000, distance = 120, country = "Arabs") {
     const owned = names.map(name => ({ name, harvester: ["HARV", "CMIN"].includes(name) }));
     const game: any = { getCurrentTick: () => 6000,
-        mapApi: { getStartingLocations: () => [{ distanceTo: () => 120 }] },
+        mapApi: { getStartingLocations: () => [{ distanceTo: () => distance }] },
         getVisibleUnits: (_: string, relation: string, filter: any) => relation === "self" ? owned.filter(filter).map((_, i) => i) : [] };
-    const player: any = { name: "bot", country: { name: "Arabs" }, credits };
-    return (name: string, extra = {}) => getEconomyBuildingPriority(game, player, { name, ...extra } as any, false);
+    const player: any = { name: "bot", country: { name: country }, credits };
+    return (name: string, extra = {}, committed = false) => getEconomyBuildingPriority(game, player, { name, ...extra } as any, committed);
 }
+
+test.each(["Americans", "Alliance", "French", "Germans", "British"])("%s funds a first factory before a new radar at nearby possible starts", country => {
+    const opening = scenario(["GAREFN", "CMIN"], 5000, 65, country);
+    expect(opening("GAWEAP")).toBeGreaterThan(0);
+    expect(opening(country === "Americans" ? "AMRADR" : "GAAIRC")).toBe(0);
+    const established = scenario(["GAREFN", "GAWEAP", "CMIN", "CMIN", "MTNK", "MTNK"], 5000, 65, country);
+    expect(established("GAAIRC")).toBeUndefined(); // Existing later tech rules can now consider it.
+});
+
+test("distant allied starts retain the existing funded air opening", () => {
+    const distant = scenario(["GAREFN", "CMIN"], 5000, 120, "French");
+    expect(distant("GAAIRC")).toBeGreaterThan(distant("GAWEAP")!);
+});
+
+test("losing a factory does not cancel the radar investment already in progress", () => {
+    const rebuilding = scenario(["GAREFN", "CMIN"], 5000, 65, "French");
+    expect(rebuilding("GAAIRC", {}, true)).toBeGreaterThan(0);
+});
+
+test("captured allied tech does not change a Soviet opening policy", () => {
+    const soviet = scenario(["NAREFN", "HARV"], 5000, 65);
+    expect(soviet("GAAIRC")).toBe(45);
+});
 
 test("an opening funds barracks, income and its first factory before optional Soviet tech", () => {
     const empty = scenario([]);

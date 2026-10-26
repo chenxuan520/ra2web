@@ -11,6 +11,10 @@ MAPS = ('mp08t2', 'tn01t2')
 PAIRS = (('Arabs', 'Arabs'), ('Russians', 'Russians'), ('Arabs', 'Russians'),
          ('Russians', 'Arabs'), ('Arabs', 'Americans'), ('Russians', 'Americans'),
          ('Americans', 'Arabs'), ('Americans', 'Russians'))
+ALLIED_GROUND_PAIRS = (('French', 'French'), ('Americans', 'Americans'),
+                      ('French', 'Americans'), ('Americans', 'French'),
+                      ('French', 'Russians'), ('Russians', 'French'),
+                      ('Americans', 'Russians'), ('Russians', 'Americans'))
 SETTINGS = dict(maxTicks=27000, sampleTicks=900, credits=10000, unitCount=0, gameSpeed=3,
                 engineDifficulty=4, pairedSpawnSwap=True, pairedPlayerOrderSwap=True,
                 simulationTicksPerSecond=15, shortGame=True, superWeapons=False,
@@ -28,8 +32,8 @@ def identity(game):
 
 
 def schedule_keys(schedule):
-    require(schedule in ('pilot', 'development'), 'Unknown P1 schedule')
-    pairs = PAIRS[:2] if schedule == 'pilot' else PAIRS
+    require(schedule in ('pilot', 'development', 'allied_ground'), 'Unknown tactic schedule')
+    pairs = ALLIED_GROUND_PAIRS if schedule == 'allied_ground' else PAIRS[:2] if schedule == 'pilot' else PAIRS
     seeds = (610101,) if schedule == 'pilot' else (610101, 610202, 610303)
     return {(a, b, m, s, swap) for a, b in pairs for m in MAPS for s in seeds for swap in (False, True)}
 
@@ -43,7 +47,7 @@ def counts(games):
                 scoreWithHalfDraws=(wins + draws / 2) / n)
 
 
-def observations(match, side):
+def observations(match, side, include_ground=False):
     specialty = match['telemetry'].get('specialty') or {}
     production = specialty.get('production')
     shots = specialty.get('shots')
@@ -78,6 +82,21 @@ def observations(match, side):
                 result['damageBySourceType'][name] = damage[side].get(name, {})
         result['firstFlakTrackTick'] = min(production[side].get('HTK', {}).get('factoryProducedTicks', []), default=None) if production is not None else None
         result['flakTrackAirShots'] = sum(v['count'] for weapon, v in shots[side].get('HTK', {}).items() if 'AA' in weapon.upper()) if shots is not None else None
+    if include_ground:
+        def first_event(names, field):
+            return min((tick for name in names for tick in production[side].get(name, {}).get(field, [])), default=None) if production is not None else None
+        result['groundOpening'] = dict(
+            produced={name: len(production[side].get(name, {}).get('factoryProducedTicks', [])) if production is not None else None
+                      for name in ('E1', 'ADOG', 'MTNK', 'CMIN', 'FV', 'JUMPJET')},
+            firstFactoryReadyTick=first_event(('GAWEAP',), 'readyTicks'),
+            firstRadarReadyTick=first_event(('GAAIRC', 'AMRADR'), 'readyTicks'),
+            firstMinerFactoryTick=first_event(('CMIN',), 'factoryProducedTicks'),
+            firstGrizzlyTick=first_event(('MTNK',), 'factoryProducedTicks'),
+            firstGrizzlyShotTick=min((v['firstTick'] for v in shots[side].get('MTNK', {}).values()), default=None) if shots is not None else None,
+            grizzlyShots=sum(v['count'] for v in shots[side].get('MTNK', {}).values()) if shots is not None else None,
+            grizzlyDamage=damage[side].get('MTNK', {}) if damage is not None else None,
+            lowCreditTicks=match['telemetry'].get('lowCreditTicks', [None, None])[side],
+            finalCreditsReceived=samples[-1].get('creditsReceived') if samples else None)
     return result
 
 
@@ -116,7 +135,7 @@ def verify(paths, candidate, baseline=CONTROL, schedule='pilot'):
             game = {k: match[k] for k in ('candidateCountry', 'baselineCountry', 'map', 'seed', 'swapped', 'result', 'reason', 'ticks')}
             game.update(errorCount=0, startingLocations=match['startingLocations'],
                         candidatePlayerName=match['candidatePlayerName'], baselinePlayerName=match['baselinePlayerName'],
-                        observations=[observations(match, side) for side in (0, 1)])
+                        observations=[observations(match, side, schedule == 'allied_ground') for side in (0, 1)])
             games[key] = game
         raw_index.append(dict(file=path.name, bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest()))
     require(set(games) == expected, f'Incomplete P1 schedule: {len(games)}/{len(expected)} games')
@@ -152,7 +171,8 @@ def write(result, directory):
     control = result.get('controlSanity')
     passed = result.get('controlSanity', result['screeningPositive'])
     verdict = ('symmetric self-play control' if control else 'asymmetric self-play control') if control is not None else ('positive' if passed else 'not improved')
-    lines = [f'# P1 direct comparison with {baseline_label}', '', f"Candidate `{result['candidateCommit']}` vs `{result['baselineCommit']}`.", '',
+    title = 'Allied ground-opening' if result['schedule'] == 'allied_ground' else 'P1'
+    lines = [f'# {title} direct comparison with {baseline_label}', '', f"Candidate `{result['candidateCommit']}` vs `{result['baselineCommit']}`.", '',
              f"{t['games']} games: {t['wins']}W / {t['losses']}L / {t['draws']}D / 0E. Wins/all games {t['winRate']:.2%}; score with half draws {t['scoreWithHalfDraws']:.2%}.", '',
              f"Development screen: {verdict}. **Not qualified.**", '',
              '| Country | W | L | D | Wins/all |', '| --- | ---: | ---: | ---: | ---: |']
@@ -173,7 +193,7 @@ if __name__ == '__main__':
     parser.add_argument('reports', type=Path, nargs='+')
     parser.add_argument('--candidate-ref', required=True)
     parser.add_argument('--baseline-ref', default=CONTROL)
-    parser.add_argument('--schedule', choices=('pilot', 'development'), default='pilot')
+    parser.add_argument('--schedule', choices=('pilot', 'development', 'allied_ground'), default='pilot')
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--require-positive', action='store_true')
     args = parser.parse_args()

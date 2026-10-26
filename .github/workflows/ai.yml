@@ -38,9 +38,9 @@ on:
         options: [historical, direct]
         default: historical
       tactic_schedule:
-        description: P1 direct C18 tactic screen, including mirrored Soviet countries
+        description: Registered development screen with mirrored country pairs
         type: choice
-        options: [none, pilot, development]
+        options: [none, pilot, development, allied_ground]
         default: none
 
 permissions:
@@ -150,6 +150,9 @@ jobs:
           if [ "$AI_TACTIC_SCHEDULE" = pilot ]; then
             tactic_seeds=610101
             tactic_pairs=Arabs:Arabs,Russians:Russians
+          elif [ "$AI_TACTIC_SCHEDULE" = allied_ground ]; then
+            tactic_seeds=610101,610202,610303
+            tactic_pairs=French:French,Americans:Americans,French:Americans,Americans:French,French:Russians,Russians:French,Americans:Russians,Russians:Americans
           else
             tactic_seeds=610101,610202,610303
             tactic_pairs=Arabs:Arabs,Russians:Russians,Arabs:Russians,Russians:Arabs,Arabs:Americans,Russians:Americans,Americans:Arabs,Americans:Russians

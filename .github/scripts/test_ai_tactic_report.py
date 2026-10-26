@@ -12,9 +12,9 @@ spec.loader.exec_module(tactic)
 CANDIDATE = 'b' * 40
 
 
-def raw_report():
+def raw_report(schedule='pilot'):
     matches = []
-    for a, b, m, seed, swapped in sorted(tactic.schedule_keys('pilot')):
+    for a, b, m, seed, swapped in sorted(tactic.schedule_keys(schedule)):
         matches.append(dict(candidateCountry=a, baselineCountry=b, map=m + '.map', seed=seed, swapped=swapped,
             result='draw', reason='tick-limit', ticks=27000, mapSha256='a' * 64, terrainSha256='c' * 64,
             telemetry=dict(errorCount=0), startingLocations=[dict(x=0, y=0), dict(x=10, y=10)][::(-1 if swapped else 1)],
@@ -53,6 +53,43 @@ class TacticTests(unittest.TestCase):
         self.assertIsNone(observed['produced']['DOG'])
         self.assertIsNone(observed['tankShots'])
         self.assertIsNone(observed['maxSampledEscort'])
+
+    def test_allied_ground_schedule_is_balanced_and_keeps_both_maps_and_swaps(self):
+        keys = tactic.schedule_keys('allied_ground')
+        self.assertEqual(len(keys), 96)
+        self.assertEqual({c: sum(k[0] == c for k in keys) for c in ('French', 'Americans', 'Russians')},
+                         {'French': 36, 'Americans': 36, 'Russians': 24})
+        for a, b, m, seed, swapped in keys:
+            self.assertIn((b, a, m, seed, swapped), keys)
+            self.assertIn((a, b, m, seed, not swapped), keys)
+
+    def test_full_ground_report_is_valid_but_a_missing_swap_cannot_be_a_draw(self):
+        report = raw_report('allied_ground')
+        self.path.write_text(json.dumps(report))
+        result = tactic.verify([self.path], CANDIDATE, schedule='allied_ground')
+        self.assertEqual(result['totals']['games'], 96)
+        self.assertFalse(result['qualified'])
+        report['matches'].pop()
+        self.path.write_text(json.dumps(report))
+        with self.assertRaisesRegex(ValueError, 'Incomplete'):
+            tactic.verify([self.path], CANDIDATE, schedule='allied_ground')
+
+    def test_ground_opening_distinguishes_placed_buildings_and_factory_units_and_missing_telemetry(self):
+        match = raw_report()['matches'][0]
+        match['telemetry']['specialty'] = dict(production=[{
+            'GAWEAP': {'placedTicks': [3000], 'readyTicks': [3053]},
+            'CMIN': {'readyTicks': [2000], 'factoryProducedTicks': [4500]},
+            'MTNK': {'factoryProducedTicks': [5100]}}, {}],
+            shots=[{'MTNK': {'105mm': {'firstTick': 5700, 'count': 4}}}, {}])
+        observed = tactic.observations(match, 0, include_ground=True)['groundOpening']
+        self.assertEqual(observed['firstFactoryReadyTick'], 3053)
+        self.assertEqual(observed['firstMinerFactoryTick'], 4500)
+        self.assertEqual(observed['firstGrizzlyShotTick'], 5700)
+        self.assertIsNone(observed['firstRadarReadyTick'])
+        self.assertIsNone(observed['grizzlyDamage'])
+        missing = tactic.observations(raw_report()['matches'][0], 0, include_ground=True)['groundOpening']
+        self.assertIsNone(missing['produced']['MTNK'])
+        self.assertIsNone(missing['grizzlyShots'])
 
     def test_air_defense_uses_actual_factory_ticks_and_air_weapon_only(self):
         match = raw_report()['matches'][0]
