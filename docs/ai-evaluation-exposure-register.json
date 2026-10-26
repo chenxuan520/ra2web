@@ -40,7 +40,7 @@
     },
     {
       "plan": "ai-allied-ground-evaluation-plan.json",
-      "candidateStatus": "not yet implemented or frozen",
+      "candidateStatus": "frozen-before-new-qualification",
       "sets": [
         "qualification_a",
         "qualification_b",
@@ -58,7 +58,15 @@
         830303
       ],
       "status": "registered-unobserved",
-      "developmentMayUseTheseSeeds": false
+      "developmentMayUseTheseSeeds": false,
+      "frozenCandidate": "ffb438108f1aaadeeeb4a951b753bc5d64c3a426",
+      "developmentRuns": [
+        40261838672,
+        40261849670,
+        40261862795,
+        40261876695
+      ],
+      "newQualificationGamesObserved": 0
     }
   ]
 }

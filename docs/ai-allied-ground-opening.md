@@ -19,3 +19,18 @@ B折法国对美国、mp08t2:720101未换边的真实败局：空指部2688tick�
 后续若冻结候选进入资格，使用新登记的[地面开局测评计划](ai-allied-ground-evaluation-plan.json)，三套新seed810101/810202/810303、820101/820202/820303、830101/830202/830303，尚未运行，不用于开发调参。旧710/720/730资格已暴露并退休给后续修改版，不能复用冒称未见。新计划沿用原80/70/70、非退步和目标改善门槛，保留原计划文件不改写。
 
 本项不填补独立战术对手、精确机制消融、镜像全覆盖、普通难度或合并引擎验证等其他条件。当前master继续保留C18及他人资源/部署/Terrain改动，不自动推广。沿用同一“RA2 对战完成汇报”任务，不新建重复监控。
+
+## 已冻结候选与精确CI
+
+候选/共同workflow-engine `ffb438108f1aaadeeeb4a951b753bc5d64c3a426`，ts-redalert2树`27cd9af3220eb7356c59722bdfcb3d8ad0b3922d`。实际游戏改动只有economyPlan的近距离盟军首重工门槛；报告脚本额外记录真实重工/空指/矿车/灰熊时序，旧pilot/development赛程保留。源码检查311 Bun通过、13跳过、0失败；37 Python完整性测试通过，entry/server/benchmark类型检查与build通过。机制测试不当胜率。
+
+| 用途 | 精确CI |
+| --- | --- |
+| ffb对C18直接开发对照 | [40261838672](https://github.com/chenxuan520/ra2web/actions/runs/40261838672) |
+| ffb对356直接开发对照 | [40261849670](https://github.com/chenxuan520/ra2web/actions/runs/40261849670) |
+| ffb对0a共同对手试验 | [40261862795](https://github.com/chenxuan520/ra2web/actions/runs/40261862795) |
+| 356对0a同条件控制 | [40261876695](https://github.com/chenxuan520/ra2web/actions/runs/40261876695) |
+
+四条各96局，共384，都是full_matrix=false/tactic_schedule=allied_ground。首轮连接GitHub确认四条已进入regression；输入日志及实际raw/report尚待独立核验。country-matrix和历史report预期skip，不是缺少432局资格。
+
+另以B折已暴露的French:Americans、mp08t2:720101原败局条件做两侧机制复现，单独留存；不计这384局，不称未见资格，不用其单例结果代替上述四组对照。
