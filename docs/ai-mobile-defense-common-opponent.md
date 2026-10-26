@@ -26,3 +26,16 @@ A/B/C已在同一冻结356的前两项直接资格中见过，此处是同一未
 三组历史regression种子已经过门槛，但不能替代本阶段九块资格与配对差分。剩余原始14/04共同对手非退步、独立战术对手、消融、镜像、普通难度与未来合并引擎验证不由本项自动豁免。master继续保留C18及他人2c51e68改动，不因开发绿灯或本项完成自动发布。
 
 沿用“RA2 对战完成汇报”同一任务，正常运行静默；六条完整后统一归档、报告差分与所有不利样本，继续下一必要项目。精确run在实际派发并核对输入后补入本文件。
+
+## 精确派发记录
+
+共同workflow/engine `55bb8d8685147ab05a344397de7cf7c21f8969a3`，其ts-redalert2树仍为`ae5e9e32216d37c9c8bdcd2594656b0d39a948b6`；不是新AI候选。首轮连接GitHub检查六条均已进入regression，实际日志输入及最终manifest仍待完成时独立核验。
+
+| 参赛版本 | 集合 | CI |
+| --- | --- | --- |
+| 356/brutal | qualification_a | [40255109057](https://github.com/chenxuan520/ra2web/actions/runs/40255109057) |
+| 356/brutal | qualification_b | [40255119452](https://github.com/chenxuan520/ra2web/actions/runs/40255119452) |
+| 356/brutal | qualification_c | [40255129951](https://github.com/chenxuan520/ra2web/actions/runs/40255129951) |
+| C18/brutal | qualification_a | [40255141406](https://github.com/chenxuan520/ra2web/actions/runs/40255141406) |
+| C18/brutal | qualification_b | [40255152490](https://github.com/chenxuan520/ra2web/actions/runs/40255152490) |
+| C18/brutal | qualification_c | [40255163614](https://github.com/chenxuan520/ra2web/actions/runs/40255163614) |
