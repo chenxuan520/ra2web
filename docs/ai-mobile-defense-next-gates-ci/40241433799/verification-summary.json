@@ -1,0 +1,185 @@
+{
+  "runId": 40241433799,
+  "evaluationSet": "regression",
+  "totals": {
+    "games": 432,
+    "wins": 380,
+    "losses": 36,
+    "draws": 16,
+    "errors": 0,
+    "winRate": 0.8796296296296297,
+    "decisiveWinRate": 0.9134615384615384,
+    "scoreWithHalfDraws": 0.8981481481481481
+  },
+  "byCountry": {
+    "Americans": {
+      "games": 48,
+      "wins": 44,
+      "losses": 4,
+      "draws": 0,
+      "errors": 0,
+      "winRate": 0.9166666666666666,
+      "decisiveWinRate": 0.9166666666666666,
+      "scoreWithHalfDraws": 0.9166666666666666
+    },
+    "Alliance": {
+      "games": 48,
+      "wins": 36,
+      "losses": 8,
+      "draws": 4,
+      "errors": 0,
+      "winRate": 0.75,
+      "decisiveWinRate": 0.8181818181818182,
+      "scoreWithHalfDraws": 0.7916666666666666
+    },
+    "French": {
+      "games": 48,
+      "wins": 36,
+      "losses": 8,
+      "draws": 4,
+      "errors": 0,
+      "winRate": 0.75,
+      "decisiveWinRate": 0.8181818181818182,
+      "scoreWithHalfDraws": 0.7916666666666666
+    },
+    "Germans": {
+      "games": 48,
+      "wins": 36,
+      "losses": 8,
+      "draws": 4,
+      "errors": 0,
+      "winRate": 0.75,
+      "decisiveWinRate": 0.8181818181818182,
+      "scoreWithHalfDraws": 0.7916666666666666
+    },
+    "British": {
+      "games": 48,
+      "wins": 36,
+      "losses": 8,
+      "draws": 4,
+      "errors": 0,
+      "winRate": 0.75,
+      "decisiveWinRate": 0.8181818181818182,
+      "scoreWithHalfDraws": 0.7916666666666666
+    },
+    "Africans": {
+      "games": 48,
+      "wins": 48,
+      "losses": 0,
+      "draws": 0,
+      "errors": 0,
+      "winRate": 1.0,
+      "decisiveWinRate": 1.0,
+      "scoreWithHalfDraws": 1.0
+    },
+    "Arabs": {
+      "games": 48,
+      "wins": 48,
+      "losses": 0,
+      "draws": 0,
+      "errors": 0,
+      "winRate": 1.0,
+      "decisiveWinRate": 1.0,
+      "scoreWithHalfDraws": 1.0
+    },
+    "Confederation": {
+      "games": 48,
+      "wins": 48,
+      "losses": 0,
+      "draws": 0,
+      "errors": 0,
+      "winRate": 1.0,
+      "decisiveWinRate": 1.0,
+      "scoreWithHalfDraws": 1.0
+    },
+    "Russians": {
+      "games": 48,
+      "wins": 48,
+      "losses": 0,
+      "draws": 0,
+      "errors": 0,
+      "winRate": 1.0,
+      "decisiveWinRate": 1.0,
+      "scoreWithHalfDraws": 1.0
+    }
+  },
+  "byMap": {
+    "mp08t2": {
+      "games": 144,
+      "wins": 120,
+      "losses": 20,
+      "draws": 4,
+      "errors": 0,
+      "winRate": 0.8333333333333334,
+      "decisiveWinRate": 0.8571428571428571,
+      "scoreWithHalfDraws": 0.8472222222222222
+    },
+    "mp11t2": {
+      "games": 144,
+      "wins": 128,
+      "losses": 16,
+      "draws": 0,
+      "errors": 0,
+      "winRate": 0.8888888888888888,
+      "decisiveWinRate": 0.8888888888888888,
+      "scoreWithHalfDraws": 0.8888888888888888
+    },
+    "tn01t2": {
+      "games": 144,
+      "wins": 132,
+      "losses": 0,
+      "draws": 12,
+      "errors": 0,
+      "winRate": 0.9166666666666666,
+      "decisiveWinRate": 1.0,
+      "scoreWithHalfDraws": 0.9583333333333334
+    }
+  },
+  "bySwap": {
+    "False": {
+      "games": 216,
+      "wins": 164,
+      "losses": 36,
+      "draws": 16,
+      "errors": 0,
+      "winRate": 0.7592592592592593,
+      "decisiveWinRate": 0.82,
+      "scoreWithHalfDraws": 0.7962962962962963
+    },
+    "True": {
+      "games": 216,
+      "wins": 216,
+      "losses": 0,
+      "draws": 0,
+      "errors": 0,
+      "winRate": 1.0,
+      "decisiveWinRate": 1.0,
+      "scoreWithHalfDraws": 1.0
+    }
+  },
+  "directAssessment": null,
+  "strengthAssessment": {
+    "passed": true,
+    "thresholds": {
+      "overall": 0.8,
+      "country": 0.7,
+      "map": 0.7
+    },
+    "failures": []
+  },
+  "invariants": {
+    "validGames": 432,
+    "uniqueGames": 432,
+    "countries": 9,
+    "gamesPerCountry": 48,
+    "gamesPerMap": 144,
+    "gamesPerCountryPair": 6,
+    "errors": 0,
+    "missing": 0,
+    "mixedVersions": false,
+    "receiptsVerified": true,
+    "pairedStartsSlotsVerified": true,
+    "independentReportBytesIdentical": true,
+    "smokeExcluded": true
+  }
+}

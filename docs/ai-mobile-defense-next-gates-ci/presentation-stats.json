@@ -1,0 +1,4256 @@
+[
+  {
+    "label": "635 qualification combined",
+    "totals": {
+      "games": 1296,
+      "wins": 625,
+      "losses": 518,
+      "draws": 153,
+      "errors": 0,
+      "winRate": 0.48225308641975306,
+      "decisiveWinRate": 0.5468066491688539,
+      "scoreWithHalfDraws": 0.5412808641975309
+    },
+    "byCountry": {
+      "Americans": {
+        "games": 144,
+        "wins": 84,
+        "losses": 36,
+        "draws": 24,
+        "errors": 0,
+        "winRate": 0.5833333333333334,
+        "decisiveWinRate": 0.7,
+        "scoreWithHalfDraws": 0.6666666666666666
+      },
+      "Alliance": {
+        "games": 144,
+        "wins": 40,
+        "losses": 93,
+        "draws": 11,
+        "errors": 0,
+        "winRate": 0.2777777777777778,
+        "decisiveWinRate": 0.3007518796992481,
+        "scoreWithHalfDraws": 0.3159722222222222
+      },
+      "French": {
+        "games": 144,
+        "wins": 41,
+        "losses": 89,
+        "draws": 14,
+        "errors": 0,
+        "winRate": 0.2847222222222222,
+        "decisiveWinRate": 0.3153846153846154,
+        "scoreWithHalfDraws": 0.3333333333333333
+      },
+      "Germans": {
+        "games": 144,
+        "wins": 40,
+        "losses": 93,
+        "draws": 11,
+        "errors": 0,
+        "winRate": 0.2777777777777778,
+        "decisiveWinRate": 0.3007518796992481,
+        "scoreWithHalfDraws": 0.3159722222222222
+      },
+      "British": {
+        "games": 144,
+        "wins": 40,
+        "losses": 92,
+        "draws": 12,
+        "errors": 0,
+        "winRate": 0.2777777777777778,
+        "decisiveWinRate": 0.30303030303030304,
+        "scoreWithHalfDraws": 0.3194444444444444
+      },
+      "Africans": {
+        "games": 144,
+        "wins": 102,
+        "losses": 23,
+        "draws": 19,
+        "errors": 0,
+        "winRate": 0.7083333333333334,
+        "decisiveWinRate": 0.816,
+        "scoreWithHalfDraws": 0.7743055555555556
+      },
+      "Arabs": {
+        "games": 144,
+        "wins": 81,
+        "losses": 43,
+        "draws": 20,
+        "errors": 0,
+        "winRate": 0.5625,
+        "decisiveWinRate": 0.6532258064516129,
+        "scoreWithHalfDraws": 0.6319444444444444
+      },
+      "Confederation": {
+        "games": 144,
+        "wins": 102,
+        "losses": 23,
+        "draws": 19,
+        "errors": 0,
+        "winRate": 0.7083333333333334,
+        "decisiveWinRate": 0.816,
+        "scoreWithHalfDraws": 0.7743055555555556
+      },
+      "Russians": {
+        "games": 144,
+        "wins": 95,
+        "losses": 26,
+        "draws": 23,
+        "errors": 0,
+        "winRate": 0.6597222222222222,
+        "decisiveWinRate": 0.7851239669421488,
+        "scoreWithHalfDraws": 0.7395833333333334
+      }
+    },
+    "byMap": {
+      "mp08t2": {
+        "games": 432,
+        "wins": 242,
+        "losses": 143,
+        "draws": 47,
+        "errors": 0,
+        "winRate": 0.5601851851851852,
+        "decisiveWinRate": 0.6285714285714286,
+        "scoreWithHalfDraws": 0.6145833333333334
+      },
+      "mp11t2": {
+        "games": 432,
+        "wins": 155,
+        "losses": 191,
+        "draws": 86,
+        "errors": 0,
+        "winRate": 0.3587962962962963,
+        "decisiveWinRate": 0.4479768786127168,
+        "scoreWithHalfDraws": 0.4583333333333333
+      },
+      "tn01t2": {
+        "games": 432,
+        "wins": 228,
+        "losses": 184,
+        "draws": 20,
+        "errors": 0,
+        "winRate": 0.5277777777777778,
+        "decisiveWinRate": 0.5533980582524272,
+        "scoreWithHalfDraws": 0.5509259259259259
+      }
+    },
+    "bySwap": {
+      "False": {
+        "games": 648,
+        "wins": 279,
+        "losses": 300,
+        "draws": 69,
+        "errors": 0,
+        "winRate": 0.4305555555555556,
+        "decisiveWinRate": 0.48186528497409326,
+        "scoreWithHalfDraws": 0.4837962962962963
+      },
+      "True": {
+        "games": 648,
+        "wins": 346,
+        "losses": 218,
+        "draws": 84,
+        "errors": 0,
+        "winRate": 0.5339506172839507,
+        "decisiveWinRate": 0.6134751773049646,
+        "scoreWithHalfDraws": 0.5987654320987654
+      }
+    },
+    "productionBothSides": [
+      {
+        "DOG": 1179,
+        "ADOG": 1541,
+        "E2": 30128,
+        "HTNK": 2451,
+        "MTNK": 4244,
+        "HARV": 955,
+        "CMIN": 1051,
+        "HTK": 1273,
+        "JUMPJET": 3891,
+        "DESO": 41,
+        "ENGINEER": 23,
+        "SENGINEER": 80,
+        "SNIPE": 40,
+        "TTNK": 13,
+        "V3": 42,
+        "ZEP": 186,
+        "BEAG": 0,
+        "TNKD": 0,
+        "DTRUCK": 0,
+        "TERROR": 0
+      },
+      {
+        "DOG": 2847,
+        "ADOG": 1538,
+        "E2": 25060,
+        "HTNK": 4002,
+        "MTNK": 1749,
+        "HARV": 1116,
+        "CMIN": 661,
+        "HTK": 2008,
+        "JUMPJET": 3305,
+        "DESO": 46,
+        "ENGINEER": 2,
+        "SENGINEER": 131,
+        "SNIPE": 12,
+        "TTNK": 0,
+        "V3": 0,
+        "ZEP": 90,
+        "BEAG": 0,
+        "TNKD": 0,
+        "DTRUCK": 0,
+        "TERROR": 0
+      }
+    ],
+    "firstEvents": {
+      "firstTankTick": {
+        "coveredGames": 436,
+        "total": 2871913,
+        "median": 6179.0
+      },
+      "firstTankShotTick": {
+        "coveredGames": 395,
+        "total": 3665114,
+        "median": 8922
+      },
+      "firstFlakTrackTick": {
+        "coveredGames": 501,
+        "total": 3459770,
+        "median": 4259
+      }
+    },
+    "firstFlakTrackAirShotTick": {
+      "coveredGames": 306,
+      "total": 1375948,
+      "median": 3841.0
+    },
+    "AAshots": {
+      "FlakTrackAAGun": 8156,
+      "FlakTrackAAGunE": 30
+    },
+    "opponentJumpjetToHarv": {
+      "damageHitPoints": {
+        "coveredGames": 1296,
+        "total": 69442,
+        "median": 0.0
+      },
+      "kills": {
+        "coveredGames": 1296,
+        "total": 51,
+        "median": 0.0
+      }
+    },
+    "tankShots": {
+      "coveredGames": 1296,
+      "total": 51780,
+      "median": 0.0
+    },
+    "tankDamage": {
+      "enemyHitPoints": 2601407,
+      "enemyKills": 10235,
+      "friendlyHitPoints": 4917,
+      "friendlyKills": 0
+    },
+    "tankInventory": {
+      "initialOwned": {
+        "coveredGames": 1296,
+        "total": 0,
+        "median": 0.0
+      },
+      "factoryProduced": {
+        "coveredGames": 1296,
+        "total": 2451,
+        "median": 0.0
+      },
+      "finalOwned": {
+        "coveredGames": 1296,
+        "total": 1198,
+        "median": 0.0
+      },
+      "netInventoryReduction": {
+        "coveredGames": 1296,
+        "total": 1253,
+        "median": 0.0
+      },
+      "ownershipChangeEvents": {
+        "coveredGames": 1296,
+        "total": 0,
+        "median": 0.0
+      },
+      "transportEvents": {
+        "coveredGames": 1296,
+        "total": 0,
+        "median": 0.0
+      }
+    },
+    "opponentSourceTankVictimTypeKills": {
+      "coveredGames": 1296,
+      "total": 1244,
+      "median": 0.0
+    },
+    "role": {
+      "coveredGames": 1296,
+      "controllerSampleGames": 1296,
+      "fullCadenceCoverageGames": 1296,
+      "expectedSamples": 724319,
+      "totals": {
+        "sampleTicks": 724319,
+        "mobileConscriptSamples": 2614224,
+        "homeConscriptSamples": 0,
+        "tankSamples": 721903,
+        "movingTankSamples": 236973,
+        "firingTankSamples": 2992,
+        "idleTankSamples": 282636,
+        "stationaryNonFiringTankSamples": 482674,
+        "escortDogSamples": 0,
+        "dogTankDistanceSamples": 0,
+        "dogTankDistanceSum": 0,
+        "dogBeyondFourTileSamples": 0
+      },
+      "gamesWithRoleTankSamples": 1056,
+      "gamesWithEscortDogSamples": 0,
+      "firstTankBeyondHome20Tick": {
+        "coveredGames": 853,
+        "total": 6805950,
+        "median": 7800
+      },
+      "maximumMobileConscripts": 23,
+      "maximumEscortDogTankDistance": 0,
+      "meanEscortDogTankDistance": null
+    },
+    "unitDetails": [
+      {
+        "coveredGames": 0,
+        "coveredSamples": 0,
+        "totalSamples": 26033
+      },
+      {
+        "coveredGames": 0,
+        "coveredSamples": 0,
+        "totalSamples": 26033
+      }
+    ],
+    "specialty": {
+      "production": {
+        "DOG": 1179,
+        "ADOG": 1541,
+        "E2": 30128,
+        "HTNK": 2451,
+        "MTNK": 4244,
+        "HARV": 955,
+        "CMIN": 1051,
+        "HTK": 1273,
+        "JUMPJET": 3891,
+        "DESO": 41,
+        "ENGINEER": 23,
+        "SENGINEER": 80,
+        "SNIPE": 40,
+        "TTNK": 13,
+        "V3": 42,
+        "ZEP": 186,
+        "BEAG": 0,
+        "TNKD": 0,
+        "DTRUCK": 0,
+        "TERROR": 0
+      },
+      "buildingsReady": {
+        "coveredGames": 1296,
+        "totals": {
+          "AMRADR": 146,
+          "GAAIRC": 582,
+          "GACNST": 733,
+          "GAPILE": 740,
+          "GAPILL": 115,
+          "GAPOWR": 1003,
+          "GAREFN": 1121,
+          "GATECH": 88,
+          "GAWEAP": 1038,
+          "GTGCAN": 6,
+          "NACNST": 639,
+          "NAHAND": 580,
+          "NALASR": 90,
+          "NANRCT": 63,
+          "NAPOWR": 1102,
+          "NARADR": 278,
+          "NAREFN": 934,
+          "NATECH": 200,
+          "NAWEAP": 941
+        }
+      },
+      "shots": {
+        "coveredGames": 1296,
+        "totals": {
+          "ADOG": 882,
+          "CAOILD": 9,
+          "DESO": 99,
+          "DOG": 166,
+          "E1": 162428,
+          "E2": 401845,
+          "FV": 8825,
+          "GAPILL": 2601,
+          "GTGCAN": 42,
+          "HARV": 26330,
+          "HTK": 43577,
+          "HTNK": 51780,
+          "JUMPJET": 187706,
+          "MTNK": 36966,
+          "NALASR": 657,
+          "NANRCT": 2,
+          "SNIPE": 521,
+          "TTNK": 108,
+          "V3": 197,
+          "ZEP": 2332
+        }
+      },
+      "damage": {
+        "coveredGames": 1296,
+        "totals": {
+          "ADOG": {
+            "enemyHitPoints": 89538,
+            "enemyKills": 869,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "CAOILD": {
+            "enemyHitPoints": 0,
+            "enemyKills": 0,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 7200,
+            "otherKills": 36
+          },
+          "CMIN": {
+            "enemyHitPoints": 0,
+            "enemyKills": 133,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "DESO": {
+            "enemyHitPoints": 1812,
+            "enemyKills": 7,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "DOG": {
+            "enemyHitPoints": 17316,
+            "enemyKills": 166,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "E1": {
+            "enemyHitPoints": 1258945,
+            "enemyKills": 5315,
+            "friendlyHitPoints": 6445,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "E2": {
+            "enemyHitPoints": 2986819,
+            "enemyKills": 11157,
+            "friendlyHitPoints": 1420,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "FV": {
+            "enemyHitPoints": 153557,
+            "enemyKills": 558,
+            "friendlyHitPoints": 34,
+            "friendlyKills": 0,
+            "otherHitPoints": 191,
+            "otherKills": 47
+          },
+          "GAPILL": {
+            "enemyHitPoints": 37231,
+            "enemyKills": 84,
+            "friendlyHitPoints": 1739,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "GTGCAN": {
+            "enemyHitPoints": 4987,
+            "enemyKills": 20,
+            "friendlyHitPoints": 1634,
+            "friendlyKills": 0,
+            "otherHitPoints": 106,
+            "otherKills": 1
+          },
+          "HARV": {
+            "enemyHitPoints": 141795,
+            "enemyKills": 212,
+            "friendlyHitPoints": 8365,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "HTK": {
+            "enemyHitPoints": 334816,
+            "enemyKills": 2732,
+            "friendlyHitPoints": 11625,
+            "friendlyKills": 30,
+            "otherHitPoints": 7743,
+            "otherKills": 3436
+          },
+          "HTNK": {
+            "enemyHitPoints": 2601407,
+            "enemyKills": 10235,
+            "friendlyHitPoints": 4917,
+            "friendlyKills": 0,
+            "otherHitPoints": 8460,
+            "otherKills": 760
+          },
+          "JUMPJET": {
+            "enemyHitPoints": 2572232,
+            "enemyKills": 7991,
+            "friendlyHitPoints": 1257,
+            "friendlyKills": 1,
+            "otherHitPoints": 174,
+            "otherKills": 0
+          },
+          "MTNK": {
+            "enemyHitPoints": 1491829,
+            "enemyKills": 6337,
+            "friendlyHitPoints": 4182,
+            "friendlyKills": 0,
+            "otherHitPoints": 3766,
+            "otherKills": 1430
+          },
+          "NALASR": {
+            "enemyHitPoints": 9918,
+            "enemyKills": 51,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "NANRCT": {
+            "enemyHitPoints": 762,
+            "enemyKills": 4,
+            "friendlyHitPoints": 3430,
+            "friendlyKills": 8,
+            "otherHitPoints": 1554,
+            "otherKills": 6
+          },
+          "SNIPE": {
+            "enemyHitPoints": 22094,
+            "enemyKills": 200,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "TTNK": {
+            "enemyHitPoints": 10803,
+            "enemyKills": 72,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 67,
+            "otherKills": 0
+          },
+          "V3": {
+            "enemyHitPoints": 25281,
+            "enemyKills": 32,
+            "friendlyHitPoints": 3777,
+            "friendlyKills": 3,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "ZEP": {
+            "enemyHitPoints": 334022,
+            "enemyKills": 1202,
+            "friendlyHitPoints": 27375,
+            "friendlyKills": 205,
+            "otherHitPoints": 7909,
+            "otherKills": 133
+          }
+        }
+      },
+      "events": {
+        "paradropActivations": {
+          "coveredGames": 1296,
+          "events": 492,
+          "gamesWithEvents": 144
+        },
+        "paradropInfantrySpawned": {
+          "coveredGames": 1296,
+          "events": 3740,
+          "gamesWithEvents": 144
+        },
+        "desolatorDeployments": {
+          "coveredGames": 1296,
+          "events": 2,
+          "gamesWithEvents": 1
+        },
+        "captureOrders": {
+          "coveredGames": 1296,
+          "events": 901,
+          "gamesWithEvents": 99
+        },
+        "harassmentDetachments": {
+          "coveredGames": 1296,
+          "events": 3,
+          "gamesWithEvents": 3
+        },
+        "desolatorsBoarded": {
+          "coveredGames": 1296,
+          "events": 0,
+          "gamesWithEvents": 0
+        },
+        "desolatorsUnloadedIntact": {
+          "coveredGames": 1296,
+          "events": 0,
+          "gamesWithEvents": 0
+        },
+        "ownerlessRadiationDamageAsVictim": {
+          "coveredGames": 1296,
+          "events": 792,
+          "gamesWithEvents": 5
+        }
+      },
+      "baselineOwnerlessRadiationDamageAsVictim": {
+        "coveredGames": 1296,
+        "events": 74,
+        "gamesWithEvents": 3
+      }
+    },
+    "ownership": {
+      "enemyAcquiredByName": {
+        "NAREFN": 4
+      },
+      "enemyCoreBuildingAcquisitions": [
+        {
+          "identity": [
+            "Africans",
+            "Confederation",
+            "tn01t2.map",
+            730202,
+            true
+          ],
+          "tick": 19466,
+          "id": 1000,
+          "name": "NAREFN",
+          "previousOwner": "@@AI1@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": 1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Africans",
+            "Russians",
+            "tn01t2.map",
+            730202,
+            true
+          ],
+          "tick": 19466,
+          "id": 1000,
+          "name": "NAREFN",
+          "previousOwner": "@@AI1@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": 1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Confederation",
+            "Africans",
+            "tn01t2.map",
+            730202,
+            true
+          ],
+          "tick": 19466,
+          "id": 1000,
+          "name": "NAREFN",
+          "previousOwner": "@@AI1@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": 1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Confederation",
+            "Russians",
+            "tn01t2.map",
+            730202,
+            true
+          ],
+          "tick": 19466,
+          "id": 1000,
+          "name": "NAREFN",
+          "previousOwner": "@@AI1@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": 1,
+          "newSide": 0
+        }
+      ],
+      "allEvents": [
+        {
+          "identity": [
+            "Alliance",
+            "Africans",
+            "mp08t2.map",
+            710101,
+            true
+          ],
+          "tick": 14160,
+          "id": 904,
+          "name": "GAREFN",
+          "previousOwner": "@@AI2@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "Alliance",
+            "Confederation",
+            "mp08t2.map",
+            710101,
+            true
+          ],
+          "tick": 14160,
+          "id": 904,
+          "name": "GAREFN",
+          "previousOwner": "@@AI2@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "Alliance",
+            "Russians",
+            "mp08t2.map",
+            710101,
+            true
+          ],
+          "tick": 14160,
+          "id": 904,
+          "name": "GAREFN",
+          "previousOwner": "@@AI2@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "French",
+            "Africans",
+            "mp08t2.map",
+            710101,
+            true
+          ],
+          "tick": 14160,
+          "id": 904,
+          "name": "GAREFN",
+          "previousOwner": "@@AI2@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "French",
+            "Confederation",
+            "mp08t2.map",
+            710101,
+            true
+          ],
+          "tick": 14160,
+          "id": 904,
+          "name": "GAREFN",
+          "previousOwner": "@@AI2@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "French",
+            "Russians",
+            "mp08t2.map",
+            710101,
+            true
+          ],
+          "tick": 14160,
+          "id": 904,
+          "name": "GAREFN",
+          "previousOwner": "@@AI2@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "Germans",
+            "Africans",
+            "mp08t2.map",
+            710101,
+            true
+          ],
+          "tick": 14160,
+          "id": 904,
+          "name": "GAREFN",
+          "previousOwner": "@@AI2@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "Germans",
+            "Confederation",
+            "mp08t2.map",
+            710101,
+            true
+          ],
+          "tick": 14160,
+          "id": 904,
+          "name": "GAREFN",
+          "previousOwner": "@@AI2@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "Germans",
+            "Russians",
+            "mp08t2.map",
+            710101,
+            true
+          ],
+          "tick": 14160,
+          "id": 904,
+          "name": "GAREFN",
+          "previousOwner": "@@AI2@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "British",
+            "Arabs",
+            "mp08t2.map",
+            710101,
+            true
+          ],
+          "tick": 22950,
+          "id": 1206,
+          "name": "GAREFN",
+          "previousOwner": "@@AI2@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "Africans",
+            "Confederation",
+            "tn01t2.map",
+            710202,
+            true
+          ],
+          "tick": 24890,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Africans",
+            "Russians",
+            "tn01t2.map",
+            710202,
+            true
+          ],
+          "tick": 24890,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Confederation",
+            "Africans",
+            "tn01t2.map",
+            710202,
+            true
+          ],
+          "tick": 24890,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Confederation",
+            "Russians",
+            "tn01t2.map",
+            710202,
+            true
+          ],
+          "tick": 24890,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "British",
+            "Arabs",
+            "mp11t2.map",
+            710303,
+            true
+          ],
+          "tick": 21668,
+          "id": 2226,
+          "name": "GAREFN",
+          "previousOwner": "@@AI2@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "Alliance",
+            "Africans",
+            "mp08t2.map",
+            720101,
+            true
+          ],
+          "tick": 15979,
+          "id": 904,
+          "name": "GAREFN",
+          "previousOwner": "@@AI2@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "Alliance",
+            "Arabs",
+            "mp08t2.map",
+            720101,
+            true
+          ],
+          "tick": 20075,
+          "id": 894,
+          "name": "GAREFN",
+          "previousOwner": "@@AI2@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "Alliance",
+            "Confederation",
+            "mp08t2.map",
+            720101,
+            true
+          ],
+          "tick": 15979,
+          "id": 904,
+          "name": "GAREFN",
+          "previousOwner": "@@AI2@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "Alliance",
+            "Russians",
+            "mp08t2.map",
+            720101,
+            true
+          ],
+          "tick": 15979,
+          "id": 904,
+          "name": "GAREFN",
+          "previousOwner": "@@AI2@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "French",
+            "Africans",
+            "mp08t2.map",
+            720101,
+            true
+          ],
+          "tick": 15979,
+          "id": 904,
+          "name": "GAREFN",
+          "previousOwner": "@@AI2@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "French",
+            "Arabs",
+            "mp08t2.map",
+            720101,
+            true
+          ],
+          "tick": 20075,
+          "id": 894,
+          "name": "GAREFN",
+          "previousOwner": "@@AI2@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "French",
+            "Confederation",
+            "mp08t2.map",
+            720101,
+            true
+          ],
+          "tick": 15979,
+          "id": 904,
+          "name": "GAREFN",
+          "previousOwner": "@@AI2@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "French",
+            "Russians",
+            "mp08t2.map",
+            720101,
+            true
+          ],
+          "tick": 15979,
+          "id": 904,
+          "name": "GAREFN",
+          "previousOwner": "@@AI2@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "Germans",
+            "Africans",
+            "mp08t2.map",
+            720101,
+            true
+          ],
+          "tick": 15979,
+          "id": 904,
+          "name": "GAREFN",
+          "previousOwner": "@@AI2@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "Germans",
+            "Arabs",
+            "mp08t2.map",
+            720101,
+            true
+          ],
+          "tick": 20075,
+          "id": 894,
+          "name": "GAREFN",
+          "previousOwner": "@@AI2@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "Germans",
+            "Confederation",
+            "mp08t2.map",
+            720101,
+            true
+          ],
+          "tick": 15979,
+          "id": 904,
+          "name": "GAREFN",
+          "previousOwner": "@@AI2@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "Germans",
+            "Russians",
+            "mp08t2.map",
+            720101,
+            true
+          ],
+          "tick": 15979,
+          "id": 904,
+          "name": "GAREFN",
+          "previousOwner": "@@AI2@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "Americans",
+            "Africans",
+            "tn01t2.map",
+            720202,
+            false
+          ],
+          "tick": 18134,
+          "id": 1041,
+          "name": "GAWEAP",
+          "previousOwner": "@@AI1@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "Americans",
+            "Confederation",
+            "tn01t2.map",
+            720202,
+            false
+          ],
+          "tick": 18134,
+          "id": 1041,
+          "name": "GAWEAP",
+          "previousOwner": "@@AI1@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "Americans",
+            "Russians",
+            "tn01t2.map",
+            720202,
+            false
+          ],
+          "tick": 18134,
+          "id": 1041,
+          "name": "GAWEAP",
+          "previousOwner": "@@AI1@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "Alliance",
+            "Africans",
+            "tn01t2.map",
+            720202,
+            false
+          ],
+          "tick": 14978,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Alliance",
+            "Confederation",
+            "tn01t2.map",
+            720202,
+            false
+          ],
+          "tick": 14978,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Alliance",
+            "Russians",
+            "tn01t2.map",
+            720202,
+            false
+          ],
+          "tick": 14978,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "French",
+            "Africans",
+            "tn01t2.map",
+            720202,
+            false
+          ],
+          "tick": 14978,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "French",
+            "Confederation",
+            "tn01t2.map",
+            720202,
+            false
+          ],
+          "tick": 14978,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "French",
+            "Russians",
+            "tn01t2.map",
+            720202,
+            false
+          ],
+          "tick": 14978,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Germans",
+            "Africans",
+            "tn01t2.map",
+            720202,
+            false
+          ],
+          "tick": 14978,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Germans",
+            "Confederation",
+            "tn01t2.map",
+            720202,
+            false
+          ],
+          "tick": 14978,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Germans",
+            "Russians",
+            "tn01t2.map",
+            720202,
+            false
+          ],
+          "tick": 14978,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "British",
+            "Africans",
+            "tn01t2.map",
+            720202,
+            false
+          ],
+          "tick": 14692,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "British",
+            "Africans",
+            "tn01t2.map",
+            720202,
+            false
+          ],
+          "tick": 18432,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@AI1@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "British",
+            "Confederation",
+            "tn01t2.map",
+            720202,
+            false
+          ],
+          "tick": 14692,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "British",
+            "Confederation",
+            "tn01t2.map",
+            720202,
+            false
+          ],
+          "tick": 18432,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@AI1@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "British",
+            "Russians",
+            "tn01t2.map",
+            720202,
+            false
+          ],
+          "tick": 14692,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "British",
+            "Russians",
+            "tn01t2.map",
+            720202,
+            false
+          ],
+          "tick": 18432,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@AI1@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "Alliance",
+            "Arabs",
+            "mp08t2.map",
+            730101,
+            true
+          ],
+          "tick": 21199,
+          "id": 894,
+          "name": "GAREFN",
+          "previousOwner": "@@AI2@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "Germans",
+            "Arabs",
+            "mp08t2.map",
+            730101,
+            true
+          ],
+          "tick": 21199,
+          "id": 894,
+          "name": "GAREFN",
+          "previousOwner": "@@AI2@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "British",
+            "Africans",
+            "mp08t2.map",
+            730101,
+            true
+          ],
+          "tick": 26057,
+          "id": 904,
+          "name": "GAREFN",
+          "previousOwner": "@@AI2@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "British",
+            "Confederation",
+            "mp08t2.map",
+            730101,
+            true
+          ],
+          "tick": 26057,
+          "id": 904,
+          "name": "GAREFN",
+          "previousOwner": "@@AI2@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "Alliance",
+            "Africans",
+            "tn01t2.map",
+            730202,
+            false
+          ],
+          "tick": 17354,
+          "id": 1036,
+          "name": "GAWEAP",
+          "previousOwner": "@@AI1@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "Alliance",
+            "Confederation",
+            "tn01t2.map",
+            730202,
+            false
+          ],
+          "tick": 17354,
+          "id": 1036,
+          "name": "GAWEAP",
+          "previousOwner": "@@AI1@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "Alliance",
+            "Russians",
+            "tn01t2.map",
+            730202,
+            false
+          ],
+          "tick": 17354,
+          "id": 1036,
+          "name": "GAWEAP",
+          "previousOwner": "@@AI1@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "French",
+            "Africans",
+            "tn01t2.map",
+            730202,
+            false
+          ],
+          "tick": 17354,
+          "id": 1036,
+          "name": "GAWEAP",
+          "previousOwner": "@@AI1@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "French",
+            "Confederation",
+            "tn01t2.map",
+            730202,
+            false
+          ],
+          "tick": 17354,
+          "id": 1036,
+          "name": "GAWEAP",
+          "previousOwner": "@@AI1@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "French",
+            "Russians",
+            "tn01t2.map",
+            730202,
+            false
+          ],
+          "tick": 17354,
+          "id": 1036,
+          "name": "GAWEAP",
+          "previousOwner": "@@AI1@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "Germans",
+            "Africans",
+            "tn01t2.map",
+            730202,
+            false
+          ],
+          "tick": 17354,
+          "id": 1036,
+          "name": "GAWEAP",
+          "previousOwner": "@@AI1@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "Germans",
+            "Confederation",
+            "tn01t2.map",
+            730202,
+            false
+          ],
+          "tick": 17354,
+          "id": 1036,
+          "name": "GAWEAP",
+          "previousOwner": "@@AI1@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "Germans",
+            "Russians",
+            "tn01t2.map",
+            730202,
+            false
+          ],
+          "tick": 17354,
+          "id": 1036,
+          "name": "GAWEAP",
+          "previousOwner": "@@AI1@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "British",
+            "Africans",
+            "tn01t2.map",
+            730202,
+            false
+          ],
+          "tick": 17354,
+          "id": 1036,
+          "name": "GAWEAP",
+          "previousOwner": "@@AI1@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "British",
+            "Confederation",
+            "tn01t2.map",
+            730202,
+            false
+          ],
+          "tick": 17354,
+          "id": 1036,
+          "name": "GAWEAP",
+          "previousOwner": "@@AI1@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "British",
+            "Russians",
+            "tn01t2.map",
+            730202,
+            false
+          ],
+          "tick": 17354,
+          "id": 1036,
+          "name": "GAWEAP",
+          "previousOwner": "@@AI1@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "Africans",
+            "Confederation",
+            "tn01t2.map",
+            730202,
+            true
+          ],
+          "tick": 19466,
+          "id": 1000,
+          "name": "NAREFN",
+          "previousOwner": "@@AI1@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": 1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Africans",
+            "Confederation",
+            "tn01t2.map",
+            730202,
+            true
+          ],
+          "tick": 22765,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Africans",
+            "Russians",
+            "tn01t2.map",
+            730202,
+            true
+          ],
+          "tick": 19466,
+          "id": 1000,
+          "name": "NAREFN",
+          "previousOwner": "@@AI1@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": 1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Africans",
+            "Russians",
+            "tn01t2.map",
+            730202,
+            true
+          ],
+          "tick": 22765,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Confederation",
+            "Africans",
+            "tn01t2.map",
+            730202,
+            true
+          ],
+          "tick": 19466,
+          "id": 1000,
+          "name": "NAREFN",
+          "previousOwner": "@@AI1@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": 1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Confederation",
+            "Africans",
+            "tn01t2.map",
+            730202,
+            true
+          ],
+          "tick": 22765,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Confederation",
+            "Russians",
+            "tn01t2.map",
+            730202,
+            true
+          ],
+          "tick": 19466,
+          "id": 1000,
+          "name": "NAREFN",
+          "previousOwner": "@@AI1@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": 1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Confederation",
+            "Russians",
+            "tn01t2.map",
+            730202,
+            true
+          ],
+          "tick": 22765,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": -1,
+          "newSide": 0
+        }
+      ],
+      "note": "ObjectOwnerChange records no captor or mission source. Do not infer an engineer/Sneak success; CAOILD oil wells are separate from core production buildings."
+    },
+    "features": {
+      "captureOrders": {
+        "events": 901,
+        "gamesWithEvents": 99,
+        "coveredGames": 1296
+      },
+      "desolatorDeployments": {
+        "events": 2,
+        "gamesWithEvents": 1,
+        "coveredGames": 1296
+      },
+      "desolatorUnloadsFromIntactTransport": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 1296
+      },
+      "desolatorsBoarded": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 1296
+      },
+      "desolatorsProduced": {
+        "events": 41,
+        "gamesWithEvents": 36,
+        "coveredGames": 1296
+      },
+      "enemyCrushKills": {
+        "events": 8229,
+        "gamesWithEvents": 802,
+        "coveredGames": 1296
+      },
+      "enemyObjectsAcquiredCauseUnspecified": {
+        "events": 4,
+        "gamesWithEvents": 4,
+        "coveredGames": 1296
+      },
+      "grandCannonShots": {
+        "events": 42,
+        "gamesWithEvents": 5,
+        "coveredGames": 1296
+      },
+      "grandCannonsReady": {
+        "events": 6,
+        "gamesWithEvents": 6,
+        "coveredGames": 1296
+      },
+      "neutralObjectsAcquiredCauseUnspecified": {
+        "events": 20,
+        "gamesWithEvents": 20,
+        "coveredGames": 1296
+      },
+      "ownerlessRadiationDamageToBaseline": {
+        "events": 74,
+        "gamesWithEvents": 3,
+        "coveredGames": 1296
+      },
+      "ownerlessRadiationDamageToCandidate": {
+        "events": 792,
+        "gamesWithEvents": 5,
+        "coveredGames": 1296
+      },
+      "surplusRaidDetachments": {
+        "events": 3,
+        "gamesWithEvents": 3,
+        "coveredGames": 1296
+      }
+    }
+  },
+  {
+    "label": "40241346363",
+    "totals": {
+      "games": 432,
+      "wins": 416,
+      "losses": 0,
+      "draws": 16,
+      "errors": 0,
+      "winRate": 0.9629629629629629,
+      "decisiveWinRate": 1.0,
+      "scoreWithHalfDraws": 0.9814814814814815
+    },
+    "byCountry": {
+      "Americans": {
+        "games": 48,
+        "wins": 48,
+        "losses": 0,
+        "draws": 0,
+        "errors": 0,
+        "winRate": 1.0,
+        "decisiveWinRate": 1.0,
+        "scoreWithHalfDraws": 1.0
+      },
+      "Alliance": {
+        "games": 48,
+        "wins": 44,
+        "losses": 0,
+        "draws": 4,
+        "errors": 0,
+        "winRate": 0.9166666666666666,
+        "decisiveWinRate": 1.0,
+        "scoreWithHalfDraws": 0.9583333333333334
+      },
+      "French": {
+        "games": 48,
+        "wins": 44,
+        "losses": 0,
+        "draws": 4,
+        "errors": 0,
+        "winRate": 0.9166666666666666,
+        "decisiveWinRate": 1.0,
+        "scoreWithHalfDraws": 0.9583333333333334
+      },
+      "Germans": {
+        "games": 48,
+        "wins": 44,
+        "losses": 0,
+        "draws": 4,
+        "errors": 0,
+        "winRate": 0.9166666666666666,
+        "decisiveWinRate": 1.0,
+        "scoreWithHalfDraws": 0.9583333333333334
+      },
+      "British": {
+        "games": 48,
+        "wins": 44,
+        "losses": 0,
+        "draws": 4,
+        "errors": 0,
+        "winRate": 0.9166666666666666,
+        "decisiveWinRate": 1.0,
+        "scoreWithHalfDraws": 0.9583333333333334
+      },
+      "Africans": {
+        "games": 48,
+        "wins": 48,
+        "losses": 0,
+        "draws": 0,
+        "errors": 0,
+        "winRate": 1.0,
+        "decisiveWinRate": 1.0,
+        "scoreWithHalfDraws": 1.0
+      },
+      "Arabs": {
+        "games": 48,
+        "wins": 48,
+        "losses": 0,
+        "draws": 0,
+        "errors": 0,
+        "winRate": 1.0,
+        "decisiveWinRate": 1.0,
+        "scoreWithHalfDraws": 1.0
+      },
+      "Confederation": {
+        "games": 48,
+        "wins": 48,
+        "losses": 0,
+        "draws": 0,
+        "errors": 0,
+        "winRate": 1.0,
+        "decisiveWinRate": 1.0,
+        "scoreWithHalfDraws": 1.0
+      },
+      "Russians": {
+        "games": 48,
+        "wins": 48,
+        "losses": 0,
+        "draws": 0,
+        "errors": 0,
+        "winRate": 1.0,
+        "decisiveWinRate": 1.0,
+        "scoreWithHalfDraws": 1.0
+      }
+    },
+    "byMap": {
+      "mp08t2": {
+        "games": 144,
+        "wins": 128,
+        "losses": 0,
+        "draws": 16,
+        "errors": 0,
+        "winRate": 0.8888888888888888,
+        "decisiveWinRate": 1.0,
+        "scoreWithHalfDraws": 0.9444444444444444
+      },
+      "mp11t2": {
+        "games": 144,
+        "wins": 144,
+        "losses": 0,
+        "draws": 0,
+        "errors": 0,
+        "winRate": 1.0,
+        "decisiveWinRate": 1.0,
+        "scoreWithHalfDraws": 1.0
+      },
+      "tn01t2": {
+        "games": 144,
+        "wins": 144,
+        "losses": 0,
+        "draws": 0,
+        "errors": 0,
+        "winRate": 1.0,
+        "decisiveWinRate": 1.0,
+        "scoreWithHalfDraws": 1.0
+      }
+    },
+    "bySwap": {
+      "False": {
+        "games": 216,
+        "wins": 200,
+        "losses": 0,
+        "draws": 16,
+        "errors": 0,
+        "winRate": 0.9259259259259259,
+        "decisiveWinRate": 1.0,
+        "scoreWithHalfDraws": 0.9629629629629629
+      },
+      "True": {
+        "games": 216,
+        "wins": 216,
+        "losses": 0,
+        "draws": 0,
+        "errors": 0,
+        "winRate": 1.0,
+        "decisiveWinRate": 1.0,
+        "scoreWithHalfDraws": 1.0
+      }
+    },
+    "productionBothSides": [
+      {
+        "DOG": 322,
+        "ADOG": 440,
+        "E2": 7026,
+        "HTNK": 388,
+        "MTNK": 276,
+        "HARV": 233,
+        "CMIN": 120,
+        "HTK": 41,
+        "JUMPJET": 1188,
+        "DESO": 3,
+        "ENGINEER": 0,
+        "SENGINEER": 3,
+        "SNIPE": 0,
+        "TTNK": 0,
+        "V3": 3,
+        "ZEP": 3,
+        "BEAG": 0,
+        "TNKD": 0,
+        "DTRUCK": 0,
+        "TERROR": 0
+      },
+      {
+        "DOG": 325,
+        "ADOG": 720,
+        "E2": 8160,
+        "HTNK": 166,
+        "MTNK": 135,
+        "HARV": 0,
+        "CMIN": 0,
+        "HTK": 53,
+        "JUMPJET": 0,
+        "DESO": 0,
+        "ENGINEER": 0,
+        "SENGINEER": 0,
+        "SNIPE": 0,
+        "TTNK": 0,
+        "V3": 0,
+        "ZEP": 0,
+        "BEAG": 0,
+        "TNKD": 0,
+        "DTRUCK": 0,
+        "TERROR": 0
+      }
+    ],
+    "firstEvents": {
+      "firstTankTick": {
+        "coveredGames": 163,
+        "total": 1018850,
+        "median": 6270
+      },
+      "firstTankShotTick": {
+        "coveredGames": 143,
+        "total": 1050641,
+        "median": 7720
+      },
+      "firstFlakTrackTick": {
+        "coveredGames": 41,
+        "total": 598529,
+        "median": 14889
+      }
+    },
+    "firstFlakTrackAirShotTick": {
+      "coveredGames": 0,
+      "total": null,
+      "median": null
+    },
+    "AAshots": {},
+    "opponentJumpjetToHarv": {
+      "damageHitPoints": {
+        "coveredGames": 432,
+        "total": 0,
+        "median": 0.0
+      },
+      "kills": {
+        "coveredGames": 432,
+        "total": 0,
+        "median": 0.0
+      }
+    },
+    "tankShots": {
+      "coveredGames": 432,
+      "total": 8165,
+      "median": 0.0
+    },
+    "tankDamage": {
+      "enemyHitPoints": 343331,
+      "enemyKills": 1077,
+      "friendlyHitPoints": 1668,
+      "friendlyKills": 0
+    },
+    "tankInventory": {
+      "initialOwned": {
+        "coveredGames": 432,
+        "total": 0,
+        "median": 0.0
+      },
+      "factoryProduced": {
+        "coveredGames": 432,
+        "total": 388,
+        "median": 0.0
+      },
+      "finalOwned": {
+        "coveredGames": 432,
+        "total": 368,
+        "median": 0.0
+      },
+      "netInventoryReduction": {
+        "coveredGames": 432,
+        "total": 20,
+        "median": 0.0
+      },
+      "ownershipChangeEvents": {
+        "coveredGames": 432,
+        "total": 0,
+        "median": 0.0
+      },
+      "transportEvents": {
+        "coveredGames": 432,
+        "total": 0,
+        "median": 0.0
+      }
+    },
+    "opponentSourceTankVictimTypeKills": {
+      "coveredGames": 432,
+      "total": 20,
+      "median": 0.0
+    },
+    "role": {
+      "coveredGames": 432,
+      "controllerSampleGames": 432,
+      "fullCadenceCoverageGames": 432,
+      "expectedSamples": 161094,
+      "totals": {
+        "sampleTicks": 161094,
+        "mobileConscriptSamples": 789775,
+        "homeConscriptSamples": 0,
+        "tankSamples": 74818,
+        "movingTankSamples": 30841,
+        "firingTankSamples": 475,
+        "idleTankSamples": 10207,
+        "stationaryNonFiringTankSamples": 43579,
+        "escortDogSamples": 0,
+        "dogTankDistanceSamples": 0,
+        "dogTankDistanceSum": 0,
+        "dogBeyondFourTileSamples": 0
+      },
+      "gamesWithRoleTankSamples": 323,
+      "gamesWithEscortDogSamples": 0,
+      "firstTankBeyondHome20Tick": {
+        "coveredGames": 318,
+        "total": 1937400,
+        "median": 5760.0
+      },
+      "maximumMobileConscripts": 26,
+      "maximumEscortDogTankDistance": 0,
+      "meanEscortDogTankDistance": null
+    },
+    "unitDetails": [
+      {
+        "coveredGames": 0,
+        "coveredSamples": 0,
+        "totalSamples": 6018
+      },
+      {
+        "coveredGames": 0,
+        "coveredSamples": 0,
+        "totalSamples": 6018
+      }
+    ],
+    "specialty": {
+      "production": {
+        "DOG": 322,
+        "ADOG": 440,
+        "E2": 7026,
+        "HTNK": 388,
+        "MTNK": 276,
+        "HARV": 233,
+        "CMIN": 120,
+        "HTK": 41,
+        "JUMPJET": 1188,
+        "DESO": 3,
+        "ENGINEER": 0,
+        "SENGINEER": 3,
+        "SNIPE": 0,
+        "TTNK": 0,
+        "V3": 3,
+        "ZEP": 3,
+        "BEAG": 0,
+        "TNKD": 0,
+        "DTRUCK": 0,
+        "TERROR": 0
+      },
+      "buildingsReady": {
+        "coveredGames": 432,
+        "totals": {
+          "AMRADR": 48,
+          "GAAIRC": 192,
+          "GACNST": 240,
+          "GAPILE": 240,
+          "GAPILL": 60,
+          "GAPOWR": 240,
+          "GAREFN": 300,
+          "GAWEAP": 200,
+          "NACNST": 192,
+          "NAHAND": 204,
+          "NALASR": 48,
+          "NAPOWR": 230,
+          "NARADR": 15,
+          "NAREFN": 268,
+          "NATECH": 3,
+          "NAWEAP": 236
+        }
+      },
+      "shots": {
+        "coveredGames": 432,
+        "totals": {
+          "ADOG": 520,
+          "DOG": 152,
+          "E1": 19480,
+          "E2": 206335,
+          "GAPILL": 564,
+          "HARV": 480,
+          "HTK": 311,
+          "HTNK": 8165,
+          "JUMPJET": 163616,
+          "MTNK": 9288,
+          "NALASR": 729,
+          "V3": 21
+        }
+      },
+      "damage": {
+        "coveredGames": 432,
+        "totals": {
+          "ADOG": {
+            "enemyHitPoints": 59200,
+            "enemyKills": 520,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "CMIN": {
+            "enemyHitPoints": 0,
+            "enemyKills": 468,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "DOG": {
+            "enemyHitPoints": 15550,
+            "enemyKills": 152,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "E1": {
+            "enemyHitPoints": 182708,
+            "enemyKills": 840,
+            "friendlyHitPoints": 1760,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "E2": {
+            "enemyHitPoints": 1807733,
+            "enemyKills": 8536,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "GAPILL": {
+            "enemyHitPoints": 16268,
+            "enemyKills": 136,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "HARV": {
+            "enemyHitPoints": 9271,
+            "enemyKills": 143,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "HTK": {
+            "enemyHitPoints": 1856,
+            "enemyKills": 0,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 5,
+            "otherKills": 0
+          },
+          "HTNK": {
+            "enemyHitPoints": 343331,
+            "enemyKills": 1077,
+            "friendlyHitPoints": 1668,
+            "friendlyKills": 0,
+            "otherHitPoints": 3486,
+            "otherKills": 180
+          },
+          "JUMPJET": {
+            "enemyHitPoints": 2417504,
+            "enemyKills": 10172,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "MTNK": {
+            "enemyHitPoints": 301076,
+            "enemyKills": 1228,
+            "friendlyHitPoints": 440,
+            "friendlyKills": 0,
+            "otherHitPoints": 4692,
+            "otherKills": 156
+          },
+          "NALASR": {
+            "enemyHitPoints": 18726,
+            "enemyKills": 189,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "V3": {
+            "enemyHitPoints": 3339,
+            "enemyKills": 3,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          }
+        }
+      },
+      "events": {
+        "paradropActivations": {
+          "coveredGames": 432,
+          "events": 80,
+          "gamesWithEvents": 48
+        },
+        "paradropInfantrySpawned": {
+          "coveredGames": 432,
+          "events": 544,
+          "gamesWithEvents": 48
+        },
+        "desolatorDeployments": {
+          "coveredGames": 432,
+          "events": 0,
+          "gamesWithEvents": 0
+        },
+        "captureOrders": {
+          "coveredGames": 432,
+          "events": 12,
+          "gamesWithEvents": 3
+        },
+        "harassmentDetachments": {
+          "coveredGames": 432,
+          "events": 0,
+          "gamesWithEvents": 0
+        },
+        "desolatorsBoarded": {
+          "coveredGames": 432,
+          "events": 0,
+          "gamesWithEvents": 0
+        },
+        "desolatorsUnloadedIntact": {
+          "coveredGames": 432,
+          "events": 0,
+          "gamesWithEvents": 0
+        },
+        "ownerlessRadiationDamageAsVictim": {
+          "coveredGames": 432,
+          "events": 0,
+          "gamesWithEvents": 0
+        }
+      },
+      "baselineOwnerlessRadiationDamageAsVictim": {
+        "coveredGames": 432,
+        "events": 0,
+        "gamesWithEvents": 0
+      }
+    },
+    "ownership": {
+      "enemyAcquiredByName": {},
+      "enemyCoreBuildingAcquisitions": [],
+      "events": [],
+      "note": "Ownership has no captor/mission/source field. No engineer or Sneak attribution is inferred; technical oil wells are separate from core buildings."
+    },
+    "features": {
+      "captureOrders": {
+        "events": 12,
+        "gamesWithEvents": 3,
+        "coveredGames": 432
+      },
+      "desolatorDeployments": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 432
+      },
+      "desolatorUnloadsFromIntactTransport": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 432
+      },
+      "desolatorsBoarded": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 432
+      },
+      "desolatorsProduced": {
+        "events": 3,
+        "gamesWithEvents": 3,
+        "coveredGames": 432
+      },
+      "enemyCrushKills": {
+        "events": 1529,
+        "gamesWithEvents": 255,
+        "coveredGames": 432
+      },
+      "enemyObjectsAcquiredCauseUnspecified": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 432
+      },
+      "grandCannonShots": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 432
+      },
+      "grandCannonsReady": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 432
+      },
+      "neutralObjectsAcquiredCauseUnspecified": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 432
+      },
+      "ownerlessRadiationDamageToBaseline": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 432
+      },
+      "ownerlessRadiationDamageToCandidate": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 432
+      },
+      "surplusRaidDetachments": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 432
+      }
+    }
+  },
+  {
+    "label": "40241433799",
+    "totals": {
+      "games": 432,
+      "wins": 380,
+      "losses": 36,
+      "draws": 16,
+      "errors": 0,
+      "winRate": 0.8796296296296297,
+      "decisiveWinRate": 0.9134615384615384,
+      "scoreWithHalfDraws": 0.8981481481481481
+    },
+    "byCountry": {
+      "Americans": {
+        "games": 48,
+        "wins": 44,
+        "losses": 4,
+        "draws": 0,
+        "errors": 0,
+        "winRate": 0.9166666666666666,
+        "decisiveWinRate": 0.9166666666666666,
+        "scoreWithHalfDraws": 0.9166666666666666
+      },
+      "Alliance": {
+        "games": 48,
+        "wins": 36,
+        "losses": 8,
+        "draws": 4,
+        "errors": 0,
+        "winRate": 0.75,
+        "decisiveWinRate": 0.8181818181818182,
+        "scoreWithHalfDraws": 0.7916666666666666
+      },
+      "French": {
+        "games": 48,
+        "wins": 36,
+        "losses": 8,
+        "draws": 4,
+        "errors": 0,
+        "winRate": 0.75,
+        "decisiveWinRate": 0.8181818181818182,
+        "scoreWithHalfDraws": 0.7916666666666666
+      },
+      "Germans": {
+        "games": 48,
+        "wins": 36,
+        "losses": 8,
+        "draws": 4,
+        "errors": 0,
+        "winRate": 0.75,
+        "decisiveWinRate": 0.8181818181818182,
+        "scoreWithHalfDraws": 0.7916666666666666
+      },
+      "British": {
+        "games": 48,
+        "wins": 36,
+        "losses": 8,
+        "draws": 4,
+        "errors": 0,
+        "winRate": 0.75,
+        "decisiveWinRate": 0.8181818181818182,
+        "scoreWithHalfDraws": 0.7916666666666666
+      },
+      "Africans": {
+        "games": 48,
+        "wins": 48,
+        "losses": 0,
+        "draws": 0,
+        "errors": 0,
+        "winRate": 1.0,
+        "decisiveWinRate": 1.0,
+        "scoreWithHalfDraws": 1.0
+      },
+      "Arabs": {
+        "games": 48,
+        "wins": 48,
+        "losses": 0,
+        "draws": 0,
+        "errors": 0,
+        "winRate": 1.0,
+        "decisiveWinRate": 1.0,
+        "scoreWithHalfDraws": 1.0
+      },
+      "Confederation": {
+        "games": 48,
+        "wins": 48,
+        "losses": 0,
+        "draws": 0,
+        "errors": 0,
+        "winRate": 1.0,
+        "decisiveWinRate": 1.0,
+        "scoreWithHalfDraws": 1.0
+      },
+      "Russians": {
+        "games": 48,
+        "wins": 48,
+        "losses": 0,
+        "draws": 0,
+        "errors": 0,
+        "winRate": 1.0,
+        "decisiveWinRate": 1.0,
+        "scoreWithHalfDraws": 1.0
+      }
+    },
+    "byMap": {
+      "mp08t2": {
+        "games": 144,
+        "wins": 120,
+        "losses": 20,
+        "draws": 4,
+        "errors": 0,
+        "winRate": 0.8333333333333334,
+        "decisiveWinRate": 0.8571428571428571,
+        "scoreWithHalfDraws": 0.8472222222222222
+      },
+      "mp11t2": {
+        "games": 144,
+        "wins": 128,
+        "losses": 16,
+        "draws": 0,
+        "errors": 0,
+        "winRate": 0.8888888888888888,
+        "decisiveWinRate": 0.8888888888888888,
+        "scoreWithHalfDraws": 0.8888888888888888
+      },
+      "tn01t2": {
+        "games": 144,
+        "wins": 132,
+        "losses": 0,
+        "draws": 12,
+        "errors": 0,
+        "winRate": 0.9166666666666666,
+        "decisiveWinRate": 1.0,
+        "scoreWithHalfDraws": 0.9583333333333334
+      }
+    },
+    "bySwap": {
+      "False": {
+        "games": 216,
+        "wins": 164,
+        "losses": 36,
+        "draws": 16,
+        "errors": 0,
+        "winRate": 0.7592592592592593,
+        "decisiveWinRate": 0.82,
+        "scoreWithHalfDraws": 0.7962962962962963
+      },
+      "True": {
+        "games": 216,
+        "wins": 216,
+        "losses": 0,
+        "draws": 0,
+        "errors": 0,
+        "winRate": 1.0,
+        "decisiveWinRate": 1.0,
+        "scoreWithHalfDraws": 1.0
+      }
+    },
+    "productionBothSides": [
+      {
+        "DOG": 384,
+        "ADOG": 728,
+        "E2": 7056,
+        "HTNK": 354,
+        "MTNK": 436,
+        "HARV": 239,
+        "CMIN": 276,
+        "HTK": 20,
+        "JUMPJET": 1824,
+        "DESO": 0,
+        "ENGINEER": 0,
+        "SENGINEER": 33,
+        "SNIPE": 0,
+        "TTNK": 0,
+        "V3": 0,
+        "ZEP": 0,
+        "BEAG": 0,
+        "TNKD": 0,
+        "DTRUCK": 0,
+        "TERROR": 0
+      },
+      {
+        "DOG": 270,
+        "ADOG": 261,
+        "E2": 10065,
+        "HTNK": 523,
+        "MTNK": 352,
+        "HARV": 154,
+        "CMIN": 175,
+        "HTK": 168,
+        "JUMPJET": 0,
+        "DESO": 0,
+        "ENGINEER": 0,
+        "SENGINEER": 3,
+        "SNIPE": 0,
+        "TTNK": 0,
+        "V3": 0,
+        "ZEP": 0,
+        "BEAG": 0,
+        "TNKD": 0,
+        "DTRUCK": 0,
+        "TERROR": 0
+      }
+    ],
+    "firstEvents": {
+      "firstTankTick": {
+        "coveredGames": 172,
+        "total": 1051600,
+        "median": 6260.0
+      },
+      "firstTankShotTick": {
+        "coveredGames": 167,
+        "total": 1216723,
+        "median": 7045
+      },
+      "firstFlakTrackTick": {
+        "coveredGames": 20,
+        "total": 285064,
+        "median": 13639.0
+      }
+    },
+    "firstFlakTrackAirShotTick": {
+      "coveredGames": 0,
+      "total": null,
+      "median": null
+    },
+    "AAshots": {},
+    "opponentJumpjetToHarv": {
+      "damageHitPoints": {
+        "coveredGames": 432,
+        "total": 0,
+        "median": 0.0
+      },
+      "kills": {
+        "coveredGames": 432,
+        "total": 0,
+        "median": 0.0
+      }
+    },
+    "tankShots": {
+      "coveredGames": 432,
+      "total": 7452,
+      "median": 0.0
+    },
+    "tankDamage": {
+      "enemyHitPoints": 360950,
+      "enemyKills": 1324,
+      "friendlyHitPoints": 798,
+      "friendlyKills": 0
+    },
+    "tankInventory": {
+      "initialOwned": {
+        "coveredGames": 432,
+        "total": 0,
+        "median": 0.0
+      },
+      "factoryProduced": {
+        "coveredGames": 432,
+        "total": 354,
+        "median": 0.0
+      },
+      "finalOwned": {
+        "coveredGames": 432,
+        "total": 354,
+        "median": 0.0
+      },
+      "netInventoryReduction": {
+        "coveredGames": 432,
+        "total": 0,
+        "median": 0.0
+      },
+      "ownershipChangeEvents": {
+        "coveredGames": 432,
+        "total": 0,
+        "median": 0.0
+      },
+      "transportEvents": {
+        "coveredGames": 432,
+        "total": 0,
+        "median": 0.0
+      }
+    },
+    "opponentSourceTankVictimTypeKills": {
+      "coveredGames": 432,
+      "total": 0,
+      "median": 0.0
+    },
+    "role": {
+      "coveredGames": 432,
+      "controllerSampleGames": 432,
+      "fullCadenceCoverageGames": 432,
+      "expectedSamples": 194268,
+      "totals": {
+        "sampleTicks": 194268,
+        "mobileConscriptSamples": 817985,
+        "homeConscriptSamples": 0,
+        "tankSamples": 77959,
+        "movingTankSamples": 34861,
+        "firingTankSamples": 674,
+        "idleTankSamples": 10797,
+        "stationaryNonFiringTankSamples": 42550,
+        "escortDogSamples": 0,
+        "dogTankDistanceSamples": 0,
+        "dogTankDistanceSum": 0,
+        "dogBeyondFourTileSamples": 0
+      },
+      "gamesWithRoleTankSamples": 324,
+      "gamesWithEscortDogSamples": 0,
+      "firstTankBeyondHome20Tick": {
+        "coveredGames": 308,
+        "total": 2290710,
+        "median": 6270.0
+      },
+      "maximumMobileConscripts": 25,
+      "maximumEscortDogTankDistance": 0,
+      "meanEscortDogTankDistance": null
+    },
+    "unitDetails": [
+      {
+        "coveredGames": 0,
+        "coveredSamples": 0,
+        "totalSamples": 7133
+      },
+      {
+        "coveredGames": 0,
+        "coveredSamples": 0,
+        "totalSamples": 7133
+      }
+    ],
+    "specialty": {
+      "production": {
+        "DOG": 384,
+        "ADOG": 728,
+        "E2": 7056,
+        "HTNK": 354,
+        "MTNK": 436,
+        "HARV": 239,
+        "CMIN": 276,
+        "HTK": 20,
+        "JUMPJET": 1824,
+        "DESO": 0,
+        "ENGINEER": 0,
+        "SENGINEER": 33,
+        "SNIPE": 0,
+        "TTNK": 0,
+        "V3": 0,
+        "ZEP": 0,
+        "BEAG": 0,
+        "TNKD": 0,
+        "DTRUCK": 0,
+        "TERROR": 0
+      },
+      "buildingsReady": {
+        "coveredGames": 432,
+        "totals": {
+          "AMRADR": 48,
+          "GAAIRC": 192,
+          "GACNST": 240,
+          "GAPILE": 240,
+          "GAPILL": 140,
+          "GAPOWR": 296,
+          "GAREFN": 352,
+          "GATECH": 4,
+          "GAWEAP": 300,
+          "GTGCAN": 4,
+          "NACNST": 192,
+          "NAHAND": 192,
+          "NALASR": 27,
+          "NAPOWR": 215,
+          "NARADR": 14,
+          "NAREFN": 262,
+          "NAWEAP": 227
+        }
+      },
+      "shots": {
+        "coveredGames": 432,
+        "totals": {
+          "ADOG": 760,
+          "DOG": 352,
+          "E1": 58604,
+          "E2": 234138,
+          "FV": 400,
+          "GAPILL": 2716,
+          "GTGCAN": 24,
+          "HARV": 986,
+          "HTK": 470,
+          "HTNK": 7452,
+          "JUMPJET": 147588,
+          "MTNK": 10088,
+          "NALASR": 33
+        }
+      },
+      "damage": {
+        "coveredGames": 432,
+        "totals": {
+          "ADOG": {
+            "enemyHitPoints": 89760,
+            "enemyKills": 760,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "CMIN": {
+            "enemyHitPoints": 0,
+            "enemyKills": 740,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "DOG": {
+            "enemyHitPoints": 40142,
+            "enemyKills": 332,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "E1": {
+            "enemyHitPoints": 512600,
+            "enemyKills": 2324,
+            "friendlyHitPoints": 308,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "E2": {
+            "enemyHitPoints": 2016511,
+            "enemyKills": 9386,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "FV": {
+            "enemyHitPoints": 5676,
+            "enemyKills": 40,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "GAPILL": {
+            "enemyHitPoints": 77204,
+            "enemyKills": 536,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "GTGCAN": {
+            "enemyHitPoints": 1788,
+            "enemyKills": 16,
+            "friendlyHitPoints": 120,
+            "friendlyKills": 0,
+            "otherHitPoints": 564,
+            "otherKills": 8
+          },
+          "HARV": {
+            "enemyHitPoints": 8878,
+            "enemyKills": 48,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "HTK": {
+            "enemyHitPoints": 2457,
+            "enemyKills": 59,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "HTNK": {
+            "enemyHitPoints": 360950,
+            "enemyKills": 1324,
+            "friendlyHitPoints": 798,
+            "friendlyKills": 0,
+            "otherHitPoints": 2276,
+            "otherKills": 452
+          },
+          "JUMPJET": {
+            "enemyHitPoints": 2152176,
+            "enemyKills": 8492,
+            "friendlyHitPoints": 192,
+            "friendlyKills": 0,
+            "otherHitPoints": 192,
+            "otherKills": 0
+          },
+          "MTNK": {
+            "enemyHitPoints": 361084,
+            "enemyKills": 1368,
+            "friendlyHitPoints": 96,
+            "friendlyKills": 0,
+            "otherHitPoints": 960,
+            "otherKills": 120
+          },
+          "NALASR": {
+            "enemyHitPoints": 924,
+            "enemyKills": 9,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          }
+        }
+      },
+      "events": {
+        "paradropActivations": {
+          "coveredGames": 432,
+          "events": 124,
+          "gamesWithEvents": 48
+        },
+        "paradropInfantrySpawned": {
+          "coveredGames": 432,
+          "events": 832,
+          "gamesWithEvents": 48
+        },
+        "desolatorDeployments": {
+          "coveredGames": 432,
+          "events": 0,
+          "gamesWithEvents": 0
+        },
+        "captureOrders": {
+          "coveredGames": 432,
+          "events": 201,
+          "gamesWithEvents": 21
+        },
+        "harassmentDetachments": {
+          "coveredGames": 432,
+          "events": 0,
+          "gamesWithEvents": 0
+        },
+        "desolatorsBoarded": {
+          "coveredGames": 432,
+          "events": 0,
+          "gamesWithEvents": 0
+        },
+        "desolatorsUnloadedIntact": {
+          "coveredGames": 432,
+          "events": 0,
+          "gamesWithEvents": 0
+        },
+        "ownerlessRadiationDamageAsVictim": {
+          "coveredGames": 432,
+          "events": 0,
+          "gamesWithEvents": 0
+        }
+      },
+      "baselineOwnerlessRadiationDamageAsVictim": {
+        "coveredGames": 432,
+        "events": 0,
+        "gamesWithEvents": 0
+      }
+    },
+    "ownership": {
+      "enemyAcquiredByName": {},
+      "enemyCoreBuildingAcquisitions": [],
+      "events": [
+        {
+          "identity": [
+            "Arabs",
+            "Africans",
+            "tn01t2.map",
+            20222,
+            true
+          ],
+          "tick": 11277,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Arabs",
+            "Confederation",
+            "tn01t2.map",
+            20222,
+            true
+          ],
+          "tick": 11277,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Arabs",
+            "Russians",
+            "tn01t2.map",
+            20222,
+            true
+          ],
+          "tick": 11277,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": -1,
+          "newSide": 0
+        }
+      ],
+      "note": "Ownership has no captor/mission/source field. No engineer or Sneak attribution is inferred; technical oil wells are separate from core buildings."
+    },
+    "features": {
+      "captureOrders": {
+        "events": 201,
+        "gamesWithEvents": 21,
+        "coveredGames": 432
+      },
+      "desolatorDeployments": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 432
+      },
+      "desolatorUnloadsFromIntactTransport": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 432
+      },
+      "desolatorsBoarded": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 432
+      },
+      "desolatorsProduced": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 432
+      },
+      "enemyCrushKills": {
+        "events": 1991,
+        "gamesWithEvents": 281,
+        "coveredGames": 432
+      },
+      "enemyObjectsAcquiredCauseUnspecified": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 432
+      },
+      "grandCannonShots": {
+        "events": 24,
+        "gamesWithEvents": 4,
+        "coveredGames": 432
+      },
+      "grandCannonsReady": {
+        "events": 4,
+        "gamesWithEvents": 4,
+        "coveredGames": 432
+      },
+      "neutralObjectsAcquiredCauseUnspecified": {
+        "events": 3,
+        "gamesWithEvents": 3,
+        "coveredGames": 432
+      },
+      "ownerlessRadiationDamageToBaseline": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 432
+      },
+      "ownerlessRadiationDamageToCandidate": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 432
+      },
+      "surplusRaidDetachments": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 432
+      }
+    }
+  },
+  {
+    "label": "40241436421",
+    "totals": {
+      "games": 432,
+      "wins": 375,
+      "losses": 29,
+      "draws": 28,
+      "errors": 0,
+      "winRate": 0.8680555555555556,
+      "decisiveWinRate": 0.9282178217821783,
+      "scoreWithHalfDraws": 0.9004629629629629
+    },
+    "byCountry": {
+      "Americans": {
+        "games": 48,
+        "wins": 48,
+        "losses": 0,
+        "draws": 0,
+        "errors": 0,
+        "winRate": 1.0,
+        "decisiveWinRate": 1.0,
+        "scoreWithHalfDraws": 1.0
+      },
+      "Alliance": {
+        "games": 48,
+        "wins": 37,
+        "losses": 7,
+        "draws": 4,
+        "errors": 0,
+        "winRate": 0.7708333333333334,
+        "decisiveWinRate": 0.8409090909090909,
+        "scoreWithHalfDraws": 0.8125
+      },
+      "French": {
+        "games": 48,
+        "wins": 36,
+        "losses": 8,
+        "draws": 4,
+        "errors": 0,
+        "winRate": 0.75,
+        "decisiveWinRate": 0.8181818181818182,
+        "scoreWithHalfDraws": 0.7916666666666666
+      },
+      "Germans": {
+        "games": 48,
+        "wins": 37,
+        "losses": 7,
+        "draws": 4,
+        "errors": 0,
+        "winRate": 0.7708333333333334,
+        "decisiveWinRate": 0.8409090909090909,
+        "scoreWithHalfDraws": 0.8125
+      },
+      "British": {
+        "games": 48,
+        "wins": 37,
+        "losses": 7,
+        "draws": 4,
+        "errors": 0,
+        "winRate": 0.7708333333333334,
+        "decisiveWinRate": 0.8409090909090909,
+        "scoreWithHalfDraws": 0.8125
+      },
+      "Africans": {
+        "games": 48,
+        "wins": 44,
+        "losses": 0,
+        "draws": 4,
+        "errors": 0,
+        "winRate": 0.9166666666666666,
+        "decisiveWinRate": 1.0,
+        "scoreWithHalfDraws": 0.9583333333333334
+      },
+      "Arabs": {
+        "games": 48,
+        "wins": 48,
+        "losses": 0,
+        "draws": 0,
+        "errors": 0,
+        "winRate": 1.0,
+        "decisiveWinRate": 1.0,
+        "scoreWithHalfDraws": 1.0
+      },
+      "Confederation": {
+        "games": 48,
+        "wins": 44,
+        "losses": 0,
+        "draws": 4,
+        "errors": 0,
+        "winRate": 0.9166666666666666,
+        "decisiveWinRate": 1.0,
+        "scoreWithHalfDraws": 0.9583333333333334
+      },
+      "Russians": {
+        "games": 48,
+        "wins": 44,
+        "losses": 0,
+        "draws": 4,
+        "errors": 0,
+        "winRate": 0.9166666666666666,
+        "decisiveWinRate": 1.0,
+        "scoreWithHalfDraws": 0.9583333333333334
+      }
+    },
+    "byMap": {
+      "mp08t2": {
+        "games": 144,
+        "wins": 115,
+        "losses": 13,
+        "draws": 16,
+        "errors": 0,
+        "winRate": 0.7986111111111112,
+        "decisiveWinRate": 0.8984375,
+        "scoreWithHalfDraws": 0.8541666666666666
+      },
+      "mp11t2": {
+        "games": 144,
+        "wins": 144,
+        "losses": 0,
+        "draws": 0,
+        "errors": 0,
+        "winRate": 1.0,
+        "decisiveWinRate": 1.0,
+        "scoreWithHalfDraws": 1.0
+      },
+      "tn01t2": {
+        "games": 144,
+        "wins": 116,
+        "losses": 16,
+        "draws": 12,
+        "errors": 0,
+        "winRate": 0.8055555555555556,
+        "decisiveWinRate": 0.8787878787878788,
+        "scoreWithHalfDraws": 0.8472222222222222
+      }
+    },
+    "bySwap": {
+      "False": {
+        "games": 216,
+        "wins": 175,
+        "losses": 13,
+        "draws": 28,
+        "errors": 0,
+        "winRate": 0.8101851851851852,
+        "decisiveWinRate": 0.9308510638297872,
+        "scoreWithHalfDraws": 0.875
+      },
+      "True": {
+        "games": 216,
+        "wins": 200,
+        "losses": 16,
+        "draws": 0,
+        "errors": 0,
+        "winRate": 0.9259259259259259,
+        "decisiveWinRate": 0.9259259259259259,
+        "scoreWithHalfDraws": 0.9259259259259259
+      }
+    },
+    "productionBothSides": [
+      {
+        "DOG": 378,
+        "ADOG": 734,
+        "E2": 6864,
+        "HTNK": 397,
+        "MTNK": 811,
+        "HARV": 241,
+        "CMIN": 312,
+        "HTK": 45,
+        "JUMPJET": 1658,
+        "DESO": 3,
+        "ENGINEER": 0,
+        "SENGINEER": 30,
+        "SNIPE": 0,
+        "TTNK": 0,
+        "V3": 0,
+        "ZEP": 6,
+        "BEAG": 0,
+        "TNKD": 0,
+        "DTRUCK": 0,
+        "TERROR": 0
+      },
+      {
+        "DOG": 289,
+        "ADOG": 300,
+        "E2": 10111,
+        "HTNK": 437,
+        "MTNK": 318,
+        "HARV": 205,
+        "CMIN": 176,
+        "HTK": 228,
+        "JUMPJET": 0,
+        "DESO": 0,
+        "ENGINEER": 0,
+        "SENGINEER": 6,
+        "SNIPE": 0,
+        "TTNK": 0,
+        "V3": 0,
+        "ZEP": 0,
+        "BEAG": 0,
+        "TNKD": 0,
+        "DTRUCK": 0,
+        "TERROR": 0
+      }
+    ],
+    "firstEvents": {
+      "firstTankTick": {
+        "coveredGames": 172,
+        "total": 1058653,
+        "median": 6227.0
+      },
+      "firstTankShotTick": {
+        "coveredGames": 143,
+        "total": 1083631,
+        "median": 7831
+      },
+      "firstFlakTrackTick": {
+        "coveredGames": 36,
+        "total": 532794,
+        "median": 13639.0
+      }
+    },
+    "firstFlakTrackAirShotTick": {
+      "coveredGames": 0,
+      "total": null,
+      "median": null
+    },
+    "AAshots": {},
+    "opponentJumpjetToHarv": {
+      "damageHitPoints": {
+        "coveredGames": 432,
+        "total": 0,
+        "median": 0.0
+      },
+      "kills": {
+        "coveredGames": 432,
+        "total": 0,
+        "median": 0.0
+      }
+    },
+    "tankShots": {
+      "coveredGames": 432,
+      "total": 9693,
+      "median": 0.0
+    },
+    "tankDamage": {
+      "enemyHitPoints": 457116,
+      "enemyKills": 1775,
+      "friendlyHitPoints": 579,
+      "friendlyKills": 0
+    },
+    "tankInventory": {
+      "initialOwned": {
+        "coveredGames": 432,
+        "total": 0,
+        "median": 0.0
+      },
+      "factoryProduced": {
+        "coveredGames": 432,
+        "total": 397,
+        "median": 0.0
+      },
+      "finalOwned": {
+        "coveredGames": 432,
+        "total": 379,
+        "median": 0.0
+      },
+      "netInventoryReduction": {
+        "coveredGames": 432,
+        "total": 18,
+        "median": 0.0
+      },
+      "ownershipChangeEvents": {
+        "coveredGames": 432,
+        "total": 0,
+        "median": 0.0
+      },
+      "transportEvents": {
+        "coveredGames": 432,
+        "total": 0,
+        "median": 0.0
+      }
+    },
+    "opponentSourceTankVictimTypeKills": {
+      "coveredGames": 432,
+      "total": 18,
+      "median": 0.0
+    },
+    "role": {
+      "coveredGames": 432,
+      "controllerSampleGames": 432,
+      "fullCadenceCoverageGames": 432,
+      "expectedSamples": 201862,
+      "totals": {
+        "sampleTicks": 201862,
+        "mobileConscriptSamples": 718886,
+        "homeConscriptSamples": 0,
+        "tankSamples": 126799,
+        "movingTankSamples": 51112,
+        "firingTankSamples": 515,
+        "idleTankSamples": 25094,
+        "stationaryNonFiringTankSamples": 75272,
+        "escortDogSamples": 0,
+        "dogTankDistanceSamples": 0,
+        "dogTankDistanceSum": 0,
+        "dogBeyondFourTileSamples": 0
+      },
+      "gamesWithRoleTankSamples": 347,
+      "gamesWithEscortDogSamples": 0,
+      "firstTankBeyondHome20Tick": {
+        "coveredGames": 315,
+        "total": 2597520,
+        "median": 6540
+      },
+      "maximumMobileConscripts": 25,
+      "maximumEscortDogTankDistance": 0,
+      "meanEscortDogTankDistance": null
+    },
+    "unitDetails": [
+      {
+        "coveredGames": 0,
+        "coveredSamples": 0,
+        "totalSamples": 7361
+      },
+      {
+        "coveredGames": 0,
+        "coveredSamples": 0,
+        "totalSamples": 7361
+      }
+    ],
+    "specialty": {
+      "production": {
+        "DOG": 378,
+        "ADOG": 734,
+        "E2": 6864,
+        "HTNK": 397,
+        "MTNK": 811,
+        "HARV": 241,
+        "CMIN": 312,
+        "HTK": 45,
+        "JUMPJET": 1658,
+        "DESO": 3,
+        "ENGINEER": 0,
+        "SENGINEER": 30,
+        "SNIPE": 0,
+        "TTNK": 0,
+        "V3": 0,
+        "ZEP": 6,
+        "BEAG": 0,
+        "TNKD": 0,
+        "DTRUCK": 0,
+        "TERROR": 0
+      },
+      "buildingsReady": {
+        "coveredGames": 432,
+        "totals": {
+          "AMRADR": 48,
+          "GAAIRC": 192,
+          "GACNST": 240,
+          "GAPILE": 240,
+          "GAPILL": 120,
+          "GAPOWR": 308,
+          "GAREFN": 368,
+          "GATECH": 4,
+          "GAWEAP": 320,
+          "NACNST": 195,
+          "NAHAND": 192,
+          "NALASR": 27,
+          "NAPOWR": 228,
+          "NARADR": 27,
+          "NAREFN": 269,
+          "NATECH": 9,
+          "NAWEAP": 219
+        }
+      },
+      "shots": {
+        "coveredGames": 432,
+        "totals": {
+          "ADOG": 816,
+          "CAOILD": 16,
+          "DOG": 349,
+          "E1": 38883,
+          "E2": 205314,
+          "FV": 2592,
+          "GAPILL": 2296,
+          "HARV": 1285,
+          "HTK": 801,
+          "HTNK": 9693,
+          "JUMPJET": 158250,
+          "MTNK": 16480,
+          "NALASR": 18
+        }
+      },
+      "damage": {
+        "coveredGames": 432,
+        "totals": {
+          "ADOG": {
+            "enemyHitPoints": 94088,
+            "enemyKills": 816,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "CAOILD": {
+            "enemyHitPoints": 0,
+            "enemyKills": 0,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 12800,
+            "otherKills": 64
+          },
+          "CMIN": {
+            "enemyHitPoints": 0,
+            "enemyKills": 680,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "DOG": {
+            "enemyHitPoints": 38165,
+            "enemyKills": 320,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "E1": {
+            "enemyHitPoints": 342022,
+            "enemyKills": 1717,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "E2": {
+            "enemyHitPoints": 1844604,
+            "enemyKills": 8768,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "FV": {
+            "enemyHitPoints": 43264,
+            "enemyKills": 128,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "GAPILL": {
+            "enemyHitPoints": 56368,
+            "enemyKills": 356,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "HARV": {
+            "enemyHitPoints": 20457,
+            "enemyKills": 160,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "HTK": {
+            "enemyHitPoints": 4308,
+            "enemyKills": 72,
+            "friendlyHitPoints": 363,
+            "friendlyKills": 0,
+            "otherHitPoints": 213,
+            "otherKills": 3
+          },
+          "HTNK": {
+            "enemyHitPoints": 457116,
+            "enemyKills": 1775,
+            "friendlyHitPoints": 579,
+            "friendlyKills": 0,
+            "otherHitPoints": 4761,
+            "otherKills": 228
+          },
+          "JUMPJET": {
+            "enemyHitPoints": 2307905,
+            "enemyKills": 8935,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          },
+          "MTNK": {
+            "enemyHitPoints": 596740,
+            "enemyKills": 2632,
+            "friendlyHitPoints": 1264,
+            "friendlyKills": 0,
+            "otherHitPoints": 1932,
+            "otherKills": 420
+          },
+          "NALASR": {
+            "enemyHitPoints": 630,
+            "enemyKills": 0,
+            "friendlyHitPoints": 0,
+            "friendlyKills": 0,
+            "otherHitPoints": 0,
+            "otherKills": 0
+          }
+        }
+      },
+      "events": {
+        "paradropActivations": {
+          "coveredGames": 432,
+          "events": 103,
+          "gamesWithEvents": 48
+        },
+        "paradropInfantrySpawned": {
+          "coveredGames": 432,
+          "events": 792,
+          "gamesWithEvents": 48
+        },
+        "desolatorDeployments": {
+          "coveredGames": 432,
+          "events": 0,
+          "gamesWithEvents": 0
+        },
+        "captureOrders": {
+          "coveredGames": 432,
+          "events": 910,
+          "gamesWithEvents": 43
+        },
+        "harassmentDetachments": {
+          "coveredGames": 432,
+          "events": 16,
+          "gamesWithEvents": 16
+        },
+        "desolatorsBoarded": {
+          "coveredGames": 432,
+          "events": 0,
+          "gamesWithEvents": 0
+        },
+        "desolatorsUnloadedIntact": {
+          "coveredGames": 432,
+          "events": 0,
+          "gamesWithEvents": 0
+        },
+        "ownerlessRadiationDamageAsVictim": {
+          "coveredGames": 432,
+          "events": 0,
+          "gamesWithEvents": 0
+        }
+      },
+      "baselineOwnerlessRadiationDamageAsVictim": {
+        "coveredGames": 432,
+        "events": 0,
+        "gamesWithEvents": 0
+      }
+    },
+    "ownership": {
+      "enemyAcquiredByName": {
+        "CAOILD": 3
+      },
+      "enemyCoreBuildingAcquisitions": [],
+      "events": [
+        {
+          "identity": [
+            "Alliance",
+            "Americans",
+            "tn01t2.map",
+            20222,
+            true
+          ],
+          "tick": 11569,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Alliance",
+            "French",
+            "tn01t2.map",
+            20222,
+            true
+          ],
+          "tick": 11569,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Alliance",
+            "Germans",
+            "tn01t2.map",
+            20222,
+            true
+          ],
+          "tick": 11569,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Alliance",
+            "British",
+            "tn01t2.map",
+            20222,
+            true
+          ],
+          "tick": 11569,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "French",
+            "Americans",
+            "tn01t2.map",
+            20222,
+            true
+          ],
+          "tick": 11569,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "French",
+            "Alliance",
+            "tn01t2.map",
+            20222,
+            true
+          ],
+          "tick": 11569,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "French",
+            "Germans",
+            "tn01t2.map",
+            20222,
+            true
+          ],
+          "tick": 11569,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "French",
+            "British",
+            "tn01t2.map",
+            20222,
+            true
+          ],
+          "tick": 11569,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Germans",
+            "Americans",
+            "tn01t2.map",
+            20222,
+            true
+          ],
+          "tick": 11569,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Germans",
+            "Alliance",
+            "tn01t2.map",
+            20222,
+            true
+          ],
+          "tick": 11569,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Germans",
+            "French",
+            "tn01t2.map",
+            20222,
+            true
+          ],
+          "tick": 11569,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Germans",
+            "British",
+            "tn01t2.map",
+            20222,
+            true
+          ],
+          "tick": 11569,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "British",
+            "Americans",
+            "tn01t2.map",
+            20222,
+            true
+          ],
+          "tick": 11569,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "British",
+            "Alliance",
+            "tn01t2.map",
+            20222,
+            true
+          ],
+          "tick": 11569,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "British",
+            "French",
+            "tn01t2.map",
+            20222,
+            true
+          ],
+          "tick": 11569,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "British",
+            "Germans",
+            "tn01t2.map",
+            20222,
+            true
+          ],
+          "tick": 11569,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Arabs",
+            "Africans",
+            "tn01t2.map",
+            20222,
+            false
+          ],
+          "tick": 7232,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Arabs",
+            "Africans",
+            "tn01t2.map",
+            20222,
+            true
+          ],
+          "tick": 7430,
+          "id": 934,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Arabs",
+            "Africans",
+            "tn01t2.map",
+            20222,
+            true
+          ],
+          "tick": 7885,
+          "id": 934,
+          "name": "CAOILD",
+          "previousOwner": "@@AI2@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "Arabs",
+            "Africans",
+            "tn01t2.map",
+            20222,
+            true
+          ],
+          "tick": 11910,
+          "id": 934,
+          "name": "CAOILD",
+          "previousOwner": "@@AI1@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": 1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Arabs",
+            "Confederation",
+            "tn01t2.map",
+            20222,
+            false
+          ],
+          "tick": 7232,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Arabs",
+            "Confederation",
+            "tn01t2.map",
+            20222,
+            true
+          ],
+          "tick": 7430,
+          "id": 934,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Arabs",
+            "Confederation",
+            "tn01t2.map",
+            20222,
+            true
+          ],
+          "tick": 7885,
+          "id": 934,
+          "name": "CAOILD",
+          "previousOwner": "@@AI2@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "Arabs",
+            "Confederation",
+            "tn01t2.map",
+            20222,
+            true
+          ],
+          "tick": 11910,
+          "id": 934,
+          "name": "CAOILD",
+          "previousOwner": "@@AI1@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": 1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Arabs",
+            "Russians",
+            "tn01t2.map",
+            20222,
+            false
+          ],
+          "tick": 7232,
+          "id": 935,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Arabs",
+            "Russians",
+            "tn01t2.map",
+            20222,
+            true
+          ],
+          "tick": 7430,
+          "id": 934,
+          "name": "CAOILD",
+          "previousOwner": "@@NEUTRAL@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": -1,
+          "newSide": 0
+        },
+        {
+          "identity": [
+            "Arabs",
+            "Russians",
+            "tn01t2.map",
+            20222,
+            true
+          ],
+          "tick": 7885,
+          "id": 934,
+          "name": "CAOILD",
+          "previousOwner": "@@AI2@@",
+          "newOwner": "@@AI1@@",
+          "previousSide": 0,
+          "newSide": 1
+        },
+        {
+          "identity": [
+            "Arabs",
+            "Russians",
+            "tn01t2.map",
+            20222,
+            true
+          ],
+          "tick": 11910,
+          "id": 934,
+          "name": "CAOILD",
+          "previousOwner": "@@AI1@@",
+          "newOwner": "@@AI2@@",
+          "previousSide": 1,
+          "newSide": 0
+        }
+      ],
+      "note": "Ownership has no captor/mission/source field. No engineer or Sneak attribution is inferred; technical oil wells are separate from core buildings."
+    },
+    "features": {
+      "captureOrders": {
+        "events": 910,
+        "gamesWithEvents": 43,
+        "coveredGames": 432
+      },
+      "desolatorDeployments": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 432
+      },
+      "desolatorUnloadsFromIntactTransport": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 432
+      },
+      "desolatorsBoarded": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 432
+      },
+      "desolatorsProduced": {
+        "events": 3,
+        "gamesWithEvents": 3,
+        "coveredGames": 432
+      },
+      "enemyCrushKills": {
+        "events": 3163,
+        "gamesWithEvents": 304,
+        "coveredGames": 432
+      },
+      "enemyObjectsAcquiredCauseUnspecified": {
+        "events": 3,
+        "gamesWithEvents": 3,
+        "coveredGames": 432
+      },
+      "grandCannonShots": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 432
+      },
+      "grandCannonsReady": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 432
+      },
+      "neutralObjectsAcquiredCauseUnspecified": {
+        "events": 22,
+        "gamesWithEvents": 22,
+        "coveredGames": 432
+      },
+      "ownerlessRadiationDamageToBaseline": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 432
+      },
+      "ownerlessRadiationDamageToCandidate": {
+        "events": 0,
+        "gamesWithEvents": 0,
+        "coveredGames": 432
+      },
+      "surplusRaidDetachments": {
+        "events": 16,
+        "gamesWithEvents": 16,
+        "coveredGames": 432
+      }
+    }
+  }
+]

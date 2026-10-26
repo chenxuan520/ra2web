@@ -1,0 +1,1178 @@
+{
+  "enemyAcquiredByName": {
+    "NAREFN": 4
+  },
+  "enemyCoreBuildingAcquisitions": [
+    {
+      "identity": [
+        "Africans",
+        "Confederation",
+        "tn01t2.map",
+        730202,
+        true
+      ],
+      "tick": 19466,
+      "id": 1000,
+      "name": "NAREFN",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Africans",
+        "Russians",
+        "tn01t2.map",
+        730202,
+        true
+      ],
+      "tick": 19466,
+      "id": 1000,
+      "name": "NAREFN",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Confederation",
+        "Africans",
+        "tn01t2.map",
+        730202,
+        true
+      ],
+      "tick": 19466,
+      "id": 1000,
+      "name": "NAREFN",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Confederation",
+        "Russians",
+        "tn01t2.map",
+        730202,
+        true
+      ],
+      "tick": 19466,
+      "id": 1000,
+      "name": "NAREFN",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 1,
+      "newSide": 0
+    }
+  ],
+  "allEvents": [
+    {
+      "identity": [
+        "Alliance",
+        "Africans",
+        "mp08t2.map",
+        710101,
+        true
+      ],
+      "tick": 14160,
+      "id": 904,
+      "name": "GAREFN",
+      "previousOwner": "@@AI2@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Alliance",
+        "Confederation",
+        "mp08t2.map",
+        710101,
+        true
+      ],
+      "tick": 14160,
+      "id": 904,
+      "name": "GAREFN",
+      "previousOwner": "@@AI2@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Alliance",
+        "Russians",
+        "mp08t2.map",
+        710101,
+        true
+      ],
+      "tick": 14160,
+      "id": 904,
+      "name": "GAREFN",
+      "previousOwner": "@@AI2@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "French",
+        "Africans",
+        "mp08t2.map",
+        710101,
+        true
+      ],
+      "tick": 14160,
+      "id": 904,
+      "name": "GAREFN",
+      "previousOwner": "@@AI2@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "French",
+        "Confederation",
+        "mp08t2.map",
+        710101,
+        true
+      ],
+      "tick": 14160,
+      "id": 904,
+      "name": "GAREFN",
+      "previousOwner": "@@AI2@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "French",
+        "Russians",
+        "mp08t2.map",
+        710101,
+        true
+      ],
+      "tick": 14160,
+      "id": 904,
+      "name": "GAREFN",
+      "previousOwner": "@@AI2@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Germans",
+        "Africans",
+        "mp08t2.map",
+        710101,
+        true
+      ],
+      "tick": 14160,
+      "id": 904,
+      "name": "GAREFN",
+      "previousOwner": "@@AI2@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Germans",
+        "Confederation",
+        "mp08t2.map",
+        710101,
+        true
+      ],
+      "tick": 14160,
+      "id": 904,
+      "name": "GAREFN",
+      "previousOwner": "@@AI2@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Germans",
+        "Russians",
+        "mp08t2.map",
+        710101,
+        true
+      ],
+      "tick": 14160,
+      "id": 904,
+      "name": "GAREFN",
+      "previousOwner": "@@AI2@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "British",
+        "Arabs",
+        "mp08t2.map",
+        710101,
+        true
+      ],
+      "tick": 22950,
+      "id": 1206,
+      "name": "GAREFN",
+      "previousOwner": "@@AI2@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Africans",
+        "Confederation",
+        "tn01t2.map",
+        710202,
+        true
+      ],
+      "tick": 24890,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Africans",
+        "Russians",
+        "tn01t2.map",
+        710202,
+        true
+      ],
+      "tick": 24890,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Confederation",
+        "Africans",
+        "tn01t2.map",
+        710202,
+        true
+      ],
+      "tick": 24890,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Confederation",
+        "Russians",
+        "tn01t2.map",
+        710202,
+        true
+      ],
+      "tick": 24890,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "British",
+        "Arabs",
+        "mp11t2.map",
+        710303,
+        true
+      ],
+      "tick": 21668,
+      "id": 2226,
+      "name": "GAREFN",
+      "previousOwner": "@@AI2@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Alliance",
+        "Africans",
+        "mp08t2.map",
+        720101,
+        true
+      ],
+      "tick": 15979,
+      "id": 904,
+      "name": "GAREFN",
+      "previousOwner": "@@AI2@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Alliance",
+        "Arabs",
+        "mp08t2.map",
+        720101,
+        true
+      ],
+      "tick": 20075,
+      "id": 894,
+      "name": "GAREFN",
+      "previousOwner": "@@AI2@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Alliance",
+        "Confederation",
+        "mp08t2.map",
+        720101,
+        true
+      ],
+      "tick": 15979,
+      "id": 904,
+      "name": "GAREFN",
+      "previousOwner": "@@AI2@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Alliance",
+        "Russians",
+        "mp08t2.map",
+        720101,
+        true
+      ],
+      "tick": 15979,
+      "id": 904,
+      "name": "GAREFN",
+      "previousOwner": "@@AI2@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "French",
+        "Africans",
+        "mp08t2.map",
+        720101,
+        true
+      ],
+      "tick": 15979,
+      "id": 904,
+      "name": "GAREFN",
+      "previousOwner": "@@AI2@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "French",
+        "Arabs",
+        "mp08t2.map",
+        720101,
+        true
+      ],
+      "tick": 20075,
+      "id": 894,
+      "name": "GAREFN",
+      "previousOwner": "@@AI2@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "French",
+        "Confederation",
+        "mp08t2.map",
+        720101,
+        true
+      ],
+      "tick": 15979,
+      "id": 904,
+      "name": "GAREFN",
+      "previousOwner": "@@AI2@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "French",
+        "Russians",
+        "mp08t2.map",
+        720101,
+        true
+      ],
+      "tick": 15979,
+      "id": 904,
+      "name": "GAREFN",
+      "previousOwner": "@@AI2@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Germans",
+        "Africans",
+        "mp08t2.map",
+        720101,
+        true
+      ],
+      "tick": 15979,
+      "id": 904,
+      "name": "GAREFN",
+      "previousOwner": "@@AI2@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Germans",
+        "Arabs",
+        "mp08t2.map",
+        720101,
+        true
+      ],
+      "tick": 20075,
+      "id": 894,
+      "name": "GAREFN",
+      "previousOwner": "@@AI2@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Germans",
+        "Confederation",
+        "mp08t2.map",
+        720101,
+        true
+      ],
+      "tick": 15979,
+      "id": 904,
+      "name": "GAREFN",
+      "previousOwner": "@@AI2@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Germans",
+        "Russians",
+        "mp08t2.map",
+        720101,
+        true
+      ],
+      "tick": 15979,
+      "id": 904,
+      "name": "GAREFN",
+      "previousOwner": "@@AI2@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Americans",
+        "Africans",
+        "tn01t2.map",
+        720202,
+        false
+      ],
+      "tick": 18134,
+      "id": 1041,
+      "name": "GAWEAP",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Americans",
+        "Confederation",
+        "tn01t2.map",
+        720202,
+        false
+      ],
+      "tick": 18134,
+      "id": 1041,
+      "name": "GAWEAP",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Americans",
+        "Russians",
+        "tn01t2.map",
+        720202,
+        false
+      ],
+      "tick": 18134,
+      "id": 1041,
+      "name": "GAWEAP",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Alliance",
+        "Africans",
+        "tn01t2.map",
+        720202,
+        false
+      ],
+      "tick": 14978,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Alliance",
+        "Confederation",
+        "tn01t2.map",
+        720202,
+        false
+      ],
+      "tick": 14978,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Alliance",
+        "Russians",
+        "tn01t2.map",
+        720202,
+        false
+      ],
+      "tick": 14978,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "French",
+        "Africans",
+        "tn01t2.map",
+        720202,
+        false
+      ],
+      "tick": 14978,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "French",
+        "Confederation",
+        "tn01t2.map",
+        720202,
+        false
+      ],
+      "tick": 14978,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "French",
+        "Russians",
+        "tn01t2.map",
+        720202,
+        false
+      ],
+      "tick": 14978,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Germans",
+        "Africans",
+        "tn01t2.map",
+        720202,
+        false
+      ],
+      "tick": 14978,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Germans",
+        "Confederation",
+        "tn01t2.map",
+        720202,
+        false
+      ],
+      "tick": 14978,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Germans",
+        "Russians",
+        "tn01t2.map",
+        720202,
+        false
+      ],
+      "tick": 14978,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "British",
+        "Africans",
+        "tn01t2.map",
+        720202,
+        false
+      ],
+      "tick": 14692,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "British",
+        "Africans",
+        "tn01t2.map",
+        720202,
+        false
+      ],
+      "tick": 18432,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "British",
+        "Confederation",
+        "tn01t2.map",
+        720202,
+        false
+      ],
+      "tick": 14692,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "British",
+        "Confederation",
+        "tn01t2.map",
+        720202,
+        false
+      ],
+      "tick": 18432,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "British",
+        "Russians",
+        "tn01t2.map",
+        720202,
+        false
+      ],
+      "tick": 14692,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "British",
+        "Russians",
+        "tn01t2.map",
+        720202,
+        false
+      ],
+      "tick": 18432,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Alliance",
+        "Arabs",
+        "mp08t2.map",
+        730101,
+        true
+      ],
+      "tick": 21199,
+      "id": 894,
+      "name": "GAREFN",
+      "previousOwner": "@@AI2@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Germans",
+        "Arabs",
+        "mp08t2.map",
+        730101,
+        true
+      ],
+      "tick": 21199,
+      "id": 894,
+      "name": "GAREFN",
+      "previousOwner": "@@AI2@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "British",
+        "Africans",
+        "mp08t2.map",
+        730101,
+        true
+      ],
+      "tick": 26057,
+      "id": 904,
+      "name": "GAREFN",
+      "previousOwner": "@@AI2@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "British",
+        "Confederation",
+        "mp08t2.map",
+        730101,
+        true
+      ],
+      "tick": 26057,
+      "id": 904,
+      "name": "GAREFN",
+      "previousOwner": "@@AI2@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Alliance",
+        "Africans",
+        "tn01t2.map",
+        730202,
+        false
+      ],
+      "tick": 17354,
+      "id": 1036,
+      "name": "GAWEAP",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Alliance",
+        "Confederation",
+        "tn01t2.map",
+        730202,
+        false
+      ],
+      "tick": 17354,
+      "id": 1036,
+      "name": "GAWEAP",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Alliance",
+        "Russians",
+        "tn01t2.map",
+        730202,
+        false
+      ],
+      "tick": 17354,
+      "id": 1036,
+      "name": "GAWEAP",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "French",
+        "Africans",
+        "tn01t2.map",
+        730202,
+        false
+      ],
+      "tick": 17354,
+      "id": 1036,
+      "name": "GAWEAP",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "French",
+        "Confederation",
+        "tn01t2.map",
+        730202,
+        false
+      ],
+      "tick": 17354,
+      "id": 1036,
+      "name": "GAWEAP",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "French",
+        "Russians",
+        "tn01t2.map",
+        730202,
+        false
+      ],
+      "tick": 17354,
+      "id": 1036,
+      "name": "GAWEAP",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Germans",
+        "Africans",
+        "tn01t2.map",
+        730202,
+        false
+      ],
+      "tick": 17354,
+      "id": 1036,
+      "name": "GAWEAP",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Germans",
+        "Confederation",
+        "tn01t2.map",
+        730202,
+        false
+      ],
+      "tick": 17354,
+      "id": 1036,
+      "name": "GAWEAP",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Germans",
+        "Russians",
+        "tn01t2.map",
+        730202,
+        false
+      ],
+      "tick": 17354,
+      "id": 1036,
+      "name": "GAWEAP",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "British",
+        "Africans",
+        "tn01t2.map",
+        730202,
+        false
+      ],
+      "tick": 17354,
+      "id": 1036,
+      "name": "GAWEAP",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "British",
+        "Confederation",
+        "tn01t2.map",
+        730202,
+        false
+      ],
+      "tick": 17354,
+      "id": 1036,
+      "name": "GAWEAP",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "British",
+        "Russians",
+        "tn01t2.map",
+        730202,
+        false
+      ],
+      "tick": 17354,
+      "id": 1036,
+      "name": "GAWEAP",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Africans",
+        "Confederation",
+        "tn01t2.map",
+        730202,
+        true
+      ],
+      "tick": 19466,
+      "id": 1000,
+      "name": "NAREFN",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Africans",
+        "Confederation",
+        "tn01t2.map",
+        730202,
+        true
+      ],
+      "tick": 22765,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Africans",
+        "Russians",
+        "tn01t2.map",
+        730202,
+        true
+      ],
+      "tick": 19466,
+      "id": 1000,
+      "name": "NAREFN",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Africans",
+        "Russians",
+        "tn01t2.map",
+        730202,
+        true
+      ],
+      "tick": 22765,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Confederation",
+        "Africans",
+        "tn01t2.map",
+        730202,
+        true
+      ],
+      "tick": 19466,
+      "id": 1000,
+      "name": "NAREFN",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Confederation",
+        "Africans",
+        "tn01t2.map",
+        730202,
+        true
+      ],
+      "tick": 22765,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Confederation",
+        "Russians",
+        "tn01t2.map",
+        730202,
+        true
+      ],
+      "tick": 19466,
+      "id": 1000,
+      "name": "NAREFN",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Confederation",
+        "Russians",
+        "tn01t2.map",
+        730202,
+        true
+      ],
+      "tick": 22765,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": -1,
+      "newSide": 0
+    }
+  ],
+  "note": "ObjectOwnerChange records no captor or mission source. Do not infer an engineer/Sneak success; CAOILD oil wells are separate from core production buildings."
+}

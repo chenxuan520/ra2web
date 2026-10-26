@@ -1,0 +1,4582 @@
+[
+  {
+    "runId": 40241153672,
+    "identity": [
+      "Alliance",
+      "Africans",
+      "mp08t2.map",
+      710101,
+      true
+    ],
+    "rawPath": "40241153672/ai-country-short/jobs/mp08t2-710101__Alliance-vs-Africans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 14160,
+        "id": 904,
+        "name": "GAREFN",
+        "previousOwner": "@@AI2@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241153672,
+    "identity": [
+      "Alliance",
+      "Confederation",
+      "mp08t2.map",
+      710101,
+      true
+    ],
+    "rawPath": "40241153672/ai-country-short/jobs/mp08t2-710101__Alliance-vs-Confederation.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 14160,
+        "id": 904,
+        "name": "GAREFN",
+        "previousOwner": "@@AI2@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241153672,
+    "identity": [
+      "Alliance",
+      "Russians",
+      "mp08t2.map",
+      710101,
+      true
+    ],
+    "rawPath": "40241153672/ai-country-short/jobs/mp08t2-710101__Alliance-vs-Russians.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 14160,
+        "id": 904,
+        "name": "GAREFN",
+        "previousOwner": "@@AI2@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241153672,
+    "identity": [
+      "French",
+      "Africans",
+      "mp08t2.map",
+      710101,
+      true
+    ],
+    "rawPath": "40241153672/ai-country-short/jobs/mp08t2-710101__French-vs-Africans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 14160,
+        "id": 904,
+        "name": "GAREFN",
+        "previousOwner": "@@AI2@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241153672,
+    "identity": [
+      "French",
+      "Confederation",
+      "mp08t2.map",
+      710101,
+      true
+    ],
+    "rawPath": "40241153672/ai-country-short/jobs/mp08t2-710101__French-vs-Confederation.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 14160,
+        "id": 904,
+        "name": "GAREFN",
+        "previousOwner": "@@AI2@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241153672,
+    "identity": [
+      "French",
+      "Russians",
+      "mp08t2.map",
+      710101,
+      true
+    ],
+    "rawPath": "40241153672/ai-country-short/jobs/mp08t2-710101__French-vs-Russians.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 14160,
+        "id": 904,
+        "name": "GAREFN",
+        "previousOwner": "@@AI2@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241153672,
+    "identity": [
+      "Germans",
+      "Africans",
+      "mp08t2.map",
+      710101,
+      true
+    ],
+    "rawPath": "40241153672/ai-country-short/jobs/mp08t2-710101__Germans-vs-Africans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 14160,
+        "id": 904,
+        "name": "GAREFN",
+        "previousOwner": "@@AI2@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241153672,
+    "identity": [
+      "Germans",
+      "Confederation",
+      "mp08t2.map",
+      710101,
+      true
+    ],
+    "rawPath": "40241153672/ai-country-short/jobs/mp08t2-710101__Germans-vs-Confederation.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 14160,
+        "id": 904,
+        "name": "GAREFN",
+        "previousOwner": "@@AI2@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241153672,
+    "identity": [
+      "Germans",
+      "Russians",
+      "mp08t2.map",
+      710101,
+      true
+    ],
+    "rawPath": "40241153672/ai-country-short/jobs/mp08t2-710101__Germans-vs-Russians.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 14160,
+        "id": 904,
+        "name": "GAREFN",
+        "previousOwner": "@@AI2@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241153672,
+    "identity": [
+      "British",
+      "Arabs",
+      "mp08t2.map",
+      710101,
+      true
+    ],
+    "rawPath": "40241153672/ai-country-short/jobs/mp08t2-710101__British-vs-Arabs.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 22950,
+        "id": 1206,
+        "name": "GAREFN",
+        "previousOwner": "@@AI2@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241153672,
+    "identity": [
+      "Arabs",
+      "Americans",
+      "mp08t2.map",
+      710101,
+      true
+    ],
+    "rawPath": "40241153672/ai-country-short/jobs/mp08t2-710101__Arabs-vs-Americans.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241153672,
+    "identity": [
+      "Arabs",
+      "Africans",
+      "mp08t2.map",
+      710101,
+      false
+    ],
+    "rawPath": "40241153672/ai-country-short/jobs/mp08t2-710101__Arabs-vs-Africans.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241153672,
+    "identity": [
+      "Arabs",
+      "Confederation",
+      "mp08t2.map",
+      710101,
+      false
+    ],
+    "rawPath": "40241153672/ai-country-short/jobs/mp08t2-710101__Arabs-vs-Confederation.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241153672,
+    "identity": [
+      "Arabs",
+      "Russians",
+      "mp08t2.map",
+      710101,
+      false
+    ],
+    "rawPath": "40241153672/ai-country-short/jobs/mp08t2-710101__Arabs-vs-Russians.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241153672,
+    "identity": [
+      "Africans",
+      "Confederation",
+      "tn01t2.map",
+      710202,
+      true
+    ],
+    "rawPath": "40241153672/ai-country-medium/jobs/tn01t2-710202__Africans-vs-Confederation.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 24890,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241153672,
+    "identity": [
+      "Africans",
+      "Russians",
+      "tn01t2.map",
+      710202,
+      true
+    ],
+    "rawPath": "40241153672/ai-country-medium/jobs/tn01t2-710202__Africans-vs-Russians.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 24890,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241153672,
+    "identity": [
+      "Arabs",
+      "Americans",
+      "tn01t2.map",
+      710202,
+      false
+    ],
+    "rawPath": "40241153672/ai-country-medium/jobs/tn01t2-710202__Arabs-vs-Americans.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241153672,
+    "identity": [
+      "Confederation",
+      "Africans",
+      "tn01t2.map",
+      710202,
+      true
+    ],
+    "rawPath": "40241153672/ai-country-medium/jobs/tn01t2-710202__Confederation-vs-Africans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 24890,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241153672,
+    "identity": [
+      "Confederation",
+      "Russians",
+      "tn01t2.map",
+      710202,
+      true
+    ],
+    "rawPath": "40241153672/ai-country-medium/jobs/tn01t2-710202__Confederation-vs-Russians.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 24890,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241153672,
+    "identity": [
+      "British",
+      "Arabs",
+      "mp11t2.map",
+      710303,
+      true
+    ],
+    "rawPath": "40241153672/ai-country-long/jobs/mp11t2-710303__British-vs-Arabs.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 21668,
+        "id": 2226,
+        "name": "GAREFN",
+        "previousOwner": "@@AI2@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241153672,
+    "identity": [
+      "Arabs",
+      "Africans",
+      "mp11t2.map",
+      710303,
+      true
+    ],
+    "rawPath": "40241153672/ai-country-long/jobs/mp11t2-710303__Arabs-vs-Africans.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241153672,
+    "identity": [
+      "Arabs",
+      "Confederation",
+      "mp11t2.map",
+      710303,
+      true
+    ],
+    "rawPath": "40241153672/ai-country-long/jobs/mp11t2-710303__Arabs-vs-Confederation.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241153672,
+    "identity": [
+      "Arabs",
+      "Russians",
+      "mp11t2.map",
+      710303,
+      true
+    ],
+    "rawPath": "40241153672/ai-country-long/jobs/mp11t2-710303__Arabs-vs-Russians.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Alliance",
+      "Africans",
+      "mp08t2.map",
+      720101,
+      true
+    ],
+    "rawPath": "40241240910/ai-country-short/jobs/mp08t2-720101__Alliance-vs-Africans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 15979,
+        "id": 904,
+        "name": "GAREFN",
+        "previousOwner": "@@AI2@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Alliance",
+      "Arabs",
+      "mp08t2.map",
+      720101,
+      true
+    ],
+    "rawPath": "40241240910/ai-country-short/jobs/mp08t2-720101__Alliance-vs-Arabs.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 20075,
+        "id": 894,
+        "name": "GAREFN",
+        "previousOwner": "@@AI2@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Alliance",
+      "Confederation",
+      "mp08t2.map",
+      720101,
+      true
+    ],
+    "rawPath": "40241240910/ai-country-short/jobs/mp08t2-720101__Alliance-vs-Confederation.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 15979,
+        "id": 904,
+        "name": "GAREFN",
+        "previousOwner": "@@AI2@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Alliance",
+      "Russians",
+      "mp08t2.map",
+      720101,
+      true
+    ],
+    "rawPath": "40241240910/ai-country-short/jobs/mp08t2-720101__Alliance-vs-Russians.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 15979,
+        "id": 904,
+        "name": "GAREFN",
+        "previousOwner": "@@AI2@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "French",
+      "Africans",
+      "mp08t2.map",
+      720101,
+      true
+    ],
+    "rawPath": "40241240910/ai-country-short/jobs/mp08t2-720101__French-vs-Africans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 15979,
+        "id": 904,
+        "name": "GAREFN",
+        "previousOwner": "@@AI2@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "French",
+      "Arabs",
+      "mp08t2.map",
+      720101,
+      true
+    ],
+    "rawPath": "40241240910/ai-country-short/jobs/mp08t2-720101__French-vs-Arabs.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 20075,
+        "id": 894,
+        "name": "GAREFN",
+        "previousOwner": "@@AI2@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "French",
+      "Confederation",
+      "mp08t2.map",
+      720101,
+      true
+    ],
+    "rawPath": "40241240910/ai-country-short/jobs/mp08t2-720101__French-vs-Confederation.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 15979,
+        "id": 904,
+        "name": "GAREFN",
+        "previousOwner": "@@AI2@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "French",
+      "Russians",
+      "mp08t2.map",
+      720101,
+      true
+    ],
+    "rawPath": "40241240910/ai-country-short/jobs/mp08t2-720101__French-vs-Russians.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 15979,
+        "id": 904,
+        "name": "GAREFN",
+        "previousOwner": "@@AI2@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Germans",
+      "Africans",
+      "mp08t2.map",
+      720101,
+      true
+    ],
+    "rawPath": "40241240910/ai-country-short/jobs/mp08t2-720101__Germans-vs-Africans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 15979,
+        "id": 904,
+        "name": "GAREFN",
+        "previousOwner": "@@AI2@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Germans",
+      "Arabs",
+      "mp08t2.map",
+      720101,
+      true
+    ],
+    "rawPath": "40241240910/ai-country-short/jobs/mp08t2-720101__Germans-vs-Arabs.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 20075,
+        "id": 894,
+        "name": "GAREFN",
+        "previousOwner": "@@AI2@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Germans",
+      "Confederation",
+      "mp08t2.map",
+      720101,
+      true
+    ],
+    "rawPath": "40241240910/ai-country-short/jobs/mp08t2-720101__Germans-vs-Confederation.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 15979,
+        "id": 904,
+        "name": "GAREFN",
+        "previousOwner": "@@AI2@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Germans",
+      "Russians",
+      "mp08t2.map",
+      720101,
+      true
+    ],
+    "rawPath": "40241240910/ai-country-short/jobs/mp08t2-720101__Germans-vs-Russians.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 15979,
+        "id": 904,
+        "name": "GAREFN",
+        "previousOwner": "@@AI2@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Arabs",
+      "Americans",
+      "mp08t2.map",
+      720101,
+      false
+    ],
+    "rawPath": "40241240910/ai-country-short/jobs/mp08t2-720101__Arabs-vs-Americans.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Arabs",
+      "Alliance",
+      "mp08t2.map",
+      720101,
+      false
+    ],
+    "rawPath": "40241240910/ai-country-short/jobs/mp08t2-720101__Arabs-vs-Alliance.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Arabs",
+      "French",
+      "mp08t2.map",
+      720101,
+      false
+    ],
+    "rawPath": "40241240910/ai-country-short/jobs/mp08t2-720101__Arabs-vs-French.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Arabs",
+      "Germans",
+      "mp08t2.map",
+      720101,
+      false
+    ],
+    "rawPath": "40241240910/ai-country-short/jobs/mp08t2-720101__Arabs-vs-Germans.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Arabs",
+      "British",
+      "mp08t2.map",
+      720101,
+      false
+    ],
+    "rawPath": "40241240910/ai-country-short/jobs/mp08t2-720101__Arabs-vs-British.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Arabs",
+      "Africans",
+      "mp08t2.map",
+      720101,
+      false
+    ],
+    "rawPath": "40241240910/ai-country-short/jobs/mp08t2-720101__Arabs-vs-Africans.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Arabs",
+      "Confederation",
+      "mp08t2.map",
+      720101,
+      false
+    ],
+    "rawPath": "40241240910/ai-country-short/jobs/mp08t2-720101__Arabs-vs-Confederation.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Arabs",
+      "Russians",
+      "mp08t2.map",
+      720101,
+      false
+    ],
+    "rawPath": "40241240910/ai-country-short/jobs/mp08t2-720101__Arabs-vs-Russians.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Americans",
+      "Africans",
+      "tn01t2.map",
+      720202,
+      false
+    ],
+    "rawPath": "40241240910/ai-country-medium/jobs/tn01t2-720202__Americans-vs-Africans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 18134,
+        "id": 1041,
+        "name": "GAWEAP",
+        "previousOwner": "@@AI1@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Americans",
+      "Confederation",
+      "tn01t2.map",
+      720202,
+      false
+    ],
+    "rawPath": "40241240910/ai-country-medium/jobs/tn01t2-720202__Americans-vs-Confederation.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 18134,
+        "id": 1041,
+        "name": "GAWEAP",
+        "previousOwner": "@@AI1@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Americans",
+      "Russians",
+      "tn01t2.map",
+      720202,
+      false
+    ],
+    "rawPath": "40241240910/ai-country-medium/jobs/tn01t2-720202__Americans-vs-Russians.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 18134,
+        "id": 1041,
+        "name": "GAWEAP",
+        "previousOwner": "@@AI1@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Alliance",
+      "Africans",
+      "tn01t2.map",
+      720202,
+      false
+    ],
+    "rawPath": "40241240910/ai-country-medium/jobs/tn01t2-720202__Alliance-vs-Africans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 14978,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Alliance",
+      "Confederation",
+      "tn01t2.map",
+      720202,
+      false
+    ],
+    "rawPath": "40241240910/ai-country-medium/jobs/tn01t2-720202__Alliance-vs-Confederation.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 14978,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Alliance",
+      "Russians",
+      "tn01t2.map",
+      720202,
+      false
+    ],
+    "rawPath": "40241240910/ai-country-medium/jobs/tn01t2-720202__Alliance-vs-Russians.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 14978,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "French",
+      "Africans",
+      "tn01t2.map",
+      720202,
+      false
+    ],
+    "rawPath": "40241240910/ai-country-medium/jobs/tn01t2-720202__French-vs-Africans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 14978,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "French",
+      "Confederation",
+      "tn01t2.map",
+      720202,
+      false
+    ],
+    "rawPath": "40241240910/ai-country-medium/jobs/tn01t2-720202__French-vs-Confederation.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 14978,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "French",
+      "Russians",
+      "tn01t2.map",
+      720202,
+      false
+    ],
+    "rawPath": "40241240910/ai-country-medium/jobs/tn01t2-720202__French-vs-Russians.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 14978,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Germans",
+      "Africans",
+      "tn01t2.map",
+      720202,
+      false
+    ],
+    "rawPath": "40241240910/ai-country-medium/jobs/tn01t2-720202__Germans-vs-Africans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 14978,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Germans",
+      "Confederation",
+      "tn01t2.map",
+      720202,
+      false
+    ],
+    "rawPath": "40241240910/ai-country-medium/jobs/tn01t2-720202__Germans-vs-Confederation.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 14978,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Germans",
+      "Russians",
+      "tn01t2.map",
+      720202,
+      false
+    ],
+    "rawPath": "40241240910/ai-country-medium/jobs/tn01t2-720202__Germans-vs-Russians.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 14978,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "British",
+      "Africans",
+      "tn01t2.map",
+      720202,
+      false
+    ],
+    "rawPath": "40241240910/ai-country-medium/jobs/tn01t2-720202__British-vs-Africans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 14692,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": -1,
+        "newSide": 0
+      },
+      {
+        "tick": 18432,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@AI1@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "British",
+      "Confederation",
+      "tn01t2.map",
+      720202,
+      false
+    ],
+    "rawPath": "40241240910/ai-country-medium/jobs/tn01t2-720202__British-vs-Confederation.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 14692,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": -1,
+        "newSide": 0
+      },
+      {
+        "tick": 18432,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@AI1@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "British",
+      "Russians",
+      "tn01t2.map",
+      720202,
+      false
+    ],
+    "rawPath": "40241240910/ai-country-medium/jobs/tn01t2-720202__British-vs-Russians.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 14692,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": -1,
+        "newSide": 0
+      },
+      {
+        "tick": 18432,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@AI1@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Arabs",
+      "Africans",
+      "tn01t2.map",
+      720202,
+      true
+    ],
+    "rawPath": "40241240910/ai-country-medium/jobs/tn01t2-720202__Arabs-vs-Africans.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Arabs",
+      "Confederation",
+      "tn01t2.map",
+      720202,
+      true
+    ],
+    "rawPath": "40241240910/ai-country-medium/jobs/tn01t2-720202__Arabs-vs-Confederation.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Arabs",
+      "Russians",
+      "tn01t2.map",
+      720202,
+      true
+    ],
+    "rawPath": "40241240910/ai-country-medium/jobs/tn01t2-720202__Arabs-vs-Russians.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Arabs",
+      "Africans",
+      "mp11t2.map",
+      720303,
+      true
+    ],
+    "rawPath": "40241240910/ai-country-long/jobs/mp11t2-720303__Arabs-vs-Africans.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Arabs",
+      "Confederation",
+      "mp11t2.map",
+      720303,
+      true
+    ],
+    "rawPath": "40241240910/ai-country-long/jobs/mp11t2-720303__Arabs-vs-Confederation.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241240910,
+    "identity": [
+      "Arabs",
+      "Russians",
+      "mp11t2.map",
+      720303,
+      true
+    ],
+    "rawPath": "40241240910/ai-country-long/jobs/mp11t2-720303__Arabs-vs-Russians.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Alliance",
+      "Arabs",
+      "mp08t2.map",
+      730101,
+      true
+    ],
+    "rawPath": "40241320276/ai-country-short/jobs/mp08t2-730101__Alliance-vs-Arabs.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 21199,
+        "id": 894,
+        "name": "GAREFN",
+        "previousOwner": "@@AI2@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Germans",
+      "Arabs",
+      "mp08t2.map",
+      730101,
+      true
+    ],
+    "rawPath": "40241320276/ai-country-short/jobs/mp08t2-730101__Germans-vs-Arabs.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 21199,
+        "id": 894,
+        "name": "GAREFN",
+        "previousOwner": "@@AI2@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "British",
+      "Africans",
+      "mp08t2.map",
+      730101,
+      true
+    ],
+    "rawPath": "40241320276/ai-country-short/jobs/mp08t2-730101__British-vs-Africans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 26057,
+        "id": 904,
+        "name": "GAREFN",
+        "previousOwner": "@@AI2@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "British",
+      "Confederation",
+      "mp08t2.map",
+      730101,
+      true
+    ],
+    "rawPath": "40241320276/ai-country-short/jobs/mp08t2-730101__British-vs-Confederation.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 26057,
+        "id": 904,
+        "name": "GAREFN",
+        "previousOwner": "@@AI2@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Arabs",
+      "Americans",
+      "mp08t2.map",
+      730101,
+      true
+    ],
+    "rawPath": "40241320276/ai-country-short/jobs/mp08t2-730101__Arabs-vs-Americans.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Arabs",
+      "Alliance",
+      "mp08t2.map",
+      730101,
+      false
+    ],
+    "rawPath": "40241320276/ai-country-short/jobs/mp08t2-730101__Arabs-vs-Alliance.json",
+    "candidateDesolatorsProduced": 2,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Arabs",
+      "French",
+      "mp08t2.map",
+      730101,
+      false
+    ],
+    "rawPath": "40241320276/ai-country-short/jobs/mp08t2-730101__Arabs-vs-French.json",
+    "candidateDesolatorsProduced": 2,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Arabs",
+      "Germans",
+      "mp08t2.map",
+      730101,
+      false
+    ],
+    "rawPath": "40241320276/ai-country-short/jobs/mp08t2-730101__Arabs-vs-Germans.json",
+    "candidateDesolatorsProduced": 3,
+    "candidateDesolatorDeployments": 2,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      50
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [
+      {
+        "tick": 16304,
+        "player": 0,
+        "id": 1527,
+        "name": "DESO",
+        "deployed": true
+      },
+      {
+        "tick": 16369,
+        "player": 0,
+        "id": 1527,
+        "name": "DESO",
+        "deployed": false
+      },
+      {
+        "tick": 17030,
+        "player": 0,
+        "id": 1527,
+        "name": "DESO",
+        "deployed": true
+      },
+      {
+        "tick": 17107,
+        "player": 0,
+        "id": 1527,
+        "name": "DESO",
+        "deployed": false
+      }
+    ],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Arabs",
+      "British",
+      "mp08t2.map",
+      730101,
+      false
+    ],
+    "rawPath": "40241320276/ai-country-short/jobs/mp08t2-730101__Arabs-vs-British.json",
+    "candidateDesolatorsProduced": 2,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Arabs",
+      "Africans",
+      "mp08t2.map",
+      730101,
+      false
+    ],
+    "rawPath": "40241320276/ai-country-short/jobs/mp08t2-730101__Arabs-vs-Africans.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Arabs",
+      "Confederation",
+      "mp08t2.map",
+      730101,
+      false
+    ],
+    "rawPath": "40241320276/ai-country-short/jobs/mp08t2-730101__Arabs-vs-Confederation.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Arabs",
+      "Russians",
+      "mp08t2.map",
+      730101,
+      false
+    ],
+    "rawPath": "40241320276/ai-country-short/jobs/mp08t2-730101__Arabs-vs-Russians.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Russians",
+      "Africans",
+      "mp08t2.map",
+      730101,
+      true
+    ],
+    "rawPath": "40241320276/ai-country-short/jobs/mp08t2-730101__Russians-vs-Africans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      168,
+      12
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Russians",
+      "Confederation",
+      "mp08t2.map",
+      730101,
+      true
+    ],
+    "rawPath": "40241320276/ai-country-short/jobs/mp08t2-730101__Russians-vs-Confederation.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      168,
+      12
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Alliance",
+      "Africans",
+      "tn01t2.map",
+      730202,
+      false
+    ],
+    "rawPath": "40241320276/ai-country-medium/jobs/tn01t2-730202__Alliance-vs-Africans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 17354,
+        "id": 1036,
+        "name": "GAWEAP",
+        "previousOwner": "@@AI1@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Alliance",
+      "Confederation",
+      "tn01t2.map",
+      730202,
+      false
+    ],
+    "rawPath": "40241320276/ai-country-medium/jobs/tn01t2-730202__Alliance-vs-Confederation.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 17354,
+        "id": 1036,
+        "name": "GAWEAP",
+        "previousOwner": "@@AI1@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Alliance",
+      "Russians",
+      "tn01t2.map",
+      730202,
+      false
+    ],
+    "rawPath": "40241320276/ai-country-medium/jobs/tn01t2-730202__Alliance-vs-Russians.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 17354,
+        "id": 1036,
+        "name": "GAWEAP",
+        "previousOwner": "@@AI1@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "French",
+      "Africans",
+      "tn01t2.map",
+      730202,
+      false
+    ],
+    "rawPath": "40241320276/ai-country-medium/jobs/tn01t2-730202__French-vs-Africans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 17354,
+        "id": 1036,
+        "name": "GAWEAP",
+        "previousOwner": "@@AI1@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "French",
+      "Confederation",
+      "tn01t2.map",
+      730202,
+      false
+    ],
+    "rawPath": "40241320276/ai-country-medium/jobs/tn01t2-730202__French-vs-Confederation.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 17354,
+        "id": 1036,
+        "name": "GAWEAP",
+        "previousOwner": "@@AI1@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "French",
+      "Russians",
+      "tn01t2.map",
+      730202,
+      false
+    ],
+    "rawPath": "40241320276/ai-country-medium/jobs/tn01t2-730202__French-vs-Russians.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 17354,
+        "id": 1036,
+        "name": "GAWEAP",
+        "previousOwner": "@@AI1@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Germans",
+      "Africans",
+      "tn01t2.map",
+      730202,
+      false
+    ],
+    "rawPath": "40241320276/ai-country-medium/jobs/tn01t2-730202__Germans-vs-Africans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 17354,
+        "id": 1036,
+        "name": "GAWEAP",
+        "previousOwner": "@@AI1@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Germans",
+      "Confederation",
+      "tn01t2.map",
+      730202,
+      false
+    ],
+    "rawPath": "40241320276/ai-country-medium/jobs/tn01t2-730202__Germans-vs-Confederation.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 17354,
+        "id": 1036,
+        "name": "GAWEAP",
+        "previousOwner": "@@AI1@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Germans",
+      "Russians",
+      "tn01t2.map",
+      730202,
+      false
+    ],
+    "rawPath": "40241320276/ai-country-medium/jobs/tn01t2-730202__Germans-vs-Russians.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 17354,
+        "id": 1036,
+        "name": "GAWEAP",
+        "previousOwner": "@@AI1@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "British",
+      "Africans",
+      "tn01t2.map",
+      730202,
+      false
+    ],
+    "rawPath": "40241320276/ai-country-medium/jobs/tn01t2-730202__British-vs-Africans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 17354,
+        "id": 1036,
+        "name": "GAWEAP",
+        "previousOwner": "@@AI1@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "British",
+      "Confederation",
+      "tn01t2.map",
+      730202,
+      false
+    ],
+    "rawPath": "40241320276/ai-country-medium/jobs/tn01t2-730202__British-vs-Confederation.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 17354,
+        "id": 1036,
+        "name": "GAWEAP",
+        "previousOwner": "@@AI1@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "British",
+      "Russians",
+      "tn01t2.map",
+      730202,
+      false
+    ],
+    "rawPath": "40241320276/ai-country-medium/jobs/tn01t2-730202__British-vs-Russians.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 17354,
+        "id": 1036,
+        "name": "GAWEAP",
+        "previousOwner": "@@AI1@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": 0,
+        "newSide": 1
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Africans",
+      "Confederation",
+      "tn01t2.map",
+      730202,
+      true
+    ],
+    "rawPath": "40241320276/ai-country-medium/jobs/tn01t2-730202__Africans-vs-Confederation.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 19466,
+        "id": 1000,
+        "name": "NAREFN",
+        "previousOwner": "@@AI1@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": 1,
+        "newSide": 0
+      },
+      {
+        "tick": 22765,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Africans",
+      "Russians",
+      "tn01t2.map",
+      730202,
+      true
+    ],
+    "rawPath": "40241320276/ai-country-medium/jobs/tn01t2-730202__Africans-vs-Russians.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 19466,
+        "id": 1000,
+        "name": "NAREFN",
+        "previousOwner": "@@AI1@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": 1,
+        "newSide": 0
+      },
+      {
+        "tick": 22765,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Arabs",
+      "Africans",
+      "tn01t2.map",
+      730202,
+      true
+    ],
+    "rawPath": "40241320276/ai-country-medium/jobs/tn01t2-730202__Arabs-vs-Africans.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Arabs",
+      "Confederation",
+      "tn01t2.map",
+      730202,
+      true
+    ],
+    "rawPath": "40241320276/ai-country-medium/jobs/tn01t2-730202__Arabs-vs-Confederation.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Arabs",
+      "Russians",
+      "tn01t2.map",
+      730202,
+      true
+    ],
+    "rawPath": "40241320276/ai-country-medium/jobs/tn01t2-730202__Arabs-vs-Russians.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Confederation",
+      "Africans",
+      "tn01t2.map",
+      730202,
+      true
+    ],
+    "rawPath": "40241320276/ai-country-medium/jobs/tn01t2-730202__Confederation-vs-Africans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 19466,
+        "id": 1000,
+        "name": "NAREFN",
+        "previousOwner": "@@AI1@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": 1,
+        "newSide": 0
+      },
+      {
+        "tick": 22765,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Confederation",
+      "Russians",
+      "tn01t2.map",
+      730202,
+      true
+    ],
+    "rawPath": "40241320276/ai-country-medium/jobs/tn01t2-730202__Confederation-vs-Russians.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 19466,
+        "id": 1000,
+        "name": "NAREFN",
+        "previousOwner": "@@AI1@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": 1,
+        "newSide": 0
+      },
+      {
+        "tick": 22765,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Alliance",
+      "Arabs",
+      "mp11t2.map",
+      730303,
+      false
+    ],
+    "rawPath": "40241320276/ai-country-long/jobs/mp11t2-730303__Alliance-vs-Arabs.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      152,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [
+      {
+        "tick": 24620,
+        "player": 1,
+        "id": 2226,
+        "name": "DESO",
+        "deployed": true
+      },
+      {
+        "tick": 24703,
+        "player": 1,
+        "id": 2226,
+        "name": "DESO",
+        "deployed": false
+      }
+    ],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "French",
+      "Arabs",
+      "mp11t2.map",
+      730303,
+      false
+    ],
+    "rawPath": "40241320276/ai-country-long/jobs/mp11t2-730303__French-vs-Arabs.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      152,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [
+      {
+        "tick": 24620,
+        "player": 1,
+        "id": 2226,
+        "name": "DESO",
+        "deployed": true
+      },
+      {
+        "tick": 24703,
+        "player": 1,
+        "id": 2226,
+        "name": "DESO",
+        "deployed": false
+      }
+    ],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Germans",
+      "Arabs",
+      "mp11t2.map",
+      730303,
+      false
+    ],
+    "rawPath": "40241320276/ai-country-long/jobs/mp11t2-730303__Germans-vs-Arabs.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      152,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [
+      {
+        "tick": 24620,
+        "player": 1,
+        "id": 2226,
+        "name": "DESO",
+        "deployed": true
+      },
+      {
+        "tick": 24703,
+        "player": 1,
+        "id": 2226,
+        "name": "DESO",
+        "deployed": false
+      }
+    ],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Africans",
+      "British",
+      "mp11t2.map",
+      730303,
+      true
+    ],
+    "rawPath": "40241320276/ai-country-long/jobs/mp11t2-730303__Africans-vs-British.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 1,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Arabs",
+      "Africans",
+      "mp11t2.map",
+      730303,
+      true
+    ],
+    "rawPath": "40241320276/ai-country-long/jobs/mp11t2-730303__Arabs-vs-Africans.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Arabs",
+      "Confederation",
+      "mp11t2.map",
+      730303,
+      true
+    ],
+    "rawPath": "40241320276/ai-country-long/jobs/mp11t2-730303__Arabs-vs-Confederation.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Arabs",
+      "Russians",
+      "mp11t2.map",
+      730303,
+      true
+    ],
+    "rawPath": "40241320276/ai-country-long/jobs/mp11t2-730303__Arabs-vs-Russians.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Confederation",
+      "British",
+      "mp11t2.map",
+      730303,
+      true
+    ],
+    "rawPath": "40241320276/ai-country-long/jobs/mp11t2-730303__Confederation-vs-British.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 1,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241320276,
+    "identity": [
+      "Russians",
+      "British",
+      "mp11t2.map",
+      730303,
+      true
+    ],
+    "rawPath": "40241320276/ai-country-long/jobs/mp11t2-730303__Russians-vs-British.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 1,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241346363,
+    "identity": [
+      "Arabs",
+      "Africans",
+      "mp08t2.map",
+      10111,
+      false
+    ],
+    "rawPath": "40241346363/ai-country-short/jobs/mp08t2-10111__Arabs-vs-Africans.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241346363,
+    "identity": [
+      "Arabs",
+      "Confederation",
+      "mp08t2.map",
+      10111,
+      false
+    ],
+    "rawPath": "40241346363/ai-country-short/jobs/mp08t2-10111__Arabs-vs-Confederation.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241346363,
+    "identity": [
+      "Arabs",
+      "Russians",
+      "mp08t2.map",
+      10111,
+      false
+    ],
+    "rawPath": "40241346363/ai-country-short/jobs/mp08t2-10111__Arabs-vs-Russians.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241433799,
+    "identity": [
+      "Arabs",
+      "Africans",
+      "tn01t2.map",
+      20222,
+      true
+    ],
+    "rawPath": "40241433799/ai-country-medium/jobs/tn01t2-20222__Arabs-vs-Africans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 11277,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241433799,
+    "identity": [
+      "Arabs",
+      "Confederation",
+      "tn01t2.map",
+      20222,
+      true
+    ],
+    "rawPath": "40241433799/ai-country-medium/jobs/tn01t2-20222__Arabs-vs-Confederation.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 11277,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241433799,
+    "identity": [
+      "Arabs",
+      "Russians",
+      "tn01t2.map",
+      20222,
+      true
+    ],
+    "rawPath": "40241433799/ai-country-medium/jobs/tn01t2-20222__Arabs-vs-Russians.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 11277,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "Alliance",
+      "Africans",
+      "mp08t2.map",
+      10111,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-short/jobs/mp08t2-10111__Alliance-vs-Africans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 1,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "Alliance",
+      "Arabs",
+      "mp08t2.map",
+      10111,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-short/jobs/mp08t2-10111__Alliance-vs-Arabs.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 1,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "Alliance",
+      "Confederation",
+      "mp08t2.map",
+      10111,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-short/jobs/mp08t2-10111__Alliance-vs-Confederation.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 1,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "Alliance",
+      "Russians",
+      "mp08t2.map",
+      10111,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-short/jobs/mp08t2-10111__Alliance-vs-Russians.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 1,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "French",
+      "Africans",
+      "mp08t2.map",
+      10111,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-short/jobs/mp08t2-10111__French-vs-Africans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 1,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "French",
+      "Arabs",
+      "mp08t2.map",
+      10111,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-short/jobs/mp08t2-10111__French-vs-Arabs.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 1,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "French",
+      "Confederation",
+      "mp08t2.map",
+      10111,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-short/jobs/mp08t2-10111__French-vs-Confederation.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 1,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "French",
+      "Russians",
+      "mp08t2.map",
+      10111,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-short/jobs/mp08t2-10111__French-vs-Russians.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 1,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "Germans",
+      "Africans",
+      "mp08t2.map",
+      10111,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-short/jobs/mp08t2-10111__Germans-vs-Africans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 1,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "Germans",
+      "Arabs",
+      "mp08t2.map",
+      10111,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-short/jobs/mp08t2-10111__Germans-vs-Arabs.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 1,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "Germans",
+      "Confederation",
+      "mp08t2.map",
+      10111,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-short/jobs/mp08t2-10111__Germans-vs-Confederation.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 1,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "Germans",
+      "Russians",
+      "mp08t2.map",
+      10111,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-short/jobs/mp08t2-10111__Germans-vs-Russians.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 1,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "British",
+      "Africans",
+      "mp08t2.map",
+      10111,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-short/jobs/mp08t2-10111__British-vs-Africans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 1,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "British",
+      "Arabs",
+      "mp08t2.map",
+      10111,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-short/jobs/mp08t2-10111__British-vs-Arabs.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 1,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "British",
+      "Confederation",
+      "mp08t2.map",
+      10111,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-short/jobs/mp08t2-10111__British-vs-Confederation.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 1,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "British",
+      "Russians",
+      "mp08t2.map",
+      10111,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-short/jobs/mp08t2-10111__British-vs-Russians.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 1,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "Alliance",
+      "Americans",
+      "tn01t2.map",
+      20222,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-medium/jobs/tn01t2-20222__Alliance-vs-Americans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 11569,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "Alliance",
+      "French",
+      "tn01t2.map",
+      20222,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-medium/jobs/tn01t2-20222__Alliance-vs-French.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 11569,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "Alliance",
+      "Germans",
+      "tn01t2.map",
+      20222,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-medium/jobs/tn01t2-20222__Alliance-vs-Germans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 11569,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "Alliance",
+      "British",
+      "tn01t2.map",
+      20222,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-medium/jobs/tn01t2-20222__Alliance-vs-British.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 11569,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "French",
+      "Americans",
+      "tn01t2.map",
+      20222,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-medium/jobs/tn01t2-20222__French-vs-Americans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 11569,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "French",
+      "Alliance",
+      "tn01t2.map",
+      20222,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-medium/jobs/tn01t2-20222__French-vs-Alliance.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 11569,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "French",
+      "Germans",
+      "tn01t2.map",
+      20222,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-medium/jobs/tn01t2-20222__French-vs-Germans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 11569,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "French",
+      "British",
+      "tn01t2.map",
+      20222,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-medium/jobs/tn01t2-20222__French-vs-British.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 11569,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "Germans",
+      "Americans",
+      "tn01t2.map",
+      20222,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-medium/jobs/tn01t2-20222__Germans-vs-Americans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 11569,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "Germans",
+      "Alliance",
+      "tn01t2.map",
+      20222,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-medium/jobs/tn01t2-20222__Germans-vs-Alliance.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 11569,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "Germans",
+      "French",
+      "tn01t2.map",
+      20222,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-medium/jobs/tn01t2-20222__Germans-vs-French.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 11569,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "Germans",
+      "British",
+      "tn01t2.map",
+      20222,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-medium/jobs/tn01t2-20222__Germans-vs-British.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 11569,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "British",
+      "Americans",
+      "tn01t2.map",
+      20222,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-medium/jobs/tn01t2-20222__British-vs-Americans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 11569,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "British",
+      "Alliance",
+      "tn01t2.map",
+      20222,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-medium/jobs/tn01t2-20222__British-vs-Alliance.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 11569,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "British",
+      "French",
+      "tn01t2.map",
+      20222,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-medium/jobs/tn01t2-20222__British-vs-French.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 11569,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "British",
+      "Germans",
+      "tn01t2.map",
+      20222,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-medium/jobs/tn01t2-20222__British-vs-Germans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 11569,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "Arabs",
+      "Africans",
+      "tn01t2.map",
+      20222,
+      false
+    ],
+    "rawPath": "40241436421/ai-country-medium/jobs/tn01t2-20222__Arabs-vs-Africans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 7232,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "Arabs",
+      "Africans",
+      "tn01t2.map",
+      20222,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-medium/jobs/tn01t2-20222__Arabs-vs-Africans.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 7430,
+        "id": 934,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": -1,
+        "newSide": 0
+      },
+      {
+        "tick": 7885,
+        "id": 934,
+        "name": "CAOILD",
+        "previousOwner": "@@AI2@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": 0,
+        "newSide": 1
+      },
+      {
+        "tick": 11910,
+        "id": 934,
+        "name": "CAOILD",
+        "previousOwner": "@@AI1@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": 1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "Arabs",
+      "Confederation",
+      "tn01t2.map",
+      20222,
+      false
+    ],
+    "rawPath": "40241436421/ai-country-medium/jobs/tn01t2-20222__Arabs-vs-Confederation.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 7232,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "Arabs",
+      "Confederation",
+      "tn01t2.map",
+      20222,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-medium/jobs/tn01t2-20222__Arabs-vs-Confederation.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 7430,
+        "id": 934,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": -1,
+        "newSide": 0
+      },
+      {
+        "tick": 7885,
+        "id": 934,
+        "name": "CAOILD",
+        "previousOwner": "@@AI2@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": 0,
+        "newSide": 1
+      },
+      {
+        "tick": 11910,
+        "id": 934,
+        "name": "CAOILD",
+        "previousOwner": "@@AI1@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": 1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "Arabs",
+      "Russians",
+      "tn01t2.map",
+      20222,
+      false
+    ],
+    "rawPath": "40241436421/ai-country-medium/jobs/tn01t2-20222__Arabs-vs-Russians.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 7232,
+        "id": 935,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": -1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "Arabs",
+      "Russians",
+      "tn01t2.map",
+      20222,
+      true
+    ],
+    "rawPath": "40241436421/ai-country-medium/jobs/tn01t2-20222__Arabs-vs-Russians.json",
+    "candidateDesolatorsProduced": 0,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [
+      {
+        "tick": 7430,
+        "id": 934,
+        "name": "CAOILD",
+        "previousOwner": "@@NEUTRAL@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": -1,
+        "newSide": 0
+      },
+      {
+        "tick": 7885,
+        "id": 934,
+        "name": "CAOILD",
+        "previousOwner": "@@AI2@@",
+        "newOwner": "@@AI1@@",
+        "previousSide": 0,
+        "newSide": 1
+      },
+      {
+        "tick": 11910,
+        "id": 934,
+        "name": "CAOILD",
+        "previousOwner": "@@AI1@@",
+        "newOwner": "@@AI2@@",
+        "previousSide": 1,
+        "newSide": 0
+      }
+    ],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "Arabs",
+      "Africans",
+      "mp11t2.map",
+      30333,
+      false
+    ],
+    "rawPath": "40241436421/ai-country-long/jobs/mp11t2-30333__Arabs-vs-Africans.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "Arabs",
+      "Confederation",
+      "mp11t2.map",
+      30333,
+      false
+    ],
+    "rawPath": "40241436421/ai-country-long/jobs/mp11t2-30333__Arabs-vs-Confederation.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  },
+  {
+    "runId": 40241436421,
+    "identity": [
+      "Arabs",
+      "Russians",
+      "mp11t2.map",
+      30333,
+      false
+    ],
+    "rawPath": "40241436421/ai-country-long/jobs/mp11t2-30333__Arabs-vs-Russians.json",
+    "candidateDesolatorsProduced": 1,
+    "candidateDesolatorDeployments": 0,
+    "ownerlessRadiationDamageAsVictim": [
+      0,
+      0
+    ],
+    "desolatorBoardingEvents": 0,
+    "desolatorIntactUnloadingEvents": 0,
+    "harassmentDetachments": 0,
+    "ownershipChanges": [],
+    "deploymentEvents": [],
+    "transportEvents": []
+  }
+]

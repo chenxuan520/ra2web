@@ -1,0 +1,53 @@
+{
+  "runId": 40241153672,
+  "candidate": "356d35b7271d14a37380585f4f809ccd19703757",
+  "baseline": "635c3f08f1e7117bd8b50f96e91d4c03a059f00a",
+  "candidateProfile": "brutal",
+  "baselineProfile": "brutal",
+  "engine": "562ebc71daba86c4ea0ea28e49ff5c28a2825932",
+  "inputsVerified": true,
+  "smoke": {
+    "games": 4,
+    "draws": 4,
+    "errors": 0,
+    "maxTicks": 3000,
+    "excludedFromMatrix": true,
+    "fingerprint": "228754ac7089cebb76576a63684d1bc662c7e4e28d99456c84d1b2bd1af5a67a",
+    "receipts": [
+      {
+        "job": "mp08t2-909__Americans-vs-Russians",
+        "sha256": "36394476cf7abe1c56a9b2b6a14bdeb208a80a985b2e63460faa2a968a968594",
+        "receipt": {
+          "fingerprint": "228754ac7089cebb76576a63684d1bc662c7e4e28d99456c84d1b2bd1af5a67a",
+          "reportSha256": "36394476cf7abe1c56a9b2b6a14bdeb208a80a985b2e63460faa2a968a968594",
+          "verifiedAt": "2026-10-25T22:40:51.219Z"
+        }
+      },
+      {
+        "job": "mp08t2-909__Russians-vs-Americans",
+        "sha256": "7831495dacd72d5d7eb56e6c54784aa2080a70325255c7f7f4e3d33caf3c63bb",
+        "receipt": {
+          "fingerprint": "228754ac7089cebb76576a63684d1bc662c7e4e28d99456c84d1b2bd1af5a67a",
+          "reportSha256": "7831495dacd72d5d7eb56e6c54784aa2080a70325255c7f7f4e3d33caf3c63bb",
+          "verifiedAt": "2026-10-25T22:40:51.177Z"
+        }
+      }
+    ]
+  },
+  "fixtureMechanisms": {
+    "passed": true,
+    "excludedFromMatrix": true,
+    "files": {
+      "rhino-dog-fixtures.json": "ef84ff326903b7497292f49d0c13f1b520d0b71d68c53c4cf99854142a55227e",
+      "harassment.json": "d34f4116b77ad71f77d096b4e4d4420dccdc526e04bcf003df1e31bc3dd56e06",
+      "sneak-capture.json": "5762ebb16a0e9eb933bf8cc2f3750572551d386c756c5adfee22dd920771af8a"
+    }
+  },
+  "tests": {
+    "bunPassed": 303,
+    "bunSkipped": 13,
+    "bunFailed": 0,
+    "pythonPassed": 34
+  },
+  "jobId": 121313011602
+}

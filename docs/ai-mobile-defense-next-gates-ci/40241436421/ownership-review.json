@@ -1,0 +1,457 @@
+{
+  "enemyAcquiredByName": {
+    "CAOILD": 3
+  },
+  "enemyCoreBuildingAcquisitions": [],
+  "events": [
+    {
+      "identity": [
+        "Alliance",
+        "Americans",
+        "tn01t2.map",
+        20222,
+        true
+      ],
+      "tick": 11569,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Alliance",
+        "French",
+        "tn01t2.map",
+        20222,
+        true
+      ],
+      "tick": 11569,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Alliance",
+        "Germans",
+        "tn01t2.map",
+        20222,
+        true
+      ],
+      "tick": 11569,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Alliance",
+        "British",
+        "tn01t2.map",
+        20222,
+        true
+      ],
+      "tick": 11569,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "French",
+        "Americans",
+        "tn01t2.map",
+        20222,
+        true
+      ],
+      "tick": 11569,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "French",
+        "Alliance",
+        "tn01t2.map",
+        20222,
+        true
+      ],
+      "tick": 11569,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "French",
+        "Germans",
+        "tn01t2.map",
+        20222,
+        true
+      ],
+      "tick": 11569,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "French",
+        "British",
+        "tn01t2.map",
+        20222,
+        true
+      ],
+      "tick": 11569,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Germans",
+        "Americans",
+        "tn01t2.map",
+        20222,
+        true
+      ],
+      "tick": 11569,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Germans",
+        "Alliance",
+        "tn01t2.map",
+        20222,
+        true
+      ],
+      "tick": 11569,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Germans",
+        "French",
+        "tn01t2.map",
+        20222,
+        true
+      ],
+      "tick": 11569,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Germans",
+        "British",
+        "tn01t2.map",
+        20222,
+        true
+      ],
+      "tick": 11569,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "British",
+        "Americans",
+        "tn01t2.map",
+        20222,
+        true
+      ],
+      "tick": 11569,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "British",
+        "Alliance",
+        "tn01t2.map",
+        20222,
+        true
+      ],
+      "tick": 11569,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "British",
+        "French",
+        "tn01t2.map",
+        20222,
+        true
+      ],
+      "tick": 11569,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "British",
+        "Germans",
+        "tn01t2.map",
+        20222,
+        true
+      ],
+      "tick": 11569,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Arabs",
+        "Africans",
+        "tn01t2.map",
+        20222,
+        false
+      ],
+      "tick": 7232,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Arabs",
+        "Africans",
+        "tn01t2.map",
+        20222,
+        true
+      ],
+      "tick": 7430,
+      "id": 934,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Arabs",
+        "Africans",
+        "tn01t2.map",
+        20222,
+        true
+      ],
+      "tick": 7885,
+      "id": 934,
+      "name": "CAOILD",
+      "previousOwner": "@@AI2@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Arabs",
+        "Africans",
+        "tn01t2.map",
+        20222,
+        true
+      ],
+      "tick": 11910,
+      "id": 934,
+      "name": "CAOILD",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Arabs",
+        "Confederation",
+        "tn01t2.map",
+        20222,
+        false
+      ],
+      "tick": 7232,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Arabs",
+        "Confederation",
+        "tn01t2.map",
+        20222,
+        true
+      ],
+      "tick": 7430,
+      "id": 934,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Arabs",
+        "Confederation",
+        "tn01t2.map",
+        20222,
+        true
+      ],
+      "tick": 7885,
+      "id": 934,
+      "name": "CAOILD",
+      "previousOwner": "@@AI2@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Arabs",
+        "Confederation",
+        "tn01t2.map",
+        20222,
+        true
+      ],
+      "tick": 11910,
+      "id": 934,
+      "name": "CAOILD",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Arabs",
+        "Russians",
+        "tn01t2.map",
+        20222,
+        false
+      ],
+      "tick": 7232,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Arabs",
+        "Russians",
+        "tn01t2.map",
+        20222,
+        true
+      ],
+      "tick": 7430,
+      "id": 934,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Arabs",
+        "Russians",
+        "tn01t2.map",
+        20222,
+        true
+      ],
+      "tick": 7885,
+      "id": 934,
+      "name": "CAOILD",
+      "previousOwner": "@@AI2@@",
+      "newOwner": "@@AI1@@",
+      "previousSide": 0,
+      "newSide": 1
+    },
+    {
+      "identity": [
+        "Arabs",
+        "Russians",
+        "tn01t2.map",
+        20222,
+        true
+      ],
+      "tick": 11910,
+      "id": 934,
+      "name": "CAOILD",
+      "previousOwner": "@@AI1@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": 1,
+      "newSide": 0
+    }
+  ],
+  "note": "Ownership has no captor/mission/source field. No engineer or Sneak attribution is inferred; technical oil wells are separate from core buildings."
+}

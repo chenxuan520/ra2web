@@ -1,0 +1,76 @@
+{
+  "method": "Stratified map/seed block bootstrap retaining all144 country/swap games within each block",
+  "blocks": [
+    {
+      "map": "mp08t2",
+      "seed": 710101,
+      "games": 144,
+      "scoreWithHalfDraws": 0.6597222222222222
+    },
+    {
+      "map": "mp08t2",
+      "seed": 720101,
+      "games": 144,
+      "scoreWithHalfDraws": 0.5902777777777778
+    },
+    {
+      "map": "mp08t2",
+      "seed": 730101,
+      "games": 144,
+      "scoreWithHalfDraws": 0.59375
+    },
+    {
+      "map": "mp11t2",
+      "seed": 710303,
+      "games": 144,
+      "scoreWithHalfDraws": 0.4791666666666667
+    },
+    {
+      "map": "mp11t2",
+      "seed": 720303,
+      "games": 144,
+      "scoreWithHalfDraws": 0.40625
+    },
+    {
+      "map": "mp11t2",
+      "seed": 730303,
+      "games": 144,
+      "scoreWithHalfDraws": 0.4895833333333333
+    },
+    {
+      "map": "tn01t2",
+      "seed": 710202,
+      "games": 144,
+      "scoreWithHalfDraws": 0.5798611111111112
+    },
+    {
+      "map": "tn01t2",
+      "seed": 720202,
+      "games": 144,
+      "scoreWithHalfDraws": 0.5416666666666666
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "games": 144,
+      "scoreWithHalfDraws": 0.53125
+    }
+  ],
+  "replicates": 5000,
+  "seed": 20261025,
+  "confidence": 0.95,
+  "percentileIndices": [
+    124,
+    4874
+  ],
+  "independentInterval": [
+    0.5204475308641975,
+    0.5613425925925926
+  ],
+  "frozenFunctionInterval": [
+    0.5204475308641975,
+    0.5613425925925926
+  ],
+  "independentlyReproduced": true,
+  "sortedBootstrapSamplesSha256": "7b5606e0fcb1aae36c687a9586ec00f656039835e227d26baabbc0618b7bef4b"
+}

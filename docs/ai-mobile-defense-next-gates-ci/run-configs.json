@@ -1,0 +1,92 @@
+{
+  "40241153672": {
+    "run_id": 40241153672,
+    "baseline": "635c3f08f1e7117bd8b50f96e91d4c03a059f00a",
+    "baselineProfile": "brutal",
+    "evaluationSet": "qualification_a",
+    "comparisonMode": "direct",
+    "candidate": "356d35b7271d14a37380585f4f809ccd19703757",
+    "candidateProfile": "brutal",
+    "engine": "562ebc71daba86c4ea0ea28e49ff5c28a2825932",
+    "seeds": [
+      710101,
+      710202,
+      710303
+    ]
+  },
+  "40241240910": {
+    "run_id": 40241240910,
+    "baseline": "635c3f08f1e7117bd8b50f96e91d4c03a059f00a",
+    "baselineProfile": "brutal",
+    "evaluationSet": "qualification_b",
+    "comparisonMode": "direct",
+    "candidate": "356d35b7271d14a37380585f4f809ccd19703757",
+    "candidateProfile": "brutal",
+    "engine": "562ebc71daba86c4ea0ea28e49ff5c28a2825932",
+    "seeds": [
+      720101,
+      720202,
+      720303
+    ]
+  },
+  "40241320276": {
+    "run_id": 40241320276,
+    "baseline": "635c3f08f1e7117bd8b50f96e91d4c03a059f00a",
+    "baselineProfile": "brutal",
+    "evaluationSet": "qualification_c",
+    "comparisonMode": "direct",
+    "candidate": "356d35b7271d14a37380585f4f809ccd19703757",
+    "candidateProfile": "brutal",
+    "engine": "562ebc71daba86c4ea0ea28e49ff5c28a2825932",
+    "seeds": [
+      730101,
+      730202,
+      730303
+    ]
+  },
+  "40241346363": {
+    "run_id": 40241346363,
+    "baseline": "14ffd3613663a0e1a373593922e0f5e1c5f20f40",
+    "baselineProfile": "normal",
+    "evaluationSet": "regression",
+    "comparisonMode": "historical",
+    "candidate": "356d35b7271d14a37380585f4f809ccd19703757",
+    "candidateProfile": "brutal",
+    "engine": "562ebc71daba86c4ea0ea28e49ff5c28a2825932",
+    "seeds": [
+      10111,
+      20222,
+      30333
+    ]
+  },
+  "40241433799": {
+    "run_id": 40241433799,
+    "baseline": "04a9f7ae57053e3f7f108afd14f830c293cac47a",
+    "baselineProfile": "brutal",
+    "evaluationSet": "regression",
+    "comparisonMode": "historical",
+    "candidate": "356d35b7271d14a37380585f4f809ccd19703757",
+    "candidateProfile": "brutal",
+    "engine": "562ebc71daba86c4ea0ea28e49ff5c28a2825932",
+    "seeds": [
+      10111,
+      20222,
+      30333
+    ]
+  },
+  "40241436421": {
+    "run_id": 40241436421,
+    "baseline": "0a46d527995adc2411c04484de7336d63d4b0c5f",
+    "baselineProfile": "brutal",
+    "evaluationSet": "regression",
+    "comparisonMode": "historical",
+    "candidate": "356d35b7271d14a37380585f4f809ccd19703757",
+    "candidateProfile": "brutal",
+    "engine": "562ebc71daba86c4ea0ea28e49ff5c28a2825932",
+    "seeds": [
+      10111,
+      20222,
+      30333
+    ]
+  }
+}

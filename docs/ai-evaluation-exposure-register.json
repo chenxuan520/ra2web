@@ -3,13 +3,32 @@
   "entries": [
     {
       "frozenCandidate": "356d35b7271d14a37380585f4f809ccd19703757",
-      "sets": ["qualification_a", "qualification_b", "qualification_c"],
+      "sets": [
+        "qualification_a",
+        "qualification_b",
+        "qualification_c"
+      ],
       "firstCompletedOpponent": "c18f77650e40b668064bdb913a75bebfa278f42b",
-      "completedRuns": [40227208347, 40227243447, 40227337951],
+      "completedRuns": [
+        40227208347,
+        40227243447,
+        40227337951
+      ],
       "status": "observed-after-freeze",
       "retunedCandidateMayClaimAsUnseen": false,
       "sameUnmodifiedCandidateAgainstOtherPlannedOpponentsAllowed": true,
-      "note": "The recorded results were unseen when this candidate was frozen. They are now exposed; future changes informed by them require newly registered qualification seeds. This does not alter the original plan or its gates."
+      "note": "The recorded results were unseen when this candidate was frozen. They are now exposed; future changes informed by them require newly registered qualification seeds. This does not alter the original plan or its gates.",
+      "sameCandidatePreviousPrototypeCompletedRuns": [
+        40241153672,
+        40241240910,
+        40241320276
+      ],
+      "sameCandidateHistoricalRegressionCompletedRuns": [
+        40241346363,
+        40241433799,
+        40241436421
+      ],
+      "nextRegisteredComparison": "ai-mobile-defense-common-opponent.md"
     }
   ]
 }

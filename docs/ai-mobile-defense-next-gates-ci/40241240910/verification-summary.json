@@ -1,0 +1,311 @@
+{
+  "runId": 40241240910,
+  "evaluationSet": "qualification_b",
+  "totals": {
+    "games": 432,
+    "wins": 196,
+    "losses": 185,
+    "draws": 51,
+    "errors": 0,
+    "winRate": 0.4537037037037037,
+    "decisiveWinRate": 0.5144356955380578,
+    "scoreWithHalfDraws": 0.5127314814814815
+  },
+  "byCountry": {
+    "Americans": {
+      "games": 48,
+      "wins": 27,
+      "losses": 10,
+      "draws": 11,
+      "errors": 0,
+      "winRate": 0.5625,
+      "decisiveWinRate": 0.7297297297297297,
+      "scoreWithHalfDraws": 0.6770833333333334
+    },
+    "Alliance": {
+      "games": 48,
+      "wins": 11,
+      "losses": 34,
+      "draws": 3,
+      "errors": 0,
+      "winRate": 0.22916666666666666,
+      "decisiveWinRate": 0.24444444444444444,
+      "scoreWithHalfDraws": 0.2604166666666667
+    },
+    "French": {
+      "games": 48,
+      "wins": 11,
+      "losses": 34,
+      "draws": 3,
+      "errors": 0,
+      "winRate": 0.22916666666666666,
+      "decisiveWinRate": 0.24444444444444444,
+      "scoreWithHalfDraws": 0.2604166666666667
+    },
+    "Germans": {
+      "games": 48,
+      "wins": 11,
+      "losses": 34,
+      "draws": 3,
+      "errors": 0,
+      "winRate": 0.22916666666666666,
+      "decisiveWinRate": 0.24444444444444444,
+      "scoreWithHalfDraws": 0.2604166666666667
+    },
+    "British": {
+      "games": 48,
+      "wins": 11,
+      "losses": 32,
+      "draws": 5,
+      "errors": 0,
+      "winRate": 0.22916666666666666,
+      "decisiveWinRate": 0.2558139534883721,
+      "scoreWithHalfDraws": 0.28125
+    },
+    "Africans": {
+      "games": 48,
+      "wins": 32,
+      "losses": 8,
+      "draws": 8,
+      "errors": 0,
+      "winRate": 0.6666666666666666,
+      "decisiveWinRate": 0.8,
+      "scoreWithHalfDraws": 0.75
+    },
+    "Arabs": {
+      "games": 48,
+      "wins": 28,
+      "losses": 17,
+      "draws": 3,
+      "errors": 0,
+      "winRate": 0.5833333333333334,
+      "decisiveWinRate": 0.6222222222222222,
+      "scoreWithHalfDraws": 0.6145833333333334
+    },
+    "Confederation": {
+      "games": 48,
+      "wins": 32,
+      "losses": 8,
+      "draws": 8,
+      "errors": 0,
+      "winRate": 0.6666666666666666,
+      "decisiveWinRate": 0.8,
+      "scoreWithHalfDraws": 0.75
+    },
+    "Russians": {
+      "games": 48,
+      "wins": 33,
+      "losses": 8,
+      "draws": 7,
+      "errors": 0,
+      "winRate": 0.6875,
+      "decisiveWinRate": 0.8048780487804879,
+      "scoreWithHalfDraws": 0.7604166666666666
+    }
+  },
+  "byMap": {
+    "mp08t2": {
+      "games": 144,
+      "wins": 79,
+      "losses": 53,
+      "draws": 12,
+      "errors": 0,
+      "winRate": 0.5486111111111112,
+      "decisiveWinRate": 0.5984848484848485,
+      "scoreWithHalfDraws": 0.5902777777777778
+    },
+    "mp11t2": {
+      "games": 144,
+      "wins": 41,
+      "losses": 68,
+      "draws": 35,
+      "errors": 0,
+      "winRate": 0.2847222222222222,
+      "decisiveWinRate": 0.3761467889908257,
+      "scoreWithHalfDraws": 0.40625
+    },
+    "tn01t2": {
+      "games": 144,
+      "wins": 76,
+      "losses": 64,
+      "draws": 4,
+      "errors": 0,
+      "winRate": 0.5277777777777778,
+      "decisiveWinRate": 0.5428571428571428,
+      "scoreWithHalfDraws": 0.5416666666666666
+    }
+  },
+  "bySwap": {
+    "False": {
+      "games": 216,
+      "wins": 87,
+      "losses": 112,
+      "draws": 17,
+      "errors": 0,
+      "winRate": 0.4027777777777778,
+      "decisiveWinRate": 0.4371859296482412,
+      "scoreWithHalfDraws": 0.44212962962962965
+    },
+    "True": {
+      "games": 216,
+      "wins": 109,
+      "losses": 73,
+      "draws": 34,
+      "errors": 0,
+      "winRate": 0.5046296296296297,
+      "decisiveWinRate": 0.5989010989010989,
+      "scoreWithHalfDraws": 0.5833333333333334
+    }
+  },
+  "directAssessment": {
+    "kind": "direct-current-bot",
+    "candidate": "356d35b7271d14a37380585f4f809ccd19703757",
+    "baseline": "635c3f08f1e7117bd8b50f96e91d4c03a059f00a",
+    "totals": {
+      "wins": 196,
+      "losses": 185,
+      "draws": 51,
+      "games": 432,
+      "winRate": 0.4537037037037037,
+      "decisiveWinRate": 0.5144356955380578
+    },
+    "scoreWithHalfDraws": 0.5127314814814815,
+    "scoreInterval": null,
+    "scenarioBlocks": 3,
+    "qualificationSchedule": false,
+    "qualified": false,
+    "screeningPositive": true,
+    "verdict": "development-positive",
+    "byCountry": {
+      "Americans": {
+        "wins": 27,
+        "losses": 10,
+        "draws": 11,
+        "games": 48,
+        "winRate": 0.5625,
+        "decisiveWinRate": 0.7297297297297297
+      },
+      "Alliance": {
+        "wins": 11,
+        "losses": 34,
+        "draws": 3,
+        "games": 48,
+        "winRate": 0.22916666666666666,
+        "decisiveWinRate": 0.24444444444444444
+      },
+      "French": {
+        "wins": 11,
+        "losses": 34,
+        "draws": 3,
+        "games": 48,
+        "winRate": 0.22916666666666666,
+        "decisiveWinRate": 0.24444444444444444
+      },
+      "Germans": {
+        "wins": 11,
+        "losses": 34,
+        "draws": 3,
+        "games": 48,
+        "winRate": 0.22916666666666666,
+        "decisiveWinRate": 0.24444444444444444
+      },
+      "British": {
+        "wins": 11,
+        "losses": 32,
+        "draws": 5,
+        "games": 48,
+        "winRate": 0.22916666666666666,
+        "decisiveWinRate": 0.2558139534883721
+      },
+      "Africans": {
+        "wins": 32,
+        "losses": 8,
+        "draws": 8,
+        "games": 48,
+        "winRate": 0.6666666666666666,
+        "decisiveWinRate": 0.8
+      },
+      "Arabs": {
+        "wins": 28,
+        "losses": 17,
+        "draws": 3,
+        "games": 48,
+        "winRate": 0.5833333333333334,
+        "decisiveWinRate": 0.6222222222222222
+      },
+      "Confederation": {
+        "wins": 32,
+        "losses": 8,
+        "draws": 8,
+        "games": 48,
+        "winRate": 0.6666666666666666,
+        "decisiveWinRate": 0.8
+      },
+      "Russians": {
+        "wins": 33,
+        "losses": 8,
+        "draws": 7,
+        "games": 48,
+        "winRate": 0.6875,
+        "decisiveWinRate": 0.8048780487804879
+      }
+    },
+    "byMap": {
+      "mp08t2.map": {
+        "wins": 79,
+        "losses": 53,
+        "draws": 12,
+        "games": 144,
+        "winRate": 0.5486111111111112,
+        "decisiveWinRate": 0.5984848484848485
+      },
+      "mp11t2.map": {
+        "wins": 41,
+        "losses": 68,
+        "draws": 35,
+        "games": 144,
+        "winRate": 0.2847222222222222,
+        "decisiveWinRate": 0.3761467889908257
+      },
+      "tn01t2.map": {
+        "wins": 76,
+        "losses": 64,
+        "draws": 4,
+        "games": 144,
+        "winRate": 0.5277777777777778,
+        "decisiveWinRate": 0.5428571428571428
+      }
+    },
+    "notes": [
+      "Input must first pass raw manifest/report/receipt verification; this command does not replace it.",
+      "The primary win rate includes draws. Score with half draws is a separately named direct-match metric.",
+      "Development-positive is a screening signal, not evidence of qualification or human strength.",
+      "Historical 80/70/70 thresholds are retained for old-opponent regressions, not reused for peer matches."
+    ]
+  },
+  "strengthAssessment": {
+    "kind": "direct-current-bot",
+    "passed": true,
+    "qualified": false,
+    "verdict": "development-positive",
+    "thresholds": {
+      "directScoreGreaterThan": 0.5
+    },
+    "failures": []
+  },
+  "invariants": {
+    "validGames": 432,
+    "uniqueGames": 432,
+    "countries": 9,
+    "gamesPerCountry": 48,
+    "gamesPerMap": 144,
+    "gamesPerCountryPair": 6,
+    "errors": 0,
+    "missing": 0,
+    "mixedVersions": false,
+    "receiptsVerified": true,
+    "pairedStartsSlotsVerified": true,
+    "independentReportBytesIdentical": true,
+    "smokeExcluded": true
+  }
+}

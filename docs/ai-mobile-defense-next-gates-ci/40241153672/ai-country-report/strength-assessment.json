@@ -1,0 +1,10 @@
+{
+  "kind": "direct-current-bot",
+  "passed": true,
+  "qualified": false,
+  "verdict": "development-positive",
+  "thresholds": {
+    "directScoreGreaterThan": 0.5
+  },
+  "failures": []
+}

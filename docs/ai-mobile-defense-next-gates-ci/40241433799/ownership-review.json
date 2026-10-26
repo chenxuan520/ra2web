@@ -1,0 +1,55 @@
+{
+  "enemyAcquiredByName": {},
+  "enemyCoreBuildingAcquisitions": [],
+  "events": [
+    {
+      "identity": [
+        "Arabs",
+        "Africans",
+        "tn01t2.map",
+        20222,
+        true
+      ],
+      "tick": 11277,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Arabs",
+        "Confederation",
+        "tn01t2.map",
+        20222,
+        true
+      ],
+      "tick": 11277,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": -1,
+      "newSide": 0
+    },
+    {
+      "identity": [
+        "Arabs",
+        "Russians",
+        "tn01t2.map",
+        20222,
+        true
+      ],
+      "tick": 11277,
+      "id": 935,
+      "name": "CAOILD",
+      "previousOwner": "@@NEUTRAL@@",
+      "newOwner": "@@AI2@@",
+      "previousSide": -1,
+      "newSide": 0
+    }
+  ],
+  "note": "Ownership has no captor/mission/source field. No engineer or Sneak attribution is inferred; technical oil wells are separate from core buildings."
+}
