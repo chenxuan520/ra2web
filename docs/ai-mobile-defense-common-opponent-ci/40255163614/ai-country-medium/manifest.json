@@ -1,0 +1,563 @@
+{
+  "format": 1,
+  "fingerprint": "061d0d2c8b4fd5dbd00730cf1d041263e68ccc9446472fcc7b66a6ec92e746d5",
+  "createdAt": "2026-10-26T01:40:49.720Z",
+  "config": {
+    "candidateCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+    "baselineCommit": "0a46d527995adc2411c04484de7336d63d4b0c5f",
+    "candidateProfile": "brutal",
+    "baselineProfile": "brutal",
+    "engineCommit": "55bb8d8685147ab05a344397de7cf7c21f8969a3",
+    "engineSourceSha256": "3a38cade03ab27d195d33cf85a6d8c60b969568664766fd2e537b1a2f17e2ab6",
+    "runnerSourceSha256": "bb46ce6326a875d22684afaf68f2369b5ef268db94cc1f544b1e46566b642f6a",
+    "bunVersion": "1.3.14",
+    "lockfileSha256": "23854cfbf8ade38e0244ce53a42396be18a819983f3f5d6372b2d6224b939cf9",
+    "resourceLoaderSha256": "c89bd9944ce017136bb46d440924b9a7ce8e2a5c868b36292721b11e90a7712d",
+    "countries": [
+      "Americans",
+      "Alliance",
+      "French",
+      "Germans",
+      "British",
+      "Africans",
+      "Arabs",
+      "Confederation",
+      "Russians"
+    ],
+    "scenarios": [
+      {
+        "map": "tn01t2",
+        "seed": 730202,
+        "mapSha256": "95a836a2b42728d2c7d5c606902619b98afe428cb54eaf8b489e2d83819213e3",
+        "terrainFile": "isotemp.mix",
+        "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+      }
+    ],
+    "maxTicks": 27000,
+    "sampleTicks": 900,
+    "credits": 10000,
+    "unitCount": 0,
+    "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+    "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66",
+    "engineDifficulty": 4,
+    "pairedSpawnSwap": true,
+    "pairedPlayerOrderSwap": true
+  },
+  "countryLabels": {
+    "Americans": "美国",
+    "Alliance": "韩国",
+    "French": "法国",
+    "Germans": "德国",
+    "British": "英国",
+    "Africans": "利比亚",
+    "Arabs": "伊拉克",
+    "Confederation": "古巴",
+    "Russians": "苏俄"
+  },
+  "jobs": [
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Americans",
+      "baselineCountry": "Alliance",
+      "id": "tn01t2-730202__Americans-vs-Alliance"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Americans",
+      "baselineCountry": "French",
+      "id": "tn01t2-730202__Americans-vs-French"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Americans",
+      "baselineCountry": "Germans",
+      "id": "tn01t2-730202__Americans-vs-Germans"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Americans",
+      "baselineCountry": "British",
+      "id": "tn01t2-730202__Americans-vs-British"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Americans",
+      "baselineCountry": "Africans",
+      "id": "tn01t2-730202__Americans-vs-Africans"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Americans",
+      "baselineCountry": "Arabs",
+      "id": "tn01t2-730202__Americans-vs-Arabs"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Americans",
+      "baselineCountry": "Confederation",
+      "id": "tn01t2-730202__Americans-vs-Confederation"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Americans",
+      "baselineCountry": "Russians",
+      "id": "tn01t2-730202__Americans-vs-Russians"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Alliance",
+      "baselineCountry": "Americans",
+      "id": "tn01t2-730202__Alliance-vs-Americans"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Alliance",
+      "baselineCountry": "French",
+      "id": "tn01t2-730202__Alliance-vs-French"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Alliance",
+      "baselineCountry": "Germans",
+      "id": "tn01t2-730202__Alliance-vs-Germans"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Alliance",
+      "baselineCountry": "British",
+      "id": "tn01t2-730202__Alliance-vs-British"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Alliance",
+      "baselineCountry": "Africans",
+      "id": "tn01t2-730202__Alliance-vs-Africans"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Alliance",
+      "baselineCountry": "Arabs",
+      "id": "tn01t2-730202__Alliance-vs-Arabs"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Alliance",
+      "baselineCountry": "Confederation",
+      "id": "tn01t2-730202__Alliance-vs-Confederation"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Alliance",
+      "baselineCountry": "Russians",
+      "id": "tn01t2-730202__Alliance-vs-Russians"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "French",
+      "baselineCountry": "Americans",
+      "id": "tn01t2-730202__French-vs-Americans"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "French",
+      "baselineCountry": "Alliance",
+      "id": "tn01t2-730202__French-vs-Alliance"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "French",
+      "baselineCountry": "Germans",
+      "id": "tn01t2-730202__French-vs-Germans"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "French",
+      "baselineCountry": "British",
+      "id": "tn01t2-730202__French-vs-British"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "French",
+      "baselineCountry": "Africans",
+      "id": "tn01t2-730202__French-vs-Africans"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "French",
+      "baselineCountry": "Arabs",
+      "id": "tn01t2-730202__French-vs-Arabs"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "French",
+      "baselineCountry": "Confederation",
+      "id": "tn01t2-730202__French-vs-Confederation"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "French",
+      "baselineCountry": "Russians",
+      "id": "tn01t2-730202__French-vs-Russians"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Germans",
+      "baselineCountry": "Americans",
+      "id": "tn01t2-730202__Germans-vs-Americans"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Germans",
+      "baselineCountry": "Alliance",
+      "id": "tn01t2-730202__Germans-vs-Alliance"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Germans",
+      "baselineCountry": "French",
+      "id": "tn01t2-730202__Germans-vs-French"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Germans",
+      "baselineCountry": "British",
+      "id": "tn01t2-730202__Germans-vs-British"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Germans",
+      "baselineCountry": "Africans",
+      "id": "tn01t2-730202__Germans-vs-Africans"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Germans",
+      "baselineCountry": "Arabs",
+      "id": "tn01t2-730202__Germans-vs-Arabs"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Germans",
+      "baselineCountry": "Confederation",
+      "id": "tn01t2-730202__Germans-vs-Confederation"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Germans",
+      "baselineCountry": "Russians",
+      "id": "tn01t2-730202__Germans-vs-Russians"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "British",
+      "baselineCountry": "Americans",
+      "id": "tn01t2-730202__British-vs-Americans"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "British",
+      "baselineCountry": "Alliance",
+      "id": "tn01t2-730202__British-vs-Alliance"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "British",
+      "baselineCountry": "French",
+      "id": "tn01t2-730202__British-vs-French"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "British",
+      "baselineCountry": "Germans",
+      "id": "tn01t2-730202__British-vs-Germans"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "British",
+      "baselineCountry": "Africans",
+      "id": "tn01t2-730202__British-vs-Africans"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "British",
+      "baselineCountry": "Arabs",
+      "id": "tn01t2-730202__British-vs-Arabs"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "British",
+      "baselineCountry": "Confederation",
+      "id": "tn01t2-730202__British-vs-Confederation"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "British",
+      "baselineCountry": "Russians",
+      "id": "tn01t2-730202__British-vs-Russians"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Africans",
+      "baselineCountry": "Americans",
+      "id": "tn01t2-730202__Africans-vs-Americans"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Africans",
+      "baselineCountry": "Alliance",
+      "id": "tn01t2-730202__Africans-vs-Alliance"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Africans",
+      "baselineCountry": "French",
+      "id": "tn01t2-730202__Africans-vs-French"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Africans",
+      "baselineCountry": "Germans",
+      "id": "tn01t2-730202__Africans-vs-Germans"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Africans",
+      "baselineCountry": "British",
+      "id": "tn01t2-730202__Africans-vs-British"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Africans",
+      "baselineCountry": "Arabs",
+      "id": "tn01t2-730202__Africans-vs-Arabs"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Africans",
+      "baselineCountry": "Confederation",
+      "id": "tn01t2-730202__Africans-vs-Confederation"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Africans",
+      "baselineCountry": "Russians",
+      "id": "tn01t2-730202__Africans-vs-Russians"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Arabs",
+      "baselineCountry": "Americans",
+      "id": "tn01t2-730202__Arabs-vs-Americans"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Arabs",
+      "baselineCountry": "Alliance",
+      "id": "tn01t2-730202__Arabs-vs-Alliance"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Arabs",
+      "baselineCountry": "French",
+      "id": "tn01t2-730202__Arabs-vs-French"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Arabs",
+      "baselineCountry": "Germans",
+      "id": "tn01t2-730202__Arabs-vs-Germans"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Arabs",
+      "baselineCountry": "British",
+      "id": "tn01t2-730202__Arabs-vs-British"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Arabs",
+      "baselineCountry": "Africans",
+      "id": "tn01t2-730202__Arabs-vs-Africans"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Arabs",
+      "baselineCountry": "Confederation",
+      "id": "tn01t2-730202__Arabs-vs-Confederation"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Arabs",
+      "baselineCountry": "Russians",
+      "id": "tn01t2-730202__Arabs-vs-Russians"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Confederation",
+      "baselineCountry": "Americans",
+      "id": "tn01t2-730202__Confederation-vs-Americans"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Confederation",
+      "baselineCountry": "Alliance",
+      "id": "tn01t2-730202__Confederation-vs-Alliance"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Confederation",
+      "baselineCountry": "French",
+      "id": "tn01t2-730202__Confederation-vs-French"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Confederation",
+      "baselineCountry": "Germans",
+      "id": "tn01t2-730202__Confederation-vs-Germans"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Confederation",
+      "baselineCountry": "British",
+      "id": "tn01t2-730202__Confederation-vs-British"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Confederation",
+      "baselineCountry": "Africans",
+      "id": "tn01t2-730202__Confederation-vs-Africans"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Confederation",
+      "baselineCountry": "Arabs",
+      "id": "tn01t2-730202__Confederation-vs-Arabs"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Confederation",
+      "baselineCountry": "Russians",
+      "id": "tn01t2-730202__Confederation-vs-Russians"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Russians",
+      "baselineCountry": "Americans",
+      "id": "tn01t2-730202__Russians-vs-Americans"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Russians",
+      "baselineCountry": "Alliance",
+      "id": "tn01t2-730202__Russians-vs-Alliance"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Russians",
+      "baselineCountry": "French",
+      "id": "tn01t2-730202__Russians-vs-French"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Russians",
+      "baselineCountry": "Germans",
+      "id": "tn01t2-730202__Russians-vs-Germans"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Russians",
+      "baselineCountry": "British",
+      "id": "tn01t2-730202__Russians-vs-British"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Russians",
+      "baselineCountry": "Africans",
+      "id": "tn01t2-730202__Russians-vs-Africans"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Russians",
+      "baselineCountry": "Arabs",
+      "id": "tn01t2-730202__Russians-vs-Arabs"
+    },
+    {
+      "map": "tn01t2",
+      "seed": 730202,
+      "candidateCountry": "Russians",
+      "baselineCountry": "Confederation",
+      "id": "tn01t2-730202__Russians-vs-Confederation"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "thresholds": {
+    "overall": 0.8,
+    "country": 0.7,
+    "map": 0.7
+  },
+  "failures": []
+}

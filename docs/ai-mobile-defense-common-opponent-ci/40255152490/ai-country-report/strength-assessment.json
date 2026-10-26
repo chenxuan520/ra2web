@@ -1,0 +1,14 @@
+{
+  "passed": false,
+  "thresholds": {
+    "overall": 0.8,
+    "country": 0.7,
+    "map": 0.7
+  },
+  "failures": [
+    "Country Alliance: 66.7% < 70.0%",
+    "Country French: 64.6% < 70.0%",
+    "Country Germans: 66.7% < 70.0%",
+    "Country British: 66.7% < 70.0%"
+  ]
+}

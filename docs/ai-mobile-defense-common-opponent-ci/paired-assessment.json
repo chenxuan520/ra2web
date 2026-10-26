@@ -1,0 +1,338 @@
+{
+  "format": 1,
+  "hypothesis": "scouted_air_counter",
+  "verdict": "inconclusive",
+  "controlCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+  "trialCommit": "356d35b7271d14a37380585f4f809ccd19703757",
+  "baseline": "0a46d527995adc2411c04484de7336d63d4b0c5f",
+  "baselineProfile": "brutal",
+  "control": {
+    "wins": 1145,
+    "losses": 72,
+    "draws": 79,
+    "games": 1296,
+    "winRate": 0.8834876543209876,
+    "decisiveWinRate": 0.9408381265406738
+  },
+  "trial": {
+    "wins": 1145,
+    "losses": 72,
+    "draws": 79,
+    "games": 1296,
+    "winRate": 0.8834876543209876,
+    "decisiveWinRate": 0.9408381265406738
+  },
+  "overallWinRateDelta": 0.0,
+  "targetWinRateDelta": 0.0,
+  "overallDeltaInterval": [
+    0.0,
+    0.0
+  ],
+  "targetDeltaInterval": [
+    0.0,
+    0.0
+  ],
+  "enoughScenarioBlocks": true,
+  "qualificationSchedule": true,
+  "primaryOpponent": true,
+  "nonRegressionGatePassed": true,
+  "scenarioBlocks": 9,
+  "targetCountries": [
+    "Africans",
+    "Arabs",
+    "Confederation",
+    "Russians"
+  ],
+  "groups": {
+    "candidateCountry": {
+      "Africans": {
+        "control": {
+          "wins": 140,
+          "losses": 0,
+          "draws": 4,
+          "games": 144,
+          "winRate": 0.9722222222222222,
+          "decisiveWinRate": 1.0
+        },
+        "trial": {
+          "wins": 140,
+          "losses": 0,
+          "draws": 4,
+          "games": 144,
+          "winRate": 0.9722222222222222,
+          "decisiveWinRate": 1.0
+        },
+        "delta": 0.0
+      },
+      "Alliance": {
+        "control": {
+          "wins": 112,
+          "losses": 15,
+          "draws": 17,
+          "games": 144,
+          "winRate": 0.7777777777777778,
+          "decisiveWinRate": 0.8818897637795275
+        },
+        "trial": {
+          "wins": 112,
+          "losses": 15,
+          "draws": 17,
+          "games": 144,
+          "winRate": 0.7777777777777778,
+          "decisiveWinRate": 0.8818897637795275
+        },
+        "delta": 0.0
+      },
+      "Americans": {
+        "control": {
+          "wins": 141,
+          "losses": 3,
+          "draws": 0,
+          "games": 144,
+          "winRate": 0.9791666666666666,
+          "decisiveWinRate": 0.9791666666666666
+        },
+        "trial": {
+          "wins": 141,
+          "losses": 3,
+          "draws": 0,
+          "games": 144,
+          "winRate": 0.9791666666666666,
+          "decisiveWinRate": 0.9791666666666666
+        },
+        "delta": 0.0
+      },
+      "Arabs": {
+        "control": {
+          "wins": 141,
+          "losses": 3,
+          "draws": 0,
+          "games": 144,
+          "winRate": 0.9791666666666666,
+          "decisiveWinRate": 0.9791666666666666
+        },
+        "trial": {
+          "wins": 141,
+          "losses": 3,
+          "draws": 0,
+          "games": 144,
+          "winRate": 0.9791666666666666,
+          "decisiveWinRate": 0.9791666666666666
+        },
+        "delta": 0.0
+      },
+      "British": {
+        "control": {
+          "wins": 109,
+          "losses": 19,
+          "draws": 16,
+          "games": 144,
+          "winRate": 0.7569444444444444,
+          "decisiveWinRate": 0.8515625
+        },
+        "trial": {
+          "wins": 109,
+          "losses": 19,
+          "draws": 16,
+          "games": 144,
+          "winRate": 0.7569444444444444,
+          "decisiveWinRate": 0.8515625
+        },
+        "delta": 0.0
+      },
+      "Confederation": {
+        "control": {
+          "wins": 140,
+          "losses": 0,
+          "draws": 4,
+          "games": 144,
+          "winRate": 0.9722222222222222,
+          "decisiveWinRate": 1.0
+        },
+        "trial": {
+          "wins": 140,
+          "losses": 0,
+          "draws": 4,
+          "games": 144,
+          "winRate": 0.9722222222222222,
+          "decisiveWinRate": 1.0
+        },
+        "delta": 0.0
+      },
+      "French": {
+        "control": {
+          "wins": 110,
+          "losses": 17,
+          "draws": 17,
+          "games": 144,
+          "winRate": 0.7638888888888888,
+          "decisiveWinRate": 0.8661417322834646
+        },
+        "trial": {
+          "wins": 110,
+          "losses": 17,
+          "draws": 17,
+          "games": 144,
+          "winRate": 0.7638888888888888,
+          "decisiveWinRate": 0.8661417322834646
+        },
+        "delta": 0.0
+      },
+      "Germans": {
+        "control": {
+          "wins": 112,
+          "losses": 15,
+          "draws": 17,
+          "games": 144,
+          "winRate": 0.7777777777777778,
+          "decisiveWinRate": 0.8818897637795275
+        },
+        "trial": {
+          "wins": 112,
+          "losses": 15,
+          "draws": 17,
+          "games": 144,
+          "winRate": 0.7777777777777778,
+          "decisiveWinRate": 0.8818897637795275
+        },
+        "delta": 0.0
+      },
+      "Russians": {
+        "control": {
+          "wins": 140,
+          "losses": 0,
+          "draws": 4,
+          "games": 144,
+          "winRate": 0.9722222222222222,
+          "decisiveWinRate": 1.0
+        },
+        "trial": {
+          "wins": 140,
+          "losses": 0,
+          "draws": 4,
+          "games": 144,
+          "winRate": 0.9722222222222222,
+          "decisiveWinRate": 1.0
+        },
+        "delta": 0.0
+      }
+    },
+    "map": {
+      "mp08t2.map": {
+        "control": {
+          "wins": 371,
+          "losses": 45,
+          "draws": 16,
+          "games": 432,
+          "winRate": 0.8587962962962963,
+          "decisiveWinRate": 0.8918269230769231
+        },
+        "trial": {
+          "wins": 371,
+          "losses": 45,
+          "draws": 16,
+          "games": 432,
+          "winRate": 0.8587962962962963,
+          "decisiveWinRate": 0.8918269230769231
+        },
+        "delta": 0.0
+      },
+      "mp11t2.map": {
+        "control": {
+          "wins": 389,
+          "losses": 8,
+          "draws": 35,
+          "games": 432,
+          "winRate": 0.9004629629629629,
+          "decisiveWinRate": 0.9798488664987406
+        },
+        "trial": {
+          "wins": 389,
+          "losses": 8,
+          "draws": 35,
+          "games": 432,
+          "winRate": 0.9004629629629629,
+          "decisiveWinRate": 0.9798488664987406
+        },
+        "delta": 0.0
+      },
+      "tn01t2.map": {
+        "control": {
+          "wins": 385,
+          "losses": 19,
+          "draws": 28,
+          "games": 432,
+          "winRate": 0.8912037037037037,
+          "decisiveWinRate": 0.9529702970297029
+        },
+        "trial": {
+          "wins": 385,
+          "losses": 19,
+          "draws": 28,
+          "games": 432,
+          "winRate": 0.8912037037037037,
+          "decisiveWinRate": 0.9529702970297029
+        },
+        "delta": 0.0
+      }
+    }
+  },
+  "regressions": [],
+  "strengthFailures": [],
+  "sources": {
+    "control": [
+      {
+        "path": "40255141406/compact-metadata.json",
+        "sha256": "91035628079efa68e5184ad71b15e557f638155e499b606f30584fa8a250195b",
+        "runId": 40255141406
+      },
+      {
+        "path": "40255152490/compact-metadata.json",
+        "sha256": "35641b6149e7c7f40c339e19a6cc198c4df2dd2701f62dd9677afcf29f231bb8",
+        "runId": 40255152490
+      },
+      {
+        "path": "40255163614/compact-metadata.json",
+        "sha256": "02519ec8debbef48a69a482607f92555e1d436a565b3ca0ce381b1e888eedb14",
+        "runId": 40255163614
+      }
+    ],
+    "trial": [
+      {
+        "path": "40255109057/compact-metadata.json",
+        "sha256": "29dc48b73fa94b385d0c51be1ed6e90e8d0db76a8196fb63707c093dc46ed4d4",
+        "runId": 40255109057
+      },
+      {
+        "path": "40255119452/compact-metadata.json",
+        "sha256": "721657533a06bec1008e783eb78cfa76db56eeee22170c034e3365c1555bc8e2",
+        "runId": 40255119452
+      },
+      {
+        "path": "40255129951/compact-metadata.json",
+        "sha256": "572997da978cc3fbb47d37d08bd6bd0007194d3a1275405f49efe65b58a033fa",
+        "runId": 40255129951
+      }
+    ]
+  },
+  "gates": {
+    "overallWinRate": 0.8,
+    "countryWinRate": 0.7,
+    "mapWinRate": 0.7,
+    "maximumGroupRegression": 0.05,
+    "minimumOverallDelta": -0.02,
+    "minimumTargetDelta": 0.03,
+    "minimumMaps": 3,
+    "minimumSeedsPerMap": 3,
+    "bootstrapReplicates": 5000,
+    "bootstrapSeed": 20261025,
+    "confidence": 0.95
+  },
+  "limitations": [
+    "Intervals condition on these fixed maps; they are not unseen-map or human win rates.",
+    "All country pairs and both spawn swaps remain inside each resampled map/seed block.",
+    "Archive hashes do not replace verification of raw artifacts and receipts.",
+    "Promising does not prove mechanism use, direct superiority over C18, or release readiness."
+  ],
+  "planSha256": "a0e588b46d76022ac4d42cd94334499928192ff5aaa8b783f13a0388e063eafe"
+}

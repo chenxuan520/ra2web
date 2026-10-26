@@ -28,7 +28,37 @@
         40241433799,
         40241436421
       ],
-      "nextRegisteredComparison": "ai-mobile-defense-common-opponent.md"
+      "nextRegisteredComparison": "ai-mobile-defense-common-opponent.md",
+      "sameCandidateCommonOpponentCompletedRuns": [
+        40255109057,
+        40255119452,
+        40255129951,
+        40255141406,
+        40255152490,
+        40255163614
+      ]
+    },
+    {
+      "plan": "ai-allied-ground-evaluation-plan.json",
+      "candidateStatus": "not yet implemented or frozen",
+      "sets": [
+        "qualification_a",
+        "qualification_b",
+        "qualification_c"
+      ],
+      "seeds": [
+        810101,
+        810202,
+        810303,
+        820101,
+        820202,
+        820303,
+        830101,
+        830202,
+        830303
+      ],
+      "status": "registered-unobserved",
+      "developmentMayUseTheseSeeds": false
     }
   ]
 }

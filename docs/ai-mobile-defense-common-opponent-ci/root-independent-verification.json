@@ -1,0 +1,57 @@
+{
+  "validGames": 2592,
+  "pairedComparisons": 1296,
+  "rawPairedReportsAndReceiptsVerified": 1296,
+  "zipDigestsAndAllMembersVerified": 30,
+  "originalReportsByteReproduced": 24,
+  "runtimeErrors": 0,
+  "missing": 0,
+  "identityAndStartingLocationsSlotsVerified": true,
+  "matchingGamesByField": {
+    "result": 1296,
+    "ticks": 1296,
+    "reason": 1296,
+    "startingLocations": 1296,
+    "candidatePlayerName": 1296,
+    "baselinePlayerName": 1296,
+    "features": 1296,
+    "observations": 1296,
+    "mobileEvidence": 1296,
+    "specialtyCounts": 1296,
+    "ownershipChanges": 1296
+  },
+  "mismatchIdentitiesByField": {
+    "result": [],
+    "ticks": [],
+    "reason": [],
+    "startingLocations": [],
+    "candidatePlayerName": [],
+    "baselinePlayerName": [],
+    "features": [],
+    "observations": [],
+    "mobileEvidence": [],
+    "specialtyCounts": [],
+    "ownershipChanges": []
+  },
+  "bootstrap": {
+    "overall": {
+      "interval": [
+        0.0,
+        0.0
+      ],
+      "sortedSamplesSha256": "549f2b181c3bbc95f357bb1bfd0a51dcd44abf59393da00d111471f81b5718cb"
+    },
+    "target": {
+      "interval": [
+        0.0,
+        0.0
+      ],
+      "sortedSamplesSha256": "549f2b181c3bbc95f357bb1bfd0a51dcd44abf59393da00d111471f81b5718cb"
+    },
+    "blocks": 9,
+    "replicates": 5000,
+    "seed": 20261025,
+    "confidence": 0.95
+  },
+  "releaseReady": false
+}

@@ -1,0 +1,92 @@
+{
+  "40255109057": {
+    "candidate": "356d35b7271d14a37380585f4f809ccd19703757",
+    "baseline": "0a46d527995adc2411c04484de7336d63d4b0c5f",
+    "candidateProfile": "brutal",
+    "baselineProfile": "brutal",
+    "evaluationSet": "qualification_a",
+    "comparisonMode": "historical",
+    "group": "trial",
+    "seeds": [
+      710101,
+      710202,
+      710303
+    ],
+    "engine": "55bb8d8685147ab05a344397de7cf7c21f8969a3"
+  },
+  "40255119452": {
+    "candidate": "356d35b7271d14a37380585f4f809ccd19703757",
+    "baseline": "0a46d527995adc2411c04484de7336d63d4b0c5f",
+    "candidateProfile": "brutal",
+    "baselineProfile": "brutal",
+    "evaluationSet": "qualification_b",
+    "comparisonMode": "historical",
+    "group": "trial",
+    "seeds": [
+      720101,
+      720202,
+      720303
+    ],
+    "engine": "55bb8d8685147ab05a344397de7cf7c21f8969a3"
+  },
+  "40255129951": {
+    "candidate": "356d35b7271d14a37380585f4f809ccd19703757",
+    "baseline": "0a46d527995adc2411c04484de7336d63d4b0c5f",
+    "candidateProfile": "brutal",
+    "baselineProfile": "brutal",
+    "evaluationSet": "qualification_c",
+    "comparisonMode": "historical",
+    "group": "trial",
+    "seeds": [
+      730101,
+      730202,
+      730303
+    ],
+    "engine": "55bb8d8685147ab05a344397de7cf7c21f8969a3"
+  },
+  "40255141406": {
+    "candidate": "c18f77650e40b668064bdb913a75bebfa278f42b",
+    "baseline": "0a46d527995adc2411c04484de7336d63d4b0c5f",
+    "candidateProfile": "brutal",
+    "baselineProfile": "brutal",
+    "evaluationSet": "qualification_a",
+    "comparisonMode": "historical",
+    "group": "control",
+    "seeds": [
+      710101,
+      710202,
+      710303
+    ],
+    "engine": "55bb8d8685147ab05a344397de7cf7c21f8969a3"
+  },
+  "40255152490": {
+    "candidate": "c18f77650e40b668064bdb913a75bebfa278f42b",
+    "baseline": "0a46d527995adc2411c04484de7336d63d4b0c5f",
+    "candidateProfile": "brutal",
+    "baselineProfile": "brutal",
+    "evaluationSet": "qualification_b",
+    "comparisonMode": "historical",
+    "group": "control",
+    "seeds": [
+      720101,
+      720202,
+      720303
+    ],
+    "engine": "55bb8d8685147ab05a344397de7cf7c21f8969a3"
+  },
+  "40255163614": {
+    "candidate": "c18f77650e40b668064bdb913a75bebfa278f42b",
+    "baseline": "0a46d527995adc2411c04484de7336d63d4b0c5f",
+    "candidateProfile": "brutal",
+    "baselineProfile": "brutal",
+    "evaluationSet": "qualification_c",
+    "comparisonMode": "historical",
+    "group": "control",
+    "seeds": [
+      730101,
+      730202,
+      730303
+    ],
+    "engine": "55bb8d8685147ab05a344397de7cf7c21f8969a3"
+  }
+}

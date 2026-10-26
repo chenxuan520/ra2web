@@ -1,0 +1,190 @@
+{
+  "runId": 40255152490,
+  "evaluationSet": "qualification_b",
+  "totals": {
+    "games": 432,
+    "wins": 364,
+    "losses": 49,
+    "draws": 19,
+    "errors": 0,
+    "winRate": 0.8425925925925926,
+    "decisiveWinRate": 0.8813559322033898,
+    "scoreWithHalfDraws": 0.8645833333333334
+  },
+  "byCountry": {
+    "Americans": {
+      "games": 48,
+      "wins": 48,
+      "losses": 0,
+      "draws": 0,
+      "errors": 0,
+      "winRate": 1.0,
+      "decisiveWinRate": 1.0,
+      "scoreWithHalfDraws": 1.0
+    },
+    "Alliance": {
+      "games": 48,
+      "wins": 32,
+      "losses": 11,
+      "draws": 5,
+      "errors": 0,
+      "winRate": 0.6666666666666666,
+      "decisiveWinRate": 0.7441860465116279,
+      "scoreWithHalfDraws": 0.71875
+    },
+    "French": {
+      "games": 48,
+      "wins": 31,
+      "losses": 12,
+      "draws": 5,
+      "errors": 0,
+      "winRate": 0.6458333333333334,
+      "decisiveWinRate": 0.7209302325581395,
+      "scoreWithHalfDraws": 0.6979166666666666
+    },
+    "Germans": {
+      "games": 48,
+      "wins": 32,
+      "losses": 11,
+      "draws": 5,
+      "errors": 0,
+      "winRate": 0.6666666666666666,
+      "decisiveWinRate": 0.7441860465116279,
+      "scoreWithHalfDraws": 0.71875
+    },
+    "British": {
+      "games": 48,
+      "wins": 32,
+      "losses": 12,
+      "draws": 4,
+      "errors": 0,
+      "winRate": 0.6666666666666666,
+      "decisiveWinRate": 0.7272727272727273,
+      "scoreWithHalfDraws": 0.7083333333333334
+    },
+    "Africans": {
+      "games": 48,
+      "wins": 48,
+      "losses": 0,
+      "draws": 0,
+      "errors": 0,
+      "winRate": 1.0,
+      "decisiveWinRate": 1.0,
+      "scoreWithHalfDraws": 1.0
+    },
+    "Arabs": {
+      "games": 48,
+      "wins": 45,
+      "losses": 3,
+      "draws": 0,
+      "errors": 0,
+      "winRate": 0.9375,
+      "decisiveWinRate": 0.9375,
+      "scoreWithHalfDraws": 0.9375
+    },
+    "Confederation": {
+      "games": 48,
+      "wins": 48,
+      "losses": 0,
+      "draws": 0,
+      "errors": 0,
+      "winRate": 1.0,
+      "decisiveWinRate": 1.0,
+      "scoreWithHalfDraws": 1.0
+    },
+    "Russians": {
+      "games": 48,
+      "wins": 48,
+      "losses": 0,
+      "draws": 0,
+      "errors": 0,
+      "winRate": 1.0,
+      "decisiveWinRate": 1.0,
+      "scoreWithHalfDraws": 1.0
+    }
+  },
+  "byMap": {
+    "mp08t2": {
+      "games": 144,
+      "wins": 115,
+      "losses": 29,
+      "draws": 0,
+      "errors": 0,
+      "winRate": 0.7986111111111112,
+      "decisiveWinRate": 0.7986111111111112,
+      "scoreWithHalfDraws": 0.7986111111111112
+    },
+    "mp11t2": {
+      "games": 144,
+      "wins": 124,
+      "losses": 1,
+      "draws": 19,
+      "errors": 0,
+      "winRate": 0.8611111111111112,
+      "decisiveWinRate": 0.992,
+      "scoreWithHalfDraws": 0.9270833333333334
+    },
+    "tn01t2": {
+      "games": 144,
+      "wins": 125,
+      "losses": 19,
+      "draws": 0,
+      "errors": 0,
+      "winRate": 0.8680555555555556,
+      "decisiveWinRate": 0.8680555555555556,
+      "scoreWithHalfDraws": 0.8680555555555556
+    }
+  },
+  "bySwap": {
+    "False": {
+      "games": 216,
+      "wins": 164,
+      "losses": 33,
+      "draws": 19,
+      "errors": 0,
+      "winRate": 0.7592592592592593,
+      "decisiveWinRate": 0.8324873096446701,
+      "scoreWithHalfDraws": 0.8032407407407407
+    },
+    "True": {
+      "games": 216,
+      "wins": 200,
+      "losses": 16,
+      "draws": 0,
+      "errors": 0,
+      "winRate": 0.9259259259259259,
+      "decisiveWinRate": 0.9259259259259259,
+      "scoreWithHalfDraws": 0.9259259259259259
+    }
+  },
+  "directAssessment": null,
+  "strengthAssessment": {
+    "passed": false,
+    "thresholds": {
+      "overall": 0.8,
+      "country": 0.7,
+      "map": 0.7
+    },
+    "failures": [
+      "Country Alliance: 66.7% < 70.0%",
+      "Country French: 64.6% < 70.0%",
+      "Country Germans: 66.7% < 70.0%",
+      "Country British: 66.7% < 70.0%"
+    ]
+  },
+  "invariants": {
+    "validGames": 432,
+    "uniqueGames": 432,
+    "countries": 9,
+    "gamesPerCountry": 48,
+    "gamesPerMap": 144,
+    "gamesPerCountryPair": 6,
+    "errors": 0,
+    "missing": 0,
+    "mixedVersions": false,
+    "receiptsVerified": true,
+    "pairedStartsSlotsVerified": true,
+    "independentReportBytesIdentical": true,
+    "smokeExcluded": true
+  }
+}
