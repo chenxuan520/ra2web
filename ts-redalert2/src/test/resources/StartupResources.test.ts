@@ -15,6 +15,7 @@ import { GameRes } from '../../engine/gameRes/GameRes';
 import { GameResConfig } from '../../engine/gameRes/GameResConfig';
 import { GameResSource } from '../../engine/gameRes/GameResSource';
 import { GameResBoxApi } from '../../gui/component/GameResBoxApi';
+import { Dialog, type DialogProps } from '../../gui/component/Dialog';
 import { GameResForm, type GameResFormProps } from '../../gui/component/GameResForm';
 import { HtmlReactElement } from '../../gui/HtmlReactElement';
 import { GameResImporter } from '../../engine/gameRes/GameResImporter';
@@ -204,6 +205,36 @@ test('resource selection presents an explicit server choice and keeps local uplo
     const localOnly = renderToStaticMarkup(React.createElement(GameResForm, { ...props, closable: false }));
     expect(localOnly).not.toContain('ts:gameres_use_server');
     expect(localOnly).toContain('ts:gameres_browse_archive');
+});
+
+test('an open resource chooser remains relative to its root when the viewport shrinks', async () => {
+    let props!: DialogProps;
+    const element = {};
+    const dialog = { setSize() {}, render() {}, getElement: () => element, unrender() {} };
+    const root = { appendChild() {}, contains: () => true, removeChild() {} };
+    const viewport = { value: { x: 0, y: 0, width: 1024, height: 768 } };
+    const factory = spyOn(HtmlReactElement, 'factory').mockImplementation((_component, options: any) => {
+        props = options;
+        return dialog as any;
+    });
+    const size = spyOn(dialog, 'setSize');
+    const unrender = spyOn(dialog, 'unrender');
+    const remove = spyOn(root, 'removeChild');
+    try {
+        const api = new GameResBoxApi(viewport, { get: (key: string) => key } as any, root as any, { async polyfillDataTransferItem() {}, async showDirectoryPicker() { return {} as FileSystemDirectoryHandle; } });
+        const selection = api.promptForGameRes(undefined, true);
+        await Promise.resolve();
+        expect(size).toHaveBeenCalledWith('100%', '100%');
+        expect(props.viewport).toEqual({ x: 0, y: 0, width: '100%', height: '100%' });
+        viewport.value = { x: 0, y: 0, width: 800, height: 600 };
+        expect(renderToStaticMarkup(React.createElement(Dialog, props))).toContain('width:100%;height:100%');
+        expect(unrender).not.toHaveBeenCalled();
+        (props.children as React.ReactElement<GameResFormProps>).props.onClose!();
+        expect(await selection).toBeUndefined();
+        expect(unrender).toHaveBeenCalledTimes(1);
+        expect(remove).toHaveBeenCalledTimes(1);
+    }
+    finally { factory.mockRestore(); size.mockRestore(); unrender.mockRestore(); remove.mockRestore(); }
 });
 
 for (const cancellation of ['AbortError', 'empty', 'null'] as const) {

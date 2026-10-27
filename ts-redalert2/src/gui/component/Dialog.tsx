@@ -14,12 +14,7 @@ export interface DialogProps {
     className?: string;
     hidden?: boolean;
     buttons: ButtonConfig[];
-    viewport: {
-        x: number;
-        y: number;
-        width: number;
-        height: number;
-    };
+    viewport: DialogViewport;
     zIndex?: number;
 }
 export class Dialog extends React.Component<DialogProps> {

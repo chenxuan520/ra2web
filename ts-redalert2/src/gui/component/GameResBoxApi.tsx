@@ -82,7 +82,7 @@ export class GameResBoxApi {
                         handleResolve(undefined);
                     },
                 } as GameResFormProps),
-                viewport: this.viewport.value,
+                viewport: { ...this.viewport.value, width: "100%", height: "100%" },
                 zIndex: 101,
             };
             console.log('[GameResBoxApi] Creating dialog element with props:', dialogProps);
@@ -100,8 +100,7 @@ export class GameResBoxApi {
             };
             if (dialogElement) {
                 console.log('[GameResBoxApi] Rendering dialog element');
-                const viewportValue = this.viewport.value;
-                dialogElement.setSize(viewportValue.width, viewportValue.height);
+                dialogElement.setSize("100%", "100%");
                 dialogElement.render();
                 const elementToAppend = dialogElement.getElement();
                 if (elementToAppend) {

@@ -1666,6 +1666,15 @@ input[type="range"]:focus {
     width: min(1080px, 100%);
 }
 
+#ra2web-root .lan-dialog .dialog-button {
+    padding: 0;
+    white-space: nowrap;
+}
+
+#ra2web-root .lan-dialog .lan-panel-header h3 {
+    flex-shrink: 0;
+}
+
 #ra2web-root .lan-dialog-header {
     display: flex;
     align-items: center;
@@ -1943,6 +1952,8 @@ input[type="range"]:focus {
 
 #ra2web-root .opts.general-opts {
     padding: 34px 86px;
+    height: 100%;
+    overflow-y: auto;
 }
 
 #ra2web-root .opts.general-opts .slider-item {
