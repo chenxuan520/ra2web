@@ -1,3 +1,4 @@
+import { isObservedLivingUnit } from "../../common/observedUnit";
 import { GameApi, ObjectType, UnitData, Vector2, ZoneType } from "../../../../game-api";
 import { SideComposition } from "../../../strategy/compositionUtils";
 import { readStrategicSituation } from "../../../strategy/nationalComposition";
@@ -40,7 +41,7 @@ export class FieldArmyMission extends Mission {
         const air = units.filter(unit => unit.zone === ZoneType.Air);
         const infantry = units.filter(unit => (unit.type as any) === ObjectType.Infantry);
         const enemies = game.getVisibleUnits(player.name, "enemy").map(id => game.getUnitData(id))
-            .filter((unit): unit is UnitData => !!unit && unit.hitPoints > 0);
+            .filter((unit): unit is UnitData => isObservedLivingUnit(unit));
         const anchors = game.getVisibleUnits(player.name, "self", rules => rules.constructionYard || rules.refinery || rules.weaponsFactory)
             .map(id => game.getUnitData(id)).filter((unit): unit is UnitData => !!unit);
         const homeThreats = enemies.filter(enemy => enemy.rules.isSelectableCombatant && !enemy.rules.harvester &&

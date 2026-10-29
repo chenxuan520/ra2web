@@ -1,18 +1,18 @@
-import { MapApi, UnitData, Vector2, ZoneType } from "../../../../../game-api";
+import { GameApi, MapApi, UnitData, Vector2, ZoneType } from "../../../../../game-api";
 import { distanceToSegment } from "./desolatorTactics";
 import { getCombatWeapon } from "./tacticalTargeting";
 
 const point = (unit: UnitData) => new Vector2(unit.tile.rx, unit.tile.ry);
 
 /** Fragile rocketeers must not trade into longer-range flak. Kirovs use a separate doctrine. */
-export function antiAirThreats(unit: UnitData, enemies: UnitData[]) {
+export function antiAirThreats(unit: UnitData, enemies: UnitData[], game?: GameApi) {
     return unit.name === "JUMPJET" && unit.zone === ZoneType.Air
-        ? enemies.map(enemy => ({ enemy, weapon: getCombatWeapon(enemy, unit, true) })).filter(entry => !!entry.weapon)
+        ? enemies.map(enemy => ({ enemy, weapon: getCombatWeapon(enemy, unit, true, game) })).filter(entry => !!entry.weapon)
         : [];
 }
 
-export function getAirEvasionPoint(unit: UnitData, enemies: UnitData[], destination: Vector2, map: MapApi): Vector2 | null {
-    const threats = antiAirThreats(unit, enemies);
+export function getAirEvasionPoint(unit: UnitData, enemies: UnitData[], destination: Vector2, map: MapApi, game?: GameApi): Vector2 | null {
+    const threats = antiAirThreats(unit, enemies, game);
     const from = point(unit);
     if (!threats.some(({ enemy, weapon }) => from.distanceTo(point(enemy)) < weapon!.range + 2)) return null;
     const risk = (at: Vector2) => threats.reduce((sum, { enemy, weapon }) => sum +
@@ -32,10 +32,10 @@ export function getAirEvasionPoint(unit: UnitData, enemies: UnitData[], destinat
 }
 
 /** A safe current position is no reason to accept an AttackTask that flies back into flak. */
-export function isAirAttackApproachSafe(unit: UnitData, target: UnitData, enemies: UnitData[]): boolean {
-    const threats = antiAirThreats(unit, enemies);
+export function isAirAttackApproachSafe(unit: UnitData, target: UnitData, enemies: UnitData[], game?: GameApi): boolean {
+    const threats = antiAirThreats(unit, enemies, game);
     if (!threats.length) return true;
-    const weapon = getCombatWeapon(unit, target, true);
+    const weapon = getCombatWeapon(unit, target, true, game);
     if (!weapon) return false;
     const from = point(unit), to = point(target), direction = to.clone().sub(from);
     const distance = direction.length();
@@ -46,8 +46,8 @@ export function isAirAttackApproachSafe(unit: UnitData, target: UnitData, enemie
 }
 
 /** Nearby flak must not pin a safe flyer in place when its objective is away from the guns. */
-export function getAirTransitWaypoint(unit: UnitData, destination: Vector2, enemies: UnitData[], map: MapApi): Vector2 | null {
-    const threats = antiAirThreats(unit, enemies), from = point(unit);
+export function getAirTransitWaypoint(unit: UnitData, destination: Vector2, enemies: UnitData[], map: MapApi, game?: GameApi): Vector2 | null {
+    const threats = antiAirThreats(unit, enemies, game), from = point(unit);
     const options: Vector2[] = [];
     const direct = destination.clone().sub(from);
     if (direct.length() <= 1) return null;

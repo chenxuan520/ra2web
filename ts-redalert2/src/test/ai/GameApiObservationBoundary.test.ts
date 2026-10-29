@@ -47,7 +47,7 @@ function fixture() {
             tile: { rx: id, ry: 2 }, tileElevation: 0, isDestroyed: false,
             position: { worldPosition: { clone: () => ({ x: id, y: 0, z: 2 }) } },
             getFoundation: () => ({ width: 1, height: 1 }),
-            healthTrait: { getHitPoints: () => 100, maxHitPoints: 100 },
+            healthTrait: { getHitPoints: () => 100, maxHitPoints: 100, level: 0 },
             isTechno: () => true, isVehicle: () => true, isInfantry: () => false,
             isUnit: () => true, isBuilding: () => false, isAircraft: () => false,
             unitOrderTrait: { hasTasks: () => false },
@@ -99,6 +99,7 @@ describe("observer-bound GameApi", () => {
         const before = hiddenObservation();
         target.tile = { rx: 99, ry: 41 };
         target.healthTrait.getHitPoints = () => 7;
+        target.healthTrait.level = 2;
         target.primaryWeapon = { get rules() { throw new Error("hidden weapon inspected"); } };
         f.hide(f.alpha, target);
         expect(hiddenObservation()).toEqual(before);
@@ -107,7 +108,8 @@ describe("observer-bound GameApi", () => {
         target.primaryWeapon = undefined;
         f.hidden.get("alpha")!.clear();
         expect(api.getUnitData(1)?.tile).toEqual({ rx: 99, ry: 41 });
-        expect(api.getUnitData(1)?.hitPoints).toBe(7);
+        expect(api.getUnitData(1)?.hitPoints).toBeUndefined();
+        expect(api.getUnitData(1)?.healthLevel).toBe(2);
     });
 
     test("retains own and shared-intel data under shroud and cloak", () => {

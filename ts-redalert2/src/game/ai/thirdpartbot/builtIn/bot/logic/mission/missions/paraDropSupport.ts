@@ -1,3 +1,4 @@
+import { estimatedCombatWeapons, isObservedLivingUnit } from "../../common/observedUnit";
 import { SpeedType, SuperWeaponStatus, SuperWeaponType, UnitData, Vector2 } from "../../../../game-api";
 import { SupabotContext } from "../../common/context";
 import { isOwnedByNeutral } from "../../common/utils";
@@ -19,7 +20,7 @@ export class ParaDropSupport {
 
         const enemies = game.getVisibleUnits(player.name, "enemy")
             .map(id => game.getUnitData(id))
-            .filter((unit): unit is UnitData => !!unit && unit.hitPoints > 0 && !isOwnedByNeutral(unit));
+            .filter((unit): unit is UnitData => isObservedLivingUnit(unit) && !isOwnedByNeutral(unit));
         const rally = matchAwareness.getMainRallyPoint();
         const base = game.getPlayerData(player.name).startLocation;
         const centers = [rally, new Vector2(base.x, base.y)];
@@ -32,7 +33,7 @@ export class ParaDropSupport {
                     if (!tile || !game.mapApi.isVisibleTile(tile, player.name) ||
                         !game.mapApi.isPassableTile(tile, SpeedType.Foot, false)) continue;
                     const exposed = enemies.some(enemy => {
-                        const range = Math.max(0, ...[enemy.primaryWeapon, enemy.secondaryWeapon]
+                        const range = Math.max(0, ...estimatedCombatWeapons(enemy, game)
                             .filter(weapon => weapon?.projectileRules?.isAntiGround || weapon?.projectileRules?.isAntiAir)
                             .map(weapon => weapon.maxRange ?? 0));
                         return range > 0 && new Vector2(enemy.tile.rx, enemy.tile.ry)

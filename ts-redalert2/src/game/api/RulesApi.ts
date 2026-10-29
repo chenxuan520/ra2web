@@ -42,6 +42,13 @@ export class RulesApi {
     get radiation() {
         return this.rules.radiation;
     }
+    /** Public color thresholds, not any object's private health value. */
+    get healthDisplayConditions() {
+        return {
+            conditionYellow: this.rules.audioVisual.conditionYellow,
+            conditionRed: this.rules.audioVisual.conditionRed,
+        };
+    }
     hasObject(type: string, id: string): boolean {
         return this.rules.hasObject(type, id);
     }

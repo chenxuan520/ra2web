@@ -5,7 +5,16 @@ import { GameSpeed } from "@/game/GameSpeed";
 import { RulesApi } from "@/game/api/RulesApi";
 import { PlayerData } from "@/game/api/interface/PlayerData";
 import type { GameObjectData } from "@/game/api/interface/GameObjectData";
+import { HealthLevel } from "@/game/gameobject/unit/HealthLevel";
 import type { UnitData } from "@/game/api/interface/UnitData";
+interface ObservedAppearance {
+    rules: any;
+    type: any;
+    name: string;
+    owner?: any;
+    isUnit: boolean;
+    fullData: boolean;
+}
 interface WeaponData {
     type: string;
     rules: any;
@@ -51,7 +60,7 @@ export class GameApi {
     private isObservableToPlayer(obj: any, player: any): boolean {
         if (obj.isDestroyed)
             return false;
-        if (obj.owner === player || this.game.alliances.haveSharedIntel(player, obj.owner))
+        if (this.hasFullUnitData(obj, player))
             return true;
         if (obj.cloakableTrait?.isCloaked())
             return false;
@@ -65,9 +74,51 @@ export class GameApi {
             .some((tile: any) => !shroud.isShrouded(tile, obj.tileElevation));
     }
     private isObservable(obj: any): boolean {
-        // F3a covers live units. Terrain/map queries, player metadata, events and
-        // disguised appearance have separate information boundaries.
-        return !this.observer || !obj.isTechno() || this.isObservableToPlayer(obj, this.observer);
+        return !this.observer || this.isObservableToPlayer(obj, this.observer);
+    }
+    private hasFullUnitData(obj: any, player = this.observer): boolean {
+        return !player || !!obj.owner && (obj.owner === player ||
+            this.game.alliances.haveSharedIntel(player, obj.owner));
+    }
+    /** Pure current appearance, evaluated only after the observation gate. */
+    private getAppearance(obj: any, player = this.observer): ObservedAppearance {
+        const fullData = this.hasFullUnitData(obj, player);
+        const disguise = !fullData && !player?.sharedDetectDisguiseTrait?.has(obj)
+            ? obj.disguiseTrait?.getDisguise() : undefined;
+        const rules = disguise?.rules ?? obj.rules;
+        const type = disguise ? rules.type : obj.type ?? rules.type;
+        const isUnit = type === ObjectType.Infantry || type === ObjectType.Vehicle ||
+            type === ObjectType.Aircraft || type === ObjectType.Building ||
+            (type === undefined && !disguise && obj.isTechno());
+        return {
+            rules, type, name: disguise ? rules.name : obj.name,
+            owner: isUnit ? (disguise ? disguise.owner : obj.owner) : undefined,
+            isUnit, fullData,
+        };
+    }
+    private getObservedObjectData(obj: any, appearance: ObservedAppearance): GameObjectData {
+        const data: GameObjectData = {
+            id: obj.id, type: appearance.type, name: appearance.name,
+            rules: appearance.rules, tile: obj.tile, tileElevation: obj.tileElevation,
+            worldPosition: obj.position.worldPosition.clone(),
+            // Non-building objects share a public 1x1 footprint, including real
+            // trees and tree appearances. Never read a disguised unit's art.
+            foundation: appearance.type === ObjectType.Building || appearance.fullData
+                ? obj.getFoundation() : { width: 1, height: 1 },
+            owner: appearance.owner?.name,
+        };
+        if (appearance.fullData) {
+            data.hitPoints = obj.healthTrait?.getHitPoints();
+            data.maxHitPoints = obj.healthTrait?.maxHitPoints;
+        }
+        else if (appearance.isUnit) {
+            // Only the displayed red/yellow/green health level. Exact health
+            // ratios feed discrete UI pips and are not directly observable.
+            const level = obj.healthTrait?.level;
+            data.healthLevel = level === HealthLevel.Green || level === HealthLevel.Yellow || level === HealthLevel.Red
+                ? level : undefined;
+        }
+        return data;
     }
     /** Alias for mapApi — backward compatibility with builtIn bot. */
     get map(): MapApi {
@@ -131,30 +182,33 @@ export class GameApi {
         };
     }
     getAllTerrainObjects(): any[] {
-        return this.game
-            .getWorld()
-            .getAllObjects()
-            .filter((obj: any) => obj.isTerrain())
+        return this.game.getWorld().getAllObjects()
+            .filter((obj: any) => this.isObservable(obj) &&
+                this.getAppearance(obj).type === ObjectType.Terrain)
             .map((obj: any) => obj.id);
     }
     getAllUnits(filter: (rules: any) => boolean = () => true): any[] {
-        return this.game
-            .getWorld()
-            .getAllObjects()
-            .filter((obj: any) => obj.isTechno() && this.isObservable(obj) && filter(obj.rules))
+        return this.game.getWorld().getAllObjects()
+            .filter((obj: any) => {
+                if (!this.isObservable(obj)) return false;
+                const appearance = this.getAppearance(obj);
+                return appearance.isUnit && filter(appearance.rules);
+            })
             .map((obj: any) => obj.id);
     }
     getNeutralUnits(filter: (rules: any) => boolean = () => true): any[] {
-        return this.game
-            .getCivilianPlayer()
-            .getOwnedObjects()
-            .filter((obj: any) => this.isObservable(obj) && filter(obj.rules))
+        const civilian = this.game.getCivilianPlayer();
+        return this.game.getWorld().getAllObjects()
+            .filter((obj: any) => {
+                if (!this.isObservable(obj)) return false;
+                const appearance = this.getAppearance(obj);
+                return appearance.isUnit && appearance.owner === civilian && filter(appearance.rules);
+            })
             .map((obj: any) => obj.id);
     }
     getUnitsInArea(area: any): any[] {
-        return this.game.map.technosByTile
-            .queryRange(area)
-            .filter((obj: any) => this.isObservable(obj))
+        return this.game.map.technosByTile.queryRange(area)
+            .filter((obj: any) => this.isObservable(obj) && this.getAppearance(obj).isUnit)
             .map((obj: any) => obj.id);
     }
     getVisibleUnits(playerName: string, type: "self" | "allied" | "hostile" | "enemy", filter: (rules: any) => boolean = () => true): any[] {
@@ -164,110 +218,115 @@ export class GameApi {
         if (!player)
             throw new Error(`Player "${playerName}" doesn't exist`);
         if (type === "self") {
-            return player
-                .getOwnedObjects()
-                .filter((obj: any) => !obj.isDestroyed && filter(obj.rules))
+            // Color/disguise never grants ownership or command permission.
+            return player.getOwnedObjects()
+                .filter((obj: any) => !obj.isDestroyed && obj.isTechno() && filter(obj.rules))
                 .map((obj: any) => obj.id);
         }
-        let visibilityFilter: (obj: any) => boolean;
-        if (type === "allied") {
-            visibilityFilter = (obj: any) => obj.owner === player ||
-                this.game.alliances.areAllied(obj.owner, player);
-        }
-        else if (type === "hostile" || type === "enemy") {
-            visibilityFilter = (obj: any) => obj.owner !== player &&
-                !this.game.alliances.areAllied(obj.owner, player) &&
-                (type !== "enemy" || obj.owner.isCombatant());
-        }
-        else {
+        if (type !== "allied" && type !== "hostile" && type !== "enemy")
             throw new Error("Unexpected type " + type);
-        }
-        return this.game
-            .getWorld()
-            .getAllObjects()
-            .filter((obj: any) => obj.isTechno() &&
-            !obj.isDestroyed &&
-            visibilityFilter(obj) &&
-            this.isObservableToPlayer(obj, player) &&
-            filter(obj.rules))
+        return this.game.getWorld().getAllObjects()
+            .filter((obj: any) => {
+                if (!this.isObservableToPlayer(obj, player)) return false;
+                const appearance = this.getAppearance(obj, player);
+                if (!appearance.isUnit) return false;
+                if (type === "allied") {
+                    // Known allied inventory, not a list of apparent friendly
+                    // colors. Suspected friendlies remain in getAllUnits().
+                    if (!obj.owner || !(obj.owner === player ||
+                        this.game.alliances.haveSharedIntel(player, obj.owner))) return false;
+                }
+                else {
+                    const owner = appearance.owner;
+                    if (!owner || owner === player || this.game.alliances.areAllied(owner, player) ||
+                        (type === "enemy" && !owner.isCombatant())) return false;
+                }
+                return filter(appearance.rules);
+            })
             .map((obj: any) => obj.id);
     }
     getGameObjectData(objectId: any): GameObjectData | undefined {
-        if (this.game.getWorld().hasObjectId(objectId)) {
-            const obj = this.game.getObjectById(objectId);
-            if (!this.isObservable(obj))
-                return undefined;
-            return {
-                id: obj.id,
-                type: obj.type,
-                name: obj.name,
-                rules: obj.rules,
-                tile: obj.tile,
-                tileElevation: obj.tileElevation,
-                worldPosition: obj.position.worldPosition.clone(),
-                foundation: obj.getFoundation(),
-                hitPoints: obj.healthTrait?.getHitPoints(),
-                maxHitPoints: obj.healthTrait?.maxHitPoints,
-                owner: obj.isTechno() ? obj.owner.name : undefined,
-            };
-        }
+        if (!this.game.getWorld().hasObjectId(objectId)) return undefined;
+        const obj = this.game.getObjectById(objectId);
+        if (!this.isObservable(obj)) return undefined;
+        return this.getObservedObjectData(obj, this.getAppearance(obj));
     }
     getUnitData(objectId: any): UnitData | undefined {
-        const gameObjectData = this.getGameObjectData(objectId);
-        if (gameObjectData) {
-            const unit = this.game.getObjectById(objectId);
-            if (!unit.isTechno()) {
-                throw new Error(`Game object with id ${objectId} is not a Techno type`);
-            }
+        if (!this.game.getWorld().hasObjectId(objectId)) return undefined;
+        const unit = this.game.getObjectById(objectId);
+        if (!this.isObservable(unit)) return undefined;
+        const appearance = this.getAppearance(unit);
+        // Real terrain and a current terrain appearance have identical lookup
+        // semantics. Previously the exception itself revealed a real tree.
+        if (!appearance.isUnit) return undefined;
+        const gameObjectData = this.getObservedObjectData(unit, appearance);
+        if (!appearance.fullData) {
+            const infantry = appearance.type === ObjectType.Infantry;
+            const vehicle = appearance.type === ObjectType.Vehicle;
+            const building = appearance.type === ObjectType.Building;
             return {
                 ...gameObjectData,
-                owner: unit.owner.name,
-                sight: unit.sight,
-                veteranLevel: unit.veteranLevel,
-                guardMode: unit.guardMode,
-                purchaseValue: unit.purchaseValue,
-                primaryWeapon: unit.primaryWeapon
-                    ? this.getWeaponData(unit.primaryWeapon)
-                    : undefined,
-                secondaryWeapon: unit.secondaryWeapon
-                    ? this.getWeaponData(unit.secondaryWeapon)
-                    : undefined,
-                deathWeapon: unit.armedTrait?.deathWeapon
-                    ? this.getWeaponData(unit.armedTrait.deathWeapon)
-                    : undefined,
-                attackState: unit.attackTrait?.attackState,
-                isFiring: unit.isFiring,
+                owner: appearance.owner?.name,
                 direction: unit.direction,
-                onBridge: unit.isInfantry() || unit.isVehicle() ? unit.onBridge : undefined,
-                zone: unit.isUnit() ? unit.zone : undefined,
-                buildStatus: unit.isBuilding() ? unit.buildStatus : undefined,
-                factory: unit.isBuilding() && unit.factoryTrait
-                    ? {
-                        deliveringUnit: unit.factoryTrait.deliveringUnit?.id,
-                        status: unit.factoryTrait.status,
-                    }
-                    : undefined,
-                rallyPoint: unit.isBuilding() ? unit.rallyTrait?.getRallyPoint() : undefined,
-                isPoweredOn: unit.isBuilding() && unit.poweredTrait?.isPoweredOn(),
-                hasWrenchRepair: unit.isBuilding() && !unit.autoRepairTrait.isDisabled(),
-                turretFacing: unit.isBuilding() || unit.isVehicle() ? unit.turretTrait?.facing : undefined,
-                turretNo: unit.isVehicle() ? unit.turretNo : undefined,
-                garrisonUnitCount: unit.isBuilding() ? unit.garrisonTrait?.units.length : undefined,
-                garrisonUnitsMax: unit.isBuilding() ? unit.garrisonTrait?.maxOccupants : undefined,
-                passengerSlotCount: unit.isVehicle() ? unit.transportTrait?.getOccupiedCapacity() : undefined,
-                passengerSlotMax: unit.isVehicle() ? unit.transportTrait?.getMaxCapacity() : undefined,
-                isIdle: !unit.unitOrderTrait.hasTasks(),
-                canMove: unit.isUnit() ? !unit.moveTrait.isDisabled() : undefined,
-                velocity: unit.isUnit() ? unit.moveTrait.velocity.clone() : undefined,
-                stance: unit.isInfantry() ? unit.stance : undefined,
-                harvestedOre: unit.isVehicle() ? unit.harvesterTrait?.ore : undefined,
-                harvestedGems: unit.isVehicle() ? unit.harvesterTrait?.gems : undefined,
-                ammo: unit.isAircraft() ? unit.ammo : undefined,
-                isWarpedOut: unit.warpedOutTrait.isActive(),
-                mindControlledBy: unit.mindControllableTrait?.getController()?.id,
-                tntTimer: unit.tntChargeTrait?.getTicksLeft(),
+                onBridge: infantry || vehicle ? unit.onBridge : undefined,
+                zone: building ? undefined : unit.zone,
+                veteranLevel: building ? undefined : unit.veteranLevel,
+                // Raw stance/firing can be hidden by the apparent art (e.g.
+                // disguised FireUp/FireProne renders Ready). Do not read it.
+                turretFacing: building || vehicle ? unit.turretTrait?.facing : undefined,
+                buildStatus: building ? unit.buildStatus : undefined,
+                hasWrenchRepair: building && unit.autoRepairTrait
+                    ? !unit.autoRepairTrait.isDisabled() : undefined,
             };
         }
+        return {
+            ...gameObjectData,
+            owner: unit.owner.name,
+            sight: unit.sight,
+            veteranLevel: unit.veteranLevel,
+            guardMode: unit.guardMode,
+            purchaseValue: unit.purchaseValue,
+            primaryWeapon: unit.primaryWeapon
+                ? this.getWeaponData(unit.primaryWeapon)
+                : undefined,
+            secondaryWeapon: unit.secondaryWeapon
+                ? this.getWeaponData(unit.secondaryWeapon)
+                : undefined,
+            deathWeapon: unit.armedTrait?.deathWeapon
+                ? this.getWeaponData(unit.armedTrait.deathWeapon)
+                : undefined,
+            attackState: unit.attackTrait?.attackState,
+            isFiring: unit.isFiring,
+            direction: unit.direction,
+            onBridge: unit.isInfantry() || unit.isVehicle() ? unit.onBridge : undefined,
+            zone: unit.isUnit() ? unit.zone : undefined,
+            buildStatus: unit.isBuilding() ? unit.buildStatus : undefined,
+            factory: unit.isBuilding() && unit.factoryTrait
+                ? {
+                    deliveringUnit: unit.factoryTrait.deliveringUnit?.id,
+                    status: unit.factoryTrait.status,
+                }
+                : undefined,
+            rallyPoint: unit.isBuilding() ? unit.rallyTrait?.getRallyPoint() : undefined,
+            isPoweredOn: unit.isBuilding() && unit.poweredTrait?.isPoweredOn(),
+            hasWrenchRepair: unit.isBuilding() && !unit.autoRepairTrait.isDisabled(),
+            turretFacing: unit.isBuilding() || unit.isVehicle() ? unit.turretTrait?.facing : undefined,
+            turretNo: unit.isVehicle() ? unit.turretNo : undefined,
+            garrisonUnitCount: unit.isBuilding() ? unit.garrisonTrait?.units.length : undefined,
+            garrisonUnitsMax: unit.isBuilding() ? unit.garrisonTrait?.maxOccupants : undefined,
+            passengerSlotCount: unit.isVehicle() ? unit.transportTrait?.getOccupiedCapacity() : undefined,
+            passengerSlotMax: unit.isVehicle() ? unit.transportTrait?.getMaxCapacity() : undefined,
+            isIdle: !unit.unitOrderTrait.hasTasks(),
+            canMove: unit.isUnit() ? !unit.moveTrait.isDisabled() : undefined,
+            velocity: unit.isUnit() ? unit.moveTrait.velocity.clone() : undefined,
+            stance: unit.isInfantry() ? unit.stance : undefined,
+            harvestedOre: unit.isVehicle() ? unit.harvesterTrait?.ore : undefined,
+            harvestedGems: unit.isVehicle() ? unit.harvesterTrait?.gems : undefined,
+            ammo: unit.isAircraft() ? unit.ammo : undefined,
+            isWarpedOut: unit.warpedOutTrait.isActive(),
+            mindControlledBy: unit.mindControllableTrait?.getController()?.id,
+            tntTimer: unit.tntChargeTrait?.getTicksLeft(),
+        };
     }
     getAllSuperWeaponData(): SuperWeaponData[] {
         return this.game

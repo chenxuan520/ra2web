@@ -1,42 +1,47 @@
 import { GameObjectData } from './GameObjectData';
 
-export interface UnitData extends GameObjectData {
-    owner: string;
-    sight: number;
-    veteranLevel: number;
-    guardMode: boolean;
-    purchaseValue: number;
+/** Visible unit appearance. Unknown data is absent, never fabricated as zero. */
+export interface ObservedUnitData extends GameObjectData {
+    owner?: string;
+    direction: number;
+    onBridge?: boolean;
+    zone?: any;
+    veteranLevel?: number;
+    turretFacing?: number;
+    buildStatus?: string;
+    hasWrenchRepair?: boolean;
+}
+
+/** Additional fields are available only for own/shared-intel or diagnostics. */
+export interface UnitData extends ObservedUnitData {
+    sight?: number;
+    guardMode?: boolean;
+    purchaseValue?: number;
     primaryWeapon?: any;
     secondaryWeapon?: any;
     deathWeapon?: any;
     attackState?: string;
-    /** Includes firing animations driven by deploy weapons, outside AttackTrait. */
+    /** Raw stance/firing are private: apparent animations may suppress them. */
+    stance?: string;
     isFiring?: boolean;
-    direction: number;
-    onBridge?: boolean;
-    zone?: any;
-    buildStatus?: string;
     factory?: {
         deliveringUnit?: string;
         status: string;
     };
     rallyPoint?: any;
     isPoweredOn?: boolean;
-    hasWrenchRepair?: boolean;
-    turretFacing?: number;
     turretNo?: number;
     garrisonUnitCount?: number;
     garrisonUnitsMax?: number;
     passengerSlotCount?: number;
     passengerSlotMax?: number;
-    isIdle: boolean;
+    isIdle?: boolean;
     canMove?: boolean;
     velocity?: any;
-    stance?: string;
     harvestedOre?: number;
     harvestedGems?: number;
     ammo?: number;
-    isWarpedOut: boolean;
+    isWarpedOut?: boolean;
     mindControlledBy?: string;
     tntTimer?: number;
 }

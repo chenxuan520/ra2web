@@ -97,6 +97,7 @@ jobs:
           bun --bun tsc -p e2e/tsconfig.ai-rhino-dog-scenario.json
           bun --bun tsc -p e2e/tsconfig.ai-information-boundary.json
           bun --bun tsc -p e2e/tsconfig.ai-observed-visibility.json
+          bun --bun tsc -p e2e/tsconfig.ai-observed-disguise.json
           bun --bun tsc -p e2e/tsconfig.ai-scouting-queue.json
           bun run build
           bun e2e/ai-harassment-scenario.ts --out .artifacts/ai-ci/harassment.json
@@ -104,6 +105,7 @@ jobs:
           bun e2e/ai-rhino-dog-scenario.ts --out .artifacts/ai-ci/rhino-dog-fixtures.json
           bun e2e/ai-information-boundary.ts --out .artifacts/ai-ci/information-boundary.json
           bun e2e/ai-observed-visibility.ts --out .artifacts/ai-ci/observed-visibility.json
+          bun e2e/ai-observed-disguise.ts --out .artifacts/ai-ci/observed-disguise.json
           bun e2e/ai-scouting-queue.ts --out .artifacts/ai-ci/scouting-queue.json
           bun e2e/ai-tournament.ts --candidate-ref "$AI_CANDIDATE_REF" --baseline-ref "$AI_BASELINE_REF" \
             --baseline-profile "$AI_BASELINE_PROFILE" \

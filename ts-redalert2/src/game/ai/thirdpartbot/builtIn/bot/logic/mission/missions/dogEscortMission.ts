@@ -1,4 +1,5 @@
-import { ObjectType, OrderType, QueueType, UnitData, Vector2, ZoneType } from "../../../../game-api";
+import { isObservedLivingUnit } from "../../common/observedUnit";
+import { GameApi, ObjectType, OrderType, QueueType, UnitData, Vector2, ZoneType } from "../../../../game-api";
 import { MissionContext } from "../../common/context";
 import { DebugLogger } from "../../common/utils";
 import { Mission, noop, requestUnits } from "../mission";
@@ -47,11 +48,11 @@ export class DogEscortMission extends Mission {
                     continue;
                 }
                 const near = anchor ? game.getVisibleUnits(player.name, "enemy")
-                    .map(id => game.getUnitData(id)).filter((enemy): enemy is UnitData => !!enemy && enemy.hitPoints > 0 &&
+                    .map(id => game.getUnitData(id)).filter((enemy): enemy is UnitData => isObservedLivingUnit(enemy) &&
                         pointOf(enemy).distanceTo(pointOf(anchor)) <= 12) : [];
                 const bite = anchor && near.filter(enemy => (enemy.type as any) === ObjectType.Infantry &&
                     pointOf(enemy).distanceTo(pointOf(dog)) <= 1.75 && pointOf(enemy).distanceTo(pointOf(anchor)) <= 4 &&
-                    getCombatWeapon(dog, enemy, true) && this.safety.isSafeMove(dog, pointOf(enemy)))
+                    getCombatWeapon(dog, enemy, true, game) && this.safety.isSafeMove(dog, pointOf(enemy)))
                     .sort((a, b) => pointOf(a).distanceTo(pointOf(dog)) - pointOf(b).distanceTo(pointOf(dog)) || a.id - b.id)[0];
                 if (bite) {
                     this.submit(context, dog, BatchableAction.toTargetId(dog.id, OrderType.Attack, bite.id));
@@ -63,7 +64,7 @@ export class DogEscortMission extends Mission {
                         return !!tile && game.mapApi.isVisibleTile(tile, player.name) &&
                             game.mapApi.isPassableTile(tile, dog.rules.speedType, !!dog.onBridge, true) &&
                             this.safety.isSafeMove(dog, point);
-                    }) : matchAwareness.getMainRallyPoint();
+                    }, game) : matchAwareness.getMainRallyPoint();
                 const safe = destination && this.safety.getSafeWaypoint(dog, destination, game);
                 if (safe && pointOf(dog).distanceTo(safe) > 1) {
                     this.submit(context, dog, BatchableAction.toPoint(dog.id, OrderType.Move, safe));
@@ -94,17 +95,17 @@ export class DogEscortMission extends Mission {
 
 /** Short, legal screen positions, with a rear fallback against crush/anti-infantry. */
 export function dogEscortPoint(dog: UnitData, tank: UnitData, enemies: UnitData[], goal: Vector2,
-    index: number, safe: (point: Vector2) => boolean): Vector2 | null {
+    index: number, safe: (point: Vector2) => boolean, game?: GameApi): Vector2 | null {
     const origin = pointOf(tank);
     const threat = enemies.filter(enemy => enemy.zone !== ZoneType.Air &&
         ((enemy.type as any) === ObjectType.Vehicle || (enemy.type as any) === ObjectType.Building) &&
-        getCombatWeapon(enemy, tank, true))
+        getCombatWeapon(enemy, tank, true, game))
         .sort((a, b) => pointOf(a).distanceTo(origin) - pointOf(b).distanceTo(origin) || a.id - b.id)[0];
     const forward = (threat ? pointOf(threat) : goal.clone()).sub(origin);
     if (forward.length() < 0.1) forward.set(1, 0);
     forward.multiplyScalar(1 / forward.length());
     const exposed = enemies.some(enemy => {
-        const weapon = getCombatWeapon(enemy, dog, true);
+        const weapon = getCombatWeapon(enemy, dog, true, game);
         return (enemy.rules.crusher && pointOf(enemy).distanceTo(origin) < 3) ||
             (!!weapon && ((enemy.type as any) === ObjectType.Infantry || enemy.rules.harvester) &&
                 pointOf(enemy).distanceTo(origin) <= weapon.range + 2);

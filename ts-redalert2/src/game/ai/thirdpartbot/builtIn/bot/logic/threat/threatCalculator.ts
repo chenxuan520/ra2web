@@ -1,3 +1,4 @@
+import { estimatedHealthRatio } from "../common/observedUnit";
 import {
     GameApi,
     GameMath,
@@ -104,10 +105,10 @@ function calculateFirepowerForUnit(gameApi: GameApi, gameObjectData: GameObjectD
     if (!rules) {
         return 0;
     }
-    const currentHp = gameObjectData?.hitPoints || 0;
-    const maxHp = gameObjectData?.maxHitPoints || 0;
     let threat = 0;
-    const hpRatio = currentHp / Math.max(1, maxHp);
+    // An unseen private HP field does not make an observed gun harmless.
+    // With no visible health bar, use its full nominal firepower conservatively.
+    const hpRatio = estimatedHealthRatio(gameObjectData, gameApi) ?? 1;
 
     if (rules.primary) {
         const weapon = gameApi.rulesApi.getWeapon(rules.primary);

@@ -1,3 +1,4 @@
+import { estimatedCombatWeapons, estimatedHitPoints, estimatedMaxHitPoints, estimatedPurchaseValue, isObservedLivingUnit } from "../../../common/observedUnit";
 import { GameApi, GameMath, ObjectType, OrderType, StanceType, UnitData, Vector2, ZoneType } from "../../../../../game-api";
 import { MissionContext } from "../../../common/context";
 import { BatchableAction } from "../../actionBatcher";
@@ -12,7 +13,8 @@ const pointOf = (unit: UnitData) => new Vector2(unit.tile.rx, unit.tile.ry);
 
 export function getRadiationDeployment(unit: UnitData, game: GameApi) {
     if (unit.name !== "DESO" || !unit.rules.deployFire) return null;
-    const weapon = unit.rules.deployFireWeapon === 0 ? unit.primaryWeapon : unit.secondaryWeapon;
+    const weapons = estimatedCombatWeapons(unit, game);
+    const weapon = unit.rules.deployFireWeapon === 0 ? weapons[0] : weapons[1];
     const radiation = game.rulesApi?.radiation;
     if (!weapon?.rules.areaFire || !(weapon.rules.radLevel > 0) || !(weapon.warheadRules?.cellSpread > 0) ||
         !(radiation?.radDurationMultiple > 0) || !(radiation.radLevelDelay > 0)) return null;
@@ -25,7 +27,7 @@ export function getRadiationDeployment(unit: UnitData, game: GameApi) {
 
 function affected(unit: UnitData): boolean {
     return (unit.type as any) !== ObjectType.Building && unit.zone !== ZoneType.Air &&
-        !unit.rules.immuneToRadiation && !unit.isWarpedOut && (unit.hitPoints ?? 1) > 0;
+        !unit.rules.immuneToRadiation && isObservedLivingUnit(unit);
 }
 
 export function distanceToSegment(point: Vector2, from: Vector2, to: Vector2): number {
@@ -66,6 +68,11 @@ export class DesolatorTactics {
                 .map(id => game.getUnitData(id)).filter((u): u is UnitData => !!u) : [];
             for (const [key, site] of observation.sites) if (site.expires <= tick) observation.sites.delete(key);
             for (const unit of [...observation.allies, ...enemies]) {
+                // Foreign stance is currently withheld by the appearance API.
+                // Unknown does not prove either deployment or absence of a
+                // plume: do not create/refresh a past-event memory from nominal
+                // DESO capability. Previously observed sites keep their expiry.
+                if (unit.stance === undefined) continue;
                 if ((unit.stance as any) !== StanceType.Deployed) continue;
                 const deployment = getRadiationDeployment(unit, game);
                 if (!deployment) continue;
@@ -93,17 +100,17 @@ export class DesolatorTactics {
     }
 
     private deploymentValue(unit: UnitData, targets: UnitData[], squadUnits: UnitData[], targetPoint: Vector2,
-        deployment: NonNullable<ReturnType<typeof getRadiationDeployment>>) {
+        deployment: NonNullable<ReturnType<typeof getRadiationDeployment>>, game: GameApi) {
         const center = pointOf(unit);
         let enemyValue = 0, enemyCount = 0, friendlyValue = 0;
         for (const target of targets) {
             // Prefer a nearby group that can be exposed before walking away.
             const distance = center.distanceTo(pointOf(target));
             if (distance > deployment.radius * 0.7) continue;
-            const damage = Math.min(target.hitPoints ?? 0, this.exposure(target, distance, deployment) * 0.35);
+            const damage = Math.min(estimatedHitPoints(target, game) ?? estimatedMaxHitPoints(target) ?? 0, this.exposure(target, distance, deployment) * 0.35);
             if (damage <= 0) continue;
             enemyCount++;
-            enemyValue += damage / Math.max(1, target.maxHitPoints ?? 1) * (target.purchaseValue ?? 200);
+            enemyValue += damage / Math.max(1, estimatedMaxHitPoints(target) ?? 1) * (estimatedPurchaseValue(target) ?? 200);
         }
         const squadIds = new Set(squadUnits.map(unit => unit.id));
         for (const ally of this.observation.allies) {
@@ -148,7 +155,7 @@ export class DesolatorTactics {
         const lastToggle = this.toggles.get(unit.id);
         if (lastToggle && lastToggle.deployed !== deployed && tick < lastToggle.tick + 30) return { handled: true };
         if (isFiringBurst(unit)) return { handled: true };
-        const value = this.deploymentValue(unit, targets, squadUnits, targetPoint, deployment);
+        const value = this.deploymentValue(unit, targets, squadUnits, targetPoint, deployment, context.game);
         const useful = value.useful && !unit.onBridge && (unit.hitPoints ?? 0) >= (unit.maxHitPoints ?? 0) * 0.4;
         if (useful) this.lastUsefulTick.set(unit.id, tick);
         if (deployed) {
@@ -171,6 +178,7 @@ export class DesolatorTactics {
         return { handled: false };
     }
 
+    /** Checks remembered sites only; true does not certify all ground free of radiation. */
     isSafeMove(unit: UnitData, to: Vector2): boolean {
         if (!affected(unit)) return true;
         const from = pointOf(unit);

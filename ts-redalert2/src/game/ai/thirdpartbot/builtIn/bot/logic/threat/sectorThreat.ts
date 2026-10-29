@@ -1,3 +1,4 @@
+import { estimatedMaxHitPoints } from "../common/observedUnit";
 import { Box2, GameApi, MapApi, PlayerData, Vector2 } from "../../../game-api";
 import { Sector, SectorAndDist } from "../map/sectorUtils";
 
@@ -25,10 +26,10 @@ export function calculateSectorThreat(startX: number, startY: number, sectorSize
             continue;
         }
         if (ownIds.has(unitId)) {
-            threat -= unit.maxHitPoints ?? 1;
+            threat -= estimatedMaxHitPoints(unit) ?? 1;
             continue;
         }
-        threat += unit.maxHitPoints ?? 1;
+        threat += estimatedMaxHitPoints(unit) ?? 1;
     }
     return threat;
 }

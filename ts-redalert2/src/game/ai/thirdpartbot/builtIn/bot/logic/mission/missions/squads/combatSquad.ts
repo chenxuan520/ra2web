@@ -187,14 +187,14 @@ export class CombatSquad implements Squad {
                             (!this.defendArea || targetPoint.distanceTo(new Vector2(target.tile.rx, target.tile.ry)) <= this.radius)) : nearbyHostiles;
                     const crush = brutal && !unit.isFiring &&
                         ![AttackState.FireUp, AttackState.Firing].includes(unit.attackState as any)
-                        ? getInfantryCrushPoint(unit, hostiles, game.mapApi) : null;
+                        ? getInfantryCrushPoint(unit, hostiles, game.mapApi, game) : null;
                     if (crush && tick >= (this.maneuverUntil.get(unit.id) ?? 0) && this.desolatorTactics.isSafeMove(unit, crush)) {
                         this.submitActionIfNew(actionBatcher, BatchableAction.toPoint(unit.id, OrderType.Move, crush), unit, tick);
                         this.maneuverUntil.set(unit.id, tick + 36);
                         continue;
                     }
                     const airEscape = brutal && this.protectAir && !unit.isFiring && ![AttackState.FireUp, AttackState.Firing].includes(unit.attackState as any)
-                        && tick >= (this.maneuverUntil.get(unit.id) ?? 0) ? getAirEvasionPoint(unit, hostiles, targetPoint, game.mapApi) : null;
+                        && tick >= (this.maneuverUntil.get(unit.id) ?? 0) ? getAirEvasionPoint(unit, hostiles, targetPoint, game.mapApi, game) : null;
                     if (airEscape) {
                         this.submitActionIfNew(actionBatcher, BatchableAction.toPoint(unit.id, OrderType.Move, airEscape), unit, tick);
                         this.maneuverUntil.set(unit.id, tick + 12);
@@ -219,7 +219,7 @@ export class CombatSquad implements Squad {
                         }
                     }
                     const retreat = brutal ? getTacticalRetreatPoint(unit, hostiles, game.mapApi,
-                        point => this.desolatorTactics.isSafeMove(unit, point)) : null;
+                        point => this.desolatorTactics.isSafeMove(unit, point), game) : null;
                     if (retreat) {
                         this.submitActionIfNew(actionBatcher, BatchableAction.toPoint(unit.id, OrderType.Move, retreat), unit, tick);
                         this.maneuverUntil.set(unit.id, tick + 12);
@@ -231,16 +231,16 @@ export class CombatSquad implements Squad {
                     const holdingReserve = brutal && (unit.hitPoints ?? Infinity) < (unit.maxHitPoints ?? 0) * 0.3 &&
                         tick < (this.injuredReserveUntil.get(unit.id) ?? 0);
                     const availableTargets = holdingReserve ? hostiles.filter(target => {
-                        const weapon = getCombatWeapon(unit, target, true);
+                        const weapon = getCombatWeapon(unit, target, true, game);
                         const distance = ownPoint.distanceTo(new Vector2(target.tile.rx, target.tile.ry));
                         return weapon && distance <= weapon.range && distance >= (weapon.weapon.minRange ?? 0);
-                    }) : brutal && this.protectAir ? hostiles.filter(target => isAirAttackApproachSafe(unit, target, hostiles)) : hostiles;
+                    }) : brutal && this.protectAir ? hostiles.filter(target => isAirAttackApproachSafe(unit, target, hostiles, game)) : hostiles;
                     // Filter null weights before maxBy: it returns an element even when all weights are null.
                     const bestUnit = brutal
-                        ? chooseTacticalTarget(unit, availableTargets, committedDamage, this.lastOrderGiven[unit.id]?.targetId)
+                        ? chooseTacticalTarget(unit, availableTargets, committedDamage, this.lastOrderGiven[unit.id]?.targetId, game)
                         : maxBy(hostiles.filter(target => getAttackWeight(unit, target) !== null), target => getAttackWeight(unit, target));
                     if (bestUnit) {
-                        const weapon = getCombatWeapon(unit, bestUnit, brutal);
+                        const weapon = getCombatWeapon(unit, bestUnit, brutal, game);
                         const targetLocation = new Vector2(bestUnit.tile.rx, bestUnit.tile.ry);
                         if (brutal && weapon && ownPoint.distanceTo(targetLocation) > weapon.range &&
                             !this.desolatorTactics.isSafeMove(unit, targetLocation)) {
@@ -259,8 +259,8 @@ export class CombatSquad implements Squad {
                             this.followTankEscort(context, unit, units, targetPoint, tick);
                         } else if (holdingReserve) {
                             if (!unit.isIdle) this.submitActionIfNew(actionBatcher, BatchableAction.noTarget(unit.id, OrderType.Stop), unit, tick);
-                        } else if (brutal && this.protectAir && antiAirThreats(unit, hostiles).length) {
-                            const waypoint = getAirTransitWaypoint(unit, targetPoint, hostiles, game.mapApi);
+                        } else if (brutal && this.protectAir && antiAirThreats(unit, hostiles, game).length) {
+                            const waypoint = getAirTransitWaypoint(unit, targetPoint, hostiles, game.mapApi, game);
                             if (waypoint) this.submitActionIfNew(actionBatcher, BatchableAction.toPoint(unit.id, OrderType.Move, waypoint), unit, tick);
                             else if (!unit.isIdle) this.submitActionIfNew(actionBatcher, BatchableAction.noTarget(unit.id, OrderType.Stop), unit, tick);
                         } else this.submitMovement(context, unit, targetPoint, tick);

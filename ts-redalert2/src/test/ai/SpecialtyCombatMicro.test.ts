@@ -277,7 +277,7 @@ describe("tank and artillery coordination", () => {
         expect(chooseTacticalTarget(attacker, [far, near], new Map())?.id).toBe(near.id);
     });
     test("plans GI deployment without mistaking its handheld range for its only engagement option", () => {
-        const gi = infantry(1, 0, 0, { primaryWeapon: weapon(15, 4), secondaryWeapon: weapon(25, 5),
+        const gi = infantry(1, 0, 0, { stance: StanceType.None, primaryWeapon: weapon(15, 4), secondaryWeapon: weapon(25, 5),
             rules: { armor: 0, deployFire: true, deployFireWeapon: 1 } });
         const armor = tank(2, 3), enemyInfantry = infantry(3, 5, 0, { owner: "enemy" });
         expect(getCombatWeapon(gi, enemyInfantry, true)?.range).toBe(4);
@@ -349,13 +349,17 @@ test("CombatSquad activates desolator tactics only for Brutal", () => {
 });
 
 test("GameApi exposes the actual deploy animation flag", () => {
-    const unit = { owner: { name: "bot" }, isTechno: () => true, isInfantry: () => true, isVehicle: () => false,
+    const unit = { id: 1, name: "DESO", type: ObjectType.Infantry, rules: { name: "DESO", type: ObjectType.Infantry },
+        tile: { rx: 1, ry: 1 }, tileElevation: 0, getFoundation: () => ({ width: 1, height: 1 }),
+        position: { worldPosition: { clone: () => ({ x: 1, y: 0, z: 1 }) } },
+        owner: { name: "bot" }, isTechno: () => true, isInfantry: () => true, isVehicle: () => false,
         isBuilding: () => false, isAircraft: () => false, isUnit: () => true, isFiring: true,
         attackTrait: { attackState: AttackState.Idle }, unitOrderTrait: { hasTasks: () => false },
         moveTrait: { isDisabled: () => false, velocity: { clone: () => ({ x: 0, z: 0 }) } },
         warpedOutTrait: { isActive: () => false } };
-    const api = { getGameObjectData: () => ({ id: 1 }), game: { getObjectById: () => unit } };
-    const data = GameApi.prototype.getUnitData.call(api as any, 1)!;
+    const api = GameApi.forDiagnostics({ rules: {}, getObjectById: () => unit,
+        getWorld: () => ({ hasObjectId: (id: number) => id === 1 }) }, true);
+    const data = api.getUnitData(1)!;
     expect(data.isFiring).toBe(true);
     expect(data.attackState as any).toBe(AttackState.Idle);
     expect(isFiringBurst(data)).toBe(true);

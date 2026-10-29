@@ -1,3 +1,4 @@
+import { estimatedMaxHitPoints } from "../../common/observedUnit";
 import { GameApi, ObjectType, PlayerData, QueueStatus, UnitData, Vector2 } from "../../../../game-api";
 import { CombatSquad } from "./squads/combatSquad";
 import { Mission, MissionAction, disbandMission, noop, requestUnits } from "../mission";
@@ -276,9 +277,9 @@ const getTargetWeight: (unitData: UnitData, tryFocusHarvester: boolean) => numbe
     if (tryFocusHarvester && unitData.rules.harvester) {
         return 100000;
     } else if (unitData.type as any === ObjectType.Building) {
-        return unitData.maxHitPoints * 10;
+        return (estimatedMaxHitPoints(unitData) ?? 1) * 10;
     } else {
-        return unitData.maxHitPoints;
+        return estimatedMaxHitPoints(unitData) ?? 1;
     }
 };
 

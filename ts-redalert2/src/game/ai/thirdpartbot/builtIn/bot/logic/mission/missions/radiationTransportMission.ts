@@ -122,9 +122,9 @@ export class RadiationTransportMission extends Mission<string> {
             if (decision.action) this.submit(context, payload, decision.action);
         } else {
             const target = chooseTacticalTarget(payload, targets.filter(enemy => {
-                const weapon = getCombatWeapon(payload, enemy, true);
+                const weapon = getCombatWeapon(payload, enemy, true, game);
                 return weapon && point(payload).distanceTo(point(enemy)) <= weapon.range;
-            }), new Map());
+            }), new Map(), undefined, game);
             if (target) this.submit(context, payload, BatchableAction.toTargetId(payload.id, OrderType.Attack, target.id));
             else if (!payload.isIdle) this.submit(context, payload, BatchableAction.noTarget(payload.id, OrderType.Stop));
         }

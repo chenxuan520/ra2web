@@ -1,3 +1,4 @@
+import { estimatedCombatWeapons } from "../../common/observedUnit";
 import { ObjectType, OrderType, UnitData, Vector2 } from "../../../../game-api";
 import { SupabotContext } from "../../common/context";
 import { getInfantryCrushPoint } from "./squads/infantryCrushing";
@@ -18,7 +19,7 @@ export class MinerDefence {
         const approaching = enemies.filter(unit => (unit.type as any) === ObjectType.Infantry && unit.rules.crushable &&
             home.distanceTo(new Vector2(unit.tile.rx, unit.tile.ry)) <= 32);
         const armorThreat = enemies.some(unit => (unit.type as any) !== ObjectType.Infantry && !unit.rules.harvester &&
-            !!unit.primaryWeapon && home.distanceTo(new Vector2(unit.tile.rx, unit.tile.ry)) <= 24);
+            !!estimatedCombatWeapons(unit, game)[0] && home.distanceTo(new Vector2(unit.tile.rx, unit.tile.ry)) <= 24);
         const miners = game.getVisibleUnits(player.name, "self", rules => rules.harvester && rules.crusher)
             .map(id => game.getUnitData(id)).filter((unit): unit is UnitData => !!unit && unit.canMove && !unit.isWarpedOut);
         let miner = this.active ? miners.find(unit => unit.id === this.active!.id) : undefined;
@@ -35,7 +36,7 @@ export class MinerDefence {
         let destination: Vector2 | null = null;
         if (tick < this.active.until && !armorThreat && approaching.length >= 2 && miner.hitPoints >= miner.maxHitPoints * 0.55 &&
             home.distanceTo(new Vector2(miner.tile.rx, miner.tile.ry)) <= 28) {
-            destination = getInfantryCrushPoint(miner, enemies, game.mapApi);
+            destination = getInfantryCrushPoint(miner, enemies, game.mapApi, game);
             if (!destination) {
                 const center = new Vector2(approaching.reduce((sum, unit) => sum + unit.tile.rx, 0) / approaching.length,
                     approaching.reduce((sum, unit) => sum + unit.tile.ry, 0) / approaching.length);

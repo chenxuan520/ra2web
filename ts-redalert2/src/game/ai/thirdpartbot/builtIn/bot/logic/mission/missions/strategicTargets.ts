@@ -1,4 +1,5 @@
-import { ObjectType, UnitData, Vector2, ZoneType } from "../../../../game-api";
+import { estimatedCombatWeapons, isObservedLivingUnit, estimatedHealthRatio } from "../../common/observedUnit";
+import { GameApi, ObjectType, UnitData, Vector2, ZoneType } from "../../../../game-api";
 import { SupabotContext } from "../../common/context";
 import { isOwnedByNeutral } from "../../common/utils";
 import { getCombatWeapon } from "./squads/tacticalTargeting";
@@ -7,7 +8,7 @@ export const RAID_TARGET_SEPARATION = 12;
 export const RAID_SIZE = 3;
 
 export function isLivingUnit(unit: UnitData | undefined | null): unit is UnitData {
-    return !!unit && unit.hitPoints > 0 && !unit.isWarpedOut;
+    return isObservedLivingUnit(unit);
 }
 
 export function isRaidTank(unit: UnitData): boolean {
@@ -31,21 +32,21 @@ export function findBaseThreat(context: SupabotContext): Vector2 | undefined {
         const point = new Vector2(base!.tile.rx, base!.tile.ry);
         const threatened = matchAwareness.getHostilesNearPoint2d(point, 12)
             .map(({ unitId }) => game.getUnitData(unitId))
-            .some(unit => isLivingUnit(unit) && !isOwnedByNeutral(unit) && !!(unit.primaryWeapon || unit.secondaryWeapon));
+            .some(unit => isLivingUnit(unit) && !isOwnedByNeutral(unit) && estimatedCombatWeapons(unit, game).some(Boolean));
         if (threatened) return point;
     }
     return undefined;
 }
 
-export function raidTargetIsSafe(target: UnitData, raiders: UnitData[], enemies: UnitData[]): boolean {
+export function raidTargetIsSafe(target: UnitData, raiders: UnitData[], enemies: UnitData[], game?: GameApi): boolean {
     if (!raiders.length || !isLivingUnit(target) || target.zone === ZoneType.Air ||
         !(target.rules.harvester || ((target.type as any) === ObjectType.Building && (target.rules.refinery || target.rules.power > 0)))) return false;
-    if (!raiders.some(raider => getCombatWeapon(raider, target))) return false;
+    if (!raiders.some(raider => getCombatWeapon(raider, target, false, game))) return false;
     const targetPoint = new Vector2(target.tile.rx, target.tile.ry);
     let guards = 0;
     for (const enemy of enemies) {
         if (enemy.id === target.id) continue;
-        const weapon = getCombatWeapon(enemy, raiders[0]);
+        const weapon = getCombatWeapon(enemy, raiders[0], false, game);
         if (!weapon) continue;
         const distance = targetPoint.distanceTo(new Vector2(enemy.tile.rx, enemy.tile.ry));
         if ((enemy.type as any) === ObjectType.Building) {
@@ -57,12 +58,12 @@ export function raidTargetIsSafe(target: UnitData, raiders: UnitData[], enemies:
     return guards <= Math.floor(raiders.length / 2);
 }
 
-export function raidUnderPressure(raiders: UnitData[], enemies: UnitData[]): boolean {
+export function raidUnderPressure(raiders: UnitData[], enemies: UnitData[], game?: GameApi): boolean {
     if (!raiders.length) return true;
     let nearbyFighters = 0;
     for (const enemy of enemies) {
         if (enemy.rules.harvester) continue;
-        const weapon = getCombatWeapon(enemy, raiders[0]);
+        const weapon = getCombatWeapon(enemy, raiders[0], false, game);
         if (!weapon) continue;
         const distance = Math.min(...raiders.map(raider =>
             new Vector2(raider.tile.rx, raider.tile.ry).distanceTo(new Vector2(enemy.tile.rx, enemy.tile.ry))));
@@ -80,8 +81,8 @@ export function selectRaidTarget(context: SupabotContext, raiders: UnitData[], m
     return enemies.filter(target => {
         const point = new Vector2(target.tile.rx, target.tile.ry);
         return mainTargets.every(main => main.distanceTo(point) >= RAID_TARGET_SEPARATION) &&
-            raidTargetIsSafe(target, raiders, enemies);
+            raidTargetIsSafe(target, raiders, enemies, context.game);
     }).map(target => ({ target, score: (target.rules.harvester ? 2000 : 500) +
-        (1 - target.hitPoints / target.maxHitPoints) * 100 - center.distanceTo(new Vector2(target.tile.rx, target.tile.ry)) }))
+        (1 - (estimatedHealthRatio(target, context.game) ?? 1)) * 100 - center.distanceTo(new Vector2(target.tile.rx, target.tile.ry)) }))
         .sort((a, b) => b.score - a.score || a.target.id - b.target.id)[0]?.target;
 }

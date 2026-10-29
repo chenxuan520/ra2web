@@ -45,12 +45,12 @@ export class HarassmentMission extends Mission<string> {
             if (findBaseThreat(context)) this.beginReturn("base-under-attack");
             else if (tick - this.createdAt >= RAID_LIFETIME) this.beginReturn("raid-timeout");
             else if (units.filter(isRaidTank).length < 2) this.beginReturn("insufficient-force");
-            else if (raidUnderPressure(units, enemies)) this.beginReturn("local-force-disadvantage");
+            else if (raidUnderPressure(units, enemies, context.game)) this.beginReturn("local-force-disadvantage");
             else if (!target) this.beginReturn("target-no-longer-visible");
             else if (this.getMainTargets().some(point => point.distanceTo(new Vector2(target.tile.rx, target.tile.ry)) < RAID_TARGET_SEPARATION)) {
                 this.beginReturn("main-force-converged");
             }
-            else if (!raidTargetIsSafe(target, units, enemies)) this.beginReturn("target-defended");
+            else if (!raidTargetIsSafe(target, units, enemies, context.game)) this.beginReturn("target-defended");
             else this.squad.setAttackArea(new Vector2(target.tile.rx, target.tile.ry));
         }
         if (this.stage === "returning") {

@@ -1,3 +1,4 @@
+import { isObservedLivingUnit } from "../../common/observedUnit";
 import { ObjectType, OrderType, SpeedType, TechnoRules, UnitData, Vector2 } from "../../../../game-api";
 import { MissionContext, SupabotContext } from "../../common/context";
 import { DebugLogger } from "../../common/utils";
@@ -12,9 +13,10 @@ const MAX_MISSION_TICKS = 4 * 60 * 15;
 /** Reach an explored entry while staying outside observed hostile gun coverage. */
 export function safeCaptureEntry(context: SupabotContext, start: UnitData, target: UnitData): boolean {
     const game = context.game;
-    if (!target.rules.capturable || !target.foundation || target.garrisonUnitCount) return false;
+    if (!target.rules.capturable || !target.foundation || target.garrisonUnitCount ||
+        (target.rules.canBeOccupied && target.garrisonUnitCount === undefined)) return false;
     const enemies = visibleEnemies(context);
-    const guns = enemies.map(enemy => ({ enemy, weapon: getCombatWeapon(enemy, start) })).filter(entry => !!entry.weapon);
+    const guns = enemies.map(enemy => ({ enemy, weapon: getCombatWeapon(enemy, start, false, game) })).filter(entry => !!entry.weapon);
     const unsafe = (tile: { rx: number; ry: number }) => guns.some(({ enemy, weapon }) =>
         new Vector2(tile.rx, tile.ry).distanceTo(new Vector2(enemy.tile.rx, enemy.tile.ry)) <= weapon!.range + 2);
     const entries: any[] = [];
@@ -57,7 +59,7 @@ export class SneakCaptureMission extends Mission<string> {
             this.lastCheck = tick;
             const visible = game.getVisibleUnits(player.name, "enemy").includes(this.targetId);
             const approach = engineer ?? plannedEngineer(context, this.engineerRule, this.home);
-            if (!target || !visible || target.hitPoints <= 0 || findBaseThreat(context) ||
+            if (!isObservedLivingUnit(target) || !visible || findBaseThreat(context) ||
                 !approach.tile || !safeCaptureEntry(context, approach, target) || tick - this.createdAt >= MAX_MISSION_TICKS) {
                 if (!engineer) return disbandMission("unsafe-target");
                 this.stage = "returning";

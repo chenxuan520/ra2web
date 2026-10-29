@@ -1,3 +1,4 @@
+import { isObservedLivingUnit } from "./observedUnit";
 import { GameApi, ObjectType, PlayerData, Vector2 } from "../../../game-api";
 
 /**
@@ -12,7 +13,7 @@ export function getKnownEnemyDirections(game: GameApi, player: PlayerData): Vect
 
     const knownBuildings = game.getVisibleUnits(player.name, "enemy", rules => rules.type === ObjectType.Building)
         .map(id => game.getUnitData(id))
-        .filter(unit => !!unit && unit.hitPoints > 0 && hostilePlayers.has(unit.owner))
+        .filter(unit => isObservedLivingUnit(unit) && hostilePlayers.has(unit.owner))
         .map(unit => new Vector2(unit!.tile.rx, unit!.tile.ry));
     const candidates = knownBuildings.length ? knownBuildings : game.mapApi.getStartingLocations()
         .filter(point => !point.equals(player.startLocation))

@@ -1,3 +1,4 @@
+import { estimatedCombatWeapons } from "../../common/observedUnit";
 import { ObjectType, OrderType, SpeedType, StanceType, UnitData, Vector2, ZoneType } from "../../../../game-api";
 import { MissionContext, SupabotContext } from "../../common/context";
 import { DebugLogger } from "../../common/utils";
@@ -35,7 +36,7 @@ export function selectRadiationGuardPoint(context: SupabotContext, radius: numbe
         .filter((unit): unit is UnitData => !!unit);
     const ownBases = friends.filter(unit => unit.owner === player.name && (unit.rules.constructionYard || unit.rules.refinery));
     const enemies = game.getVisibleUnits(player.name, "enemy").map(id => game.getUnitData(id))
-        .filter((unit): unit is UnitData => !!unit && unit.zone !== ZoneType.Air && !!unit.primaryWeapon);
+        .filter((unit): unit is UnitData => !!unit && unit.zone !== ZoneType.Air && !!estimatedCombatWeapons(unit, game)[0]);
     const base = ownBases.find(unit => unit.rules.constructionYard) ?? ownBases[0];
     if (!base) return;
     const anchor = point(base);
@@ -50,7 +51,7 @@ export function selectRadiationGuardPoint(context: SupabotContext, radius: numbe
         if (separation < radius + 2 || separation > radius + 13 || (dx * forward.x + dy * forward.y) < radius * 0.6) continue;
         const location = new Vector2(anchor.x + dx, anchor.y + dy);
         if (!isRadiationGuardPointSafe(context, location, radius, friends)) continue;
-        if (enemies.some(hostile => location.distanceTo(point(hostile)) < (hostile.primaryWeapon?.maxRange ?? 0) + 2)) continue;
+        if (enemies.some(hostile => location.distanceTo(point(hostile)) < (estimatedCombatWeapons(hostile, game)[0]?.maxRange ?? 0) + 2)) continue;
         const score = distanceToSegment(location, anchor, approach) * 2 + Math.abs(separation - (radius + 5)) +
             Math.abs(location.distanceTo(approach) - (radius * 0.7)) * 0.5;
         candidates.push({ location, score });
@@ -67,12 +68,12 @@ export function getRadiationGuardWaypoint(context: SupabotContext, unit: UnitDat
     const start = game.mapApi.getTile(from.x, from.y), end = game.mapApi.getTile(destination.x, destination.y);
     if (!start || !end || !game.mapApi.findPath) return;
     const threats = game.getVisibleUnits(player.name, "enemy").map(id => game.getUnitData(id))
-        .filter((enemy): enemy is UnitData => !!enemy && !!getCombatWeapon(enemy, unit, true));
+        .filter((enemy): enemy is UnitData => !!enemy && !!getCombatWeapon(enemy, unit, true, game));
     const unsafe = (tile: { rx: number; ry: number }) => {
         if (!game.mapApi.isVisibleTile(tile as any, player.name) || game.mapApi.hasBridgeOnTile(tile as any)) return true;
         const at = new Vector2(tile.rx, tile.ry);
         return threats.some(enemy => {
-            const reach = getCombatWeapon(enemy, unit, true)!.range + 2;
+            const reach = getCombatWeapon(enemy, unit, true, game)!.range + 2;
             const current = from.distanceTo(point(enemy)), next = at.distanceTo(point(enemy));
             // A surrounded defender may retreat out of range, never move deeper.
             return next < reach && (current >= reach || next < current - 0.1);
@@ -145,9 +146,9 @@ export class RadiationGuardMission extends Mission {
             let action = decision.action;
             if (!decision.handled) {
                 const target = chooseTacticalTarget(unit, targets.filter(target => {
-                    const weapon = getCombatWeapon(unit, target, true);
+                    const weapon = getCombatWeapon(unit, target, true, game);
                     return atGuard && weapon && point(unit).distanceTo(point(target)) <= weapon.range && point(target).distanceTo(this.guard!) <= radius;
-                }), new Map());
+                }), new Map(), undefined, game);
                 const waypoint = this.guard && !atGuard ? getRadiationGuardWaypoint(context, unit, this.guard) : undefined;
                 action = waypoint ? BatchableAction.toPoint(unit.id, OrderType.Move, waypoint)
                     : target ? BatchableAction.toTargetId(unit.id, OrderType.Attack, target.id)
