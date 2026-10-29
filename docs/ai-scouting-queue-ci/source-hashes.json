@@ -1,0 +1,212 @@
+{
+  "engineCommit": "8f295c9c40bd24a4782164a31e668b0754039bd7",
+  "candidateCommit": "8f295c9c40bd24a4782164a31e668b0754039bd7",
+  "baselineCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+  "source": "Extracted from immutable CI artifact metadata and independently recomputed from frozen Git objects; no current working-tree source used.",
+  "gitTreesAndWorkflowBlob": {
+    "ts-redalert2/src": {
+      "8f295c9c40bd24a4782164a31e668b0754039bd7": "fb70faa3d5700116e47a11c78f099436708685c9"
+    },
+    "ts-redalert2/src/game": {
+      "8f295c9c40bd24a4782164a31e668b0754039bd7": "2ccf637949fc9073f9588e200d53b87acb431072"
+    },
+    "ts-redalert2/e2e": {
+      "8f295c9c40bd24a4782164a31e668b0754039bd7": "b1218e72b90d963668511c1669e1976b781fe17a"
+    },
+    ".github/workflows/ai.yml": {
+      "8f295c9c40bd24a4782164a31e668b0754039bd7": "adcb2ae9dac2b36c7e6ef28e8cdd20d0bf177ca6"
+    }
+  },
+  "wholeTsRedalert2Tree": "48ad168b242f1591589e829f6774c640fd112080",
+  "recomputedSourceDigests": {
+    "entireGame": {
+      "sha256": "4d37ec6199f59563388b34e847e086572002761c5850f8cd84ef2947653f4e24",
+      "fileCount": 653
+    },
+    "builtIn": {
+      "sha256": "43a142facc50e98e869c8ec8fe1204a494fa50f12ea43420d7c97b97ead9dd83",
+      "fileCount": 69
+    },
+    "tournamentEngine": {
+      "sha256": "a0e02a189426ff1bb3273322db1341d2f8204b418ca60934516d02142ef56433",
+      "fileCount": 1226
+    },
+    "allAiRunners": {
+      "sha256": "7fc2f6d68aa44684e149665142618effd6103bfb8fdc0973b2398afda1abf856",
+      "fileCount": 15
+    }
+  },
+  "manifestFields": {
+    "engineSourceSha256": "a0e02a189426ff1bb3273322db1341d2f8204b418ca60934516d02142ef56433",
+    "runnerSourceSha256": "7fc2f6d68aa44684e149665142618effd6103bfb8fdc0973b2398afda1abf856",
+    "lockfileSha256": "23854cfbf8ade38e0244ce53a42396be18a819983f3f5d6372b2d6224b939cf9",
+    "resourceLoaderSha256": "c89bd9944ce017136bb46d440924b9a7ce8e2a5c868b36292721b11e90a7712d",
+    "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+    "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66",
+    "scenarios": [
+      {
+        "map": "mp08t2",
+        "seed": 909,
+        "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+        "terrainFile": "isotemp.mix",
+        "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+      }
+    ]
+  },
+  "fixtures": {
+    "information-boundary.json": {
+      "raw": {
+        "bytes": 93748,
+        "sha256": "98fd1a8fc534fb96f0c43f9992c55811c635f5a8a7cced6366659e75f2ff4a3d"
+      },
+      "sourceMetadata": {
+        "source": {
+          "commit": "8f295c9c40bd24a4782164a31e668b0754039bd7",
+          "source": "working-tree",
+          "dirty": false,
+          "builtInSourceSha256": "43a142facc50e98e869c8ec8fe1204a494fa50f12ea43420d7c97b97ead9dd83",
+          "engineApiSha256": "07f922510941e14aeda16d139906190fee3702c6b3ce0cae1550813972157232",
+          "mapApiSha256": "16b51316aa20d45bb7b3a3af2bd820fe51cf7e0f6cb91a084f086440383a3a77",
+          "runnerSha256": "21274073aa457aab68be34a5a664b1db7d225f4a735061eb87a0f296d2e4f290",
+          "fixtureHelperSha256": "1b5213e81e17fd8f361a429a3f2ba09ebf13cb929e8642d44368e099f9c49b2a"
+        }
+      },
+      "resources": {
+        "mapSha256": "c43e94057d6abaec0a39899b44175259f150649e2cd39be66504bb2957f2ec67",
+        "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4",
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+      }
+    },
+    "observed-visibility.json": {
+      "raw": {
+        "bytes": 222151,
+        "sha256": "799dc1ccb47828fa2ae90a341407043868ba1b5064b9af56eafc27ce96ee0448"
+      },
+      "sourceMetadata": {
+        "sourceBefore": {
+          "commit": "8f295c9c40bd24a4782164a31e668b0754039bd7",
+          "source": "working-tree",
+          "workingTreeStatus": "",
+          "gameSourceSha256": "4d37ec6199f59563388b34e847e086572002761c5850f8cd84ef2947653f4e24",
+          "runnerSha256": "df3f5453df0848c87516ab3e63083ccb0b24b9d40f27dbca48f775c65e429ca3",
+          "files": {
+            "src/game/api/GameApi.ts": "07f922510941e14aeda16d139906190fee3702c6b3ce0cae1550813972157232",
+            "src/game/BotManager.ts": "69a7f3d267fec6457b51bba613db0450e56daba7a3641f3661ff8a59f17706fe",
+            "src/game/gameobject/trait/CloakableTrait.ts": "2cbc2da9665086ef55c611cb9f6f590f5dab57587444cec42a9e0f5d3335498a",
+            "src/game/gameobject/trait/SubmergibleTrait.ts": "b1ae78992268040a70581d44bf9078ed299073cd623b89a51044f0922c95204f",
+            "src/game/trait/SharedDetectCloakTrait.ts": "aa11140799d662e7b742b0636736125c8597350a9f311f9eda7821873fa9bb8d",
+            "e2e/ai-specialty-scenarios.ts": "1b5213e81e17fd8f361a429a3f2ba09ebf13cb929e8642d44368e099f9c49b2a",
+            "e2e/tsconfig.ai-observed-visibility.json": "77cc515ebf6da978b49940bde1e374d6d66cb41e1ef575ae523fe34414f858d9"
+          }
+        },
+        "sourceAfter": {
+          "commit": "8f295c9c40bd24a4782164a31e668b0754039bd7",
+          "source": "working-tree",
+          "workingTreeStatus": "",
+          "gameSourceSha256": "4d37ec6199f59563388b34e847e086572002761c5850f8cd84ef2947653f4e24",
+          "runnerSha256": "df3f5453df0848c87516ab3e63083ccb0b24b9d40f27dbca48f775c65e429ca3",
+          "files": {
+            "src/game/api/GameApi.ts": "07f922510941e14aeda16d139906190fee3702c6b3ce0cae1550813972157232",
+            "src/game/BotManager.ts": "69a7f3d267fec6457b51bba613db0450e56daba7a3641f3661ff8a59f17706fe",
+            "src/game/gameobject/trait/CloakableTrait.ts": "2cbc2da9665086ef55c611cb9f6f590f5dab57587444cec42a9e0f5d3335498a",
+            "src/game/gameobject/trait/SubmergibleTrait.ts": "b1ae78992268040a70581d44bf9078ed299073cd623b89a51044f0922c95204f",
+            "src/game/trait/SharedDetectCloakTrait.ts": "aa11140799d662e7b742b0636736125c8597350a9f311f9eda7821873fa9bb8d",
+            "e2e/ai-specialty-scenarios.ts": "1b5213e81e17fd8f361a429a3f2ba09ebf13cb929e8642d44368e099f9c49b2a",
+            "e2e/tsconfig.ai-observed-visibility.json": "77cc515ebf6da978b49940bde1e374d6d66cb41e1ef575ae523fe34414f858d9"
+          }
+        },
+        "sourceStable": true
+      },
+      "resources": {
+        "mapSha256": "cbada2fde5d2c9c0240fd62b5ef458f901b56a72bfac6a875a913bf11c3604f7",
+        "terrainSha256": "e0b189588495b62a3882eec1c9d4ec4018712f2d2745e1757c9ea6003d2858cf",
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+      }
+    },
+    "scouting-queue.json": {
+      "raw": {
+        "bytes": 50836,
+        "sha256": "07a56c90d80284c21179410fa7751a702df5afca87e5cf249d3b2bfa57c68ed0"
+      },
+      "sourceMetadata": {
+        "sourceBefore": {
+          "commit": "8f295c9c40bd24a4782164a31e668b0754039bd7",
+          "source": "working-tree",
+          "workingTreeStatus": "",
+          "gameSourceSha256": "4d37ec6199f59563388b34e847e086572002761c5850f8cd84ef2947653f4e24",
+          "runnerSha256": "6096290df3123a90b10db056b32bb31fd5d2cd4a27c2755e6f9fab40b92e5855",
+          "files": {
+            "src/game/api/GameApi.ts": "07f922510941e14aeda16d139906190fee3702c6b3ce0cae1550813972157232",
+            "src/game/api/MapApi.ts": "16b51316aa20d45bb7b3a3af2bd820fe51cf7e0f6cb91a084f086440383a3a77",
+            "src/game/ai/thirdpartbot/builtIn/bot/logic/common/scout.ts": "7d5f65c8a89ebac1233c68519bf4bfbf5e2dc73bb70d6fedda6ea65740ae034c",
+            "src/game/ai/thirdpartbot/builtIn/bot/logic/awareness.ts": "f57048020997ba5daf56dd93b320a73d66251d2888933b824108ecf8b4668865",
+            "src/game/ai/thirdpartbot/builtIn/bot/logic/map/sector.ts": "45747b4f6a94d97f1d525b3e5ad037ba40611e1bff2cb2dc15c984469b1a3cbc",
+            "src/game/ai/thirdpartbot/builtIn/bot/logic/map/incrementalGridCache.ts": "065a4e45143f71fa5f3fe7ab247d8d9c74c9f1f3350c2ed4b5b3fdc8a0cc6adb",
+            "e2e/ai-specialty-scenarios.ts": "1b5213e81e17fd8f361a429a3f2ba09ebf13cb929e8642d44368e099f9c49b2a",
+            "e2e/tsconfig.ai-scouting-queue.json": "07cd9b79bcd78cef5701c83660019ad4b3687fa1db91fcb8e9708bfa59707ee9"
+          }
+        },
+        "sourceAfter": {
+          "commit": "8f295c9c40bd24a4782164a31e668b0754039bd7",
+          "source": "working-tree",
+          "workingTreeStatus": "",
+          "gameSourceSha256": "4d37ec6199f59563388b34e847e086572002761c5850f8cd84ef2947653f4e24",
+          "runnerSha256": "6096290df3123a90b10db056b32bb31fd5d2cd4a27c2755e6f9fab40b92e5855",
+          "files": {
+            "src/game/api/GameApi.ts": "07f922510941e14aeda16d139906190fee3702c6b3ce0cae1550813972157232",
+            "src/game/api/MapApi.ts": "16b51316aa20d45bb7b3a3af2bd820fe51cf7e0f6cb91a084f086440383a3a77",
+            "src/game/ai/thirdpartbot/builtIn/bot/logic/common/scout.ts": "7d5f65c8a89ebac1233c68519bf4bfbf5e2dc73bb70d6fedda6ea65740ae034c",
+            "src/game/ai/thirdpartbot/builtIn/bot/logic/awareness.ts": "f57048020997ba5daf56dd93b320a73d66251d2888933b824108ecf8b4668865",
+            "src/game/ai/thirdpartbot/builtIn/bot/logic/map/sector.ts": "45747b4f6a94d97f1d525b3e5ad037ba40611e1bff2cb2dc15c984469b1a3cbc",
+            "src/game/ai/thirdpartbot/builtIn/bot/logic/map/incrementalGridCache.ts": "065a4e45143f71fa5f3fe7ab247d8d9c74c9f1f3350c2ed4b5b3fdc8a0cc6adb",
+            "e2e/ai-specialty-scenarios.ts": "1b5213e81e17fd8f361a429a3f2ba09ebf13cb929e8642d44368e099f9c49b2a",
+            "e2e/tsconfig.ai-scouting-queue.json": "07cd9b79bcd78cef5701c83660019ad4b3687fa1db91fcb8e9708bfa59707ee9"
+          }
+        },
+        "sourceStable": true
+      },
+      "resources": {
+        "mapSha256": "c43e94057d6abaec0a39899b44175259f150649e2cd39be66504bb2957f2ec67",
+        "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4",
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+      }
+    },
+    "harassment.json": {
+      "raw": {
+        "bytes": 15832,
+        "sha256": "1e1c755f0b6cd8fcc6acab159e56ecd3f46d969e63c42e36f2e02bfec5649c43"
+      },
+      "sourceMetadata": {
+        "version": {
+          "commit": "8f295c9c40bd24a4782164a31e668b0754039bd7",
+          "builtInSourceSha256": "43a142facc50e98e869c8ec8fe1204a494fa50f12ea43420d7c97b97ead9dd83",
+          "workingTreeStatus": ""
+        },
+        "runnerSha256": "bf1056ebc22687da5b29fef8e4647f85a758a24402fa5ff7cf4ce5ebe957a8b7"
+      },
+      "resources": {
+        "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+        "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4",
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+      }
+    }
+  },
+  "localFrozenComparisons": {
+    "evidenceCommit": "ef1ffb6b6b5c3c7d48958beba90cb10752f7ee90",
+    "scoutingQueue": {
+      "path": "docs/ai-scouting-queue-evidence/report.json",
+      "exactBytes": true,
+      "bytes": 50836,
+      "sha256": "07a56c90d80284c21179410fa7751a702df5afca87e5cf249d3b2bfa57c68ed0"
+    },
+    "informationBoundaryAndObservedVisibility": {
+      "nonMetadataDataExactlyEqual": true,
+      "sourceMetadataChangesSeparatelyVerified": true,
+      "priorSourceCommit": "3198391d7bc4e5ce02032ce3b4b16cdee01b212a"
+    }
+  }
+}

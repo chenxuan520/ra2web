@@ -1,0 +1,82 @@
+{
+  "format": 1,
+  "fingerprint": "f6eadd54e566db2fc028590aeb05a55f9417db97f8b51f5742440a766e5662c5",
+  "updatedAt": "2026-10-29T20:18:24.495Z",
+  "completedJobs": 2,
+  "expectedJobs": 2,
+  "activeJobs": [],
+  "failedJobs": {},
+  "rateDefinitions": {
+    "winRateValid": "wins / (wins + losses + draws); primary rate, invalid error games reported separately",
+    "winRateAllRecorded": "wins / (wins + losses + draws + errors); unplayed games are pending, never wins",
+    "winRateDecisive": "wins / (wins + losses); excludes both draws and errors; null when no decisive games"
+  },
+  "total": {
+    "wins": 0,
+    "losses": 0,
+    "draws": 4,
+    "errors": 0,
+    "total": 4,
+    "expectedGames": 4,
+    "pending": 0,
+    "winRateValid": 0,
+    "winRateAllRecorded": 0,
+    "winRateDecisive": null
+  },
+  "byCountry": {
+    "Americans": {
+      "wins": 0,
+      "losses": 0,
+      "draws": 2,
+      "errors": 0,
+      "total": 2,
+      "expectedGames": 2,
+      "pending": 0,
+      "winRateValid": 0,
+      "winRateAllRecorded": 0,
+      "winRateDecisive": null
+    },
+    "Russians": {
+      "wins": 0,
+      "losses": 0,
+      "draws": 2,
+      "errors": 0,
+      "total": 2,
+      "expectedGames": 2,
+      "pending": 0,
+      "winRateValid": 0,
+      "winRateAllRecorded": 0,
+      "winRateDecisive": null
+    }
+  },
+  "matrix": {
+    "Americans": {
+      "Russians": {
+        "wins": 0,
+        "losses": 0,
+        "draws": 2,
+        "errors": 0,
+        "total": 2,
+        "expectedGames": 2,
+        "pending": 0,
+        "winRateValid": 0,
+        "winRateAllRecorded": 0,
+        "winRateDecisive": null
+      }
+    },
+    "Russians": {
+      "Americans": {
+        "wins": 0,
+        "losses": 0,
+        "draws": 2,
+        "errors": 0,
+        "total": 2,
+        "expectedGames": 2,
+        "pending": 0,
+        "winRateValid": 0,
+        "winRateAllRecorded": 0,
+        "winRateDecisive": null
+      }
+    }
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "format": 1,
+  "runId": 40947340059,
+  "url": "https://github.com/chenxuan520/ra2web/actions/runs/40947340059",
+  "sourceCommit": "8f295c9c40bd24a4782164a31e668b0754039bd7",
+  "baselineCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+  "engineCommit": "8f295c9c40bd24a4782164a31e668b0754039bd7",
+  "candidateProfile": "brutal",
+  "baselineProfile": "brutal",
+  "wholeTsRedalert2Tree": "48ad168b242f1591589e829f6774c640fd112080",
+  "workflowInputs": {
+    "full_matrix": false,
+    "tactic_schedule": "none",
+    "evaluation_set": "development",
+    "comparison_mode": "direct"
+  },
+  "allJobsReadByRoot": true,
+  "jobs": 5,
+  "executedJobs": 1,
+  "intentionalSkippedJobs": 4,
+  "allArtifactsReadByRoot": true,
+  "artifacts": 1,
+  "membersVerified": 14,
+  "sourceGitBlobAndTreeHashesIndependentlyVerified": true,
+  "frozenScoutingFixtureRawExactlyEqual": true,
+  "frozenF1F3aNonMetadataExactlyEqual": true,
+  "changedSourceMetadataSeparatelyVerified": true,
+  "manifestFingerprintVerified": true,
+  "rawReceiptByteHashesVerified": true,
+  "frozenValidateJobReportRecomputed": true,
+  "summaryRecomputed": true,
+  "regressionLog": {
+    "bytes": 542818,
+    "sha256": "e891ccf5f2fe2d72a069cda0b694448a9eac105f2c47c5708240858463108542"
+  },
+  "tests": {
+    "bunPass": 339,
+    "bunSkip": 13,
+    "bunFail": 0,
+    "pythonPass": 37,
+    "build": true,
+    "typechecksPassed": true
+  },
+  "smoke": {
+    "complete": true,
+    "games": 4,
+    "maxTicks": 3000,
+    "errors": 0,
+    "warnings": 0,
+    "physicalAndSlotSwap": true,
+    "qualificationEligible": false,
+    "reason": "Deliberately truncated compatibility smoke; raw tick-limit draws are not 27000-tick strength samples."
+  },
+  "realFixtures": {
+    "informationCases": 4,
+    "informationTicksEach": 180,
+    "cloakCases": 2,
+    "cloakTicksEach": 232,
+    "scoutingQueueCases": 3,
+    "scoutingQueueTicks": [
+      0,
+      3960,
+      3960
+    ],
+    "errors": 0,
+    "mechanismOnly": true
+  },
+  "independentReview": {
+    "passed": true,
+    "assertions": 744,
+    "fullReportSha256": "4f45f5df28459ae3b390c519cc4f9e3aa6bf2a0b8c435b5d2a5d6c236e085ef9"
+  },
+  "verificationSources": "verification-provenance.json",
+  "releaseReady": false
+}

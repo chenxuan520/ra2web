@@ -1,0 +1,66 @@
+{
+  "format": 1,
+  "fingerprint": "f6eadd54e566db2fc028590aeb05a55f9417db97f8b51f5742440a766e5662c5",
+  "createdAt": "2026-10-29T20:18:09.294Z",
+  "config": {
+    "candidateCommit": "8f295c9c40bd24a4782164a31e668b0754039bd7",
+    "baselineCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+    "candidateProfile": "brutal",
+    "baselineProfile": "brutal",
+    "engineCommit": "8f295c9c40bd24a4782164a31e668b0754039bd7",
+    "engineSourceSha256": "a0e02a189426ff1bb3273322db1341d2f8204b418ca60934516d02142ef56433",
+    "runnerSourceSha256": "7fc2f6d68aa44684e149665142618effd6103bfb8fdc0973b2398afda1abf856",
+    "bunVersion": "1.3.14",
+    "lockfileSha256": "23854cfbf8ade38e0244ce53a42396be18a819983f3f5d6372b2d6224b939cf9",
+    "resourceLoaderSha256": "c89bd9944ce017136bb46d440924b9a7ce8e2a5c868b36292721b11e90a7712d",
+    "countries": [
+      "Americans",
+      "Russians"
+    ],
+    "scenarios": [
+      {
+        "map": "mp08t2",
+        "seed": 909,
+        "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+        "terrainFile": "isotemp.mix",
+        "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+      }
+    ],
+    "maxTicks": 3000,
+    "sampleTicks": 900,
+    "credits": 10000,
+    "unitCount": 0,
+    "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+    "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66",
+    "engineDifficulty": 4,
+    "pairedSpawnSwap": true,
+    "pairedPlayerOrderSwap": true
+  },
+  "countryLabels": {
+    "Americans": "美国",
+    "Alliance": "韩国",
+    "French": "法国",
+    "Germans": "德国",
+    "British": "英国",
+    "Africans": "利比亚",
+    "Arabs": "伊拉克",
+    "Confederation": "古巴",
+    "Russians": "苏俄"
+  },
+  "jobs": [
+    {
+      "map": "mp08t2",
+      "seed": 909,
+      "candidateCountry": "Americans",
+      "baselineCountry": "Russians",
+      "id": "mp08t2-909__Americans-vs-Russians"
+    },
+    {
+      "map": "mp08t2",
+      "seed": 909,
+      "candidateCountry": "Russians",
+      "baselineCountry": "Americans",
+      "id": "mp08t2-909__Russians-vs-Americans"
+    }
+  ]
+}

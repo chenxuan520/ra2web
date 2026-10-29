@@ -1,0 +1,32 @@
+[
+  {
+    "job": "mp08t2-909__Americans-vs-Russians",
+    "rawArtifactMember": "smoke/jobs/mp08t2-909__Americans-vs-Russians.json",
+    "raw": {
+      "bytes": 152143,
+      "sha256": "10a295043c22c02d9786f44658f2f30cfdf1ad539d5b540af7219ba776352ee1"
+    },
+    "receiptArtifactMember": "smoke/jobs/mp08t2-909__Americans-vs-Russians.verified.json",
+    "archivedReceipt": "receipts/mp08t2-909__Americans-vs-Russians.verified.json",
+    "receipt": {
+      "bytes": 218,
+      "sha256": "7aba059803a22e3faab7044237114b1810ae66a119423e9c949ef7c9e56bdaad"
+    },
+    "fingerprint": "f6eadd54e566db2fc028590aeb05a55f9417db97f8b51f5742440a766e5662c5"
+  },
+  {
+    "job": "mp08t2-909__Russians-vs-Americans",
+    "rawArtifactMember": "smoke/jobs/mp08t2-909__Russians-vs-Americans.json",
+    "raw": {
+      "bytes": 156442,
+      "sha256": "1d9f63f8bc8f0ff0e8274981797eecd96d905cf3f20eefee1ff7aa57bb7397b3"
+    },
+    "receiptArtifactMember": "smoke/jobs/mp08t2-909__Russians-vs-Americans.verified.json",
+    "archivedReceipt": "receipts/mp08t2-909__Russians-vs-Americans.verified.json",
+    "receipt": {
+      "bytes": 218,
+      "sha256": "8fb6c06791384b74ccbd78ea05298b5c8ceeb0e386db7783d5a8bf42eba915e5"
+    },
+    "fingerprint": "f6eadd54e566db2fc028590aeb05a55f9417db97f8b51f5742440a766e5662c5"
+  }
+]

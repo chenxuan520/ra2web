@@ -1,0 +1,91 @@
+{
+  "passed": true,
+  "receipts": [
+    {
+      "job": "mp08t2-909__Americans-vs-Russians",
+      "complete": true,
+      "reportSha256": "10a295043c22c02d9786f44658f2f30cfdf1ad539d5b540af7219ba776352ee1"
+    },
+    {
+      "job": "mp08t2-909__Russians-vs-Americans",
+      "complete": true,
+      "reportSha256": "1d9f63f8bc8f0ff0e8274981797eecd96d905cf3f20eefee1ff7aa57bb7397b3"
+    }
+  ],
+  "summaryMatches": true,
+  "summary": {
+    "rateDefinitions": {
+      "winRateValid": "wins / (wins + losses + draws); primary rate, invalid error games reported separately",
+      "winRateAllRecorded": "wins / (wins + losses + draws + errors); unplayed games are pending, never wins",
+      "winRateDecisive": "wins / (wins + losses); excludes both draws and errors; null when no decisive games"
+    },
+    "total": {
+      "wins": 0,
+      "losses": 0,
+      "draws": 4,
+      "errors": 0,
+      "total": 4,
+      "expectedGames": 4,
+      "pending": 0,
+      "winRateValid": 0,
+      "winRateAllRecorded": 0,
+      "winRateDecisive": null
+    },
+    "byCountry": {
+      "Americans": {
+        "wins": 0,
+        "losses": 0,
+        "draws": 2,
+        "errors": 0,
+        "total": 2,
+        "expectedGames": 2,
+        "pending": 0,
+        "winRateValid": 0,
+        "winRateAllRecorded": 0,
+        "winRateDecisive": null
+      },
+      "Russians": {
+        "wins": 0,
+        "losses": 0,
+        "draws": 2,
+        "errors": 0,
+        "total": 2,
+        "expectedGames": 2,
+        "pending": 0,
+        "winRateValid": 0,
+        "winRateAllRecorded": 0,
+        "winRateDecisive": null
+      }
+    },
+    "matrix": {
+      "Americans": {
+        "Russians": {
+          "wins": 0,
+          "losses": 0,
+          "draws": 2,
+          "errors": 0,
+          "total": 2,
+          "expectedGames": 2,
+          "pending": 0,
+          "winRateValid": 0,
+          "winRateAllRecorded": 0,
+          "winRateDecisive": null
+        }
+      },
+      "Russians": {
+        "Americans": {
+          "wins": 0,
+          "losses": 0,
+          "draws": 2,
+          "errors": 0,
+          "total": 2,
+          "expectedGames": 2,
+          "pending": 0,
+          "winRateValid": 0,
+          "winRateAllRecorded": 0,
+          "winRateDecisive": null
+        }
+      }
+    }
+  }
+}

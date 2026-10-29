@@ -1,0 +1,68 @@
+{
+  "runId": 40947340059,
+  "remoteInventory": {
+    "actor": "root",
+    "tool": "connected GitHub",
+    "allJobs": 5,
+    "allArtifacts": 1,
+    "snapshot": {
+      "bytes": 3932,
+      "sha256": "56e3b1c44b1a0303815e6ebf964d42d2ab3b383fa7929408804321f3549b4b23"
+    }
+  },
+  "rootSmokeRecompute": {
+    "actor": "root",
+    "script": {
+      "bytes": 2325,
+      "sha256": "4252a253572a8aa6a867e584c0849aa8e347b688f463253ee8657c09a5b9be77"
+    },
+    "frozenPureValidator": {
+      "bytes": 9043,
+      "sha256": "6274e4a6a3e579bf15273afa7fc9fe756cbf05c1c30837e3b0b78c173a7fd893"
+    },
+    "inputManifest": {
+      "bytes": 2192,
+      "sha256": "030646ceb1ab7fff8d477caad759271eddae2d7c13b5c064c15152b94a39ec1c"
+    },
+    "inputSummary": {
+      "bytes": 1935,
+      "sha256": "eecc5abbb7fcba9cc1175b2de9e97e6bc3172a7523466cdb37e868f3ece612c7"
+    },
+    "rawAndReceiptInputs": "raw-receipts.json",
+    "archivedOutput": "smoke-games.jsonl",
+    "output": {
+      "bytes": 1930,
+      "sha256": "e45c8b25b007e5d83c2564cd14eb04a7405bba27898de4d1d5fd1eca9a7aec6e"
+    },
+    "checksFromScript": [
+      "manifest fingerprint",
+      "two raw byte SHA256 receipts",
+      "frozen validateJobReport",
+      "no startup issues",
+      "zero errors/warnings/issues",
+      "3000 tick-limit",
+      "two starting locations per game",
+      "frozen summarizeTournament total/byCountry/matrix equality"
+    ],
+    "assertionCount": null,
+    "boundary": "Root output is the four compact game records; no additional persisted root source-audit receipt or assertion count is claimed here."
+  },
+  "independentReview": {
+    "actor": "l0_ci_review",
+    "assertions": 744,
+    "passed": true,
+    "report": {
+      "bytes": 54588,
+      "sha256": "4f45f5df28459ae3b390c519cc4f9e3aa6bf2a0b8c435b5d2a5d6c236e085ef9"
+    },
+    "script": {
+      "bytes": 25457,
+      "sha256": "a81301be757dc772443a16469c9e08cf7e3c6677b78f9ed92321f5569ec2d2b6"
+    },
+    "pureValidatorResult": {
+      "bytes": 2290,
+      "sha256": "912d294af34572ec3d8c05f9854c220872c8a1a47704165d3cbd90f27f8f656c"
+    },
+    "boundary": "Independent artifact/source/resource/raw verification; remote jobs/artifact inventory supplied by root. No new match or fixture was launched."
+  }
+}

@@ -32,4 +32,4 @@ L1机制可运行、开图更早和完整对局更强是三个不同结论，必
 
 正常初始视野下，实际队列分配初始27项后为空；3840/3959tick不扩，3960按原阈值补入95个可见度不足0.8的区域目标，其中94个中心未见、1个中心已见。全已探反例仍为0，自身隐藏坐标clone反例保留其余3个公共出生点并排除自己。目标分配不表示狗已经走过或揭雾完成，revealedTargetCount保持null；缓存按检查点充分预热，没有验证正常增量调度和完整DefaultStrategy。无生产、交火、资金变动或运行错误；不由此给出胜率/发布结论。现有CIregression已加入该机制脚本，新CI运行身份与结果另记。
 
-新[回归CI40947340059](https://github.com/chenxuan520/ra2web/actions/runs/40947340059)以源码8f295c9同时作为candidate和engine，C18为baseline、双方brutal。配置只执行regression，full_matrix=false/tactic_schedule=none；派发时正常运行，结果待全部作业与artifact核验。此前3198391的绿色CI不能替代这次新源码的回归。
+新[回归CI40947340059](https://github.com/chenxuan520/ra2web/actions/runs/40947340059)以源码8f295c9同时作为candidate和engine，C18为baseline、双方brutal。配置只执行regression，full_matrix=false/tactic_schedule=none；现已成功并完成根代理与独立744项断言核验，全部5作业/1个artifact/14个成员齐全；4个配置跳过正常。新增L0原始报告与冻结本地证据逐字节一致，4次3000tick兼容烟测零错误，不计战力样本。详见[本轮CI归档](ai-scouting-queue-ci/report.md)。此前3198391的结果没有混入本轮。

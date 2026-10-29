@@ -1,0 +1,59 @@
+{
+  "runId": 40947340059,
+  "provenance": "Root agent read all jobs and artifacts using connected GitHub; independent reviewer checked the supplied final snapshot, not a second remote listing.",
+  "snapshotSha256": "56e3b1c44b1a0303815e6ebf964d42d2ab3b383fa7929408804321f3549b4b23",
+  "jobs": [
+    {
+      "id": 123706066337,
+      "name": "regression",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 40947340059
+    },
+    {
+      "id": 123707811931,
+      "name": "tactic-screen",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 40947340059
+    },
+    {
+      "id": 123707812332,
+      "name": "country-matrix",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 40947340059
+    },
+    {
+      "id": 123707812541,
+      "name": "tactic-report",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 40947340059
+    },
+    {
+      "id": 123707812574,
+      "name": "report",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 40947340059
+    }
+  ],
+  "artifact": {
+    "id": 12928794056,
+    "name": "ai-regression",
+    "size_in_bytes": 47681,
+    "digest": "sha256:c7981e595f3fa77cb72d062d8053f2b22ca550db5a1e54f978fab04fb67a2562",
+    "expired": false,
+    "created_at": "2026-10-29T20:18:25Z",
+    "expires_at": "2026-11-12T20:18:24Z",
+    "updated_at": "2026-10-29T20:18:25Z",
+    "workflow_run": {
+      "id": 40947340059,
+      "repository_id": 1429377314,
+      "head_repository_id": 1429377314,
+      "head_branch": "feature/ai-rhino-dog",
+      "head_sha": "8f295c9c40bd24a4782164a31e668b0754039bd7"
+    }
+  }
+}
