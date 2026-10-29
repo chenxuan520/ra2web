@@ -1,0 +1,84 @@
+{
+  "runId": 40958211507,
+  "artifactId": 12934482360,
+  "name": "ai-regression",
+  "bytes": 92103,
+  "sha256": "77104884e5ce0af852ceb7b7e85b8724c7d4851f27137b922d7270c3242ca9d0",
+  "members": [
+    {
+      "path": "harassment.json",
+      "bytes": 15832,
+      "sha256": "a619b4e66578562f3673243892565246ded451a4737533348f83dff35dad0acd"
+    },
+    {
+      "path": "observed-disguise.json",
+      "bytes": 2583365,
+      "sha256": "db682d5d5f3978d2c7a601b9d907e6a491ac860c1f029f501ce6f28a4d7c635e"
+    },
+    {
+      "path": "information-boundary.json",
+      "bytes": 93748,
+      "sha256": "555b4775187beeb8138b59648ad33288ce53f48eaa7f29c9efd694ba94ad4b73"
+    },
+    {
+      "path": "observed-visibility.json",
+      "bytes": 221851,
+      "sha256": "7bee5629bae535ced579c637a4f8f6aa90f8c1e18742e5f3136244c29da96fcc"
+    },
+    {
+      "path": "rhino-dog-fixtures.json",
+      "bytes": 28854,
+      "sha256": "1643eef2d560c8a92e1d5671be17950678aa0b53f0c49d8b611c8fe84796c81b"
+    },
+    {
+      "path": "smoke/jobs/mp08t2-909__Americans-vs-Russians.json",
+      "bytes": 152092,
+      "sha256": "0caaa5530b520486545ba2bcb1bc62bf412ae2b6195d5c9d2ffaabf0dea6009c"
+    },
+    {
+      "path": "scouting-queue.json",
+      "bytes": 50836,
+      "sha256": "1afa9ec6ac6014cf645762aea051aa35a2dd69565a6136d7ec55ad5ba05e3a55"
+    },
+    {
+      "path": "smoke/jobs/mp08t2-909__Americans-vs-Russians.log",
+      "bytes": 1641,
+      "sha256": "389a99d53c4ecf4efdb50ebe28d482e8e9f8e69b92ee06e67c9a8720eaeba480"
+    },
+    {
+      "path": "smoke/jobs/mp08t2-909__Americans-vs-Russians.verified.json",
+      "bytes": 218,
+      "sha256": "25f86d19d419748d9159ccdb8517a1e618cf1463872f171a7e8846a7c6212695"
+    },
+    {
+      "path": "smoke/jobs/mp08t2-909__Russians-vs-Americans.json",
+      "bytes": 156441,
+      "sha256": "bb15d80b0930ed4c3a984b0f5bfe649ad96550978f56dafb241b12d22dd279f4"
+    },
+    {
+      "path": "smoke/jobs/mp08t2-909__Russians-vs-Americans.log",
+      "bytes": 1642,
+      "sha256": "40ba723ac27f54dd445592f1083df36e86b7feed9636c8be97bc82e18ba5b882"
+    },
+    {
+      "path": "smoke/jobs/mp08t2-909__Russians-vs-Americans.verified.json",
+      "bytes": 218,
+      "sha256": "f30f365fbe02f8cf7eb05294abd3fc87012797dc83184add57fde567c5c84a63"
+    },
+    {
+      "path": "smoke/manifest.json",
+      "bytes": 2192,
+      "sha256": "018c738439741df9548dbbd4ecc3d7ecc7d2fa8f16cec2437d12749e666d9aca"
+    },
+    {
+      "path": "smoke/summary.json",
+      "bytes": 1935,
+      "sha256": "7622d138d2bbeb68a13917c54f0457645f8104008d4f8cfb106b2b04ba3557d1"
+    },
+    {
+      "path": "sneak-capture.json",
+      "bytes": 6063,
+      "sha256": "5762ebb16a0e9eb933bf8cc2f3750572551d386c756c5adfee22dd920771af8a"
+    }
+  ]
+}

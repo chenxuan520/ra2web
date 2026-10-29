@@ -36,3 +36,5 @@ GameApi的terrain名单差异已处理，但MapApi对象/地形查询、事件�
 真实机制脚本 `e2e/ai-observed-disguise.ts` 使用原始资源与预置单位，经实际ActionsApi、MakesDisguise弹头、移动、自动攻击、伤害、运输和修复推进；预置不是正常付费开局。共享识破须根据资源里实际存在的detector验证，不把集合手工add当正常原版行为。具体冻结版本、运行覆盖与原始哈希在完成后单独归档；本设计与机制不能代替正常生产、完整策略或独立胜率资格。
 
 源码现已冻结为 `0efe4dbd2efc7f62c677c07c1de2f7895327f11a`，6场景真实复跑、32次截短兼容运行及最终364项Bun通过等结果见[冻结证据](ai-observed-disguise-evidence/report.md)。NAPSIS原版非零范围规则与实际共享识破已单独覆盖，未证明正常付费生产。新CI结果需另验，不将这次机制正确性当作发布通过。
+
+该冻结版本的[精确CI回归](ai-observed-disguise-ci/report.md)现已独立验收成功；上述未完成的功能、信息边界与战力门槛仍保留。

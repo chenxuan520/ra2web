@@ -1,0 +1,47 @@
+{
+  "runId": 40958211507,
+  "candidate": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+  "engine": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+  "baseline": "c18f77650e40b668064bdb913a75bebfa278f42b",
+  "profiles": [
+    "brutal",
+    "brutal"
+  ],
+  "inputLogVerified": true,
+  "allJobsRead": 5,
+  "allArtifactsRead": 1,
+  "allZipMembersVerified": 15,
+  "allSevenFixtureRawBytesEqualFrozenLocal": true,
+  "manifestConfigMatchesFrozenLocalExceptPinnedCiBun": true,
+  "ciBun": "1.3.14",
+  "frozenValidateJobReport": true,
+  "manifestFingerprintAndRawReceipts": true,
+  "summaryRecomputed": true,
+  "physicalAndPlayerSlotSwap": true,
+  "smokeGames": 4,
+  "smokeMaxTicks": 3000,
+  "errorCount": 0,
+  "qualificationEligible": false,
+  "bunTests": {
+    "pass": 364,
+    "skip": 13,
+    "fail": 0
+  },
+  "pythonTests": 37,
+  "regressionLog": {
+    "bytes": 551916,
+    "sha256": "d93c9945013ec2f2097a6291c1248c774177ca05733b4ef112fdbf52d991e72a"
+  },
+  "rootVerifier": {
+    "bytes": 2307,
+    "sha256": "42e98d8606991252da04d5cc93c8ceb10dab36c8f0d985c927d8de792f64d196"
+  },
+  "releaseReady": false,
+  "independentReview": {
+    "passed": true,
+    "mainChecks": 776,
+    "auxiliaryLogChecks": 46,
+    "countsAreNotAdded": true,
+    "jsonSha256": "198e928a3558d68693181ab34178ecaad74c6147a92e080e5ad261cb783c3d8d"
+  }
+}

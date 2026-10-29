@@ -1,0 +1,8 @@
+{
+  "sourceCommit": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+  "allSevenFixtureRawBytesEqualFrozenLocal": true,
+  "frozenRawIndexes": "../ai-observed-disguise-evidence/real-regression-index.json",
+  "rootSourceVerification": "../ai-observed-disguise-evidence/root-fixture-receipt.json",
+  "independentSourceAndMechanismVerification": "../ai-observed-disguise-evidence/independent-fixture-review.json",
+  "local32CompatibilityNotMixedWithCi4": true
+}

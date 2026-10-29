@@ -1,0 +1,169 @@
+{
+  "kind": "independent-readonly-ci-log-and-inventory-review",
+  "runId": 40958211507,
+  "passed": true,
+  "checksPassed": 46,
+  "source": "Supplied root connected-final-snapshot plus actual downloaded regression-current.log and ZIP. No second network read/new game/repository mutation.",
+  "regressionJobId": 123743826062,
+  "jobs": [
+    {
+      "id": 123743826062,
+      "name": "regression",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 123745691973,
+      "name": "tactic-screen",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 123745692507,
+      "name": "country-matrix",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 123745693022,
+      "name": "report",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 123745693774,
+      "name": "tactic-report",
+      "status": "completed",
+      "conclusion": "skipped"
+    }
+  ],
+  "artifact": {
+    "id": 12934482360,
+    "zipBytes": 92103,
+    "zipSha256": "77104884e5ce0af852ceb7b7e85b8724c7d4851f27137b922d7270c3242ca9d0",
+    "members": 15,
+    "crcAndExtractedBytesMatch": true
+  },
+  "inputs": {
+    "candidate": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+    "engine": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+    "baseline": "c18f77650e40b668064bdb913a75bebfa278f42b",
+    "candidateProfile": "brutal",
+    "baselineProfile": "brutal",
+    "evaluationSet": "development",
+    "comparisonMode": "direct",
+    "tacticSchedule": "none",
+    "fullMatrix": false,
+    "profileProvenance": "Baseline profile and refs/mode/set/tactic actual log env; candidate profile/engine also checked manifest and connected workflow head. fullMatrix=false is dispatch record corroborated by exact configured skips."
+  },
+  "log": {
+    "bytes": 551916,
+    "sha256": "d93c9945013ec2f2097a6291c1248c774177ca05733b4ef112fdbf52d991e72a"
+  },
+  "tests": {
+    "bunPass": 364,
+    "bunSkip": 13,
+    "bunFail": 0,
+    "bunExpectCalls": 2921,
+    "pythonPass": 37,
+    "typecheckCommands": [
+      "bun run typecheck:entry",
+      "bun run typecheck:server",
+      "bun --bun tsc -p e2e/tsconfig.ai-benchmark.json",
+      "bun --bun tsc -p e2e/tsconfig.ai-sneak-capture-scenario.json",
+      "bun --bun tsc -p e2e/tsconfig.ai-rhino-dog-scenario.json",
+      "bun --bun tsc -p e2e/tsconfig.ai-information-boundary.json",
+      "bun --bun tsc -p e2e/tsconfig.ai-observed-visibility.json",
+      "bun --bun tsc -p e2e/tsconfig.ai-observed-disguise.json",
+      "bun --bun tsc -p e2e/tsconfig.ai-scouting-queue.json"
+    ],
+    "buildSuccess": true,
+    "mechanismSummaries": 7
+  },
+  "skippedOptionalTests": [
+    "gateway with real PvPGN > (unnamed)",
+    "gateway with real PvPGN > rejects anonymous operations, malformed input and case-insensitive duplicate logins",
+    "gateway with real PvPGN > authenticates, discovers real rooms, starts consistent games and enforces relay identities",
+    "gateway with real PvPGN > keeps the real online guest logged in after the pre-game host leave",
+    "gateway with real PvPGN > keeps the real online guest logged in after the pre-game host disconnect",
+    "gateway with real PvPGN > does not echo chat rejected by the upstream-compatible rate limit",
+    "gateway with real PvPGN > returns real failures instead of static fallback or simulated authentication",
+    "gateway with real PvPGN > closes clients and settles requests on daemon shutdown, then restores persisted accounts",
+    "gateway with real PvPGN > (unnamed)",
+    "actual prepared CDN boots Engine rules and all menu assets using only the three startup MIX files",
+    "local source MIX files retain strict CRC and bounded nested indexes",
+    "prepared local CDN satisfies client menu, prefetch, theater, audio and official map contracts",
+    "prepared MIX and maps load through an existing server with the real client HTTP loaders"
+  ],
+  "skipConditions": {
+    "realPvPGN": "Frozen server/gateway.test.ts:218-219 gates on PVPGN_TEST_PREFIX.",
+    "sourceMix": "Frozen SourceMix.test.ts:7-12 gates on RA2_RESOURCE_SOURCE.",
+    "preparedCDNAndStartup": "Frozen PreparedCdn.test.ts:31-35 and StartupResources.test.ts:178-179 gate on RA2_PREPARED_CDN.",
+    "realHTTP": "Frozen PreparedCdn.test.ts:130-131 additionally gates on RA2_RESOURCE_HTTP_BASE."
+  },
+  "nonFailureWarnings": [
+    "7z-wasm path/fs/crypto externalized for browser",
+    "@ra2web/pcxfile CommonJS module variable in ESM",
+    "large minified chunks",
+    "ineffective dynamic imports",
+    "Git default-branch hint",
+    "Node20 action-runtime/deprecated Node APIs"
+  ],
+  "hardFailureMarkers": [],
+  "smoke": {
+    "recordedGames": 4,
+    "ticksEach": 3000,
+    "logErrors": 0,
+    "logFailedJobs": 0,
+    "qualificationEligible": false,
+    "boundary": "Only log/inventory review here; complete raw/source/fingerprint/receipt audit by parent. Four short smoke draws excluded from27000tick strength samples."
+  },
+  "checks": [
+    "Supplied final connected snapshot includes exact run/all5jobs/1artifact",
+    "Exact regression job completed successfully",
+    "All actual regression steps successful",
+    "Exactly4configured skipped jobs",
+    "Exact artifact ID/name/ZIPsize",
+    "ZIP byteSHA equals connected digest",
+    "15unique ZIPmembers and CRC",
+    "All extracted member bytes equal ZIP",
+    "Actual repeated log env AI_CANDIDATE_REF",
+    "Actual repeated log env AI_BASELINE_REF",
+    "Actual repeated log env AI_BASELINE_PROFILE",
+    "Actual repeated log env AI_EVALUATION_SET",
+    "Actual repeated log env AI_COMPARISON_MODE",
+    "Actual repeated log env AI_TACTIC_SCHEDULE",
+    "Manifest exact candidateCommit",
+    "Manifest exact baselineCommit",
+    "Manifest exact engineCommit",
+    "Manifest exact candidateProfile",
+    "Manifest exact baselineProfile",
+    "Manifest exact maxTicks",
+    "Connected workflow checkout frozen0efe",
+    "Bun364pass/13skip/0fail377total",
+    "Python37 and OK",
+    "13optional skipped rows9PvPGN/4resource",
+    "Sequential command bun run typecheck:entry",
+    "Sequential command bun run typecheck:server",
+    "Sequential command bun --bun tsc -p e2e/tsconfig.ai-benchmark.json",
+    "Sequential command bun --bun tsc -p e2e/tsconfig.ai-sneak-capture-scenario.json",
+    "Sequential command bun --bun tsc -p e2e/tsconfig.ai-rhino-dog-scenario.json",
+    "Sequential command bun --bun tsc -p e2e/tsconfig.ai-information-boundary.json",
+    "Sequential command bun --bun tsc -p e2e/tsconfig.ai-observed-visibility.json",
+    "Sequential command bun --bun tsc -p e2e/tsconfig.ai-observed-disguise.json",
+    "Sequential command bun --bun tsc -p e2e/tsconfig.ai-scouting-queue.json",
+    "Shell fail-fast and actual build completion",
+    "Actual mechanism summary success line8622",
+    "Actual mechanism summary success line8623",
+    "Actual mechanism summary success line8624",
+    "Actual mechanism summary success line8685",
+    "Actual mechanism summary success line8746",
+    "Actual mechanism summary success line8807",
+    "Actual mechanism summary success line8868",
+    "Seven actual mechanism summaries",
+    "Both paired smoke jobs completed",
+    "Smoke log complete2jobs4games0errors/no failed jobs",
+    "No test/compiler/action/runtime error markers in actual log",
+    "Artifact upload log agrees with actual ZIPinventory"
+  ]
+}

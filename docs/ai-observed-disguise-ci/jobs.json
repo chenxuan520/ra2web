@@ -1,0 +1,130 @@
+{
+  "source": "connected GitHub tools, complete five-job inventory",
+  "runId": 40958211507,
+  "jobs": [
+    {
+      "id": 123743826062,
+      "name": "regression",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 40958211507,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run oven-sh/setup-bun@v2",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Validate report integrity checks",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Run actions/cache@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Prepare real game resources",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Regression and real-engine mechanism tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Post Run actions/cache@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16
+        },
+        {
+          "name": "Post Run oven-sh/setup-bun@v2",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19
+        }
+      ]
+    },
+    {
+      "id": 123745691973,
+      "name": "tactic-screen",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 40958211507,
+      "logs_url": null,
+      "steps": null
+    },
+    {
+      "id": 123745692507,
+      "name": "country-matrix",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 40958211507,
+      "logs_url": null,
+      "steps": null
+    },
+    {
+      "id": 123745693022,
+      "name": "report",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 40958211507,
+      "logs_url": null,
+      "steps": null
+    },
+    {
+      "id": 123745693774,
+      "name": "tactic-report",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 40958211507,
+      "logs_url": null,
+      "steps": null
+    }
+  ]
+}

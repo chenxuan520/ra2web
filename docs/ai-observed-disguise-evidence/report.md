@@ -30,6 +30,8 @@
 
 [新回归CI40958211507](https://github.com/chenxuan520/ra2web/actions/runs/40958211507)的candidate与engine/workflow均为0efe4db，对C18，双方brutal，development/direct，full_matrix=false、tactic_schedule=none。归档时正常运行；后续须通过已连接GitHub读全部作业、artifact成员及日志后独立验收。预计regression执行、另四项配置跳过，无国家/战术矩阵报告是正常。此处本地结果不能替代CI结果。
 
+后续验收已完成：该精确CI成功，全部5作业/1个artifact/15成员和日志已核，七份真实机制raw与本轮冻结本地结果逐字节一致；CI四次3000tick也经原始回执复算。见[独立CI归档](../ai-observed-disguise-ci/report.md)，不与本地32次混样。
+
 [紧凑机制报告](compact-fixture.json)完整保留6场景的设置、订单、事件、26组快照、结果和限制；省略的1263行连续trace另有[内容哈希索引](trace-index.json)。原始报告2583365字节，SHA256 `db682d5d5f3978d2c7a601b9d907e6a491ac860c1f029f501ce6f28a4d7c635e`。完整raw留本地；新CI配置也将上传其独立运行的完整报告，最终字节另验。不提交大报告/ZIP、资源或媒体。另存[根回执](root-fixture-receipt.json)、[独立fixture复核](independent-fixture-review.json)、[兼容复算](compatibility-verification.json)、[32条记录](compatibility-games.jsonl)、[验证回执](validation-receipt.json)和[目录SHA](SHA256SUMS)。
 
 仍须解决外部DESO部署/辐射观察缺口，以及后续MapApi、事件、玩家元数据等边界；外部真实姿态缺失后不能声称敌方辐射避让完整。分支的旧开局草稿仍未达标。正常生产、L1付费分路侦察、当前Bot/消融实战、独立资格和最终集成部署均未被本轮替代。
