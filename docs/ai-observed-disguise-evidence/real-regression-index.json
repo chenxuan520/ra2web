@@ -1,0 +1,231 @@
+[
+  {
+    "file": "observed-disguise.frozen.json",
+    "bytes": 2583365,
+    "sha256": "db682d5d5f3978d2c7a601b9d907e6a491ac860c1f029f501ce6f28a4d7c635e",
+    "passed": true,
+    "reportedErrorCount": 0,
+    "source": {
+      "sourceBefore": {
+        "commit": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+        "source": "working-tree",
+        "workingTreeStatus": "",
+        "gameSourceSha256": "33c627cab687d1d62104f2c851fd8121b46a95c9fb8cd648a9c6f05e87d08417",
+        "runnerSha256": "858a1f7641bcef4902ec0e5fbafac0aa3d62f70c932324dc044df19e8b216c02",
+        "files": {
+          "src/game/api/GameApi.ts": "2e18387cc67c6239985b22d2857b01f49ca130d424cd5f9638711107fdf7b883",
+          "src/game/api/ActionsApi.ts": "6f4a964d90a5e4214598b7112fa974eaad3f08b1cc745259b626ae0f071148b4",
+          "src/game/api/interface/GameObjectData.ts": "d3907984c9ae63b99c25dfda3fcb352775eb4fddb409601583e883a91a8c12bb",
+          "src/game/api/interface/UnitData.ts": "3c85ffdd04a85084c0b751d7729024198f00691f1a06a6826761d18465660c9b",
+          "src/game/BotManager.ts": "69a7f3d267fec6457b51bba613db0450e56daba7a3641f3661ff8a59f17706fe",
+          "src/game/gameobject/Projectile.ts": "4616b0a43137cb47ca1210e0955edb1f1e3e502ec3ea21d1eeadc073f97d8dc7",
+          "src/game/gameobject/trait/DisguiseTrait.ts": "12767392137e4046506327e438c58e856f649b3576ec8df66b444bd7cd2fed6e",
+          "src/game/gameobject/trait/AttackTrait.ts": "0e12244331a48fece30a9443af0bfe51933d3d25c4fd81aecc4f23404f855d69",
+          "src/game/trait/SharedDetectDisguiseTrait.ts": "76500902059f0ae8e624b27fef2716b469f8830a37d2f8b330a864433c124fae",
+          "src/game/order/AttackOrder.ts": "1521cf2a2f2842be91740977d4aaab3cf4e5f48d782651531910ec17991d0b4c",
+          "e2e/ai-specialty-scenarios.ts": "1b5213e81e17fd8f361a429a3f2ba09ebf13cb929e8642d44368e099f9c49b2a",
+          "e2e/tsconfig.ai-observed-disguise.json": "472945b47623d2b4990e0fb40e5c280c59552a16439b6553a3fb26941481e857"
+        }
+      },
+      "sourceAfter": {
+        "commit": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+        "source": "working-tree",
+        "workingTreeStatus": "",
+        "gameSourceSha256": "33c627cab687d1d62104f2c851fd8121b46a95c9fb8cd648a9c6f05e87d08417",
+        "runnerSha256": "858a1f7641bcef4902ec0e5fbafac0aa3d62f70c932324dc044df19e8b216c02",
+        "files": {
+          "src/game/api/GameApi.ts": "2e18387cc67c6239985b22d2857b01f49ca130d424cd5f9638711107fdf7b883",
+          "src/game/api/ActionsApi.ts": "6f4a964d90a5e4214598b7112fa974eaad3f08b1cc745259b626ae0f071148b4",
+          "src/game/api/interface/GameObjectData.ts": "d3907984c9ae63b99c25dfda3fcb352775eb4fddb409601583e883a91a8c12bb",
+          "src/game/api/interface/UnitData.ts": "3c85ffdd04a85084c0b751d7729024198f00691f1a06a6826761d18465660c9b",
+          "src/game/BotManager.ts": "69a7f3d267fec6457b51bba613db0450e56daba7a3641f3661ff8a59f17706fe",
+          "src/game/gameobject/Projectile.ts": "4616b0a43137cb47ca1210e0955edb1f1e3e502ec3ea21d1eeadc073f97d8dc7",
+          "src/game/gameobject/trait/DisguiseTrait.ts": "12767392137e4046506327e438c58e856f649b3576ec8df66b444bd7cd2fed6e",
+          "src/game/gameobject/trait/AttackTrait.ts": "0e12244331a48fece30a9443af0bfe51933d3d25c4fd81aecc4f23404f855d69",
+          "src/game/trait/SharedDetectDisguiseTrait.ts": "76500902059f0ae8e624b27fef2716b469f8830a37d2f8b330a864433c124fae",
+          "src/game/order/AttackOrder.ts": "1521cf2a2f2842be91740977d4aaab3cf4e5f48d782651531910ec17991d0b4c",
+          "e2e/ai-specialty-scenarios.ts": "1b5213e81e17fd8f361a429a3f2ba09ebf13cb929e8642d44368e099f9c49b2a",
+          "e2e/tsconfig.ai-observed-disguise.json": "472945b47623d2b4990e0fb40e5c280c59552a16439b6553a3fb26941481e857"
+        }
+      }
+    },
+    "resources": {
+      "mapSha256": "c43e94057d6abaec0a39899b44175259f150649e2cd39be66504bb2957f2ec67",
+      "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4",
+      "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+      "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+    },
+    "mechanismOnly": true
+  },
+  {
+    "file": "information-boundary.json",
+    "bytes": 93748,
+    "sha256": "555b4775187beeb8138b59648ad33288ce53f48eaa7f29c9efd694ba94ad4b73",
+    "passed": true,
+    "reportedErrorCount": 0,
+    "source": {
+      "source": {
+        "commit": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+        "source": "working-tree",
+        "dirty": false,
+        "builtInSourceSha256": "d551c26f3e8bc6c98e361697377dee94610a42f62b2e82d9b65011062c4a9c94",
+        "engineApiSha256": "2e18387cc67c6239985b22d2857b01f49ca130d424cd5f9638711107fdf7b883",
+        "mapApiSha256": "16b51316aa20d45bb7b3a3af2bd820fe51cf7e0f6cb91a084f086440383a3a77",
+        "runnerSha256": "21274073aa457aab68be34a5a664b1db7d225f4a735061eb87a0f296d2e4f290",
+        "fixtureHelperSha256": "1b5213e81e17fd8f361a429a3f2ba09ebf13cb929e8642d44368e099f9c49b2a"
+      }
+    },
+    "resources": {
+      "mapSha256": "c43e94057d6abaec0a39899b44175259f150649e2cd39be66504bb2957f2ec67",
+      "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4",
+      "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+      "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+    },
+    "mechanismOnly": true
+  },
+  {
+    "file": "observed-visibility.json",
+    "bytes": 221851,
+    "sha256": "7bee5629bae535ced579c637a4f8f6aa90f8c1e18742e5f3136244c29da96fcc",
+    "passed": true,
+    "reportedErrorCount": 0,
+    "source": {
+      "sourceBefore": {
+        "commit": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+        "source": "working-tree",
+        "workingTreeStatus": "",
+        "gameSourceSha256": "33c627cab687d1d62104f2c851fd8121b46a95c9fb8cd648a9c6f05e87d08417",
+        "runnerSha256": "df3f5453df0848c87516ab3e63083ccb0b24b9d40f27dbca48f775c65e429ca3",
+        "files": {
+          "src/game/api/GameApi.ts": "2e18387cc67c6239985b22d2857b01f49ca130d424cd5f9638711107fdf7b883",
+          "src/game/BotManager.ts": "69a7f3d267fec6457b51bba613db0450e56daba7a3641f3661ff8a59f17706fe",
+          "src/game/gameobject/trait/CloakableTrait.ts": "2cbc2da9665086ef55c611cb9f6f590f5dab57587444cec42a9e0f5d3335498a",
+          "src/game/gameobject/trait/SubmergibleTrait.ts": "b1ae78992268040a70581d44bf9078ed299073cd623b89a51044f0922c95204f",
+          "src/game/trait/SharedDetectCloakTrait.ts": "aa11140799d662e7b742b0636736125c8597350a9f311f9eda7821873fa9bb8d",
+          "e2e/ai-specialty-scenarios.ts": "1b5213e81e17fd8f361a429a3f2ba09ebf13cb929e8642d44368e099f9c49b2a",
+          "e2e/tsconfig.ai-observed-visibility.json": "77cc515ebf6da978b49940bde1e374d6d66cb41e1ef575ae523fe34414f858d9"
+        }
+      },
+      "sourceAfter": {
+        "commit": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+        "source": "working-tree",
+        "workingTreeStatus": "",
+        "gameSourceSha256": "33c627cab687d1d62104f2c851fd8121b46a95c9fb8cd648a9c6f05e87d08417",
+        "runnerSha256": "df3f5453df0848c87516ab3e63083ccb0b24b9d40f27dbca48f775c65e429ca3",
+        "files": {
+          "src/game/api/GameApi.ts": "2e18387cc67c6239985b22d2857b01f49ca130d424cd5f9638711107fdf7b883",
+          "src/game/BotManager.ts": "69a7f3d267fec6457b51bba613db0450e56daba7a3641f3661ff8a59f17706fe",
+          "src/game/gameobject/trait/CloakableTrait.ts": "2cbc2da9665086ef55c611cb9f6f590f5dab57587444cec42a9e0f5d3335498a",
+          "src/game/gameobject/trait/SubmergibleTrait.ts": "b1ae78992268040a70581d44bf9078ed299073cd623b89a51044f0922c95204f",
+          "src/game/trait/SharedDetectCloakTrait.ts": "aa11140799d662e7b742b0636736125c8597350a9f311f9eda7821873fa9bb8d",
+          "e2e/ai-specialty-scenarios.ts": "1b5213e81e17fd8f361a429a3f2ba09ebf13cb929e8642d44368e099f9c49b2a",
+          "e2e/tsconfig.ai-observed-visibility.json": "77cc515ebf6da978b49940bde1e374d6d66cb41e1ef575ae523fe34414f858d9"
+        }
+      }
+    },
+    "resources": {
+      "mapSha256": "cbada2fde5d2c9c0240fd62b5ef458f901b56a72bfac6a875a913bf11c3604f7",
+      "terrainSha256": "e0b189588495b62a3882eec1c9d4ec4018712f2d2745e1757c9ea6003d2858cf",
+      "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+      "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+    },
+    "mechanismOnly": true
+  },
+  {
+    "file": "scouting-queue.json",
+    "bytes": 50836,
+    "sha256": "1afa9ec6ac6014cf645762aea051aa35a2dd69565a6136d7ec55ad5ba05e3a55",
+    "passed": true,
+    "reportedErrorCount": 0,
+    "source": {
+      "sourceBefore": {
+        "commit": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+        "source": "working-tree",
+        "workingTreeStatus": "",
+        "gameSourceSha256": "33c627cab687d1d62104f2c851fd8121b46a95c9fb8cd648a9c6f05e87d08417",
+        "runnerSha256": "6096290df3123a90b10db056b32bb31fd5d2cd4a27c2755e6f9fab40b92e5855",
+        "files": {
+          "src/game/api/GameApi.ts": "2e18387cc67c6239985b22d2857b01f49ca130d424cd5f9638711107fdf7b883",
+          "src/game/api/MapApi.ts": "16b51316aa20d45bb7b3a3af2bd820fe51cf7e0f6cb91a084f086440383a3a77",
+          "src/game/ai/thirdpartbot/builtIn/bot/logic/common/scout.ts": "7d5f65c8a89ebac1233c68519bf4bfbf5e2dc73bb70d6fedda6ea65740ae034c",
+          "src/game/ai/thirdpartbot/builtIn/bot/logic/awareness.ts": "f57048020997ba5daf56dd93b320a73d66251d2888933b824108ecf8b4668865",
+          "src/game/ai/thirdpartbot/builtIn/bot/logic/map/sector.ts": "45747b4f6a94d97f1d525b3e5ad037ba40611e1bff2cb2dc15c984469b1a3cbc",
+          "src/game/ai/thirdpartbot/builtIn/bot/logic/map/incrementalGridCache.ts": "065a4e45143f71fa5f3fe7ab247d8d9c74c9f1f3350c2ed4b5b3fdc8a0cc6adb",
+          "e2e/ai-specialty-scenarios.ts": "1b5213e81e17fd8f361a429a3f2ba09ebf13cb929e8642d44368e099f9c49b2a",
+          "e2e/tsconfig.ai-scouting-queue.json": "07cd9b79bcd78cef5701c83660019ad4b3687fa1db91fcb8e9708bfa59707ee9"
+        }
+      },
+      "sourceAfter": {
+        "commit": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+        "source": "working-tree",
+        "workingTreeStatus": "",
+        "gameSourceSha256": "33c627cab687d1d62104f2c851fd8121b46a95c9fb8cd648a9c6f05e87d08417",
+        "runnerSha256": "6096290df3123a90b10db056b32bb31fd5d2cd4a27c2755e6f9fab40b92e5855",
+        "files": {
+          "src/game/api/GameApi.ts": "2e18387cc67c6239985b22d2857b01f49ca130d424cd5f9638711107fdf7b883",
+          "src/game/api/MapApi.ts": "16b51316aa20d45bb7b3a3af2bd820fe51cf7e0f6cb91a084f086440383a3a77",
+          "src/game/ai/thirdpartbot/builtIn/bot/logic/common/scout.ts": "7d5f65c8a89ebac1233c68519bf4bfbf5e2dc73bb70d6fedda6ea65740ae034c",
+          "src/game/ai/thirdpartbot/builtIn/bot/logic/awareness.ts": "f57048020997ba5daf56dd93b320a73d66251d2888933b824108ecf8b4668865",
+          "src/game/ai/thirdpartbot/builtIn/bot/logic/map/sector.ts": "45747b4f6a94d97f1d525b3e5ad037ba40611e1bff2cb2dc15c984469b1a3cbc",
+          "src/game/ai/thirdpartbot/builtIn/bot/logic/map/incrementalGridCache.ts": "065a4e45143f71fa5f3fe7ab247d8d9c74c9f1f3350c2ed4b5b3fdc8a0cc6adb",
+          "e2e/ai-specialty-scenarios.ts": "1b5213e81e17fd8f361a429a3f2ba09ebf13cb929e8642d44368e099f9c49b2a",
+          "e2e/tsconfig.ai-scouting-queue.json": "07cd9b79bcd78cef5701c83660019ad4b3687fa1db91fcb8e9708bfa59707ee9"
+        }
+      }
+    },
+    "resources": {
+      "mapSha256": "c43e94057d6abaec0a39899b44175259f150649e2cd39be66504bb2957f2ec67",
+      "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4",
+      "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+      "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+    },
+    "mechanismOnly": true
+  },
+  {
+    "file": "harassment.json",
+    "bytes": 15832,
+    "sha256": "a619b4e66578562f3673243892565246ded451a4737533348f83dff35dad0acd",
+    "passed": true,
+    "reportedErrorCount": null,
+    "source": {
+      "version": {
+        "commit": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+        "builtInSourceSha256": "d551c26f3e8bc6c98e361697377dee94610a42f62b2e82d9b65011062c4a9c94",
+        "workingTreeStatus": ""
+      },
+      "runnerSha256": "bf1056ebc22687da5b29fef8e4647f85a758a24402fa5ff7cf4ce5ebe957a8b7"
+    },
+    "resources": {
+      "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+      "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4",
+      "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+      "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+    },
+    "mechanismOnly": true
+  },
+  {
+    "file": "sneak-capture.json",
+    "bytes": 6063,
+    "sha256": "5762ebb16a0e9eb933bf8cc2f3750572551d386c756c5adfee22dd920771af8a",
+    "passed": true,
+    "reportedErrorCount": null,
+    "source": {},
+    "resources": null,
+    "mechanismOnly": true
+  },
+  {
+    "file": "rhino-dog.json",
+    "bytes": 28854,
+    "sha256": "1643eef2d560c8a92e1d5671be17950678aa0b53f0c49d8b611c8fe84796c81b",
+    "passed": true,
+    "reportedErrorCount": null,
+    "source": {},
+    "resources": {
+      "mapSha256": "b84570fd81afddc88ecfd19b9a93b46c0b7007c56b94aebd2ad434db6dd19476",
+      "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4",
+      "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+      "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+    },
+    "mechanismOnly": true
+  }
+]

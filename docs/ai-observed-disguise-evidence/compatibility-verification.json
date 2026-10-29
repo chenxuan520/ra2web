@@ -1,0 +1,553 @@
+{
+  "passed": true,
+  "groups": [
+    {
+      "name": "original14-normal",
+      "manifestFingerprint": "f6c3e0e35a36eb8470b987d88bf883c02e4a1b8886a930eff20a2520ef165bac",
+      "manifestSha256": "9e29f0940aaa64bf92a214afcfa311c2f4c627e66a9b9c29cd92dcec89530812",
+      "config": {
+        "candidateCommit": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+        "baselineCommit": "14ffd3613663a0e1a373593922e0f5e1c5f20f40",
+        "candidateProfile": "brutal",
+        "baselineProfile": "normal",
+        "engineCommit": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+        "engineSourceSha256": "bf27b33ad3121c0c1c7f5d87213b88b40ba204010cd00cb5d31fbf518d705a8f",
+        "runnerSourceSha256": "b3ca8b52880159bc1963f996fd97a3228ff108d8dbf03df3610062a95c34528b",
+        "bunVersion": "1.3.14",
+        "lockfileSha256": "23854cfbf8ade38e0244ce53a42396be18a819983f3f5d6372b2d6224b939cf9",
+        "resourceLoaderSha256": "c89bd9944ce017136bb46d440924b9a7ce8e2a5c868b36292721b11e90a7712d",
+        "countries": [
+          "Americans",
+          "Russians"
+        ],
+        "scenarios": [
+          {
+            "map": "mp08t2",
+            "seed": 909,
+            "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+            "terrainFile": "isotemp.mix",
+            "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+          }
+        ],
+        "maxTicks": 3000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66",
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true
+      },
+      "rawReports": [
+        {
+          "job": "mp08t2-909__Americans-vs-Russians",
+          "bytes": 154536,
+          "sha256": "5c5885044022d7bd5322427749dc84213985efe62fc85b55206b0973dc906ebf",
+          "receiptBytes": 218,
+          "receiptSha256": "4d8dd7272759f7e9724ca013584e4307f546889ed2bfc05c8042a20514d71534"
+        },
+        {
+          "job": "mp08t2-909__Russians-vs-Americans",
+          "bytes": 162493,
+          "sha256": "c470cb380c59ad2759e9fe7cef0b91fe93dba73f4d76b97c5ce8077ed6e0b2a0",
+          "receiptBytes": 218,
+          "receiptSha256": "e55f20db8080f921e0cd443928ab22840aa52dd4d12519667dd802c030fb6031"
+        }
+      ],
+      "summary": {
+        "wins": 0,
+        "losses": 0,
+        "draws": 4,
+        "errors": 0,
+        "total": 4,
+        "expectedGames": 4,
+        "pending": 0,
+        "winRateValid": 0,
+        "winRateAllRecorded": 0,
+        "winRateDecisive": null
+      },
+      "qualificationEligible": false
+    },
+    {
+      "name": "historical04-brutal",
+      "manifestFingerprint": "ba7b9f1ece0494ba96a86f24d1fd702e3fdcbd1b232ed7e794b77985ec9b2826",
+      "manifestSha256": "e34d86a1b26470535ce54900b44fd2da64be30f98748246f68d440da8d6c0c32",
+      "config": {
+        "candidateCommit": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+        "baselineCommit": "04a9f7ae57053e3f7f108afd14f830c293cac47a",
+        "candidateProfile": "brutal",
+        "baselineProfile": "brutal",
+        "engineCommit": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+        "engineSourceSha256": "bf27b33ad3121c0c1c7f5d87213b88b40ba204010cd00cb5d31fbf518d705a8f",
+        "runnerSourceSha256": "b3ca8b52880159bc1963f996fd97a3228ff108d8dbf03df3610062a95c34528b",
+        "bunVersion": "1.3.14",
+        "lockfileSha256": "23854cfbf8ade38e0244ce53a42396be18a819983f3f5d6372b2d6224b939cf9",
+        "resourceLoaderSha256": "c89bd9944ce017136bb46d440924b9a7ce8e2a5c868b36292721b11e90a7712d",
+        "countries": [
+          "Americans",
+          "Russians"
+        ],
+        "scenarios": [
+          {
+            "map": "mp08t2",
+            "seed": 909,
+            "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+            "terrainFile": "isotemp.mix",
+            "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+          }
+        ],
+        "maxTicks": 3000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66",
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true
+      },
+      "rawReports": [
+        {
+          "job": "mp08t2-909__Americans-vs-Russians",
+          "bytes": 171844,
+          "sha256": "d7ad25de8847590f893e57acc51cc31fdd597c425e9d572d16471d1c74776816",
+          "receiptBytes": 218,
+          "receiptSha256": "31735c579b98ab4fba4f56152c2f0d105d1237aa397eeef239abf328287e45b9"
+        },
+        {
+          "job": "mp08t2-909__Russians-vs-Americans",
+          "bytes": 165279,
+          "sha256": "d5e01b1cc08defca5374a7cf557e6c064b47bb9c73735f2bce7973cb74f892b4",
+          "receiptBytes": 218,
+          "receiptSha256": "ec37a1b07c75b1b8f27b8dfcdbd1ed065e2f1cecdc29073f224e6d2fdc9a0d21"
+        }
+      ],
+      "summary": {
+        "wins": 0,
+        "losses": 0,
+        "draws": 4,
+        "errors": 0,
+        "total": 4,
+        "expectedGames": 4,
+        "pending": 0,
+        "winRateValid": 0,
+        "winRateAllRecorded": 0,
+        "winRateDecisive": null
+      },
+      "qualificationEligible": false
+    },
+    {
+      "name": "historical0a-brutal",
+      "manifestFingerprint": "544617be53d5ec2f153c9ec66608ec01d920a0d7aef2618cabf6db4c7c3a4d80",
+      "manifestSha256": "022bada62796ddaf93498f9a5180dc679725a4fb9621b54dada6f1188108f531",
+      "config": {
+        "candidateCommit": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+        "baselineCommit": "0a46d527995adc2411c04484de7336d63d4b0c5f",
+        "candidateProfile": "brutal",
+        "baselineProfile": "brutal",
+        "engineCommit": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+        "engineSourceSha256": "bf27b33ad3121c0c1c7f5d87213b88b40ba204010cd00cb5d31fbf518d705a8f",
+        "runnerSourceSha256": "b3ca8b52880159bc1963f996fd97a3228ff108d8dbf03df3610062a95c34528b",
+        "bunVersion": "1.3.14",
+        "lockfileSha256": "23854cfbf8ade38e0244ce53a42396be18a819983f3f5d6372b2d6224b939cf9",
+        "resourceLoaderSha256": "c89bd9944ce017136bb46d440924b9a7ce8e2a5c868b36292721b11e90a7712d",
+        "countries": [
+          "Americans",
+          "Russians"
+        ],
+        "scenarios": [
+          {
+            "map": "mp08t2",
+            "seed": 909,
+            "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+            "terrainFile": "isotemp.mix",
+            "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+          }
+        ],
+        "maxTicks": 3000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66",
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true
+      },
+      "rawReports": [
+        {
+          "job": "mp08t2-909__Americans-vs-Russians",
+          "bytes": 170337,
+          "sha256": "f8d33c36499d1ef757745b56ecd8ed2b63317bc39dcee934c45e167af1de775f",
+          "receiptBytes": 218,
+          "receiptSha256": "972560b70c77908c09ef83e7ee5b4ff9c725876414b98776058433886789d5c0"
+        },
+        {
+          "job": "mp08t2-909__Russians-vs-Americans",
+          "bytes": 165286,
+          "sha256": "90db26b377433225cbc4494a4adada545ce93d2cf0d73bf47e6b47e788dcf7b9",
+          "receiptBytes": 218,
+          "receiptSha256": "88bb432e2e20a5377b27c961d52157cd7ced04becabc5fe7fb7e4a14957ad755"
+        }
+      ],
+      "summary": {
+        "wins": 0,
+        "losses": 0,
+        "draws": 4,
+        "errors": 0,
+        "total": 4,
+        "expectedGames": 4,
+        "pending": 0,
+        "winRateValid": 0,
+        "winRateAllRecorded": 0,
+        "winRateDecisive": null
+      },
+      "qualificationEligible": false
+    },
+    {
+      "name": "currentC18-brutal",
+      "manifestFingerprint": "9304bd5719ed1e4ad65da0bc5af5602b7642ce5e1836a4cd6d96427798f9559d",
+      "manifestSha256": "7c2613468e0c474eb3c361960d6775ac4b0cea9a006b97d5e7d59e1bb5fe6483",
+      "config": {
+        "candidateCommit": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+        "baselineCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+        "candidateProfile": "brutal",
+        "baselineProfile": "brutal",
+        "engineCommit": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+        "engineSourceSha256": "bf27b33ad3121c0c1c7f5d87213b88b40ba204010cd00cb5d31fbf518d705a8f",
+        "runnerSourceSha256": "b3ca8b52880159bc1963f996fd97a3228ff108d8dbf03df3610062a95c34528b",
+        "bunVersion": "1.3.14",
+        "lockfileSha256": "23854cfbf8ade38e0244ce53a42396be18a819983f3f5d6372b2d6224b939cf9",
+        "resourceLoaderSha256": "c89bd9944ce017136bb46d440924b9a7ce8e2a5c868b36292721b11e90a7712d",
+        "countries": [
+          "Americans",
+          "Russians"
+        ],
+        "scenarios": [
+          {
+            "map": "mp08t2",
+            "seed": 909,
+            "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+            "terrainFile": "isotemp.mix",
+            "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+          }
+        ],
+        "maxTicks": 3000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66",
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true
+      },
+      "rawReports": [
+        {
+          "job": "mp08t2-909__Americans-vs-Russians",
+          "bytes": 152094,
+          "sha256": "39ffab936ff7007475a27c0244f131ee5ef3a8d6b0ccc197bfabaf35e9575de8",
+          "receiptBytes": 218,
+          "receiptSha256": "8c2632261a0ca3d7c794c67cbeaf029f5d18ac426e676eb1e50a46209bc1cc1e"
+        },
+        {
+          "job": "mp08t2-909__Russians-vs-Americans",
+          "bytes": 156437,
+          "sha256": "889fa08dcb4f1ba31ca249036c657824f1383726f7d0bf44f3c03399b3c34969",
+          "receiptBytes": 218,
+          "receiptSha256": "3f4c6a5f27b48b0dc9e2c2163d6b0e91d373a7eb5d8ae56f4d6b6a1953c359f7"
+        }
+      ],
+      "summary": {
+        "wins": 0,
+        "losses": 0,
+        "draws": 4,
+        "errors": 0,
+        "total": 4,
+        "expectedGames": 4,
+        "pending": 0,
+        "winRateValid": 0,
+        "winRateAllRecorded": 0,
+        "winRateDecisive": null
+      },
+      "qualificationEligible": false
+    },
+    {
+      "name": "previous356-brutal",
+      "manifestFingerprint": "f86222ca179d582fb9c95ba1f6be35abe8434102f80726f23116104b2e16fb46",
+      "manifestSha256": "0a355364bea2c2b0ec0ea8f4935a46cf90a4cb0dd2ab13c3159bbdb0bf550f7f",
+      "config": {
+        "candidateCommit": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+        "baselineCommit": "356d35b7271d14a37380585f4f809ccd19703757",
+        "candidateProfile": "brutal",
+        "baselineProfile": "brutal",
+        "engineCommit": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+        "engineSourceSha256": "bf27b33ad3121c0c1c7f5d87213b88b40ba204010cd00cb5d31fbf518d705a8f",
+        "runnerSourceSha256": "b3ca8b52880159bc1963f996fd97a3228ff108d8dbf03df3610062a95c34528b",
+        "bunVersion": "1.3.14",
+        "lockfileSha256": "23854cfbf8ade38e0244ce53a42396be18a819983f3f5d6372b2d6224b939cf9",
+        "resourceLoaderSha256": "c89bd9944ce017136bb46d440924b9a7ce8e2a5c868b36292721b11e90a7712d",
+        "countries": [
+          "Americans",
+          "Russians"
+        ],
+        "scenarios": [
+          {
+            "map": "mp08t2",
+            "seed": 909,
+            "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+            "terrainFile": "isotemp.mix",
+            "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+          }
+        ],
+        "maxTicks": 3000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66",
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true
+      },
+      "rawReports": [
+        {
+          "job": "mp08t2-909__Americans-vs-Russians",
+          "bytes": 152094,
+          "sha256": "5ad81d0062d980613c68c33e55f950cbcdf2b143d450f86a4679d42a390a79f1",
+          "receiptBytes": 218,
+          "receiptSha256": "76d8fcb1063e66eb232136fa34f646ea0e281ca9c3ae79c405f930d7aa194e8a"
+        },
+        {
+          "job": "mp08t2-909__Russians-vs-Americans",
+          "bytes": 156438,
+          "sha256": "9d747049004b338fc7f3a425a38e7b6c07a559c747518f483a212ba14bd4e5dc",
+          "receiptBytes": 218,
+          "receiptSha256": "18b2a048d5e445b0b1ae014e0c38027274238c7049d0467893291f0d38afff34"
+        }
+      ],
+      "summary": {
+        "wins": 0,
+        "losses": 0,
+        "draws": 4,
+        "errors": 0,
+        "total": 4,
+        "expectedGames": 4,
+        "pending": 0,
+        "winRateValid": 0,
+        "winRateAllRecorded": 0,
+        "winRateDecisive": null
+      },
+      "qualificationEligible": false
+    },
+    {
+      "name": "previousL0-brutal",
+      "manifestFingerprint": "ad8fd06d78e8aa69312f30b73d9fdb359f248356ced96e7d212a880d6aa3712e",
+      "manifestSha256": "7b44053702ca6c4d8ef9a0cfa1f594717bd31ec494b8130f15966785e4cd85b0",
+      "config": {
+        "candidateCommit": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+        "baselineCommit": "8f295c9c40bd24a4782164a31e668b0754039bd7",
+        "candidateProfile": "brutal",
+        "baselineProfile": "brutal",
+        "engineCommit": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+        "engineSourceSha256": "bf27b33ad3121c0c1c7f5d87213b88b40ba204010cd00cb5d31fbf518d705a8f",
+        "runnerSourceSha256": "b3ca8b52880159bc1963f996fd97a3228ff108d8dbf03df3610062a95c34528b",
+        "bunVersion": "1.3.14",
+        "lockfileSha256": "23854cfbf8ade38e0244ce53a42396be18a819983f3f5d6372b2d6224b939cf9",
+        "resourceLoaderSha256": "c89bd9944ce017136bb46d440924b9a7ce8e2a5c868b36292721b11e90a7712d",
+        "countries": [
+          "Americans",
+          "Russians"
+        ],
+        "scenarios": [
+          {
+            "map": "mp08t2",
+            "seed": 909,
+            "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+            "terrainFile": "isotemp.mix",
+            "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+          }
+        ],
+        "maxTicks": 3000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66",
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true
+      },
+      "rawReports": [
+        {
+          "job": "mp08t2-909__Americans-vs-Russians",
+          "bytes": 152088,
+          "sha256": "c20aed8ee5d8e8eac0a6fd6e7ad84c1d9aea5cd1b803e6d47d8d344fc757d612",
+          "receiptBytes": 218,
+          "receiptSha256": "dc121ba7d9bdbec66a736091451c5f1bf53165353a3d591b24b0c2987e35b1f2"
+        },
+        {
+          "job": "mp08t2-909__Russians-vs-Americans",
+          "bytes": 152136,
+          "sha256": "fea2a2ed37e9cc1c37384c5fdd6c6a04c8f76adfa8efd09e5c9593edf666b4ac",
+          "receiptBytes": 218,
+          "receiptSha256": "f14f2934658507ad53ae57b3e3b33366b7fa69fcd17a3ef72f1cdf2eb1cfbce2"
+        }
+      ],
+      "summary": {
+        "wins": 0,
+        "losses": 0,
+        "draws": 4,
+        "errors": 0,
+        "total": 4,
+        "expectedGames": 4,
+        "pending": 0,
+        "winRateValid": 0,
+        "winRateAllRecorded": 0,
+        "winRateDecisive": null
+      },
+      "qualificationEligible": false
+    },
+    {
+      "name": "current-normal-self",
+      "manifestFingerprint": "3488f9223e17f19c80979626b9b8204375509d2ea7ebbe980010c7e68867cd93",
+      "manifestSha256": "974d768b5e66c41829c0fcf9f6564022643cfd53ca1b43b77a7ca4837f269a69",
+      "config": {
+        "candidateCommit": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+        "baselineCommit": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+        "candidateProfile": "normal",
+        "baselineProfile": "normal",
+        "engineCommit": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+        "engineSourceSha256": "bf27b33ad3121c0c1c7f5d87213b88b40ba204010cd00cb5d31fbf518d705a8f",
+        "runnerSourceSha256": "b3ca8b52880159bc1963f996fd97a3228ff108d8dbf03df3610062a95c34528b",
+        "bunVersion": "1.3.14",
+        "lockfileSha256": "23854cfbf8ade38e0244ce53a42396be18a819983f3f5d6372b2d6224b939cf9",
+        "resourceLoaderSha256": "c89bd9944ce017136bb46d440924b9a7ce8e2a5c868b36292721b11e90a7712d",
+        "countries": [
+          "Americans",
+          "Russians"
+        ],
+        "scenarios": [
+          {
+            "map": "mp08t2",
+            "seed": 909,
+            "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+            "terrainFile": "isotemp.mix",
+            "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+          }
+        ],
+        "maxTicks": 3000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66",
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true
+      },
+      "rawReports": [
+        {
+          "job": "mp08t2-909__Americans-vs-Russians",
+          "bytes": 171732,
+          "sha256": "264bd926849a0a423b15cfe3cb55d4ca7c4cbf7e1bf5cb12fc65ca1edce64aac",
+          "receiptBytes": 218,
+          "receiptSha256": "0f92894bc8a853923e41dc488b2906e99fb52008a00e9af61ef397df8791db0f"
+        },
+        {
+          "job": "mp08t2-909__Russians-vs-Americans",
+          "bytes": 171738,
+          "sha256": "198f3f04bf605ee40427338b774b8fe1fcab80b665d8fdda400e8af450ea8efd",
+          "receiptBytes": 218,
+          "receiptSha256": "6159293a976ddcab5e26ead17a2afe36ca489eae9ba37f9e5cccd31777ac1440"
+        }
+      ],
+      "summary": {
+        "wins": 0,
+        "losses": 0,
+        "draws": 4,
+        "errors": 0,
+        "total": 4,
+        "expectedGames": 4,
+        "pending": 0,
+        "winRateValid": 0,
+        "winRateAllRecorded": 0,
+        "winRateDecisive": null
+      },
+      "qualificationEligible": false
+    },
+    {
+      "name": "currentC18-combat-smoke",
+      "manifestFingerprint": "b9294da5471be129e6eea6f11d362129e6c88e28c85a5b696f92834941e4c4e3",
+      "manifestSha256": "de1d348d723420cfab6742c573e6b8054ce4f2470c3e2a0e0db31ecce9aa19c6",
+      "config": {
+        "candidateCommit": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+        "baselineCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+        "candidateProfile": "brutal",
+        "baselineProfile": "brutal",
+        "engineCommit": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+        "engineSourceSha256": "bf27b33ad3121c0c1c7f5d87213b88b40ba204010cd00cb5d31fbf518d705a8f",
+        "runnerSourceSha256": "b3ca8b52880159bc1963f996fd97a3228ff108d8dbf03df3610062a95c34528b",
+        "bunVersion": "1.3.14",
+        "lockfileSha256": "23854cfbf8ade38e0244ce53a42396be18a819983f3f5d6372b2d6224b939cf9",
+        "resourceLoaderSha256": "c89bd9944ce017136bb46d440924b9a7ce8e2a5c868b36292721b11e90a7712d",
+        "countries": [
+          "Americans",
+          "Russians"
+        ],
+        "scenarios": [
+          {
+            "map": "mp08t2",
+            "seed": 909,
+            "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+            "terrainFile": "isotemp.mix",
+            "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+          }
+        ],
+        "maxTicks": 9000,
+        "sampleTicks": 900,
+        "credits": 10000,
+        "unitCount": 0,
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66",
+        "engineDifficulty": 4,
+        "pairedSpawnSwap": true,
+        "pairedPlayerOrderSwap": true
+      },
+      "rawReports": [
+        {
+          "job": "mp08t2-909__Americans-vs-Russians",
+          "bytes": 403800,
+          "sha256": "be13ecfba6db7e7fb399ed174e616d5bc34d78235961ce547088775519ea4664",
+          "receiptBytes": 218,
+          "receiptSha256": "225df0a6bd2a6b27e75fc506b450a42b3602ed49e7b99a518e08d70a1a01b272"
+        },
+        {
+          "job": "mp08t2-909__Russians-vs-Americans",
+          "bytes": 402876,
+          "sha256": "2d11ef9e949211b8ab2d0e4c4fcb8ac72601a6c42c56ba2b32c23020f69a48c6",
+          "receiptBytes": 218,
+          "receiptSha256": "822d5508ca871f3fd5b7cbd09a3491c22bf94cc69923524e4b096004ea413a80"
+        }
+      ],
+      "summary": {
+        "wins": 0,
+        "losses": 0,
+        "draws": 4,
+        "errors": 0,
+        "total": 4,
+        "expectedGames": 4,
+        "pending": 0,
+        "winRateValid": 0,
+        "winRateAllRecorded": 0,
+        "winRateDecisive": null
+      },
+      "qualificationEligible": false
+    }
+  ],
+  "games": 32,
+  "errors": 0,
+  "qualificationEligible": false,
+  "scope": "28x3000 tick compatibility plus 4x9000 tick combat window; no strength qualification."
+}

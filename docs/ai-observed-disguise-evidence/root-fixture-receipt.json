@@ -1,0 +1,17 @@
+{
+  "sourceCommit": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+  "rawBytes": 2583365,
+  "rawSha256": "db682d5d5f3978d2c7a601b9d907e6a491ac860c1f029f501ce6f28a4d7c635e",
+  "sourceGitFilesVerified": 12,
+  "gameTsFilesVerified": 654,
+  "entireGameSha256": "33c627cab687d1d62104f2c851fd8121b46a95c9fb8cd648a9c6f05e87d08417",
+  "fixtureRunnerGitVerified": true,
+  "resourceHashesVerified": true,
+  "developmentNonMetadataExactlyEqual": true,
+  "cases": 6,
+  "assertions": 1357,
+  "observerPairs": 26,
+  "errorCount": 0,
+  "sourceStable": true,
+  "strengthEligible": false
+}

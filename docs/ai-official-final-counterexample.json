@@ -1,0 +1,613 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "url": "https://www.bilibili.com/video/BV1Zmedz4EJ7/?p=1",
+    "bvid": "BV1Zmedz4EJ7",
+    "part": 1,
+    "event": "2025原版冰天王决赛P1",
+    "versionProvenance": "沿用docs/ai-official-final-decision-window.md已核官方原版赛事身份；本次未另取模式/INI",
+    "players": {
+      "purple": "85/伊拉克",
+      "green": "威龙/法国"
+    },
+    "map": "冰天/画面赛事HUD地图2025冰天-宝石冰天",
+    "perspective": "OB全图和双方库存，不是玩家第一视角",
+    "media": {
+      "path": "/workspace/scratch/ra2-top-match-research/BV1Zmedz4EJ7-p1-hd.mp4",
+      "bytes": 34833580,
+      "sha256": "f8a22491a15a0e7008b9913fd4925916c3e05bcfbd348f53f6ae99ebfc997255"
+    },
+    "ffprobeDurationSeconds": 184.018254
+  },
+  "viewing": {
+    "videoSeconds": [
+      151,
+      152,
+      153,
+      154,
+      155,
+      156,
+      157,
+      158,
+      159,
+      160,
+      161,
+      162,
+      163,
+      164,
+      165,
+      166,
+      167,
+      168,
+      169,
+      170,
+      171,
+      172,
+      173,
+      174,
+      175,
+      176,
+      177,
+      178,
+      179,
+      180,
+      181,
+      182,
+      183
+    ],
+    "sampleIntervalSeconds": 1,
+    "contactSheetsViewed": [
+      "contact-151.jpg",
+      "contact-160.jpg",
+      "contact-169.jpg",
+      "contact-178.jpg"
+    ],
+    "inventoryStripsViewed": [
+      "inventory-151.png",
+      "inventory-162.png",
+      "inventory-173.png"
+    ],
+    "individuallyViewedFullFrames": [
+      151,
+      161,
+      166,
+      167,
+      176,
+      179
+    ],
+    "heardAudio": false,
+    "asrUsed": false,
+    "continuousPlayback": false,
+    "fullGameContinuouslyWatched": false,
+    "noNewMediaDownload": true,
+    "excludedPriorWindow": [
+      60,
+      150
+    ],
+    "timeRule": "视频秒、HUD时钟分别记；不换算游戏tick，不假定固定秒差"
+  },
+  "inventoryMethod": {
+    "quantity": "OB该帧现存库存；不是累计出厂或花费",
+    "zeroMeaning": "对应库存图标当帧未列，不能推出永不生产或固定对象已死",
+    "identityReference": "复用旧窗口CNCNZ cameo htkicon/jjeticon/e2icon，仅辨认图标。第三方页面本次HTTP403，未重新取得正文。",
+    "unclassifiedIcon": "161秒紫库存新增另一车辆图标，当前未核名称，不计入HTK或坦克产量。",
+    "noCasualtyAttribution": true
+  },
+  "inventorySnapshots": [
+    {
+      "s": 151,
+      "clock": "02:36",
+      "purple_HTNK": 6,
+      "purple_E2": 11,
+      "purple_HTK": 1,
+      "green_JUMPJET": 1,
+      "green_MTNK": 5,
+      "green_CMIN": 3
+    },
+    {
+      "s": 157,
+      "clock": "02:42",
+      "purple_HTNK": 6,
+      "purple_E2": 16,
+      "purple_HTK": 1,
+      "green_JUMPJET": 1,
+      "green_MTNK": 5,
+      "green_CMIN": 3
+    },
+    {
+      "s": 158,
+      "clock": "02:44",
+      "purple_HTNK": 7,
+      "purple_E2": 17,
+      "purple_HTK": 1,
+      "green_JUMPJET": 1,
+      "green_MTNK": 5,
+      "green_CMIN": 3
+    },
+    {
+      "s": 161,
+      "clock": "02:47",
+      "purple_HTNK": 7,
+      "purple_E2": 20,
+      "purple_HTK": 1,
+      "green_JUMPJET": 1,
+      "green_MTNK": 5,
+      "green_CMIN": 3
+    },
+    {
+      "s": 162,
+      "clock": "02:48",
+      "purple_HTNK": 7,
+      "purple_E2": 21,
+      "purple_HTK": 1,
+      "green_JUMPJET": 1,
+      "green_MTNK": 5,
+      "green_CMIN": 3
+    },
+    {
+      "s": 163,
+      "clock": "02:49",
+      "purple_HTNK": 7,
+      "purple_E2": 21,
+      "purple_HTK": 1,
+      "green_JUMPJET": 1,
+      "green_MTNK": 5,
+      "green_CMIN": 3
+    },
+    {
+      "s": 166,
+      "clock": "02:52",
+      "purple_HTNK": 7,
+      "purple_E2": 18,
+      "purple_HTK": 1,
+      "green_JUMPJET": 1,
+      "green_MTNK": 5,
+      "green_CMIN": 4
+    },
+    {
+      "s": 167,
+      "clock": "02:53",
+      "purple_HTNK": 7,
+      "purple_E2": 18,
+      "purple_HTK": 1,
+      "green_JUMPJET": 0,
+      "green_MTNK": 4,
+      "green_CMIN": 4
+    },
+    {
+      "s": 168,
+      "clock": "02:54",
+      "purple_HTNK": 7,
+      "purple_E2": 18,
+      "purple_HTK": 1,
+      "green_JUMPJET": 0,
+      "green_MTNK": 4,
+      "green_CMIN": 4
+    },
+    {
+      "s": 169,
+      "clock": "02:55",
+      "purple_HTNK": 5,
+      "purple_E2": 18,
+      "purple_HTK": 1,
+      "green_JUMPJET": 0,
+      "green_MTNK": 4,
+      "green_CMIN": 4
+    },
+    {
+      "s": 173,
+      "clock": "02:59",
+      "purple_HTNK": 2,
+      "purple_E2": 17,
+      "purple_HTK": 1,
+      "green_JUMPJET": 0,
+      "green_MTNK": 4,
+      "green_CMIN": 4
+    },
+    {
+      "s": 176,
+      "clock": "03:02",
+      "purple_HTNK": 2,
+      "purple_E2": 15,
+      "purple_HTK": 1,
+      "green_JUMPJET": 0,
+      "green_MTNK": 4,
+      "green_CMIN": 4
+    },
+    {
+      "s": 178,
+      "clock": "03:04",
+      "purple_HTNK": 2,
+      "purple_E2": 12,
+      "purple_HTK": 1,
+      "green_JUMPJET": 0,
+      "green_MTNK": 4,
+      "green_CMIN": 4
+    }
+  ],
+  "observations": [
+    {
+      "id": "official-p1-low-aa-ground-growth-followthrough",
+      "windowVideoSeconds": [
+        151,
+        168
+      ],
+      "facts": [
+        "151–178逐秒库存条均见紫HTK为1；不能把库存稳定等同于没有损失补造。",
+        "犀牛库存157秒6、158秒7，直到168秒仍7；162–163秒动员兵21。",
+        "161–164画面紫地面坦克自矿区东北侧向南接近绿前沿建筑，164–168在绿炮体/前沿建筑附近集中接触。"
+      ],
+      "playerKnownInformation": "未知；OB双边库存不能证明85何时看见JJ，也不能反推生产指令由其触发。",
+      "supportedInterpretation": "实际低量HTK库存与后续地面库存增长/地面接触同时存在；不是全转防空。",
+      "unproven": [
+        "新增犀牛/动员兵的精确订单与累计出厂数",
+        "是否同一HTK全程存活",
+        "HTK对空具体目标/伤害",
+        "独立编队/快捷键",
+        "地面转向是否由巨炮火力迫使"
+      ]
+    },
+    {
+      "id": "official-p1-jj-disappears-without-kill-proof",
+      "windowVideoSeconds": [
+        166,
+        167
+      ],
+      "facts": [
+        "166秒HUD02:52绿色JJ库存1；167秒HUD02:53对应图标未列。",
+        "同一窗口紫HTK仍1、绿色MTNK由5到4；多种单位状态同时变化。"
+      ],
+      "supportedInterpretation": "空军库存从1到未列的局部时序，可以作为以后逐对象跟踪的候选窗口。",
+      "unproven": [
+        "是否同一JJ被击杀",
+        "由HTK还是其他攻击源造成",
+        "真实AA发射/命中/HP",
+        "是否存在其它出入世界原因"
+      ],
+      "restriction": "不把JJ库存消失写成HTK击杀/防空成功，也不拼成某种单位交换收益。"
+    },
+    {
+      "id": "official-p1-low-aa-not-sufficient-for-victory",
+      "windowVideoSeconds": [
+        168,
+        179
+      ],
+      "facts": [
+        "紫犀牛168秒7、169秒5、173秒2、178秒2。仅作为库存下降，不换算战斗阵亡。",
+        "179秒HUD03:05显示游戏结束，顶部分数由85:威龙0:0变0:1；紫基地同时大范围爆炸。"
+      ],
+      "result": "本P1胜方为绿色法国威龙；具体退出/胜负判定命令未取得。",
+      "supportedInterpretation": "同一完整局尾的反例：出现一辆HTK、地面库存继续增长且JJ后段不再列出，并没有确保苏军最终取胜。",
+      "unproven": [
+        "AA是否净收益为正或负",
+        "巨炮单独导致胜利",
+        "所有库存下降对应的击毁来源",
+        "最后爆炸是否投降清除而非攻击逐一击毁"
+      ],
+      "restriction": "不能用这一局证明一辆HTK普遍足够、应当不造HTK或增加到任何固定数量；需要反空预算与地面接战风险的同条件实验。"
+    }
+  ],
+  "engineeringUse": {
+    "allowed": "已记录的单项反空假设应同时测地面生产与接战损失、总结果；本反例限制仅凭空军出现/HTK出厂或JJ消失判成功。",
+    "notSupported": "未恢复玩家合法视野和订单因果，不新增固定数量/时限/射程/撤退规则；没有AI收益。",
+    "researchStillNeeded": [
+      "同高手相近局势无空军/不补HTK对照",
+      "HTK实际行进到保护点与对空交互链",
+      "地面坦克接巨炮/放弃冲击的具体玩家视角或命令链"
+    ]
+  },
+  "frames": [
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t151.png",
+      "bytes": 1694534,
+      "sha256": "1fec08880d0f5ebd523d1c9b25be5b28bd6b34fa8537960118838c3482d1d62e",
+      "videoSeconds": 151,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip",
+      "individuallyViewedFullFrame": true
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t152.png",
+      "bytes": 1691301,
+      "sha256": "03ba1c1d53eb3e66391d0e4ed0ad8f37b97721641445da1a670274ee9e043284",
+      "videoSeconds": 152,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t153.png",
+      "bytes": 1707836,
+      "sha256": "912ed9a1e1fb75183832b787b9d25bd52612ebd5522619f5c99fed6e8ae08da0",
+      "videoSeconds": 153,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t154.png",
+      "bytes": 1684685,
+      "sha256": "989e028d44193da87f392217a40580970cef60cb9a412b54a61ca7c5291d7b0d",
+      "videoSeconds": 154,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t155.png",
+      "bytes": 1564409,
+      "sha256": "25113da9556864d8ec2210ad8e57e67e0ec0145b48776a3b675656e4a415c17a",
+      "videoSeconds": 155,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t156.png",
+      "bytes": 1684389,
+      "sha256": "6e52165a0cba18054877557147de741779b0e1fb9758a8ab13da89950bd33fca",
+      "videoSeconds": 156,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t157.png",
+      "bytes": 1337856,
+      "sha256": "993960c688ec4376f350b957f24300436f333c4c5fbd776b939eb96c1aa66360",
+      "videoSeconds": 157,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t158.png",
+      "bytes": 1138904,
+      "sha256": "463fbc55bd8c55a4f4015ffa8ff81d856e16f6d0d461043381f763b02f143f60",
+      "videoSeconds": 158,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t159.png",
+      "bytes": 1353876,
+      "sha256": "fc96b56924d4842c8a961ada2586335530df5c95f269c3c3064b5ca8c59fda42",
+      "videoSeconds": 159,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t160.png",
+      "bytes": 1438829,
+      "sha256": "4c0526e364e108e153edf48516627a42640a7f61c759fbe7ed08409e6b6dcf86",
+      "videoSeconds": 160,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t161.png",
+      "bytes": 1568220,
+      "sha256": "497c466ac0423b160ef6ecd5c5f3644a193b698830263f874188c262e1358561",
+      "videoSeconds": 161,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip",
+      "individuallyViewedFullFrame": true
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t162.png",
+      "bytes": 1615492,
+      "sha256": "6870927280d54c698c416c4a6d9f9e682afda69d565a1bbe46704b8b1897cd1f",
+      "videoSeconds": 162,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t163.png",
+      "bytes": 1642113,
+      "sha256": "2080448e327ff1b5a0a58bb442d9eab57fb3a905b030ccbd6e767f8215d1d420",
+      "videoSeconds": 163,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t164.png",
+      "bytes": 1668025,
+      "sha256": "893dc21e8e91ae274a98593e035a507588482f1864c8d2a1886f5990101f6cd6",
+      "videoSeconds": 164,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t165.png",
+      "bytes": 1708044,
+      "sha256": "f2cc4d869a39a23abce5a9737d7e12b938dcea9eaaf14a66cb845cef129afbd9",
+      "videoSeconds": 165,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t166.png",
+      "bytes": 1675818,
+      "sha256": "5137ae0bf7dd8b02aa9da90415404a1fe8df6daa43faffbcb58c4a16e0fe72d5",
+      "videoSeconds": 166,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip",
+      "individuallyViewedFullFrame": true
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t167.png",
+      "bytes": 1679478,
+      "sha256": "2a30c83556493f4c777343ab039ededa54c9d0ef5343da9b9138c3e4e675ea84",
+      "videoSeconds": 167,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip",
+      "individuallyViewedFullFrame": true
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t168.png",
+      "bytes": 1685039,
+      "sha256": "6b0f6b3f6db41ecf331b1e8b312beb8dd25f47cc36214116d625481fb2edb45d",
+      "videoSeconds": 168,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t169.png",
+      "bytes": 1693397,
+      "sha256": "779f0d5d31566fc5602d37e465fba7264d6bd3b4a659433ab7261c1b3b90cf4b",
+      "videoSeconds": 169,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t170.png",
+      "bytes": 1692967,
+      "sha256": "7b3fed75528c2f27dafbf69333bae2c5b0594c385712cef717447571db22d003",
+      "videoSeconds": 170,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t171.png",
+      "bytes": 1698054,
+      "sha256": "8c66930f6904200c8e277a9c675d1eb51db7e6778ce0645e50fb3745a7d692c1",
+      "videoSeconds": 171,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t172.png",
+      "bytes": 1694656,
+      "sha256": "03a6c0f3e626e761021d7c9805739052d565ef8b5d651bf1925ff143a1c489ad",
+      "videoSeconds": 172,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t173.png",
+      "bytes": 1704074,
+      "sha256": "48f96a2372bafb48bdd2df5c88e9de373cd553fd22d50939c92703ad43ebb8d5",
+      "videoSeconds": 173,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t174.png",
+      "bytes": 1713073,
+      "sha256": "9ece853cd0d61e579457db66b94dd6aa4f73a3e4efb03910ff3442b6e811dd79",
+      "videoSeconds": 174,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t175.png",
+      "bytes": 1709570,
+      "sha256": "3605113c894a30faf36111ec8b470856c7128505daaba03f43b7ccf255ef205e",
+      "videoSeconds": 175,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t176.png",
+      "bytes": 1705926,
+      "sha256": "8492e505a542da89a0f4c650d3d04f5d97608007b02e271dce69bbd58266a4bc",
+      "videoSeconds": 176,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip",
+      "individuallyViewedFullFrame": true
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t177.png",
+      "bytes": 1543128,
+      "sha256": "6627a3d55b9a85db76a91585e152f5b89e789663ccb1ad28a0c9ec5ee0f9190a",
+      "videoSeconds": 177,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t178.png",
+      "bytes": 1525695,
+      "sha256": "f5a64155d09c8fedf34578d0ca72da1e82fa7d30ce72bfa8a38ee310be4b5f1e",
+      "videoSeconds": 178,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t179.png",
+      "bytes": 1622417,
+      "sha256": "68957bf9081532d02d5fc2cccfc2722b9ba8a219d4b1cc3a36e86067427100a2",
+      "videoSeconds": 179,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip",
+      "individuallyViewedFullFrame": true
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t180.png",
+      "bytes": 1660413,
+      "sha256": "89752c9b4e758ed4d5d31581f6c9d12c414d06d36964d6773ecac9fbbdb2e0ca",
+      "videoSeconds": 180,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t181.png",
+      "bytes": 1654876,
+      "sha256": "2c51b0d070ff057bd3e7f37125cdc7dbdd74af8b582206eb7473ca49e5135c24",
+      "videoSeconds": 181,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t182.png",
+      "bytes": 233088,
+      "sha256": "df942a3a5d91cf35013573245864c1f869dd92dd622acd058bd8d1eb7060878a",
+      "videoSeconds": 182,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/t183.png",
+      "bytes": 237291,
+      "sha256": "b9f96c32ee5c9adb0cc7219277f2ffb57eb597e4429b7a05ea4ffa3f1796e5c2",
+      "videoSeconds": 183,
+      "viewedRegion": "full frame on contact sheet; right inventory in enlarged strip"
+    }
+  ],
+  "derivedViews": [
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/contact-151.jpg",
+      "bytes": 926455,
+      "sha256": "25a86f67b2e73a9b4a793868cd95fd3b4f0f25db11f2768589b9ef34408dd166"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/contact-160.jpg",
+      "bytes": 976453,
+      "sha256": "01d078d8bb292f436526c48e78d2fa6eb7616807993c18ff0fdf4f079ba88105"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/contact-169.jpg",
+      "bytes": 1014182,
+      "sha256": "ee298809a35b942c05f4b6de58f0a7bb4c2e85203fd9ec839815922a1ec89de8"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/contact-178.jpg",
+      "bytes": 476429,
+      "sha256": "73100e71f9bb1f640cf4d29ce0833f0734e355de054eb1b0aff5319533f047bb"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/inventory-151.png",
+      "bytes": 893197,
+      "sha256": "4d27068f35547beecbb419385d523dba2af6dba2eac3865592caa01dc9fcd3d6"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/inventory-162.png",
+      "bytes": 902424,
+      "sha256": "657e31e78915ac504d57563089a7294396a070b16e1c93e715175c9176887da8"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/inventory-173.png",
+      "bytes": 598756,
+      "sha256": "18bfb2e8c5f5ac67b143f76290ca3c9a7f65859cfa936fcb311de34e5d780a79"
+    },
+    {
+      "path": "/workspace/scratch/expert-counterexample-20261030/purple-cameo-comparison.png",
+      "bytes": 254461,
+      "sha256": "c0ba70658e73559c84c7ad9fe806fe15edbc13a66a0ab9be02327e4ba2ada6f6"
+    }
+  ],
+  "reusedCameoReferences": [
+    {
+      "path": "/workspace/scratch/official-final-window-20261030/htkicon.png",
+      "bytes": 2546,
+      "sha256": "d9118764202e253a49da6ec3104958ee805818556cffa5de22cf4b781c3707be"
+    },
+    {
+      "path": "/workspace/scratch/official-final-window-20261030/jjeticon.png",
+      "bytes": 2359,
+      "sha256": "8d9990449e8224332b138a727863f65e426d45c3d89fa84f9a4e7fd9a5b90b2f"
+    },
+    {
+      "path": "/workspace/scratch/official-final-window-20261030/e2icon.png",
+      "bytes": 2472,
+      "sha256": "98987ba504bd061d6412a50edf97c1cd076c1100fb98d6093314dfa7f859536a"
+    }
+  ],
+  "scope": "Only scratch research index/notes; no repository changes, simulation, CI, git operations, notifications, or deployments.",
+  "rootReview": {
+    "allReferenceBytesAndSha256Verified": 45,
+    "newFrames": 33,
+    "independentlyViewedFullFrames": [
+      166,
+      167,
+      179
+    ],
+    "independentlyViewedInventoryStrips": [
+      "inventory-151.png",
+      "inventory-173.png"
+    ],
+    "qualification": "OB库存/终局反例；无玩家合法发现、下单、击杀因果或连续全局观察",
+    "sourceIndexSha256": "dca3d7b719aa557bddff5b1324363f0945f1291560dc29d1b28ce4143c86b485"
+  }
+}

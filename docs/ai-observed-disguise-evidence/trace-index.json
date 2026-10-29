@@ -1,0 +1,44 @@
+[
+  {
+    "case": "spy-real-makeup-same-external-E1-shape",
+    "rows": 3,
+    "firstTick": 1,
+    "lastTick": 3,
+    "canonicalJsonSha256": "13947fada99c86d7fd2e616a6a8eec95a1b28b8aa76e7610f3e5c6a8cc0ec868"
+  },
+  {
+    "case": "spy-false-friendly-DOG-local-autoattack",
+    "rows": 378,
+    "firstTick": 1,
+    "lastTick": 378,
+    "canonicalJsonSha256": "ca40cb39940e3bbd40bbdb78438dd9289b2a9544f8c1d52ce9d5a675d8822283"
+  },
+  {
+    "case": "spy-false-friendly-ADOG-local-autoattack",
+    "rows": 378,
+    "firstTick": 1,
+    "lastTick": 378,
+    "canonicalJsonSha256": "a20df2d368a72d08bd8be10b276de5aba8b9ca5f8d43fa275f30fae4cf3b56c1"
+  },
+  {
+    "case": "MGTK-natural-tree-move-fire-and-real-damage",
+    "rows": 162,
+    "firstTick": 1,
+    "lastTick": 162,
+    "canonicalJsonSha256": "b81998840f8cd48eb3610ad73f188dfed0e7995a61aea168923a36470bd11abc"
+  },
+  {
+    "case": "own-ENGINEER-FV-real-board-repair-unload",
+    "rows": 149,
+    "firstTick": 1,
+    "lastTick": 149,
+    "canonicalJsonSha256": "0a7755dc13d7ad1989dd9bbcbc943b979e8eaca3b0db40a04ee222b075dadc44"
+  },
+  {
+    "case": "original-NAPSIS-real-range-and-power-shared-detection",
+    "rows": 193,
+    "firstTick": 1,
+    "lastTick": 193,
+    "canonicalJsonSha256": "2131a35067b26804f210a403e23b9aa5a3036d4f7a9a40242da33d5b270210e3"
+  }
+]

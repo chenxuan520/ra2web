@@ -1,0 +1,61 @@
+{
+  "sourceCommit": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+  "bun": {
+    "pass": 364,
+    "skip": 13,
+    "fail": 0,
+    "assertions": 2921
+  },
+  "python": {
+    "pass": 37
+  },
+  "typechecks": [
+    "entry",
+    "server",
+    "benchmark",
+    "observed-disguise"
+  ],
+  "build": true,
+  "realRegressionScripts": 7,
+  "compatibilityGames": 32,
+  "compatibilityQualificationEligible": false,
+  "compatibilityMaxTicks": {
+    "3000": 28,
+    "9000": 4
+  },
+  "logs": [
+    {
+      "file": "bun-test.final.log",
+      "bytes": 242256,
+      "sha256": "432e928a2e1ddd47e0773ec4dc2438ecd8951d7d91e52d6b4c455b451ed185d5"
+    },
+    {
+      "file": "build.final.log",
+      "bytes": 18942,
+      "sha256": "9b4160f66b17b937e9470f00b03944743be3ca9d5a6404f5a1185920290d0a8e"
+    },
+    {
+      "file": "python.log",
+      "bytes": 136,
+      "sha256": "581c94ded39f9be87e176fa36fbac51061b6d09ef53cd82b7d14a8cc637296e4"
+    },
+    {
+      "file": "observed-disguise.frozen.log",
+      "bytes": 2581,
+      "sha256": "0fb418395a7d7929d5c861162d2fe16b5a67459c77106117b0a7f1612e89b304"
+    },
+    {
+      "file": "boundary-fixtures.log",
+      "bytes": 6906,
+      "sha256": "fde3b9edaca1357028e8279b40aab20d73c8ad7721e8169757c6eb571f3fc6a8"
+    },
+    {
+      "file": "mission-fixtures.log",
+      "bytes": 1905,
+      "sha256": "78cac60ce2e44595ee35db76c2695616b54ef494a732247114bfea7d9b3a1571"
+    }
+  ],
+  "ciRun": 40958211507,
+  "ciStatusAtArchive": "in_progress; separately verify all connected jobs/artifact bytes before accepting",
+  "releaseReady": false
+}
