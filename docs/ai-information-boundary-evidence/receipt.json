@@ -1,0 +1,104 @@
+{
+  "format": 1,
+  "kind": "preplaced-real-engine-information-boundary-receipt",
+  "sourceCommit": "183554e3105e6dd0e28b7f3d8d958841ebb7d0b7",
+  "report": "report.json",
+  "reportBytes": 93748,
+  "reportSha256": "1cad6afa915e35a36fd8e826bc0f61bf00e319fa8bf6cb6c1f21aa79fa487d02",
+  "source": {
+    "commit": "183554e3105e6dd0e28b7f3d8d958841ebb7d0b7",
+    "source": "working-tree",
+    "dirty": false,
+    "builtInSourceSha256": "600921e85c81e9e9b792db02447cae0e5a4497b249ffe1351de3e095e7cba6d9",
+    "engineApiSha256": "4f64655115eb45782a7bdbcd677b4215311a65750e8c32290ab67a8a14d3c218",
+    "mapApiSha256": "16b51316aa20d45bb7b3a3af2bd820fe51cf7e0f6cb91a084f086440383a3a77",
+    "runnerSha256": "21274073aa457aab68be34a5a664b1db7d225f4a735061eb87a0f296d2e4f290",
+    "fixtureHelperSha256": "1b5213e81e17fd8f361a429a3f2ba09ebf13cb929e8642d44368e099f9c49b2a"
+  },
+  "resources": {
+    "mapSha256": "c43e94057d6abaec0a39899b44175259f150649e2cd39be66504bb2957f2ec67",
+    "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4",
+    "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+    "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+  },
+  "verifiedBy": "root rerun of committed source, independent Python comparison and git blob hashes",
+  "passed": true,
+  "errorCount": 0,
+  "cases": 4,
+  "comparisons": [
+    {
+      "difficulty": "normal",
+      "observationMatch": true,
+      "intentsMatch": true,
+      "commandsMatch": true,
+      "commandsPerWorld": [
+        1,
+        1
+      ],
+      "snapshotsPerWorld": [
+        6,
+        6
+      ]
+    },
+    {
+      "difficulty": "brutal",
+      "observationMatch": true,
+      "intentsMatch": true,
+      "commandsMatch": true,
+      "commandsPerWorld": [
+        1,
+        1
+      ],
+      "snapshotsPerWorld": [
+        6,
+        6
+      ]
+    }
+  ],
+  "independentChecks": [
+    "All four worlds completed 180 ticks with six snapshots and one actual command each.",
+    "Equal legitimate observation hashes, snapshot/intent payloads and commands for each hidden-start pair.",
+    "Normal and brutal share own physical start and slot; enemy physical start differs.",
+    "No guarded enemy startLocation, credits or power reads.",
+    "Every recorded observation hash independently recomputed from its raw observation payload.",
+    "Five source digests match the prior working-tree fixture; API/MapApi/runner/helper match committed git blobs.",
+    "Real shroud reveal/reset and resource/threat transitions exactly match prior working-tree fixture."
+  ],
+  "validation": {
+    "bunTest": {
+      "passed": 322,
+      "skipped": 13,
+      "failed": 0,
+      "assertions": 2572,
+      "files": 38,
+      "logSha256": "04ff28967874ad13f40f18c9efc460795a38579f65d69510dc40603156091260",
+      "skippedPrerequisites": [
+        "Real PvPGN tests require PVPGN_TEST_PREFIX.",
+        "Optional resource/CDN/HTTP integration tests require their RA2_* input variables and existing server."
+      ]
+    },
+    "typechecks": {
+      "entry": "passed",
+      "server": "passed",
+      "aiBenchmark": "passed",
+      "aiInformationBoundary": "passed"
+    },
+    "build": {
+      "passed": true,
+      "logSha256": "bb7ee6972e8b4e9ec160ec85fbac07eb306717c06528d517042a4948f686043a",
+      "warnings": "Existing chunk-size and ineffective dynamic-import warnings."
+    },
+    "timing": "Unit/type/build checks ran before commit on the same source bytes; the real-engine fixture was rerun after the source commit."
+  },
+  "limitations": [
+    "Preplaced objects and no-op opposing bots; no economic or strength claim.",
+    "Actual awareness and selected mission/building policies, not the full DefaultStrategy or production scheduler.",
+    "Only pre-contact windows are compared; physical collision differences are not hidden or removed.",
+    "Does not certify disguised/stealth identities, all path-planning information, or powered gap-generator behavior.",
+    "The feature branch still contains the unqualified ffb438 ground-opening draft.",
+    "No complete match matrix, CI qualification, master integration or production deployment is represented."
+  ],
+  "strengthClaim": null,
+  "researchComplete": false,
+  "releaseReady": false
+}

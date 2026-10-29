@@ -1,0 +1,524 @@
+{
+  "format": 1,
+  "date": "2026-10-30",
+  "timezone": "Asia/Shanghai",
+  "status": "research-incomplete",
+  "tacticsImplemented": false,
+  "newStrengthClaim": null,
+  "groups": {
+    "allied": {
+      "date": "2026-10-30",
+      "timezone": "Asia/Shanghai",
+      "status": "new-evidence-not-strategy-validation",
+      "method": "Viewed extracted frames and burned-in Chinese text, with exact-seek key frames; not continuous complete playback; audio not transcribed/listened; Bilibili public subtitle endpoints returned no tracks. Some first coarse grids were extracted during partial download, and black end tiles are excluded, not observations. Complete media hashes now verified.",
+      "sources": [
+        {
+          "bvid": "BV195411k7YN",
+          "expectedBytes": 43372803,
+          "bytes": 43372803,
+          "sha256": "2c2b2a2242be1f2fdf43c693cfe22fb24a060940ea0e63ab672c8d02e2d919ac",
+          "complete": true,
+          "url": "https://www.bilibili.com/video/BV195411k7YN/",
+          "title": "【20231206】【威龙第一视角】【天梯】【阿留申群岛】【2号双美】",
+          "uploader": "柯哀の旧日",
+          "durationSeconds": 175,
+          "quality": 64,
+          "shaIndependentlyRecomputed": true
+        },
+        {
+          "bvid": "BV13Xi3BVEpe",
+          "expectedBytes": 42424247,
+          "bytes": 42424247,
+          "sha256": "8fe9aeed3377b90d64bd8f9f0171ef7aa573032d8f29765e62373a09df60dbe5",
+          "complete": true,
+          "url": "https://www.bilibili.com/video/BV13Xi3BVEpe/",
+          "title": "红色警戒2盟军教科书 - part1",
+          "uploader": "一只不爱做梦的青凰",
+          "durationSeconds": 406,
+          "quality": 64,
+          "shaIndependentlyRecomputed": true
+        },
+        {
+          "bvid": "BV1a9UWB5EDP",
+          "expectedBytes": 5367995,
+          "bytes": 5367995,
+          "sha256": "55eaad87c3e932bf767d6c1398673a81986e0078b2c0dfd0cb56023a01a82028",
+          "complete": true,
+          "url": "https://www.bilibili.com/video/BV1a9UWB5EDP/",
+          "title": "【盟军教学】这个算是开篇？",
+          "uploader": "一只不爱做梦的青凰",
+          "durationSeconds": 83,
+          "quality": 64,
+          "shaIndependentlyRecomputed": true
+        }
+      ],
+      "keyFrames": [
+        {
+          "path": "textbook-key-214.png",
+          "sha256": "f3138db4500608842bf7b64116092fd178ea6594cfdeae4f3c3bf6ab9edc80be"
+        },
+        {
+          "path": "textbook-detail-244.png",
+          "sha256": "e844981fbaf513e94b833597cecbd89607a653c99f1ec2140f85558c96a23c5e"
+        },
+        {
+          "path": "textbook-detail-262.png",
+          "sha256": "2b19e5e4c8e8b9710724fb20a849cbefbeea946ea9f800bf71f61d7e2ac42a5a"
+        },
+        {
+          "path": "textbook-key-277.png",
+          "sha256": "fea36622e765a2c4dbf69ffc2e956ae593f0373d1e9fbc2ee3c8ba83410d5cc0"
+        },
+        {
+          "path": "textbook-detail-292.png",
+          "sha256": "f3f915b972caa20c8e543c41e96f29d29e03ffca34bce929f63ff7455a0c26c0"
+        },
+        {
+          "path": "textbook-key-301.png",
+          "sha256": "a24556091e8f779a026779bdbbbcd6df57f8b5863a23e3157df1ec6d20790e96"
+        },
+        {
+          "path": "textbook-key-313.png",
+          "sha256": "abf56cf4a03253f04546f5fe7a02b71a8c80df9d085cc08efdf9fdc46411419f"
+        },
+        {
+          "path": "textbook-key-325.png",
+          "sha256": "cf5e2cd3bbde5f0d673580237c154ae4487cbdd4edac36065ddb368ce00a6769"
+        },
+        {
+          "path": "textbook-final-370.png",
+          "sha256": "b84e1d93bab5543102168283c82016a5d3fe01aa8b58471a19092457f8f886e4"
+        },
+        {
+          "path": "textbook-scout-contact.jpg",
+          "sha256": "d32e43f744377bb06673dfe6c3e240f60b66601779b8b5c31c19b9eb0366fb25"
+        },
+        {
+          "path": "mirror60-115-contact.jpg",
+          "sha256": "007f7c5587bf71137f71167fcb0707211a44247f8cf0462989e9e10cd368c5f3"
+        },
+        {
+          "path": "mirror120-end-contact.jpg",
+          "sha256": "6dd595f6c1bfd4240d9af099aa3b087c964efcd248fc249ebe2d30d2e04469a8"
+        }
+      ],
+      "textbook": {
+        "source": "https://www.bilibili.com/video/BV13Xi3BVEpe/",
+        "scope": "Original-RA2 Allied/Soviet ice scenario in community original-RA2 tutorial; exact rules/map file hashes unavailable.",
+        "presenter": "一只不爱做梦的青凰 / IDCK",
+        "originalPlayer": null,
+        "recordedYear": null,
+        "historicalFootageProvenance": "Presenter refers to 2019 upload and says he learned from this material in 2017. Do not attribute the match to the presenter or date the recorded match to2019.",
+        "observedRanges": [
+          {
+            "range": [
+              0,
+              230
+            ],
+            "sampling": "approximately every10 video seconds; early grid fps timing only approximate"
+          },
+          {
+            "range": [
+              175,
+              210
+            ],
+            "sampling": "exact seek every5 seconds; contact sheet read"
+          },
+          {
+            "range": [
+              238,
+              307
+            ],
+            "sampling": "exact seek every3 seconds, selected key frames enlarged; not every extracted frame individually read"
+          },
+          {
+            "range": [
+              320,
+              390
+            ],
+            "sampling": "coarse5-second grid; only available nonblack tiles considered"
+          },
+          {
+            "exactEnlarged": [
+              214,
+              244,
+              262,
+              277,
+              292,
+              301,
+              313,
+              325,
+              340,
+              370,
+              400
+            ]
+          }
+        ],
+        "findings": [
+          {
+            "videoSeconds": 214,
+            "type": "presenter-reassessment",
+            "summary": "Presenter warns the old airfield-first opening should not be copied uncritically; now prefers factory-first in this context.",
+            "screen": "Own Allied base shows air command before war factory.",
+            "generalizationLimit": "Not a universal ban on early air; match geography and pressure matter."
+          },
+          {
+            "videoSeconds": [
+              244,
+              262
+            ],
+            "type": "commentary-plus-visible-factory",
+            "summary": "Air scout watches factory exits; presenter distinguishes first Rhino from higher-priority flak/drone interception.",
+            "screen": "Known Soviet production area and Rhino/air-unit activity visible.",
+            "notConfirmed": [
+              "Actual flak/drone kill",
+              "Enemy output caused own next production switch"
+            ],
+            "correction": "262s says Rhino(犀牛), not harvester. Initial thumbnail reading was corrected before notes."
+          },
+          {
+            "videoSeconds": 277,
+            "type": "presenter-mechanics-hypothesis",
+            "summary": "Three Grizzlies are grouped when leaving; presenter relates this to drone protection.",
+            "notConfirmed": [
+              "Three-shot breakpoint in this project",
+              "Optimal group size across maps"
+            ],
+            "screen": "Separated groups/vehicles visible; damage claim needs rule and real-engine check."
+          },
+          {
+            "videoSeconds": 292,
+            "type": "failure-counterexample",
+            "summary": "Presenter labels a para-distraction/capture attempt unsuccessful and continues looking for opportunities.",
+            "screen": "Enemy construction yard remains enemy-colored; parachute context visible in nearby samples.",
+            "notConfirmed": [
+              "Every engineer action/path",
+              "Exact reason for capture failure"
+            ]
+          },
+          {
+            "videoSeconds": [
+              301,
+              313,
+              325,
+              370
+            ],
+            "type": "group-control-and-raiding",
+            "summary": "Separate tank groups reposition, pressure different areas, then combine around mining.",
+            "screen": "Group labels2 at301 and1 at313 visible; movement vectors and separated forces are on screen.",
+            "notConfirmed": [
+              "Opponent attention or camera state",
+              "Every harvester killed",
+              "Repeatable win-rate gain"
+            ],
+            "warning": "Do not turn visible group1/2 here into universal fixed controlgroup numbers."
+          }
+        ],
+        "dogRoles": {
+          "status": "not-established",
+          "range": [
+            175,
+            210
+          ],
+          "observed": "Dogs open black shroud in multiple nearby directions.",
+          "unknown": [
+            "Per-dog complete route",
+            "Anti-scout/entrance guard assignment",
+            "Optimal count"
+          ],
+          "commentary": "Presenter only broadly calls the opening vision gathering."
+        }
+      },
+      "mirror": {
+        "source": "https://www.bilibili.com/video/BV195411k7YN/",
+        "playerAttribution": "Uploader/title identify 威龙; original community advanced-map index links it.",
+        "map": "Aleutian Islands / 阿留申群岛; island/water routes visibly central",
+        "countries": "US vsUS according to title; Allied UI/air/paradrop on screen",
+        "observationRange": "0–70 coarse5-second frames,60–170 exact5-second frames; not continuous full playback",
+        "findings": [
+          {
+            "videoSeconds": 50,
+            "screen": "Own refinery and air-command building visible before any own war factory in viewed base."
+          },
+          {
+            "videoSeconds": [
+              60,
+              75,
+              78
+            ],
+            "screen": "Air infantry traverse water and open black shroud; enemy coast and economy become visible in this window.",
+            "firstSeenCaveat": "Earliest sampled observation, not exact first-discovery tick."
+          },
+          {
+            "videoSeconds": [
+              100,
+              105,
+              110,
+              120
+            ],
+            "screen": "Air groups meet near opposing coast; selected own group then moves back toward home coast while enemy naval yard appears.",
+            "notConfirmed": [
+              "Exact command rationale",
+              "Causal change in production after observed navy"
+            ]
+          },
+          {
+            "videoSeconds": [
+              125,
+              130,
+              145
+            ],
+            "screen": "Own naval yard, ships and airborne/para movement visible.",
+            "notConfirmed": [
+              "Complete unit build order",
+              "Exact losses/cost benefit"
+            ]
+          },
+          {
+            "videoSeconds": 170,
+            "screen": "Game-ended overlay; no quantified win-rate conclusion."
+          }
+        ],
+        "applicability": "Positive example of map-dependent air scouting and staged retreat, but a naval/island mirror. It does not fill the standard land-map Allied mirror qualification or establish universal air-first."
+      },
+      "secondaryLesson": {
+        "source": "https://www.bilibili.com/video/BV1a9UWB5EDP/",
+        "viewed": "0–38 coarse5-second frames;38–82 coarse4-second frames;74 exact enlarged",
+        "result": "This clip mostly references another creator and briefly displays a textbook. No actionable new match decision claimed.",
+        "documentLead": "Original-RA2 PVP compulsoryIII Allied chapter shown in screen; no full document obtained."
+      },
+      "strategySimulationRun": false,
+      "sourceCodeChanged": false,
+      "ciDispatched": false,
+      "newStrengthClaim": null
+    },
+    "drone": {
+      "format": 1,
+      "date": "2026-10-30 Asia/Shanghai",
+      "researchComplete": false,
+      "implementationEvidenceReady": false,
+      "scope": "research only; no code/git/CI changes",
+      "media": [
+        {
+          "bvid": "BV13w411E7jP",
+          "url": "https://www.bilibili.com/video/BV13w411E7jP/",
+          "title": "【20231003】【威龙第一视角】【沙漠宝石】【2号双伊】",
+          "aid": 326554363,
+          "cid": 1412917656,
+          "duration": 428,
+          "media": "BV13w411E7jP-low.mp4",
+          "expectedBytes": 22051358,
+          "quality": 16,
+          "bytes": 22051358,
+          "sha256": "21af2cd8b8c38dd4c9fc28fb511ca495ea8b663c2e239cb7a67e1818d33d514d",
+          "complete": true,
+          "provenance": "ra2pvp.com/zhongjivideo index and actual first-person shroud/sidebar frames; repost not original uploader",
+          "versionExactBuild": null,
+          "gameSettings": null,
+          "opponentIdentity": null,
+          "viewing": "sampled, not continuously watched"
+        },
+        {
+          "bvid": "BV1g49tYqEuK",
+          "url": "https://www.bilibili.com/video/BV1g49tYqEuK/",
+          "title": "【20250121】【威龙第一视角】【沙漠宝石】【3号伊拉克】.mp4",
+          "aid": 114092568222019,
+          "cid": 25764237349,
+          "duration": 405,
+          "media": "BV1g49tYqEuK-low.mp4",
+          "expectedBytes": 23473866,
+          "quality": 16,
+          "bytes": 23473866,
+          "sha256": "fe06ea109ceb19b7b24114f299c80d608023324a1d1b800a778c00c78a1327f3",
+          "complete": true,
+          "provenance": "ra2pvp.com/zhongjivideo index and actual first-person shroud/sidebar frames; repost not original uploader",
+          "versionExactBuild": null,
+          "gameSettings": null,
+          "opponentIdentity": null,
+          "viewing": "sampled, not continuously watched"
+        },
+        {
+          "bvid": "BV1h49tYqEnt",
+          "url": "https://www.bilibili.com/video/BV1h49tYqEnt/",
+          "title": "【20250121】【威龙第一视角】【沙漠宝石】【2号伊拉克】.mp4",
+          "aid": 114092568285728,
+          "cid": 25764175810,
+          "duration": 280,
+          "media": "BV1h49tYqEnt-low.mp4",
+          "expectedBytes": 16147331,
+          "quality": 16,
+          "bytes": 16147331,
+          "sha256": "52881f7cff111f99a383965bdbfd50909b71ca6ce6fcc13ab2f812dee87a7788",
+          "complete": true,
+          "provenance": "ra2pvp.com/zhongjivideo index and actual first-person shroud/sidebar frames; repost not original uploader",
+          "versionExactBuild": null,
+          "gameSettings": null,
+          "opponentIdentity": null,
+          "viewing": "sampled, not continuously watched"
+        }
+      ],
+      "frames": [
+        {
+          "file": "pos2-intel45-60.png",
+          "bytes": 4772841,
+          "sha256": "13b8e632dcf1cd1574c05633253cc34d392f59a6874ebadfc277ef40a1e1f32a"
+        },
+        {
+          "file": "pos2-production-panels.png",
+          "bytes": 3197155,
+          "sha256": "3811f4472dd4cf45c9d675a4b6df9766601176df39ffbf9f48f93097d2da6000"
+        },
+        {
+          "file": "pos2-drone-exit-window.png",
+          "bytes": 2920430,
+          "sha256": "1be9e273657330436d66a9d566b8662c71d06110bb01a079d1c2909a23ebda4d"
+        },
+        {
+          "file": "2025-pos2-at65-high.png",
+          "bytes": 1644298,
+          "sha256": "c2b84d413578d9f29aa0e600bef4f7be057a9220e2f5e0e04b4f72160357cacb"
+        },
+        {
+          "file": "2025-pos2-at66-high.png",
+          "bytes": 1048314,
+          "sha256": "3f4c231ed9f7d0040e90165595263bb70bf14cfdf6045916733b7ab7a3685b7f"
+        },
+        {
+          "file": "pos3-production-panels-low.png",
+          "bytes": 2105606,
+          "sha256": "77e543a8990e88561e0fa5ed40eba9e16ea0df02f347d1fbd596ca3e9fadeaf6"
+        },
+        {
+          "file": "2025-pos3-40-120.jpg",
+          "bytes": 240421,
+          "sha256": "dee2810c9bffac7f1b1fe95041b24b56424a48380083d453dea21f13b92755bd"
+        },
+        {
+          "file": "2023-50-170.jpg",
+          "bytes": 354528,
+          "sha256": "669baf2f10462ba6010e81ce5ac079f17f0d8358b19bdfbaf2449ef129969796"
+        }
+      ],
+      "observations": [
+        {
+          "source": "BV1h49tYqEnt",
+          "mediaSeconds": [
+            46,
+            47,
+            48,
+            49
+          ],
+          "gameClock": null,
+          "kind": "first-person actual frame",
+          "seen": "green enemy refinery/barracks/power along opened shroud route",
+          "unknown": [
+            "hidden queues",
+            "opponent cash"
+          ]
+        },
+        {
+          "source": "BV1h49tYqEnt",
+          "mediaSeconds": [
+            57
+          ],
+          "gameClock": null,
+          "kind": "first-person actual frame",
+          "seen": "green enemy war factory visible; surrounding shroud persists"
+        },
+        {
+          "source": "BV1h49tYqEnt",
+          "mediaSeconds": [
+            58,
+            60,
+            62,
+            62.5,
+            65
+          ],
+          "gameClock": null,
+          "seen": "drone icon active at58/60; miner active at62; drone emerges at factory exit at62.5; moved to side at65",
+          "queueCountNotOutput": {
+            "minerPendingAt58": 6
+          },
+          "causalTrigger": null,
+          "subsequentKillOrParasiteOutcome": null
+        },
+        {
+          "source": "BV1g49tYqEuK",
+          "mediaSeconds": [
+            56,
+            58,
+            64
+          ],
+          "gameClock": null,
+          "seen": "drone production active56/58; miner active64",
+          "priorEnemyBaseKnown": null,
+          "subsequentKillOrParasiteOutcome": null
+        },
+        {
+          "source": "BV13w411E7jP",
+          "mediaSecondsApproximate": [
+            0,
+            30,
+            50,
+            170
+          ],
+          "seen": "first game ends almost immediately; reload before later real opening",
+          "comparisonLimit": "Do not compare opening timing from media0 across clips"
+        }
+      ],
+      "secondarySources": [
+        {
+          "url": "https://ra2.com/information/1020471156153978880",
+          "retrieval": "full text locally read via urllib",
+          "sha256": "7302ca37079682c596d561daa289c94db22475cef395ff8c1958e794237a1074",
+          "kind": "tournament reporter account, not directly watched footage",
+          "version": "original-RA2 context clues, exact tournament version/rules unconfirmed"
+        },
+        {
+          "url": "https://ra2.com/information/1021606345129590784",
+          "retrieval": "full text locally read via urllib",
+          "sha256": "904cff0ba0e6fad6b43704df791dd5339f6d8870f58fdfb2bbee5059008c4687",
+          "kind": "tournament reporter account, not directly watched footage",
+          "version": "original-RA2 context clues, exact tournament version/rules unconfirmed"
+        },
+        {
+          "url": "https://ra2.com/information/1019150301718769664",
+          "retrieval": "full text locally read via urllib",
+          "sha256": "d24c90ed4674afa11d6904b4719fbe4c7c15f1454a188e8c7955c80f6aaaf959",
+          "kind": "tournament reporter account, not directly watched footage",
+          "version": "original-RA2 context clues, exact tournament version/rules unconfirmed"
+        }
+      ],
+      "exclusions": [
+        "Do not infer first-drone cause from action order",
+        "No drone/no-drone matched pair recovered",
+        "No spider combat benefit recovered",
+        "Queue counters are not actual output",
+        "FPS contact sheets only locate windows; exact seek confirms cited seconds",
+        "Fulton engineer-captures-vehicle wording rejected as mechanism-inconsistent"
+      ],
+      "highPartial": {
+        "file": "BV1h49tYqEnt.720p.partial",
+        "bytes": 26000001,
+        "complete": false,
+        "sourceTotalBytes": 66731217,
+        "verifiedHttpRange": "bytes 9437184-26000000/66731217",
+        "sha256": "092ad1563f721a9614306cfac63623a6596a5a8f97e5a4844311e52638d48a7b"
+      }
+    }
+  },
+  "independentRootByteVerification": {
+    "completeMedia": 6,
+    "frames": 20
+  },
+  "rootVisuallyReviewed": [
+    "textbook-detail-244.png",
+    "textbook-detail-262.png",
+    "textbook-detail-292.png",
+    "textbook-key-301.png",
+    "textbook-final-370.png",
+    "pos2-drone-exit-window.png",
+    "pos2-production-panels.png",
+    "2025-pos2-at63-high.png"
+  ]
+}

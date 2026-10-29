@@ -1,0 +1,3964 @@
+{
+  "kind": "preplaced-real-engine-information-boundary",
+  "seed": 910031,
+  "map": "mp01t4.map",
+  "source": {
+    "commit": "183554e3105e6dd0e28b7f3d8d958841ebb7d0b7",
+    "source": "working-tree",
+    "dirty": false,
+    "builtInSourceSha256": "600921e85c81e9e9b792db02447cae0e5a4497b249ffe1351de3e095e7cba6d9",
+    "engineApiSha256": "4f64655115eb45782a7bdbcd677b4215311a65750e8c32290ab67a8a14d3c218",
+    "mapApiSha256": "16b51316aa20d45bb7b3a3af2bd820fe51cf7e0f6cb91a084f086440383a3a77",
+    "runnerSha256": "21274073aa457aab68be34a5a664b1db7d225f4a735061eb87a0f296d2e4f290",
+    "fixtureHelperSha256": "1b5213e81e17fd8f361a429a3f2ba09ebf13cb929e8642d44368e099f9c49b2a"
+  },
+  "resources": {
+    "mapSha256": "c43e94057d6abaec0a39899b44175259f150649e2cd39be66504bb2957f2ec67",
+    "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4",
+    "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+    "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+  },
+  "cases": [
+    {
+      "difficulty": "normal",
+      "enemyStart": 1,
+      "ownStartIndex": 0,
+      "playerSlots": [
+        "@@AI1@@",
+        "@@AI2@@"
+      ],
+      "physicalStarts": [
+        {
+          "x": 57,
+          "y": 98
+        },
+        {
+          "x": 99,
+          "y": 148
+        }
+      ],
+      "settings": {
+        "credits": 10000,
+        "unitCount": 0,
+        "engineDifficulty": 4
+      },
+      "fixtureObjects": [
+        {
+          "id": 1367,
+          "name": "NACNST",
+          "tile": {
+            "x": 61,
+            "y": 102
+          }
+        },
+        {
+          "id": 1368,
+          "name": "NAPOWR",
+          "tile": {
+            "x": 52,
+            "y": 102
+          }
+        },
+        {
+          "id": 1369,
+          "name": "HTNK",
+          "tile": {
+            "x": 53,
+            "y": 94
+          }
+        },
+        {
+          "id": 1370,
+          "name": "HTNK",
+          "tile": {
+            "x": 55,
+            "y": 94
+          }
+        },
+        {
+          "id": 1371,
+          "name": "HTNK",
+          "tile": {
+            "x": 57,
+            "y": 94
+          }
+        },
+        {
+          "id": 1372,
+          "name": "HTNK",
+          "tile": {
+            "x": 59,
+            "y": 94
+          }
+        }
+      ],
+      "sensitiveReads": [],
+      "snapshots": [
+        {
+          "tick": 30,
+          "observable": {
+            "ownStart": {
+              "x": 57,
+              "y": 98
+            },
+            "ownObjects": [
+              {
+                "id": 1365,
+                "name": "SMCV",
+                "tile": {
+                  "x": 57,
+                  "y": 98
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1369,
+                "name": "HTNK",
+                "tile": {
+                  "x": 53,
+                  "y": 94
+                },
+                "hp": 400
+              },
+              {
+                "id": 1370,
+                "name": "HTNK",
+                "tile": {
+                  "x": 55,
+                  "y": 94
+                },
+                "hp": 400
+              },
+              {
+                "id": 1371,
+                "name": "HTNK",
+                "tile": {
+                  "x": 57,
+                  "y": 94
+                },
+                "hp": 400
+              },
+              {
+                "id": 1372,
+                "name": "HTNK",
+                "tile": {
+                  "x": 59,
+                  "y": 94
+                },
+                "hp": 400
+              },
+              {
+                "id": 1367,
+                "name": "NACNST",
+                "tile": {
+                  "x": 61,
+                  "y": 102
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1368,
+                "name": "NAPOWR",
+                "tile": {
+                  "x": 52,
+                  "y": 102
+                },
+                "hp": 750
+              }
+            ],
+            "enemyIds": [],
+            "ownCredits": 10000,
+            "ownPower": {
+              "total": 150,
+              "drain": 0,
+              "isLowPower": false
+            },
+            "shroudSha256": "dc687af73ca384392af9fe317003c8b57f9b6d73307c4a96a3d03c3d1c208547"
+          },
+          "observationSha256": "2cc431f8171ecc664b390ca69a18ef79911a18b4a3dbfabe5cc4eef3d6806b1f",
+          "directions": [
+            {
+              "x": 99,
+              "y": 148
+            },
+            {
+              "x": 110,
+              "y": 55
+            },
+            {
+              "x": 152,
+              "y": 96
+            }
+          ],
+          "rally": {
+            "x": 57,
+            "y": 98
+          },
+          "attackTargets": [
+            {
+              "name": "attack_6",
+              "at": {
+                "x": 99,
+                "y": 148
+              }
+            }
+          ],
+          "radiationGuard": {
+            "x": 67,
+            "y": 110
+          },
+          "groundPlacement": {
+            "dx": 69,
+            "dy": 55,
+            "rx": 63,
+            "ry": 98,
+            "z": 4,
+            "tileNum": 0,
+            "subTile": 0,
+            "terrainType": 13,
+            "landType": 0,
+            "rampType": 0,
+            "id": "63_98",
+            "occluded": false
+          },
+          "airPlacement": {
+            "dx": 63,
+            "dy": 51,
+            "rx": 58,
+            "ry": 99,
+            "z": 4,
+            "tileNum": 0,
+            "subTile": 0,
+            "terrainType": 13,
+            "landType": 0,
+            "rampType": 0,
+            "id": "58_99",
+            "occluded": false
+          },
+          "requests": [],
+          "expansionCandidates": []
+        },
+        {
+          "tick": 60,
+          "observable": {
+            "ownStart": {
+              "x": 57,
+              "y": 98
+            },
+            "ownObjects": [
+              {
+                "id": 1365,
+                "name": "SMCV",
+                "tile": {
+                  "x": 57,
+                  "y": 98
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1369,
+                "name": "HTNK",
+                "tile": {
+                  "x": 54,
+                  "y": 95
+                },
+                "hp": 400
+              },
+              {
+                "id": 1370,
+                "name": "HTNK",
+                "tile": {
+                  "x": 56,
+                  "y": 95
+                },
+                "hp": 400
+              },
+              {
+                "id": 1371,
+                "name": "HTNK",
+                "tile": {
+                  "x": 58,
+                  "y": 95
+                },
+                "hp": 400
+              },
+              {
+                "id": 1372,
+                "name": "HTNK",
+                "tile": {
+                  "x": 59,
+                  "y": 95
+                },
+                "hp": 400
+              },
+              {
+                "id": 1367,
+                "name": "NACNST",
+                "tile": {
+                  "x": 61,
+                  "y": 102
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1368,
+                "name": "NAPOWR",
+                "tile": {
+                  "x": 52,
+                  "y": 102
+                },
+                "hp": 750
+              }
+            ],
+            "enemyIds": [],
+            "ownCredits": 10000,
+            "ownPower": {
+              "total": 150,
+              "drain": 0,
+              "isLowPower": false
+            },
+            "shroudSha256": "218652b7245c7dc5d04ee82c0700610dc535dc241b9d27bde9d1ac1c29f0b4e7"
+          },
+          "observationSha256": "cf35ee8a66e91756cd73cda7cc8e979fc22202a36c9c9c224df98dbc9527459a",
+          "directions": [
+            {
+              "x": 99,
+              "y": 148
+            },
+            {
+              "x": 110,
+              "y": 55
+            },
+            {
+              "x": 152,
+              "y": 96
+            }
+          ],
+          "rally": {
+            "x": 57,
+            "y": 98
+          },
+          "attackTargets": [
+            {
+              "name": "attack_6",
+              "at": {
+                "x": 99,
+                "y": 148
+              }
+            }
+          ],
+          "radiationGuard": {
+            "x": 67,
+            "y": 110
+          },
+          "groundPlacement": {
+            "dx": 65,
+            "dy": 49,
+            "rx": 58,
+            "ry": 97,
+            "z": 4,
+            "tileNum": 493,
+            "subTile": 0,
+            "terrainType": 14,
+            "landType": 4,
+            "rampType": 0,
+            "id": "58_97",
+            "occluded": false
+          },
+          "airPlacement": {
+            "dx": 67,
+            "dy": 59,
+            "rx": 64,
+            "ry": 101,
+            "z": 4,
+            "tileNum": 498,
+            "subTile": 0,
+            "terrainType": 14,
+            "landType": 4,
+            "rampType": 0,
+            "id": "64_101",
+            "occluded": false
+          },
+          "requests": [],
+          "expansionCandidates": []
+        },
+        {
+          "tick": 90,
+          "observable": {
+            "ownStart": {
+              "x": 57,
+              "y": 98
+            },
+            "ownObjects": [
+              {
+                "id": 1365,
+                "name": "SMCV",
+                "tile": {
+                  "x": 57,
+                  "y": 98
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1369,
+                "name": "HTNK",
+                "tile": {
+                  "x": 56,
+                  "y": 97
+                },
+                "hp": 400
+              },
+              {
+                "id": 1370,
+                "name": "HTNK",
+                "tile": {
+                  "x": 58,
+                  "y": 97
+                },
+                "hp": 400
+              },
+              {
+                "id": 1371,
+                "name": "HTNK",
+                "tile": {
+                  "x": 60,
+                  "y": 97
+                },
+                "hp": 400
+              },
+              {
+                "id": 1372,
+                "name": "HTNK",
+                "tile": {
+                  "x": 60,
+                  "y": 96
+                },
+                "hp": 400
+              },
+              {
+                "id": 1367,
+                "name": "NACNST",
+                "tile": {
+                  "x": 61,
+                  "y": 102
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1368,
+                "name": "NAPOWR",
+                "tile": {
+                  "x": 52,
+                  "y": 102
+                },
+                "hp": 750
+              }
+            ],
+            "enemyIds": [],
+            "ownCredits": 10000,
+            "ownPower": {
+              "total": 150,
+              "drain": 0,
+              "isLowPower": false
+            },
+            "shroudSha256": "faf2f47577c4c186c33e3e1271028c50108f288a1940bec91c9911475e93eee5"
+          },
+          "observationSha256": "23aacb21063cd706b90d6314c7de08be6ef057d2c142184889f010115b719eca",
+          "directions": [
+            {
+              "x": 99,
+              "y": 148
+            },
+            {
+              "x": 110,
+              "y": 55
+            },
+            {
+              "x": 152,
+              "y": 96
+            }
+          ],
+          "rally": {
+            "x": 63,
+            "y": 106
+          },
+          "attackTargets": [
+            {
+              "name": "attack_6",
+              "at": {
+                "x": 99,
+                "y": 148
+              }
+            }
+          ],
+          "radiationGuard": {
+            "x": 67,
+            "y": 110
+          },
+          "groundPlacement": {
+            "dx": 73,
+            "dy": 61,
+            "rx": 68,
+            "ry": 99,
+            "z": 4,
+            "tileNum": 495,
+            "subTile": 0,
+            "terrainType": 14,
+            "landType": 4,
+            "rampType": 0,
+            "id": "68_99",
+            "occluded": false
+          },
+          "airPlacement": {
+            "dx": 69,
+            "dy": 57,
+            "rx": 64,
+            "ry": 99,
+            "z": 4,
+            "tileNum": 0,
+            "subTile": 0,
+            "terrainType": 13,
+            "landType": 0,
+            "rampType": 0,
+            "id": "64_99",
+            "occluded": false
+          },
+          "requests": [],
+          "expansionCandidates": []
+        },
+        {
+          "tick": 120,
+          "observable": {
+            "ownStart": {
+              "x": 57,
+              "y": 98
+            },
+            "ownObjects": [
+              {
+                "id": 1365,
+                "name": "SMCV",
+                "tile": {
+                  "x": 57,
+                  "y": 98
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1369,
+                "name": "HTNK",
+                "tile": {
+                  "x": 56,
+                  "y": 98
+                },
+                "hp": 400
+              },
+              {
+                "id": 1370,
+                "name": "HTNK",
+                "tile": {
+                  "x": 60,
+                  "y": 99
+                },
+                "hp": 400
+              },
+              {
+                "id": 1371,
+                "name": "HTNK",
+                "tile": {
+                  "x": 62,
+                  "y": 99
+                },
+                "hp": 400
+              },
+              {
+                "id": 1372,
+                "name": "HTNK",
+                "tile": {
+                  "x": 62,
+                  "y": 98
+                },
+                "hp": 400
+              },
+              {
+                "id": 1367,
+                "name": "NACNST",
+                "tile": {
+                  "x": 61,
+                  "y": 102
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1368,
+                "name": "NAPOWR",
+                "tile": {
+                  "x": 52,
+                  "y": 102
+                },
+                "hp": 750
+              }
+            ],
+            "enemyIds": [],
+            "ownCredits": 10000,
+            "ownPower": {
+              "total": 150,
+              "drain": 0,
+              "isLowPower": false
+            },
+            "shroudSha256": "b85d90150bc15697b52c7ab3c1d7ece02ced0c16e8abbd52818dfc1bb6a3826d"
+          },
+          "observationSha256": "c8c55cd0840fa3c1b76eec80f71bc36f3006af7fa40a7d7a7674f10c394dc4c9",
+          "directions": [
+            {
+              "x": 99,
+              "y": 148
+            },
+            {
+              "x": 110,
+              "y": 55
+            },
+            {
+              "x": 152,
+              "y": 96
+            }
+          ],
+          "rally": {
+            "x": 63,
+            "y": 106
+          },
+          "attackTargets": [
+            {
+              "name": "attack_6",
+              "at": {
+                "x": 99,
+                "y": 148
+              }
+            }
+          ],
+          "radiationGuard": {
+            "x": 67,
+            "y": 110
+          },
+          "groundPlacement": {
+            "dx": 69,
+            "dy": 53,
+            "rx": 62,
+            "ry": 97,
+            "z": 4,
+            "tileNum": 501,
+            "subTile": 0,
+            "terrainType": 14,
+            "landType": 4,
+            "rampType": 0,
+            "id": "62_97",
+            "occluded": false
+          },
+          "airPlacement": {
+            "dx": 69,
+            "dy": 57,
+            "rx": 64,
+            "ry": 99,
+            "z": 4,
+            "tileNum": 0,
+            "subTile": 0,
+            "terrainType": 13,
+            "landType": 0,
+            "rampType": 0,
+            "id": "64_99",
+            "occluded": false
+          },
+          "requests": [],
+          "expansionCandidates": []
+        },
+        {
+          "tick": 150,
+          "observable": {
+            "ownStart": {
+              "x": 57,
+              "y": 98
+            },
+            "ownObjects": [
+              {
+                "id": 1365,
+                "name": "SMCV",
+                "tile": {
+                  "x": 57,
+                  "y": 98
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1369,
+                "name": "HTNK",
+                "tile": {
+                  "x": 58,
+                  "y": 99
+                },
+                "hp": 400
+              },
+              {
+                "id": 1370,
+                "name": "HTNK",
+                "tile": {
+                  "x": 62,
+                  "y": 101
+                },
+                "hp": 400
+              },
+              {
+                "id": 1371,
+                "name": "HTNK",
+                "tile": {
+                  "x": 64,
+                  "y": 101
+                },
+                "hp": 400
+              },
+              {
+                "id": 1372,
+                "name": "HTNK",
+                "tile": {
+                  "x": 64,
+                  "y": 100
+                },
+                "hp": 400
+              },
+              {
+                "id": 1367,
+                "name": "NACNST",
+                "tile": {
+                  "x": 61,
+                  "y": 102
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1368,
+                "name": "NAPOWR",
+                "tile": {
+                  "x": 52,
+                  "y": 102
+                },
+                "hp": 750
+              }
+            ],
+            "enemyIds": [],
+            "ownCredits": 10000,
+            "ownPower": {
+              "total": 150,
+              "drain": 0,
+              "isLowPower": false
+            },
+            "shroudSha256": "34b84b0ed376f3d8096d1741dbcc47c2a2ea8e42d29854b9acff79b76164bb18"
+          },
+          "observationSha256": "a31eead882882aea116bcf54b39eaa868a7bc364881a3b4ba89504e934de961f",
+          "directions": [
+            {
+              "x": 99,
+              "y": 148
+            },
+            {
+              "x": 110,
+              "y": 55
+            },
+            {
+              "x": 152,
+              "y": 96
+            }
+          ],
+          "rally": {
+            "x": 63,
+            "y": 106
+          },
+          "attackTargets": [
+            {
+              "name": "attack_6",
+              "at": {
+                "x": 99,
+                "y": 148
+              }
+            }
+          ],
+          "radiationGuard": {
+            "x": 67,
+            "y": 110
+          },
+          "groundPlacement": {
+            "dx": 61,
+            "dy": 45,
+            "rx": 54,
+            "ry": 97,
+            "z": 4,
+            "tileNum": 0,
+            "subTile": 0,
+            "terrainType": 13,
+            "landType": 0,
+            "rampType": 0,
+            "id": "54_97",
+            "occluded": false
+          },
+          "airPlacement": {
+            "dx": 71,
+            "dy": 59,
+            "rx": 66,
+            "ry": 99,
+            "z": 4,
+            "tileNum": 0,
+            "subTile": 0,
+            "terrainType": 13,
+            "landType": 0,
+            "rampType": 0,
+            "id": "66_99",
+            "occluded": false
+          },
+          "requests": [],
+          "expansionCandidates": []
+        },
+        {
+          "tick": 180,
+          "observable": {
+            "ownStart": {
+              "x": 57,
+              "y": 98
+            },
+            "ownObjects": [
+              {
+                "id": 1365,
+                "name": "SMCV",
+                "tile": {
+                  "x": 57,
+                  "y": 98
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1369,
+                "name": "HTNK",
+                "tile": {
+                  "x": 59,
+                  "y": 100
+                },
+                "hp": 400
+              },
+              {
+                "id": 1370,
+                "name": "HTNK",
+                "tile": {
+                  "x": 63,
+                  "y": 101
+                },
+                "hp": 400
+              },
+              {
+                "id": 1371,
+                "name": "HTNK",
+                "tile": {
+                  "x": 66,
+                  "y": 103
+                },
+                "hp": 400
+              },
+              {
+                "id": 1372,
+                "name": "HTNK",
+                "tile": {
+                  "x": 66,
+                  "y": 102
+                },
+                "hp": 400
+              },
+              {
+                "id": 1367,
+                "name": "NACNST",
+                "tile": {
+                  "x": 61,
+                  "y": 102
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1368,
+                "name": "NAPOWR",
+                "tile": {
+                  "x": 52,
+                  "y": 102
+                },
+                "hp": 750
+              }
+            ],
+            "enemyIds": [],
+            "ownCredits": 10000,
+            "ownPower": {
+              "total": 150,
+              "drain": 0,
+              "isLowPower": false
+            },
+            "shroudSha256": "0db0433c5fad2da03b984fb29ba74717d8cc6707e5ae47c4e5e7ddbcdb38972f"
+          },
+          "observationSha256": "91e04857e20cca50fc457551fbf7cda83434a03893798a8f6b4d16b3a81ebad9",
+          "directions": [
+            {
+              "x": 99,
+              "y": 148
+            },
+            {
+              "x": 110,
+              "y": 55
+            },
+            {
+              "x": 152,
+              "y": 96
+            }
+          ],
+          "rally": {
+            "x": 63,
+            "y": 106
+          },
+          "attackTargets": [
+            {
+              "name": "attack_6",
+              "at": {
+                "x": 99,
+                "y": 148
+              }
+            }
+          ],
+          "radiationGuard": {
+            "x": 67,
+            "y": 110
+          },
+          "groundPlacement": {
+            "dx": 69,
+            "dy": 53,
+            "rx": 62,
+            "ry": 97,
+            "z": 4,
+            "tileNum": 501,
+            "subTile": 0,
+            "terrainType": 14,
+            "landType": 4,
+            "rampType": 0,
+            "id": "62_97",
+            "occluded": false
+          },
+          "airPlacement": {
+            "dx": 63,
+            "dy": 51,
+            "rx": 58,
+            "ry": 99,
+            "z": 4,
+            "tileNum": 0,
+            "subTile": 0,
+            "terrainType": 13,
+            "landType": 0,
+            "rampType": 0,
+            "id": "58_99",
+            "occluded": false
+          },
+          "requests": [],
+          "expansionCandidates": []
+        }
+      ],
+      "commands": [
+        {
+          "tick": 24,
+          "args": [
+            [
+              1369,
+              1370,
+              1371,
+              1372
+            ],
+            4,
+            99,
+            148
+          ]
+        }
+      ],
+      "ticks": 180
+    },
+    {
+      "difficulty": "normal",
+      "enemyStart": 2,
+      "ownStartIndex": 0,
+      "playerSlots": [
+        "@@AI1@@",
+        "@@AI2@@"
+      ],
+      "physicalStarts": [
+        {
+          "x": 57,
+          "y": 98
+        },
+        {
+          "x": 152,
+          "y": 96
+        }
+      ],
+      "settings": {
+        "credits": 10000,
+        "unitCount": 0,
+        "engineDifficulty": 4
+      },
+      "fixtureObjects": [
+        {
+          "id": 1367,
+          "name": "NACNST",
+          "tile": {
+            "x": 61,
+            "y": 102
+          }
+        },
+        {
+          "id": 1368,
+          "name": "NAPOWR",
+          "tile": {
+            "x": 52,
+            "y": 102
+          }
+        },
+        {
+          "id": 1369,
+          "name": "HTNK",
+          "tile": {
+            "x": 53,
+            "y": 94
+          }
+        },
+        {
+          "id": 1370,
+          "name": "HTNK",
+          "tile": {
+            "x": 55,
+            "y": 94
+          }
+        },
+        {
+          "id": 1371,
+          "name": "HTNK",
+          "tile": {
+            "x": 57,
+            "y": 94
+          }
+        },
+        {
+          "id": 1372,
+          "name": "HTNK",
+          "tile": {
+            "x": 59,
+            "y": 94
+          }
+        }
+      ],
+      "sensitiveReads": [],
+      "snapshots": [
+        {
+          "tick": 30,
+          "observable": {
+            "ownStart": {
+              "x": 57,
+              "y": 98
+            },
+            "ownObjects": [
+              {
+                "id": 1365,
+                "name": "SMCV",
+                "tile": {
+                  "x": 57,
+                  "y": 98
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1369,
+                "name": "HTNK",
+                "tile": {
+                  "x": 53,
+                  "y": 94
+                },
+                "hp": 400
+              },
+              {
+                "id": 1370,
+                "name": "HTNK",
+                "tile": {
+                  "x": 55,
+                  "y": 94
+                },
+                "hp": 400
+              },
+              {
+                "id": 1371,
+                "name": "HTNK",
+                "tile": {
+                  "x": 57,
+                  "y": 94
+                },
+                "hp": 400
+              },
+              {
+                "id": 1372,
+                "name": "HTNK",
+                "tile": {
+                  "x": 59,
+                  "y": 94
+                },
+                "hp": 400
+              },
+              {
+                "id": 1367,
+                "name": "NACNST",
+                "tile": {
+                  "x": 61,
+                  "y": 102
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1368,
+                "name": "NAPOWR",
+                "tile": {
+                  "x": 52,
+                  "y": 102
+                },
+                "hp": 750
+              }
+            ],
+            "enemyIds": [],
+            "ownCredits": 10000,
+            "ownPower": {
+              "total": 150,
+              "drain": 0,
+              "isLowPower": false
+            },
+            "shroudSha256": "dc687af73ca384392af9fe317003c8b57f9b6d73307c4a96a3d03c3d1c208547"
+          },
+          "observationSha256": "2cc431f8171ecc664b390ca69a18ef79911a18b4a3dbfabe5cc4eef3d6806b1f",
+          "directions": [
+            {
+              "x": 99,
+              "y": 148
+            },
+            {
+              "x": 110,
+              "y": 55
+            },
+            {
+              "x": 152,
+              "y": 96
+            }
+          ],
+          "rally": {
+            "x": 57,
+            "y": 98
+          },
+          "attackTargets": [
+            {
+              "name": "attack_6",
+              "at": {
+                "x": 99,
+                "y": 148
+              }
+            }
+          ],
+          "radiationGuard": {
+            "x": 67,
+            "y": 110
+          },
+          "groundPlacement": {
+            "dx": 69,
+            "dy": 55,
+            "rx": 63,
+            "ry": 98,
+            "z": 4,
+            "tileNum": 0,
+            "subTile": 0,
+            "terrainType": 13,
+            "landType": 0,
+            "rampType": 0,
+            "id": "63_98",
+            "occluded": false
+          },
+          "airPlacement": {
+            "dx": 63,
+            "dy": 51,
+            "rx": 58,
+            "ry": 99,
+            "z": 4,
+            "tileNum": 0,
+            "subTile": 0,
+            "terrainType": 13,
+            "landType": 0,
+            "rampType": 0,
+            "id": "58_99",
+            "occluded": false
+          },
+          "requests": [],
+          "expansionCandidates": []
+        },
+        {
+          "tick": 60,
+          "observable": {
+            "ownStart": {
+              "x": 57,
+              "y": 98
+            },
+            "ownObjects": [
+              {
+                "id": 1365,
+                "name": "SMCV",
+                "tile": {
+                  "x": 57,
+                  "y": 98
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1369,
+                "name": "HTNK",
+                "tile": {
+                  "x": 54,
+                  "y": 95
+                },
+                "hp": 400
+              },
+              {
+                "id": 1370,
+                "name": "HTNK",
+                "tile": {
+                  "x": 56,
+                  "y": 95
+                },
+                "hp": 400
+              },
+              {
+                "id": 1371,
+                "name": "HTNK",
+                "tile": {
+                  "x": 58,
+                  "y": 95
+                },
+                "hp": 400
+              },
+              {
+                "id": 1372,
+                "name": "HTNK",
+                "tile": {
+                  "x": 59,
+                  "y": 95
+                },
+                "hp": 400
+              },
+              {
+                "id": 1367,
+                "name": "NACNST",
+                "tile": {
+                  "x": 61,
+                  "y": 102
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1368,
+                "name": "NAPOWR",
+                "tile": {
+                  "x": 52,
+                  "y": 102
+                },
+                "hp": 750
+              }
+            ],
+            "enemyIds": [],
+            "ownCredits": 10000,
+            "ownPower": {
+              "total": 150,
+              "drain": 0,
+              "isLowPower": false
+            },
+            "shroudSha256": "218652b7245c7dc5d04ee82c0700610dc535dc241b9d27bde9d1ac1c29f0b4e7"
+          },
+          "observationSha256": "cf35ee8a66e91756cd73cda7cc8e979fc22202a36c9c9c224df98dbc9527459a",
+          "directions": [
+            {
+              "x": 99,
+              "y": 148
+            },
+            {
+              "x": 110,
+              "y": 55
+            },
+            {
+              "x": 152,
+              "y": 96
+            }
+          ],
+          "rally": {
+            "x": 57,
+            "y": 98
+          },
+          "attackTargets": [
+            {
+              "name": "attack_6",
+              "at": {
+                "x": 99,
+                "y": 148
+              }
+            }
+          ],
+          "radiationGuard": {
+            "x": 67,
+            "y": 110
+          },
+          "groundPlacement": {
+            "dx": 65,
+            "dy": 49,
+            "rx": 58,
+            "ry": 97,
+            "z": 4,
+            "tileNum": 493,
+            "subTile": 0,
+            "terrainType": 14,
+            "landType": 4,
+            "rampType": 0,
+            "id": "58_97",
+            "occluded": false
+          },
+          "airPlacement": {
+            "dx": 67,
+            "dy": 59,
+            "rx": 64,
+            "ry": 101,
+            "z": 4,
+            "tileNum": 498,
+            "subTile": 0,
+            "terrainType": 14,
+            "landType": 4,
+            "rampType": 0,
+            "id": "64_101",
+            "occluded": false
+          },
+          "requests": [],
+          "expansionCandidates": []
+        },
+        {
+          "tick": 90,
+          "observable": {
+            "ownStart": {
+              "x": 57,
+              "y": 98
+            },
+            "ownObjects": [
+              {
+                "id": 1365,
+                "name": "SMCV",
+                "tile": {
+                  "x": 57,
+                  "y": 98
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1369,
+                "name": "HTNK",
+                "tile": {
+                  "x": 56,
+                  "y": 97
+                },
+                "hp": 400
+              },
+              {
+                "id": 1370,
+                "name": "HTNK",
+                "tile": {
+                  "x": 58,
+                  "y": 97
+                },
+                "hp": 400
+              },
+              {
+                "id": 1371,
+                "name": "HTNK",
+                "tile": {
+                  "x": 60,
+                  "y": 97
+                },
+                "hp": 400
+              },
+              {
+                "id": 1372,
+                "name": "HTNK",
+                "tile": {
+                  "x": 60,
+                  "y": 96
+                },
+                "hp": 400
+              },
+              {
+                "id": 1367,
+                "name": "NACNST",
+                "tile": {
+                  "x": 61,
+                  "y": 102
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1368,
+                "name": "NAPOWR",
+                "tile": {
+                  "x": 52,
+                  "y": 102
+                },
+                "hp": 750
+              }
+            ],
+            "enemyIds": [],
+            "ownCredits": 10000,
+            "ownPower": {
+              "total": 150,
+              "drain": 0,
+              "isLowPower": false
+            },
+            "shroudSha256": "faf2f47577c4c186c33e3e1271028c50108f288a1940bec91c9911475e93eee5"
+          },
+          "observationSha256": "23aacb21063cd706b90d6314c7de08be6ef057d2c142184889f010115b719eca",
+          "directions": [
+            {
+              "x": 99,
+              "y": 148
+            },
+            {
+              "x": 110,
+              "y": 55
+            },
+            {
+              "x": 152,
+              "y": 96
+            }
+          ],
+          "rally": {
+            "x": 63,
+            "y": 106
+          },
+          "attackTargets": [
+            {
+              "name": "attack_6",
+              "at": {
+                "x": 99,
+                "y": 148
+              }
+            }
+          ],
+          "radiationGuard": {
+            "x": 67,
+            "y": 110
+          },
+          "groundPlacement": {
+            "dx": 73,
+            "dy": 61,
+            "rx": 68,
+            "ry": 99,
+            "z": 4,
+            "tileNum": 495,
+            "subTile": 0,
+            "terrainType": 14,
+            "landType": 4,
+            "rampType": 0,
+            "id": "68_99",
+            "occluded": false
+          },
+          "airPlacement": {
+            "dx": 69,
+            "dy": 57,
+            "rx": 64,
+            "ry": 99,
+            "z": 4,
+            "tileNum": 0,
+            "subTile": 0,
+            "terrainType": 13,
+            "landType": 0,
+            "rampType": 0,
+            "id": "64_99",
+            "occluded": false
+          },
+          "requests": [],
+          "expansionCandidates": []
+        },
+        {
+          "tick": 120,
+          "observable": {
+            "ownStart": {
+              "x": 57,
+              "y": 98
+            },
+            "ownObjects": [
+              {
+                "id": 1365,
+                "name": "SMCV",
+                "tile": {
+                  "x": 57,
+                  "y": 98
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1369,
+                "name": "HTNK",
+                "tile": {
+                  "x": 56,
+                  "y": 98
+                },
+                "hp": 400
+              },
+              {
+                "id": 1370,
+                "name": "HTNK",
+                "tile": {
+                  "x": 60,
+                  "y": 99
+                },
+                "hp": 400
+              },
+              {
+                "id": 1371,
+                "name": "HTNK",
+                "tile": {
+                  "x": 62,
+                  "y": 99
+                },
+                "hp": 400
+              },
+              {
+                "id": 1372,
+                "name": "HTNK",
+                "tile": {
+                  "x": 62,
+                  "y": 98
+                },
+                "hp": 400
+              },
+              {
+                "id": 1367,
+                "name": "NACNST",
+                "tile": {
+                  "x": 61,
+                  "y": 102
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1368,
+                "name": "NAPOWR",
+                "tile": {
+                  "x": 52,
+                  "y": 102
+                },
+                "hp": 750
+              }
+            ],
+            "enemyIds": [],
+            "ownCredits": 10000,
+            "ownPower": {
+              "total": 150,
+              "drain": 0,
+              "isLowPower": false
+            },
+            "shroudSha256": "b85d90150bc15697b52c7ab3c1d7ece02ced0c16e8abbd52818dfc1bb6a3826d"
+          },
+          "observationSha256": "c8c55cd0840fa3c1b76eec80f71bc36f3006af7fa40a7d7a7674f10c394dc4c9",
+          "directions": [
+            {
+              "x": 99,
+              "y": 148
+            },
+            {
+              "x": 110,
+              "y": 55
+            },
+            {
+              "x": 152,
+              "y": 96
+            }
+          ],
+          "rally": {
+            "x": 63,
+            "y": 106
+          },
+          "attackTargets": [
+            {
+              "name": "attack_6",
+              "at": {
+                "x": 99,
+                "y": 148
+              }
+            }
+          ],
+          "radiationGuard": {
+            "x": 67,
+            "y": 110
+          },
+          "groundPlacement": {
+            "dx": 69,
+            "dy": 53,
+            "rx": 62,
+            "ry": 97,
+            "z": 4,
+            "tileNum": 501,
+            "subTile": 0,
+            "terrainType": 14,
+            "landType": 4,
+            "rampType": 0,
+            "id": "62_97",
+            "occluded": false
+          },
+          "airPlacement": {
+            "dx": 69,
+            "dy": 57,
+            "rx": 64,
+            "ry": 99,
+            "z": 4,
+            "tileNum": 0,
+            "subTile": 0,
+            "terrainType": 13,
+            "landType": 0,
+            "rampType": 0,
+            "id": "64_99",
+            "occluded": false
+          },
+          "requests": [],
+          "expansionCandidates": []
+        },
+        {
+          "tick": 150,
+          "observable": {
+            "ownStart": {
+              "x": 57,
+              "y": 98
+            },
+            "ownObjects": [
+              {
+                "id": 1365,
+                "name": "SMCV",
+                "tile": {
+                  "x": 57,
+                  "y": 98
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1369,
+                "name": "HTNK",
+                "tile": {
+                  "x": 58,
+                  "y": 99
+                },
+                "hp": 400
+              },
+              {
+                "id": 1370,
+                "name": "HTNK",
+                "tile": {
+                  "x": 62,
+                  "y": 101
+                },
+                "hp": 400
+              },
+              {
+                "id": 1371,
+                "name": "HTNK",
+                "tile": {
+                  "x": 64,
+                  "y": 101
+                },
+                "hp": 400
+              },
+              {
+                "id": 1372,
+                "name": "HTNK",
+                "tile": {
+                  "x": 64,
+                  "y": 100
+                },
+                "hp": 400
+              },
+              {
+                "id": 1367,
+                "name": "NACNST",
+                "tile": {
+                  "x": 61,
+                  "y": 102
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1368,
+                "name": "NAPOWR",
+                "tile": {
+                  "x": 52,
+                  "y": 102
+                },
+                "hp": 750
+              }
+            ],
+            "enemyIds": [],
+            "ownCredits": 10000,
+            "ownPower": {
+              "total": 150,
+              "drain": 0,
+              "isLowPower": false
+            },
+            "shroudSha256": "34b84b0ed376f3d8096d1741dbcc47c2a2ea8e42d29854b9acff79b76164bb18"
+          },
+          "observationSha256": "a31eead882882aea116bcf54b39eaa868a7bc364881a3b4ba89504e934de961f",
+          "directions": [
+            {
+              "x": 99,
+              "y": 148
+            },
+            {
+              "x": 110,
+              "y": 55
+            },
+            {
+              "x": 152,
+              "y": 96
+            }
+          ],
+          "rally": {
+            "x": 63,
+            "y": 106
+          },
+          "attackTargets": [
+            {
+              "name": "attack_6",
+              "at": {
+                "x": 99,
+                "y": 148
+              }
+            }
+          ],
+          "radiationGuard": {
+            "x": 67,
+            "y": 110
+          },
+          "groundPlacement": {
+            "dx": 61,
+            "dy": 45,
+            "rx": 54,
+            "ry": 97,
+            "z": 4,
+            "tileNum": 0,
+            "subTile": 0,
+            "terrainType": 13,
+            "landType": 0,
+            "rampType": 0,
+            "id": "54_97",
+            "occluded": false
+          },
+          "airPlacement": {
+            "dx": 71,
+            "dy": 59,
+            "rx": 66,
+            "ry": 99,
+            "z": 4,
+            "tileNum": 0,
+            "subTile": 0,
+            "terrainType": 13,
+            "landType": 0,
+            "rampType": 0,
+            "id": "66_99",
+            "occluded": false
+          },
+          "requests": [],
+          "expansionCandidates": []
+        },
+        {
+          "tick": 180,
+          "observable": {
+            "ownStart": {
+              "x": 57,
+              "y": 98
+            },
+            "ownObjects": [
+              {
+                "id": 1365,
+                "name": "SMCV",
+                "tile": {
+                  "x": 57,
+                  "y": 98
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1369,
+                "name": "HTNK",
+                "tile": {
+                  "x": 59,
+                  "y": 100
+                },
+                "hp": 400
+              },
+              {
+                "id": 1370,
+                "name": "HTNK",
+                "tile": {
+                  "x": 63,
+                  "y": 101
+                },
+                "hp": 400
+              },
+              {
+                "id": 1371,
+                "name": "HTNK",
+                "tile": {
+                  "x": 66,
+                  "y": 103
+                },
+                "hp": 400
+              },
+              {
+                "id": 1372,
+                "name": "HTNK",
+                "tile": {
+                  "x": 66,
+                  "y": 102
+                },
+                "hp": 400
+              },
+              {
+                "id": 1367,
+                "name": "NACNST",
+                "tile": {
+                  "x": 61,
+                  "y": 102
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1368,
+                "name": "NAPOWR",
+                "tile": {
+                  "x": 52,
+                  "y": 102
+                },
+                "hp": 750
+              }
+            ],
+            "enemyIds": [],
+            "ownCredits": 10000,
+            "ownPower": {
+              "total": 150,
+              "drain": 0,
+              "isLowPower": false
+            },
+            "shroudSha256": "0db0433c5fad2da03b984fb29ba74717d8cc6707e5ae47c4e5e7ddbcdb38972f"
+          },
+          "observationSha256": "91e04857e20cca50fc457551fbf7cda83434a03893798a8f6b4d16b3a81ebad9",
+          "directions": [
+            {
+              "x": 99,
+              "y": 148
+            },
+            {
+              "x": 110,
+              "y": 55
+            },
+            {
+              "x": 152,
+              "y": 96
+            }
+          ],
+          "rally": {
+            "x": 63,
+            "y": 106
+          },
+          "attackTargets": [
+            {
+              "name": "attack_6",
+              "at": {
+                "x": 99,
+                "y": 148
+              }
+            }
+          ],
+          "radiationGuard": {
+            "x": 67,
+            "y": 110
+          },
+          "groundPlacement": {
+            "dx": 69,
+            "dy": 53,
+            "rx": 62,
+            "ry": 97,
+            "z": 4,
+            "tileNum": 501,
+            "subTile": 0,
+            "terrainType": 14,
+            "landType": 4,
+            "rampType": 0,
+            "id": "62_97",
+            "occluded": false
+          },
+          "airPlacement": {
+            "dx": 63,
+            "dy": 51,
+            "rx": 58,
+            "ry": 99,
+            "z": 4,
+            "tileNum": 0,
+            "subTile": 0,
+            "terrainType": 13,
+            "landType": 0,
+            "rampType": 0,
+            "id": "58_99",
+            "occluded": false
+          },
+          "requests": [],
+          "expansionCandidates": []
+        }
+      ],
+      "commands": [
+        {
+          "tick": 24,
+          "args": [
+            [
+              1369,
+              1370,
+              1371,
+              1372
+            ],
+            4,
+            99,
+            148
+          ]
+        }
+      ],
+      "ticks": 180
+    },
+    {
+      "difficulty": "brutal",
+      "enemyStart": 1,
+      "ownStartIndex": 0,
+      "playerSlots": [
+        "@@AI1@@",
+        "@@AI2@@"
+      ],
+      "physicalStarts": [
+        {
+          "x": 57,
+          "y": 98
+        },
+        {
+          "x": 99,
+          "y": 148
+        }
+      ],
+      "settings": {
+        "credits": 10000,
+        "unitCount": 0,
+        "engineDifficulty": 4
+      },
+      "fixtureObjects": [
+        {
+          "id": 1367,
+          "name": "NACNST",
+          "tile": {
+            "x": 61,
+            "y": 102
+          }
+        },
+        {
+          "id": 1368,
+          "name": "NAPOWR",
+          "tile": {
+            "x": 52,
+            "y": 102
+          }
+        },
+        {
+          "id": 1369,
+          "name": "HTNK",
+          "tile": {
+            "x": 53,
+            "y": 94
+          }
+        },
+        {
+          "id": 1370,
+          "name": "HTNK",
+          "tile": {
+            "x": 55,
+            "y": 94
+          }
+        },
+        {
+          "id": 1371,
+          "name": "HTNK",
+          "tile": {
+            "x": 57,
+            "y": 94
+          }
+        },
+        {
+          "id": 1372,
+          "name": "HTNK",
+          "tile": {
+            "x": 59,
+            "y": 94
+          }
+        }
+      ],
+      "sensitiveReads": [],
+      "snapshots": [
+        {
+          "tick": 30,
+          "observable": {
+            "ownStart": {
+              "x": 57,
+              "y": 98
+            },
+            "ownObjects": [
+              {
+                "id": 1365,
+                "name": "SMCV",
+                "tile": {
+                  "x": 57,
+                  "y": 98
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1369,
+                "name": "HTNK",
+                "tile": {
+                  "x": 53,
+                  "y": 94
+                },
+                "hp": 400
+              },
+              {
+                "id": 1370,
+                "name": "HTNK",
+                "tile": {
+                  "x": 55,
+                  "y": 94
+                },
+                "hp": 400
+              },
+              {
+                "id": 1371,
+                "name": "HTNK",
+                "tile": {
+                  "x": 57,
+                  "y": 94
+                },
+                "hp": 400
+              },
+              {
+                "id": 1372,
+                "name": "HTNK",
+                "tile": {
+                  "x": 59,
+                  "y": 94
+                },
+                "hp": 400
+              },
+              {
+                "id": 1367,
+                "name": "NACNST",
+                "tile": {
+                  "x": 61,
+                  "y": 102
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1368,
+                "name": "NAPOWR",
+                "tile": {
+                  "x": 52,
+                  "y": 102
+                },
+                "hp": 750
+              }
+            ],
+            "enemyIds": [],
+            "ownCredits": 10000,
+            "ownPower": {
+              "total": 150,
+              "drain": 0,
+              "isLowPower": false
+            },
+            "shroudSha256": "dc687af73ca384392af9fe317003c8b57f9b6d73307c4a96a3d03c3d1c208547"
+          },
+          "observationSha256": "2cc431f8171ecc664b390ca69a18ef79911a18b4a3dbfabe5cc4eef3d6806b1f",
+          "directions": [
+            {
+              "x": 99,
+              "y": 148
+            },
+            {
+              "x": 110,
+              "y": 55
+            },
+            {
+              "x": 152,
+              "y": 96
+            }
+          ],
+          "rally": {
+            "x": 57,
+            "y": 98
+          },
+          "attackTargets": [
+            {
+              "name": "fieldArmy",
+              "at": {
+                "x": 99,
+                "y": 148
+              }
+            }
+          ],
+          "radiationGuard": {
+            "x": 67,
+            "y": 110
+          },
+          "groundPlacement": {
+            "dx": 69,
+            "dy": 63,
+            "rx": 67,
+            "ry": 102,
+            "z": 4,
+            "tileNum": 0,
+            "subTile": 0,
+            "terrainType": 13,
+            "landType": 0,
+            "rampType": 0,
+            "id": "67_102",
+            "occluded": false
+          },
+          "airPlacement": {
+            "dx": 64,
+            "dy": 52,
+            "rx": 59,
+            "ry": 99,
+            "z": 4,
+            "tileNum": 0,
+            "subTile": 0,
+            "terrainType": 13,
+            "landType": 0,
+            "rampType": 0,
+            "id": "59_99",
+            "occluded": false
+          },
+          "requests": [],
+          "expansionCandidates": []
+        },
+        {
+          "tick": 60,
+          "observable": {
+            "ownStart": {
+              "x": 57,
+              "y": 98
+            },
+            "ownObjects": [
+              {
+                "id": 1365,
+                "name": "SMCV",
+                "tile": {
+                  "x": 57,
+                  "y": 98
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1369,
+                "name": "HTNK",
+                "tile": {
+                  "x": 55,
+                  "y": 96
+                },
+                "hp": 400
+              },
+              {
+                "id": 1370,
+                "name": "HTNK",
+                "tile": {
+                  "x": 57,
+                  "y": 96
+                },
+                "hp": 400
+              },
+              {
+                "id": 1371,
+                "name": "HTNK",
+                "tile": {
+                  "x": 59,
+                  "y": 96
+                },
+                "hp": 400
+              },
+              {
+                "id": 1372,
+                "name": "HTNK",
+                "tile": {
+                  "x": 59,
+                  "y": 95
+                },
+                "hp": 400
+              },
+              {
+                "id": 1367,
+                "name": "NACNST",
+                "tile": {
+                  "x": 61,
+                  "y": 102
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1368,
+                "name": "NAPOWR",
+                "tile": {
+                  "x": 52,
+                  "y": 102
+                },
+                "hp": 750
+              }
+            ],
+            "enemyIds": [],
+            "ownCredits": 10000,
+            "ownPower": {
+              "total": 150,
+              "drain": 0,
+              "isLowPower": false
+            },
+            "shroudSha256": "218652b7245c7dc5d04ee82c0700610dc535dc241b9d27bde9d1ac1c29f0b4e7"
+          },
+          "observationSha256": "9a948fb78248f57ea9e813ff1e09319b19379d122f83a113a64b0b580b9aea58",
+          "directions": [
+            {
+              "x": 99,
+              "y": 148
+            },
+            {
+              "x": 110,
+              "y": 55
+            },
+            {
+              "x": 152,
+              "y": 96
+            }
+          ],
+          "rally": {
+            "x": 57,
+            "y": 98
+          },
+          "attackTargets": [
+            {
+              "name": "fieldArmy",
+              "at": {
+                "x": 99,
+                "y": 148
+              }
+            }
+          ],
+          "radiationGuard": {
+            "x": 67,
+            "y": 110
+          },
+          "groundPlacement": {
+            "dx": 64,
+            "dy": 48,
+            "rx": 57,
+            "ry": 97,
+            "z": 4,
+            "tileNum": 498,
+            "subTile": 0,
+            "terrainType": 14,
+            "landType": 4,
+            "rampType": 0,
+            "id": "57_97",
+            "occluded": false
+          },
+          "airPlacement": {
+            "dx": 63,
+            "dy": 51,
+            "rx": 58,
+            "ry": 99,
+            "z": 4,
+            "tileNum": 0,
+            "subTile": 0,
+            "terrainType": 13,
+            "landType": 0,
+            "rampType": 0,
+            "id": "58_99",
+            "occluded": false
+          },
+          "requests": [],
+          "expansionCandidates": []
+        },
+        {
+          "tick": 90,
+          "observable": {
+            "ownStart": {
+              "x": 57,
+              "y": 98
+            },
+            "ownObjects": [
+              {
+                "id": 1365,
+                "name": "SMCV",
+                "tile": {
+                  "x": 57,
+                  "y": 98
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1369,
+                "name": "HTNK",
+                "tile": {
+                  "x": 56,
+                  "y": 98
+                },
+                "hp": 400
+              },
+              {
+                "id": 1370,
+                "name": "HTNK",
+                "tile": {
+                  "x": 59,
+                  "y": 98
+                },
+                "hp": 400
+              },
+              {
+                "id": 1371,
+                "name": "HTNK",
+                "tile": {
+                  "x": 61,
+                  "y": 98
+                },
+                "hp": 400
+              },
+              {
+                "id": 1372,
+                "name": "HTNK",
+                "tile": {
+                  "x": 61,
+                  "y": 97
+                },
+                "hp": 400
+              },
+              {
+                "id": 1367,
+                "name": "NACNST",
+                "tile": {
+                  "x": 61,
+                  "y": 102
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1368,
+                "name": "NAPOWR",
+                "tile": {
+                  "x": 52,
+                  "y": 102
+                },
+                "hp": 750
+              }
+            ],
+            "enemyIds": [],
+            "ownCredits": 10000,
+            "ownPower": {
+              "total": 150,
+              "drain": 0,
+              "isLowPower": false
+            },
+            "shroudSha256": "4ed31e527345ed2762ad8c7784c53f9362e058ca21cbcd1df81c474b18271d72"
+          },
+          "observationSha256": "2fdda5c8bbcdaa22348b8b2c2807f089ff5c2668a5a839bf646c36753909baeb",
+          "directions": [
+            {
+              "x": 99,
+              "y": 148
+            },
+            {
+              "x": 110,
+              "y": 55
+            },
+            {
+              "x": 152,
+              "y": 96
+            }
+          ],
+          "rally": {
+            "x": 63,
+            "y": 106
+          },
+          "attackTargets": [
+            {
+              "name": "fieldArmy",
+              "at": {
+                "x": 99,
+                "y": 148
+              }
+            }
+          ],
+          "radiationGuard": {
+            "x": 67,
+            "y": 110
+          },
+          "groundPlacement": {
+            "dx": 69,
+            "dy": 53,
+            "rx": 62,
+            "ry": 97,
+            "z": 4,
+            "tileNum": 501,
+            "subTile": 0,
+            "terrainType": 14,
+            "landType": 4,
+            "rampType": 0,
+            "id": "62_97",
+            "occluded": false
+          },
+          "airPlacement": {
+            "dx": 66,
+            "dy": 56,
+            "rx": 62,
+            "ry": 100,
+            "z": 4,
+            "tileNum": 502,
+            "subTile": 0,
+            "terrainType": 14,
+            "landType": 4,
+            "rampType": 0,
+            "id": "62_100",
+            "occluded": false
+          },
+          "requests": [],
+          "expansionCandidates": []
+        },
+        {
+          "tick": 120,
+          "observable": {
+            "ownStart": {
+              "x": 57,
+              "y": 98
+            },
+            "ownObjects": [
+              {
+                "id": 1365,
+                "name": "SMCV",
+                "tile": {
+                  "x": 57,
+                  "y": 98
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1369,
+                "name": "HTNK",
+                "tile": {
+                  "x": 57,
+                  "y": 99
+                },
+                "hp": 400
+              },
+              {
+                "id": 1370,
+                "name": "HTNK",
+                "tile": {
+                  "x": 61,
+                  "y": 100
+                },
+                "hp": 400
+              },
+              {
+                "id": 1371,
+                "name": "HTNK",
+                "tile": {
+                  "x": 63,
+                  "y": 100
+                },
+                "hp": 400
+              },
+              {
+                "id": 1372,
+                "name": "HTNK",
+                "tile": {
+                  "x": 63,
+                  "y": 99
+                },
+                "hp": 400
+              },
+              {
+                "id": 1367,
+                "name": "NACNST",
+                "tile": {
+                  "x": 61,
+                  "y": 102
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1368,
+                "name": "NAPOWR",
+                "tile": {
+                  "x": 52,
+                  "y": 102
+                },
+                "hp": 750
+              }
+            ],
+            "enemyIds": [],
+            "ownCredits": 10000,
+            "ownPower": {
+              "total": 150,
+              "drain": 0,
+              "isLowPower": false
+            },
+            "shroudSha256": "c311bcf139bea4140422e65cce4db1917e1feba82e02ac67431678fa1e988836"
+          },
+          "observationSha256": "63a1829a9f80515dcfa51b42497a40a1a9313964fc563d0a2c5a2ee235f48a34",
+          "directions": [
+            {
+              "x": 99,
+              "y": 148
+            },
+            {
+              "x": 110,
+              "y": 55
+            },
+            {
+              "x": 152,
+              "y": 96
+            }
+          ],
+          "rally": {
+            "x": 63,
+            "y": 106
+          },
+          "attackTargets": [
+            {
+              "name": "fieldArmy",
+              "at": {
+                "x": 99,
+                "y": 148
+              }
+            }
+          ],
+          "radiationGuard": {
+            "x": 67,
+            "y": 110
+          },
+          "groundPlacement": {
+            "dx": 65,
+            "dy": 49,
+            "rx": 58,
+            "ry": 97,
+            "z": 4,
+            "tileNum": 493,
+            "subTile": 0,
+            "terrainType": 14,
+            "landType": 4,
+            "rampType": 0,
+            "id": "58_97",
+            "occluded": false
+          },
+          "airPlacement": {
+            "dx": 69,
+            "dy": 57,
+            "rx": 64,
+            "ry": 99,
+            "z": 4,
+            "tileNum": 0,
+            "subTile": 0,
+            "terrainType": 13,
+            "landType": 0,
+            "rampType": 0,
+            "id": "64_99",
+            "occluded": false
+          },
+          "requests": [],
+          "expansionCandidates": []
+        },
+        {
+          "tick": 150,
+          "observable": {
+            "ownStart": {
+              "x": 57,
+              "y": 98
+            },
+            "ownObjects": [
+              {
+                "id": 1365,
+                "name": "SMCV",
+                "tile": {
+                  "x": 57,
+                  "y": 98
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1369,
+                "name": "HTNK",
+                "tile": {
+                  "x": 58,
+                  "y": 99
+                },
+                "hp": 400
+              },
+              {
+                "id": 1370,
+                "name": "HTNK",
+                "tile": {
+                  "x": 63,
+                  "y": 101
+                },
+                "hp": 400
+              },
+              {
+                "id": 1371,
+                "name": "HTNK",
+                "tile": {
+                  "x": 65,
+                  "y": 102
+                },
+                "hp": 400
+              },
+              {
+                "id": 1372,
+                "name": "HTNK",
+                "tile": {
+                  "x": 65,
+                  "y": 101
+                },
+                "hp": 400
+              },
+              {
+                "id": 1367,
+                "name": "NACNST",
+                "tile": {
+                  "x": 61,
+                  "y": 102
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1368,
+                "name": "NAPOWR",
+                "tile": {
+                  "x": 52,
+                  "y": 102
+                },
+                "hp": 750
+              }
+            ],
+            "enemyIds": [],
+            "ownCredits": 10000,
+            "ownPower": {
+              "total": 150,
+              "drain": 0,
+              "isLowPower": false
+            },
+            "shroudSha256": "988d9b51f916301ffda4274ec0da658db0245036edd138666a2fca589fbc112d"
+          },
+          "observationSha256": "f5e508df7d64ef0f49d6c7444be99c2baa2b0cb5d4e498f998483e4625aac7b3",
+          "directions": [
+            {
+              "x": 99,
+              "y": 148
+            },
+            {
+              "x": 110,
+              "y": 55
+            },
+            {
+              "x": 152,
+              "y": 96
+            }
+          ],
+          "rally": {
+            "x": 63,
+            "y": 106
+          },
+          "attackTargets": [
+            {
+              "name": "fieldArmy",
+              "at": {
+                "x": 99,
+                "y": 148
+              }
+            }
+          ],
+          "radiationGuard": {
+            "x": 67,
+            "y": 110
+          },
+          "groundPlacement": {
+            "dx": 72,
+            "dy": 56,
+            "rx": 65,
+            "ry": 97,
+            "z": 4,
+            "tileNum": 257,
+            "subTile": 12,
+            "terrainType": 12,
+            "landType": 1,
+            "rampType": 0,
+            "id": "65_97",
+            "occluded": false
+          },
+          "airPlacement": {
+            "dx": 71,
+            "dy": 59,
+            "rx": 66,
+            "ry": 99,
+            "z": 4,
+            "tileNum": 0,
+            "subTile": 0,
+            "terrainType": 13,
+            "landType": 0,
+            "rampType": 0,
+            "id": "66_99",
+            "occluded": false
+          },
+          "requests": [],
+          "expansionCandidates": []
+        },
+        {
+          "tick": 180,
+          "observable": {
+            "ownStart": {
+              "x": 57,
+              "y": 98
+            },
+            "ownObjects": [
+              {
+                "id": 1365,
+                "name": "SMCV",
+                "tile": {
+                  "x": 57,
+                  "y": 98
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1369,
+                "name": "HTNK",
+                "tile": {
+                  "x": 60,
+                  "y": 101
+                },
+                "hp": 400
+              },
+              {
+                "id": 1370,
+                "name": "HTNK",
+                "tile": {
+                  "x": 65,
+                  "y": 102
+                },
+                "hp": 400
+              },
+              {
+                "id": 1371,
+                "name": "HTNK",
+                "tile": {
+                  "x": 67,
+                  "y": 104
+                },
+                "hp": 400
+              },
+              {
+                "id": 1372,
+                "name": "HTNK",
+                "tile": {
+                  "x": 67,
+                  "y": 103
+                },
+                "hp": 400
+              },
+              {
+                "id": 1367,
+                "name": "NACNST",
+                "tile": {
+                  "x": 61,
+                  "y": 102
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1368,
+                "name": "NAPOWR",
+                "tile": {
+                  "x": 52,
+                  "y": 102
+                },
+                "hp": 750
+              }
+            ],
+            "enemyIds": [],
+            "ownCredits": 10000,
+            "ownPower": {
+              "total": 150,
+              "drain": 0,
+              "isLowPower": false
+            },
+            "shroudSha256": "cbc60e2e34421e42ee8c5403cc88a63e4a8a3c641a38ff875a01914b61333b68"
+          },
+          "observationSha256": "c5dc10558c6b020c5e7b62cd799b62e008a916d850c9aba85b38a0eccd7d8209",
+          "directions": [
+            {
+              "x": 99,
+              "y": 148
+            },
+            {
+              "x": 110,
+              "y": 55
+            },
+            {
+              "x": 152,
+              "y": 96
+            }
+          ],
+          "rally": {
+            "x": 63,
+            "y": 106
+          },
+          "attackTargets": [
+            {
+              "name": "fieldArmy",
+              "at": {
+                "x": 99,
+                "y": 148
+              }
+            }
+          ],
+          "radiationGuard": {
+            "x": 67,
+            "y": 110
+          },
+          "groundPlacement": {
+            "dx": 71,
+            "dy": 55,
+            "rx": 64,
+            "ry": 97,
+            "z": 4,
+            "tileNum": 257,
+            "subTile": 11,
+            "terrainType": 13,
+            "landType": 0,
+            "rampType": 0,
+            "id": "64_97",
+            "occluded": false
+          },
+          "airPlacement": {
+            "dx": 63,
+            "dy": 51,
+            "rx": 58,
+            "ry": 99,
+            "z": 4,
+            "tileNum": 0,
+            "subTile": 0,
+            "terrainType": 13,
+            "landType": 0,
+            "rampType": 0,
+            "id": "58_99",
+            "occluded": false
+          },
+          "requests": [],
+          "expansionCandidates": []
+        }
+      ],
+      "commands": [
+        {
+          "tick": 6,
+          "args": [
+            [
+              1369,
+              1370,
+              1371,
+              1372
+            ],
+            4,
+            99,
+            148
+          ]
+        }
+      ],
+      "ticks": 180
+    },
+    {
+      "difficulty": "brutal",
+      "enemyStart": 2,
+      "ownStartIndex": 0,
+      "playerSlots": [
+        "@@AI1@@",
+        "@@AI2@@"
+      ],
+      "physicalStarts": [
+        {
+          "x": 57,
+          "y": 98
+        },
+        {
+          "x": 152,
+          "y": 96
+        }
+      ],
+      "settings": {
+        "credits": 10000,
+        "unitCount": 0,
+        "engineDifficulty": 4
+      },
+      "fixtureObjects": [
+        {
+          "id": 1367,
+          "name": "NACNST",
+          "tile": {
+            "x": 61,
+            "y": 102
+          }
+        },
+        {
+          "id": 1368,
+          "name": "NAPOWR",
+          "tile": {
+            "x": 52,
+            "y": 102
+          }
+        },
+        {
+          "id": 1369,
+          "name": "HTNK",
+          "tile": {
+            "x": 53,
+            "y": 94
+          }
+        },
+        {
+          "id": 1370,
+          "name": "HTNK",
+          "tile": {
+            "x": 55,
+            "y": 94
+          }
+        },
+        {
+          "id": 1371,
+          "name": "HTNK",
+          "tile": {
+            "x": 57,
+            "y": 94
+          }
+        },
+        {
+          "id": 1372,
+          "name": "HTNK",
+          "tile": {
+            "x": 59,
+            "y": 94
+          }
+        }
+      ],
+      "sensitiveReads": [],
+      "snapshots": [
+        {
+          "tick": 30,
+          "observable": {
+            "ownStart": {
+              "x": 57,
+              "y": 98
+            },
+            "ownObjects": [
+              {
+                "id": 1365,
+                "name": "SMCV",
+                "tile": {
+                  "x": 57,
+                  "y": 98
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1369,
+                "name": "HTNK",
+                "tile": {
+                  "x": 53,
+                  "y": 94
+                },
+                "hp": 400
+              },
+              {
+                "id": 1370,
+                "name": "HTNK",
+                "tile": {
+                  "x": 55,
+                  "y": 94
+                },
+                "hp": 400
+              },
+              {
+                "id": 1371,
+                "name": "HTNK",
+                "tile": {
+                  "x": 57,
+                  "y": 94
+                },
+                "hp": 400
+              },
+              {
+                "id": 1372,
+                "name": "HTNK",
+                "tile": {
+                  "x": 59,
+                  "y": 94
+                },
+                "hp": 400
+              },
+              {
+                "id": 1367,
+                "name": "NACNST",
+                "tile": {
+                  "x": 61,
+                  "y": 102
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1368,
+                "name": "NAPOWR",
+                "tile": {
+                  "x": 52,
+                  "y": 102
+                },
+                "hp": 750
+              }
+            ],
+            "enemyIds": [],
+            "ownCredits": 10000,
+            "ownPower": {
+              "total": 150,
+              "drain": 0,
+              "isLowPower": false
+            },
+            "shroudSha256": "dc687af73ca384392af9fe317003c8b57f9b6d73307c4a96a3d03c3d1c208547"
+          },
+          "observationSha256": "2cc431f8171ecc664b390ca69a18ef79911a18b4a3dbfabe5cc4eef3d6806b1f",
+          "directions": [
+            {
+              "x": 99,
+              "y": 148
+            },
+            {
+              "x": 110,
+              "y": 55
+            },
+            {
+              "x": 152,
+              "y": 96
+            }
+          ],
+          "rally": {
+            "x": 57,
+            "y": 98
+          },
+          "attackTargets": [
+            {
+              "name": "fieldArmy",
+              "at": {
+                "x": 99,
+                "y": 148
+              }
+            }
+          ],
+          "radiationGuard": {
+            "x": 67,
+            "y": 110
+          },
+          "groundPlacement": {
+            "dx": 69,
+            "dy": 63,
+            "rx": 67,
+            "ry": 102,
+            "z": 4,
+            "tileNum": 0,
+            "subTile": 0,
+            "terrainType": 13,
+            "landType": 0,
+            "rampType": 0,
+            "id": "67_102",
+            "occluded": false
+          },
+          "airPlacement": {
+            "dx": 64,
+            "dy": 52,
+            "rx": 59,
+            "ry": 99,
+            "z": 4,
+            "tileNum": 0,
+            "subTile": 0,
+            "terrainType": 13,
+            "landType": 0,
+            "rampType": 0,
+            "id": "59_99",
+            "occluded": false
+          },
+          "requests": [],
+          "expansionCandidates": []
+        },
+        {
+          "tick": 60,
+          "observable": {
+            "ownStart": {
+              "x": 57,
+              "y": 98
+            },
+            "ownObjects": [
+              {
+                "id": 1365,
+                "name": "SMCV",
+                "tile": {
+                  "x": 57,
+                  "y": 98
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1369,
+                "name": "HTNK",
+                "tile": {
+                  "x": 55,
+                  "y": 96
+                },
+                "hp": 400
+              },
+              {
+                "id": 1370,
+                "name": "HTNK",
+                "tile": {
+                  "x": 57,
+                  "y": 96
+                },
+                "hp": 400
+              },
+              {
+                "id": 1371,
+                "name": "HTNK",
+                "tile": {
+                  "x": 59,
+                  "y": 96
+                },
+                "hp": 400
+              },
+              {
+                "id": 1372,
+                "name": "HTNK",
+                "tile": {
+                  "x": 59,
+                  "y": 95
+                },
+                "hp": 400
+              },
+              {
+                "id": 1367,
+                "name": "NACNST",
+                "tile": {
+                  "x": 61,
+                  "y": 102
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1368,
+                "name": "NAPOWR",
+                "tile": {
+                  "x": 52,
+                  "y": 102
+                },
+                "hp": 750
+              }
+            ],
+            "enemyIds": [],
+            "ownCredits": 10000,
+            "ownPower": {
+              "total": 150,
+              "drain": 0,
+              "isLowPower": false
+            },
+            "shroudSha256": "218652b7245c7dc5d04ee82c0700610dc535dc241b9d27bde9d1ac1c29f0b4e7"
+          },
+          "observationSha256": "9a948fb78248f57ea9e813ff1e09319b19379d122f83a113a64b0b580b9aea58",
+          "directions": [
+            {
+              "x": 99,
+              "y": 148
+            },
+            {
+              "x": 110,
+              "y": 55
+            },
+            {
+              "x": 152,
+              "y": 96
+            }
+          ],
+          "rally": {
+            "x": 57,
+            "y": 98
+          },
+          "attackTargets": [
+            {
+              "name": "fieldArmy",
+              "at": {
+                "x": 99,
+                "y": 148
+              }
+            }
+          ],
+          "radiationGuard": {
+            "x": 67,
+            "y": 110
+          },
+          "groundPlacement": {
+            "dx": 64,
+            "dy": 48,
+            "rx": 57,
+            "ry": 97,
+            "z": 4,
+            "tileNum": 498,
+            "subTile": 0,
+            "terrainType": 14,
+            "landType": 4,
+            "rampType": 0,
+            "id": "57_97",
+            "occluded": false
+          },
+          "airPlacement": {
+            "dx": 63,
+            "dy": 51,
+            "rx": 58,
+            "ry": 99,
+            "z": 4,
+            "tileNum": 0,
+            "subTile": 0,
+            "terrainType": 13,
+            "landType": 0,
+            "rampType": 0,
+            "id": "58_99",
+            "occluded": false
+          },
+          "requests": [],
+          "expansionCandidates": []
+        },
+        {
+          "tick": 90,
+          "observable": {
+            "ownStart": {
+              "x": 57,
+              "y": 98
+            },
+            "ownObjects": [
+              {
+                "id": 1365,
+                "name": "SMCV",
+                "tile": {
+                  "x": 57,
+                  "y": 98
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1369,
+                "name": "HTNK",
+                "tile": {
+                  "x": 56,
+                  "y": 98
+                },
+                "hp": 400
+              },
+              {
+                "id": 1370,
+                "name": "HTNK",
+                "tile": {
+                  "x": 59,
+                  "y": 98
+                },
+                "hp": 400
+              },
+              {
+                "id": 1371,
+                "name": "HTNK",
+                "tile": {
+                  "x": 61,
+                  "y": 98
+                },
+                "hp": 400
+              },
+              {
+                "id": 1372,
+                "name": "HTNK",
+                "tile": {
+                  "x": 61,
+                  "y": 97
+                },
+                "hp": 400
+              },
+              {
+                "id": 1367,
+                "name": "NACNST",
+                "tile": {
+                  "x": 61,
+                  "y": 102
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1368,
+                "name": "NAPOWR",
+                "tile": {
+                  "x": 52,
+                  "y": 102
+                },
+                "hp": 750
+              }
+            ],
+            "enemyIds": [],
+            "ownCredits": 10000,
+            "ownPower": {
+              "total": 150,
+              "drain": 0,
+              "isLowPower": false
+            },
+            "shroudSha256": "4ed31e527345ed2762ad8c7784c53f9362e058ca21cbcd1df81c474b18271d72"
+          },
+          "observationSha256": "2fdda5c8bbcdaa22348b8b2c2807f089ff5c2668a5a839bf646c36753909baeb",
+          "directions": [
+            {
+              "x": 99,
+              "y": 148
+            },
+            {
+              "x": 110,
+              "y": 55
+            },
+            {
+              "x": 152,
+              "y": 96
+            }
+          ],
+          "rally": {
+            "x": 63,
+            "y": 106
+          },
+          "attackTargets": [
+            {
+              "name": "fieldArmy",
+              "at": {
+                "x": 99,
+                "y": 148
+              }
+            }
+          ],
+          "radiationGuard": {
+            "x": 67,
+            "y": 110
+          },
+          "groundPlacement": {
+            "dx": 69,
+            "dy": 53,
+            "rx": 62,
+            "ry": 97,
+            "z": 4,
+            "tileNum": 501,
+            "subTile": 0,
+            "terrainType": 14,
+            "landType": 4,
+            "rampType": 0,
+            "id": "62_97",
+            "occluded": false
+          },
+          "airPlacement": {
+            "dx": 66,
+            "dy": 56,
+            "rx": 62,
+            "ry": 100,
+            "z": 4,
+            "tileNum": 502,
+            "subTile": 0,
+            "terrainType": 14,
+            "landType": 4,
+            "rampType": 0,
+            "id": "62_100",
+            "occluded": false
+          },
+          "requests": [],
+          "expansionCandidates": []
+        },
+        {
+          "tick": 120,
+          "observable": {
+            "ownStart": {
+              "x": 57,
+              "y": 98
+            },
+            "ownObjects": [
+              {
+                "id": 1365,
+                "name": "SMCV",
+                "tile": {
+                  "x": 57,
+                  "y": 98
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1369,
+                "name": "HTNK",
+                "tile": {
+                  "x": 57,
+                  "y": 99
+                },
+                "hp": 400
+              },
+              {
+                "id": 1370,
+                "name": "HTNK",
+                "tile": {
+                  "x": 61,
+                  "y": 100
+                },
+                "hp": 400
+              },
+              {
+                "id": 1371,
+                "name": "HTNK",
+                "tile": {
+                  "x": 63,
+                  "y": 100
+                },
+                "hp": 400
+              },
+              {
+                "id": 1372,
+                "name": "HTNK",
+                "tile": {
+                  "x": 63,
+                  "y": 99
+                },
+                "hp": 400
+              },
+              {
+                "id": 1367,
+                "name": "NACNST",
+                "tile": {
+                  "x": 61,
+                  "y": 102
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1368,
+                "name": "NAPOWR",
+                "tile": {
+                  "x": 52,
+                  "y": 102
+                },
+                "hp": 750
+              }
+            ],
+            "enemyIds": [],
+            "ownCredits": 10000,
+            "ownPower": {
+              "total": 150,
+              "drain": 0,
+              "isLowPower": false
+            },
+            "shroudSha256": "c311bcf139bea4140422e65cce4db1917e1feba82e02ac67431678fa1e988836"
+          },
+          "observationSha256": "63a1829a9f80515dcfa51b42497a40a1a9313964fc563d0a2c5a2ee235f48a34",
+          "directions": [
+            {
+              "x": 99,
+              "y": 148
+            },
+            {
+              "x": 110,
+              "y": 55
+            },
+            {
+              "x": 152,
+              "y": 96
+            }
+          ],
+          "rally": {
+            "x": 63,
+            "y": 106
+          },
+          "attackTargets": [
+            {
+              "name": "fieldArmy",
+              "at": {
+                "x": 99,
+                "y": 148
+              }
+            }
+          ],
+          "radiationGuard": {
+            "x": 67,
+            "y": 110
+          },
+          "groundPlacement": {
+            "dx": 65,
+            "dy": 49,
+            "rx": 58,
+            "ry": 97,
+            "z": 4,
+            "tileNum": 493,
+            "subTile": 0,
+            "terrainType": 14,
+            "landType": 4,
+            "rampType": 0,
+            "id": "58_97",
+            "occluded": false
+          },
+          "airPlacement": {
+            "dx": 69,
+            "dy": 57,
+            "rx": 64,
+            "ry": 99,
+            "z": 4,
+            "tileNum": 0,
+            "subTile": 0,
+            "terrainType": 13,
+            "landType": 0,
+            "rampType": 0,
+            "id": "64_99",
+            "occluded": false
+          },
+          "requests": [],
+          "expansionCandidates": []
+        },
+        {
+          "tick": 150,
+          "observable": {
+            "ownStart": {
+              "x": 57,
+              "y": 98
+            },
+            "ownObjects": [
+              {
+                "id": 1365,
+                "name": "SMCV",
+                "tile": {
+                  "x": 57,
+                  "y": 98
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1369,
+                "name": "HTNK",
+                "tile": {
+                  "x": 58,
+                  "y": 99
+                },
+                "hp": 400
+              },
+              {
+                "id": 1370,
+                "name": "HTNK",
+                "tile": {
+                  "x": 63,
+                  "y": 101
+                },
+                "hp": 400
+              },
+              {
+                "id": 1371,
+                "name": "HTNK",
+                "tile": {
+                  "x": 65,
+                  "y": 102
+                },
+                "hp": 400
+              },
+              {
+                "id": 1372,
+                "name": "HTNK",
+                "tile": {
+                  "x": 65,
+                  "y": 101
+                },
+                "hp": 400
+              },
+              {
+                "id": 1367,
+                "name": "NACNST",
+                "tile": {
+                  "x": 61,
+                  "y": 102
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1368,
+                "name": "NAPOWR",
+                "tile": {
+                  "x": 52,
+                  "y": 102
+                },
+                "hp": 750
+              }
+            ],
+            "enemyIds": [],
+            "ownCredits": 10000,
+            "ownPower": {
+              "total": 150,
+              "drain": 0,
+              "isLowPower": false
+            },
+            "shroudSha256": "988d9b51f916301ffda4274ec0da658db0245036edd138666a2fca589fbc112d"
+          },
+          "observationSha256": "f5e508df7d64ef0f49d6c7444be99c2baa2b0cb5d4e498f998483e4625aac7b3",
+          "directions": [
+            {
+              "x": 99,
+              "y": 148
+            },
+            {
+              "x": 110,
+              "y": 55
+            },
+            {
+              "x": 152,
+              "y": 96
+            }
+          ],
+          "rally": {
+            "x": 63,
+            "y": 106
+          },
+          "attackTargets": [
+            {
+              "name": "fieldArmy",
+              "at": {
+                "x": 99,
+                "y": 148
+              }
+            }
+          ],
+          "radiationGuard": {
+            "x": 67,
+            "y": 110
+          },
+          "groundPlacement": {
+            "dx": 72,
+            "dy": 56,
+            "rx": 65,
+            "ry": 97,
+            "z": 4,
+            "tileNum": 257,
+            "subTile": 12,
+            "terrainType": 12,
+            "landType": 1,
+            "rampType": 0,
+            "id": "65_97",
+            "occluded": false
+          },
+          "airPlacement": {
+            "dx": 71,
+            "dy": 59,
+            "rx": 66,
+            "ry": 99,
+            "z": 4,
+            "tileNum": 0,
+            "subTile": 0,
+            "terrainType": 13,
+            "landType": 0,
+            "rampType": 0,
+            "id": "66_99",
+            "occluded": false
+          },
+          "requests": [],
+          "expansionCandidates": []
+        },
+        {
+          "tick": 180,
+          "observable": {
+            "ownStart": {
+              "x": 57,
+              "y": 98
+            },
+            "ownObjects": [
+              {
+                "id": 1365,
+                "name": "SMCV",
+                "tile": {
+                  "x": 57,
+                  "y": 98
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1369,
+                "name": "HTNK",
+                "tile": {
+                  "x": 60,
+                  "y": 101
+                },
+                "hp": 400
+              },
+              {
+                "id": 1370,
+                "name": "HTNK",
+                "tile": {
+                  "x": 65,
+                  "y": 102
+                },
+                "hp": 400
+              },
+              {
+                "id": 1371,
+                "name": "HTNK",
+                "tile": {
+                  "x": 67,
+                  "y": 104
+                },
+                "hp": 400
+              },
+              {
+                "id": 1372,
+                "name": "HTNK",
+                "tile": {
+                  "x": 67,
+                  "y": 103
+                },
+                "hp": 400
+              },
+              {
+                "id": 1367,
+                "name": "NACNST",
+                "tile": {
+                  "x": 61,
+                  "y": 102
+                },
+                "hp": 1000
+              },
+              {
+                "id": 1368,
+                "name": "NAPOWR",
+                "tile": {
+                  "x": 52,
+                  "y": 102
+                },
+                "hp": 750
+              }
+            ],
+            "enemyIds": [],
+            "ownCredits": 10000,
+            "ownPower": {
+              "total": 150,
+              "drain": 0,
+              "isLowPower": false
+            },
+            "shroudSha256": "cbc60e2e34421e42ee8c5403cc88a63e4a8a3c641a38ff875a01914b61333b68"
+          },
+          "observationSha256": "c5dc10558c6b020c5e7b62cd799b62e008a916d850c9aba85b38a0eccd7d8209",
+          "directions": [
+            {
+              "x": 99,
+              "y": 148
+            },
+            {
+              "x": 110,
+              "y": 55
+            },
+            {
+              "x": 152,
+              "y": 96
+            }
+          ],
+          "rally": {
+            "x": 63,
+            "y": 106
+          },
+          "attackTargets": [
+            {
+              "name": "fieldArmy",
+              "at": {
+                "x": 99,
+                "y": 148
+              }
+            }
+          ],
+          "radiationGuard": {
+            "x": 67,
+            "y": 110
+          },
+          "groundPlacement": {
+            "dx": 71,
+            "dy": 55,
+            "rx": 64,
+            "ry": 97,
+            "z": 4,
+            "tileNum": 257,
+            "subTile": 11,
+            "terrainType": 13,
+            "landType": 0,
+            "rampType": 0,
+            "id": "64_97",
+            "occluded": false
+          },
+          "airPlacement": {
+            "dx": 63,
+            "dy": 51,
+            "rx": 58,
+            "ry": 99,
+            "z": 4,
+            "tileNum": 0,
+            "subTile": 0,
+            "terrainType": 13,
+            "landType": 0,
+            "rampType": 0,
+            "id": "58_99",
+            "occluded": false
+          },
+          "requests": [],
+          "expansionCandidates": []
+        }
+      ],
+      "commands": [
+        {
+          "tick": 6,
+          "args": [
+            [
+              1369,
+              1370,
+              1371,
+              1372
+            ],
+            4,
+            99,
+            148
+          ]
+        }
+      ],
+      "ticks": 180
+    }
+  ],
+  "pairs": [
+    {
+      "difficulty": "normal",
+      "observationMatch": true,
+      "intentsMatch": true,
+      "commandsMatch": true,
+      "commandsPerWorld": [
+        1,
+        1
+      ],
+      "snapshotsPerWorld": [
+        6,
+        6
+      ]
+    },
+    {
+      "difficulty": "brutal",
+      "observationMatch": true,
+      "intentsMatch": true,
+      "commandsMatch": true,
+      "commandsPerWorld": [
+        1,
+        1
+      ],
+      "snapshotsPerWorld": [
+        6,
+        6
+      ]
+    }
+  ],
+  "transitions": {
+    "sensitiveReads": [],
+    "before": [
+      {
+        "x": 99,
+        "y": 148
+      },
+      {
+        "x": 110,
+        "y": 55
+      },
+      {
+        "x": 152,
+        "y": 96
+      }
+    ],
+    "revealed": [
+      {
+        "x": 159,
+        "y": 103
+      }
+    ],
+    "reshrouded": [
+      {
+        "x": 99,
+        "y": 148
+      },
+      {
+        "x": 110,
+        "y": 55
+      },
+      {
+        "x": 152,
+        "y": 96
+      }
+    ],
+    "hiddenThreat": {
+      "before": 0,
+      "after": 0
+    },
+    "resources": {
+      "tile": {
+        "x": 60,
+        "y": 85
+      },
+      "rawBefore": 4,
+      "rawAfter": 3,
+      "unknownBefore": null,
+      "unknownAfter": null,
+      "resourceValues": {
+        "ore": 25,
+        "gems": 50
+      },
+      "expectedCredits": 150,
+      "knownMoney": 150,
+      "richestSector": {
+        "x": 128,
+        "y": 80,
+        "credits": 11925
+      },
+      "sectorSize": 8,
+      "emptyKnownTile": {
+        "x": 12,
+        "y": 106
+      },
+      "expansionBudgetThreshold": 4000,
+      "budgetGateOnly": true
+    },
+    "coverage": "Real shroud reveal/reset and ordinary TiberiumTrait depletion; not a powered gap-generator interaction or production test."
+  },
+  "passed": true,
+  "limitations": [
+    "Preplaced objects and no-op opposing bots; no economic or strength claim.",
+    "Actual awareness and selected mission/building policies, not the full DefaultStrategy or production scheduler.",
+    "Only pre-contact windows are compared; physical collision differences are not hidden or removed.",
+    "Does not certify disguised/stealth identities, all path-planning information, or powered gap-generator behavior."
+  ],
+  "errorCount": 0,
+  "engineErrors": []
+}
