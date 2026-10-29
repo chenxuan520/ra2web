@@ -5,7 +5,7 @@ import { PriorityQueue } from "@datastructures-js/priority-queue";
 
 export const getUnseenStartingLocations = (gameApi: GameApi, playerData: PlayerData) => {
     const unseenStartingLocations = gameApi.mapApi.getStartingLocations().filter((startingLocation) => {
-        if (startingLocation == playerData.startLocation) {
+        if (startingLocation.x === playerData.startLocation.x && startingLocation.y === playerData.startLocation.y) {
             return false;
         }
         let tile = gameApi.mapApi.getTile(startingLocation.x, startingLocation.y);
@@ -90,7 +90,7 @@ export class ScoutingManager {
         gameApi.mapApi
             .getStartingLocations()
             .filter((startingLocation) => {
-                if (startingLocation == playerData.startLocation) {
+                if (startingLocation.x === playerData.startLocation.x && startingLocation.y === playerData.startLocation.y) {
                     return false;
                 }
                 let tile = gameApi.mapApi.getTile(startingLocation.x, startingLocation.y);
@@ -114,21 +114,21 @@ export class ScoutingManager {
 
     onAiUpdate(gameApi: GameApi, playerData: PlayerData, sectorCache: SectorCache) {
         const currentHead = this.scoutingQueue.front();
-        if (!currentHead) {
-            return;
-        }
-        const headTarget = currentHead.target;
-        if (!headTarget) {
-            this.scoutingQueue.dequeue();
-            return;
-        }
-        const { x, y } = headTarget;
-        const tile = gameApi.mapApi.getTile(x, y);
-        if (tile && gameApi.mapApi.isVisibleTile(tile, playerData.name)) {
-            this.logger(`head point is visible, dequeueing`);
-            this.scoutingQueue.dequeue();
+        if (currentHead) {
+            const headTarget = currentHead.target;
+            if (!headTarget) {
+                this.scoutingQueue.dequeue();
+                return;
+            }
+            const { x, y } = headTarget;
+            const tile = gameApi.mapApi.getTile(x, y);
+            if (tile && gameApi.mapApi.isVisibleTile(tile, playerData.name)) {
+                this.logger(`head point is visible, dequeueing`);
+                this.scoutingQueue.dequeue();
+            }
         }
 
+        // Consuming the current queue must not stop future radius expansion.
         const requiredRadius = Math.floor(gameApi.getCurrentTick() / SCOUTING_RADIUS_EXPANSION_TICKS);
         if (requiredRadius > this.queuedRadius + MIN_SCOUT_RADIUS_INCREASE) {
             this.logger(`expanding scouting radius from ${this.queuedRadius} to ${requiredRadius}`);
