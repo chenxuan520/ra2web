@@ -38,3 +38,5 @@ GameApi的terrain名单差异已处理，但MapApi对象/地形查询、事件�
 源码现已冻结为 `0efe4dbd2efc7f62c677c07c1de2f7895327f11a`，6场景真实复跑、32次截短兼容运行及最终364项Bun通过等结果见[冻结证据](ai-observed-disguise-evidence/report.md)。NAPSIS原版非零范围规则与实际共享识破已单独覆盖，未证明正常付费生产。新CI结果需另验，不将这次机制正确性当作发布通过。
 
 该冻结版本的[精确CI回归](ai-observed-disguise-ci/report.md)现已独立验收成功；上述未完成的功能、信息边界与战力门槛仍保留。
+
+下一单项的[可见展开/地表风险候选设计](ai-observation-api-audit/visible-radiation-design.md)与原版ART解析已归档，尚未实现或渲染验证。展开外观与污染真值分开；该设计不阻塞独立L1付费侦察机制。

@@ -1,0 +1,920 @@
+{
+  "kind": "readonly-original-resource-parse-and-pure-sequenceMap-calls",
+  "noGameTicks": true,
+  "noRendererFrames": true,
+  "baseSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+  "customSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66",
+  "mergedRulesSha256": "32621d9f37078e5bfc94351309bf55db712c4ab3f4a200c8b112e5fd1342bf4d",
+  "mergedArtSha256": "7a21aaa40a6daab9b625d59e8c446654b773b5d7a516d4e46572e91e808e9adc",
+  "radiation": {
+    "radDurationMultiple": 1,
+    "radApplicationDelay": 16,
+    "radLevelMax": 500,
+    "radLevelDelay": 90,
+    "radLightDelay": 90,
+    "radLevelFactor": 0.2,
+    "radLightFactor": 0.1,
+    "radTintFactor": 1,
+    "radColor": [
+      0,
+      255,
+      0
+    ],
+    "radSiteWarhead": "RadSite"
+  },
+  "units": {
+    "DESO": {
+      "rules": {
+        "name": "DESO",
+        "imageName": "DESO",
+        "deployFire": true,
+        "deployFireWeapon": 1,
+        "permaDisguise": false
+      },
+      "art": {
+        "image": "",
+        "fireUp": 2,
+        "sequences": {
+          "Ready": {
+            "type": 0,
+            "startFrame": 0,
+            "frameCount": 1,
+            "facingMult": 1
+          },
+          "Guard": {
+            "type": 1,
+            "startFrame": 0,
+            "frameCount": 1,
+            "facingMult": 1
+          },
+          "Walk": {
+            "type": 3,
+            "startFrame": 8,
+            "frameCount": 6,
+            "facingMult": 6
+          },
+          "Idle1": {
+            "type": 9,
+            "startFrame": 56,
+            "frameCount": 15,
+            "facingMult": 0,
+            "onlyFacing": 1
+          },
+          "Idle2": {
+            "type": 10,
+            "startFrame": 71,
+            "frameCount": 14,
+            "facingMult": 0,
+            "onlyFacing": 5
+          },
+          "Prone": {
+            "type": 2,
+            "startFrame": 86,
+            "frameCount": 1,
+            "facingMult": 6
+          },
+          "Crawl": {
+            "type": 6,
+            "startFrame": 86,
+            "frameCount": 6,
+            "facingMult": 6
+          },
+          "Die1": {
+            "type": 11,
+            "startFrame": 134,
+            "frameCount": 15,
+            "facingMult": 0
+          },
+          "Die2": {
+            "type": 12,
+            "startFrame": 149,
+            "frameCount": 15,
+            "facingMult": 0
+          },
+          "FireUp": {
+            "type": 4,
+            "startFrame": 164,
+            "frameCount": 6,
+            "facingMult": 6
+          },
+          "FireProne": {
+            "type": 8,
+            "startFrame": 212,
+            "frameCount": 6,
+            "facingMult": 6
+          },
+          "Down": {
+            "type": 5,
+            "startFrame": 260,
+            "frameCount": 2,
+            "facingMult": 2
+          },
+          "Up": {
+            "type": 7,
+            "startFrame": 276,
+            "frameCount": 2,
+            "facingMult": 2
+          },
+          "Deploy": {
+            "type": 27,
+            "startFrame": 299,
+            "frameCount": 15,
+            "facingMult": 0
+          },
+          "Deployed": {
+            "type": 28,
+            "startFrame": 298,
+            "frameCount": 1,
+            "facingMult": 0
+          },
+          "DeployedFire": {
+            "type": 29,
+            "startFrame": 292,
+            "frameCount": 7,
+            "facingMult": 0
+          },
+          "Undeploy": {
+            "type": 31,
+            "startFrame": 0,
+            "frameCount": 1,
+            "facingMult": 1
+          },
+          "Cheer": {
+            "type": 33,
+            "startFrame": 56,
+            "frameCount": 15,
+            "facingMult": 0,
+            "onlyFacing": 3
+          },
+          "Panic": {
+            "type": 34,
+            "startFrame": 8,
+            "frameCount": 6,
+            "facingMult": 6
+          }
+        }
+      }
+    },
+    "SPY": {
+      "rules": {
+        "name": "SPY",
+        "imageName": "SPY",
+        "deployFire": false,
+        "deployFireWeapon": 1,
+        "permaDisguise": true
+      },
+      "art": {
+        "image": "",
+        "fireUp": 1,
+        "sequences": {
+          "Ready": {
+            "type": 0,
+            "startFrame": 0,
+            "frameCount": 1,
+            "facingMult": 1
+          },
+          "Guard": {
+            "type": 1,
+            "startFrame": 0,
+            "frameCount": 1,
+            "facingMult": 1
+          },
+          "Prone": {
+            "type": 2,
+            "startFrame": 86,
+            "frameCount": 1,
+            "facingMult": 6
+          },
+          "Walk": {
+            "type": 3,
+            "startFrame": 8,
+            "frameCount": 6,
+            "facingMult": 6
+          },
+          "FireUp": {
+            "type": 4,
+            "startFrame": 0,
+            "frameCount": 1,
+            "facingMult": 1
+          },
+          "Down": {
+            "type": 5,
+            "startFrame": 164,
+            "frameCount": 2,
+            "facingMult": 2
+          },
+          "Crawl": {
+            "type": 6,
+            "startFrame": 86,
+            "frameCount": 6,
+            "facingMult": 6
+          },
+          "Up": {
+            "type": 7,
+            "startFrame": 180,
+            "frameCount": 2,
+            "facingMult": 2
+          },
+          "FireProne": {
+            "type": 8,
+            "startFrame": 86,
+            "frameCount": 1,
+            "facingMult": 6
+          },
+          "Idle1": {
+            "type": 9,
+            "startFrame": 56,
+            "frameCount": 15,
+            "facingMult": 0,
+            "onlyFacing": 1
+          },
+          "Idle2": {
+            "type": 10,
+            "startFrame": 71,
+            "frameCount": 15,
+            "facingMult": 0,
+            "onlyFacing": 5
+          },
+          "Die1": {
+            "type": 11,
+            "startFrame": 134,
+            "frameCount": 15,
+            "facingMult": 0
+          },
+          "Die2": {
+            "type": 12,
+            "startFrame": 149,
+            "frameCount": 15,
+            "facingMult": 0
+          },
+          "Cheer": {
+            "type": 33,
+            "startFrame": 196,
+            "frameCount": 8,
+            "facingMult": 0
+          },
+          "Panic": {
+            "type": 34,
+            "startFrame": 8,
+            "frameCount": 6,
+            "facingMult": 6
+          }
+        }
+      }
+    },
+    "E1": {
+      "rules": {
+        "name": "E1",
+        "imageName": "GI",
+        "deployFire": true,
+        "deployFireWeapon": 1,
+        "permaDisguise": false
+      },
+      "art": {
+        "image": "",
+        "fireUp": 2,
+        "sequences": {
+          "Ready": {
+            "type": 0,
+            "startFrame": 0,
+            "frameCount": 1,
+            "facingMult": 1
+          },
+          "Guard": {
+            "type": 1,
+            "startFrame": 0,
+            "frameCount": 1,
+            "facingMult": 1
+          },
+          "Prone": {
+            "type": 2,
+            "startFrame": 86,
+            "frameCount": 1,
+            "facingMult": 6
+          },
+          "Walk": {
+            "type": 3,
+            "startFrame": 8,
+            "frameCount": 6,
+            "facingMult": 6
+          },
+          "FireUp": {
+            "type": 4,
+            "startFrame": 164,
+            "frameCount": 6,
+            "facingMult": 6
+          },
+          "Down": {
+            "type": 5,
+            "startFrame": 260,
+            "frameCount": 2,
+            "facingMult": 2
+          },
+          "Crawl": {
+            "type": 6,
+            "startFrame": 86,
+            "frameCount": 6,
+            "facingMult": 6
+          },
+          "Up": {
+            "type": 7,
+            "startFrame": 276,
+            "frameCount": 2,
+            "facingMult": 2
+          },
+          "FireProne": {
+            "type": 8,
+            "startFrame": 212,
+            "frameCount": 6,
+            "facingMult": 6
+          },
+          "Idle1": {
+            "type": 9,
+            "startFrame": 56,
+            "frameCount": 15,
+            "facingMult": 0,
+            "onlyFacing": 3
+          },
+          "Idle2": {
+            "type": 10,
+            "startFrame": 71,
+            "frameCount": 14,
+            "facingMult": 0,
+            "onlyFacing": 5
+          },
+          "Die1": {
+            "type": 11,
+            "startFrame": 134,
+            "frameCount": 15,
+            "facingMult": 0
+          },
+          "Die2": {
+            "type": 12,
+            "startFrame": 149,
+            "frameCount": 15,
+            "facingMult": 0
+          },
+          "Deploy": {
+            "type": 27,
+            "startFrame": 300,
+            "frameCount": 15,
+            "facingMult": 0
+          },
+          "Deployed": {
+            "type": 28,
+            "startFrame": 292,
+            "frameCount": 1,
+            "facingMult": 1
+          },
+          "DeployedFire": {
+            "type": 29,
+            "startFrame": 315,
+            "frameCount": 6,
+            "facingMult": 6
+          },
+          "DeployedIdle": {
+            "type": 30,
+            "startFrame": 0,
+            "frameCount": 0,
+            "facingMult": 0
+          },
+          "Undeploy": {
+            "type": 31,
+            "startFrame": 276,
+            "frameCount": 2,
+            "facingMult": 2
+          },
+          "Paradrop": {
+            "type": 32,
+            "startFrame": 363,
+            "frameCount": 1,
+            "facingMult": 0
+          },
+          "Cheer": {
+            "type": 33,
+            "startFrame": 364,
+            "frameCount": 8,
+            "facingMult": 0,
+            "onlyFacing": 5
+          },
+          "Panic": {
+            "type": 34,
+            "startFrame": 8,
+            "frameCount": 6,
+            "facingMult": 6
+          }
+        }
+      }
+    },
+    "E2": {
+      "rules": {
+        "name": "E2",
+        "imageName": "CONS",
+        "deployFire": false,
+        "deployFireWeapon": 1,
+        "permaDisguise": false
+      },
+      "art": {
+        "image": "",
+        "fireUp": 6,
+        "sequences": {
+          "Ready": {
+            "type": 0,
+            "startFrame": 0,
+            "frameCount": 1,
+            "facingMult": 1
+          },
+          "Guard": {
+            "type": 1,
+            "startFrame": 0,
+            "frameCount": 1,
+            "facingMult": 1
+          },
+          "Prone": {
+            "type": 2,
+            "startFrame": 86,
+            "frameCount": 1,
+            "facingMult": 6
+          },
+          "Walk": {
+            "type": 3,
+            "startFrame": 8,
+            "frameCount": 6,
+            "facingMult": 6
+          },
+          "FireUp": {
+            "type": 4,
+            "startFrame": 164,
+            "frameCount": 6,
+            "facingMult": 6
+          },
+          "Down": {
+            "type": 5,
+            "startFrame": 260,
+            "frameCount": 2,
+            "facingMult": 2
+          },
+          "Crawl": {
+            "type": 6,
+            "startFrame": 86,
+            "frameCount": 6,
+            "facingMult": 6
+          },
+          "Up": {
+            "type": 7,
+            "startFrame": 276,
+            "frameCount": 2,
+            "facingMult": 2
+          },
+          "FireProne": {
+            "type": 8,
+            "startFrame": 212,
+            "frameCount": 6,
+            "facingMult": 6
+          },
+          "Idle1": {
+            "type": 9,
+            "startFrame": 56,
+            "frameCount": 15,
+            "facingMult": 0,
+            "onlyFacing": 1
+          },
+          "Idle2": {
+            "type": 10,
+            "startFrame": 71,
+            "frameCount": 14,
+            "facingMult": 0,
+            "onlyFacing": 5
+          },
+          "Die1": {
+            "type": 11,
+            "startFrame": 134,
+            "frameCount": 15,
+            "facingMult": 0
+          },
+          "Die2": {
+            "type": 12,
+            "startFrame": 149,
+            "frameCount": 15,
+            "facingMult": 0
+          },
+          "Cheer": {
+            "type": 33,
+            "startFrame": 293,
+            "frameCount": 8,
+            "facingMult": 0,
+            "onlyFacing": 5
+          },
+          "Paradrop": {
+            "type": 32,
+            "startFrame": 292,
+            "frameCount": 1,
+            "facingMult": 0
+          },
+          "Panic": {
+            "type": 34,
+            "startFrame": 8,
+            "frameCount": 6,
+            "facingMult": 6
+          }
+        }
+      }
+    },
+    "ENGINEER": {
+      "rules": {
+        "name": "ENGINEER",
+        "imageName": "ENGINEER",
+        "deployFire": false,
+        "deployFireWeapon": 1,
+        "permaDisguise": false
+      },
+      "art": {
+        "image": "",
+        "fireUp": 2,
+        "sequences": {
+          "Ready": {
+            "type": 0,
+            "startFrame": 0,
+            "frameCount": 1,
+            "facingMult": 1
+          },
+          "Guard": {
+            "type": 1,
+            "startFrame": 0,
+            "frameCount": 1,
+            "facingMult": 1
+          },
+          "Prone": {
+            "type": 2,
+            "startFrame": 86,
+            "frameCount": 1,
+            "facingMult": 6
+          },
+          "Walk": {
+            "type": 3,
+            "startFrame": 8,
+            "frameCount": 6,
+            "facingMult": 6
+          },
+          "FireUp": {
+            "type": 4,
+            "startFrame": 164,
+            "frameCount": 6,
+            "facingMult": 6
+          },
+          "Down": {
+            "type": 5,
+            "startFrame": 212,
+            "frameCount": 2,
+            "facingMult": 2
+          },
+          "Crawl": {
+            "type": 6,
+            "startFrame": 86,
+            "frameCount": 6,
+            "facingMult": 6
+          },
+          "Up": {
+            "type": 7,
+            "startFrame": 228,
+            "frameCount": 2,
+            "facingMult": 2
+          },
+          "FireProne": {
+            "type": 8,
+            "startFrame": 164,
+            "frameCount": 6,
+            "facingMult": 6
+          },
+          "Idle1": {
+            "type": 9,
+            "startFrame": 56,
+            "frameCount": 15,
+            "facingMult": 0,
+            "onlyFacing": 1
+          },
+          "Idle2": {
+            "type": 10,
+            "startFrame": 71,
+            "frameCount": 14,
+            "facingMult": 0,
+            "onlyFacing": 5
+          },
+          "Die1": {
+            "type": 11,
+            "startFrame": 134,
+            "frameCount": 15,
+            "facingMult": 0
+          },
+          "Die2": {
+            "type": 12,
+            "startFrame": 149,
+            "frameCount": 15,
+            "facingMult": 0
+          },
+          "Paradrop": {
+            "type": 32,
+            "startFrame": 244,
+            "frameCount": 1,
+            "facingMult": 0
+          },
+          "Cheer": {
+            "type": 33,
+            "startFrame": 245,
+            "frameCount": 8,
+            "facingMult": 0,
+            "onlyFacing": 5
+          },
+          "Panic": {
+            "type": 34,
+            "startFrame": 8,
+            "frameCount": 6,
+            "facingMult": 6
+          }
+        }
+      }
+    }
+  },
+  "counterexamples": [
+    {
+      "apparentArt": "DESO",
+      "stance": "None",
+      "fire": false,
+      "sequence": "Ready",
+      "disguisedChangeBranchSequence": "Ready"
+    },
+    {
+      "apparentArt": "DESO",
+      "stance": "None",
+      "fire": true,
+      "sequence": "FireUp",
+      "disguisedChangeBranchSequence": "Ready"
+    },
+    {
+      "apparentArt": "DESO",
+      "stance": "Guard",
+      "fire": false,
+      "sequence": "Guard",
+      "disguisedChangeBranchSequence": "Guard"
+    },
+    {
+      "apparentArt": "DESO",
+      "stance": "Guard",
+      "fire": true,
+      "sequence": "FireUp",
+      "disguisedChangeBranchSequence": "Ready"
+    },
+    {
+      "apparentArt": "DESO",
+      "stance": "Prone",
+      "fire": false,
+      "sequence": "Prone",
+      "disguisedChangeBranchSequence": "Prone"
+    },
+    {
+      "apparentArt": "DESO",
+      "stance": "Prone",
+      "fire": true,
+      "sequence": "FireProne",
+      "disguisedChangeBranchSequence": "Ready"
+    },
+    {
+      "apparentArt": "DESO",
+      "stance": "Deployed",
+      "fire": false,
+      "sequence": "Deployed",
+      "disguisedChangeBranchSequence": "Deployed"
+    },
+    {
+      "apparentArt": "DESO",
+      "stance": "Deployed",
+      "fire": true,
+      "sequence": "DeployedFire",
+      "disguisedChangeBranchSequence": "DeployedFire"
+    },
+    {
+      "apparentArt": "SPY",
+      "stance": "None",
+      "fire": false,
+      "sequence": "Ready",
+      "disguisedChangeBranchSequence": "Ready"
+    },
+    {
+      "apparentArt": "SPY",
+      "stance": "None",
+      "fire": true,
+      "sequence": "FireUp",
+      "disguisedChangeBranchSequence": "Ready"
+    },
+    {
+      "apparentArt": "SPY",
+      "stance": "Guard",
+      "fire": false,
+      "sequence": "Guard",
+      "disguisedChangeBranchSequence": "Guard"
+    },
+    {
+      "apparentArt": "SPY",
+      "stance": "Guard",
+      "fire": true,
+      "sequence": "FireUp",
+      "disguisedChangeBranchSequence": "Ready"
+    },
+    {
+      "apparentArt": "SPY",
+      "stance": "Prone",
+      "fire": false,
+      "sequence": "Prone",
+      "disguisedChangeBranchSequence": "Prone"
+    },
+    {
+      "apparentArt": "SPY",
+      "stance": "Prone",
+      "fire": true,
+      "sequence": "FireProne",
+      "disguisedChangeBranchSequence": "Ready"
+    },
+    {
+      "apparentArt": "SPY",
+      "stance": "Deployed",
+      "fire": false,
+      "sequence": "Ready",
+      "disguisedChangeBranchSequence": "Ready"
+    },
+    {
+      "apparentArt": "SPY",
+      "stance": "Deployed",
+      "fire": true,
+      "sequence": "FireUp",
+      "disguisedChangeBranchSequence": "Ready"
+    },
+    {
+      "apparentArt": "E1",
+      "stance": "None",
+      "fire": false,
+      "sequence": "Ready",
+      "disguisedChangeBranchSequence": "Ready"
+    },
+    {
+      "apparentArt": "E1",
+      "stance": "None",
+      "fire": true,
+      "sequence": "FireUp",
+      "disguisedChangeBranchSequence": "Ready"
+    },
+    {
+      "apparentArt": "E1",
+      "stance": "Guard",
+      "fire": false,
+      "sequence": "Guard",
+      "disguisedChangeBranchSequence": "Guard"
+    },
+    {
+      "apparentArt": "E1",
+      "stance": "Guard",
+      "fire": true,
+      "sequence": "FireUp",
+      "disguisedChangeBranchSequence": "Ready"
+    },
+    {
+      "apparentArt": "E1",
+      "stance": "Prone",
+      "fire": false,
+      "sequence": "Prone",
+      "disguisedChangeBranchSequence": "Prone"
+    },
+    {
+      "apparentArt": "E1",
+      "stance": "Prone",
+      "fire": true,
+      "sequence": "FireProne",
+      "disguisedChangeBranchSequence": "Ready"
+    },
+    {
+      "apparentArt": "E1",
+      "stance": "Deployed",
+      "fire": false,
+      "sequence": "Deployed",
+      "disguisedChangeBranchSequence": "Deployed"
+    },
+    {
+      "apparentArt": "E1",
+      "stance": "Deployed",
+      "fire": true,
+      "sequence": "DeployedFire",
+      "disguisedChangeBranchSequence": "DeployedFire"
+    },
+    {
+      "apparentArt": "E2",
+      "stance": "None",
+      "fire": false,
+      "sequence": "Ready",
+      "disguisedChangeBranchSequence": "Ready"
+    },
+    {
+      "apparentArt": "E2",
+      "stance": "None",
+      "fire": true,
+      "sequence": "FireUp",
+      "disguisedChangeBranchSequence": "Ready"
+    },
+    {
+      "apparentArt": "E2",
+      "stance": "Guard",
+      "fire": false,
+      "sequence": "Guard",
+      "disguisedChangeBranchSequence": "Guard"
+    },
+    {
+      "apparentArt": "E2",
+      "stance": "Guard",
+      "fire": true,
+      "sequence": "FireUp",
+      "disguisedChangeBranchSequence": "Ready"
+    },
+    {
+      "apparentArt": "E2",
+      "stance": "Prone",
+      "fire": false,
+      "sequence": "Prone",
+      "disguisedChangeBranchSequence": "Prone"
+    },
+    {
+      "apparentArt": "E2",
+      "stance": "Prone",
+      "fire": true,
+      "sequence": "FireProne",
+      "disguisedChangeBranchSequence": "Ready"
+    },
+    {
+      "apparentArt": "E2",
+      "stance": "Deployed",
+      "fire": false,
+      "sequence": "Ready",
+      "disguisedChangeBranchSequence": "Ready"
+    },
+    {
+      "apparentArt": "E2",
+      "stance": "Deployed",
+      "fire": true,
+      "sequence": "FireUp",
+      "disguisedChangeBranchSequence": "Ready"
+    },
+    {
+      "apparentArt": "ENGINEER",
+      "stance": "None",
+      "fire": false,
+      "sequence": "Ready",
+      "disguisedChangeBranchSequence": "Ready"
+    },
+    {
+      "apparentArt": "ENGINEER",
+      "stance": "None",
+      "fire": true,
+      "sequence": "FireUp",
+      "disguisedChangeBranchSequence": "Ready"
+    },
+    {
+      "apparentArt": "ENGINEER",
+      "stance": "Guard",
+      "fire": false,
+      "sequence": "Guard",
+      "disguisedChangeBranchSequence": "Guard"
+    },
+    {
+      "apparentArt": "ENGINEER",
+      "stance": "Guard",
+      "fire": true,
+      "sequence": "FireUp",
+      "disguisedChangeBranchSequence": "Ready"
+    },
+    {
+      "apparentArt": "ENGINEER",
+      "stance": "Prone",
+      "fire": false,
+      "sequence": "Prone",
+      "disguisedChangeBranchSequence": "Prone"
+    },
+    {
+      "apparentArt": "ENGINEER",
+      "stance": "Prone",
+      "fire": true,
+      "sequence": "FireProne",
+      "disguisedChangeBranchSequence": "Ready"
+    },
+    {
+      "apparentArt": "ENGINEER",
+      "stance": "Deployed",
+      "fire": false,
+      "sequence": "Ready",
+      "disguisedChangeBranchSequence": "Ready"
+    },
+    {
+      "apparentArt": "ENGINEER",
+      "stance": "Deployed",
+      "fire": true,
+      "sequence": "FireUp",
+      "disguisedChangeBranchSequence": "Ready"
+    }
+  ]
+}
