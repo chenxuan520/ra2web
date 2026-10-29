@@ -1,0 +1,458 @@
+{
+  "schemaVersion": 1,
+  "purpose": "补陆战盟盟第一视角条件行为；scratch研究，不是AI实现或对局验证",
+  "source": {
+    "url": "https://www.bilibili.com/video/BV1CubhzUE3s/",
+    "bvid": "BV1CubhzUE3s",
+    "aid": 115019392027389,
+    "cid": 31658806456,
+    "uploader": "红警威龙",
+    "title": "红警世界冠军美国VS世界亚军法国，颠覆红警认知的一局",
+    "durationSeconds": 815,
+    "mode": "美国对法国（标题；黄盟军与红方巨炮画面相符）",
+    "map": "雪地陆战；疑似冰天但地图名未核",
+    "perspective": "保留黑幕的黄色玩家操作视角；配音属于回顾式讲解，未证明实时口述",
+    "version": {
+      "status": "原版资格待确认；界面支持原版判断",
+      "support": [
+        "310秒已显科技车辆列表仅见矿车、灰熊、IFV、幻影、光棱、飞机、MCV，未见战斗要塞/遥控坦克。",
+        "410秒步兵列表仅见GI、工程师、狗、飞行兵、间谍、谭雅、超时空兵，未见GGI/海豹。"
+      ],
+      "notEstablished": [
+        "原版/RA2模式设置屏",
+        "原始rules/客户端配置",
+        "房间是否额外改规则"
+      ],
+      "restriction": "不因CNCNet名称或本局未出现尤里阵营就认定原版；在版本确证前只保留行为候选，不纳入原版定量策略依据。"
+    }
+  },
+  "viewing": {
+    "completeWatched": false,
+    "heardByHuman": false,
+    "lowExactSeekSeconds": [
+      2,
+      15,
+      30,
+      45,
+      60,
+      75,
+      90,
+      105,
+      108,
+      110,
+      111,
+      114,
+      117,
+      120,
+      123,
+      126,
+      130,
+      150,
+      170,
+      190,
+      210,
+      230,
+      250,
+      270,
+      290,
+      310,
+      330
+    ],
+    "hdExactSeekSeconds": [
+      90,
+      100,
+      110,
+      125,
+      270,
+      310,
+      410
+    ],
+    "gameClock": "未逐帧登记；全部时间为视频秒，不换算game tick",
+    "audio": {
+      "path": "landmirror90-180.wav",
+      "bytes": 2880078,
+      "sha256": "940746da1200742750747716f7a2bf94a078bc847e550620054ec90032cca45d",
+      "windowSeconds": [
+        90,
+        180
+      ],
+      "method": "faster-whisper small, CPU int8, beam3, noVAD; machine transcription only"
+    }
+  },
+  "observations": [
+    {
+      "id": "landmirror-air-defense-90-125",
+      "videoSeconds": [
+        90,
+        125
+      ],
+      "visualFacts": [
+        "90秒敌红色盟军矿区和IFV在已揭开的地面可见；防御侧栏亮起爱国者图标。",
+        "100秒己方黄色矿区旁站立步兵；110秒附近步兵已展开，爱国者可见，红色飞行兵在步兵上方，黄色IFV在右侧矿区。",
+        "105–126秒每3秒抽帧中，114秒IFV朝红色飞行兵方向追近；120–125秒追至更北侧。静帧可见目标/移动线，不据此数实射命中。"
+      ],
+      "machineParaphrase": "90–98秒机器识别讲解为：因对面开始出飞行兵，预防骚扰建筑而补爱国者；106–122秒讲解把爱国者保护步兵、IFV追飞行兵串联。",
+      "legallyKnown": "被录画面保留黑幕，110秒实际有敌飞行兵可见；90秒以前玩家如何首次获得出飞行兵情报未核，不能把90秒的口述反推已经观测到隐藏生产。",
+      "supported": "存在固定防空保护暴露步兵/矿区、机动IFV接续追击可见飞行兵的具体场景；条件化防空思路有本人回顾式讲解支持。",
+      "unknown": [
+        "确切首见敌空军时间",
+        "生产队列切换因果和各单位累计出厂数量",
+        "爱国者精确放置tick/实际费用",
+        "飞行兵精确伤亡/单个武器归因",
+        "此反应相对其他选择的收益"
+      ]
+    },
+    {
+      "id": "landmirror-abort-stated-not-visual",
+      "videoSeconds": [
+        122.24,
+        126.52
+      ],
+      "visualFacts": [
+        "该窗口实际画面继续显示黄色IFV追红色飞行兵，并非己方飞行兵撤离敌矿场的完整连续过程。"
+      ],
+      "machineParaphrase": "机器识别本人讲解为：自己也想攻击对方矿场，但对方IFV提前赶到，遂无办法继续。",
+      "supported": "一个有明确防空干预条件的放弃袭矿说法，属于讲解候选证据。",
+      "unknown": [
+        "口述究竟回指何时/哪组单位",
+        "该袭矿在画面中的完整开始与退出",
+        "发动者单位构成",
+        "是否造成实际矿场伤害"
+      ],
+      "strength": "机器口述，未由对应行动画面独立确认；不可升级成已完整验证成功撤退。"
+    },
+    {
+      "id": "landmirror-production-grouping-133-410",
+      "videoSeconds": [
+        133,
+        410
+      ],
+      "visualFacts": [
+        "150秒抽帧可见己方多座重工。",
+        "310秒选中己方地面坦克，多个单位标记编队1；敌红色飞行兵位于矿区上方，下侧有己方IFV。",
+        "410秒己方黄色地面单位进入红色法国矿场附近，红方巨炮与飞行兵可见。"
+      ],
+      "machineParaphrase": "133–136秒机器识别讲解为此阶段增加至三座重工。",
+      "unknown": [
+        "三重工是不是因空袭结束才决定",
+        "始终保留多少IFV或是否独立快捷编队",
+        "多处同时进攻和完整往返路线",
+        "最终胜负及每一袭矿收益"
+      ],
+      "strength": "产能扩充/地面编队1有片段支持；尚不足以导出固定三重工时机或坦克/IFV比例。"
+    },
+    {
+      "id": "landmirror-no-steal-house-rule",
+      "videoSeconds": [
+        136.2,
+        179
+      ],
+      "visualFacts": [
+        "该窗口未验证工程师偷建筑操作。"
+      ],
+      "machineParaphrase": "机器识别讲解为当时该CNCNet对局不允许偷，并以假设讨论偷重工与美国空降守偷。",
+      "supported": "应隔离禁偷房规条件，不能从没偷推断正常原版对局的最优偷/不偷决定。",
+      "unknown": [
+        "具体房间设置/完整赛事规则",
+        "禁止范围是工程师偷还是还包含间谍",
+        "旁白假设的实际验证"
+      ],
+      "strength": "仅本人讲解的机器识别；不作为工程师/间谍实战成功证据。"
+    }
+  ],
+  "keyFrames": [
+    {
+      "path": "landmirror-hd90.png",
+      "bytes": 1326317,
+      "sha256": "666e30da50c50a818552a193e81e91446dedab0cfd9530bb042328bd474929cb",
+      "videoSeconds": 90,
+      "source": "public qn64 CDN range/seek; whole HD not downloaded",
+      "viewed": true
+    },
+    {
+      "path": "landmirror-hd100.png",
+      "bytes": 1261523,
+      "sha256": "70a7614ee07b16492eabce61e91922c686e128effce61f38228f2dfe09adc428",
+      "videoSeconds": 100,
+      "source": "public qn64 CDN range/seek; whole HD not downloaded",
+      "viewed": true
+    },
+    {
+      "path": "landmirror-hd110.png",
+      "bytes": 1260811,
+      "sha256": "d297451642e9d70ef9f694351f3b6481137b5b5faf39e9034e9a5651dffab33c",
+      "videoSeconds": 110,
+      "source": "public qn64 CDN range/seek; whole HD not downloaded",
+      "viewed": true
+    },
+    {
+      "path": "landmirror-hd125.png",
+      "bytes": 1509163,
+      "sha256": "a7acbdb37bd72b08c4940470d18ab69177a5b9ae254338b00e9ab3014965c746",
+      "videoSeconds": 125,
+      "source": "public qn64 CDN range/seek; whole HD not downloaded",
+      "viewed": true
+    },
+    {
+      "path": "landmirror-hd270.png",
+      "bytes": 1260802,
+      "sha256": "8c7943779d92ccc141ac9be1037dea53a9db42025e072bf01945c01b5d76251e",
+      "videoSeconds": 270,
+      "source": "public qn64 CDN range/seek; whole HD not downloaded",
+      "viewed": true
+    },
+    {
+      "path": "landmirror-hd310.png",
+      "bytes": 1311514,
+      "sha256": "b2d134ed4c4b2ad789fc1d8425630180a4a9723bafba62932695c33c8df3c6b3",
+      "videoSeconds": 310,
+      "source": "public qn64 CDN range/seek; whole HD not downloaded",
+      "viewed": true
+    },
+    {
+      "path": "landmirror-hd410.png",
+      "bytes": 1619839,
+      "sha256": "3a8486f5f6405e1a71a32e4fd663994227e2917805f69e043b8c6900622b511a",
+      "videoSeconds": 410,
+      "source": "public qn64 CDN range/seek; whole HD not downloaded",
+      "viewed": true
+    }
+  ],
+  "contactSheets": [
+    {
+      "path": "landmirror-early-contact.jpg",
+      "bytes": 479698,
+      "sha256": "622ae460a6a7e481f193439bb980b395080076cd160f8c4df93b888883889d60"
+    },
+    {
+      "path": "landmirror90-170.jpg",
+      "bytes": 226772,
+      "sha256": "78cefc6da94fb6c35f7d5fac9ae5b59d27effc2db8aa03c9cd49f5874272211e"
+    },
+    {
+      "path": "landmirror250-contact.jpg",
+      "bytes": 368303,
+      "sha256": "958ad6feab2bc5324a0d6bd42b5a2802dd30e466e1480de0b30e394ad0e05c9f"
+    },
+    {
+      "path": "landmirror-air-contact.jpg",
+      "bytes": 618800,
+      "sha256": "04424bad654b54d6887921e8b9bfbe76b2e0aae18977fd9e0a0c5420bbaa04b2"
+    },
+    {
+      "path": "steel-first-contact.jpg",
+      "bytes": 253183,
+      "sha256": "a4482c68422683677692f3d325bf143a324b17a4b7188f1e457da255af495bba"
+    },
+    {
+      "path": "steel-mid-contact.jpg",
+      "bytes": 724109,
+      "sha256": "79679250ae55dba78ed1678069e12b9756c189336d2844c378d8b3a51c01d1b8"
+    },
+    {
+      "path": "multi-first-contact.jpg",
+      "bytes": 336457,
+      "sha256": "07202f7c9c01411843671fd65be859746f671d477cff286a81a8f29caf5cf474"
+    },
+    {
+      "path": "multi-mid-contact.jpg",
+      "bytes": 628052,
+      "sha256": "c137dcc02ed818d2d69581c406ab9f98af2cdd407ea2728bdffca104fa02dd69"
+    }
+  ],
+  "media": [
+    {
+      "path": "BV1CubhzUE3s-low.mp4",
+      "bytes": 31690229,
+      "sha256": "51c5b1cd0e77c555d79572fddc01cc30d6ac3b3bfeed2d7e63b6112b32db214a",
+      "bvid": "BV1CubhzUE3s",
+      "complete": false,
+      "expectedBytes": 64871256,
+      "reason": "Public CDN response ended early; parallel standard Range completion attempt ended with HTTP 504 and completedParts=[]; prefix remains independently hashed"
+    },
+    {
+      "path": "BV1apmYBYEqs-low.mp4",
+      "bytes": 29291844,
+      "sha256": "9740c45ec380e785e1fe8ddec79974e8ad9cb126b3bc9bb4159e5aadcf5f16c2",
+      "bvid": "BV1apmYBYEqs",
+      "complete": true
+    },
+    {
+      "path": "BV13pmYBYEUu-low.mp4",
+      "bytes": 22257775,
+      "sha256": "6edd22266aa5c6030e0ad832381479df9ee9445517c76842dfecbd520130d8d1",
+      "bvid": "BV13pmYBYEUu",
+      "complete": true
+    }
+  ],
+  "excludedOrLimitedSources": [
+    {
+      "url": "https://www.ra2pvp.com/UP/weilong.php",
+      "finding": "盟内小图对决实际链接仍BV1GpmYBYEM5，已知失效，本次未重试。索引混两版，不能替代版本核验。"
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1apmYBYEqs/",
+      "finding": "钢铁洪流片10–60与70–175秒抽帧为红盟军对黄苏军，不是盟盟；完整下载不等于全看。无新战术定量主张。"
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV13pmYBYEUu/",
+      "finding": "多线片10–60与70–175秒抽帧为黄盟军对红苏军，不是盟盟；完整下载不等于全看。无新战术定量主张。"
+    }
+  ],
+  "implementationReadiness": "version_pending; evidence_candidate_only",
+  "notClaimed": [
+    "新AI收益",
+    "普适开局狗数/路线",
+    "工程师或间谍成功",
+    "独立分组始终有效",
+    "完整获胜链条",
+    "无损撤退或精确击杀"
+  ],
+  "rootReview": {
+    "byteHashesVerified": [
+      "landmirror90-180.wav",
+      "landmirror-hd90.png",
+      "landmirror-hd100.png",
+      "landmirror-hd110.png",
+      "landmirror-hd125.png",
+      "landmirror-hd270.png",
+      "landmirror-hd310.png",
+      "landmirror-hd410.png",
+      "landmirror-early-contact.jpg",
+      "landmirror90-170.jpg",
+      "landmirror250-contact.jpg",
+      "landmirror-air-contact.jpg",
+      "steel-first-contact.jpg",
+      "steel-mid-contact.jpg",
+      "multi-first-contact.jpg",
+      "multi-mid-contact.jpg",
+      "BV1CubhzUE3s-low.mp4",
+      "BV1apmYBYEqs-low.mp4",
+      "BV13pmYBYEUu-low.mp4"
+    ],
+    "visuallyReviewedVideoSeconds": [
+      110,
+      125,
+      310,
+      410
+    ],
+    "method": "four original HD frames individually inspected; no full continuous viewing or human audio listening",
+    "versionCertified": false,
+    "strengthEvidence": false
+  },
+  "versionFollowup": {
+    "schemaVersion": 1,
+    "task": "land-mirror-version-check",
+    "mainSource": {
+      "url": "https://www.bilibili.com/video/BV1CubhzUE3s/",
+      "status": "candidate-only; 原版来源资格本轮仍未解除",
+      "newChecks": [
+        {
+          "kind": "author_intro_machine_asr",
+          "windowVideoSeconds": [
+            0,
+            90
+          ],
+          "factsOrStatements": [
+            "0–17.8秒机器识别本人回顾讲解称对手为神6、距其成为世界亚军约两个月。",
+            "17.8–36.48秒机器识别称CNC冰天、自己左下美国、神6右上法国。",
+            "59.64–69.24秒机器识别谈伞兵守路口配固定防空；这是作者观点，未逐一验证全部路口效果。",
+            "72.04–83.84秒机器识别为本局七矿车一重工后搬基地开矿，盟内飞行兵重要；未独立数完整矿车库存，不据口述定通用阈值。"
+          ],
+          "notEstablished": [
+            "确切录制日期",
+            "是官方赛事还是练习",
+            "具体RA2模式/房间设置",
+            "上述作者因果说法的收益"
+          ],
+          "audio": {
+            "path": "landmirror0-90.wav",
+            "bytes": 2880078,
+            "sha256": "d1e8707e90eed05528d0496d39c40acaa6a9a9214decd235d9ce325f1ff93e62"
+          },
+          "transcript": {
+            "path": "landmirror-intro-machine-transcript.jsonl",
+            "bytes": 5368,
+            "sha256": "0609a3cd1234b7bb8d3578ded3c7ff66c64e1f2d25a9af3f8be6cb4ca55ce126"
+          },
+          "warning": "faster-whisper small机器识别，未亲耳验证；不转录整段。"
+        },
+        {
+          "kind": "public_tags",
+          "url": "https://api.bilibili.com/x/tag/archive/tags?bvid=BV1CubhzUE3s",
+          "evidence": {
+            "path": "landmirror-version-tags.json",
+            "bytes": 3748,
+            "sha256": "8104cda96023eff160a33f9f66bd5fcd752c2139df92688d83b14fda3eec14db"
+          },
+          "finding": "公开标签同时有红色警戒2与尤里的复仇，不能单靠标签定版；也不能据此反判一定是尤复。"
+        },
+        {
+          "kind": "public_comments",
+          "url": "https://api.bilibili.com/x/v2/reply?type=1&oid=115019392027389&pn=1&ps=20&sort=2",
+          "evidence": {
+            "path": "landmirror-version-replies.json",
+            "bytes": 35957,
+            "sha256": "2832ebebbb5f3e8860dd645152f4059771289f66aab82e9677748a7f49525b56"
+          },
+          "finding": "成功取得公开热评第一页，实际返回3主评论及子回复；未见原作者明确版本/房规说明，不能冒称查尽73条。"
+        },
+        {
+          "kind": "official_event_archive",
+          "url": "https://www.ra2match.com/ybxxzl2/",
+          "finding": "赛事站原版2021–2022档案列2021CNC国际赛冠亚为威龙、神6，且决赛20210821；与旁白身份相容，但本片说在夺亚约两个月前，不能把官方决赛规则直接移植到该练习片。"
+        },
+        {
+          "kind": "platform_primary_documentation",
+          "url": "https://forums.cncnet.org/topic/11913-yr-84-update/",
+          "finding": "2021-07-26官方社区更新明确区分RA2 Ladder Maps与YR Ladder Maps，且在RA2模式也可选择No Dog Engineer Kills。这说明CNCNet名字本身不定规则，本局模式仍需与来源匹配。"
+        }
+      ],
+      "priorVisualSupport": "已查看310/410秒侧栏与原版单位列表一致；仍不是独立的正式原版比赛/模式关联。详见land-mirror-followup.json逐帧SHA。",
+      "houseRule": "136–179秒机器识别称本局禁偷，具体范围未明。保持房规隔离；不作正常原版工程师/间谍决策或效果证据。",
+      "requalificationStandard": "可用官方明确原版赛事或可靠原版模式来源与具体录像匹配，再结合画面完成来源资格；不要求所有录像必须取得INI。当前缺的是对应来源，不是证明绝对无任何定制。"
+    },
+    "alternateChecks": [
+      {
+        "url": "https://www.bilibili.com/video/BV1RZ421Y7KY/",
+        "title": "红警天梯，大河奔流盟内打法教学！",
+        "uploader": "红警-匡威",
+        "aid": 1153328587,
+        "cid": 1511101727,
+        "durationSeconds": 490,
+        "checked": "metadata+video exact0s first frame only; no full watch/audio/whole media download",
+        "frame": {
+          "path": "BV1RZ421Y7KY-version-first.png",
+          "bytes": 1665189,
+          "sha256": "024b46b4e6133c2f20f301468ba6af3b9579ae06a0e59580fbb5179c474490cf"
+        },
+        "finding": "画面开场已是大河奔流有海军/船厂/运输与地面交战的剪辑标题帧，不是房间或模式设置屏；不能由这一帧定原版资格，也不当新陆战盟盟连续决策证据。",
+        "status": "followup lead only; no tactic admitted"
+      },
+      {
+        "url": "https://www.bilibili.com/video/BV1zS411K7HC/",
+        "title": "红色警戒2大河奔流的法内教学！",
+        "uploader": "红警-匡威",
+        "aid": 1905470959,
+        "cid": 1571698878,
+        "durationSeconds": 604,
+        "checked": "metadata+video exact0s first frame only; no full watch/audio/whole media download",
+        "frame": {
+          "path": "BV1zS411K7HC-version-first.png",
+          "bytes": 1551702,
+          "sha256": "68068a204292213e16bf8d6ec930836fa3e1a1623889c80b66b8d1a76f0269b6"
+        },
+        "finding": "画面开场已是大河奔流有海军/船厂/运输与地面交战的剪辑标题帧，不是房间或模式设置屏；不能由这一帧定原版资格，也不当新陆战盟盟连续决策证据。",
+        "status": "followup lead only; no tactic admitted"
+      }
+    ],
+    "limits": [
+      "不重下已存媒体",
+      "没有新完整连续决策窗口或失败因果证明",
+      "没有改repo/git/CI",
+      "原媒体和机器转写只在scratch"
+    ],
+    "conclusion": "本轮补齐对手/地图口述与平台混模式说明，未正式解除BV1CubhzUE3s来源资格；停止扩片，回用已有明确官方原版赛事窗口更有效。",
+    "rootByteChecks": 6
+  }
+}

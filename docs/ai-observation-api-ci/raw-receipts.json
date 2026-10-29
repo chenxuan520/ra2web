@@ -1,0 +1,14 @@
+[
+  {
+    "job": "mp08t2-909__Americans-vs-Russians",
+    "fingerprint": "43e17a826432fb01ad032b8a052a07438e4956955f11556c85a00af125e51c58",
+    "reportSha256": "d385f9b5610e48536050238e77f37cc417ae5f516d557af6d2a360b415890ef5",
+    "verifiedAt": "2026-10-29T20:01:45.897Z"
+  },
+  {
+    "job": "mp08t2-909__Russians-vs-Americans",
+    "fingerprint": "43e17a826432fb01ad032b8a052a07438e4956955f11556c85a00af125e51c58",
+    "reportSha256": "ec7905848d7e405492a9b76af498e1e6bfa78fcbcd9f7f59041c2a1f5dab4bbb",
+    "verifiedAt": "2026-10-29T20:01:45.836Z"
+  }
+]

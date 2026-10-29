@@ -1,0 +1,74 @@
+{
+  "runId": 40944893447,
+  "artifactId": 12928562384,
+  "name": "ai-regression",
+  "zipBytes": 43362,
+  "zipSha256": "ced4c1d09804ca869606d6cd1571d96930d09e2b20e8693da078e3a3c9f5c1c1",
+  "members": [
+    {
+      "path": "harassment.json",
+      "bytes": 15832,
+      "sha256": "f85cf30403042d679aba03eda9b78f9611d320b5a4fbe7fcd78eca0a34c5f7e1"
+    },
+    {
+      "path": "information-boundary.json",
+      "bytes": 93748,
+      "sha256": "51ffbfddb111794ad3e8a7830b51b8c9dce987e0198d4f95661ab2be9eb6db37"
+    },
+    {
+      "path": "observed-visibility.json",
+      "bytes": 222151,
+      "sha256": "7e69e3b05a10e689770ff1af3356d665dcf6deaf82f444381d060de9fcbb0e7c"
+    },
+    {
+      "path": "rhino-dog-fixtures.json",
+      "bytes": 29728,
+      "sha256": "ef84ff326903b7497292f49d0c13f1b520d0b71d68c53c4cf99854142a55227e"
+    },
+    {
+      "path": "smoke/jobs/mp08t2-909__Americans-vs-Russians.json",
+      "bytes": 152149,
+      "sha256": "d385f9b5610e48536050238e77f37cc417ae5f516d557af6d2a360b415890ef5"
+    },
+    {
+      "path": "smoke/jobs/mp08t2-909__Americans-vs-Russians.log",
+      "bytes": 1641,
+      "sha256": "fdd1fdda5dae46d5e1079783bdb30019dd2e1ca94936c5822b280e1f0cc6cdae"
+    },
+    {
+      "path": "smoke/jobs/mp08t2-909__Americans-vs-Russians.verified.json",
+      "bytes": 218,
+      "sha256": "ac4341be43296ec8097c9e88d54f6d9cf5c5489e325eba45898e01c8c4f67f50"
+    },
+    {
+      "path": "smoke/jobs/mp08t2-909__Russians-vs-Americans.json",
+      "bytes": 156436,
+      "sha256": "ec7905848d7e405492a9b76af498e1e6bfa78fcbcd9f7f59041c2a1f5dab4bbb"
+    },
+    {
+      "path": "smoke/jobs/mp08t2-909__Russians-vs-Americans.log",
+      "bytes": 1641,
+      "sha256": "7d484cc76eb19e907afcc02ba367fa6718e9764e55fe9dd306f4f0df4f7502f1"
+    },
+    {
+      "path": "smoke/jobs/mp08t2-909__Russians-vs-Americans.verified.json",
+      "bytes": 218,
+      "sha256": "3a0f2324172e68f94380006408e8e1248a06599f6fa26500d1ddd2545e0687b2"
+    },
+    {
+      "path": "smoke/manifest.json",
+      "bytes": 2192,
+      "sha256": "e7478929c1aa455e5001ee54e37c2d0033ccc23360a59e9cf8b7a86a365e843a"
+    },
+    {
+      "path": "smoke/summary.json",
+      "bytes": 1935,
+      "sha256": "c64a0207ec0629d19720d8d1bd70576b8f7620403bb16751e9ab8601025061cb"
+    },
+    {
+      "path": "sneak-capture.json",
+      "bytes": 6063,
+      "sha256": "5762ebb16a0e9eb933bf8cc2f3750572551d386c756c5adfee22dd920771af8a"
+    }
+  ]
+}

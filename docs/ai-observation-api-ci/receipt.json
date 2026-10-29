@@ -1,0 +1,59 @@
+{
+  "format": 1,
+  "runId": 40944893447,
+  "url": "https://github.com/chenxuan520/ra2web/actions/runs/40944893447",
+  "sourceCommit": "3198391d7bc4e5ce02032ce3b4b16cdee01b212a",
+  "baselineCommit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+  "engineCommit": "abcd5dc16ffeff3743f919b0146178bc01ed5f91",
+  "bothProfiles": "brutal",
+  "wholeTsRedalert2Tree": "8fa1f2c75447b14595cc3433fffa5d36f8fd9dbd",
+  "allJobsRead": true,
+  "jobs": 5,
+  "executedJobs": 1,
+  "intentionalSkippedJobs": 4,
+  "allArtifactsRead": true,
+  "artifacts": 1,
+  "membersVerified": 13,
+  "sourceGitBlobAndTreeHashesVerified": true,
+  "localFrozenFixtureDataExactlyEqualExceptDocumentCommit": true,
+  "manifestFingerprintVerified": true,
+  "rawReceiptByteHashesVerified": true,
+  "repositoryValidateJobReportRecomputed": true,
+  "summaryRecomputed": true,
+  "regressionLog": {
+    "bytes": 536884,
+    "sha256": "33c0e383ae291731554b113975f49d9d362ab79df99b24aef75ab9767d1606a1"
+  },
+  "tests": {
+    "bunPass": 332,
+    "bunSkip": 13,
+    "bunFail": 0,
+    "pythonPass": 37,
+    "build": true,
+    "typechecksPassed": true
+  },
+  "smoke": {
+    "complete": true,
+    "games": 4,
+    "maxTicks": 3000,
+    "errors": 0,
+    "warnings": 0,
+    "physicalAndSlotSwap": true,
+    "qualificationEligible": false,
+    "reason": "Deliberately truncated compatibility smoke, excluded from 27000-tick strength samples."
+  },
+  "realFixtures": {
+    "informationCases": 4,
+    "ticksEach": 180,
+    "cloakCases": 2,
+    "cloakTicksEach": 232,
+    "errors": 0,
+    "preplaced": true
+  },
+  "releaseReady": false,
+  "independentReview": {
+    "passed": true,
+    "assertions": 687,
+    "fullReportSha256": "3289ed8e1ad82c63a9fdec93aba76645092a5a68e43a70d4fd9bde4ea3056b0b"
+  }
+}

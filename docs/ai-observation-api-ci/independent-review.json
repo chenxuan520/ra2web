@@ -1,0 +1,486 @@
+{
+  "kind": "independent-readonly-ci-evidence-review",
+  "passed": true,
+  "runId": 40944893447,
+  "artifactId": 12928562384,
+  "zipSha256": "ced4c1d09804ca869606d6cd1571d96930d09e2b20e8693da078e3a3c9f5c1c1",
+  "engine": "abcd5dc16ffeff3743f919b0146178bc01ed5f91",
+  "candidate": "3198391d7bc4e5ce02032ce3b4b16cdee01b212a",
+  "baseline": "c18f77650e40b668064bdb913a75bebfa278f42b",
+  "gitTreeEquality": {
+    "ts-redalert2/src": {
+      "abcd5dc16ffeff3743f919b0146178bc01ed5f91": "fe02255766f5159b47fc9855a95644d11579fc9c",
+      "3198391d7bc4e5ce02032ce3b4b16cdee01b212a": "fe02255766f5159b47fc9855a95644d11579fc9c"
+    },
+    "ts-redalert2/src/game": {
+      "abcd5dc16ffeff3743f919b0146178bc01ed5f91": "fe4f34a80623566ddc8b4e6483fd0ff6aa5a8722",
+      "3198391d7bc4e5ce02032ce3b4b16cdee01b212a": "fe4f34a80623566ddc8b4e6483fd0ff6aa5a8722"
+    },
+    "ts-redalert2/e2e": {
+      "abcd5dc16ffeff3743f919b0146178bc01ed5f91": "1f7bd80d860ddb3a3d453c944ab387504e1a5c26",
+      "3198391d7bc4e5ce02032ce3b4b16cdee01b212a": "1f7bd80d860ddb3a3d453c944ab387504e1a5c26"
+    },
+    ".github/workflows/ai.yml": {
+      "abcd5dc16ffeff3743f919b0146178bc01ed5f91": "eb3b1350bf2aa9e1a90a12ef97fda521429e3c1c",
+      "3198391d7bc4e5ce02032ce3b4b16cdee01b212a": "eb3b1350bf2aa9e1a90a12ef97fda521429e3c1c"
+    }
+  },
+  "sourceDigests": {
+    "entireGame": {
+      "sha256": "3c450591a4d4da36919cf17635317ff21465e591d6e9ad66019a04ba8db4366f",
+      "fileCount": 653
+    },
+    "builtIn": {
+      "sha256": "600921e85c81e9e9b792db02447cae0e5a4497b249ffe1351de3e095e7cba6d9",
+      "fileCount": 69
+    },
+    "tournamentEngine": {
+      "sha256": "a0e02a189426ff1bb3273322db1341d2f8204b418ca60934516d02142ef56433",
+      "fileCount": 1226
+    },
+    "allAiRunners": {
+      "sha256": "cbe2f5bf02bb96584d6bb1f37b3db700f00cd96deccde185e354984968797168",
+      "fileCount": 14
+    }
+  },
+  "zipMembers": [
+    {
+      "path": "harassment.json",
+      "bytes": 15832,
+      "sha256": "f85cf30403042d679aba03eda9b78f9611d320b5a4fbe7fcd78eca0a34c5f7e1"
+    },
+    {
+      "path": "information-boundary.json",
+      "bytes": 93748,
+      "sha256": "51ffbfddb111794ad3e8a7830b51b8c9dce987e0198d4f95661ab2be9eb6db37"
+    },
+    {
+      "path": "observed-visibility.json",
+      "bytes": 222151,
+      "sha256": "7e69e3b05a10e689770ff1af3356d665dcf6deaf82f444381d060de9fcbb0e7c"
+    },
+    {
+      "path": "rhino-dog-fixtures.json",
+      "bytes": 29728,
+      "sha256": "ef84ff326903b7497292f49d0c13f1b520d0b71d68c53c4cf99854142a55227e"
+    },
+    {
+      "path": "smoke/jobs/mp08t2-909__Americans-vs-Russians.json",
+      "bytes": 152149,
+      "sha256": "d385f9b5610e48536050238e77f37cc417ae5f516d557af6d2a360b415890ef5"
+    },
+    {
+      "path": "smoke/jobs/mp08t2-909__Americans-vs-Russians.log",
+      "bytes": 1641,
+      "sha256": "fdd1fdda5dae46d5e1079783bdb30019dd2e1ca94936c5822b280e1f0cc6cdae"
+    },
+    {
+      "path": "smoke/jobs/mp08t2-909__Americans-vs-Russians.verified.json",
+      "bytes": 218,
+      "sha256": "ac4341be43296ec8097c9e88d54f6d9cf5c5489e325eba45898e01c8c4f67f50"
+    },
+    {
+      "path": "smoke/jobs/mp08t2-909__Russians-vs-Americans.json",
+      "bytes": 156436,
+      "sha256": "ec7905848d7e405492a9b76af498e1e6bfa78fcbcd9f7f59041c2a1f5dab4bbb"
+    },
+    {
+      "path": "smoke/jobs/mp08t2-909__Russians-vs-Americans.log",
+      "bytes": 1641,
+      "sha256": "7d484cc76eb19e907afcc02ba367fa6718e9764e55fe9dd306f4f0df4f7502f1"
+    },
+    {
+      "path": "smoke/jobs/mp08t2-909__Russians-vs-Americans.verified.json",
+      "bytes": 218,
+      "sha256": "3a0f2324172e68f94380006408e8e1248a06599f6fa26500d1ddd2545e0687b2"
+    },
+    {
+      "path": "smoke/manifest.json",
+      "bytes": 2192,
+      "sha256": "e7478929c1aa455e5001ee54e37c2d0033ccc23360a59e9cf8b7a86a365e843a"
+    },
+    {
+      "path": "smoke/summary.json",
+      "bytes": 1935,
+      "sha256": "c64a0207ec0629d19720d8d1bd70576b8f7620403bb16751e9ab8601025061cb"
+    },
+    {
+      "path": "sneak-capture.json",
+      "bytes": 6063,
+      "sha256": "5762ebb16a0e9eb933bf8cc2f3750572551d386c756c5adfee22dd920771af8a"
+    }
+  ],
+  "resources": [
+    {
+      "fixture": "F1",
+      "map": "mp01t4.map",
+      "hashes": {
+        "mapSha256": "c43e94057d6abaec0a39899b44175259f150649e2cd39be66504bb2957f2ec67",
+        "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4",
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+      }
+    },
+    {
+      "fixture": "F3a",
+      "map": "mp10s4.map",
+      "hashes": {
+        "mapSha256": "cbada2fde5d2c9c0240fd62b5ef458f901b56a72bfac6a875a913bf11c3604f7",
+        "terrainSha256": "e0b189588495b62a3882eec1c9d4ec4018712f2d2745e1757c9ea6003d2858cf",
+        "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+        "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+      }
+    }
+  ],
+  "F1": {
+    "pairs": [
+      {
+        "difficulty": "normal",
+        "ticksEach": 180,
+        "snapshotsEach": 6,
+        "commandsEach": 1,
+        "physicalStarts": [
+          [
+            {
+              "x": 57,
+              "y": 98
+            },
+            {
+              "x": 99,
+              "y": 148
+            }
+          ],
+          [
+            {
+              "x": 57,
+              "y": 98
+            },
+            {
+              "x": 152,
+              "y": 96
+            }
+          ]
+        ]
+      },
+      {
+        "difficulty": "brutal",
+        "ticksEach": 180,
+        "snapshotsEach": 6,
+        "commandsEach": 1,
+        "physicalStarts": [
+          [
+            {
+              "x": 57,
+              "y": 98
+            },
+            {
+              "x": 99,
+              "y": 148
+            }
+          ],
+          [
+            {
+              "x": 57,
+              "y": 98
+            },
+            {
+              "x": 152,
+              "y": 96
+            }
+          ]
+        ]
+      }
+    ],
+    "transitions": {
+      "sensitiveReads": [],
+      "before": [
+        {
+          "x": 99,
+          "y": 148
+        },
+        {
+          "x": 110,
+          "y": 55
+        },
+        {
+          "x": 152,
+          "y": 96
+        }
+      ],
+      "revealed": [
+        {
+          "x": 159,
+          "y": 103
+        }
+      ],
+      "reshrouded": [
+        {
+          "x": 99,
+          "y": 148
+        },
+        {
+          "x": 110,
+          "y": 55
+        },
+        {
+          "x": 152,
+          "y": 96
+        }
+      ],
+      "hiddenThreat": {
+        "before": 0,
+        "after": 0
+      },
+      "resources": {
+        "tile": {
+          "x": 60,
+          "y": 85
+        },
+        "rawBefore": 4,
+        "rawAfter": 3,
+        "unknownBefore": null,
+        "unknownAfter": null,
+        "resourceValues": {
+          "ore": 25,
+          "gems": 50
+        },
+        "expectedCredits": 150,
+        "knownMoney": 150,
+        "richestSector": {
+          "x": 128,
+          "y": 80,
+          "credits": 11925
+        },
+        "sectorSize": 8,
+        "emptyKnownTile": {
+          "x": 12,
+          "y": 106
+        },
+        "expansionBudgetThreshold": 4000,
+        "budgetGateOnly": true
+      },
+      "coverage": "Real shroud reveal/reset and ordinary TiberiumTrait depletion; not a powered gap-generator interaction or production test."
+    }
+  },
+  "F3a": {
+    "cases": [
+      {
+        "target": "SUB",
+        "ticks": 232,
+        "snapshotTicks": [
+          0,
+          18,
+          177,
+          177,
+          177,
+          232
+        ],
+        "cloakEvents": [
+          [
+            17,
+            true
+          ],
+          [
+            176,
+            false
+          ],
+          [
+            231,
+            true
+          ]
+        ],
+        "laterShots": [
+          {
+            "tick": 197,
+            "type": "WeaponFire",
+            "id": 1232,
+            "cloaked": false,
+            "submerged": false,
+            "weapon": "ASWLauncher",
+            "damage": null
+          }
+        ],
+        "damagedHp": 0,
+        "coverage": {
+          "interleavedApiPairs": 6,
+          "sampledTicks": 232,
+          "naturalInitialCloak": true,
+          "sensorMovementUncloak": true,
+          "naturalRecloak": true,
+          "actualShroudResetReveal": true,
+          "directIdAndLists": true,
+          "hiddenFilterNeverCalled": true,
+          "ownerVisibleThroughout": true,
+          "foreignObserverQueryRejected": true,
+          "weaponFireEventsBeforeDetection": 0,
+          "laterWeaponFireEvents": 1,
+          "damageEvents": 0
+        }
+      },
+      {
+        "target": "DLPH",
+        "ticks": 232,
+        "snapshotTicks": [
+          0,
+          18,
+          177,
+          177,
+          177,
+          232
+        ],
+        "cloakEvents": [
+          [
+            17,
+            true
+          ],
+          [
+            176,
+            false
+          ],
+          [
+            231,
+            true
+          ]
+        ],
+        "laterShots": [
+          {
+            "tick": 197,
+            "type": "WeaponFire",
+            "id": 1232,
+            "cloaked": false,
+            "submerged": false,
+            "weapon": "ASWLauncher",
+            "damage": null
+          }
+        ],
+        "damagedHp": 0,
+        "coverage": {
+          "interleavedApiPairs": 6,
+          "sampledTicks": 232,
+          "naturalInitialCloak": true,
+          "sensorMovementUncloak": true,
+          "naturalRecloak": true,
+          "actualShroudResetReveal": true,
+          "directIdAndLists": true,
+          "hiddenFilterNeverCalled": true,
+          "ownerVisibleThroughout": true,
+          "foreignObserverQueryRejected": true,
+          "weaponFireEventsBeforeDetection": 0,
+          "laterWeaponFireEvents": 1,
+          "damageEvents": 0
+        }
+      }
+    ]
+  },
+  "smoke": {
+    "games": [
+      {
+        "candidateCountry": "Americans",
+        "baselineCountry": "Russians",
+        "map": "mp08t2.map",
+        "seed": 909,
+        "swapped": false,
+        "candidatePlayerName": "@@AI1@@",
+        "baselinePlayerName": "@@AI2@@",
+        "startingLocations": [
+          {
+            "x": 27,
+            "y": 50
+          },
+          {
+            "x": 82,
+            "y": 87
+          }
+        ],
+        "result": "draw",
+        "reason": "tick-limit",
+        "ticks": 3000
+      },
+      {
+        "candidateCountry": "Americans",
+        "baselineCountry": "Russians",
+        "map": "mp08t2.map",
+        "seed": 909,
+        "swapped": true,
+        "candidatePlayerName": "@@AI2@@",
+        "baselinePlayerName": "@@AI1@@",
+        "startingLocations": [
+          {
+            "x": 82,
+            "y": 87
+          },
+          {
+            "x": 27,
+            "y": 50
+          }
+        ],
+        "result": "draw",
+        "reason": "tick-limit",
+        "ticks": 3000
+      },
+      {
+        "candidateCountry": "Russians",
+        "baselineCountry": "Americans",
+        "map": "mp08t2.map",
+        "seed": 909,
+        "swapped": false,
+        "candidatePlayerName": "@@AI1@@",
+        "baselinePlayerName": "@@AI2@@",
+        "startingLocations": [
+          {
+            "x": 27,
+            "y": 50
+          },
+          {
+            "x": 82,
+            "y": 87
+          }
+        ],
+        "result": "draw",
+        "reason": "tick-limit",
+        "ticks": 3000
+      },
+      {
+        "candidateCountry": "Russians",
+        "baselineCountry": "Americans",
+        "map": "mp08t2.map",
+        "seed": 909,
+        "swapped": true,
+        "candidatePlayerName": "@@AI2@@",
+        "baselinePlayerName": "@@AI1@@",
+        "startingLocations": [
+          {
+            "x": 82,
+            "y": 87
+          },
+          {
+            "x": 27,
+            "y": 50
+          }
+        ],
+        "result": "draw",
+        "reason": "tick-limit",
+        "ticks": 3000
+      }
+    ],
+    "zeroRuntimeErrors": true,
+    "frozenValidatorPassed": true,
+    "receiptsMatched": 2,
+    "summaryExactRecompute": true,
+    "strengthSample": false
+  },
+  "checksPassed": 687,
+  "boundaries": [
+    "No new matches or fixtures were launched. Only byte/hash validation and frozen pure report validators ran.",
+    "Workflow jobs/artifact listing provenance comes from parent connected-GitHub review, not independently re-fetched by this child.",
+    "Four 3000tick smoke timeouts are runtime compatibility checks, excluded from27000tick strength samples.",
+    "F1/F3a remain preplaced mechanisms; no win-rate or complete information-fairness claim.",
+    "Raw snapshots assert repeat-view equality; the report retains one copy of the equal views rather than both.",
+    "No disguised/SPY/MGTK visibility, events, terrain/resource API closure, powered gap generator or shared-intel real-engine coverage is claimed."
+  ],
+  "fullLocalReview": {
+    "bytes": 49901,
+    "sha256": "3289ed8e1ad82c63a9fdec93aba76645092a5a68e43a70d4fd9bde4ea3056b0b"
+  },
+  "assertionCount": 687
+}
