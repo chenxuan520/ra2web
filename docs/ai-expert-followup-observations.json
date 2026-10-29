@@ -505,6 +505,218 @@
         "verifiedHttpRange": "bytes 9437184-26000000/66731217",
         "sha256": "092ad1563f721a9614306cfac63623a6596a5a8f97e5a4844311e52638d48a7b"
       }
+    },
+    "droneTracking": {
+      "format": 1,
+      "date": "2026-10-30 Asia/Shanghai",
+      "source": "https://www.bilibili.com/video/BV1h49tYqEnt/",
+      "timeBase": "exact media seek seconds, game clock unavailable",
+      "method": "dense sampled frames, no continuous viewing or command/object-ID log",
+      "sourceFullLowMediaSha256": "52881f7cff111f99a383965bdbfd50909b71ca6ce6fcc13ab2f812dee87a7788",
+      "highPartial": {
+        "file": "BV1h49tYqEnt-followup.720p.partial",
+        "bytes": 36000001,
+        "sourceTotalBytes": 66731217,
+        "complete": false,
+        "sha256": "b308da6b6e6009ddf3da083f65eaa1bb501efff5b79957d1ac66315cda1f37ed",
+        "rangeReceipt": "followup-high-range-receipt.json"
+      },
+      "oldPartialPreservedAndReverified": true,
+      "sampling": [
+        {
+          "quality": 720,
+          "range": [
+            63,
+            102
+          ],
+          "intervalSeconds": 1
+        },
+        {
+          "quality": 360,
+          "range": [
+            103,
+            181
+          ],
+          "intervalSeconds": 2
+        },
+        {
+          "quality": 720,
+          "exactSeconds": [
+            72,
+            81,
+            82,
+            88,
+            89,
+            103,
+            115,
+            119,
+            125,
+            127,
+            137,
+            139,
+            141
+          ]
+        }
+      ],
+      "frames": [
+        {
+          "file": "follow-63-82.png",
+          "bytes": 7780096,
+          "sha256": "d9ba1b6a26e69d0e0a29c7faa33f13dee5e4dc8b56647d94de3b9cbdc4d22ef1"
+        },
+        {
+          "file": "follow-83-102.png",
+          "bytes": 8021788,
+          "sha256": "bd00258eb21de795ee0e6c9b1ab19ac3d4f44d884b1fa84f40d23355dfdc6d40"
+        },
+        {
+          "file": "follow-low-103-141.png",
+          "bytes": 7312629,
+          "sha256": "55fb603b145849550f0fe4ebea482c5e6d1f88d0bc5d255b9bb1d50111e28b01"
+        },
+        {
+          "file": "follow-low-143-181.png",
+          "bytes": 7082228,
+          "sha256": "c09ed95271138ba019244bfb28e32f254e3ce846be8fd1dbf6b38561cbfae148"
+        },
+        {
+          "file": "follow-full72.png",
+          "bytes": 1769186,
+          "sha256": "35c87c08dcc5145b94dcab61bc19d471a448d96a955dfc39b63f7b0e650a1e89"
+        },
+        {
+          "file": "follow-full81.png",
+          "bytes": 1735568,
+          "sha256": "976d17450651841d803baa911289b82be6b7a16af67d318a7f49cc126a33b254"
+        },
+        {
+          "file": "follow-full82.png",
+          "bytes": 1769650,
+          "sha256": "1c9d390242d361c6722432ea7189e8c5de501f7c6e3d882d110e16b8d0813ca3"
+        },
+        {
+          "file": "follow-full88.png",
+          "bytes": 1470637,
+          "sha256": "60c5da638a88fa8d95f9814c7dd899c17c16375c7f68b4267da72d11fa2567ba"
+        },
+        {
+          "file": "follow-full89.png",
+          "bytes": 1620895,
+          "sha256": "4685e42cb3d0a374785c6bfe73a56f235452b75b384bcfcc47699a6221c26890"
+        },
+        {
+          "file": "follow-high-103.png",
+          "bytes": 1818044,
+          "sha256": "cfc31bb5e39fcc8e5061d48e9c4b2cefb7d781c56496d3efb1c466b5ee4d5911"
+        },
+        {
+          "file": "follow-high-115.png",
+          "bytes": 1545670,
+          "sha256": "63359cdc965d83875f63df8d61bf0290ef804c5f95a4be482cb3304845389d57"
+        },
+        {
+          "file": "follow-high-119.png",
+          "bytes": 1564525,
+          "sha256": "77955162ff59b31b9adea40b7951acb9efb4cf1818e42a53fe28c6d602d71387"
+        },
+        {
+          "file": "follow-high-125.png",
+          "bytes": 1645675,
+          "sha256": "49e27dbf0fc226572a8cf5abe50aeaa0bdc5efa5f651c761c751ae771a723d5f"
+        },
+        {
+          "file": "follow-high-127.png",
+          "bytes": 1802259,
+          "sha256": "8012ff11690bf5c08f999af2e41bde42dc0f8202a63881defcb1296450f49523"
+        },
+        {
+          "file": "follow-high-137.png",
+          "bytes": 1758506,
+          "sha256": "dcb46bb88cba9de82efa5c9d252fc781a055023a79b47ab33932b3d64a77c9ce"
+        },
+        {
+          "file": "follow-high-139.png",
+          "bytes": 1670764,
+          "sha256": "3b5297a2bd69bb89a2f3ac787e24cd9832e7304a212335300800e65b6fe6aa69"
+        },
+        {
+          "file": "follow-high-141.png",
+          "bytes": 1656688,
+          "sha256": "3cf66ff9ec5f496ede8bad5db43a1d113c45b8e93ad66e6b00ea8958a940f748"
+        }
+      ],
+      "chain": [
+        {
+          "t": [
+            62.5,
+            65
+          ],
+          "event": "factory exit then numbered small unit nearby",
+          "basis": "prior exact frame and this re-view",
+          "identityConfidence": "factory exit observed; later numbering not unique"
+        },
+        {
+          "t": [
+            81,
+            82,
+            88,
+            89
+          ],
+          "event": "numbered small unit takes side passage toward above enemy factory; paths into shroud",
+          "identityConfidence": "visually consistent continuation, interrupted by camera cuts"
+        },
+        {
+          "t": [
+            103,
+            115,
+            125
+          ],
+          "event": "small unit remains in upper passage while additional green factory and miners visible",
+          "identityConfidence": "position continuity across sampled shots only"
+        },
+        {
+          "t": [
+            127
+          ],
+          "event": "visible rhino queue29, not actual29output; second small unit appears",
+          "cause": null
+        },
+        {
+          "t": [
+            139,
+            141
+          ],
+          "event": "two small units both display1 and move; unique-first-drone identity no longer recoverable",
+          "identityAmbiguous": true
+        }
+      ],
+      "outcome": {
+        "dogKills": null,
+        "parasiteSuccess": null,
+        "harvesterKills": null,
+        "forcedRepair": null,
+        "combatLoss": null,
+        "incomeDamage": null,
+        "reason": "No fully attributed attack/outcome chain; unknown is not zero"
+      },
+      "decisionHypotheses": [
+        "independent perimeter reconnaissance may precede combat",
+        "do not force every drone into nearest miner",
+        "production switch may depend on own economy or observed enemy expansion; causal trigger unconfirmed"
+      ],
+      "researchComplete": false,
+      "tacticalBenefitProven": false,
+      "rootIndependentByteVerification": {
+        "frames": 17,
+        "partialMedia": 1,
+        "oldPartialShaPreserved": true
+      },
+      "rootVisuallyReviewed": [
+        "follow-full82.png",
+        "follow-high-115.png",
+        "follow-high-139.png"
+      ],
+      "engineTranslationCaution": "Explored RA2 terrain normally stays observable until reshrouded. Remaining nearby is not automatically required to receive information about an already revealed factory; combat interception, route coverage and escape must be separate hypotheses."
     }
   },
   "independentRootByteVerification": {

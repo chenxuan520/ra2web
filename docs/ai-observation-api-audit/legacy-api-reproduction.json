@@ -1,0 +1,34 @@
+{
+  "kind": "actual-GameApi-methods-with-mock-world-not-real-engine",
+  "sourceSha256": "4f64655115eb45782a7bdbcd677b4215311a65750e8c32290ab67a8a14d3c218",
+  "expectedPlayerAppearance": [
+    "E1 in apparent bot color",
+    "terrain tree",
+    "invisible cloaked submarine"
+  ],
+  "enemyIds": [
+    1,
+    2,
+    3
+  ],
+  "filterReceivesRealNames": [
+    "SPY",
+    "MGTK",
+    "SUB"
+  ],
+  "spyReturned": {
+    "name": "SPY",
+    "owner": "enemy",
+    "rulesName": "SPY"
+  },
+  "mirageReturned": {
+    "name": "MGTK",
+    "owner": "enemy",
+    "rulesName": "MGTK"
+  },
+  "cloakedReturned": {
+    "name": "SUB",
+    "owner": "enemy",
+    "rulesName": "SUB"
+  }
+}
