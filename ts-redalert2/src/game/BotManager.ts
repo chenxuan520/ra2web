@@ -17,7 +17,7 @@ export class BotManager {
     private actionLogger: any;
     private bots: Map<any, any>;
     private disposables: CompositeDisposable;
-    private gameApi?: GameApi;
+    private readonly botApis = new Map<any, GameApi>();
     static factory(actionFactory: any, botFactory: any, botDebugIndex: any, actionLogger: any): BotManager {
         return new this(actionFactory, new ActionQueue(), botFactory, botDebugIndex, actionLogger);
     }
@@ -31,13 +31,13 @@ export class BotManager {
         this.disposables = new CompositeDisposable();
     }
     init(game: any): void {
-        this.gameApi = new GameApi(game, true);
         const eventsApi = new EventsApi(game.events);
         const aiCombatants = game.getCombatants().filter((c: any) => c.isAi);
         logger.info(`[BotManager] Initializing ${aiCombatants.length} AI player(s)`);
         for (const combatant of aiCombatants) {
             try {
                 const bot = this.botFactory.create(combatant);
+                this.botApis.set(bot, GameApi.forPlayer(game, true, combatant.name));
                 this.bots.set(combatant, bot);
                 logger.info(`[BotManager] Created bot "${bot.name}" (${bot.constructor.name}) for country "${combatant.country?.name ?? '?'}"`);
             } catch (e) {
@@ -51,7 +51,7 @@ export class BotManager {
         eventsApi.subscribe((event: any) => {
             this.bots.forEach(bot => {
                 try {
-                    bot.onGameEvent(event, this.gameApi);
+                    bot.onGameEvent(event, this.botApis.get(bot)!);
                 } catch (e) {
                     logger.error(`[BotManager] Bot "${bot.name}" onGameEvent error:`, e);
                 }
@@ -69,12 +69,13 @@ export class BotManager {
                     logger.error(`[BotManager] Player "${bot.name}" has no production system`);
                     continue;
                 }
-                bot.setGameApi(this.gameApi);
+                const gameApi = this.botApis.get(bot)!;
+                bot.setGameApi(gameApi);
                 bot.setActionsApi(new ActionsApi(game, this.actionFactory, this.actionQueue, bot));
                 bot.setProductionApi(new ProductionApi(player.production));
-                bot.setLogger(new LoggerApi(AppLogger.get(bot.name) as any, this.gameApi));
+                bot.setLogger(new LoggerApi(AppLogger.get(bot.name) as any, gameApi));
                 logger.info(`[BotManager] APIs set for bot "${bot.name}", calling onGameStart...`);
-                bot.onGameStart(this.gameApi);
+                bot.onGameStart(gameApi);
                 logger.info(`[BotManager] Bot "${bot.name}" onGameStart completed successfully`);
             } catch (e) {
                 logger.error(`[BotManager] Bot "${bot.name}" initialization failed:`, e);
@@ -100,7 +101,7 @@ export class BotManager {
                 continue;
             }
             try {
-                bot.onGameTick(this.gameApi);
+                bot.onGameTick(this.botApis.get(bot)!);
             } catch (e) {
                 if (gameState.currentTick % 150 === 0) {
                     logger.error(`[BotManager] Bot "${bot.name}" onGameTick error @tick ${gameState.currentTick}:`, e);
@@ -115,7 +116,7 @@ export class BotManager {
         }
     }
     dispose(): void {
-        this.gameApi = undefined;
+        this.botApis.clear();
         this.bots.clear();
         this.disposables.dispose();
     }

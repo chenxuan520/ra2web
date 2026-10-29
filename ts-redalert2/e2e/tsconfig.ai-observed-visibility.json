@@ -1,0 +1,4 @@
+{
+  "extends": "./tsconfig.ai-benchmark.json",
+  "include": ["ai-observed-visibility.ts", "../src/types/**/*.d.ts"]
+}

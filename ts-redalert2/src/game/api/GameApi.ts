@@ -31,11 +31,43 @@ export class GameApi {
     private useGameRandom: boolean;
     public mapApi: MapApi;
     public rulesApi: RulesApi;
-    constructor(game: any, useGameRandom: boolean) {
+    private constructor(game: any, useGameRandom: boolean, private readonly observer?: any) {
         this.game = game;
         this.useGameRandom = useGameRandom;
         this.mapApi = new MapApi(game);
         this.rulesApi = new RulesApi(game.rules);
+    }
+    /** A stable observation boundary for one bot; never changes with query order. */
+    static forPlayer(game: any, useGameRandom: boolean, playerName: string): GameApi {
+        const player = game.getPlayerByName(playerName);
+        if (!player)
+            throw new Error(`Player "${playerName}" doesn't exist`);
+        return new GameApi(game, useGameRandom, player);
+    }
+    /** Omniscient reads for explicit diagnostics/referees, never supplied to a bot. */
+    static forDiagnostics(game: any, useGameRandom: boolean): GameApi {
+        return new GameApi(game, useGameRandom);
+    }
+    private isObservableToPlayer(obj: any, player: any): boolean {
+        if (obj.isDestroyed)
+            return false;
+        if (obj.owner === player || this.game.alliances.haveSharedIntel(player, obj.owner))
+            return true;
+        if (obj.cloakableTrait?.isCloaked())
+            return false;
+        const shroud = this.game.mapShroudTrait.getPlayerShroud(player);
+        // Defeated non-observers may no longer have a shroud. Its absence does
+        // not grant them omniscient live reads through retained bot callbacks.
+        if (!shroud)
+            return false;
+        return this.game.map.tileOccupation
+            .calculateTilesForGameObject(obj.tile, obj)
+            .some((tile: any) => !shroud.isShrouded(tile, obj.tileElevation));
+    }
+    private isObservable(obj: any): boolean {
+        // F3a covers live units. Terrain/map queries, player metadata, events and
+        // disguised appearance have separate information boundaries.
+        return !this.observer || !obj.isTechno() || this.isObservableToPlayer(obj, this.observer);
     }
     /** Alias for mapApi — backward compatibility with builtIn bot. */
     get map(): MapApi {
@@ -109,29 +141,32 @@ export class GameApi {
         return this.game
             .getWorld()
             .getAllObjects()
-            .filter((obj: any) => obj.isTechno() && filter(obj.rules))
+            .filter((obj: any) => obj.isTechno() && this.isObservable(obj) && filter(obj.rules))
             .map((obj: any) => obj.id);
     }
     getNeutralUnits(filter: (rules: any) => boolean = () => true): any[] {
         return this.game
             .getCivilianPlayer()
             .getOwnedObjects()
-            .filter((obj: any) => filter(obj.rules))
+            .filter((obj: any) => this.isObservable(obj) && filter(obj.rules))
             .map((obj: any) => obj.id);
     }
     getUnitsInArea(area: any): any[] {
         return this.game.map.technosByTile
             .queryRange(area)
+            .filter((obj: any) => this.isObservable(obj))
             .map((obj: any) => obj.id);
     }
     getVisibleUnits(playerName: string, type: "self" | "allied" | "hostile" | "enemy", filter: (rules: any) => boolean = () => true): any[] {
+        if (this.observer && playerName !== this.observer.name)
+            throw new Error(`GameApi view for "${this.observer.name}" cannot query "${playerName}"`);
         const player = this.game.getPlayerByName(playerName);
         if (!player)
             throw new Error(`Player "${playerName}" doesn't exist`);
         if (type === "self") {
             return player
                 .getOwnedObjects()
-                .filter((obj: any) => filter(obj.rules))
+                .filter((obj: any) => !obj.isDestroyed && filter(obj.rules))
                 .map((obj: any) => obj.id);
         }
         let visibilityFilter: (obj: any) => boolean;
@@ -140,11 +175,7 @@ export class GameApi {
                 this.game.alliances.areAllied(obj.owner, player);
         }
         else if (type === "hostile" || type === "enemy") {
-            const playerShroud = this.game.mapShroudTrait.getPlayerShroud(player);
-            visibilityFilter = (obj: any) => this.game.map.tileOccupation
-                .calculateTilesForGameObject(obj.tile, obj)
-                .some((tile: any) => !playerShroud?.isShrouded(tile, obj.tileElevation)) &&
-                obj.owner !== player &&
+            visibilityFilter = (obj: any) => obj.owner !== player &&
                 !this.game.alliances.areAllied(obj.owner, player) &&
                 (type !== "enemy" || obj.owner.isCombatant());
         }
@@ -157,12 +188,15 @@ export class GameApi {
             .filter((obj: any) => obj.isTechno() &&
             !obj.isDestroyed &&
             visibilityFilter(obj) &&
+            this.isObservableToPlayer(obj, player) &&
             filter(obj.rules))
             .map((obj: any) => obj.id);
     }
     getGameObjectData(objectId: any): GameObjectData | undefined {
         if (this.game.getWorld().hasObjectId(objectId)) {
             const obj = this.game.getObjectById(objectId);
+            if (!this.isObservable(obj))
+                return undefined;
             return {
                 id: obj.id,
                 type: obj.type,
