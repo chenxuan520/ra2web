@@ -1,0 +1,1856 @@
+{
+  "kind": "real-engine-scouting-queue-mechanism",
+  "map": "mp01t4.map",
+  "seed": 940031,
+  "sourceBefore": {
+    "commit": "8f295c9c40bd24a4782164a31e668b0754039bd7",
+    "source": "working-tree",
+    "workingTreeStatus": "",
+    "gameSourceSha256": "4d37ec6199f59563388b34e847e086572002761c5850f8cd84ef2947653f4e24",
+    "runnerSha256": "6096290df3123a90b10db056b32bb31fd5d2cd4a27c2755e6f9fab40b92e5855",
+    "files": {
+      "src/game/api/GameApi.ts": "07f922510941e14aeda16d139906190fee3702c6b3ce0cae1550813972157232",
+      "src/game/api/MapApi.ts": "16b51316aa20d45bb7b3a3af2bd820fe51cf7e0f6cb91a084f086440383a3a77",
+      "src/game/ai/thirdpartbot/builtIn/bot/logic/common/scout.ts": "7d5f65c8a89ebac1233c68519bf4bfbf5e2dc73bb70d6fedda6ea65740ae034c",
+      "src/game/ai/thirdpartbot/builtIn/bot/logic/awareness.ts": "f57048020997ba5daf56dd93b320a73d66251d2888933b824108ecf8b4668865",
+      "src/game/ai/thirdpartbot/builtIn/bot/logic/map/sector.ts": "45747b4f6a94d97f1d525b3e5ad037ba40611e1bff2cb2dc15c984469b1a3cbc",
+      "src/game/ai/thirdpartbot/builtIn/bot/logic/map/incrementalGridCache.ts": "065a4e45143f71fa5f3fe7ab247d8d9c74c9f1f3350c2ed4b5b3fdc8a0cc6adb",
+      "e2e/ai-specialty-scenarios.ts": "1b5213e81e17fd8f361a429a3f2ba09ebf13cb929e8642d44368e099f9c49b2a",
+      "e2e/tsconfig.ai-scouting-queue.json": "07cd9b79bcd78cef5701c83660019ad4b3687fa1db91fcb8e9708bfa59707ee9"
+    }
+  },
+  "sourceAfter": {
+    "commit": "8f295c9c40bd24a4782164a31e668b0754039bd7",
+    "source": "working-tree",
+    "workingTreeStatus": "",
+    "gameSourceSha256": "4d37ec6199f59563388b34e847e086572002761c5850f8cd84ef2947653f4e24",
+    "runnerSha256": "6096290df3123a90b10db056b32bb31fd5d2cd4a27c2755e6f9fab40b92e5855",
+    "files": {
+      "src/game/api/GameApi.ts": "07f922510941e14aeda16d139906190fee3702c6b3ce0cae1550813972157232",
+      "src/game/api/MapApi.ts": "16b51316aa20d45bb7b3a3af2bd820fe51cf7e0f6cb91a084f086440383a3a77",
+      "src/game/ai/thirdpartbot/builtIn/bot/logic/common/scout.ts": "7d5f65c8a89ebac1233c68519bf4bfbf5e2dc73bb70d6fedda6ea65740ae034c",
+      "src/game/ai/thirdpartbot/builtIn/bot/logic/awareness.ts": "f57048020997ba5daf56dd93b320a73d66251d2888933b824108ecf8b4668865",
+      "src/game/ai/thirdpartbot/builtIn/bot/logic/map/sector.ts": "45747b4f6a94d97f1d525b3e5ad037ba40611e1bff2cb2dc15c984469b1a3cbc",
+      "src/game/ai/thirdpartbot/builtIn/bot/logic/map/incrementalGridCache.ts": "065a4e45143f71fa5f3fe7ab247d8d9c74c9f1f3350c2ed4b5b3fdc8a0cc6adb",
+      "e2e/ai-specialty-scenarios.ts": "1b5213e81e17fd8f361a429a3f2ba09ebf13cb929e8642d44368e099f9c49b2a",
+      "e2e/tsconfig.ai-scouting-queue.json": "07cd9b79bcd78cef5701c83660019ad4b3687fa1db91fcb8e9708bfa59707ee9"
+    }
+  },
+  "sourceStable": true,
+  "resources": {
+    "mapSha256": "c43e94057d6abaec0a39899b44175259f150649e2cd39be66504bb2957f2ec67",
+    "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4",
+    "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+    "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+  },
+  "cases": [
+    {
+      "mode": "hidden-own-clone",
+      "fixtureOnly": true,
+      "passed": true,
+      "shroudSetup": [
+        {
+          "tick": 0,
+          "operation": "real-shroud-reset",
+          "note": "Counterfactual mechanism setup hiding even our own starting tile; no units, rules or enemy positions changed."
+        }
+      ],
+      "logs": [
+        {
+          "tick": 0,
+          "message": "Adding 99,148 to initial scouting queue"
+        },
+        {
+          "tick": 0,
+          "message": "Adding 152,96 to initial scouting queue"
+        },
+        {
+          "tick": 0,
+          "message": "Adding 110,55 to initial scouting queue"
+        }
+      ],
+      "events": [],
+      "checkpoints": [],
+      "assignedTargetCount": 28,
+      "revealedTargetCount": null,
+      "settings": {
+        "credits": 10000,
+        "unitCount": 0,
+        "engineDifficulty": [
+          4,
+          4
+        ]
+      },
+      "publicStarts": [
+        {
+          "x": 57,
+          "y": 98
+        },
+        {
+          "x": 99,
+          "y": 148
+        },
+        {
+          "x": 152,
+          "y": 96
+        },
+        {
+          "x": 110,
+          "y": 55
+        }
+      ],
+      "ownStart": {
+        "x": 57,
+        "y": 98
+      },
+      "ownStartIsDistinctObject": true,
+      "ownStartVisible": false,
+      "unseenPublicStarts": [
+        {
+          "x": 99,
+          "y": 148
+        },
+        {
+          "x": 152,
+          "y": 96
+        },
+        {
+          "x": 110,
+          "y": 55
+        }
+      ],
+      "cacheSetup": {
+        "type": "actual MatchAwarenessImpl.getSectorCache()",
+        "size": {
+          "width": 25,
+          "height": 25
+        },
+        "primeUpdates": 1250,
+        "visibilitySource": "actual observer MapApi/shroud; no mock ratios"
+      },
+      "initialAssignedTargets": [
+        {
+          "target": {
+            "x": 99,
+            "y": 148
+          },
+          "priority": 900,
+          "permanent": true,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 152,
+            "y": 96
+          },
+          "priority": 900,
+          "permanent": true,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 60,
+            "y": 100
+          },
+          "priority": 900,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 110,
+            "y": 55
+          },
+          "priority": 900,
+          "permanent": true,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 68,
+            "y": 100
+          },
+          "priority": 899,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 60,
+            "y": 92
+          },
+          "priority": 899,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 60,
+            "y": 108
+          },
+          "priority": 899,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 52,
+            "y": 100
+          },
+          "priority": 899,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 52,
+            "y": 108
+          },
+          "priority": 898.5857864376269,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 52,
+            "y": 92
+          },
+          "priority": 898.5857864376269,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 68,
+            "y": 108
+          },
+          "priority": 898.5857864376269,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 68,
+            "y": 92
+          },
+          "priority": 898.5857864376269,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 76,
+            "y": 100
+          },
+          "priority": 898,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 60,
+            "y": 84
+          },
+          "priority": 898,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 60,
+            "y": 116
+          },
+          "priority": 898,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 44,
+            "y": 100
+          },
+          "priority": 898,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 44,
+            "y": 108
+          },
+          "priority": 897.7639320225002,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 44,
+            "y": 92
+          },
+          "priority": 897.7639320225002,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 52,
+            "y": 116
+          },
+          "priority": 897.7639320225002,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 68,
+            "y": 116
+          },
+          "priority": 897.7639320225002,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 52,
+            "y": 84
+          },
+          "priority": 897.7639320225002,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 68,
+            "y": 84
+          },
+          "priority": 897.7639320225002,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 76,
+            "y": 92
+          },
+          "priority": 897.7639320225002,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 76,
+            "y": 108
+          },
+          "priority": 897.7639320225002,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 44,
+            "y": 116
+          },
+          "priority": 897.1715728752538,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 76,
+            "y": 84
+          },
+          "priority": 897.1715728752538,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 76,
+            "y": 116
+          },
+          "priority": 897.1715728752538,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 44,
+            "y": 84
+          },
+          "priority": 897.1715728752538,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        }
+      ],
+      "finalTick": 0
+    },
+    {
+      "mode": "assigned-empty-queue",
+      "fixtureOnly": true,
+      "passed": true,
+      "shroudSetup": [],
+      "logs": [
+        {
+          "tick": 0,
+          "message": "Adding 99,148 to initial scouting queue"
+        },
+        {
+          "tick": 0,
+          "message": "Adding 152,96 to initial scouting queue"
+        },
+        {
+          "tick": 0,
+          "message": "Adding 110,55 to initial scouting queue"
+        },
+        {
+          "tick": 3960,
+          "message": "expanding scouting radius from 16 to 33"
+        }
+      ],
+      "events": [],
+      "checkpoints": [
+        {
+          "tick": 3840,
+          "assignedTargets": [],
+          "assignedTargetCount": 0,
+          "revealedTargetCount": null,
+          "hasTargetsAfterAssignment": false
+        },
+        {
+          "tick": 3959,
+          "assignedTargets": [],
+          "assignedTargetCount": 0,
+          "revealedTargetCount": null,
+          "hasTargetsAfterAssignment": false
+        },
+        {
+          "tick": 3960,
+          "assignedTargets": [
+            {
+              "target": {
+                "x": 68,
+                "y": 100
+              },
+              "priority": 899,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 68,
+                "y": 92
+              },
+              "priority": 898.5857864376269,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 52,
+                "y": 108
+              },
+              "priority": 898.5857864376269,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 68,
+                "y": 108
+              },
+              "priority": 898.5857864376269,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 60,
+                "y": 116
+              },
+              "priority": 898,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 60,
+                "y": 84
+              },
+              "priority": 898,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 44,
+                "y": 100
+              },
+              "priority": 898,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 76,
+                "y": 100
+              },
+              "priority": 898,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 44,
+                "y": 92
+              },
+              "priority": 897.7639320225002,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 52,
+                "y": 116
+              },
+              "priority": 897.7639320225002,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 68,
+                "y": 116
+              },
+              "priority": 897.7639320225002,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 76,
+                "y": 92
+              },
+              "priority": 897.7639320225002,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 52,
+                "y": 84
+              },
+              "priority": 897.7639320225002,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 68,
+                "y": 84
+              },
+              "priority": 897.7639320225002,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 44,
+                "y": 108
+              },
+              "priority": 897.7639320225002,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 76,
+                "y": 108
+              },
+              "priority": 897.7639320225002,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 44,
+                "y": 116
+              },
+              "priority": 897.1715728752538,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 76,
+                "y": 116
+              },
+              "priority": 897.1715728752538,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 76,
+                "y": 84
+              },
+              "priority": 897.1715728752538,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 44,
+                "y": 84
+              },
+              "priority": 897.1715728752538,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 60,
+                "y": 76
+              },
+              "priority": 897,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 60,
+                "y": 124
+              },
+              "priority": 897,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 36,
+                "y": 100
+              },
+              "priority": 897,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 84,
+                "y": 100
+              },
+              "priority": 897,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 68,
+                "y": 76
+              },
+              "priority": 896.8377223398317,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 36,
+                "y": 92
+              },
+              "priority": 896.8377223398317,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 52,
+                "y": 124
+              },
+              "priority": 896.8377223398317,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 84,
+                "y": 92
+              },
+              "priority": 896.8377223398317,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 68,
+                "y": 124
+              },
+              "priority": 896.8377223398317,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 52,
+                "y": 76
+              },
+              "priority": 896.8377223398317,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 36,
+                "y": 108
+              },
+              "priority": 896.8377223398317,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 84,
+                "y": 108
+              },
+              "priority": 896.8377223398317,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 84,
+                "y": 116
+              },
+              "priority": 896.394448724536,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 44,
+                "y": 124
+              },
+              "priority": 896.394448724536,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 76,
+                "y": 76
+              },
+              "priority": 896.394448724536,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 36,
+                "y": 84
+              },
+              "priority": 896.394448724536,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 44,
+                "y": 76
+              },
+              "priority": 896.394448724536,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 76,
+                "y": 124
+              },
+              "priority": 896.394448724536,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 84,
+                "y": 84
+              },
+              "priority": 896.394448724536,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 36,
+                "y": 116
+              },
+              "priority": 896.394448724536,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 60,
+                "y": 132
+              },
+              "priority": 896,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 28,
+                "y": 100
+              },
+              "priority": 896,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 92,
+                "y": 100
+              },
+              "priority": 896,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 60,
+                "y": 68
+              },
+              "priority": 896,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 52,
+                "y": 68
+              },
+              "priority": 895.8768943743823,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 68,
+                "y": 68
+              },
+              "priority": 895.8768943743823,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 92,
+                "y": 92
+              },
+              "priority": 895.8768943743823,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 52,
+                "y": 132
+              },
+              "priority": 895.8768943743823,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 68,
+                "y": 132
+              },
+              "priority": 895.8768943743823,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 28,
+                "y": 108
+              },
+              "priority": 895.8768943743823,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 92,
+                "y": 108
+              },
+              "priority": 895.8768943743823,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 28,
+                "y": 92
+              },
+              "priority": 895.8768943743823,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 84,
+                "y": 76
+              },
+              "priority": 895.7573593128807,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 36,
+                "y": 124
+              },
+              "priority": 895.7573593128807,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 84,
+                "y": 124
+              },
+              "priority": 895.7573593128807,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 76,
+                "y": 132
+              },
+              "priority": 895.5278640450005,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 28,
+                "y": 116
+              },
+              "priority": 895.5278640450005,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 92,
+                "y": 116
+              },
+              "priority": 895.5278640450005,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 76,
+                "y": 68
+              },
+              "priority": 895.5278640450005,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 44,
+                "y": 132
+              },
+              "priority": 895.5278640450005,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 92,
+                "y": 84
+              },
+              "priority": 895.5278640450005,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 92,
+                "y": 76
+              },
+              "priority": 895,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 84,
+                "y": 132
+              },
+              "priority": 895,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 20,
+                "y": 100
+              },
+              "priority": 895,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 60,
+                "y": 60
+              },
+              "priority": 895,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 84,
+                "y": 68
+              },
+              "priority": 895,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 60,
+                "y": 140
+              },
+              "priority": 895,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 92,
+                "y": 124
+              },
+              "priority": 895,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 100,
+                "y": 100
+              },
+              "priority": 895,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 20,
+                "y": 108
+              },
+              "priority": 894.9009804864072,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 52,
+                "y": 140
+              },
+              "priority": 894.9009804864072,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 68,
+                "y": 60
+              },
+              "priority": 894.9009804864072,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 100,
+                "y": 108
+              },
+              "priority": 894.9009804864072,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 68,
+                "y": 140
+              },
+              "priority": 894.9009804864072,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 100,
+                "y": 92
+              },
+              "priority": 894.9009804864072,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 100,
+                "y": 116
+              },
+              "priority": 894.6148351928655,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 100,
+                "y": 84
+              },
+              "priority": 894.6148351928655,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 76,
+                "y": 60
+              },
+              "priority": 894.6148351928655,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 76,
+                "y": 140
+              },
+              "priority": 894.6148351928655,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 92,
+                "y": 68
+              },
+              "priority": 894.3431457505076,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 92,
+                "y": 132
+              },
+              "priority": 894.3431457505076,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 84,
+                "y": 60
+              },
+              "priority": 894.1690481051547,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 84,
+                "y": 140
+              },
+              "priority": 894.1690481051547,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 100,
+                "y": 76
+              },
+              "priority": 894.1690481051547,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 100,
+                "y": 124
+              },
+              "priority": 894.1690481051547,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 92,
+                "y": 60
+              },
+              "priority": 893.5968757625672,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 92,
+                "y": 140
+              },
+              "priority": 893.5968757625672,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 100,
+                "y": 68
+              },
+              "priority": 893.5968757625672,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 100,
+                "y": 132
+              },
+              "priority": 893.5968757625672,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 100,
+                "y": 60
+              },
+              "priority": 892.9289321881345,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 100,
+                "y": 140
+              },
+              "priority": 892.9289321881345,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0
+            },
+            {
+              "target": {
+                "x": 60,
+                "y": 108
+              },
+              "priority": 856.859375,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0.046875
+            },
+            {
+              "target": {
+                "x": 52,
+                "y": 92
+              },
+              "priority": 772.2221602198356,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0.140625
+            },
+            {
+              "target": {
+                "x": 60,
+                "y": 92
+              },
+              "priority": 604.015625,
+              "permanent": false,
+              "visibleAtAssignment": false,
+              "sectorVisibilityRatio": 0.328125
+            },
+            {
+              "target": {
+                "x": 52,
+                "y": 100
+              },
+              "priority": 449.5,
+              "permanent": false,
+              "visibleAtAssignment": true,
+              "sectorVisibilityRatio": 0.5
+            }
+          ],
+          "assignedTargetCount": 95,
+          "revealedTargetCount": null,
+          "hasTargetsAfterAssignment": false
+        }
+      ],
+      "assignedTargetCount": 122,
+      "revealedTargetCount": null,
+      "settings": {
+        "credits": 10000,
+        "unitCount": 0,
+        "engineDifficulty": [
+          4,
+          4
+        ]
+      },
+      "publicStarts": [
+        {
+          "x": 57,
+          "y": 98
+        },
+        {
+          "x": 99,
+          "y": 148
+        },
+        {
+          "x": 152,
+          "y": 96
+        },
+        {
+          "x": 110,
+          "y": 55
+        }
+      ],
+      "ownStart": {
+        "x": 57,
+        "y": 98
+      },
+      "ownStartIsDistinctObject": true,
+      "ownStartVisible": true,
+      "unseenPublicStarts": [
+        {
+          "x": 99,
+          "y": 148
+        },
+        {
+          "x": 152,
+          "y": 96
+        },
+        {
+          "x": 110,
+          "y": 55
+        }
+      ],
+      "cacheSetup": {
+        "type": "actual MatchAwarenessImpl.getSectorCache()",
+        "size": {
+          "width": 25,
+          "height": 25
+        },
+        "primeUpdates": 1250,
+        "visibilitySource": "actual observer MapApi/shroud; no mock ratios"
+      },
+      "initialAssignedTargets": [
+        {
+          "target": {
+            "x": 99,
+            "y": 148
+          },
+          "priority": 900,
+          "permanent": true,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 152,
+            "y": 96
+          },
+          "priority": 900,
+          "permanent": true,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 110,
+            "y": 55
+          },
+          "priority": 900,
+          "permanent": true,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 68,
+            "y": 100
+          },
+          "priority": 899,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 52,
+            "y": 108
+          },
+          "priority": 898.5857864376269,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 68,
+            "y": 108
+          },
+          "priority": 898.5857864376269,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 68,
+            "y": 92
+          },
+          "priority": 898.5857864376269,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 76,
+            "y": 100
+          },
+          "priority": 898,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 60,
+            "y": 84
+          },
+          "priority": 898,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 60,
+            "y": 116
+          },
+          "priority": 898,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 44,
+            "y": 100
+          },
+          "priority": 898,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 68,
+            "y": 116
+          },
+          "priority": 897.7639320225002,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 44,
+            "y": 92
+          },
+          "priority": 897.7639320225002,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 44,
+            "y": 108
+          },
+          "priority": 897.7639320225002,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 52,
+            "y": 116
+          },
+          "priority": 897.7639320225002,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 52,
+            "y": 84
+          },
+          "priority": 897.7639320225002,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 76,
+            "y": 108
+          },
+          "priority": 897.7639320225002,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 76,
+            "y": 92
+          },
+          "priority": 897.7639320225002,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 68,
+            "y": 84
+          },
+          "priority": 897.7639320225002,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 76,
+            "y": 84
+          },
+          "priority": 897.1715728752538,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 44,
+            "y": 116
+          },
+          "priority": 897.1715728752538,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 76,
+            "y": 116
+          },
+          "priority": 897.1715728752538,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 44,
+            "y": 84
+          },
+          "priority": 897.1715728752538,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0
+        },
+        {
+          "target": {
+            "x": 60,
+            "y": 108
+          },
+          "priority": 856.859375,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0.046875
+        },
+        {
+          "target": {
+            "x": 52,
+            "y": 92
+          },
+          "priority": 772.2221602198356,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0.140625
+        },
+        {
+          "target": {
+            "x": 60,
+            "y": 92
+          },
+          "priority": 604.015625,
+          "permanent": false,
+          "visibleAtAssignment": false,
+          "sectorVisibilityRatio": 0.328125
+        },
+        {
+          "target": {
+            "x": 52,
+            "y": 100
+          },
+          "priority": 449.5,
+          "permanent": false,
+          "visibleAtAssignment": true,
+          "sectorVisibilityRatio": 0.5
+        }
+      ],
+      "expansionTargetDigest": "9d177894dbf89e3f20f892d74055deef1745a301d56b95dc4a0b6d5194aca545",
+      "finalCredits": [
+        10000,
+        10000
+      ],
+      "finalTick": 3960,
+      "sameTickDoesNotRefill": true
+    },
+    {
+      "mode": "all-explored",
+      "fixtureOnly": true,
+      "passed": true,
+      "shroudSetup": [
+        {
+          "tick": 0,
+          "operation": "real-shroud-revealAll",
+          "note": "All-explored negative control only; this is not a completed scouting trip or competitive-game visibility."
+        }
+      ],
+      "logs": [
+        {
+          "tick": 3960,
+          "message": "expanding scouting radius from 16 to 33"
+        }
+      ],
+      "events": [],
+      "checkpoints": [
+        {
+          "tick": 3840,
+          "assignedTargets": [],
+          "assignedTargetCount": 0,
+          "revealedTargetCount": null,
+          "hasTargetsAfterAssignment": false
+        },
+        {
+          "tick": 3959,
+          "assignedTargets": [],
+          "assignedTargetCount": 0,
+          "revealedTargetCount": null,
+          "hasTargetsAfterAssignment": false
+        },
+        {
+          "tick": 3960,
+          "assignedTargets": [],
+          "assignedTargetCount": 0,
+          "revealedTargetCount": null,
+          "hasTargetsAfterAssignment": false
+        }
+      ],
+      "assignedTargetCount": 0,
+      "revealedTargetCount": null,
+      "settings": {
+        "credits": 10000,
+        "unitCount": 0,
+        "engineDifficulty": [
+          4,
+          4
+        ]
+      },
+      "publicStarts": [
+        {
+          "x": 57,
+          "y": 98
+        },
+        {
+          "x": 99,
+          "y": 148
+        },
+        {
+          "x": 152,
+          "y": 96
+        },
+        {
+          "x": 110,
+          "y": 55
+        }
+      ],
+      "ownStart": {
+        "x": 57,
+        "y": 98
+      },
+      "ownStartIsDistinctObject": true,
+      "ownStartVisible": true,
+      "unseenPublicStarts": [],
+      "cacheSetup": {
+        "type": "actual MatchAwarenessImpl.getSectorCache()",
+        "size": {
+          "width": 25,
+          "height": 25
+        },
+        "primeUpdates": 1250,
+        "visibilitySource": "actual observer MapApi/shroud; no mock ratios"
+      },
+      "initialAssignedTargets": [],
+      "finalCredits": [
+        10000,
+        10000
+      ],
+      "finalTick": 3960,
+      "sameTickDoesNotRefill": true
+    }
+  ],
+  "passed": true,
+  "limitations": [
+    "Target assignment uses the real getNewScoutTarget API; it does not prove a dog moved or any assigned target was revealed.",
+    "revealedTargetCount is not measured and is null, never inferred from the count of assigned targets.",
+    "The real awareness-created sector cache is fully primed at checkpoints; normal incremental scheduling and full DefaultStrategy are not exercised.",
+    "Hidden-own and fully explored controls explicitly reset/reveal the real shroud; the positive expansion case uses ordinary initial vision.",
+    "No extra units, production, combat, funding, altered game rules or hidden enemy data are supplied to the queue.",
+    "The preserved radius argument33 is sector-rounded by SectorCache; this does not promise an exact33-tile Euclidean boundary.",
+    "These checks establish queue lifecycle, not scouting route quality, paid production or strength."
+  ],
+  "errorCount": 0,
+  "engineErrors": []
+}

@@ -1,0 +1,910 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "url": "https://www.bilibili.com/video/BV1Zmedz4EJ7/?p=1",
+    "bvid": "BV1Zmedz4EJ7",
+    "part": 1,
+    "event": "2025原版冰天王决赛P1",
+    "players": {
+      "purple": "85/伊拉克",
+      "green": "威龙/法国"
+    },
+    "versionQualification": "沿用此前已核官方原版赛事身份，结合旗标/画面；不要求额外INI才采用",
+    "perspective": "OB双边库存及全图，非玩家第一视角",
+    "media": {
+      "path": "BV1Zmedz4EJ7-p1-hd.mp4",
+      "bytes": 34833580,
+      "sha256": "f8a22491a15a0e7008b9913fd4925916c3e05bcfbd348f53f6ae99ebfc997255"
+    }
+  },
+  "newViewing": {
+    "windowSeconds": [
+      60,
+      150
+    ],
+    "baseSamplingSeconds": [
+      60,
+      63,
+      66,
+      69,
+      72,
+      75,
+      78,
+      81,
+      84,
+      87,
+      90,
+      93,
+      96,
+      99,
+      102,
+      105,
+      108,
+      111,
+      114,
+      117,
+      120,
+      123,
+      126,
+      129,
+      132,
+      135,
+      138,
+      141,
+      144,
+      147,
+      150
+    ],
+    "denseInventoryWindows": [
+      [
+        90,
+        100,
+        1
+      ],
+      [
+        108,
+        150,
+        1
+      ]
+    ],
+    "fullFramesIndividuallyReviewed": [
+      90,
+      118,
+      119,
+      124,
+      129,
+      130,
+      135,
+      138,
+      141,
+      144,
+      147,
+      150
+    ],
+    "notContinuousPlayback": true,
+    "heardByHuman": false,
+    "asrUsed": false,
+    "timeRule": "视频秒与画面HUD时钟分别记录，不换算tick，不假设固定时差",
+    "oldCoarseSamples": "旧20秒抽帧仅背景；本次新增每3秒全图和变化处每1秒库存时序"
+  },
+  "inventoryMethod": {
+    "meaning": "OB现存库存截图；不是累计产量、净战斗阵亡或完整资源花费",
+    "absent": "0表示该帧未列该库存图标，按本overlay的库存显示解释；不推生产策略永远为0",
+    "identificationCorrection": "曾有根初读把绿色GI3当JJ3；已用独立cameo纠正。150秒是GI3、JJ1。紫橙色10是E2，不是Flak Trooper；未经对照的中间读数不纳入记录。"
+  },
+  "inventorySnapshots": [
+    {
+      "s": 90,
+      "clock": "01:33",
+      "JJ": 0,
+      "HTK": 0,
+      "HTNK": 1,
+      "MTNK": 1,
+      "FV": 1,
+      "CMIN": 3,
+      "HARV": 2
+    },
+    {
+      "s": 91,
+      "clock": null,
+      "JJ": 0,
+      "HTK": 0,
+      "HTNK": 1,
+      "MTNK": 1,
+      "FV": 0,
+      "GI": 1,
+      "CMIN": 3,
+      "HARV": 2
+    },
+    {
+      "s": 118,
+      "clock": "02:02",
+      "JJ": 0,
+      "HTK": 0,
+      "HTNK": 3,
+      "MTNK": 3,
+      "FV": 0
+    },
+    {
+      "s": 119,
+      "clock": "02:03",
+      "JJ": 1,
+      "HTK": 0,
+      "HTNK": 3,
+      "MTNK": 4,
+      "FV": 0
+    },
+    {
+      "s": 124,
+      "clock": "02:08",
+      "JJ": 1,
+      "HTK": 0,
+      "HTNK": 4,
+      "MTNK": 4,
+      "FV": 0,
+      "GI": 1
+    },
+    {
+      "s": 129,
+      "clock": "02:13",
+      "JJ": 1,
+      "HTK": 0,
+      "HTNK": 4,
+      "MTNK": 5,
+      "FV": 0,
+      "GI": 1,
+      "HARV": 3
+    },
+    {
+      "s": 130,
+      "clock": "02:14",
+      "JJ": 1,
+      "HTK": 1,
+      "HTNK": 4,
+      "MTNK": 5,
+      "FV": 0,
+      "GI": 1
+    },
+    {
+      "s": 138,
+      "clock": "02:23",
+      "JJ": 1,
+      "HTK": 1,
+      "HTNK": 4,
+      "MTNK": 5,
+      "FV": 0,
+      "GI": 2,
+      "E2": 3,
+      "GTGCAN": 1
+    },
+    {
+      "s": 139,
+      "clock": null,
+      "JJ": 1,
+      "HTK": 1,
+      "HTNK": 5,
+      "MTNK": 5,
+      "FV": 0,
+      "GI": 2,
+      "E2": 4,
+      "GTGCAN": 1
+    },
+    {
+      "s": 149,
+      "clock": null,
+      "JJ": 1,
+      "HTK": 1,
+      "HTNK": 6,
+      "MTNK": 5,
+      "FV": 0,
+      "GI": 3,
+      "E2": 9,
+      "GTGCAN": 1
+    },
+    {
+      "s": 150,
+      "clock": "02:35",
+      "JJ": 1,
+      "HTK": 1,
+      "HTNK": 6,
+      "MTNK": 5,
+      "FV": 0,
+      "GI": 3,
+      "E2": 10,
+      "GTGCAN": 1,
+      "CMIN": 3,
+      "HARV": 3
+    }
+  ],
+  "observations": [
+    {
+      "id": "official-p1-air-and-flak-window",
+      "windowVideoSeconds": [
+        108,
+        150
+      ],
+      "chain": [
+        "在每秒库存图中，盟军飞行兵118秒未显示，119秒显示1；118秒左侧生产面板对应图标呈完成，119秒库存增加，支持该窗口新增一名飞行兵。",
+        "苏军履带129秒未显示，130秒显示1，之后到150秒每秒仍为1。",
+        "同窗口苏军犀牛124秒为4，139秒5，149秒6；不能把补一辆履带写成停止主力生产或全转防空。"
+      ],
+      "firstAppearanceIntervals": {
+        "JJ": "(118,119]视频秒",
+        "HTK": "(129,130]视频秒"
+      },
+      "whatItSupports": "低量空军与一辆机动防空并存、地面主力库存仍增长的真实场景，供设计轻量反空兼顾地面预算的工程假设。",
+      "whatItDoesNotProve": [
+        "85何时首次看见飞行兵",
+        "该履带订单是否由侦察触发",
+        "精确订单下达时间和累计出厂总数",
+        "履带实际对空射击/命中/击杀",
+        "每个飞兵是否同一实体",
+        "一辆履带足够或所有场景固定1:1",
+        "2–6辆或600tick等工程阈值由录像证明"
+      ],
+      "visibleKnowledge": "OB全图和双边库存不等于任何玩家已知；紫基地右侧/上侧有小单位及影子，但本窗口没有闭合单位身份连续跟踪和该方战争迷雾。首次互相可见时间未知。",
+      "counterpoint": "JJ库存130–150秒仍为1；不能仅因补出履带就认领清空空军或防空成功。未记录HP/伤害，不把持有数量不变解释成毫无效果。"
+    },
+    {
+      "id": "official-p1-ifv-disappearance",
+      "windowVideoSeconds": [
+        90,
+        98
+      ],
+      "chain": [
+        "盟军IFV90秒库存1，91秒该图标消失；CNCNZ IFV cameo已独立对照。",
+        "91秒出现GI库存1，92秒又未显示；底部另有一个车辆图标仍存在，不能将它误读成IFV继续存在。"
+      ],
+      "supports": "机动防空库存变化事实；已有IFV并非全程保留。",
+      "unknown": [
+        "IFV为什么消失（被杀/售卖或其他）",
+        "是否乘员/武器模式改变",
+        "谁造成损失",
+        "91秒GI是否来自该IFV",
+        "这一变化与后续飞行兵选择有无因果"
+      ],
+      "restriction": "镜头此时未给完整IFV结局；不得把图标消失记成确证阵亡，也不能据此称飞兵替代IFV的主动转型。"
+    },
+    {
+      "id": "official-p1-forward-cannon-ground",
+      "windowVideoSeconds": [
+        99,
+        150
+      ],
+      "chain": [
+        "99秒画面已见绿色建造厂在原基地北侧、中央矿区南面。",
+        "111–120秒其北侧逐步出现前沿建筑；129秒绿色兵营靠近中央矿区南缘。",
+        "137秒库存未见巨炮，138秒巨炮库存1，画面前沿可见其炮体；150秒仍1。",
+        "141–150秒紫方坦克和动员兵在中央矿区北侧/矿场附近移动，绿方灰熊在巨炮/前沿建筑附近；两方并非仅单位离散空跑。"
+      ],
+      "supports": "前沿建筑、地面主力与少量防空共存的局面；原版法国有实际巨炮出现。",
+      "unknown": [
+        "完整建筑订单和精确放置tick",
+        "哪个单位被巨炮命中及伤害/击杀",
+        "紫军移动是否由巨炮射程直接迫使",
+        "是否由独立快捷编队执行",
+        "最终胜负因果"
+      ],
+      "restriction": "出厂/建成/命中/收益分别记录；本窗口不声称巨炮胜利收益或完整高手套路。"
+    },
+    {
+      "id": "official-p1-drone-inventory-caution",
+      "windowVideoSeconds": [
+        109,
+        112
+      ],
+      "chain": [
+        "109秒紫DRON库存1，110秒未列。",
+        "111秒绿灰熊库存4，112秒3。"
+      ],
+      "unknown": [
+        "是否寄生导致蜘蛛不再在世界库存显示",
+        "蜘蛛是否死亡",
+        "灰熊库存变化的具体原因",
+        "两项变化是否涉及同一实体"
+      ],
+      "restriction": "没有连续对象跟踪，不能把相邻库存变化拼成蜘蛛成功击毁或阵亡。"
+    }
+  ],
+  "engineeringHypothesis": {
+    "text": "仅在本Bot合法可见空军威胁时，尝试低量、可负担的机动防空供给，并维持地面生产；与当前Bot/无反空单项对照，测地面节奏、矿车受损、实射和总体收益。",
+    "notVideoFacts": [
+      "目标车数或比例",
+      "记忆长度",
+      "预算上限",
+      "该机制提高胜率"
+    ],
+    "readiness": "有一条明确原版实场数量时序支持假设；因果、阈值与收益须机制和真实对局验证，并非研究全部完成"
+  },
+  "frames": [
+    {
+      "path": "t060.png",
+      "bytes": 1422391,
+      "sha256": "749a521305576a579ee79a7a054ceda4c5dae25953eb1dfc9cef5a81fda5fa30",
+      "videoSeconds": 60,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t063.png",
+      "bytes": 1340738,
+      "sha256": "b56f271e939e646a8249181126ee53f32cfc3881165ebeb670bf0f41f589974f",
+      "videoSeconds": 63,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t066.png",
+      "bytes": 1377854,
+      "sha256": "5e20c15330f2664c6107940f976b5cd849dd23cf4a165679ce0c96a611a02889",
+      "videoSeconds": 66,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t069.png",
+      "bytes": 1430609,
+      "sha256": "fc33a36364f51c60f8004b4f31bad0d5f2c0b741efd7a0633adf9caf1ef2eb96",
+      "videoSeconds": 69,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t072.png",
+      "bytes": 1431051,
+      "sha256": "60a09a6b54fae0475140ed65062b22da8e06c0876a83bfef4e148e155c494430",
+      "videoSeconds": 72,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t075.png",
+      "bytes": 1432023,
+      "sha256": "aacd5564a24c61814d95f3ab83ec169a9621a6ba541d2f20a2e375d01337f692",
+      "videoSeconds": 75,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t078.png",
+      "bytes": 1210740,
+      "sha256": "e859c14988df245c42695866a23554ed283083b67ca129337a4b963cc83f1c21",
+      "videoSeconds": 78,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t081.png",
+      "bytes": 1465303,
+      "sha256": "77a331fcb51731b42e59c2439dbd3e2744bcc7db472526dec8ae9f0769e4e069",
+      "videoSeconds": 81,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t084.png",
+      "bytes": 1109234,
+      "sha256": "a8fbc138c8e47d8bf513848f7ca68bf1abc9f0ea927873f937d7c9c063cd68b8",
+      "videoSeconds": 84,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t087.png",
+      "bytes": 1361323,
+      "sha256": "482b39792e950e7641d6f62217ad01fbeaffc1deda7a6e278874e3e8468161f3",
+      "videoSeconds": 87,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t090.png",
+      "bytes": 1569885,
+      "sha256": "be9d3e5847c6e9a14ff641327a46ba739543a106696f6f5991992a941fd4c6a6",
+      "videoSeconds": 90,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t091.png",
+      "bytes": 1508157,
+      "sha256": "f2d02c9633b162f9d3d46fc507bfe09cb6e508958cf015d9b9d8f9e92ff72560",
+      "videoSeconds": 91,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t092.png",
+      "bytes": 1522992,
+      "sha256": "c07338835dc0c27efb33d9e95209c9e1453b83efef2ae1da1add36044ac15640",
+      "videoSeconds": 92,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t093.png",
+      "bytes": 1546130,
+      "sha256": "fe09471af2cbff0e7878f5bb33bc608e21d163cb7411dac2815dbbbaa626c13c",
+      "videoSeconds": 93,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t094.png",
+      "bytes": 1235327,
+      "sha256": "c4b212c04d041dce9affb1834028fcdb6a79674d6feed0650cb686a4e97370f0",
+      "videoSeconds": 94,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t095.png",
+      "bytes": 1598826,
+      "sha256": "c8a8ad3043efdb9f36e2d9468e33fa42fd7508c9a3b96e3dff826f5489fd481e",
+      "videoSeconds": 95,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t096.png",
+      "bytes": 1624789,
+      "sha256": "879f90217d01367b3900312048be8c089c41f5fc91d345c87d5000206480c352",
+      "videoSeconds": 96,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t097.png",
+      "bytes": 1676768,
+      "sha256": "3e1437396f93f7a68077b6e5f00a006e48a85cc85836f9380010b06c6fab425a",
+      "videoSeconds": 97,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t098.png",
+      "bytes": 1153997,
+      "sha256": "276baf8ac52bda72f84db044297f3a8d090279cb32ae2ccbf45a20b62256fe26",
+      "videoSeconds": 98,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t099.png",
+      "bytes": 1194890,
+      "sha256": "a909ae08ab90166292c397ff291417cb0cda197794478ddc6c3d0f182dd328c1",
+      "videoSeconds": 99,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t100.png",
+      "bytes": 1378499,
+      "sha256": "90d68d4512b15fe359a6618c55c3d38898e0b6dbb5a77a4423182825852c2b00",
+      "videoSeconds": 100,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t102.png",
+      "bytes": 1178266,
+      "sha256": "cf9a8cee2bd43144755f7963831d3cc630d4ed70bfeca02685e8db89a224448e",
+      "videoSeconds": 102,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t105.png",
+      "bytes": 1400743,
+      "sha256": "62bfea7d48c073c20ae5e534e662fb676e852809bec31d99120b580f91ff04e5",
+      "videoSeconds": 105,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t108.png",
+      "bytes": 1503711,
+      "sha256": "031b135a6117b7a18e01975d33dd5423c3dd93dd570fb4e42b7106364a1f1f9c",
+      "videoSeconds": 108,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t109.png",
+      "bytes": 1523879,
+      "sha256": "ea6dc866a5219f62de32e1ae42239abd37cfedba09f59ff162eed965963d97cd",
+      "videoSeconds": 109,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t110.png",
+      "bytes": 1526664,
+      "sha256": "c62119e29fd68fe705aa3eae1b25024695613f462f245c03bb2da62c811ac31b",
+      "videoSeconds": 110,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t111.png",
+      "bytes": 1294057,
+      "sha256": "4433be42ee3edf0105a165828b5debf5e3cc0b911e74ddd6ae86a41b576d9665",
+      "videoSeconds": 111,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t112.png",
+      "bytes": 1471494,
+      "sha256": "8de7390810dc2dbad02479d1ee20b19516774c26856fbcfc5edfac3080e39117",
+      "videoSeconds": 112,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t113.png",
+      "bytes": 1539916,
+      "sha256": "228f842555e5d60f1e778065929981b6da320b9bcd6ea74e4cf237ca31052ec6",
+      "videoSeconds": 113,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t114.png",
+      "bytes": 1539027,
+      "sha256": "636dd079e795ef525bec4ddd77175a2cca1989c8cd890c1f03e88ee90f115062",
+      "videoSeconds": 114,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t115.png",
+      "bytes": 1520361,
+      "sha256": "8ee8e9a94625b81e4af713b7297da92e932407d25e47ac9939d49ef63341425e",
+      "videoSeconds": 115,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t116.png",
+      "bytes": 1559162,
+      "sha256": "04fcdcd48d159617d340974bf3998916c1fd4405479aa97ea10422315346e37f",
+      "videoSeconds": 116,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t117.png",
+      "bytes": 1617767,
+      "sha256": "f8c55c23ebcf51fe8e4d0aba05b73384646ae2b95cecc23d3e3cc9f8b637e867",
+      "videoSeconds": 117,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t118.png",
+      "bytes": 1654127,
+      "sha256": "afa37b23e36ee2002814befbb7b2f2601ae8ec35e61da5f40912d8bd81e791ce",
+      "videoSeconds": 118,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t119.png",
+      "bytes": 1541605,
+      "sha256": "7d5bf7b3c10b3eb7f709aacc06e29c77b07a7a9b4daa9632e36deb9b11d5e1bc",
+      "videoSeconds": 119,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t120.png",
+      "bytes": 1566466,
+      "sha256": "3ccc15be5c0ef4b6d0a5c94e7163f624996bd719bc98dbcec6e1df5eae05a1c8",
+      "videoSeconds": 120,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t121.png",
+      "bytes": 1327273,
+      "sha256": "3367bff8630cb9843643b60fa852541d4a0e2b102bfb434a1b0992e3ed0bf824",
+      "videoSeconds": 121,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t122.png",
+      "bytes": 1165169,
+      "sha256": "378fc8ca6c60040e39590927f387bb818cee3c3a126463087bf444b42749fa6d",
+      "videoSeconds": 122,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t123.png",
+      "bytes": 1579059,
+      "sha256": "d3f0b5f027b7d7f3278e7540ec5a3ae62dbca4576e325ccdac2f1d548d1ddb74",
+      "videoSeconds": 123,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t124.png",
+      "bytes": 1512132,
+      "sha256": "2c7c0fdbd3cb476a64371ff4fe64e0b4dc407269e133f74b32447a9ffc6679ca",
+      "videoSeconds": 124,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t125.png",
+      "bytes": 1640909,
+      "sha256": "82b41df06bb4f9d0b7ce2535aca2c08cfd9ea12d36132e1ff457393894143c9f",
+      "videoSeconds": 125,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t126.png",
+      "bytes": 1601731,
+      "sha256": "69e13ca80b3ca6764c112e5f104a6726d8893dfb53921c21ca5bfe1ca0c0fd86",
+      "videoSeconds": 126,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t127.png",
+      "bytes": 1634179,
+      "sha256": "3e8d9a13813d86dfae568fdbd7b37ee5e4783b62ccc2817ebd3eef06c3cdb290",
+      "videoSeconds": 127,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t128.png",
+      "bytes": 1602444,
+      "sha256": "24086b37e5f4cd953a8a95c6e3a386b88a30c3ecaf3ccf9854eb7c13c6173b4e",
+      "videoSeconds": 128,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t129.png",
+      "bytes": 1651068,
+      "sha256": "7409cc39fae0811daea68143aba37c15125c61946ea4b1126b6524787143d9a5",
+      "videoSeconds": 129,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t130.png",
+      "bytes": 1662801,
+      "sha256": "49515ced71b66bd82f5844b6e0d50315881f3a54131e394b764f4308fc3517ea",
+      "videoSeconds": 130,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t131.png",
+      "bytes": 1685974,
+      "sha256": "7ecd03a8ea3d5274a2dee86d6f52b6ff3b18236af3764433e8722e772f4351f6",
+      "videoSeconds": 131,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t132.png",
+      "bytes": 1694747,
+      "sha256": "c2f35620605e7ff63ca390a28a8b945a55ff2e7a5dce28b1488c8c69a86944f5",
+      "videoSeconds": 132,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t133.png",
+      "bytes": 1700848,
+      "sha256": "12e233b0b5b0d544d6788e626d1b4cb13f83c176d1a8205f4c13bec16ceb0388",
+      "videoSeconds": 133,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t134.png",
+      "bytes": 1702490,
+      "sha256": "c828f2ee5d84e9d95c105642b8f45390bb1877bc7ce16d30bdd66a63d6e94ced",
+      "videoSeconds": 134,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t135.png",
+      "bytes": 1708449,
+      "sha256": "1ae80ee451edc8e4d8012ed42d4106379045821184f3b44be167c134cd9fbce6",
+      "videoSeconds": 135,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t136.png",
+      "bytes": 1474603,
+      "sha256": "8b650e68071c417dc9b67e85bb4c8f1912541ff5f13b021aff4842f145975772",
+      "videoSeconds": 136,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t137.png",
+      "bytes": 1166601,
+      "sha256": "533a1956e6c9e21f39a512cba17a5bc03d682efd91fe2a328e16edeca5e5f17c",
+      "videoSeconds": 137,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t138.png",
+      "bytes": 1294647,
+      "sha256": "cf22e52c8223c73363c0a23b61443c79e1be74c718506f2112a6a90e880d0f78",
+      "videoSeconds": 138,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t139.png",
+      "bytes": 1547289,
+      "sha256": "ee0861c91fb3d7b046a6dcca9e6b6716b5c708ab9776fd0e61c5ba97b3598806",
+      "videoSeconds": 139,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t140.png",
+      "bytes": 1646980,
+      "sha256": "9ca18caef9f50b56556c9df16667fb68ea33a7ee2d5f61c5d551dce308631ae8",
+      "videoSeconds": 140,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t141.png",
+      "bytes": 1686519,
+      "sha256": "87d5d58b9015fa21727e247e09b528280e2200bcedb50200838f53872c7895ba",
+      "videoSeconds": 141,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t142.png",
+      "bytes": 1682946,
+      "sha256": "4640fe62284730f7c3273d74da0633839adb459a77440d3dc75589aa2b1d42fd",
+      "videoSeconds": 142,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t143.png",
+      "bytes": 1704428,
+      "sha256": "f1378f73c09df3c37405bb3e1730d080ceeaeab993a69133def45891972f6784",
+      "videoSeconds": 143,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t144.png",
+      "bytes": 1704306,
+      "sha256": "b22a0a877c4fd401a2f5ff43ac83c187901853c22e2ae842d65cb203f8dcd96c",
+      "videoSeconds": 144,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t145.png",
+      "bytes": 1718695,
+      "sha256": "a9a4e94f185b8909580cade1aed356d38fd1e1bd105e819e088d0762db400148",
+      "videoSeconds": 145,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t146.png",
+      "bytes": 1676290,
+      "sha256": "389d54c85bb8325f8e1a852aae67f849bf326971e076eb37bdeb5a1082375923",
+      "videoSeconds": 146,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t147.png",
+      "bytes": 1710918,
+      "sha256": "36287eaef5511d6479cf237a4d533269597f85f3d62a4004906b4496055b526c",
+      "videoSeconds": 147,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    },
+    {
+      "path": "t148.png",
+      "bytes": 1717688,
+      "sha256": "a351c9b44bfa53591ca2d6bfe4a96313471d050a8c90496a1a798990290911a4",
+      "videoSeconds": 148,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t149.png",
+      "bytes": 1728248,
+      "sha256": "b9bd84343f0a9cb27d445dd172a9b6ad56b2348803c794ae00cf231541955ce0",
+      "videoSeconds": 149,
+      "viewedRegion": "right inventory crop only"
+    },
+    {
+      "path": "t150.png",
+      "bytes": 1730864,
+      "sha256": "badb1da238e1e99d7366c8fe10b642797339ed1cd2004fe909773736b5bce5b8",
+      "videoSeconds": 150,
+      "viewedRegion": "full-map exact frame/contact sheet"
+    }
+  ],
+  "contactSheets": [
+    {
+      "path": "contact-0.jpg",
+      "bytes": 841819,
+      "sha256": "7dac736771f7eeb004e7b993a698ad0e9ec0346db0d0bb66c3714a43d1a3c910"
+    },
+    {
+      "path": "contact-1.jpg",
+      "bytes": 829949,
+      "sha256": "f84d9d2ae9e63b3f0f23a1bf5e64752f5b02ac8ce6982d3b2fc0040da3ade90b"
+    },
+    {
+      "path": "contact-2.jpg",
+      "bytes": 914154,
+      "sha256": "95eb938cb90ceb38335c64b1b71ef58d74a11f37d12785f58f8c81c46508cd15"
+    },
+    {
+      "path": "contact-3.jpg",
+      "bytes": 846600,
+      "sha256": "972d9000e3259d8c0b4d746b5658ed67ed580462249ae6945a9f92b76b15d733"
+    },
+    {
+      "path": "inventory-108-120.png",
+      "bytes": 677475,
+      "sha256": "3369a0b2bf1c03e75f81249a227125fbaebf8f8757afdc5145d80fc21794dccc"
+    },
+    {
+      "path": "inventory-121-135.png",
+      "bytes": 773690,
+      "sha256": "21721c01e0993eb73d71b53d42dfa05a5afc6bb6a3a888f70759a3b79ab837a0"
+    },
+    {
+      "path": "inventory-136-150.png",
+      "bytes": 942929,
+      "sha256": "8c1f3c102d2bfa3346b3144846215f8e4feafbf36987b5255682494cd5d3f66f"
+    },
+    {
+      "path": "inventory-90-100.png",
+      "bytes": 715297,
+      "sha256": "740da2f41c5e9e7a5411a7a24638b3a0f6793ee10987c0daa71e68fc3e98be89"
+    },
+    {
+      "path": "inventory-samples.png",
+      "bytes": 538590,
+      "sha256": "45eb79e66e926f7192d4e719d6de6f45f0f23a447efa8e8bfd7e4c333bde89f9"
+    },
+    {
+      "path": "check-110-113.png",
+      "bytes": 422945,
+      "sha256": "c6d16131b41a23b423d6a342fc5f2e15c0cfbeaefd27d83d00a71ac84161b892"
+    }
+  ],
+  "cameoReferences": [
+    {
+      "path": "giicon.png",
+      "bytes": 2677,
+      "sha256": "a9ad3b60707619c92e89abd5e25819928e840ef4b08262f3f6c7559f3b8e9bcc",
+      "unit": "GI/E1",
+      "url": "https://cncnz.com/wp-content/uploads/2018/04/ra2_giicon.png",
+      "use": "visual cameo identity reference only; not tactical source"
+    },
+    {
+      "path": "jjeticon.png",
+      "bytes": 2359,
+      "sha256": "8d9990449e8224332b138a727863f65e426d45c3d89fa84f9a4e7fd9a5b90b2f",
+      "unit": "Rocketeer/JUMPJET",
+      "url": "https://cncnz.com/wp-content/uploads/2018/04/ra2_jjeticon.png",
+      "use": "visual cameo identity reference only; not tactical source"
+    },
+    {
+      "path": "clegicon.png",
+      "bytes": 2430,
+      "sha256": "4bcddeb8ef9b0e79435a0d25ab2c38cc1edcd764574b9f0fe7e2f3b32842a2da",
+      "unit": "Chrono Legionnaire/CLEG",
+      "url": "https://cncnz.com/wp-content/uploads/2018/04/ra2_clegicon.png",
+      "use": "visual cameo identity reference only; not tactical source"
+    },
+    {
+      "path": "e2icon.png",
+      "bytes": 2472,
+      "sha256": "98987ba504bd061d6412a50edf97c1cd076c1100fb98d6093314dfa7f859536a",
+      "unit": "Conscript/E2",
+      "url": "https://cncnz.com/wp-content/uploads/2018/04/ra2_e2icon.png",
+      "use": "visual cameo identity reference only; not tactical source"
+    },
+    {
+      "path": "flkticon.png",
+      "bytes": 2295,
+      "sha256": "a21be03fd2e4bd8e9fe8cf5a92d628629373ea9acebe4fc64b4b9e8d5a70028e",
+      "unit": "Flak Trooper/FLAKT",
+      "url": "https://cncnz.com/wp-content/uploads/2018/04/ra2_flkticon.png",
+      "use": "visual cameo identity reference only; not tactical source"
+    },
+    {
+      "path": "htkicon.png",
+      "bytes": 2546,
+      "sha256": "d9118764202e253a49da6ec3104958ee805818556cffa5de22cf4b781c3707be",
+      "unit": "Flak Track/HTK",
+      "url": "https://cncnz.com/wp-content/uploads/2018/04/ra2_htkicon.png",
+      "use": "visual cameo identity reference only; not tactical source"
+    },
+    {
+      "path": "fvicon.png",
+      "bytes": 2566,
+      "sha256": "1d706cb4ed0b1a58b2115f522df976f05407b7ac92379958e618ca7f49d2e464",
+      "unit": "IFV/FV",
+      "url": "https://cncnz.com/wp-content/uploads/2018/04/ra2_fvicon.png",
+      "use": "visual cameo identity reference only; not tactical source"
+    }
+  ],
+  "scope": "不下载媒体，不改repo/git/CI，不宣称新增AI收益",
+  "rootReview": {
+    "allReferencedFileHashesVerified": 84,
+    "individuallyViewedFramesSeconds": [
+      119,
+      130,
+      131,
+      138,
+      140
+    ],
+    "inventoryStripsViewed": [
+      "inventory-samples.png",
+      "inventory-108-120.png"
+    ],
+    "notContinuousPlayback": true,
+    "tacticalBenefitNotMeasured": true
+  }
+}

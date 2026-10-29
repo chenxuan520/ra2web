@@ -41,3 +41,6 @@ F3b 再处理伪装外观投影，不能简单删除所有伪装单位。间谍�
 证据见[独立回执](../ai-observed-visibility-evidence/receipt.json)、[真实可见性报告](../ai-observed-visibility-evidence/visibility-report.json)、[F1/F2复跑](../ai-observed-visibility-evidence/information-report.json)、[冒烟逐次记录](../ai-observed-visibility-evidence/smoke-games.jsonl)与[原始哈希索引](../ai-observed-visibility-evidence/SHA256SUMS)。现有CI的regression已加入两套类型检查和机制脚本；派发与CI实际结果另按精确run记录。
 
 F3b 伪装投影仍待实现；可见敌方的factory/rally、武器cooldown、载客与采矿内部状态也未全部审计。真实裂缝发生器、完整策略公平资格与战力资格均未完成，未合并master或上线。
+
+
+F3b的[实施前字段合同与回归场景](disguise-design.md)已补齐，并保留独立复跑一致的实际方法/mock世界复现。该设计仍未实现，不能把字段合同建议当作现有观察API承诺。

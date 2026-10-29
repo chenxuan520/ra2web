@@ -1,0 +1,79 @@
+{
+  "format": 1,
+  "sourceCommit": "8f295c9c40bd24a4782164a31e668b0754039bd7",
+  "sourceGitBlobsAndTreeVerified": true,
+  "runnerSha256": "6096290df3123a90b10db056b32bb31fd5d2cd4a27c2755e6f9fab40b92e5855",
+  "rawBytes": 50836,
+  "rawSha256": "07a56c90d80284c21179410fa7751a702df5afca87e5cf249d3b2bfa57c68ed0",
+  "engineErrors": 0,
+  "sourceStable": true,
+  "validation": {
+    "bunPass": 339,
+    "bunSkip": 13,
+    "bunFail": 0,
+    "entryServerBenchmarkTypes": true,
+    "newFixtureTypes": true,
+    "build": true,
+    "focusedBeforeRepair": {
+      "pass": 3,
+      "fail": 4
+    },
+    "focusedAfterRepairWithExistingBoundaryTests": {
+      "pass": 18,
+      "fail": 0,
+      "assertions": 110
+    }
+  },
+  "cases": [
+    {
+      "mode": "hidden-own-clone",
+      "ticks": 0,
+      "initialAssigned": 28,
+      "checkpoints": [],
+      "revealedTargetCount": null
+    },
+    {
+      "mode": "assigned-empty-queue",
+      "ticks": 3960,
+      "initialAssigned": 27,
+      "checkpoints": [
+        {
+          "tick": 3840,
+          "assigned": 0
+        },
+        {
+          "tick": 3959,
+          "assigned": 0
+        },
+        {
+          "tick": 3960,
+          "assigned": 95
+        }
+      ],
+      "revealedTargetCount": null
+    },
+    {
+      "mode": "all-explored",
+      "ticks": 3960,
+      "initialAssigned": 0,
+      "checkpoints": [
+        {
+          "tick": 3840,
+          "assigned": 0
+        },
+        {
+          "tick": 3959,
+          "assigned": 0
+        },
+        {
+          "tick": 3960,
+          "assigned": 0
+        }
+      ],
+      "revealedTargetCount": null
+    }
+  ],
+  "coverage": "Real queue API, real shroud and fully primed actual sector cache; assigned targets, not completed dog routes or paid production. Expanded95 include94 unseen centers and1 visible center in a sector below0.8 visibility.",
+  "qualificationEligible": false,
+  "releaseReady": false
+}

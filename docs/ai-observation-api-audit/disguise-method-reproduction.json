@@ -1,0 +1,62 @@
+{
+  "kind": "actual-methods-mock-world-and-rules-not-real-engine",
+  "hashes": {
+    "game/api/GameApi.ts": "07f922510941e14aeda16d139906190fee3702c6b3ce0cae1550813972157232",
+    "game/gameobject/trait/DisguiseTrait.ts": "12767392137e4046506327e438c58e856f649b3576ec8df66b444bd7cd2fed6e",
+    "game/gameobject/trait/AttackTrait.ts": "0e12244331a48fece30a9443af0bfe51933d3d25c4fd81aecc4f23404f855d69",
+    "engine/renderable/entity/plugin/InfantryDisguisePlugin.ts": "67e5bfab0041faecb0b66a4a5a271ded82d3396c2ce4b35645590aac6e4d05e2"
+  },
+  "initialRendering": {
+    "uiName": "GI",
+    "spriteName": "E1",
+    "apparentOwner": "viewer"
+  },
+  "currentApi": {
+    "ids": [
+      1,
+      2
+    ],
+    "filterNames": [
+      "SPY",
+      "MGTK"
+    ],
+    "data": [
+      {
+        "id": 1,
+        "name": "SPY",
+        "owner": "enemy",
+        "type": 3,
+        "rulesName": "SPY"
+      },
+      {
+        "id": 2,
+        "name": "MGTK",
+        "owner": "enemy",
+        "type": 7,
+        "rulesName": "MGTK"
+      }
+    ]
+  },
+  "targetPredicates": {
+    "dogAutoSpy": true,
+    "tankAutoSpy": false,
+    "tankManualSpy": true,
+    "dogAutoTreeMirage": false,
+    "tankForceTreeMirage": true
+  },
+  "sharedDetectedRendering": {
+    "uiName": "SPY",
+    "showsDisguise": false
+  },
+  "afterSharedDetectionExit": "GI",
+  "spyAfterDamageAnd100MockTicks": {
+    "disguised": false,
+    "tankAutoPredicate": false,
+    "dogAutoPredicate": true
+  },
+  "mirageAfterDamageAnd16MockTicks": {
+    "disguised": true,
+    "name": "TREE01"
+  },
+  "note": "15 mock cooldown ticks chosen to exercise code; not a claim about original INI timing. Predicates omit range, LOS, target acquisition and damage simulation."
+}
