@@ -1,0 +1,96 @@
+[
+  {
+    "rawFile": "smoke-normal.json",
+    "rawBytes": 341282,
+    "rawSha256": "64e20450e018db8668d26064fd7e2bfe2caf206f01e846fe37267800bfd6e427",
+    "engineCommit": "3198391d7bc4e5ce02032ce3b4b16cdee01b212a",
+    "candidate": {
+      "commit": "3198391d7bc4e5ce02032ce3b4b16cdee01b212a",
+      "profile": "normal",
+      "source": "3198391d7bc4e5ce02032ce3b4b16cdee01b212a",
+      "dirty": false,
+      "workingTreeStatus": null,
+      "diffSha256": null,
+      "sourceSha256": null
+    },
+    "baseline": {
+      "commit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+      "profile": "normal"
+    },
+    "resources": {
+      "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+      "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+    },
+    "settings": {
+      "maxTicks": 3000,
+      "sampleTicks": 900,
+      "credits": 10000,
+      "unitCount": 0,
+      "gameSpeed": 3,
+      "engineDifficulty": 4,
+      "pairedSpawnSwap": true,
+      "pairedPlayerOrderSwap": true,
+      "simulationTicksPerSecond": 15,
+      "shortGame": true,
+      "superWeapons": false,
+      "crates": false,
+      "engineStalemateDetection": false
+    },
+    "summary": {
+      "total": 4,
+      "candidateWins": 0,
+      "baselineWins": 0,
+      "draws": 4,
+      "invalid": 0
+    },
+    "qualificationEligible": false,
+    "reason": "Compatibility-only 3000-tick truncation; not a 27000-tick evaluation draw sample."
+  },
+  {
+    "rawFile": "smoke-brutal.json",
+    "rawBytes": 306394,
+    "rawSha256": "2b977c84177190c1044eda454b299972cd6ebe438c2555c7af67e54bcb9e9155",
+    "engineCommit": "3198391d7bc4e5ce02032ce3b4b16cdee01b212a",
+    "candidate": {
+      "commit": "3198391d7bc4e5ce02032ce3b4b16cdee01b212a",
+      "profile": "brutal",
+      "source": "3198391d7bc4e5ce02032ce3b4b16cdee01b212a",
+      "dirty": false,
+      "workingTreeStatus": null,
+      "diffSha256": null,
+      "sourceSha256": null
+    },
+    "baseline": {
+      "commit": "c18f77650e40b668064bdb913a75bebfa278f42b",
+      "profile": "brutal"
+    },
+    "resources": {
+      "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+      "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+    },
+    "settings": {
+      "maxTicks": 3000,
+      "sampleTicks": 900,
+      "credits": 10000,
+      "unitCount": 0,
+      "gameSpeed": 3,
+      "engineDifficulty": 4,
+      "pairedSpawnSwap": true,
+      "pairedPlayerOrderSwap": true,
+      "simulationTicksPerSecond": 15,
+      "shortGame": true,
+      "superWeapons": false,
+      "crates": false,
+      "engineStalemateDetection": false
+    },
+    "summary": {
+      "total": 4,
+      "candidateWins": 0,
+      "baselineWins": 0,
+      "draws": 4,
+      "invalid": 0
+    },
+    "qualificationEligible": false,
+    "reason": "Compatibility-only 3000-tick truncation; not a 27000-tick evaluation draw sample."
+  }
+]

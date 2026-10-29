@@ -1,0 +1,133 @@
+{
+  "format": 1,
+  "sourceCommit": "3198391d7bc4e5ce02032ce3b4b16cdee01b212a",
+  "fixtureSource": {
+    "commit": "3198391d7bc4e5ce02032ce3b4b16cdee01b212a",
+    "source": "working-tree",
+    "workingTreeStatus": "",
+    "gameSourceSha256": "3c450591a4d4da36919cf17635317ff21465e591d6e9ad66019a04ba8db4366f",
+    "runnerSha256": "df3f5453df0848c87516ab3e63083ccb0b24b9d40f27dbca48f775c65e429ca3",
+    "files": {
+      "src/game/api/GameApi.ts": "07f922510941e14aeda16d139906190fee3702c6b3ce0cae1550813972157232",
+      "src/game/BotManager.ts": "69a7f3d267fec6457b51bba613db0450e56daba7a3641f3661ff8a59f17706fe",
+      "src/game/gameobject/trait/CloakableTrait.ts": "2cbc2da9665086ef55c611cb9f6f590f5dab57587444cec42a9e0f5d3335498a",
+      "src/game/gameobject/trait/SubmergibleTrait.ts": "b1ae78992268040a70581d44bf9078ed299073cd623b89a51044f0922c95204f",
+      "src/game/trait/SharedDetectCloakTrait.ts": "aa11140799d662e7b742b0636736125c8597350a9f311f9eda7821873fa9bb8d",
+      "e2e/ai-specialty-scenarios.ts": "1b5213e81e17fd8f361a429a3f2ba09ebf13cb929e8642d44368e099f9c49b2a",
+      "e2e/tsconfig.ai-observed-visibility.json": "77cc515ebf6da978b49940bde1e374d6d66cb41e1ef575ae523fe34414f858d9"
+    }
+  },
+  "resources": {
+    "mapSha256": "cbada2fde5d2c9c0240fd62b5ef458f901b56a72bfac6a875a913bf11c3604f7",
+    "terrainSha256": "e0b189588495b62a3882eec1c9d4ec4018712f2d2745e1757c9ea6003d2858cf",
+    "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+    "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+  },
+  "rawReports": [
+    {
+      "file": "visibility-report.json",
+      "bytes": 222151,
+      "sha256": "bf8097f0c87fbe63dc5e9594e96d5a08709f5646620ccbb76815859e738464d4"
+    },
+    {
+      "file": "information-report.json",
+      "bytes": 93748,
+      "sha256": "4f2133efa56b04fe5f6181250f9624e445e23edb4bd46ada0c835c22c2d676f1"
+    }
+  ],
+  "verifiedBy": "Root rerun after source freeze and independent Python checks of raw observations, trace, events, original git blobs and game tree digest.",
+  "visibilityCases": [
+    {
+      "target": "SUB",
+      "ticks": 232,
+      "snapshots": 6,
+      "coverage": {
+        "interleavedApiPairs": 6,
+        "sampledTicks": 232,
+        "naturalInitialCloak": true,
+        "sensorMovementUncloak": true,
+        "naturalRecloak": true,
+        "actualShroudResetReveal": true,
+        "directIdAndLists": true,
+        "hiddenFilterNeverCalled": true,
+        "ownerVisibleThroughout": true,
+        "foreignObserverQueryRejected": true,
+        "weaponFireEventsBeforeDetection": 0,
+        "laterWeaponFireEvents": 1,
+        "damageEvents": 0
+      }
+    },
+    {
+      "target": "DLPH",
+      "ticks": 232,
+      "snapshots": 6,
+      "coverage": {
+        "interleavedApiPairs": 6,
+        "sampledTicks": 232,
+        "naturalInitialCloak": true,
+        "sensorMovementUncloak": true,
+        "naturalRecloak": true,
+        "actualShroudResetReveal": true,
+        "directIdAndLists": true,
+        "hiddenFilterNeverCalled": true,
+        "ownerVisibleThroughout": true,
+        "foreignObserverQueryRejected": true,
+        "weaponFireEventsBeforeDetection": 0,
+        "laterWeaponFireEvents": 1,
+        "damageEvents": 0
+      }
+    }
+  ],
+  "informationFixture": {
+    "passed": true,
+    "errors": 0,
+    "cases": 4,
+    "comparison": "All cases, intents, commands and transitions equal prior F1/F2 fixture; source metadata correctly differs."
+  },
+  "compatibilitySmokes": {
+    "runs": 2,
+    "totalGames": 8,
+    "errors": 0,
+    "ticksPerGame": 3000,
+    "profiles": [
+      "normal",
+      "brutal"
+    ],
+    "strengthSample": false
+  },
+  "validation": {
+    "bunTest": {
+      "pass": 332,
+      "skip": 13,
+      "fail": 0,
+      "assertions": 2669,
+      "files": 39,
+      "logSha256": "d4819bf0acb0db0d2349b46d94d12d8f306f2bafcdac716e6273bdbb8a4a5f78"
+    },
+    "typechecks": [
+      "entry",
+      "server",
+      "ai-benchmark",
+      "ai-information-boundary",
+      "ai-observed-visibility"
+    ],
+    "build": {
+      "passed": true,
+      "logSha256": "1b0af0aff828d7ddd3e6209b0f908216aefba1e8854bd56be9298326a905acfb"
+    },
+    "pythonIntegrityTests": 37
+  },
+  "limitations": [
+    "Preplaced naval units and no-op bots; not production, economic, full strategy or win-rate evidence.",
+    "Revealing/resetting the real shroud is explicit fixture setup; no powered gap generator is exercised.",
+    "Only SUB/DLPH hostile cloak and real DEST sensors, two observers and direct/list/filter APIs are covered.",
+    "Automatic ASW shots after detection are retained. The window ends at natural recloak; subsequent outcomes are not covered.",
+    "Shared allied intel, neutral units, destruction, events, terrain/resource APIs, disguises and remembered-object policies are not certified here.",
+    "No rule, cloak cooldown, hit point, weapon, movement speed or sensor-radius mutation is used.",
+    "F3b disguised appearance and visible-unit internal state projection remain unaudited.",
+    "Historical strategies share this new engine API; no previous win rates carry over.",
+    "Feature still inherits unqualified ffb438 opening; no strength qualification, master integration or deployment."
+  ],
+  "releaseReady": false,
+  "strengthClaim": null
+}

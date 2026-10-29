@@ -732,5 +732,35 @@
     "pos2-drone-exit-window.png",
     "pos2-production-panels.png",
     "2025-pos2-at63-high.png"
-  ]
+  ],
+  "boundedMachineTranscription": {
+    "method": "faster-whisper 1.2.1, public small model, CPU int8; machine transcription only, not direct listening",
+    "modelRevision": "536b0662742c02347bc0e980a01041f333bce120",
+    "clips": [
+      {
+        "source": "https://www.bilibili.com/video/BV13Xi3BVEpe/",
+        "mediaSeconds": [
+          238,
+          307
+        ]
+      },
+      {
+        "source": "https://www.bilibili.com/video/BV1h49tYqEnt/",
+        "mediaSeconds": [
+          62,
+          145
+        ]
+      }
+    ],
+    "newAcceptedDecisionEvidence": false,
+    "certaintyLimits": [
+      "Machine errors possible; unsupported isolated phrases excluded.",
+      "Burned subtitles cross-checked; transcription did not recover additional conditional tactical reasoning.",
+      "No claim about unprocessed audio.",
+      "Forced-language model probability is not text accuracy."
+    ],
+    "storedInRepository": [
+      "This compact original assessment only; no media, model or transcript."
+    ]
+  }
 }
