@@ -1,0 +1,428 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-30",
+  "timezone": "Asia/Shanghai",
+  "scope": "Original RA2 only",
+  "status": "research-incomplete",
+  "implementationAuthorizedByThisEvidence": false,
+  "strategySimulationRun": false,
+  "newAiStrengthClaim": null,
+  "method": "New dense key-frame inspection of previously archived original-final P1 media; not continuous complete viewing or command logs. All frame byte hashes independently recomputed. Observer information is not automatically player information.",
+  "tournamentIndex": "https://www.ra2match.com/ybxxzl4/",
+  "matches": [
+    {
+      "bvid": "BV1Zmedz4EJ7",
+      "countries": [
+        "Arabs",
+        "French"
+      ],
+      "role": "2025 ice final P1",
+      "notes": "Counts are living dogs in observer roster, not produced totals or roles. France 3 at 00:25 is not a completed 3-dog opening.",
+      "url": "https://www.bilibili.com/video/BV1Zmedz4EJ7/?p=1",
+      "mediaSha256": "f8a22491a15a0e7008b9913fd4925916c3e05bcfbd348f53f6ae99ebfc997255",
+      "observations": [
+        {
+          "onScreenGameClock": "00:23",
+          "livingDogCounts": [
+            3,
+            2
+          ]
+        },
+        {
+          "onScreenGameClock": "00:25",
+          "livingDogCounts": [
+            4,
+            3
+          ]
+        },
+        {
+          "onScreenGameClock": "00:28",
+          "livingDogCounts": [
+            4,
+            4
+          ]
+        },
+        {
+          "onScreenGameClock": "00:33",
+          "livingDogCounts": [
+            4,
+            4
+          ]
+        },
+        {
+          "onScreenGameClock": "00:38",
+          "livingDogCounts": [
+            4,
+            4
+          ]
+        },
+        {
+          "onScreenGameClock": "00:46",
+          "livingDogCounts": [
+            4,
+            3
+          ]
+        },
+        {
+          "onScreenGameClock": "01:09",
+          "livingDogCounts": [
+            2,
+            2
+          ]
+        }
+      ],
+      "informationAvailableToPlayer": null,
+      "completeRoutes": null,
+      "controlGroups": null,
+      "decisionCausalityConfirmed": false
+    },
+    {
+      "bvid": "BV1hgPTzeEfb",
+      "countries": [
+        "Arabs",
+        "Arabs"
+      ],
+      "role": "2025 all-round final P1",
+      "notes": "Side order green/purple. Infantry visible alongside 3-dog opening. City map exact file unknown.",
+      "url": "https://www.bilibili.com/video/BV1hgPTzeEfb/?p=1",
+      "mediaSha256": "618e47500fd9f79c2efa4b1fad146e6000d8fabb25d0e2468f3c906c4ecd462c",
+      "observations": [
+        {
+          "onScreenGameClock": "00:20",
+          "livingDogCounts": [
+            2,
+            2
+          ]
+        },
+        {
+          "onScreenGameClock": "00:25",
+          "livingDogCounts": [
+            3,
+            3
+          ]
+        },
+        {
+          "onScreenGameClock": "00:51",
+          "livingDogCounts": [
+            3,
+            4
+          ]
+        }
+      ],
+      "informationAvailableToPlayer": null,
+      "completeRoutes": null,
+      "controlGroups": null,
+      "decisionCausalityConfirmed": false
+    },
+    {
+      "bvid": "BV1hitn6jEVK",
+      "countries": [
+        "Arabs",
+        "Arabs"
+      ],
+      "role": "2026 ice final P1",
+      "notes": "Side order green/pink; observer game clock, not exact media timestamps.",
+      "url": "https://www.bilibili.com/video/BV1hitn6jEVK/?p=1",
+      "mediaSha256": "1cb86fe1eb8daaf82631bf170949fb20d71a612a67a9b2cc41a1af2911f129e4",
+      "observations": [
+        {
+          "onScreenGameClock": "00:17",
+          "livingDogCounts": [
+            1,
+            1
+          ]
+        },
+        {
+          "onScreenGameClock": "00:23",
+          "livingDogCounts": [
+            3,
+            3
+          ]
+        },
+        {
+          "onScreenGameClock": "00:28",
+          "livingDogCounts": [
+            4,
+            4
+          ]
+        },
+        {
+          "onScreenGameClock": "00:33",
+          "livingDogCounts": [
+            4,
+            4
+          ]
+        },
+        {
+          "onScreenGameClock": "00:38",
+          "livingDogCounts": [
+            4,
+            4
+          ]
+        }
+      ],
+      "informationAvailableToPlayer": null,
+      "completeRoutes": null,
+      "controlGroups": null,
+      "decisionCausalityConfirmed": false
+    }
+  ],
+  "newVideoAccess": [
+    {
+      "url": "https://www.bilibili.com/video/BV1GpmYBYEM5/",
+      "status": "unavailable page; not watched",
+      "role": "allied mirror candidate source"
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV12NivBYExz/",
+      "status": "complete download; sampled frames through end including 180-199s at 1s; infiltration chain unconfirmed",
+      "role": "player spy video; not qualified decision evidence",
+      "downloadedBytes": 14263019,
+      "expectedBytes": 14263019,
+      "partial": false,
+      "mediaSha256": "b5199d07a34f4e46d5a2ed974988ba423554bea9da05f7ddd1dc795e881e526f",
+      "actualEffectConfirmed": false
+    }
+  ],
+  "localFrameDigests": [
+    {
+      "name": "final-p1-at25.png",
+      "bytes": 1145910,
+      "sha256": "221187a4b7811915d83d21315f43bb61bfeccfaacbdc5e9bb103c85d26ff23f7"
+    },
+    {
+      "name": "final-p1-at45.png",
+      "bytes": 1338509,
+      "sha256": "669ca7147d20d29deaf0acb0bddfe43375ba58cdca2a0178f63cd78c56e2e310"
+    },
+    {
+      "name": "final-p1-roster0-100.png",
+      "bytes": 1521641,
+      "sha256": "90115d11c5b095c77a6ab180939564dc60772fa58f0e1925f17506628988f700"
+    },
+    {
+      "name": "final-p1-55-90.png",
+      "bytes": 3115834,
+      "sha256": "872dd9a6e62b9ed51d9daef7293d099248ea38fa9e14bd6741d400f73495adc5"
+    },
+    {
+      "name": "2026-p1-roster0-100.png",
+      "bytes": 1439781,
+      "sha256": "918034b18c3d90f67a78134bff3b50b673010cbc57e5255f3603f7797a6b9c3c"
+    },
+    {
+      "name": "2026-p1-0-90.png",
+      "bytes": 4392685,
+      "sha256": "5f0c61fa83204664b8cabb7f099f10ef4f32d97b3d9d1ad2e278debb3503f4c2"
+    },
+    {
+      "name": "2026-p1-at62.png",
+      "bytes": 1214935,
+      "sha256": "72ae44a7b2c6cd5d81325ba48d3840a515a2d50a7a8d0a699b5b8821e49ff8a5"
+    },
+    {
+      "name": "allround-p1-roster0-100.png",
+      "bytes": 1643905,
+      "sha256": "57dfc6be4e859994e9b289bfeee9e657a606052b40763d6cfae60f2bb03fc87c"
+    },
+    {
+      "name": "allround-p1-0-90.png",
+      "bytes": 5490910,
+      "sha256": "19d7fdfde4f182a3fbde3eb93119249bd90aa30429fefc513c227ec228a7862f"
+    },
+    {
+      "name": "allround-p1-at22.png",
+      "bytes": 2090342,
+      "sha256": "9a966e9ed3084ac8a13e5199b34f604f78c58a34235d1696632eaeb92efeebc3"
+    },
+    {
+      "name": "spy0-110.png",
+      "bytes": 4635681,
+      "sha256": "5457f7f469eec6dd83607607bbf67a7d1fed8da6600a8ac8e70b26643377e2db",
+      "sourceCoverage": "partial 9437184/14263019 bytes; not complete video"
+    },
+    {
+      "name": "spy105-140.png",
+      "bytes": 3270379,
+      "sha256": "3654b2be274a369b1331937c82af53552847fd2c7ef5d2c3a3df6d3cd90dfee0",
+      "sourceCoverage": "partial 9437184/14263019 bytes; not complete video"
+    },
+    {
+      "name": "spy140-end-3s.png",
+      "bytes": 10336500,
+      "sha256": "f92be053f5a4a92e3216fb63ccded59b9105d15187e4f67ffe18eb7661f77f69",
+      "sourceCoverage": "complete media; sampled frames only; no confirmed infiltration effect"
+    },
+    {
+      "name": "spy180-199-1s.png",
+      "bytes": 13882074,
+      "sha256": "e3508560f4119c3c3359709fb2b6e04dff3d16c579bef11c3a9cd6192703c867",
+      "sourceCoverage": "complete media; sampled frames only; no confirmed infiltration effect"
+    },
+    {
+      "name": "spy183.png",
+      "bytes": 362283,
+      "sha256": "184dabebc4b6d76bd1790ef9058998c503d6988806a5f84a8f7738e13192466e",
+      "sourceCoverage": "complete media; sampled frames only; no confirmed infiltration effect"
+    },
+    {
+      "name": "spy188.png",
+      "bytes": 393081,
+      "sha256": "283e4ce8e4a8f0b74d5430fb081afbee912fc55ea7c3aa59c4ff24f3a8bead43",
+      "sourceCoverage": "complete media; sampled frames only; no confirmed infiltration effect"
+    },
+    {
+      "name": "spy194.png",
+      "bytes": 367713,
+      "sha256": "5492a97edc492ecffb13d9d2e1e363553d337f30ab05e84e3f2123c54707c866",
+      "sourceCoverage": "complete media; sampled frames only; no confirmed infiltration effect"
+    }
+  ],
+  "mechanics": {
+    "scope": "Local engine merged rules, not elite strategy or win-rate evidence",
+    "hashes": {
+      "ini": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+      "custom": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66"
+    },
+    "units": {
+      "DRON": {
+        "Cost": "500",
+        "Speed": "10",
+        "Strength": "100",
+        "Sight": "4",
+        "Primary": "DroneJump",
+        "Secondary": "VirtualScanner",
+        "MovementZone": "Destroyer",
+        "Size": "2",
+        "Parasiteable": "no",
+        "Prerequisite": "NAWEAP",
+        "ImmuneToRadiation": "yes"
+      },
+      "DOG": {
+        "Cost": "200",
+        "Speed": "8",
+        "Strength": "100",
+        "Sight": "9",
+        "Primary": "BadTeeth",
+        "Secondary": "VirtualScanner",
+        "MovementZone": "Infantry",
+        "Size": "1",
+        "Prerequisite": "Barracks",
+        "ImmuneToRadiation": "no"
+      },
+      "ADOG": {
+        "Cost": "200",
+        "Speed": "8",
+        "Strength": "100",
+        "Sight": "9",
+        "Primary": "GoodTeeth",
+        "Secondary": "VirtualScanner",
+        "MovementZone": "Infantry",
+        "Size": "1",
+        "Prerequisite": "Barracks",
+        "ImmuneToRadiation": "no"
+      },
+      "HTNK": {
+        "Cost": "900",
+        "Speed": "6",
+        "Strength": "400",
+        "Sight": "8",
+        "Primary": "120mm",
+        "OpportunityFire": "yes",
+        "MovementZone": "Destroyer",
+        "Size": "3",
+        "Prerequisite": "NAWEAP"
+      },
+      "MTNK": {
+        "Cost": "700",
+        "Speed": "7",
+        "Strength": "300",
+        "Sight": "8",
+        "Primary": "105mm",
+        "OpportunityFire": "yes",
+        "MovementZone": "Normal",
+        "Size": "3",
+        "Prerequisite": "GAWEAP"
+      },
+      "HTK": {
+        "Cost": "500",
+        "Speed": "8",
+        "Strength": "180",
+        "Sight": "8",
+        "Primary": "FlakTrackGun",
+        "Secondary": "FlakTrackAAGun",
+        "MovementZone": "Normal",
+        "Passengers": "5",
+        "SizeLimit": "2",
+        "Size": "3",
+        "Prerequisite": "NAWEAP",
+        "ImmuneToRadiation": "no"
+      },
+      "FV": {
+        "Cost": "600",
+        "Speed": "10",
+        "Strength": "200",
+        "Sight": "8",
+        "Primary": "HoverMissile",
+        "MovementZone": "Normal",
+        "Passengers": "1",
+        "SizeLimit": "1",
+        "Size": "3",
+        "Prerequisite": "GAWEAP",
+        "ImmuneToRadiation": "no"
+      },
+      "HARV": {
+        "Cost": "1400",
+        "Speed": "4",
+        "Strength": "1000",
+        "Sight": "4",
+        "Primary": "20mmRapid",
+        "OpportunityFire": "yes",
+        "MovementZone": "Crusher",
+        "Size": "3",
+        "Prerequisite": "NAWEAP,PROC",
+        "ImmuneToRadiation": "yes"
+      },
+      "CMIN": {
+        "Cost": "1400",
+        "Speed": "4",
+        "Strength": "1000",
+        "Sight": "4",
+        "Primary": "none",
+        "MovementZone": "Crusher",
+        "Size": "3",
+        "Teleporter": "yes",
+        "Prerequisite": "GAWEAP,PROC",
+        "ImmuneToRadiation": "yes"
+      }
+    }
+  },
+  "writtenSources": [
+    {
+      "url": "https://ra2.com/information/1240070237655822336",
+      "read": "full text",
+      "evidence": "community advice, not certified champion decision log",
+      "usedFor": "research hypotheses about anti-scout and harassment timing"
+    },
+    {
+      "url": "https://ra2.com/information/1494255732627533825",
+      "read": "full text",
+      "evidence": "signed vanilla introductory tutorial; selected mechanics cross-checked",
+      "usedFor": "IFV role change and parasite removal, not win-rate claims"
+    },
+    {
+      "url": "https://xwis.net/forums/index.php/topic/30690-help-with-allies-please/",
+      "read": "search excerpts only; full text unavailable",
+      "evidence": "unverified lead",
+      "usedFor": "follow-up research only"
+    }
+  ],
+  "missing": [
+    "Full original Allied-vs-Allied decision chain",
+    "Player viewpoint and information at decision time",
+    "Complete engineer and spy operation with actual effects",
+    "Matched examples choosing and not choosing Terror Drone",
+    "Control-group identities and orders",
+    "Failure/abandonment counterexamples"
+  ]
+}
