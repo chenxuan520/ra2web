@@ -11,6 +11,7 @@ import { UnitComposition } from "../../../strategy/strategy";
 import { SideComposition } from "../../../strategy/compositionUtils";
 import { allocateAttackComposition } from "./attackComposition";
 import { HarassmentMissionFactory } from "./harassmentMission";
+import { getKnownEnemyDirections } from "../../common/knownEnemyDirections";
 
 export enum AttackFailReason {
     NoTargets = "NoTargets",
@@ -300,22 +301,10 @@ function generateTarget(
             return new Vector2(maxUnit.tile.rx, maxUnit.tile.ry);
         }
         if (includeBaseLocations) {
-            const mapApi = gameApi.mapApi;
-            const enemyPlayers = gameApi
-                .getPlayers()
-                .map((p) => gameApi.getPlayerData(p))
-                .filter((otherPlayer) => !gameApi.areAlliedPlayers(playerData.name, otherPlayer.name));
-
-            const unexploredEnemyLocations = enemyPlayers.filter((otherPlayer) => {
-                const tile = mapApi.getTile(otherPlayer.startLocation.x, otherPlayer.startLocation.y);
-                if (!tile) {
-                    return false;
-                }
-                return !mapApi.isVisibleTile(tile, playerData.name);
-            });
-            if (unexploredEnemyLocations.length > 0) {
-                const idx = gameApi.generateRandomInt(0, unexploredEnemyLocations.length - 1);
-                return unexploredEnemyLocations[idx].startLocation;
+            const searchLocations = getKnownEnemyDirections(gameApi, playerData);
+            if (searchLocations.length > 0) {
+                const idx = gameApi.generateRandomInt(0, searchLocations.length - 1);
+                return searchLocations[idx];
             }
         }
     } catch (err) {

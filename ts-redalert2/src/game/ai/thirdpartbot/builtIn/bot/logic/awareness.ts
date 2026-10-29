@@ -6,9 +6,10 @@ import { calculateAreaVisibility, getPointTowardsOtherPoint } from "./map/map";
 import { Circle, Quadtree } from "@timohausmann/quadtree-ts";
 import { ScoutingManager } from "./common/scout";
 import { getDiagonalMapBounds, IncrementalGridCache } from "./map/incrementalGridCache";
-import { calculateDiffuseSectorThreat, calculateMoney, calculateSectorThreat } from "./threat/sectorThreat";
+import { calculateDiffuseSectorThreat, calculateMoney, calculateSectorThreat, observeSectorUnits } from "./threat/sectorThreat";
 import { BuildSpaceCache } from "./map/buildSpaceCache";
 import { getSectorId } from "./map/sectorUtils";
+import { getKnownEnemyDirections } from "./common/knownEnemyDirections";
 
 export type UnitPositionQuery = { x: number; y: number; unitId: number };
 
@@ -92,6 +93,7 @@ export class MatchAwarenessImpl implements MatchAwareness {
     private scoutingManager: ScoutingManager;
     private sectorCache: SectorCache;
     private buildSpaceCache: BuildSpaceCache;
+    private sectorObservation: ReturnType<typeof observeSectorUnits> | undefined;
 
     private expansionCandidates: Vector2[] = [];
 
@@ -123,9 +125,9 @@ export class MatchAwarenessImpl implements MatchAwareness {
                 const sp = new Vector2(startX, startY);
                 const ep = new Vector2(sp.x + size, sp.y + size);
                 const visibility = calculateAreaVisibility(gameApi.mapApi, playerData, sp, ep);
-                const threatLevel = calculateSectorThreat(startX, startY, size, gameApi, playerData);
+                const threatLevel = calculateSectorThreat(startX, startY, size, gameApi, playerData, this.sectorObservation);
                 const diffuseThreatLevel = calculateDiffuseSectorThreat(currentValue, neighbours);
-                const totalMoney = calculateMoney(startX, startY, size, gameApi.mapApi);
+                const totalMoney = calculateMoney(startX, startY, size, gameApi.mapApi, playerData.name);
                 const connectedSectorIds = currentValue.connectedSectorsDirty ? calculateConnectedSectorIds(gameApi.mapApi, startX, startY, neighbours) : currentValue.connectedSectorIds;
                 return {
                     ...currentValue,
@@ -198,6 +200,9 @@ export class MatchAwarenessImpl implements MatchAwareness {
         const sectorCache = this.sectorCache;
         const playerData = game.getPlayerData(player.name);
 
+        // All sectors updated in this synchronous AI cycle share one current
+        // legal observation. Refresh it next cycle, including after reshrouding.
+        this.sectorObservation = observeSectorUnits(game, playerData.name);
         sectorCache.updateSectors(game.getCurrentTick(), SECTORS_TO_UPDATE_PER_CYCLE);
         this.buildSpaceCache.update(game.getCurrentTick());
 
@@ -253,18 +258,15 @@ export class MatchAwarenessImpl implements MatchAwareness {
 
         // Update rally point every few ticks.
         if (game.getCurrentTick() % RALLY_POINT_UPDATE_INTERVAL_TICKS === 0) {
-            const enemyPlayers = game
-                .getPlayers()
-                .filter((p) => p !== playerData.name && !game.areAlliedPlayers(playerData.name, p));
-            const enemy = game.getPlayerData(enemyPlayers[0]);
-            this.mainRallyPoint = getPointTowardsOtherPoint(
+            const direction = getKnownEnemyDirections(game, playerData)[0];
+            this.mainRallyPoint = direction ? getPointTowardsOtherPoint(
                 game,
                 playerData.startLocation,
-                enemy.startLocation,
+                direction,
                 10,
                 10,
                 0,
-            );
+            ) : playerData.startLocation.clone();
         }
 
         // Decide to expand or not
@@ -280,7 +282,7 @@ export class MatchAwarenessImpl implements MatchAwareness {
                 if (!cell) {
                     return false;
                 }
-                if (cell.value.totalMoney && cell.value.totalMoney < EXPANSION_MIN_MONEY) {
+                if ((cell.value.totalMoney ?? 0) < EXPANSION_MIN_MONEY) {
                     return false;
                 }
                 if (ownBuildingVectors.some((ref) => ref.distanceTo(candidate) < EXPANSION_MIN_DISTANCE_TO_BUILDABLE)) {

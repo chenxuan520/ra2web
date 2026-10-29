@@ -4,6 +4,7 @@ import { TiberiumType } from '@/engine/type/TiberiumType';
 import { Vector2 } from '@/game/math/Vector2';
 interface Game {
     map: Map;
+    rules: { getTiberium(type: TiberiumType): { value: number } };
     getPlayerByName(name: string): Player;
     getWorld(): World;
     mapShroudTrait: {
@@ -154,6 +155,13 @@ export class MapApi {
     getTileResourceData(tile: any) {
         const obj = this.map.getObjectsOnTile(tile).find(obj => (obj.isOverlay() && obj.isTiberium()) || (obj.isTerrain() && obj.rules.spawnsTiberium));
         return obj ? this.getResourceData(obj) : undefined;
+    }
+    /** Public rules, not any player's balance or hidden resource quantity. */
+    getResourceCreditValues(): { ore: number; gems: number } {
+        return {
+            ore: this.game.rules.getTiberium(TiberiumType.Ore).value,
+            gems: this.game.rules.getTiberium(TiberiumType.Gems).value,
+        };
     }
     getAllTilesResourceData() {
         const data: ResourceData[] = [];

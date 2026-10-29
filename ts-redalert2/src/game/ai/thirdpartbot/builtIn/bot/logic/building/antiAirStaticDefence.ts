@@ -1,7 +1,8 @@
-import { GameApi, PlayerData, TechnoRules, Vector2 } from "../../../game-api";
+import { GameApi, PlayerData, TechnoRules } from "../../../game-api";
 import { getPointTowardsOtherPoint } from "../map/map";
 import { GlobalThreat } from "../threat/threat";
 import { AiBuildingRules, getDefaultPlacementLocation, numBuildingsOwnedOfType } from "./buildingRules";
+import { getKnownEnemyDirections } from "../common/knownEnemyDirections";
 
 export class AntiAirStaticDefence implements AiBuildingRules {
     constructor(
@@ -15,22 +16,10 @@ export class AntiAirStaticDefence implements AiBuildingRules {
         playerData: PlayerData,
         technoRules: TechnoRules,
     ): { rx: number; ry: number } | undefined {
-        // Prefer front towards enemy.
-        let startLocation = playerData.startLocation;
-        let players = game.getPlayers();
-        let enemyFacingLocationCandidates: Vector2[] = [];
-        for (let i = 0; i < players.length; ++i) {
-            let playerName = players[i];
-            if (playerName == playerData.name) {
-                continue;
-            }
-            let enemyPlayer = game.getPlayerData(playerName);
-            enemyFacingLocationCandidates.push(
-                getPointTowardsOtherPoint(game, startLocation, enemyPlayer.startLocation, 4, 16, 1.5),
-            );
-        }
-        let selectedLocation =
-            enemyFacingLocationCandidates[Math.floor(game.generateRandom() * enemyFacingLocationCandidates.length)];
+        const candidates = getKnownEnemyDirections(game, playerData).map(direction =>
+            getPointTowardsOtherPoint(game, playerData.startLocation, direction, 4, 16, 1.5));
+        const selectedLocation = candidates.length
+            ? candidates[Math.floor(game.generateRandom() * candidates.length)] : playerData.startLocation;
         return getDefaultPlacementLocation(game, playerData, selectedLocation, technoRules, false, 0);
     }
 

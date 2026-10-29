@@ -105,9 +105,13 @@ export async function loadSpecialtyResources(cdn: string = defaultCdn, mapName: 
 
 /** Initialized real map with two no-op bots; call game.start() after placing fixtures. */
 export function createSpecialtyGame(resources: Awaited<ReturnType<typeof loadSpecialtyResources>>, seed: number = 303,
-    countries: string[] = ['Arabs', 'French']) {
+    countries: string[] = ['Arabs', 'French'], startPositions: [number, number] = [0, 1]) {
     if (countries.length !== 2 || countries.some(country => !resources.countries.includes(country))) throw new Error('Two supported countries are required');
     const map = new MapFile().fromString(resources.mapText);
+    if (startPositions[0] === startPositions[1] || startPositions.some(position =>
+        !Number.isInteger(position) || position < 0 || position >= map.startingLocations.length)) {
+        throw new Error('Two different valid fixture starting positions are required');
+    }
     const opts: GameOpts = { gameMode: 1, gameSpeed: 3, credits: 10000, unitCount: 0, shortGame: true,
         superWeapons: false, buildOffAlly: false, mcvRepacks: true, cratesAppear: false,
         destroyableBridges: true, multiEngineer: false, noDogEngiKills: false,
@@ -115,7 +119,7 @@ export function createSpecialtyGame(resources: Awaited<ReturnType<typeof loadSpe
         mapSizeBytes: resources.mapBytes, mapOfficial: true, maxSlots: map.startingLocations.length,
         humanPlayers: [], aiPlayers: countries.map((country, index) => ({
             difficulty: AiDifficulty.Normal, countryId: resources.countries.indexOf(country),
-            colorId: index, startPos: index, teamId: -2,
+            colorId: index, startPos: startPositions[index], teamId: -2,
         })) };
     const game: any = GameFactory.create(map as any, resources.tileSets, resources.rules, resources.art,
         resources.ini('ai.ini'), resources.ini(resources.modes.getById(1).rulesOverride), [],

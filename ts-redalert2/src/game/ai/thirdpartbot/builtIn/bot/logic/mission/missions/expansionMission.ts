@@ -137,6 +137,7 @@ export class ExpansionMission extends Mission {
             return noop();
         }
         // if there's a conyard near the destination, we're done.
+        const ownConyards = new Set(gameApi.getVisibleUnits(playerData.name, "self", (rules) => rules.constructionYard));
         const conYards = gameApi
             .getUnitsInArea(
                 new Box2(
@@ -144,6 +145,7 @@ export class ExpansionMission extends Mission {
                     this.destination.clone().addScalar(CONYARD_SCAN_DISTANCE),
                 ),
             )
+            .filter((id) => ownConyards.has(id))
             .map((id) => getCachedTechnoRules(gameApi, id))
             .filter((r) => r?.constructionYard);
         if (conYards.length > 0) {
@@ -365,10 +367,12 @@ export class ExpansionMissionFactory {
             if (nearbyOre || context.player.production.getQueueData(QueueType.Structures).items.length) return;
         }
         const selectedConyard = game.getGameObjectData(conYards[0])!;
+        const ownRefineries = new Set(refineries);
         const refineryNearconyard = game
             .getUnitsInArea(
                 new Box2(toVector2(selectedConyard.tile).subScalar(10), toVector2(selectedConyard.tile).addScalar(14)),
             )
+            .filter((id) => ownRefineries.has(id))
             .map((id) => game.getGameObjectData(id))
             .filter(isTechnoRulesObject)
             .filter((obj) => obj.rules.refinery);

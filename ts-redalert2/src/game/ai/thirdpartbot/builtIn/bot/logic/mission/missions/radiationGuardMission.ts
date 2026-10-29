@@ -6,6 +6,7 @@ import { Mission, noop, requestUnits } from "../mission";
 import { MissionController } from "../missionController";
 import { DesolatorTactics, distanceToSegment, getRadiationDeployment } from "./squads/desolatorTactics";
 import { chooseTacticalTarget, getCombatWeapon, isFiringBurst } from "./squads/tacticalTargeting";
+import { getKnownEnemyDirections } from "../../common/knownEnemyDirections";
 
 const point = (unit: UnitData) => new Vector2(unit.tile.rx, unit.tile.ry);
 
@@ -39,8 +40,7 @@ export function selectRadiationGuardPoint(context: SupabotContext, radius: numbe
     if (!base) return;
     const anchor = point(base);
     const enemy = [...enemies].sort((a, b) => anchor.distanceTo(point(a)) - anchor.distanceTo(point(b)) || a.id - b.id)[0];
-    const approach = enemy ? point(enemy) : game.getPlayers().filter(name => name !== player.name && !game.areAlliedPlayers(player.name, name))
-        .map(name => game.getPlayerData(name)).find(other => other.isCombatant)?.startLocation;
+    const approach = enemy ? point(enemy) : getKnownEnemyDirections(game, game.getPlayerData(player.name))[0];
     if (!approach || approach.equals(anchor)) return;
     const forward = approach.clone().sub(anchor);
     forward.multiplyScalar(1 / forward.length());

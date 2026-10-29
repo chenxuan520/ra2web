@@ -2,6 +2,7 @@ import { GameApi, ObjectType, UnitData, Vector2, ZoneType } from "../../../../ga
 import { SideComposition } from "../../../strategy/compositionUtils";
 import { readStrategicSituation } from "../../../strategy/nationalComposition";
 import { getOpeningAirBudget } from "../../../strategy/openingAirBudget";
+import { getKnownEnemyDirections } from "../../common/knownEnemyDirections";
 import { MissionContext } from "../../common/context";
 import { DebugLogger } from "../../common/utils";
 import { Mission, requestSpecificUnits, requestUnits } from "../mission";
@@ -72,11 +73,10 @@ export class FieldArmyMission extends Mission {
                     this.targetId = objective.id;
                     this.attackArea = location(objective);
                 } else {
-                    const enemyStart = game.getPlayers().filter(name => name !== player.name && !game.areAlliedPlayers(player.name, name))
-                        .map(name => game.getPlayerData(name)).find(other => other.isCombatant)?.startLocation ?? rally;
-                    const startTile = game.mapApi.getTile(enemyStart.x, enemyStart.y);
+                    const searchDirection = getKnownEnemyDirections(game, playerData)[0] ?? rally;
+                    const startTile = game.mapApi.getTile(searchDirection.x, searchDirection.y);
                     this.attackArea = startTile && game.mapApi.isVisibleTile(startTile, player.name)
-                        ? this.searchUnexplored(game, player.name, center, enemyStart) : enemyStart;
+                        ? this.searchUnexplored(game, player.name, center, searchDirection) : searchDirection;
                 }
             }
         }
