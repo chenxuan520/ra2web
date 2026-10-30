@@ -95,7 +95,7 @@ export function chooseTacticalTarget(
         if (isArmedDefense) score += 45;
         else if (target.rules.weaponsFactory || target.rules.refinery) score += 35;
         else if (target.rules.barracks || target.rules.constructionYard) score += 30;
-        else if (target.rules.harvester) score += 30;
+        else if (target.rules.harvester) score += 40;
         else if (target.rules.power > 0) score += 10;
         // Never march past something we can shoot to chase a slightly higher value target.
         score += distance <= attack.range ? 35 : -12 * (distance - attack.range);

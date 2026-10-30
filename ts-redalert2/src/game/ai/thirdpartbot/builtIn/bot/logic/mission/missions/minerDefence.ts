@@ -66,5 +66,25 @@ export class MinerDefence {
             this.active.lastOrder = tick;
             this.active.destination = destination;
         }
+
+        // Harvester safety: if an endangered harvester (< 50% HP) is under direct hostile threat, dock at nearest safe refinery
+        if (tick % 30 === 0) {
+            const allMiners = game.getVisibleUnits(player.name, "self", rules => rules.harvester)
+                .map(id => game.getUnitData(id)).filter((unit): unit is UnitData => !!unit && unit.canMove && !unit.isWarpedOut);
+            for (const m of allMiners) {
+                if (m.hitPoints < m.maxHitPoints * 0.5) {
+                    const nearbyHostiles = enemies.filter(e => e.rules.isSelectableCombatant && !e.rules.harvester &&
+                        new Vector2(e.tile.rx, e.tile.ry).distanceTo(new Vector2(m.tile.rx, m.tile.ry)) <= 10);
+                    if (nearbyHostiles.length > 0) {
+                        const refinery = game.getVisibleUnits(player.name, "self", rules => rules.refinery)
+                            .map(id => game.getUnitData(id)).filter(Boolean)
+                            .sort((a, b) => new Vector2(a!.tile.rx, a!.tile.ry).distanceTo(home) - new Vector2(b!.tile.rx, b!.tile.ry).distanceTo(home))[0];
+                        if (refinery) {
+                            player.actions.orderUnits([m.id], OrderType.Dock, refinery.id);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

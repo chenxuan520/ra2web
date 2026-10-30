@@ -52,7 +52,9 @@ export function raidTargetIsSafe(target: UnitData, raiders: UnitData[], enemies:
         if ((enemy.type as any) === ObjectType.Building) {
             if (distance <= weapon.range + 3) return false;
         } else if (distance <= Math.max(10, weapon.range + 2)) {
-            guards++;
+            const isHeavyGuard = (enemy.type as any) !== ObjectType.Infantry ||
+                !enemy.rules.crushable || (weapon.damage >= 40);
+            guards += isHeavyGuard ? 1 : 0.3;
         }
     }
     return guards <= Math.floor(raiders.length / 2);
