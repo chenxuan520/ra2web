@@ -60,14 +60,14 @@ export class FieldArmyMission extends Mission {
         const targetDist = enemyDir ? playerData.startLocation.distanceTo(enemyDir) : 0;
         const isLongMap = maxDim > 100 && targetDist > 80;
         const enemyArmor = (s.enemy.vehicles ?? 0);
-        const minArmor = isLongMap ? (enemyArmor > 3 ? 7 : 5) : 4;
+        const minArmor = isLongMap ? (enemyArmor > 3 ? 6 : 4) : 4;
         if (armor.length >= minArmor ||
-            (armor.length >= 3 && enemyArmor <= 1) ||
+            (armor.length >= 3 && enemyArmor <= 2) ||
             (armor.length >= 2 && enemyArmor === 0) ||
             air.length >= 2 || units.some(unit => unit.name === "ZEP") || infantry.length >= 20) {
             this.attacking = true;
         }
-        if (units.length < (isLongMap ? 2 : 1) && !air.length) this.attacking = false;
+        if (units.length < 1 && !air.length) this.attacking = false;
         const center = this.getCenterOfMass() ?? rally;
         if (tick >= this.nextTargetCheck) {
             this.nextTargetCheck = tick + 30;

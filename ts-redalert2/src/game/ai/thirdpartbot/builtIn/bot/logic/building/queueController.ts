@@ -12,8 +12,7 @@ import { GlobalThreat } from "../threat/threat";
 import { BUILDING_NAME_TO_RULES, TechnoRulesWithPriority, getDefaultPlacementLocation } from "./buildingRules";
 import { SupabotContext } from "../common/context";
 import { UnitRequest } from "../mission/missionController";
-import { NATIONAL_SUPPORT_LIMITS } from "../../strategy/nationalComposition";
-import { readStrategicSituation } from "../../strategy/nationalComposition";
+import { countCoreTanks, NATIONAL_SUPPORT_LIMITS, readStrategicSituation } from "../../strategy/nationalComposition";
 import { getBasicInfantryBudget, isSovietCountry } from "../../strategy/basicInfantryBudget";
 
 export const QUEUES = [
@@ -129,11 +128,16 @@ export class QueueController {
                 const tank = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === "MTNK" || option.name === "HTNK");
                 if (tank) requests.set(tank.name, { priority: 100, specificLocation: null });
             }
-            if (situation.harvesters >= 1 && isSovietCountry(playerData.country?.name)) {
-                const core = (situation.own.HTNK ?? 0) + (situation.own.APOC ?? 0);
-                const tank = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === "HTNK");
-                if (tank && core < 10 && (requests.get(tank.name)?.priority ?? 0) < 50) {
-                    requests.set(tank.name, { priority: 50, specificLocation: null });
+            if (situation.harvesters >= 1) {
+                const core = countCoreTanks(situation);
+                const tankName = isSovietCountry(playerData.country?.name) ? "HTNK" : "MTNK";
+                const tank = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === tankName);
+                if (tank) {
+                    if (core < 4 && situation.harvesters >= 2) {
+                        requests.set(tank.name, { priority: 85, specificLocation: null });
+                    } else if (core < 10 && (requests.get(tank.name)?.priority ?? 0) < 50) {
+                        requests.set(tank.name, { priority: 50, specificLocation: null });
+                    }
                 }
             }
         }
@@ -272,12 +276,16 @@ export class QueueController {
             // Consider cancelling if something else is significantly higher priority than what is currently being produced.
 
             const currentProduction = queueData.items[0].rules;
-            if (decision.unit.name !== currentProduction.name || decision.unit.type !== currentProduction.type) {
+            // Never unqueue buildings once active; only allow cancelling non-buildings for emergency priorities
+            if (!isBuildingQueue(queueType) &&
+                (decision.unit.name !== currentProduction.name || decision.unit.type !== currentProduction.type)) {
                 // Changing our mind.
                 const currentRequest = unitTypeRequests.get(currentProduction.name);
                 const currentItemPriority = currentRequest ? currentRequest.priority : 0;
                 const newItemPriority = decision.priority;
-                if (newItemPriority > currentItemPriority * 2) {
+                // Only cancel if current item is explicitly obsolete/capped (0 priority) and new item is an emergency (>= 80),
+                // or if new item is genuinely more than 2x higher priority than the active request.
+                if (currentItemPriority === 0 ? newItemPriority >= 80 : newItemPriority > currentItemPriority * 2) {
                     logger(
                         `Dequeueing queue ${queueTypeToName(queueData.type)} unit ${currentProduction.name} because ${
                             decision.unit.name
