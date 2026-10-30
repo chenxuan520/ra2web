@@ -61,6 +61,7 @@ const PLACEMENT_FAILURE_CANCEL_THRESHOLD = 10;
 export class QueueController {
     private queueStates: QueueState[] = [];
     private lastRepairCheckAt = 0;
+    private lastEmergencySaleAt = -9999;
     private airResponseUntil = -Infinity;
     private airResponseTarget = 0;
     private placementFailures: Map<string, number> = new Map();
@@ -188,6 +189,26 @@ export class QueueController {
                 }
             });
             this.lastRepairCheckAt = game.getCurrentTick();
+        }
+
+        // Emergency salvage: if we have 0 harvesters or 0 refineries and cannot afford replacement (< 800 credits),
+        // sell non-essential auxiliary structures (tech lab, radar, or static defense) to recover cash.
+        const tick = game.getCurrentTick();
+        if (context.difficulty === "brutal" && playerData.credits < 800 && tick > this.lastEmergencySaleAt + 450) {
+            const situation = readStrategicSituation(game, playerData);
+            const needsEmergencyCash = situation.harvesters === 0 || ((situation.own.NAREFN ?? 0) + (situation.own.GAREFN ?? 0) === 0);
+            if (needsEmergencyCash) {
+                const auxiliaryRules = (r: TechnoRules) =>
+                    ["NATECH", "GATECH", "NARADR", "AMRADR", "GAAIRC"].includes(r.name) ||
+                    ((r.name === "NALASR" || r.name === "GAPILL") && situation.harvesters === 0);
+                const candidates = game.getVisibleUnits(playerData.name, "self", auxiliaryRules);
+                if (candidates.length > 0) {
+                    const sellId = candidates[0];
+                    logger(`Emergency cash liquidation: selling building ${sellId} to break deadlock`);
+                    actionsApi.sellBuilding?.(sellId);
+                    this.lastEmergencySaleAt = tick;
+                }
+            }
         }
     }
 
