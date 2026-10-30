@@ -259,7 +259,13 @@ export class CombatSquad implements Squad {
                             units.some(other => ["HTNK", "MTNK", "APOC", "MGTK"].includes(other.name))))) {
                             this.followTankEscort(context, unit, units, targetPoint, tick);
                         } else if (holdingReserve) {
-                            if (!unit.isIdle) this.submitActionIfNew(actionBatcher, BatchableAction.noTarget(unit.id, OrderType.Stop), unit, tick);
+                            const depots = game.getVisibleUnits(context.player.name, "self", rules =>
+                                rules.name === "GADEPT" || rules.name === "NADEPT");
+                            if (depots.length > 0 && (unit.type as any) === ObjectType.Vehicle && !unit.rules.harvester) {
+                                this.submitActionIfNew(actionBatcher, BatchableAction.toTargetId(unit.id, OrderType.Dock, depots[0]), unit, tick);
+                            } else if (!unit.isIdle) {
+                                this.submitActionIfNew(actionBatcher, BatchableAction.noTarget(unit.id, OrderType.Stop), unit, tick);
+                            }
                         } else if (brutal && this.protectAir && antiAirThreats(unit, hostiles, game).length) {
                             const waypoint = getAirTransitWaypoint(unit, targetPoint, hostiles, game.mapApi, game);
                             if (waypoint) this.submitActionIfNew(actionBatcher, BatchableAction.toPoint(unit.id, OrderType.Move, waypoint), unit, tick);
