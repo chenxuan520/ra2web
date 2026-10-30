@@ -305,6 +305,13 @@ export class QueueController {
                 }
             }
         } else if (queueData.status == QueueStatus.OnHold) {
+            const currentItem = queueData.items[0];
+            const currentPriority = currentItem ? (unitTypeRequests.get(currentItem.rules.name)?.priority ?? 0) : 0;
+            if (currentItem && currentPriority === 0 && (!decision || decision.priority === 0)) {
+                logger(`Cancelling held ${currentItem.rules.name} in queue ${queueTypeToName(queueData.type)} because priority dropped to 0`);
+                actionsApi.unqueueFromProduction(queueData.type, currentItem.rules.name, currentItem.rules.type, currentItem.quantity);
+                return;
+            }
             // Consider resuming queue if priority is high relative to other queues.
             if (totalWeightAcrossQueues === 0 || myCredits >= totalCostAcrossQueues) {
                 logger(`Resuming queue ${queueTypeToName(queueData.type)} because credits are high`);
