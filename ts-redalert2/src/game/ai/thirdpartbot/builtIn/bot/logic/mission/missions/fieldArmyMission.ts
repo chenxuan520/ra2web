@@ -61,8 +61,13 @@ export class FieldArmyMission extends Mission {
         const isLongMap = maxDim > 100 && targetDist > 80;
         const enemyArmor = (s.enemy.vehicles ?? 0);
         const minArmor = isLongMap ? (enemyArmor > 3 ? 7 : 5) : 4;
-        if (armor.length >= minArmor || (armor.length >= 4 && enemyArmor <= 1) || air.length >= 2 || units.some(unit => unit.name === "ZEP") || infantry.length >= 20) this.attacking = true;
-        if (units.length < (isLongMap ? 3 : 2) && !air.length) this.attacking = false;
+        if (armor.length >= minArmor ||
+            (armor.length >= 3 && enemyArmor <= 1) ||
+            (armor.length >= 2 && enemyArmor === 0) ||
+            air.length >= 2 || units.some(unit => unit.name === "ZEP") || infantry.length >= 20) {
+            this.attacking = true;
+        }
+        if (units.length < (isLongMap ? 2 : 1) && !air.length) this.attacking = false;
         const center = this.getCenterOfMass() ?? rally;
         if (tick >= this.nextTargetCheck) {
             this.nextTargetCheck = tick + 30;
@@ -85,7 +90,11 @@ export class FieldArmyMission extends Mission {
                 if (objective) {
                     this.targetId = objective.id;
                     this.attackArea = location(objective);
-                    this.lastEnemyLocation = location(objective);
+                    if ((objective.type as any) === ObjectType.Building || objective.rules.constructionYard || objective.rules.refinery || objective.rules.weaponsFactory) {
+                        this.lastEnemyLocation = location(objective);
+                    } else {
+                        this.lastEnemyLocation ??= location(objective);
+                    }
                 } else {
                     const fallbackDir = this.lastEnemyLocation ?? rally;
                     const searchDirection = getKnownEnemyDirections(game, playerData)[0] ?? fallbackDir;

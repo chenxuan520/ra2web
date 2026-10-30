@@ -216,6 +216,7 @@ export class QueueController {
             return;
         }
         if (queueData.status == QueueStatus.Idle) {
+            this.placementFailures.clear();
             // Start building the decided item.
             if (decision !== undefined && !(totalCostAcrossQueues > myCredits && decision.priority < minimumPriority)) {
                 logger(`Decision (${queueTypeToName(queueType)}): ${decision.unit.name}`);
@@ -224,23 +225,8 @@ export class QueueController {
         } else if (queueData.status == QueueStatus.Ready && queueData.items.length > 0) {
             if (isBuildingQueue(queueType)) {
                 const readyUnit = queueData.items[0].rules;
-                const currentRequest = unitTypeRequests.get(readyUnit.name);
-                if (!currentRequest) {
-                    // No one is requesting this anymore, cancel
-                    logger(`Cancelling ready ${readyUnit.name} because no one is requesting anymore`);
-                    actionsApi.unqueueFromProduction(queueType, readyUnit.name, readyUnit.type, 1);
-                    this.placementFailures.delete(readyUnit.name);
-                    return;
-                }
-                if (!currentRequest.specificLocation) {
-                    // No one is requesting this anymore, cancel
-                    logger(`Cancelling ready ${readyUnit.name} because location is unspecified`);
-                    actionsApi.unqueueFromProduction(queueType, readyUnit.name, readyUnit.type, 1);
-                    this.placementFailures.delete(readyUnit.name);
-                    return;
-                }
-
                 const failures = this.placementFailures.get(readyUnit.name) ?? 0;
+                this.placementFailures.set(readyUnit.name, failures + 1);
 
                 // If too many failures, cancel the building to unblock the queue
                 if (failures >= PLACEMENT_FAILURE_CANCEL_THRESHOLD) {
@@ -250,45 +236,39 @@ export class QueueController {
                     return;
                 }
 
-                let placeX = currentRequest.specificLocation.x;
-                let placeY = currentRequest.specificLocation.y;
+                const currentRequest = unitTypeRequests.get(readyUnit.name);
+                let placeX = currentRequest?.specificLocation?.x;
+                let placeY = currentRequest?.specificLocation?.y;
 
                 // Check if the suggested location is valid
-                const canPlace = game.canPlaceBuilding(playerData.name, readyUnit.name, { rx: placeX, ry: placeY });
+                let canPlace = placeX !== undefined && placeY !== undefined &&
+                    game.canPlaceBuilding(playerData.name, readyUnit.name, { rx: placeX, ry: placeY });
 
-                if (!canPlace) {
-                    this.placementFailures.set(readyUnit.name, failures + 1);
-
-                    // After threshold, try to find an alternative placement location
-                    if (failures >= PLACEMENT_FAILURE_RETRY_THRESHOLD) {
-                        const conYards = game.getVisibleUnits(playerData.name, "self", (r: TechnoRules) => r.constructionYard);
-                        if (conYards.length > 0) {
-                            const conYardData = game.getUnitData(conYards[0]);
-                            if (conYardData?.tile) {
-                                const altLocation = getDefaultPlacementLocation(
-                                    game,
-                                    playerData,
-                                    new Vector2(conYardData.tile.rx, conYardData.tile.ry),
-                                    readyUnit,
-                                );
-                                if (altLocation) {
-                                    logger(`Retrying ${readyUnit.name} at alternative location (${altLocation.rx},${altLocation.ry}) after ${failures} failures`);
-                                    actionsApi.placeBuilding(readyUnit.name, altLocation.rx, altLocation.ry);
-                                    this.placementFailures.delete(readyUnit.name);
-                                    return;
-                                }
-                            }
-                        }
+                if (!canPlace || failures >= PLACEMENT_FAILURE_RETRY_THRESHOLD) {
+                    // After threshold, find an alternative placement location
+                    const conYards = game.getVisibleUnits(playerData.name, "self", (r: TechnoRules) => r.constructionYard);
+                    const conYardData = conYards.length > 0 ? game.getUnitData(conYards[0]) : undefined;
+                    const centerPoint = conYardData?.tile
+                        ? new Vector2(conYardData.tile.rx, conYardData.tile.ry)
+                        : playerData.startLocation;
+                    const altLocation = getDefaultPlacementLocation(game, playerData, centerPoint, readyUnit);
+                    if (altLocation) {
+                        logger(`Retrying ${readyUnit.name} at alternative location (${altLocation.rx},${altLocation.ry}) after ${failures} failures`);
+                        placeX = altLocation.rx;
+                        placeY = altLocation.ry;
+                        canPlace = true;
+                    } else {
                         logger(`Cannot find alternative location for ${readyUnit.name} (failure #${failures + 1})`);
                     }
-                    return;
                 }
 
-                // Location is valid, place the building
-                actionsApi.placeBuilding(readyUnit.name, placeX, placeY);
-                this.placementFailures.delete(readyUnit.name);
+                if (canPlace && placeX !== undefined && placeY !== undefined) {
+                    actionsApi.placeBuilding(readyUnit.name, placeX, placeY);
+                }
+                return;
             }
         } else if (queueData.status == QueueStatus.Active && queueData.items.length > 0 && decision != null) {
+            this.placementFailures.clear();
             // Consider cancelling if something else is significantly higher priority than what is currently being produced.
 
             const currentProduction = queueData.items[0].rules;
