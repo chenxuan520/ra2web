@@ -140,6 +140,11 @@ export class QueueController {
                         requests.set(tank.name, { priority: 50, specificLocation: null });
                     }
                 }
+                const heavyName = isSovietCountry(playerData.country?.name) ? "APOC" : "MGTK";
+                const heavy = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === heavyName);
+                if (heavy && situation.credits >= heavy.cost && (requests.get(heavy.name)?.priority ?? 0) < 60) {
+                    requests.set(heavy.name, { priority: 60, specificLocation: null });
+                }
             }
         }
         this.queueStates = QUEUES.map((queueType) => {
