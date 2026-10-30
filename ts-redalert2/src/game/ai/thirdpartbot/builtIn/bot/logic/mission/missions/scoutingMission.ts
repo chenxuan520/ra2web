@@ -5,6 +5,7 @@ import {
     MissionAction,
     disbandMission,
     noop,
+    releaseUnits,
     requestUnits,
     requestUnitsWithSamePriority,
 } from "../mission";
@@ -57,6 +58,11 @@ export class ScoutingMission extends Mission {
 
         if ((matchAwareness.getSectorCache().getOverallVisibility() || 0) > 0.9) {
             return disbandMission();
+        }
+
+        if (scouts.length > 1) {
+            const excess = scouts.slice(1).map((unit) => unit.id);
+            return releaseUnits(excess);
         }
 
         if (scouts.length === 0) {
@@ -157,7 +163,12 @@ export class ScoutingMissionFactory {
         if (!matchAwareness.getScoutingManager().hasScoutTargets()) {
             return;
         }
-        if (!missionController.addMission(new ScoutingMission("globalScout", 10, logger))) {
+        const created0 = !!missionController.addMission(new ScoutingMission("globalScout", 10, logger));
+        let created1 = false;
+        if (context.difficulty === "brutal") {
+            created1 = !!missionController.addMission(new ScoutingMission("globalScout_1", 10, logger));
+        }
+        if (!created0 && !created1) {
             this.lastScoutAt = game.getCurrentTick();
         }
     }

@@ -10,6 +10,7 @@ export class InfantryHomeMission extends Mission {
     private squad?: CombatSquad;
 
     constructor(private controller: MissionController, logger: DebugLogger) { super("infantryHome", logger); }
+    isUnitsLocked() { return true; }
     getPriority() { return 20; }
     getGlobalDebugText() { return "infantry holds the income approach"; }
 

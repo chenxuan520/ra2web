@@ -3,10 +3,11 @@ import { GameApi, ObjectType, UnitData, Vector2, ZoneType } from "../../../../ga
 import { SideComposition } from "../../../strategy/compositionUtils";
 import { readStrategicSituation } from "../../../strategy/nationalComposition";
 import { getOpeningAirBudget } from "../../../strategy/openingAirBudget";
+import { getBasicInfantryBudget, isSovietCountry } from "../../../strategy/basicInfantryBudget";
 import { getKnownEnemyDirections } from "../../common/knownEnemyDirections";
 import { MissionContext } from "../../common/context";
 import { DebugLogger } from "../../common/utils";
-import { Mission, requestSpecificUnits, requestUnits } from "../mission";
+import { Mission, releaseUnits, requestSpecificUnits, requestUnits } from "../mission";
 import { MissionController } from "../missionController";
 import { CombatSquad } from "./squads/combatSquad";
 
@@ -23,6 +24,7 @@ export class FieldArmyMission extends Mission {
     private searchProgressAt = 0;
     private searchDistance = Infinity;
     private failedSearches = new Map<string, number>();
+    private lastEnemyLocation?: Vector2;
 
     constructor(private plan: SideComposition | null, private controller: MissionController, logger: DebugLogger) { super("fieldArmy", logger); }
 
@@ -37,6 +39,9 @@ export class FieldArmyMission extends Mission {
         const playerData = game.getPlayerData(player.name);
         const s = readStrategicSituation(game, playerData);
         const units = this.getUnits(game);
+        const mobileRoles = context.difficulty === "brutal" && isSovietCountry(playerData.country?.name);
+        const misplaced = mobileRoles ? units.filter(unit => unit.name === "E2").map(unit => unit.id) : [];
+        if (misplaced.length) return releaseUnits(misplaced);
         const armor = units.filter(unit => ["MTNK", "HTNK", "MGTK", "APOC"].includes(unit.name));
         const air = units.filter(unit => unit.zone === ZoneType.Air);
         const infantry = units.filter(unit => (unit.type as any) === ObjectType.Infantry);
@@ -49,8 +54,14 @@ export class FieldArmyMission extends Mission {
         const rally = matchAwareness.getMainRallyPoint();
         this.squad ??= new CombatSquad(rally, rally, 15);
         this.squad.setAirSafety(getOpeningAirBudget(game, playerData) === 2);
-        if (armor.length >= 4 || air.length >= 2 || units.some(unit => unit.name === "ZEP") || infantry.length >= 20) this.attacking = true;
-        if (units.length < 3 && !air.length) this.attacking = false;
+        const mapSize = game.mapApi.getRealMapSize?.();
+        const maxDim = mapSize ? Math.max(mapSize.width, mapSize.height) : 60;
+        const enemyDir = getKnownEnemyDirections(game, playerData)[0];
+        const targetDist = enemyDir ? playerData.startLocation.distanceTo(enemyDir) : 0;
+        const isLongMap = maxDim > 100 && targetDist > 80;
+        const minArmor = isLongMap ? 8 : 4;
+        if (armor.length >= minArmor || air.length >= 2 || units.some(unit => unit.name === "ZEP") || infantry.length >= 20) this.attacking = true;
+        if (units.length < (isLongMap ? 4 : 3) && !air.length) this.attacking = false;
         const center = this.getCenterOfMass() ?? rally;
         if (tick >= this.nextTargetCheck) {
             this.nextTargetCheck = tick + 30;
@@ -73,8 +84,10 @@ export class FieldArmyMission extends Mission {
                 if (objective) {
                     this.targetId = objective.id;
                     this.attackArea = location(objective);
+                    this.lastEnemyLocation = location(objective);
                 } else {
-                    const searchDirection = getKnownEnemyDirections(game, playerData)[0] ?? rally;
+                    const fallbackDir = this.lastEnemyLocation ?? rally;
+                    const searchDirection = getKnownEnemyDirections(game, playerData)[0] ?? fallbackDir;
                     const startTile = game.mapApi.getTile(searchDirection.x, searchDirection.y);
                     this.attackArea = startTile && game.mapApi.isVisibleTile(startTile, player.name)
                         ? this.searchUnexplored(game, player.name, center, searchDirection) : searchDirection;
@@ -91,7 +104,8 @@ export class FieldArmyMission extends Mission {
             if (available.has(name) && (s.own[name] ?? 0) < count) requests[name] = priority;
         };
         const allied = available.has("MTNK");
-        if (s.harvesters && !allied) want("E2", 32, 20);
+        const conscripts = getBasicInfantryBudget("E2", context.difficulty);
+        if (s.harvesters && !allied && !mobileRoles) want("E2", conscripts.total, 20);
         const tank = allied ? "MTNK" : "HTNK", aa = allied ? "FV" : "HTK";
         const core = (s.own.MTNK ?? 0) + (s.own.HTNK ?? 0) + (s.own.MGTK ?? 0) + (s.own.APOC ?? 0);
         const airPlan = this.plan?.composition.JUMPJET || this.plan?.composition.ZEP;
@@ -110,7 +124,8 @@ export class FieldArmyMission extends Mission {
         const assigned = new Set(this.controller.getMissions().flatMap(mission => mission.getUnitIds()));
         const free = game.getVisibleUnits(player.name, "self", rules => rules.isSelectableCombatant && !rules.harvester &&
             !["DESO", "DOG", "ADOG"].includes(rules.name) &&
-            (rules.name !== "E1" || (s.own.E1 ?? 0) > 5) && (rules.name !== "E2" || (s.own.E2 ?? 0) > 12))
+            (rules.name !== "E1" || (s.own.E1 ?? 0) > 5) &&
+            (rules.name !== "E2" || (!mobileRoles && (s.own.E2 ?? 0) > conscripts.reserve)))
             .filter(id => !assigned.has(id));
         if (free.length) return requestSpecificUnits(free, 50);
         return requestUnits(requests);
