@@ -255,7 +255,8 @@ export class CombatSquad implements Squad {
                         }
                         this.debugLastTarget = `Unit ${bestUnit.id.toString()}`;
                     } else {
-                        if (brutal && isMissileArtillery(unit)) {
+                        if (brutal && (isMissileArtillery(unit) || ((unit.name === "HTK" || unit.name === "FV") &&
+                            units.some(other => ["HTNK", "MTNK", "APOC", "MGTK"].includes(other.name))))) {
                             this.followTankEscort(context, unit, units, targetPoint, tick);
                         } else if (holdingReserve) {
                             if (!unit.isIdle) this.submitActionIfNew(actionBatcher, BatchableAction.noTarget(unit.id, OrderType.Stop), unit, tick);
