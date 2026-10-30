@@ -90,8 +90,12 @@ export function chooseTacticalTarget(
             Math.abs(attack.weapon.rules?.damage ?? attack.damage) * Math.max(1, attack.weapon.rules?.burst ?? 1));
         let score = 40 * Math.min(2, damageEfficiency) + 60 * Math.min(1, attack.damage / remainingHealth);
         score += threat ? 40 + Math.min(40, threat.damage / Math.max(1, threat.weapon.rules?.rof ?? 1) * 4) : 0;
-        if (target.rules.harvester) score += 30;
-        else if (target.rules.constructionYard || target.rules.weaponsFactory) score += 20;
+        const isArmedDefense = (target.type as any) === ObjectType.Building &&
+            (target.rules.primary || target.rules.secondary);
+        if (isArmedDefense) score += 45;
+        else if (target.rules.weaponsFactory || target.rules.refinery) score += 35;
+        else if (target.rules.barracks || target.rules.constructionYard) score += 30;
+        else if (target.rules.harvester) score += 30;
         else if (target.rules.power > 0) score += 10;
         // Never march past something we can shoot to chase a slightly higher value target.
         score += distance <= attack.range ? 35 : -12 * (distance - attack.range);
@@ -129,8 +133,9 @@ export function getTacticalRetreatPoint(attacker: UnitData, targets: UnitData[],
     }
     if (!nearestThreat) return null;
     const ownWeapon = getCombatWeapon(attacker, nearestThreat, true, game);
-    const injured = (attacker.hitPoints ?? Infinity) < (attacker.maxHitPoints ?? 0) * 0.3;
-    const canKite = ownWeapon && ownWeapon.range >= threatRange + 1.5 &&
+    const isBuildingThreat = (nearestThreat.type as any) === ObjectType.Building;
+    const injured = (attacker.hitPoints ?? Infinity) < (attacker.maxHitPoints ?? 0) * 0.3 && !isBuildingThreat;
+    const canKite = !isBuildingThreat && ownWeapon && ownWeapon.range >= threatRange + 1.5 &&
         ownWeapon.weapon.cooldownTicks > 6 && nearestDistance < ownWeapon.range - 0.5;
     const insideMinimumRange = ownWeapon && nearestDistance < (ownWeapon.weapon.minRange ?? 0);
     if (!injured && !canKite && !insideMinimumRange) return null;

@@ -63,12 +63,11 @@ export class FieldArmyMission extends Mission {
         const factories = (s.own.GAWEAP ?? 0) + (s.own.NAWEAP ?? 0);
         const minArmor = isLongMap ? (enemyArmor > 3 ? 6 : 4) : 4;
         const isLateGame = tick >= 10000;
-        const canAssault = factories > 0
-            ? (armor.length >= minArmor ||
-               (!isLongMap && armor.length >= 3 && enemyArmor <= 2) ||
-               (isLateGame && armor.length >= 2 && armor.length > enemyArmor && enemyArmor <= 1) ||
-               (!isLongMap && armor.length >= 2 && enemyArmor === 0 && targetDist <= 45))
-            : armor.length >= 6;
+        const canAssault = armor.length >= minArmor || (factories > 0 && (
+            (!isLongMap && armor.length >= 3 && enemyArmor <= 2) ||
+            (isLateGame && armor.length >= 2 && armor.length > enemyArmor && enemyArmor <= 1) ||
+            (!isLongMap && armor.length >= 2 && enemyArmor === 0 && targetDist <= 45)
+        ));
         if (canAssault ||
             air.length >= 2 || units.some(unit => unit.name === "ZEP") || infantry.length >= 20) {
             this.attacking = true;
@@ -88,8 +87,15 @@ export class FieldArmyMission extends Mission {
             } else {
                 const previous = enemies.find(enemy => enemy.id === this.targetId);
                 const objective = previous ?? enemies.map(enemy => {
-                    let value = enemy.rules.refinery ? 110 : enemy.rules.constructionYard ? 100 : enemy.rules.weaponsFactory ? 90
-                        : enemy.rules.harvester ? 80 : (enemy.type as any) === ObjectType.Building ? 60 : 20;
+                    const isArmedDefense = (enemy.type as any) === ObjectType.Building &&
+                        (enemy.rules.primary || enemy.rules.secondary);
+                    let value = isArmedDefense ? 135
+                        : enemy.rules.refinery ? 110
+                        : enemy.rules.constructionYard ? 100
+                        : enemy.rules.weaponsFactory ? 90
+                        : enemy.rules.harvester ? 80
+                        : (enemy.type as any) === ObjectType.Building ? 60
+                        : 20;
                     value -= center.distanceTo(location(enemy)) * 0.5;
                     return { enemy, value };
                 }).sort((a, b) => b.value - a.value || a.enemy.id - b.enemy.id)[0]?.enemy;
@@ -101,8 +107,11 @@ export class FieldArmyMission extends Mission {
                     } else {
                         this.lastEnemyLocation ??= location(objective);
                     }
+                } else if (this.lastEnemyLocation && center.distanceTo(this.lastEnemyLocation) > 8) {
+                    this.attackArea = this.lastEnemyLocation;
                 } else {
-                    const fallbackDir = this.lastEnemyLocation ?? rally;
+                    this.lastEnemyLocation = undefined;
+                    const fallbackDir = rally;
                     const searchDirection = getKnownEnemyDirections(game, playerData)[0] ?? fallbackDir;
                     const startTile = game.mapApi.getTile(searchDirection.x, searchDirection.y);
                     this.attackArea = startTile && game.mapApi.isVisibleTile(startTile, player.name)
@@ -123,8 +132,10 @@ export class FieldArmyMission extends Mission {
         const conscripts = getBasicInfantryBudget("E2", context.difficulty);
         if (s.harvesters && !allied && !mobileRoles) want("E2", conscripts.total, 20);
         const tank = allied ? "MTNK" : "HTNK", aa = allied ? "FV" : "HTK";
+        const heavyTank = allied ? (available.has("MGTK") ? "MGTK" : "PRIS") : "APOC";
         const core = (s.own.MTNK ?? 0) + (s.own.HTNK ?? 0) + (s.own.MGTK ?? 0) + (s.own.APOC ?? 0);
         const airPlan = this.plan?.composition.JUMPJET || this.plan?.composition.ZEP;
+        if (available.has(heavyTank)) want(heavyTank, 4, 60);
         want(tank, airPlan ? 4 : 50, core < 2 ? 60 : core < 6 ? 55 : 45);
         const airThreat = matchAwareness.getThreatCache()?.totalOffensiveAirThreat ?? 0;
         if (core >= 4 || airThreat > 0) want(aa, airThreat > 0 ? Math.max(2, Math.ceil(core / 3)) : Math.max(1, Math.ceil(core / 8)), 45);

@@ -209,7 +209,7 @@ export class QueueController {
         // With five or six queues, every queue can fall below 25%. Always
         // let the highest-priority queue progress rather than holding all of them.
         const highestPriority = Math.max(0, ...this.queueStates.map(state => state.topItem?.priority ?? 0));
-        const minimumPriority = Math.min(totalWeightAcrossQueues * 0.25, highestPriority);
+        const minimumPriority = highestPriority >= 85 ? 60 : Math.min(totalWeightAcrossQueues * 0.25, highestPriority);
 
         const queueData = productionApi.getQueueData(queueType);
         const currentItem = queueData.items[0];
