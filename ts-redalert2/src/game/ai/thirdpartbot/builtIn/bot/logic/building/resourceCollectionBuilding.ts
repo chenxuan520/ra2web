@@ -32,19 +32,33 @@ export class ResourceCollectionBuilding extends BasicBuilding {
         var closeOreDist: number | undefined;
         let selectedLocation: Vector2 = conyardVectors[0];
 
+        const existingRefineries = game
+            .getVisibleUnits(playerData.name, "self", (r) => r.refinery)
+            .map((r) => game.getGameObjectData(r)?.tile)
+            .filter((t): t is Tile => !!t)
+            .map((t) => new Vector2(t.rx, t.ry));
+
         const allTileResourceData = game.mapApi.getAllTilesResourceData()
             .filter(resource => game.mapApi.isVisibleTile(resource.tile, playerData.name));
+
+        const unservicedActive = allTileResourceData.filter(res =>
+            (res.ore > 0 || res.gems > 0) &&
+            !existingRefineries.some(ref => ref.distanceTo(new Vector2(res.tile.rx, res.tile.ry)) <= 8)
+        );
+
+        const candidates = unservicedActive.length > 0
+            ? unservicedActive
+            : allTileResourceData.filter(res => res.spawnsOre || res.ore > 0 || res.gems > 0);
+
         for (const conyard of conyardVectors) {
-            for (let i = 0; i < allTileResourceData.length; ++i) {
-                let tileResourceData = allTileResourceData[i];
-                if (tileResourceData.spawnsOre || tileResourceData.ore > 0 || tileResourceData.gems > 0) {
-                    let dist = GameMath.sqrt(
-                        (conyard.x - tileResourceData.tile.rx) ** 2 + (conyard.y - tileResourceData.tile.ry) ** 2,
-                    );
-                    if (closeOreDist == undefined || dist < closeOreDist) {
-                        closeOreDist = dist;
-                        closeOre = tileResourceData.tile;
-                    }
+            for (let i = 0; i < candidates.length; ++i) {
+                let tileResourceData = candidates[i];
+                let dist = GameMath.sqrt(
+                    (conyard.x - tileResourceData.tile.rx) ** 2 + (conyard.y - tileResourceData.tile.ry) ** 2,
+                );
+                if (closeOreDist == undefined || dist < closeOreDist) {
+                    closeOreDist = dist;
+                    closeOre = tileResourceData.tile;
                 }
             }
         }
