@@ -45,7 +45,7 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
     }
     if (rules.name === "GAWEAP" || rules.name === "NAWEAP") {
         if (!factories) {
-            if (!refineries) return 0;
+            if (!refineries) return committed ? (rules.name === "NAWEAP" ? 60 : 30) : 0;
             return rules.name === "NAWEAP" ? 60 : 30;
         }
         if (factories === 1) {

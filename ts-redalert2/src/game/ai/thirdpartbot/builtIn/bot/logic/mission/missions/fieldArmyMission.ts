@@ -60,10 +60,16 @@ export class FieldArmyMission extends Mission {
         const targetDist = enemyDir ? playerData.startLocation.distanceTo(enemyDir) : 0;
         const isLongMap = maxDim > 100 && targetDist > 80;
         const enemyArmor = (s.enemy.vehicles ?? 0);
+        const factories = (s.own.GAWEAP ?? 0) + (s.own.NAWEAP ?? 0);
         const minArmor = isLongMap ? (enemyArmor > 3 ? 6 : 4) : 4;
-        if (armor.length >= minArmor ||
-            (armor.length >= 3 && enemyArmor <= 2) ||
-            (armor.length >= 2 && enemyArmor === 0) ||
+        const isLateGame = tick >= 10000;
+        const canAssault = factories > 0
+            ? (armor.length >= minArmor ||
+               (!isLongMap && armor.length >= 3 && enemyArmor <= 2) ||
+               (isLateGame && armor.length >= 2 && armor.length > enemyArmor && enemyArmor <= 1) ||
+               (!isLongMap && armor.length >= 2 && enemyArmor === 0 && targetDist <= 45))
+            : armor.length >= 6;
+        if (canAssault ||
             air.length >= 2 || units.some(unit => unit.name === "ZEP") || infantry.length >= 20) {
             this.attacking = true;
         }
