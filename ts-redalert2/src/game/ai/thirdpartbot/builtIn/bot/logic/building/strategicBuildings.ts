@@ -6,6 +6,7 @@ import { getAdjacencyTiles, getDefaultPlacementLocation } from "./buildingRules"
 const RADARS = new Set(["GAAIRC", "AMRADR", "NARADR"]);
 const LABS = new Set(["GATECH", "NATECH"]);
 const REFINERIES = new Set(["GAREFN", "NAREFN"]);
+const SUPERWEAPONS = new Set(["NAMISL", "NAIRON", "GAWEAT", "GACHRO"]);
 const distance = (x1: number, y1: number, x2: number, y2: number) => GameMath.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
 
 function findThreatenedAnchor(game: GameApi, player: PlayerData, radius = 30) {
@@ -27,7 +28,7 @@ export function getStrategicBuildingPriority(
     game: GameApi, player: PlayerData, option: TechnoRules, threat: GlobalThreat | null,
     committed = false,
 ): number | undefined {
-    if (!RADARS.has(option.name) && !LABS.has(option.name) && !REFINERIES.has(option.name) && option.name !== "GTGCAN") return undefined;
+    if (!RADARS.has(option.name) && !LABS.has(option.name) && !REFINERIES.has(option.name) && !SUPERWEAPONS.has(option.name) && option.name !== "GTGCAN") return undefined;
     const situation = readStrategicSituation(game, player);
     const { own, enemy, credits, harvesters, country } = situation;
     const core = countCoreTanks(situation);
@@ -61,7 +62,13 @@ export function getStrategicBuildingPriority(
     }
     if (LABS.has(option.name)) {
         if (owned || !hasMatureEconomy(situation) || credits < option.cost + 700 || player.power.isLowPower) return 0;
-        return enemy.vehicles >= 3 || enemy.defences >= 2 ? 18 : 0;
+        return enemy.vehicles >= 3 || enemy.defences >= 2 || credits >= option.cost + 1200 ? 18 : 0;
+    }
+    if (SUPERWEAPONS.has(option.name)) {
+        if (owned > 0 || !hasMatureEconomy(situation) || player.power.isLowPower) return 0;
+        if (committed) return 16;
+        if (credits >= option.cost + 1500 && countCoreTanks(situation) >= 6) return 16;
+        return 0;
     }
     if (option.name === "GTGCAN") {
         const cap = harvesters >= 4 && core >= 8 && enemy.infantry + enemy.vehicles >= 8 ? 2 : 1;

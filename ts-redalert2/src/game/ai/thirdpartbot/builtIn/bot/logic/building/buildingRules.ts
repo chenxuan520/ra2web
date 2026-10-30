@@ -194,6 +194,8 @@ export const BUILDING_NAME_TO_RULES = new Map<string, AiBuildingRules>([
     ["AMRADR", new BasicBuilding(10, 1, 500)], // Airforce Command (USA)
 
     ["GATECH", new BasicBuilding(20, 1, 4000)], // Allied Battle Lab
+    ["GAWEAT", new BasicBuilding(15, 1, 5000)], // Weather Controller
+    ["GACHRO", new BasicBuilding(15, 1, 5000)], // Chronosphere
     ["GAYARD", new BasicBuilding(0, 0, 0)], // Naval Yard, disabled
 
     ["GAPILL", new AntiGroundStaticDefence(2, 1, 7.5, 5)], // Pillbox
@@ -224,6 +226,8 @@ export const BUILDING_NAME_TO_RULES = new Map<string, AiBuildingRules>([
     ["NAYARD", new BasicBuilding(0, 0, 0)], // Naval Yard, disabled
 
     ["NATECH", new BasicBuilding(20, 1, 4000)], // Soviet Battle Lab
+    ["NAMISL", new BasicBuilding(15, 1, 5000)], // Nuclear Missile Silo
+    ["NAIRON", new BasicBuilding(15, 1, 5000)], // Iron Curtain
 
     ["NALASR", new AntiGroundStaticDefence(2, 1, 7.5, 5)], // Sentry Gun
     ["NAFLAK", new AntiAirStaticDefence(1, 1, 7.5)], // Flak Cannon
