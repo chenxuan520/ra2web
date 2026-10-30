@@ -689,6 +689,7 @@ input[type="range"]:focus {
 
 #ra2web-root .lobby-form .player-slot {
     height: 26px;
+    white-space: nowrap;
 }
 
 #ra2web-root .lobby-form .player-slot.player-slot-header {
@@ -1665,6 +1666,15 @@ input[type="range"]:focus {
     width: min(1080px, 100%);
 }
 
+#ra2web-root .lan-dialog .dialog-button {
+    padding: 0;
+    white-space: nowrap;
+}
+
+#ra2web-root .lan-dialog .lan-panel-header h3 {
+    flex-shrink: 0;
+}
+
 #ra2web-root .lan-dialog-header {
     display: flex;
     align-items: center;
@@ -1942,6 +1952,8 @@ input[type="range"]:focus {
 
 #ra2web-root .opts.general-opts {
     padding: 34px 86px;
+    height: 100%;
+    overflow-y: auto;
 }
 
 #ra2web-root .opts.general-opts .slider-item {
@@ -2420,7 +2432,7 @@ input[type="range"]:focus {
     color: white;
     font-size: 16px;
     height: 153px;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     pointer-events: none;
 }
 
@@ -2437,6 +2449,13 @@ input[type="range"]:focus {
 
 #ra2web-root .game-res-box.message-box .message-box-content .browse-buttons {
     text-align: center;
+}
+
+#ra2web-root .game-res-box.message-box .message-box-content .browse-buttons .dialog-button {
+    width: auto;
+    min-width: 126px;
+    padding: 0 10px;
+    white-space: nowrap;
 }
 
 #ra2web-root .game-res-box.message-box .message-box-content .browse-buttons .dialog-button:first-child {

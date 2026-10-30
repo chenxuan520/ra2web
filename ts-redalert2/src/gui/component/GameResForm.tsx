@@ -53,12 +53,14 @@ export const GameResForm: React.FC<GameResFormProps> = ({ closable, strings, def
         }
     };
     return (<div>
-            {closable && (<div className="close-button" onClick={onClose} role="button" tabIndex={0} aria-label="Close">
-                    
-                </div>)}
             <div className="title">{strings.get("ts:gameres_locate_title")}</div>
             <div className="browse-container">
                 <p>{strings.get("ts:gameres_import_desc")}</p>
+                {closable && (<p className="download-button">
+                    <button type="button" className="dialog-button" onClick={onClose}>
+                        {strings.get("ts:gameres_use_server")}
+                    </button>
+                </p>)}
                 <form className="link-container" onSubmit={handleSubmit}>
                     <p className="link-field">
                         <label htmlFor="archiveUrlInput">{strings.get("ts:gameres_download_url")}</label>

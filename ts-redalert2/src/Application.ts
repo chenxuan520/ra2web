@@ -558,12 +558,7 @@ export class Application {
                 console.warn('[Diag] VFS ownership diagnostics failed:', e);
             }
             if (configToPersist) {
-                if (configToPersist.isCdn()) {
-                    this.localPrefs.removeItem(StorageKey.GameRes);
-                }
-                else {
-                    this.localPrefs.setItem(StorageKey.GameRes, configToPersist.serialize());
-                }
+                this.localPrefs.setItem(StorageKey.GameRes, configToPersist.serialize());
                 gameResConfig = configToPersist;
             }
             this.gameResConfig = gameResConfig;
@@ -938,7 +933,7 @@ export class Application {
             }
             console.log('[Application] Initializing LiveInteractionTester');
             const { TestToolSupport } = await this.importOptionalDevModule('./tools/TestToolSupport');
-            const gameMap = await TestToolSupport.loadMap(this.createTestToolContext().mapResourceLoader!, "2_reconcile.map");
+            const gameMap = await TestToolSupport.loadMap(this.createTestToolContext().mapResourceLoader!, "mp03t4.map");
             const { LiveInteractionTester } = await this.importOptionalDevModule('./tools/LiveInteractionTester');
             await LiveInteractionTester.main(Engine.vfs, gameMap, this.rootEl!, this.strings, this.createTestToolContext(), {
                 generalOptions: this.generalOptions,

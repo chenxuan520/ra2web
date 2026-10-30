@@ -175,7 +175,7 @@ export class Terrain {
             islandChecker = (tile, onBridge) => islandIdMap.get(tile, onBridge) === startIslandId;
         }
         else {
-            islandChecker = (tile, onBridge) => this.getPassableSpeed(tile, speedType, onBridge, onBridge, ignoredBlockers) > 0;
+            islandChecker = (tile, bridgeLevel) => this.getPassableSpeed(tile, speedType, onBridge, bridgeLevel, ignoredBlockers) > 0;
         }
         if (!hasEndNode || !islandChecker(endTile, endOnBridge)) {
             const fallbackTile = bestEffort ?

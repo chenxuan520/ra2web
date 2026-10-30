@@ -703,12 +703,13 @@ export class GameScreen extends RootScreen {
         debugRoot.actionsApi = actionsApi;
         debugRoot.unitSelection = game.getUnitSelection();
         if (this.lanMatchSession) {
+            const matchSession = this.lanMatchSession;
             const updateLanMatchDebugState = (snapshot: any) => {
                 debugRoot.lanMatch = snapshot;
             };
-            updateLanMatchDebugState(this.lanMatchSession.getSnapshot());
-            this.lanMatchSession.onSnapshotChange.subscribe(updateLanMatchDebugState);
-            this.disposables.add(() => this.lanMatchSession?.onSnapshotChange.unsubscribe(updateLanMatchDebugState));
+            updateLanMatchDebugState(matchSession.getSnapshot());
+            matchSession.onSnapshotChange.subscribe(updateLanMatchDebugState);
+            this.disposables.add(() => matchSession.onSnapshotChange.unsubscribe(updateLanMatchDebugState));
         }
         const serializeOwnedUnit = (unit: any) => ({
             id: unit.id,

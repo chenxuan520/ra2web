@@ -1,4 +1,5 @@
-import { lstat, mkdir, readFile, readdir, realpath, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { lstat, mkdir, mkdtemp, readFile, readdir, realpath, rename, rm, writeFile } from 'node:fs/promises';
 import { basename, dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { deflateSync } from 'node:zlib';
@@ -371,10 +372,110 @@ export async function prepareResources(sourceFolder: string, outputFolder: strin
     return { sourceFolder: source, outputFolder: output, gameResFolder: join(output, 'game-res/v2'), mapsFolder: join(output, 'maps'), sources, files: summary, totalBytes: summary.reduce((sum, file) => sum + file.size, 0), mapNames: prepared.maps.map(map => map.fileName) };
 }
 
+export async function prepareBundledResources(outputFolder = fileURLToPath(new URL('../public/cdn/', import.meta.url)), archivePath = fileURLToPath(new URL('./game-res.7z', import.meta.url))) {
+    const output = await resolveOutputFolder(resolve(outputFolder));
+    const marker = join(output, '.ra2web-bundled-sha256');
+    try {
+        const archive = await realpath(archivePath);
+        const archiveSha256 = createHash('sha256').update(await readFile(archive)).digest('hex');
+        const executable = Bun.which('7z');
+        if (!executable) throw new Error('Bundled resources require system 7z (p7zip-full); install it before running prepare:bundled');
+        const run7z = async (args: string[]) => {
+            const child = Bun.spawn([executable, ...args], { stdin: 'ignore', stdout: 'pipe', stderr: 'pipe' });
+            const [code, stdout, stderr] = await Promise.all([child.exited, new Response(child.stdout).text(), new Response(child.stderr).text()]);
+            if (code !== 0) throw new Error(`Bundled archive ${args[0]} failed: ${stderr.trim() || stdout.trim()}`);
+            return stdout;
+        };
+        const mixes = [...resourceConfigs].filter(([type]) => type < ResourceType.HalloweenMix).map(([, config]) => config.src);
+        const directories = new Set(['game-res', 'game-res/v2', 'game-res/v2/ls', 'maps']);
+        const allowed = new Set(['game-res/v2/manifest.json', 'game-res/v2/glsl.png', 'maps/manifest.json', 'maps/missions.pkt', ...mixes.map(name => `game-res/v2/${name}`), ...loadingImages.map(name => `game-res/v2/ls/ls800${name}.png`)]);
+        const safeMapName = (name: string) => /^[a-z0-9][a-z0-9_.() -]*\.(map|mpr)$/.test(name) && !name.includes('..');
+        const files = new Map<string, { size: number; crc: number }>();
+        const seen = new Set<string>();
+        const listing = await run7z(['l', '-slt', '-ba', archive]);
+        for (const block of listing.trim().split(/\r?\n\r?\n/)) {
+            const entry = Object.fromEntries(block.split(/\r?\n/).map(line => {
+                const split = line.indexOf(' = ');
+                return [line.slice(0, split), line.slice(split + 3)];
+            }));
+            const name = entry.Path;
+            const directory = entry.Attributes?.includes('D');
+            if (!name || seen.has(name) || entry.Attributes?.includes('l') || 'Symbolic Link' in entry || 'Hard Link' in entry || entry.Encrypted === '+' || !(directory ? directories.has(name) : allowed.has(name) || (name.startsWith('maps/') && safeMapName(name.slice(5))))) {
+                throw new Error(`Unsafe bundled entry: ${name}`);
+            }
+            seen.add(name);
+            if (directory) continue;
+            const size = Number(entry.Size);
+            if (!Number.isSafeInteger(size) || size < 0 || !/^[0-9A-F]{8}$/i.test(entry.CRC)) throw new Error(`Invalid bundled size or CRC: ${name}`);
+            files.set(name, { size, crc: parseInt(entry.CRC, 16) });
+        }
+        const validate = async (folder: string, parseMixes = false) => {
+            for (const [name, expected] of files) {
+                const target = join(folder, name);
+                const entry = await lstat(target);
+                if (!entry.isFile() || entry.nlink !== 1 || await resolveOutputFolder(target) !== target) throw new Error(`Bundled cache entry must be a regular file: ${name}`);
+                const bytes = await readFile(target);
+                if (bytes.length !== expected.size || Crc32.calculateCrc(bytes) !== expected.crc) throw new Error(`Bundled size or CRC mismatch: ${name}`);
+                if (parseMixes && name.endsWith('.mix')) readMix(name, bytes);
+            }
+            const manifest = JSON.parse(await readFile(join(folder, 'game-res/v2/manifest.json'), 'utf8'));
+            if (manifest.version !== 2 || manifest.format !== 'mix' || !manifest.checksums || Object.keys(manifest.checksums).length !== mixes.length) throw new Error('Invalid bundled version 2 MIX manifest');
+            for (const name of mixes) {
+                const crc = manifest.checksums[name];
+                if (!Number.isInteger(crc) || crc < 0 || crc > 0xFFFFFFFF || crc !== files.get(`game-res/v2/${name}`)?.crc) throw new Error(`Invalid bundled manifest CRC: ${name}`);
+            }
+            if (!files.has('maps/missions.pkt') || !files.has('game-res/v2/manifest.json') || !files.has('maps/manifest.json')) throw new Error('Missing bundled resource manifest or map packet');
+            const mapManifest = JSON.parse(await readFile(join(folder, 'maps/manifest.json'), 'utf8'));
+            if (mapManifest.version !== 1 || !Array.isArray(mapManifest.maps) || !mapManifest.maps.length) throw new Error('Invalid bundled map manifest');
+            const mapNames: string[] = [];
+            for (const map of mapManifest.maps) {
+                if (!map || typeof map.fileName !== 'string' || !safeMapName(map.fileName) || mapNames.includes(map.fileName)) throw new Error('Invalid bundled map filename');
+                const expected = files.get(`maps/${map.fileName}`);
+                if (!expected || map.size <= 0 || map.size !== expected.size || map.digest !== expected.crc.toString(16)) throw new Error(`Invalid bundled map size or digest: ${map.fileName}`);
+                mapNames.push(map.fileName);
+            }
+            if (mapNames.length !== [...files.keys()].filter(name => name.startsWith('maps/') && /\.(map|mpr)$/.test(name)).length) throw new Error('Bundled map manifest does not match archive maps');
+            return mapNames;
+        };
+        const summary = { archivePath: archive, archiveSha256, outputFolder: output, gameResFolder: join(output, 'game-res/v2'), mapsFolder: join(output, 'maps'), files: [...files].map(([name, file]) => ({ name, size: file.size })), totalBytes: [...files.values()].reduce((sum, file) => sum + file.size, 0) };
+        try {
+            const entry = await lstat(marker);
+            if (entry.isFile() && entry.nlink === 1 && await readFile(marker, 'utf8') === archiveSha256) {
+                const mapNames = await validate(output);
+                await rm(join(output, '.ra2web-resource-version'), { force: true });
+                return { ...summary, mapNames, cached: true };
+            }
+        }
+        catch {}
+        await rm(marker, { recursive: true, force: true });
+        await mkdir(output, { recursive: true });
+        const staging = await mkdtemp(join(output, '.ra2web-bundled-'));
+        try {
+            await run7z(['x', '-y', `-o${staging}`, archive]);
+            const mapNames = await validate(staging, true);
+            for (const name of ['game-res', 'maps']) {
+                await rm(join(output, name), { recursive: true, force: true });
+                await rename(join(staging, name), join(output, name));
+            }
+            await rm(join(output, '.ra2web-resource-version'), { force: true });
+            await writeFile(marker, archiveSha256, { flag: 'wx' });
+            return { ...summary, mapNames, cached: false };
+        }
+        finally {
+            await rm(staging, { recursive: true, force: true });
+        }
+    }
+    catch (error) {
+        await rm(marker, { recursive: true, force: true });
+        throw error;
+    }
+}
+
 if (import.meta.main) {
     try {
-        if (process.argv.length !== 4) throw new Error('Usage: bun deploy/prepare-resources.ts <source-folder> <output-cdn-folder>');
-        console.log(JSON.stringify(await prepareResources(process.argv[2], process.argv[3]), null, 2));
+        const bundled = process.argv[2] === '--bundled';
+        if (bundled ? process.argv.length < 3 || process.argv.length > 4 : process.argv.length !== 4) throw new Error('Usage: bun deploy/prepare-resources.ts <source-folder> <output-cdn-folder> | --bundled [output-cdn-folder]');
+        console.log(JSON.stringify(await (bundled ? prepareBundledResources(process.argv[3]) : prepareResources(process.argv[2], process.argv[3])), null, 2));
     }
     catch (error) {
         console.error(error instanceof Error ? error.message : String(error));
