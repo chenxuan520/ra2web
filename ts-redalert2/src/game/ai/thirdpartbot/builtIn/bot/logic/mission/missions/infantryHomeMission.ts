@@ -1,3 +1,4 @@
+import { UnitData, Vector2 } from "../../../../game-api";
 import { MissionContext, SupabotContext } from "../../common/context";
 import { DebugLogger } from "../../common/utils";
 import { getBasicInfantryBudget, isSovietCountry } from "../../../strategy/basicInfantryBudget";
@@ -30,13 +31,30 @@ export class InfantryHomeMission extends Mission {
             return replacements.length ? releaseUnits(replacements) : noop();
         }
         // Stay near the same public home approach as the assembling field army.
-        // Do not chase visible enemies beyond this defensive radius.
+        // Defend against intruders near base anchors; otherwise hold the entrance approach.
         const forward = matchAwareness.getMainRallyPoint().clone().sub(data.startLocation);
         if (forward.length() > 4) forward.multiplyScalar(4 / forward.length());
         const rally = data.startLocation.clone().add(forward);
         rally.set(Math.round(rally.x), Math.round(rally.y));
+
+        const anchors = game.getVisibleUnits(player.name, "self", rules => rules.constructionYard || rules.refinery || rules.weaponsFactory)
+            .map(id => game.getUnitData(id)).filter((unit): unit is UnitData => !!unit);
+        const homeThreats = game.getVisibleUnits(player.name, "enemy")
+            .map(id => game.getUnitData(id))
+            .filter((unit): unit is UnitData => !!unit && unit.rules.isSelectableCombatant && !unit.rules.harvester &&
+                (anchors.some(anchor => new Vector2(unit.tile.rx, unit.tile.ry).distanceTo(new Vector2(anchor.tile.rx, anchor.tile.ry)) <= 22) ||
+                 new Vector2(unit.tile.rx, unit.tile.ry).distanceTo(data.startLocation) <= 22));
+        const nearestThreat = homeThreats.length ? [...homeThreats].sort((a, b) =>
+            new Vector2(a.tile.rx, a.tile.ry).distanceTo(rally) - new Vector2(b.tile.rx, b.tile.ry).distanceTo(rally) || a.id - b.id)[0] : undefined;
+
         this.squad ??= new CombatSquad(rally, rally, 12, true);
-        this.squad.setAttackArea(rally);
+        if (nearestThreat) {
+            this.squad.setAttackArea(new Vector2(nearestThreat.tile.rx, nearestThreat.tile.ry));
+            this.squad.setDefensiveRadius(22);
+        } else {
+            this.squad.setAttackArea(rally);
+            this.squad.setDefensiveRadius(12);
+        }
         this.squad.onAiUpdate(context, this, this.logger);
 
         const assigned = new Set(this.controller.getMissions().flatMap(m => m.getUnitIds()));

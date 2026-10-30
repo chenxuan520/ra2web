@@ -59,9 +59,10 @@ export class FieldArmyMission extends Mission {
         const enemyDir = getKnownEnemyDirections(game, playerData)[0];
         const targetDist = enemyDir ? playerData.startLocation.distanceTo(enemyDir) : 0;
         const isLongMap = maxDim > 100 && targetDist > 80;
-        const minArmor = isLongMap ? 8 : 4;
-        if (armor.length >= minArmor || air.length >= 2 || units.some(unit => unit.name === "ZEP") || infantry.length >= 20) this.attacking = true;
-        if (units.length < (isLongMap ? 4 : 3) && !air.length) this.attacking = false;
+        const enemyArmor = (s.enemy.vehicles ?? 0);
+        const minArmor = isLongMap ? (enemyArmor > 3 ? 7 : 5) : 4;
+        if (armor.length >= minArmor || (armor.length >= 4 && enemyArmor <= 1) || air.length >= 2 || units.some(unit => unit.name === "ZEP") || infantry.length >= 20) this.attacking = true;
+        if (units.length < (isLongMap ? 3 : 2) && !air.length) this.attacking = false;
         const center = this.getCenterOfMass() ?? rally;
         if (tick >= this.nextTargetCheck) {
             this.nextTargetCheck = tick + 30;
@@ -109,7 +110,7 @@ export class FieldArmyMission extends Mission {
         const tank = allied ? "MTNK" : "HTNK", aa = allied ? "FV" : "HTK";
         const core = (s.own.MTNK ?? 0) + (s.own.HTNK ?? 0) + (s.own.MGTK ?? 0) + (s.own.APOC ?? 0);
         const airPlan = this.plan?.composition.JUMPJET || this.plan?.composition.ZEP;
-        want(tank, airPlan ? 4 : 30, core < 2 ? 50 : 30);
+        want(tank, airPlan ? 4 : 50, core < 2 ? 60 : core < 6 ? 55 : 45);
         const airThreat = matchAwareness.getThreatCache()?.totalOffensiveAirThreat ?? 0;
         if (core >= 4 || airThreat > 0) want(aa, airThreat > 0 ? Math.max(2, Math.ceil(core / 3)) : Math.max(1, Math.ceil(core / 8)), 45);
         for (const name of Object.keys(this.plan?.composition ?? {})) {
