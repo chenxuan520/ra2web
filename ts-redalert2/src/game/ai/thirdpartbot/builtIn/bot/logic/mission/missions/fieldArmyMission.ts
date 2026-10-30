@@ -186,6 +186,21 @@ export class FieldArmyMission extends Mission {
         this.searchArea = options.sort((a, b) => a.distance - b.distance || a.point.x - b.point.x || a.point.y - b.point.y)[0]?.point;
         this.searchDistance = Infinity;
         this.searchProgressAt = tick;
-        return this.searchArea ?? fallback;
+        if (this.searchArea) return this.searchArea;
+
+        // When all map shroud has been scouted or candidates are exhausted, patrol between candidate enemy starting sectors if enemies exist
+        const hasHostiles = game.getPlayers().some(name => name !== player &&
+            !game.areAlliedPlayers(player, name) && game.getPlayerData(name).isCombatant);
+        if (hasHostiles) {
+            const myStart = game.getPlayerData(player).startLocation;
+            const otherStarts = game.mapApi.getStartingLocations()
+                .filter(point => !point.equals(myStart))
+                .sort((a, b) => a.x - b.x || a.y - b.y);
+            if (otherStarts.length > 0) {
+                const patrolIndex = Math.floor(tick / 900) % otherStarts.length;
+                return otherStarts[patrolIndex];
+            }
+        }
+        return fallback;
     }
 }
