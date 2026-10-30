@@ -295,7 +295,8 @@ export class QueueController {
                 }
             } else {
                 // Not changing our mind, but maybe other queues are more important for now.
-                if (totalCostAcrossQueues > myCredits && decision.priority < minimumPriority) {
+                // Do not pause if we can easily afford this unit, or if it is an active military response
+                if (totalCostAcrossQueues > myCredits && myCredits < decision.unit.cost && decision.priority < minimumPriority) {
                     logger(
                         `Pausing queue ${queueTypeToName(queueData.type)} because weight is low (${
                             decision.priority
@@ -312,9 +313,10 @@ export class QueueController {
                 actionsApi.unqueueFromProduction(queueData.type, currentItem.rules.name, currentItem.rules.type, currentItem.quantity);
                 return;
             }
-            // Consider resuming queue if priority is high relative to other queues.
-            if (totalWeightAcrossQueues === 0 || myCredits >= totalCostAcrossQueues) {
-                logger(`Resuming queue ${queueTypeToName(queueData.type)} because credits are high`);
+            // Consider resuming queue if priority is high relative to other queues or if we can afford this item.
+            if (totalWeightAcrossQueues === 0 || myCredits >= totalCostAcrossQueues ||
+                (decision && myCredits >= decision.unit.cost && decision.priority >= 15)) {
+                logger(`Resuming queue ${queueTypeToName(queueData.type)} because credits are high or item is affordable`);
                 actionsApi.resumeProduction(queueData.type);
             } else if (decision && decision.priority >= minimumPriority) {
                 logger(

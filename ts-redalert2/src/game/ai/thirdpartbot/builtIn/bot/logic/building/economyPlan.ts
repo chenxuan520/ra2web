@@ -10,8 +10,16 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
     const count = s.own[rules.name] ?? 0;
     if (rules.refinery) {
         if (!refineries) return 50;
-        if (refineries === 1) return (committed || (factories > 0 && s.harvesters >= 2) ||
-            (!factories && (s.own.JUMPJET ?? 0) >= 2 && getOpeningAirBudget(game, player) === 2)) ? 50 : 0;
+        if (refineries === 1) {
+            if (!committed) {
+                const intruders = game.getVisibleUnits(player.name, "enemy", option => option.isSelectableCombatant)
+                    .map(id => game.getUnitData(id)).filter(unit => unit &&
+                        (unit.tile.rx - player.startLocation.x) ** 2 + (unit.tile.ry - player.startLocation.y) ** 2 <= 25 ** 2);
+                if (intruders.length >= 3) return 0;
+            }
+            return (committed || (factories > 0 && s.harvesters >= 2) ||
+                (!factories && (s.own.JUMPJET ?? 0) >= 2 && getOpeningAirBudget(game, player) === 2)) ? 50 : 0;
+        }
         return refineries < 4 && s.harvesters >= refineries * 2 ? 18 : 0;
     }
     if (rules.name === "GAPILE" || rules.name === "NAHAND") return count ? 0 : 55;
