@@ -133,7 +133,7 @@ export class QueueController {
                 const tankName = isSovietCountry(playerData.country?.name) ? "HTNK" : "MTNK";
                 const tank = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === tankName);
                 if (tank) {
-                    if (core < 4 && situation.harvesters >= 2) {
+                    if ((core < 1 && situation.harvesters >= 1) || (core < 4 && situation.harvesters >= 2)) {
                         requests.set(tank.name, { priority: 85, specificLocation: null });
                     } else if (core < 10 && (requests.get(tank.name)?.priority ?? 0) < 50) {
                         requests.set(tank.name, { priority: 50, specificLocation: null });
