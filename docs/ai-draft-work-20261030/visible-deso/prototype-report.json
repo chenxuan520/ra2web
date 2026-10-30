@@ -1,0 +1,821 @@
+{
+  "kind": "visible-deso-material-and-animation-prototype",
+  "noGameTicks": true,
+  "noGpuFrames": true,
+  "productionApiIntegrated": false,
+  "materialSha256": "3f4433c617b5c841b5664dcc6fd85aa8611471eddaa574538fef49f18a1030aa",
+  "rawShpSha256": "7f157a5089a3ec822ae73eb951993a410c8fabc0d1fa839ddb0eed255aabfcc4",
+  "materialChecks": {
+    "exactOriginalRgba298": "deployed",
+    "silhouette298": null,
+    "silhouette313": null,
+    "possibleTransitionOrDeployed": null,
+    "incompleteSprite": null,
+    "stableImageEquivalentRgbaIndices": [
+      298
+    ],
+    "stableImageEquivalentSilhouetteIndices": [
+      297,
+      298,
+      313
+    ]
+  },
+  "renderSchedules": [
+    {
+      "name": "10ms-sampling",
+      "firstRenderAt": 0,
+      "final": {
+        "timeMs": 1100,
+        "sequence": "Deployed",
+        "materialFrame": 298,
+        "animationState": "RUNNING"
+      },
+      "trace": [
+        {
+          "timeMs": 0,
+          "sequence": "Deploy",
+          "materialFrame": 299,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 10,
+          "sequence": "Deploy",
+          "materialFrame": 299,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 20,
+          "sequence": "Deploy",
+          "materialFrame": 299,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 30,
+          "sequence": "Deploy",
+          "materialFrame": 299,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 40,
+          "sequence": "Deploy",
+          "materialFrame": 299,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 50,
+          "sequence": "Deploy",
+          "materialFrame": 299,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 60,
+          "sequence": "Deploy",
+          "materialFrame": 299,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 70,
+          "sequence": "Deploy",
+          "materialFrame": 300,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 80,
+          "sequence": "Deploy",
+          "materialFrame": 300,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 90,
+          "sequence": "Deploy",
+          "materialFrame": 300,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 100,
+          "sequence": "Deploy",
+          "materialFrame": 300,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 110,
+          "sequence": "Deploy",
+          "materialFrame": 300,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 120,
+          "sequence": "Deploy",
+          "materialFrame": 300,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 130,
+          "sequence": "Deploy",
+          "materialFrame": 300,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 140,
+          "sequence": "Deploy",
+          "materialFrame": 301,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 150,
+          "sequence": "Deploy",
+          "materialFrame": 301,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 160,
+          "sequence": "Deploy",
+          "materialFrame": 301,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 170,
+          "sequence": "Deploy",
+          "materialFrame": 301,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 180,
+          "sequence": "Deploy",
+          "materialFrame": 301,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 190,
+          "sequence": "Deploy",
+          "materialFrame": 301,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 200,
+          "sequence": "Deploy",
+          "materialFrame": 301,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 210,
+          "sequence": "Deploy",
+          "materialFrame": 302,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 220,
+          "sequence": "Deploy",
+          "materialFrame": 302,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 230,
+          "sequence": "Deploy",
+          "materialFrame": 302,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 240,
+          "sequence": "Deploy",
+          "materialFrame": 302,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 250,
+          "sequence": "Deploy",
+          "materialFrame": 302,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 260,
+          "sequence": "Deploy",
+          "materialFrame": 302,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 270,
+          "sequence": "Deploy",
+          "materialFrame": 302,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 280,
+          "sequence": "Deploy",
+          "materialFrame": 303,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 290,
+          "sequence": "Deploy",
+          "materialFrame": 303,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 300,
+          "sequence": "Deploy",
+          "materialFrame": 303,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 310,
+          "sequence": "Deploy",
+          "materialFrame": 303,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 320,
+          "sequence": "Deploy",
+          "materialFrame": 303,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 330,
+          "sequence": "Deploy",
+          "materialFrame": 303,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 340,
+          "sequence": "Deploy",
+          "materialFrame": 303,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 350,
+          "sequence": "Deploy",
+          "materialFrame": 304,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 360,
+          "sequence": "Deploy",
+          "materialFrame": 304,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 370,
+          "sequence": "Deploy",
+          "materialFrame": 304,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 380,
+          "sequence": "Deploy",
+          "materialFrame": 304,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 390,
+          "sequence": "Deploy",
+          "materialFrame": 304,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 400,
+          "sequence": "Deploy",
+          "materialFrame": 304,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 410,
+          "sequence": "Deploy",
+          "materialFrame": 304,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 420,
+          "sequence": "Deploy",
+          "materialFrame": 305,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 430,
+          "sequence": "Deploy",
+          "materialFrame": 305,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 440,
+          "sequence": "Deploy",
+          "materialFrame": 305,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 450,
+          "sequence": "Deploy",
+          "materialFrame": 305,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 460,
+          "sequence": "Deploy",
+          "materialFrame": 305,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 470,
+          "sequence": "Deploy",
+          "materialFrame": 305,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 480,
+          "sequence": "Deploy",
+          "materialFrame": 305,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 490,
+          "sequence": "Deploy",
+          "materialFrame": 306,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 500,
+          "sequence": "Deploy",
+          "materialFrame": 306,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 510,
+          "sequence": "Deploy",
+          "materialFrame": 306,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 520,
+          "sequence": "Deploy",
+          "materialFrame": 306,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 530,
+          "sequence": "Deploy",
+          "materialFrame": 306,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 540,
+          "sequence": "Deploy",
+          "materialFrame": 306,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 550,
+          "sequence": "Deploy",
+          "materialFrame": 306,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 560,
+          "sequence": "Deploy",
+          "materialFrame": 307,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 570,
+          "sequence": "Deploy",
+          "materialFrame": 307,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 580,
+          "sequence": "Deploy",
+          "materialFrame": 307,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 590,
+          "sequence": "Deploy",
+          "materialFrame": 307,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 600,
+          "sequence": "Deploy",
+          "materialFrame": 307,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 610,
+          "sequence": "Deploy",
+          "materialFrame": 307,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 620,
+          "sequence": "Deploy",
+          "materialFrame": 307,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 630,
+          "sequence": "Deploy",
+          "materialFrame": 308,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 640,
+          "sequence": "Deploy",
+          "materialFrame": 308,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 650,
+          "sequence": "Deploy",
+          "materialFrame": 308,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 660,
+          "sequence": "Deploy",
+          "materialFrame": 308,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 670,
+          "sequence": "Deploy",
+          "materialFrame": 308,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 680,
+          "sequence": "Deploy",
+          "materialFrame": 308,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 690,
+          "sequence": "Deploy",
+          "materialFrame": 308,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 700,
+          "sequence": "Deploy",
+          "materialFrame": 309,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 710,
+          "sequence": "Deploy",
+          "materialFrame": 309,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 720,
+          "sequence": "Deploy",
+          "materialFrame": 309,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 730,
+          "sequence": "Deploy",
+          "materialFrame": 309,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 740,
+          "sequence": "Deploy",
+          "materialFrame": 309,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 750,
+          "sequence": "Deploy",
+          "materialFrame": 309,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 760,
+          "sequence": "Deploy",
+          "materialFrame": 309,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 770,
+          "sequence": "Deploy",
+          "materialFrame": 310,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 780,
+          "sequence": "Deploy",
+          "materialFrame": 310,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 790,
+          "sequence": "Deploy",
+          "materialFrame": 310,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 800,
+          "sequence": "Deploy",
+          "materialFrame": 310,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 810,
+          "sequence": "Deploy",
+          "materialFrame": 310,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 820,
+          "sequence": "Deploy",
+          "materialFrame": 310,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 830,
+          "sequence": "Deploy",
+          "materialFrame": 310,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 840,
+          "sequence": "Deploy",
+          "materialFrame": 311,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 850,
+          "sequence": "Deploy",
+          "materialFrame": 311,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 860,
+          "sequence": "Deploy",
+          "materialFrame": 311,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 870,
+          "sequence": "Deploy",
+          "materialFrame": 311,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 880,
+          "sequence": "Deploy",
+          "materialFrame": 311,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 890,
+          "sequence": "Deploy",
+          "materialFrame": 311,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 900,
+          "sequence": "Deploy",
+          "materialFrame": 311,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 910,
+          "sequence": "Deploy",
+          "materialFrame": 312,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 920,
+          "sequence": "Deploy",
+          "materialFrame": 312,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 930,
+          "sequence": "Deploy",
+          "materialFrame": 312,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 940,
+          "sequence": "Deploy",
+          "materialFrame": 312,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 950,
+          "sequence": "Deploy",
+          "materialFrame": 312,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 960,
+          "sequence": "Deploy",
+          "materialFrame": 312,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 970,
+          "sequence": "Deploy",
+          "materialFrame": 312,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 980,
+          "sequence": "Deploy",
+          "materialFrame": 313,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 990,
+          "sequence": "Deploy",
+          "materialFrame": 313,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 1000,
+          "sequence": "Deploy",
+          "materialFrame": 313,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 1010,
+          "sequence": "Deploy",
+          "materialFrame": 313,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 1020,
+          "sequence": "Deploy",
+          "materialFrame": 313,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 1030,
+          "sequence": "Deploy",
+          "materialFrame": 313,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 1040,
+          "sequence": "Deploy",
+          "materialFrame": 313,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 1050,
+          "sequence": "Deploy",
+          "materialFrame": 313,
+          "animationState": "STOPPED"
+        },
+        {
+          "timeMs": 1060,
+          "sequence": "Deployed",
+          "materialFrame": 298,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 1070,
+          "sequence": "Deployed",
+          "materialFrame": 298,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 1080,
+          "sequence": "Deployed",
+          "materialFrame": 298,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 1090,
+          "sequence": "Deployed",
+          "materialFrame": 298,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 1100,
+          "sequence": "Deployed",
+          "materialFrame": 298,
+          "animationState": "RUNNING"
+        }
+      ]
+    },
+    {
+      "name": "100ms-sampling",
+      "firstRenderAt": 0,
+      "final": {
+        "timeMs": 1100,
+        "sequence": "Deploy",
+        "materialFrame": 310,
+        "animationState": "RUNNING"
+      },
+      "trace": [
+        {
+          "timeMs": 0,
+          "sequence": "Deploy",
+          "materialFrame": 299,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 100,
+          "sequence": "Deploy",
+          "materialFrame": 300,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 200,
+          "sequence": "Deploy",
+          "materialFrame": 301,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 300,
+          "sequence": "Deploy",
+          "materialFrame": 302,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 400,
+          "sequence": "Deploy",
+          "materialFrame": 303,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 500,
+          "sequence": "Deploy",
+          "materialFrame": 304,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 600,
+          "sequence": "Deploy",
+          "materialFrame": 305,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 700,
+          "sequence": "Deploy",
+          "materialFrame": 306,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 800,
+          "sequence": "Deploy",
+          "materialFrame": 307,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 900,
+          "sequence": "Deploy",
+          "materialFrame": 308,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 1000,
+          "sequence": "Deploy",
+          "materialFrame": 309,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 1100,
+          "sequence": "Deploy",
+          "materialFrame": 310,
+          "animationState": "RUNNING"
+        }
+      ]
+    },
+    {
+      "name": "late-first-render",
+      "firstRenderAt": 1000,
+      "final": {
+        "timeMs": 1100,
+        "sequence": "Deploy",
+        "materialFrame": 300,
+        "animationState": "RUNNING"
+      },
+      "trace": [
+        {
+          "timeMs": 1000,
+          "sequence": "Deploy",
+          "materialFrame": 299,
+          "animationState": "RUNNING"
+        },
+        {
+          "timeMs": 1100,
+          "sequence": "Deploy",
+          "materialFrame": 300,
+          "animationState": "RUNNING"
+        }
+      ]
+    }
+  ],
+  "assertions": 33,
+  "errorCount": 0,
+  "conclusion": "The original complete unremapped/unlit material frame 298 can be distinguished in this material corpus. A silhouette cannot distinguish it from transition frame 313. Real Animation render cadence gives different frames for the same unchanged game stance; no deterministic legal sample producer is implemented.",
+  "boundaries": [
+    "Classifier input is an already known full pixel-signature sample from an exact registered rendering domain. No GameApi code produces this sample.",
+    "RGBA uniqueness here is not uniqueness under player color remap, lighting, occlusion, shroud, palette effects, or camera sampling.",
+    "No unit identity, ownership, stance, weapon, shot, radiation, expiry, or damage is read by the classifier.",
+    "The animation schedule is an isolated real Animation execution with the relevant queue transition, not a full Infantry renderer or an in-game screenshot.",
+    "No deployed observation, pollution memory, tactic, match win rate, or release qualification has been restored by this prototype."
+  ]
+}

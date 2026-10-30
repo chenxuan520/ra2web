@@ -1,0 +1,4 @@
+{
+  "extends": "./tsconfig.ai-benchmark.json",
+  "include": ["ai-paid-scouting.ts", "../src/types/**/*.d.ts"]
+}

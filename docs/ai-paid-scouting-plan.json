@@ -1,0 +1,86 @@
+{
+  "format": 1,
+  "phase": "L1 mechanism, not strategy or qualification",
+  "registeredAt": "2026-10-29T22:28:33.491140+00:00",
+  "baseSource": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+  "baseGameTree": "7fcbc337c495cb42b9c56af57dc411224b2a06a3",
+  "hypothesis": "At the same two-dog production policy, separate public target assignments may reduce duplicated exploration; losses and counterexamples remain outcomes.",
+  "maps": [
+    "mp08t2.map",
+    "tn01t2.map"
+  ],
+  "scenarios": [
+    "open",
+    "defended-first-route"
+  ],
+  "seed": 840101,
+  "seedStatus": "exposed development; not independent qualification",
+  "settings": {
+    "credits": 10000,
+    "unitCount": 0,
+    "engineDifficulty": 4,
+    "maxTicks": 4800,
+    "physicalStartAndPlayerSlotSwap": true,
+    "determinismRepeats": 2
+  },
+  "arms": {
+    "S1": {
+      "paidDogLimit": 1,
+      "routePolicy": "shared sequential",
+      "role": "quantity/cost reference"
+    },
+    "S2": {
+      "paidDogLimit": 2,
+      "routePolicy": "shared sequential",
+      "role": "same-budget route control"
+    },
+    "R2": {
+      "paidDogLimit": 2,
+      "routePolicy": "distinct public targets",
+      "role": "route treatment"
+    }
+  },
+  "pairing": "S2/R2 use identical production prerequisites, request conditions, no replacement, completion/abandonment rules and command cadence; only target allocation differs.",
+  "plannedRuns": 48,
+  "uniqueConditions": 24,
+  "repeatIncreasesSampleSize": false,
+  "layoutRegistration": "Actual deterministic legal building placement, public route points, empty point and opposite-player target placement must be written and hashed by setup-only mode before running outcomes. Infeasible layouts are errors, not silently dropped maps.",
+  "controls": [
+    "single public target",
+    "all public targets already explored",
+    "no available dog production",
+    "incomplete production cut-off",
+    "actual partial-production cancellation refund",
+    "hidden target permutation before first legal discovery"
+  ],
+  "telemetry": [
+    "production request/acceptance/payment/refund/factory completion separately",
+    "own queue remaining paid and unpaid balance",
+    "per-dog actual movement and orders",
+    "observer real newly explored tile union and coverage curve",
+    "discovery events from observer API",
+    "actual damage/loss and opponent entry visibility",
+    "same-seed per-arm result equality",
+    "resource/source/raw SHA256"
+  ],
+  "prohibitedChanges": [
+    "free dogs or credits",
+    "modified rules or terrain",
+    "hidden enemy locations as route input",
+    "replacement production",
+    "new retreat policy",
+    "production response to scouting",
+    "per-arm tick extension",
+    "dropping failed or censored conditions"
+  ],
+  "interpretation": [
+    "Preplaced facilities isolate mechanics and do not measure normal MCV opening opportunity cost.",
+    "Paid production correctness, exploration outcome and full-match strength are separate.",
+    "No strength pass/fail is attached to L1; all runs are mechanisms, not 27000-tick draws.",
+    "Per-unit reveal credit is null unless causally observed; report team union otherwise.",
+    "C18 under a changed observation contract is not alone a pure causal control; L2 also needs the same-contract preceding frozen source and a route-only ablation."
+  ],
+  "status": "paused-unvalidated-draft",
+  "completedRuns": 0,
+  "setupRegistrationCompleted": false
+}

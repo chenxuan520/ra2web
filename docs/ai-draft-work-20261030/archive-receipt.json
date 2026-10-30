@@ -1,0 +1,83 @@
+{
+  "kind": "paused-work-archive-only",
+  "date": "2026-10-30 Asia/Shanghai",
+  "baseCommit": "fc1b1c80ab3b8000af7433a7bd2ddb80067e74cb",
+  "gameSourceChanges": [],
+  "files": {
+    "docs/ai-paid-scouting-plan.json": {
+      "bytes": 3438,
+      "sha256": "1684f0b5adf22de9b9e13f016cac7bd8544fb5cb6d3b2e5966991ae88b909d76"
+    },
+    "ts-redalert2/e2e/ai-paid-scouting.ts": {
+      "bytes": 36121,
+      "sha256": "5a501981a7088136989846ade7a5b4e83f6d7251221abbc3f04e412cf0f69064"
+    },
+    "ts-redalert2/e2e/tsconfig.ai-paid-scouting.json": {
+      "bytes": 112,
+      "sha256": "a235de8802bb978a755cbb43f31f24451c339943ddecf575e1c8421d05266b65"
+    },
+    "ts-redalert2/e2e/ai-visible-deso-prototype.ts": {
+      "bytes": 8182,
+      "sha256": "19a6dbd1c3b10357d9ee0a93da61f3b9528a5619e18cc128089c14edd9a1d10a"
+    },
+    "ts-redalert2/e2e/tsconfig.ai-visible-deso-prototype.json": {
+      "bytes": 121,
+      "sha256": "86dec76c32d2bb2080dc05ccca57b9c42d208fc5e177f0b35c959d345162710b"
+    },
+    "ts-redalert2/e2e/lib/apparent-sprite-classifier.ts": {
+      "bytes": 3550,
+      "sha256": "eb7e3d693eb7887d6f5e58f4ecf5197252e3e0147102ab72e2bbc8a9a1cec861"
+    },
+    "ts-redalert2/src/test/ai/ApparentSpriteClassifier.test.ts": {
+      "bytes": 4690,
+      "sha256": "4048c7238c3cf59b105fec241292f33c6339f0db57da21db5f6414667af2317d"
+    }
+  },
+  "validation": {
+    "classifierTests": {
+      "pass": 6,
+      "fail": 0,
+      "assertions": 21
+    },
+    "typechecks": [
+      "entry",
+      "server",
+      "ai-benchmark",
+      "ai-paid-scouting",
+      "ai-visible-deso-prototype"
+    ],
+    "build": true,
+    "visibleDesoPrototype": {
+      "assertions": 33,
+      "byteEqualOriginalReport": true,
+      "reportBytes": 21017,
+      "reportSha256": "2d77229104009ce49d75df7ccb13287d73f8efbedd5b6be217fd44cbcb5f7f5e"
+    },
+    "fullGameplaySuiteRerunForArchive": false,
+    "paidScoutSetupPassed": false,
+    "paidScoutCompletedMainRuns": 0,
+    "newMatches": 0,
+    "newCIRuns": 0,
+    "deployment": false
+  },
+  "validationLogHashes": {
+    "server.log": {
+      "bytes": 40,
+      "sha256": "58a3a5612c938038d0127f95d1afc08eb2135a598ac795c1f5306f095763c55e"
+    },
+    "build.log": {
+      "bytes": 18942,
+      "sha256": "59e2b665989c01cc3ad7af7677fcf18e0a9e8f16cc17522fa9930b5a154baae8"
+    },
+    "entry.log": {
+      "bytes": 39,
+      "sha256": "252860dcdc1eecbfba6025f14a2bf819c4f0522a85bd64927ec39ea9e4ee19bc"
+    }
+  },
+  "limits": [
+    "No gameplay source changes or activated strategy.",
+    "Unvalidated scout runner and verifier are archived drafts; setup failure is not hidden or converted to a result.",
+    "Original local scripts/notes preserve historical paths and are not current execution instructions.",
+    "No automation resumed or created; no production deployment."
+  ]
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "archive": "anims.mix",
+    "archiveBytes": 15834074,
+    "archiveSha256": "ca3cfbd10451b7977909e57093413152f946ccbfadafb1e3dcca296295a83348",
+    "entry": "deso.shp",
+    "entryBytes": 189904,
+    "entrySha256": "7f157a5089a3ec822ae73eb951993a410c8fabc0d1fa839ddb0eed255aabfcc4"
+  },
+  {
+    "archive": "ui.mix",
+    "archiveBytes": 70923590,
+    "archiveSha256": "de26df1dd42b80cfb57f56de264e68f848ae6b461c12da23dff646c5a21e691a",
+    "entry": "unittem.pal",
+    "entryBytes": 768,
+    "entrySha256": "ed785e62eed291480f3198dd44f6b656ebe3a9b75e9f641944d710abc6bde3e3"
+  }
+]

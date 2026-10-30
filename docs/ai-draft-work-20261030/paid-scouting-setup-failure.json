@@ -1,0 +1,7 @@
+{
+  "passed": false,
+  "errorCount": 1,
+  "engineErrors": [],
+  "engineWarnings": [],
+  "error": "Error: Actual factory exit is impassable\n    at check (/workspace/ra2web/ts-redalert2/e2e/ai-paid-scouting.ts:23:74)\n    at setup (/workspace/ra2web/ts-redalert2/e2e/ai-paid-scouting.ts:156:9)\n    at runPaidScouting (/workspace/ra2web/ts-redalert2/e2e/ai-paid-scouting.ts:364:21)"
+}

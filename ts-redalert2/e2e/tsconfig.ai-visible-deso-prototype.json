@@ -1,0 +1,4 @@
+{
+  "extends": "./tsconfig.ai-benchmark.json",
+  "include": ["ai-visible-deso-prototype.ts", "../src/types/**/*.d.ts"]
+}

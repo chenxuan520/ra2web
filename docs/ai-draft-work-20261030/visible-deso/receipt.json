@@ -1,0 +1,156 @@
+{
+  "sourceCommit": "0efe4dbd2efc7f62c677c07c1de2f7895327f11a",
+  "sourceFiles": [
+    {
+      "path": "ts-redalert2/src/data/ShpFile.ts",
+      "bytes": 8154,
+      "sha256": "0e1bb2face7c350564056b2336cb8380f296735badfbf7d8bd1c98ac91a1ad58",
+      "byteEqualsFrozen0efe": true
+    },
+    {
+      "path": "ts-redalert2/src/data/ShpImage.ts",
+      "bytes": 1447,
+      "sha256": "d987742bd834168354db0b671d11b47a6343d4b2031fa049e3575c2ee95d5c8e",
+      "byteEqualsFrozen0efe": true
+    },
+    {
+      "path": "ts-redalert2/src/data/encoding/Format3.ts",
+      "bytes": 1716,
+      "sha256": "bc581f099922024da8a1644e74e50024ed3c0636c15472321127f4bf9460cfab",
+      "byteEqualsFrozen0efe": true
+    },
+    {
+      "path": "ts-redalert2/src/data/Palette.ts",
+      "bytes": 3689,
+      "sha256": "0a480e3a354742db9fe3a9bfb49f9b5d024d84fb8ca5b539de653e0d853842a7",
+      "byteEqualsFrozen0efe": true
+    },
+    {
+      "path": "ts-redalert2/deploy/prepare-resources.ts",
+      "bytes": 22428,
+      "sha256": "c89bd9944ce017136bb46d440924b9a7ce8e2a5c868b36292721b11e90a7712d",
+      "byteEqualsFrozen0efe": true
+    },
+    {
+      "path": "ts-redalert2/src/game/art/SequenceReader.ts",
+      "bytes": 1099,
+      "sha256": "eb2959aee30bb9d46f3aa1450383948b60965de1ee69b2e8cd13e55cbc48514a",
+      "byteEqualsFrozen0efe": true
+    }
+  ],
+  "outputs": [
+    {
+      "path": "check-prepared.ts",
+      "bytes": 988,
+      "sha256": "c84455943e5eea13baca25d45ba53c82745232f25b34256ecb063cbfe347deb8"
+    },
+    {
+      "path": "deso-0.png",
+      "bytes": 1076,
+      "sha256": "069e647e1cdf1adc169af5195487211d245498dbd9764dc781ae918d0b44cd00"
+    },
+    {
+      "path": "deso-164.png",
+      "bytes": 1036,
+      "sha256": "0f2e8605b9cd098a417287c593ec8e0ccf799ca55b949efb0bb0308138efac24"
+    },
+    {
+      "path": "deso-292.png",
+      "bytes": 997,
+      "sha256": "f271ad878acb4e982f6a808ecb1e33a1a4e2f8feeaa079ea4b8e41659463765f"
+    },
+    {
+      "path": "deso-293.png",
+      "bytes": 907,
+      "sha256": "6e445db9e22c34c14e16a41f16007c30cff198049f796ae6db312c9d21258513"
+    },
+    {
+      "path": "deso-294.png",
+      "bytes": 905,
+      "sha256": "d43a903a6b4a2baeebed00b23c069f0beb29273c9c52b371775c229214be0615"
+    },
+    {
+      "path": "deso-295.png",
+      "bytes": 894,
+      "sha256": "0af72887e44f2cbee0c0dcd18955f5905a170681cdb54e768da6e7ce9c166be7"
+    },
+    {
+      "path": "deso-296.png",
+      "bytes": 955,
+      "sha256": "865e7b3f437855738464b738bc54a56797b7a1174b6402a5952692fe5bf690c5"
+    },
+    {
+      "path": "deso-297.png",
+      "bytes": 988,
+      "sha256": "6b4977e36fcb590d3a2df7ce41c4841b1bd0632adfa783598ac797bbb5c413b5"
+    },
+    {
+      "path": "deso-298.png",
+      "bytes": 987,
+      "sha256": "844ab4093244958902a0279b747d2d350ee6a3b30732929fc6794a5119b00cde"
+    },
+    {
+      "path": "deso-299.png",
+      "bytes": 1037,
+      "sha256": "fa7d5a0dfe96fff52eb53f4e3ac845ca49d996b302bf9939c076a23b0a44b4b4"
+    },
+    {
+      "path": "deso-300.png",
+      "bytes": 1041,
+      "sha256": "4d3bab666dd04a1275cc4eab58fa1ae22989977973b2de9bcb9a55f3c08fdef0"
+    },
+    {
+      "path": "deso-305.png",
+      "bytes": 1131,
+      "sha256": "34118eb668d57e260554fa63d4ab3d33de971adf88454cba589e171d487ebcab"
+    },
+    {
+      "path": "deso-310.png",
+      "bytes": 1065,
+      "sha256": "35589348187618793bf7094fa77531e094b5315b4f01480cdad417372fede887"
+    },
+    {
+      "path": "deso-313.png",
+      "bytes": 987,
+      "sha256": "835edd67345b8eebda0294196f2e391a876708f93e1db5c3b3245823234d49f1"
+    },
+    {
+      "path": "deso-86.png",
+      "bytes": 1014,
+      "sha256": "1644d0b923668a266c47e7d49ba92c6079dd7eba798fc8912fd3ef2f93e627c2"
+    },
+    {
+      "path": "deso-contact.png",
+      "bytes": 22656,
+      "sha256": "baeb0bb33a476da0fb672642a71200dd973dec14775d779cd75abe1dffbd36d2"
+    },
+    {
+      "path": "extract-output.json",
+      "bytes": 9945,
+      "sha256": "5b97fd677a3b37891c5c4dfb767b7ae04ccf82899813541cc1663f751e2b9620"
+    },
+    {
+      "path": "extract.ts",
+      "bytes": 6688,
+      "sha256": "1ded0590f3a6e9fef1ecf39f58493eb5e19d4f2aebe38a9986dbb87ba92d46a7"
+    },
+    {
+      "path": "material.json",
+      "bytes": 412411,
+      "sha256": "3f4433c617b5c841b5664dcc6fd85aa8611471eddaa574538fef49f18a1030aa"
+    },
+    {
+      "path": "notes.md",
+      "bytes": 2760,
+      "sha256": "af57242be4edb3b4a4f4696c67dd7e110a7f3df53ace64c78ac873cefac322b6"
+    },
+    {
+      "path": "prepared-cross-check.json",
+      "bytes": 586,
+      "sha256": "6768a6fdddc5da4ec87b5b4602829ed5de3c6a4ea1491513b2dcab58ca49692a"
+    }
+  ],
+  "gameTicks": 0,
+  "rendererFrames": 0,
+  "matches": 0
+}

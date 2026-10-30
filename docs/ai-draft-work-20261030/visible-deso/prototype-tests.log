@@ -1,0 +1,14 @@
+bun test v1.3.14 (0d9b296a)
+
+src/test/ai/ApparentSpriteClassifier.test.ts:
+(pass) material-only apparent sprite classifier > same visible material sample gives the same posture despite inaccessible private identity and state [0.67ms]
+(pass) material-only apparent sprite classifier > source frame index and sequence identity cannot split equal pixels [0.12ms]
+(pass) material-only apparent sprite classifier > all still-possible frames must have only deployed appearance [0.07ms]
+(pass) material-only apparent sprite classifier > shroud, partial sprites, unsupported palette/light/remap domain, art, and unknown corpus fail closed [0.14ms]
+(pass) material-only apparent sprite classifier > an incomplete or malformed material corpus never invents positive posture [0.08ms]
+(pass) material-only apparent sprite classifier > registration mutation and observer call order do not alter compiled support [0.04ms]
+
+ 6 pass
+ 0 fail
+ 21 expect() calls
+Ran 6 tests across 1 file. [45.00ms]
