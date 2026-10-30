@@ -30,6 +30,7 @@ export class FieldArmyMission extends Mission {
 
     setPlan(plan: SideComposition | null) { this.plan = plan; }
     getAttackArea() { return this.attackArea; }
+    isAttacking() { return this.attacking; }
     getPriority() { return 50; }
     getGlobalDebugText() { return this.attacking ? "combined assault" : "building a mobile reserve"; }
 

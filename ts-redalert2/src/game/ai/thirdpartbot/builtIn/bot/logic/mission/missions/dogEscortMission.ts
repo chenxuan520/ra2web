@@ -28,8 +28,8 @@ export class DogEscortMission extends Mission {
         const { game, player, matchAwareness } = context;
         if (context.difficulty !== "brutal") return noop();
         const tick = game.getCurrentTick();
-        const dogs = this.getUnitsOfTypes(game, "DOG").filter(unit => unit.hitPoints > 0 && !unit.isWarpedOut);
-        const tanks = this.army.getUnitsOfTypes(game, "HTNK").filter(unit => unit.hitPoints > 0 &&
+        const dogs = this.getUnitsOfTypes(game, "DOG", "ADOG").filter(unit => unit.hitPoints > 0 && !unit.isWarpedOut);
+        const tanks = this.army.getUnitsOfTypes(game, "HTNK", "MTNK", "APOC", "MGTK").filter(unit => unit.hitPoints > 0 &&
             !unit.isWarpedOut && unit.zone !== ZoneType.Air).sort((a, b) => a.id - b.id);
         if (tick >= this.lastCheck + 12) {
             this.lastCheck = tick;
@@ -74,13 +74,13 @@ export class DogEscortMission extends Mission {
         // A dedicated small budget; leave the locked scout and all old infantry,
         // tank, miner and tech policies unchanged for this first experiment.
         const playerData = game.getPlayerData(player.name);
-        const available = player.production.getAvailableObjects().find(rule => rule.name === "DOG");
+        const available = player.production.getAvailableObjects().find(rule => rule.name === "DOG" || rule.name === "ADOG");
         const miners = game.getVisibleUnits(player.name, "self", rule => rule.harvester).length;
-        const totalDogs = game.getVisibleUnits(player.name, "self", rule => rule.name === "DOG").length;
+        const totalDogs = game.getVisibleUnits(player.name, "self", rule => rule.name === "DOG" || rule.name === "ADOG").length;
         const desired = tanks.length ? Math.min(6, Math.max(1, Math.floor(tanks.length / 2))) : 0;
-        const committed = player.production.getQueueData?.(QueueType.Infantry).items[0]?.rules.name === "DOG";
+        const committed = player.production.getQueueData?.(QueueType.Infantry).items[0]?.rules.name === available?.name;
         return available && miners >= 1 && tanks.length >= 1 && dogs.length < desired && totalDogs < 8 &&
-            (committed || playerData.credits >= available.cost) ? requestUnits({ DOG: 25 }) : noop();
+            (committed || playerData.credits >= available.cost) ? requestUnits({ [available.name]: 25 }) : noop();
     }
 
     private submit(context: MissionContext, unit: UnitData, action: BatchableAction) {

@@ -133,7 +133,7 @@ export class DefaultStrategy implements Strategy {
                 missionController.addMission(this.fieldArmy);
             }
             this.fieldArmy.setPlan(composition);
-            if (!this.dogEscort && context.player.production.getAvailableObjects().some(rule => rule.name === "HTNK")) {
+            if (!this.dogEscort && context.player.production.getAvailableObjects().some(rule => ["HTNK", "MTNK"].includes(rule.name))) {
                 this.dogEscort = new DogEscortMission(this.fieldArmy, logger);
                 missionController.addMission(this.dogEscort);
             }
