@@ -26,7 +26,7 @@ export function manageAttackMicro(attacker: UnitData, target: UnitData): Batchab
         const isDeployed = (attacker.stance as any) === StanceType.Deployed;
         if (!isDeployed && (distance <= deployedWeaponRange || (attacker.attackState as any) === AttackState.JustFired)) {
             return BatchableAction.noTarget(attacker.id, OrderType.DeploySelected, NONCE_GI_DEPLOY);
-        } else if (isDeployed && distance > deployedWeaponRange) {
+        } else if (isDeployed && distance > deployedWeaponRange + 1.5) {
             return BatchableAction.noTarget(attacker.id, OrderType.DeploySelected, NONCE_GI_UNDEPLOY);
         }
     }

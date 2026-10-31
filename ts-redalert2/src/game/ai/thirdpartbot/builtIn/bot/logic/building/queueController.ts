@@ -102,7 +102,12 @@ export class QueueController {
                 const miners = game.getVisibleUnits(player.name, "self", rules => rules.harvester).length;
                 const refineries = game.getVisibleUnits(player.name, "self", rules => rules.refinery).length;
                 const desired = Math.min(6, refineries * 2);
-                if (miners < desired) priority = Math.max(priority, miners < 4 ? 80 : 60);
+                if (miners < desired) {
+                    const situation = readStrategicSituation(game, playerData);
+                    const core = countCoreTanks(situation);
+                    const minCoreBeforeMiner2 = isSovietCountry(playerData.country?.name) ? 2 : 1;
+                    priority = Math.max(priority, miners === 0 ? 120 : (core >= minCoreBeforeMiner2 && miners < 2 ? 90 : (miners < 4 ? 80 : 60)));
+                }
             }
             if (priority > (requests.get(option.name)?.priority ?? 0)) {
                 requests.set(option.name, { priority, specificLocation: null });
@@ -124,7 +129,7 @@ export class QueueController {
                     requests.set(aa.name, { priority: 100, specificLocation: null });
                 }
             }
-            if (situation.harvesters >= 1 && situation.enemy.infantry >= 8 &&
+            if (situation.harvesters >= 2 && situation.enemy.infantry >= 8 &&
                 (situation.own.MTNK ?? 0) + (situation.own.HTNK ?? 0) < Math.min(6, Math.max(2, Math.ceil(situation.enemy.infantry / 6)))) {
                 const tank = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === "MTNK" || option.name === "HTNK");
                 if (tank) requests.set(tank.name, { priority: 100, specificLocation: null });
@@ -134,9 +139,12 @@ export class QueueController {
                 const tankName = isSovietCountry(playerData.country?.name) ? "HTNK" : "MTNK";
                 const tank = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === tankName);
                 if (tank) {
-                    if ((core < 1 && situation.harvesters >= 1) || (core < 4 && situation.harvesters >= 2)) {
+                    const hasDualRefinery = (situation.own.NAREFN ?? 0) + (situation.own.GAREFN ?? 0) >= 2;
+                    if ((core < 1 && situation.harvesters >= 1) || (core < 4 && (situation.harvesters >= 2 || hasDualRefinery))) {
                         requests.set(tank.name, { priority: 85, specificLocation: null });
-                    } else if (core < 10 && (requests.get(tank.name)?.priority ?? 0) < 50) {
+                    } else if (core < 8 && (requests.get(tank.name)?.priority ?? 0) < 65) {
+                        requests.set(tank.name, { priority: 65, specificLocation: null });
+                    } else if (core < 12 && (requests.get(tank.name)?.priority ?? 0) < 50) {
                         requests.set(tank.name, { priority: 50, specificLocation: null });
                     }
                 }

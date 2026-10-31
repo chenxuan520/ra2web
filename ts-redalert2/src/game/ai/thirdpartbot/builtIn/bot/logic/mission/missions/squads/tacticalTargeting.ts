@@ -92,12 +92,16 @@ export function chooseTacticalTarget(
         score += threat ? 40 + Math.min(40, threat.damage / Math.max(1, threat.weapon.rules?.rof ?? 1) * 4) : 0;
         const isArmedDefense = (target.type as any) === ObjectType.Building &&
             (target.rules.primary || target.rules.secondary);
+        const isCombatVehicle = ((target.rules.type === ObjectType.Vehicle || (target.type as any) === ObjectType.Vehicle)) &&
+            (target.rules.primary || target.rules.secondary) && !target.rules.harvester;
         if (isArmedDefense) score += 45;
+        else if (isCombatVehicle) score += 42;
         else if (target.rules.weaponsFactory || target.rules.refinery) score += 35;
         else if (target.rules.barracks || target.rules.constructionYard) score += 30;
-        else if (target.rules.harvester) score += 40;
+        else if (target.rules.harvester) score += 25;
         else if (target.rules.power > 0) score += 10;
         if (target.zone === ZoneType.Air) score += target.name === "ZEP" ? 70 : 50;
+        if (remainingHealth <= (estimatedMaxHitPoints(target) ?? 100) * 0.35) score += 20;
         // Never march past something we can shoot to chase a slightly higher value target.
         score += distance <= attack.range ? 35 : -12 * (distance - attack.range);
         score -= distance * 1.5;
@@ -139,12 +143,13 @@ export function getTacticalRetreatPoint(attacker: UnitData, targets: UnitData[],
     const canKite = !isBuildingThreat && ownWeapon && ownWeapon.range >= threatRange + 1.5 &&
         ownWeapon.weapon.cooldownTicks > 6 && nearestDistance < ownWeapon.range - 0.5;
     const insideMinimumRange = ownWeapon && nearestDistance < (ownWeapon.weapon.minRange ?? 0);
-    if (!injured && !canKite && !insideMinimumRange) return null;
+    const fleeCrusher = !isBuildingThreat && Boolean(attacker.rules?.crushable) && Boolean(nearestThreat.rules?.crusher) && nearestDistance <= 2.5;
+    if (!injured && !canKite && !insideMinimumRange && !fleeCrusher) return null;
 
     // Integer tile destinations are stable across clients; the game still validates pathfinding.
     const dx = attacker.tile.rx - nearestThreat.tile.rx;
     const dy = attacker.tile.ry - nearestThreat.tile.ry;
-    const distance = injured ? 3 : 2;
+    const distance = injured || fleeCrusher ? 3 : 2;
     const threats = targets.map(target => ({ target, weapon: getCombatWeapon(target, attacker, true, game) }))
         .filter(entry => !!entry.weapon);
     const minimumRangePenalty = (point: Vector2) => Math.max(0, (ownWeapon?.weapon.minRange ?? 0) -

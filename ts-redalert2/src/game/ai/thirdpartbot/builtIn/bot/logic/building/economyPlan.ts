@@ -15,9 +15,11 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
                 const intruders = game.getVisibleUnits(player.name, "enemy", option => option.isSelectableCombatant)
                     .map(id => game.getUnitData(id)).filter(unit => unit &&
                         (unit.tile.rx - player.startLocation.x) ** 2 + (unit.tile.ry - player.startLocation.y) ** 2 <= 25 ** 2);
-                if (intruders.length >= 3) return 0;
+                if (intruders.length >= 3 && s.credits < 3000) return 0;
             }
-            return (committed || (factories > 0 && s.harvesters >= 2) ||
+            const core = (s.own.MTNK ?? 0) + (s.own.HTNK ?? 0);
+            const canExpand = s.harvesters >= 2 && (s.credits >= 2000 || core >= 3);
+            return (committed || (factories > 0 && canExpand) ||
                 (!factories && (s.own.JUMPJET ?? 0) >= 2 && getOpeningAirBudget(game, player) === 2)) ? 50 : 0;
         }
         return refineries < 4 && s.harvesters >= refineries * 2 ? 18 : 0;
@@ -36,7 +38,7 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
     if (rules.name === "GATECH" && !count && s.harvesters >= 4 && armor >= 2) return 30;
     if (rules.name === "GADEPT" || rules.name === "NADEPT") return s.credits >= 6000 && armor >= 8 ? 1 : 0;
     if (["GAAIRC", "AMRADR", "NARADR"].includes(rules.name) &&
-        (!factories || (s.harvesters < 3 && (s.own.MTNK ?? 0) + (s.own.HTNK ?? 0) < 2))) return 0;
+        (!factories || s.harvesters < 2 || (s.harvesters < 3 && (s.own.MTNK ?? 0) + (s.own.HTNK ?? 0) < 2))) return 0;
     if (rules.name === "GAPILL" || rules.name === "NALASR") {
         const intruders = game.getVisibleUnits(player.name, "enemy", option => option.isSelectableCombatant)
             .map(id => game.getUnitData(id)).filter(unit => unit &&

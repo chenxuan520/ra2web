@@ -111,6 +111,12 @@ describe('brutal survival micro', () => {
         expect(getTacticalRetreatPoint(injured, [unit(2, 1)], { ...passableMap, getTile: () => undefined })).toBeNull();
         expect(getTacticalRetreatPoint(injured, [unit(2, 1)], { ...passableMap, isPassableTile: () => false })).toBeNull();
     });
+
+    test('pulls crushable infantry away from nearby heavy tanks with crusher capability', () => {
+        const infantry = unit(1, 5, { type: ObjectType.Infantry as any, rules: { crushable: true, speedType: SpeedType.Foot, isSelectableCombatant: true, movementZone: MovementZone.Infantry } as any });
+        const tank = unit(2, 4, { rules: { crusher: true, speedType: SpeedType.Track, isSelectableCombatant: true, movementZone: MovementZone.Normal } as any });
+        expect(getTacticalRetreatPoint(infantry, [tank], passableMap)?.x).toBe(8);
+    });
 });
 
 describe('command preservation', () => {

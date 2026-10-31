@@ -64,8 +64,8 @@ export class FieldArmyMission extends Mission {
         const factories = (s.own.GAWEAP ?? 0) + (s.own.NAWEAP ?? 0);
         const minArmor = isLongMap ? (enemyArmor > 3 ? 6 : 4) : 4;
         const isLateGame = tick >= 10000;
-        const canAssault = armor.length >= minArmor || (factories > 0 && (
-            (!isLongMap && armor.length >= 3 && enemyArmor <= 2) ||
+        const canAssault = (armor.length >= minArmor && (armor.length >= enemyArmor || armor.length >= 6)) || (factories > 0 && (
+            (!isLongMap && armor.length >= 3 && enemyArmor <= 1 && targetDist <= 45) ||
             (isLateGame && armor.length >= 2 && armor.length > enemyArmor && enemyArmor <= 1) ||
             (!isLongMap && armor.length >= 2 && enemyArmor === 0 && targetDist <= 45)
         ));
@@ -73,7 +73,9 @@ export class FieldArmyMission extends Mission {
             air.length >= 2 || units.some(unit => unit.name === "ZEP") || infantry.length >= 20) {
             this.attacking = true;
         }
-        if (units.length < 1 && !air.length) this.attacking = false;
+        if ((units.length < 3 && !air.length) || (armor.length < 2 && infantry.length < 6 && air.length < 2 && !units.some(unit => unit.name === "ZEP"))) {
+            this.attacking = false;
+        }
         const center = this.getCenterOfMass() ?? rally;
         if (tick >= this.nextTargetCheck) {
             this.nextTargetCheck = tick + 30;
@@ -81,13 +83,29 @@ export class FieldArmyMission extends Mission {
                 const forward = rally.clone().sub(playerData.startLocation);
                 if (forward.length() > 4) forward.multiplyScalar(4 / forward.length());
                 this.attackArea = playerData.startLocation.clone().add(forward);
-            } else if (homeThreats.length && (center.distanceTo(rally) < 40 || homeThreats.length >= 6)) {
+            } else if (homeThreats.length && (center.distanceTo(rally) < 40 || homeThreats.length >= 4 ||
+                homeThreats.some(enemy => enemy.rules.primary && ((enemy.type as any) === ObjectType.Vehicle ||
+                    anchors.some(base => location(base).distanceTo(location(enemy)) <= 14))))) {
                 const enemy = [...homeThreats].sort((a, b) => location(a).distanceTo(rally) - location(b).distanceTo(rally) || a.id - b.id)[0];
                 this.attackArea = location(enemy);
                 this.targetId = undefined;
             } else {
                 const previous = enemies.find(enemy => enemy.id === this.targetId);
-                const objective = previous ?? enemies.map(enemy => {
+                const prevDist = previous ? center.distanceTo(location(previous)) : Infinity;
+                const prevIsArmedDefense = previous && (previous.type as any) === ObjectType.Building &&
+                    (previous.rules.primary || previous.rules.secondary);
+                const nearbyArmedDefense = enemies.find(enemy =>
+                    (enemy.type as any) === ObjectType.Building &&
+                    (enemy.rules.primary || enemy.rules.secondary) &&
+                    center.distanceTo(location(enemy)) <= 18
+                );
+                const shouldRetarget = !previous ||
+                    (!prevIsArmedDefense && !!nearbyArmedDefense) ||
+                    (prevDist > 25 && enemies.some(e => center.distanceTo(location(e)) <= 15)) ||
+                    ((previous.rules.type === ObjectType.Vehicle || (previous.type as any) === ObjectType.Vehicle) && !previous.rules.harvester && prevDist > 20 &&
+                        enemies.some(e => (e.type as any) === ObjectType.Building && center.distanceTo(location(e)) <= 18));
+
+                const objective = (!shouldRetarget && previous) ? previous : enemies.map(enemy => {
                     const isArmedDefense = (enemy.type as any) === ObjectType.Building &&
                         (enemy.rules.primary || enemy.rules.secondary);
                     let value = isArmedDefense ? 135
@@ -137,9 +155,11 @@ export class FieldArmyMission extends Mission {
         const core = (s.own.MTNK ?? 0) + (s.own.HTNK ?? 0) + (s.own.MGTK ?? 0) + (s.own.APOC ?? 0);
         const airPlan = this.plan?.composition.JUMPJET || this.plan?.composition.ZEP;
         if (available.has(heavyTank)) want(heavyTank, 4, 60);
-        want(tank, airPlan ? 4 : 50, core < 2 ? 60 : core < 6 ? 55 : 45);
+        want(tank, airPlan ? 4 : 50, core < 4 ? 75 : core < 8 ? 65 : 50);
         const airThreat = matchAwareness.getThreatCache()?.totalOffensiveAirThreat ?? 0;
-        if (core >= 4 || airThreat > 0) want(aa, airThreat > 0 ? Math.max(2, Math.ceil(core / 3)) : Math.max(1, Math.ceil(core / 8)), 45);
+        const enemyInf = s.enemy.infantry ?? 0;
+        const aaTarget = airThreat > 0 ? Math.max(2, Math.ceil(core / 3)) : enemyInf >= 6 ? Math.min(3, Math.max(1, Math.ceil(enemyInf / 6))) : Math.max(1, Math.ceil(core / 8));
+        if (core >= 4 || airThreat > 0 || enemyInf >= 6) want(aa, aaTarget, enemyInf >= 8 ? 65 : 45);
         for (const name of Object.keys(this.plan?.composition ?? {})) {
             if (name === tank || name === aa || name === "E1" || name === "E2" || name === "DESO") continue;
             const openingAir = name === "JUMPJET" ? getOpeningAirBudget(game, playerData) : 0;

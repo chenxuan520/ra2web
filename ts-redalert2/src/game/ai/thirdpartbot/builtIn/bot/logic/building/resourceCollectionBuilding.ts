@@ -65,7 +65,9 @@ export class ResourceCollectionBuilding extends BasicBuilding {
         if (closeOre) {
             selectedLocation = new Vector2(closeOre.rx, closeOre.ry);
         }
-        return getDefaultPlacementLocation(game, playerData, selectedLocation, technoRules, false, 2);
+        return getDefaultPlacementLocation(game, playerData, selectedLocation, technoRules, false, 2)
+            ?? getDefaultPlacementLocation(game, playerData, selectedLocation, technoRules, false, 1)
+            ?? getDefaultPlacementLocation(game, playerData, selectedLocation, technoRules, false, 0);
     }
 
     // Don't build/start selling these if we don't have any harvesters
