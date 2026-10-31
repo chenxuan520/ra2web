@@ -256,7 +256,7 @@ export class CombatSquad implements Squad {
                         this.debugLastTarget = `Unit ${bestUnit.id.toString()}`;
                     } else {
                         if (brutal && (isMissileArtillery(unit) || ((unit.name === "HTK" || unit.name === "FV") &&
-                            units.some(other => ["HTNK", "MTNK", "APOC", "MGTK"].includes(other.name))))) {
+                            units.some(other => ["HTNK", "MTNK", "APOC", "MGTK", "SREF"].includes(other.name))))) {
                             this.followTankEscort(context, unit, units, targetPoint, tick);
                         } else if (holdingReserve) {
                             const depots = game.getVisibleUnits(context.player.name, "self", rules =>

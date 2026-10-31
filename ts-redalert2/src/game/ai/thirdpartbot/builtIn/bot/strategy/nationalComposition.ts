@@ -52,7 +52,7 @@ export function readStrategicSituation(game: GameApi, player: PlayerData): Strat
 }
 
 export function countCoreTanks(situation: StrategicSituation): number {
-    return ["MTNK", "HTNK", "MGTK", "APOC"].reduce((sum, name) => sum + (situation.own[name] ?? 0), 0);
+    return ["MTNK", "HTNK", "MGTK", "APOC", "SREF"].reduce((sum, name) => sum + (situation.own[name] ?? 0), 0);
 }
 
 export function hasEstablishedEconomy(situation: StrategicSituation): boolean {

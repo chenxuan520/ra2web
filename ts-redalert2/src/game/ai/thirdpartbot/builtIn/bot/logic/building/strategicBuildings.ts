@@ -50,7 +50,7 @@ export function getStrategicBuildingPriority(
             : country === "British" ? enemy.infantry >= 3
             : country === "Germans" ? enemy.vehicles >= 3 && enemy.vehicles >= enemy.infantry
             : country === "Russians" || country === "French" ? enemy.infantry + enemy.vehicles >= 4
-            : enemy.defences >= 2 && hasMatureEconomy(situation);
+            : (hasMatureEconomy(situation) || enemy.defences >= 2 || (core >= 4 && credits >= option.cost + 600));
         if (needsSpecialist && !player.power.isLowPower) return 18;
     }
     if (REFINERIES.has(option.name) && owned === 1 && harvesters === 2 && core >= 4 &&

@@ -32,13 +32,13 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
         const groundFirst = allied && getOpeningAirBudget(game, player) > 2;
         return committed || !groundFirst ? 45 : 0;
     }
-    const armor = (s.own.MTNK ?? 0) + (s.own.HTNK ?? 0);
+    const armor = (s.own.MTNK ?? 0) + (s.own.HTNK ?? 0) + (s.own.MGTK ?? 0) + (s.own.APOC ?? 0) + (s.own.SREF ?? 0);
     if (rules.name === "NARADR" && !count && s.harvesters >= 3 && armor >= 2) return 24;
     if (rules.name === "NATECH" && !count && s.harvesters >= 3 && armor >= 2) return 30;
-    if (rules.name === "GATECH" && !count && s.harvesters >= 4 && armor >= 2) return 30;
+    if (rules.name === "GATECH" && !count && s.harvesters >= 3 && armor >= 2) return 30;
     if (rules.name === "GADEPT" || rules.name === "NADEPT") return s.credits >= 6000 && armor >= 8 ? 1 : 0;
     if (["GAAIRC", "AMRADR", "NARADR"].includes(rules.name) &&
-        (!factories || s.harvesters < 2 || (s.harvesters < 3 && (s.own.MTNK ?? 0) + (s.own.HTNK ?? 0) < 2))) return 0;
+        (!factories || s.harvesters < 2 || (s.harvesters < 3 && armor < 2))) return 0;
     if (rules.name === "GAPILL" || rules.name === "NALASR") {
         const intruders = game.getVisibleUnits(player.name, "enemy", option => option.isSelectableCombatant)
             .map(id => game.getUnitData(id)).filter(unit => unit &&

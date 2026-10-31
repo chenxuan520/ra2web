@@ -1,7 +1,7 @@
 import { isObservedLivingUnit } from "../../common/observedUnit";
 import { GameApi, ObjectType, UnitData, Vector2, ZoneType } from "../../../../game-api";
 import { SideComposition } from "../../../strategy/compositionUtils";
-import { readStrategicSituation } from "../../../strategy/nationalComposition";
+import { countCoreTanks, readStrategicSituation } from "../../../strategy/nationalComposition";
 import { getOpeningAirBudget } from "../../../strategy/openingAirBudget";
 import { getBasicInfantryBudget, isSovietCountry } from "../../../strategy/basicInfantryBudget";
 import { getKnownEnemyDirections } from "../../common/knownEnemyDirections";
@@ -43,7 +43,7 @@ export class FieldArmyMission extends Mission {
         const mobileRoles = context.difficulty === "brutal" && isSovietCountry(playerData.country?.name);
         const misplaced = mobileRoles ? units.filter(unit => unit.name === "E2").map(unit => unit.id) : [];
         if (misplaced.length) return releaseUnits(misplaced);
-        const armor = units.filter(unit => ["MTNK", "HTNK", "MGTK", "APOC"].includes(unit.name));
+        const armor = units.filter(unit => ["MTNK", "HTNK", "MGTK", "APOC", "SREF"].includes(unit.name));
         const air = units.filter(unit => unit.zone === ZoneType.Air);
         const infantry = units.filter(unit => (unit.type as any) === ObjectType.Infantry);
         const enemies = game.getVisibleUnits(player.name, "enemy").map(id => game.getUnitData(id))
@@ -73,8 +73,12 @@ export class FieldArmyMission extends Mission {
             air.length >= 2 || units.some(unit => unit.name === "ZEP") || infantry.length >= 20) {
             this.attacking = true;
         }
-        if ((units.length < 3 && !air.length) || (armor.length < 2 && infantry.length < 6 && air.length < 2 && !units.some(unit => unit.name === "ZEP"))) {
-            this.attacking = false;
+        const outnumbered = enemyArmor > 0 && armor.length < Math.min(enemyArmor, 6);
+        const decimated = armor.length < (isLateGame ? 2 : 4);
+        if (decimated || outnumbered || (units.length < 3 && !air.length)) {
+            if (!air.length && !units.some(unit => unit.name === "ZEP")) {
+                this.attacking = false;
+            }
         }
         const center = this.getCenterOfMass() ?? rally;
         if (tick >= this.nextTargetCheck) {
@@ -108,9 +112,11 @@ export class FieldArmyMission extends Mission {
                 const objective = (!shouldRetarget && previous) ? previous : enemies.map(enemy => {
                     const isArmedDefense = (enemy.type as any) === ObjectType.Building &&
                         (enemy.rules.primary || enemy.rules.secondary);
+                    const isCombatVehicle = (enemy.type as any) === ObjectType.Vehicle && enemy.rules.isSelectableCombatant && !enemy.rules.harvester;
                     let value = isArmedDefense ? 135
                         : enemy.rules.refinery ? 110
-                        : enemy.rules.constructionYard ? 100
+                        : enemy.rules.constructionYard ? 105
+                        : isCombatVehicle ? 100
                         : enemy.rules.weaponsFactory ? 90
                         : enemy.rules.harvester ? 80
                         : (enemy.type as any) === ObjectType.Building ? 60
@@ -151,11 +157,11 @@ export class FieldArmyMission extends Mission {
         const conscripts = getBasicInfantryBudget("E2", context.difficulty);
         if (s.harvesters && !allied && !mobileRoles) want("E2", conscripts.total, 20);
         const tank = allied ? "MTNK" : "HTNK", aa = allied ? "FV" : "HTK";
-        const heavyTank = allied ? (available.has("MGTK") ? "MGTK" : "PRIS") : "APOC";
-        const core = (s.own.MTNK ?? 0) + (s.own.HTNK ?? 0) + (s.own.MGTK ?? 0) + (s.own.APOC ?? 0);
+        const heavyTank = allied ? (available.has("SREF") ? "SREF" : (available.has("MGTK") ? "MGTK" : "MTNK")) : null;
+        const core = countCoreTanks(s);
         const airPlan = this.plan?.composition.JUMPJET || this.plan?.composition.ZEP;
-        if (available.has(heavyTank)) want(heavyTank, 4, 60);
-        want(tank, airPlan ? 4 : 50, core < 4 ? 75 : core < 8 ? 65 : 50);
+        if (heavyTank && available.has(heavyTank) && heavyTank !== tank) want(heavyTank, 4, 60);
+        want(tank, airPlan ? 4 : 50, core < 4 ? 75 : core < 8 ? 65 : 55);
         const airThreat = matchAwareness.getThreatCache()?.totalOffensiveAirThreat ?? 0;
         const enemyInf = s.enemy.infantry ?? 0;
         const aaTarget = airThreat > 0 ? Math.max(2, Math.ceil(core / 3)) : enemyInf >= 6 ? Math.min(3, Math.max(1, Math.ceil(enemyInf / 6))) : Math.max(1, Math.ceil(core / 8));

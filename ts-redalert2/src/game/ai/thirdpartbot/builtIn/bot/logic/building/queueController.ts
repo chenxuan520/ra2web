@@ -144,14 +144,18 @@ export class QueueController {
                         requests.set(tank.name, { priority: 85, specificLocation: null });
                     } else if (core < 8 && (requests.get(tank.name)?.priority ?? 0) < 65) {
                         requests.set(tank.name, { priority: 65, specificLocation: null });
-                    } else if (core < 12 && (requests.get(tank.name)?.priority ?? 0) < 50) {
+                    } else if (core < 16 && (requests.get(tank.name)?.priority ?? 0) < 55) {
+                        requests.set(tank.name, { priority: 55, specificLocation: null });
+                    } else if ((requests.get(tank.name)?.priority ?? 0) < 50) {
                         requests.set(tank.name, { priority: 50, specificLocation: null });
                     }
                 }
-                const heavyName = isSovietCountry(playerData.country?.name) ? "APOC" : "MGTK";
-                const heavy = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === heavyName);
-                if (heavy && situation.credits >= heavy.cost && (requests.get(heavy.name)?.priority ?? 0) < 60) {
-                    requests.set(heavy.name, { priority: 60, specificLocation: null });
+                if (!isSovietCountry(playerData.country?.name)) {
+                    const heavyName = productionApi.getAvailableObjects(QueueType.Vehicles).some(o => o.name === "SREF") ? "SREF" : "MGTK";
+                    const heavy = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === heavyName);
+                    if (heavy && situation.credits >= heavy.cost && (requests.get(heavy.name)?.priority ?? 0) < 60) {
+                        requests.set(heavy.name, { priority: 60, specificLocation: null });
+                    }
                 }
             }
         }
@@ -256,7 +260,8 @@ export class QueueController {
         if (queueData.status == QueueStatus.Idle) {
             this.placementFailures.clear();
             // Start building the decided item.
-            if (decision !== undefined && !(totalCostAcrossQueues > myCredits && decision.priority < minimumPriority)) {
+            const canAffordBuilding = isBuildingQueue(queueType) && decision !== undefined && decision.priority >= 18 && myCredits >= decision.unit.cost + 400;
+            if (decision !== undefined && (canAffordBuilding || !(totalCostAcrossQueues > myCredits && decision.priority < minimumPriority))) {
                 logger(`Decision (${queueTypeToName(queueType)}): ${decision.unit.name}`);
                 actionsApi.queueForProduction(queueType, decision.unit.name, decision.unit.type, 1);
             }
