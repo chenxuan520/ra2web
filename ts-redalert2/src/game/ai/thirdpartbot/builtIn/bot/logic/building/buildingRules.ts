@@ -221,7 +221,7 @@ export const BUILDING_NAME_TO_RULES = new Map<string, AiBuildingRules>([
     ["NAHAND", new BasicBuilding(12, 1)], // Barracks
     ["HARV", new Harvester(15, 4, 2)], // War Miner
     ["NADEPT", new BasicBuilding(1, 1, 10000)], // Repair Depot
-    ["NARADR", new BasicBuilding(10, 1, 500)], // Radar
+    ["NARADR", new BasicBuilding(10, 1, 2500)], // Radar
     ["NANRCT", new PowerPlant()], // Nuclear Reactor
     ["NAYARD", new BasicBuilding(0, 0, 0)], // Naval Yard, disabled
 

@@ -74,8 +74,8 @@ export class FieldArmyMission extends Mission {
             this.attacking = true;
         }
         const outnumbered = enemyArmor > 0 && armor.length < Math.min(enemyArmor, 6);
-        const decimated = armor.length < (isLateGame ? 2 : 4);
-        if (decimated || outnumbered || (units.length < 3 && !air.length)) {
+        const decimated = armor.length < (isLateGame ? 2 : (canAssault ? 2 : 3));
+        if (decimated || outnumbered || (units.length < 2 && !air.length)) {
             if (!air.length && !units.some(unit => unit.name === "ZEP")) {
                 this.attacking = false;
             }

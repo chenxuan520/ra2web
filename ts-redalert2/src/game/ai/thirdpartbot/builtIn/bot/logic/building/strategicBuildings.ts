@@ -49,7 +49,8 @@ export function getStrategicBuildingPriority(
         const needsSpecialist = country === "Arabs" ? enemy.infantry >= 3 || enemy.vehicles >= 4
             : country === "British" ? enemy.infantry >= 3
             : country === "Germans" ? enemy.vehicles >= 3 && enemy.vehicles >= enemy.infantry
-            : country === "Russians" || country === "French" ? enemy.infantry + enemy.vehicles >= 4
+            : country === "French" ? enemy.infantry + enemy.vehicles >= 4
+            : country === "Russians" ? (hasMatureEconomy(situation) || (core >= 8 && credits >= option.cost + 1000))
             : (hasMatureEconomy(situation) || enemy.defences >= 2 || (core >= 4 && credits >= option.cost + 600));
         if (needsSpecialist && !player.power.isLowPower) return 18;
     }

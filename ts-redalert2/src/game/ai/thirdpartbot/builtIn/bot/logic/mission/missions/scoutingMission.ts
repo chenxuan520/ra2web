@@ -16,6 +16,7 @@ import { ActionBatcher } from "../actionBatcher";
 import { getDistanceBetweenTileAndPoint } from "../../map/map";
 import { PrioritisedScoutTarget } from "../../common/scout";
 import { MissionContext, SupabotContext } from "../../common/context";
+import { getKnownEnemyDirections } from "../../common/knownEnemyDirections";
 
 const SCOUT_MOVE_COOLDOWN_TICKS = 30;
 
@@ -40,6 +41,7 @@ export class ScoutingMission extends Mission {
     private scoutMinDistance?: number;
 
     private hadUnit: boolean = false;
+    private totalUnitsReceived: number = 0;
 
     constructor(
         uniqueName: string,
@@ -56,8 +58,25 @@ export class ScoutingMission extends Mission {
         const scoutNames = ["ADOG", "DOG", "E1", "E2", "FV", "HTK"];
         const scouts = this.getUnitsOfTypes(game, ...scoutNames);
 
+        if (scouts.length > 0 && !this.hadUnit) {
+            this.hadUnit = true;
+            this.totalUnitsReceived++;
+        }
+
+        const factories = game.getVisibleUnits(playerData.name, "self", rules => rules.weaponsFactory).length;
+        this.priority = factories === 0 ? 85 : 50;
+
         if ((matchAwareness.getSectorCache().getOverallVisibility() || 0) > 0.9) {
             return disbandMission();
+        }
+
+        // Once initial scout dog has been deployed and completed its run (or died/late game), disband to prevent infinite dog feeding
+        if (this.totalUnitsReceived >= 1 && (scouts.length === 0 || game.getCurrentTick() > 3600)) {
+            const knownEnemy = getKnownEnemyDirections(game, playerData);
+            if (knownEnemy.length > 0 || scouts.length === 0) {
+                this.logger(`Enemy location known or scout completed, disbanding scouting mission ${this.getUniqueName()}`);
+                return disbandMission();
+            }
         }
 
         if (scouts.length > 1) {
@@ -66,10 +85,18 @@ export class ScoutingMission extends Mission {
         }
 
         if (scouts.length === 0) {
+            if (this.totalUnitsReceived >= 1) {
+                return disbandMission();
+            }
             // Count the number of times the scout dies trying to uncover the current scoutTarget.
             if (this.scoutTarget && this.hadUnit) {
                 this.attemptsOnCurrentTarget++;
                 this.hadUnit = false;
+            }
+            const available = new Set(context.player.production.getAvailableObjects().map((o) => o.name));
+            const preferredDog = available.has("DOG") ? "DOG" : available.has("ADOG") ? "ADOG" : null;
+            if (preferredDog) {
+                return requestUnits({ [preferredDog]: this.priority });
             }
             return requestUnitsWithSamePriority(scoutNames, this.priority);
         } else if (this.scoutTarget) {
@@ -149,6 +176,7 @@ export class ScoutingMission extends Mission {
 const SCOUT_COOLDOWN_TICKS = 300;
 
 export class ScoutingMissionFactory {
+    private initialMissionsCreated = false;
     constructor(private lastScoutAt: number = -SCOUT_COOLDOWN_TICKS) {}
 
     getName(): string {
@@ -157,16 +185,23 @@ export class ScoutingMissionFactory {
 
     maybeCreateMissions(context: SupabotContext, missionController: MissionController, logger: DebugLogger): void {
         const { game, matchAwareness } = context;
+        if (this.initialMissionsCreated) {
+            return;
+        }
         if (game.getCurrentTick() < this.lastScoutAt + SCOUT_COOLDOWN_TICKS) {
             return;
         }
         if (!matchAwareness.getScoutingManager().hasScoutTargets()) {
             return;
         }
-        const created0 = !!missionController.addMission(new ScoutingMission("globalScout", 10, logger));
+        const scoutPriority = context.difficulty === "brutal" ? 85 : 50;
+        const created0 = !!missionController.addMission(new ScoutingMission("globalScout", scoutPriority, logger));
         let created1 = false;
         if (context.difficulty === "brutal") {
-            created1 = !!missionController.addMission(new ScoutingMission("globalScout_1", 10, logger));
+            created1 = !!missionController.addMission(new ScoutingMission("globalScout_1", scoutPriority, logger));
+        }
+        if (created0 || created1) {
+            this.initialMissionsCreated = true;
         }
         if (!created0 && !created1) {
             this.lastScoutAt = game.getCurrentTick();

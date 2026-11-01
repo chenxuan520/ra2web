@@ -18,7 +18,7 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
                 if (intruders.length >= 3 && s.credits < 3000) return 0;
             }
             const core = (s.own.MTNK ?? 0) + (s.own.HTNK ?? 0);
-            const canExpand = s.harvesters >= 2 && (s.credits >= 2000 || core >= 3);
+            const canExpand = s.harvesters >= 2 && (s.credits >= 1500 || core >= 2);
             return (committed || (factories > 0 && canExpand) ||
                 (!factories && (s.own.JUMPJET ?? 0) >= 2 && getOpeningAirBudget(game, player) === 2)) ? 50 : 0;
         }
@@ -33,7 +33,10 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
         return committed || !groundFirst ? 45 : 0;
     }
     const armor = (s.own.MTNK ?? 0) + (s.own.HTNK ?? 0) + (s.own.MGTK ?? 0) + (s.own.APOC ?? 0) + (s.own.SREF ?? 0);
-    if (rules.name === "NARADR" && !count && s.harvesters >= 3 && armor >= 2) return 24;
+    if (rules.name === "NARADR") {
+        if (s.country === "Russians" && (refineries < 2 || armor < 6 || s.credits < 2500)) return 0;
+        if (!count && s.harvesters >= 3 && armor >= 2) return 24;
+    }
     if (rules.name === "NATECH" && !count && s.harvesters >= 3 && armor >= 2) return 30;
     if (rules.name === "GATECH" && !count && s.harvesters >= 3 && armor >= 2) return 30;
     if (rules.name === "GADEPT" || rules.name === "NADEPT") return s.credits >= 6000 && armor >= 8 ? 1 : 0;

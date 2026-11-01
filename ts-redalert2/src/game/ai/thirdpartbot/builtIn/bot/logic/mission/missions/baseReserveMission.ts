@@ -39,6 +39,10 @@ export class BaseReserveMission extends Mission {
             this.squad.setDefensiveRadius(8);
         }
         this.squad.onAiUpdate(context, this, this.logger);
+        const factories = game.getVisibleUnits(player.name, "self", rules => rules.weaponsFactory).length;
+        if (context.difficulty === "brutal" && factories === 0 && homeThreats.length === 0) {
+            return noop();
+        }
         const available = context.player.production.getAvailableObjects();
         const infantry = available.find(rules => rules.name === "E1" || rules.name === "E2");
         if (!infantry) return noop();

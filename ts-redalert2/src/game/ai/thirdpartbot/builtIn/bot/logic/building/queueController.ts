@@ -6,6 +6,7 @@ import {
     QueueStatus,
     QueueType,
     TechnoRules,
+    UnitData,
     Vector2,
 } from "../../../game-api";
 import { GlobalThreat } from "../threat/threat";
@@ -85,6 +86,21 @@ export class QueueController {
             for (const name of ["E1", "E2"]) {
                 const count = game.getVisibleUnits(player.name, "self", rules => rules.name === name).length;
                 if (count >= getBasicInfantryBudget(name, context.difficulty).total) requests.delete(name);
+            }
+            // Before War Factory is established, never let basic foot infantry starve the refinery and factory
+            const factories = game.getVisibleUnits(player.name, "self", rules => rules.weaponsFactory).length;
+            if (factories === 0) {
+                const start = playerData.startLocation;
+                const hasHomeThreat = !start || game.getVisibleUnits(player.name, "enemy", rules => rules.isSelectableCombatant && !rules.harvester)
+                    .some(id => {
+                        const unit = game.getUnitData(id);
+                        if (!unit?.tile) return true;
+                        return (unit.tile.rx - start.x) ** 2 + (unit.tile.ry - start.y) ** 2 <= 25 ** 2;
+                    });
+                if (!hasHomeThreat) {
+                    requests.delete("E1");
+                    requests.delete("E2");
+                }
             }
             for (const [name, cap] of Object.entries(NATIONAL_SUPPORT_LIMITS)) {
                 if (game.getVisibleUnits(player.name, "self", rules => rules.name === name).length >= cap) {
