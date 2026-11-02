@@ -145,14 +145,16 @@ export class FieldArmyMission extends Mission {
                     ((previous.rules.type === ObjectType.Vehicle || (previous.type as any) === ObjectType.Vehicle) && !previous.rules.harvester && prevDist > 20 &&
                         enemies.some(e => (e.type as any) === ObjectType.Building && center.distanceTo(location(e)) <= 18));
 
+                const hasEnemyCombatants = enemies.some(e => (e.type as any) === ObjectType.Vehicle && e.rules.isSelectableCombatant && !e.rules.harvester);
                 const objective = (!shouldRetarget && previous) ? previous : enemies.map(enemy => {
                     const isArmedDefense = (enemy.type as any) === ObjectType.Building &&
                         (enemy.rules.primary || enemy.rules.secondary);
                     const isCombatVehicle = (enemy.type as any) === ObjectType.Vehicle && enemy.rules.isSelectableCombatant && !enemy.rules.harvester;
                     let value = isArmedDefense ? 135
+                        : isCombatVehicle ? 120
+                        : (!hasEnemyCombatants && (enemy.type as any) === ObjectType.Building) ? 150
                         : enemy.rules.refinery ? 110
                         : enemy.rules.constructionYard ? 105
-                        : isCombatVehicle ? 100
                         : enemy.rules.weaponsFactory ? 90
                         : enemy.rules.harvester ? 80
                         : (enemy.type as any) === ObjectType.Building ? 60

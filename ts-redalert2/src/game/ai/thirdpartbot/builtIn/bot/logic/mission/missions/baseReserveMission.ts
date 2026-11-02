@@ -40,8 +40,8 @@ export class BaseReserveMission extends Mission {
         }
         this.squad.onAiUpdate(context, this, this.logger);
         const factories = game.getVisibleUnits(player.name, "self", rules => rules.weaponsFactory).length;
-        const core = game.getVisibleUnits(player.name, "self", rules => ["HTNK", "MTNK", "MGTK", "APOC", "SREF"].includes(rules.name)).length;
-        if (context.difficulty === "brutal" && (factories === 0 || core < 1) && homeThreats.length === 0) {
+        const harvesters = game.getVisibleUnits(player.name, "self", rules => rules.harvester).length;
+        if (context.difficulty === "brutal" && homeThreats.length === 0) {
             return noop();
         }
         const available = context.player.production.getAvailableObjects();

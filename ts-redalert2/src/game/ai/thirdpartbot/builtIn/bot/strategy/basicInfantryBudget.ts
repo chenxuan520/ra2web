@@ -1,7 +1,7 @@
 /** One budget shared by the standing reserve, field requests and production cap. */
 export function getBasicInfantryBudget(name: string, difficulty: string | undefined) {
-    if (name === "E1") return difficulty === "brutal" ? { reserve: 3, total: 6 } : { reserve: 5, total: 9 };
-    return difficulty === "brutal" ? { reserve: 2, total: 4 } : { reserve: 12, total: 32 };
+    if (name === "E1") return difficulty === "brutal" ? { reserve: 0, total: 0 } : { reserve: 5, total: 9 };
+    return difficulty === "brutal" ? { reserve: 0, total: 0 } : { reserve: 12, total: 32 };
 }
 
 export const isSovietCountry = (name: string | undefined) =>

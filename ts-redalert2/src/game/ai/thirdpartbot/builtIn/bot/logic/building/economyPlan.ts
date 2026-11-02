@@ -18,9 +18,9 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
                 if (intruders.length >= 3 && s.credits < 3000) return 0;
             }
             const core = (s.own.MTNK ?? 0) + (s.own.HTNK ?? 0);
-            const canExpand = s.harvesters >= 2 && (s.credits >= 1500 || core >= 2);
+            const canExpand = s.harvesters >= 2 && (s.credits >= 1500 || core >= 3);
             return (committed || (factories > 0 && canExpand) ||
-                (!factories && (s.own.JUMPJET ?? 0) >= 2 && getOpeningAirBudget(game, player) === 2)) ? 50 : 0;
+                (!factories && (s.own.JUMPJET ?? 0) >= 2 && getOpeningAirBudget(game, player) === 2)) ? 65 : 0;
         }
         return refineries < 4 && s.harvesters >= refineries * 2 ? 18 : 0;
     }
@@ -54,7 +54,8 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
             return rules.name === "NAWEAP" ? 60 : 30;
         }
         if (factories === 1) {
-            return (committed || s.harvesters >= 4 || (refineries >= 2 && s.harvesters >= 3 && s.credits >= 1200)) ? 35 : 0;
+            const hasIncomeForDual = (refineries >= 2 && s.harvesters >= 2) || s.harvesters >= 4;
+            return (committed || hasIncomeForDual) ? 65 : 0;
         }
         return factories < 3 && s.harvesters >= 4 + (factories - 1) * 2 ? 35 : 0;
     }
