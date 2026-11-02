@@ -80,11 +80,25 @@ export function selectRaidTarget(context: SupabotContext, raiders: UnitData[], m
     const enemies = visibleEnemies(context);
     const center = new Vector2(raiders.reduce((sum, unit) => sum + unit.tile.rx, 0) / raiders.length,
         raiders.reduce((sum, unit) => sum + unit.tile.ry, 0) / raiders.length);
+    const armedDefenses = enemies.filter(e => (e.type as any) === ObjectType.Building && (e.rules.primary || e.rules.secondary));
     return enemies.filter(target => {
         const point = new Vector2(target.tile.rx, target.tile.ry);
         return mainTargets.every(main => main.distanceTo(point) >= RAID_TARGET_SEPARATION) &&
             raidTargetIsSafe(target, raiders, enemies, context.game);
-    }).map(target => ({ target, score: (target.rules.harvester ? 2000 : 500) +
-        (1 - (estimatedHealthRatio(target, context.game) ?? 1)) * 100 - center.distanceTo(new Vector2(target.tile.rx, target.tile.ry)) }))
-        .sort((a, b) => b.score - a.score || a.target.id - b.target.id)[0]?.target;
+    }).map(target => {
+        const point = new Vector2(target.tile.rx, target.tile.ry);
+        const distToDefense = armedDefenses.length > 0
+            ? Math.min(...armedDefenses.map(d => new Vector2(d.tile.rx, d.tile.ry).distanceTo(point)))
+            : Infinity;
+        // Priority bonuses for scouted enemy weak points (unfortified nodes outside static defence range)
+        const isIsolatedHarvester = target.rules.harvester && distToDefense >= 15;
+        const isExposedRefinery = target.rules.refinery && distToDefense >= 15;
+        const isExposedPower = (target.rules.power ?? 0) > 0 && distToDefense >= 15;
+        const weakPointBonus = isIsolatedHarvester ? 1000 : isExposedRefinery ? 800 : isExposedPower ? 600 : 0;
+        const baseScore = target.rules.harvester ? 2000 : target.rules.refinery ? 1200 : 500;
+        return {
+            target,
+            score: baseScore + weakPointBonus + (1 - (estimatedHealthRatio(target, context.game) ?? 1)) * 100 - center.distanceTo(point),
+        };
+    }).sort((a, b) => b.score - a.score || a.target.id - b.target.id)[0]?.target;
 }

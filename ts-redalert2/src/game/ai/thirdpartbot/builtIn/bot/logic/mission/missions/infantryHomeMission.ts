@@ -73,6 +73,11 @@ export class InfantryHomeMission extends Mission {
         const conscripts = game.getVisibleUnits(player.name, "self", r => r.name === "E2");
         const free = conscripts.filter(id => !assigned.has(id));
         if (free.length) return requestSpecificUnits(free, 20);
+        const factories = game.getVisibleUnits(player.name, "self", rules => rules.weaponsFactory).length;
+        const core = game.getVisibleUnits(player.name, "self", rules => ["HTNK", "MTNK", "MGTK", "APOC", "SREF"].includes(rules.name)).length;
+        const underThreat = homeThreats.length > 0;
+        const openingSafe = factories > 0 && core >= 1;
+        if (!underThreat && !openingSafe) return noop();
         const hasIncome = game.getVisibleUnits(player.name, "self", r => r.harvester).length > 0;
         // Preserve the former field-army request and global cap. The original
         // twelve-man reserve still requests at priority 50 before this priority 20.

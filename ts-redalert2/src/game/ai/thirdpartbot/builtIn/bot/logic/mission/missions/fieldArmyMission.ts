@@ -52,6 +52,12 @@ export class FieldArmyMission extends Mission {
             .map(id => game.getUnitData(id)).filter((unit): unit is UnitData => !!unit);
         const homeThreats = enemies.filter(enemy => enemy.rules.isSelectableCombatant && !enemy.rules.harvester &&
             anchors.some(base => location(base).distanceTo(location(enemy)) <= 22));
+        const approachThreats = enemies.filter(enemy => enemy.rules.isSelectableCombatant && !enemy.rules.harvester &&
+            anchors.some(base => {
+                const d = location(base).distanceTo(location(enemy));
+                return d > 22 && d <= 48;
+            }));
+        const incomingStrikeForce = approachThreats.length >= 2 || approachThreats.some(e => (e.type as any) === ObjectType.Vehicle);
         const rally = matchAwareness.getMainRallyPoint();
         this.squad ??= new CombatSquad(rally, rally, 15);
         this.squad.setAirSafety(getOpeningAirBudget(game, playerData) === 2);
@@ -60,22 +66,47 @@ export class FieldArmyMission extends Mission {
         const enemyDir = getKnownEnemyDirections(game, playerData)[0];
         const targetDist = enemyDir ? playerData.startLocation.distanceTo(enemyDir) : 0;
         const isLongMap = maxDim > 100 && targetDist > 80;
+
+        // Dynamic combat strength evaluation across both armies and defensive structures
+        let ourPower = 0;
+        for (const unit of units) {
+            if (["HTNK", "MTNK"].includes(unit.name)) ourPower += 100;
+            else if (["APOC", "SREF", "MGTK"].includes(unit.name)) ourPower += 150;
+            else if (["HTK", "FV"].includes(unit.name)) ourPower += 50;
+            else if (unit.name === "JUMPJET") ourPower += 70;
+            else if (unit.name === "ZEP") ourPower += 220;
+            else if ((unit.type as any) === ObjectType.Infantry) ourPower += 15;
+        }
         const enemyArmor = (s.enemy.vehicles ?? 0);
+        const enemyDefences = (s.enemy.defences ?? 0);
+        const enemyInfantry = (s.enemy.infantry ?? 0);
+        const enemyAircraft = (s.enemy.aircraft ?? 0);
+        const enemyPower = enemyArmor * 100 + enemyDefences * 140 + enemyInfantry * 15 + enemyAircraft * 70;
+        const forceRatio = enemyPower > 0 ? ourPower / enemyPower : 2.0;
+        const hasHeavyDefences = enemyDefences >= 2;
+        const hasSiege = units.some(u => ["SREF", "ZEP", "V3"].includes(u.name));
+
         const factories = (s.own.GAWEAP ?? 0) + (s.own.NAWEAP ?? 0);
         const minArmor = isLongMap ? (enemyArmor > 3 ? 6 : 4) : 4;
         const isLateGame = tick >= 10000;
-        const canAssault = (armor.length >= minArmor && (armor.length >= enemyArmor || armor.length >= 6)) || (factories > 0 && (
-            (!isLongMap && armor.length >= 3 && enemyArmor <= 1 && targetDist <= 45) ||
-            (isLateGame && armor.length >= 2 && armor.length > enemyArmor && enemyArmor <= 1) ||
-            (!isLongMap && armor.length >= 2 && enemyArmor === 0 && targetDist <= 45)
-        ));
+        // Against heavy static defenses (2+ towers), require either siege weapons or decisive armor mass
+        const defenseReady = !hasHeavyDefences || hasSiege || (armor.length >= Math.max(8, enemyArmor + enemyDefences * 2) && forceRatio >= 1.2);
+        const canAssault = defenseReady && (
+            (armor.length >= minArmor && (armor.length >= enemyArmor || armor.length >= 6) && forceRatio >= 0.9) ||
+            (factories > 0 && (
+                (!isLongMap && armor.length >= 3 && enemyArmor <= 1 && enemyDefences === 0 && targetDist <= 45) ||
+                (isLateGame && armor.length >= 2 && armor.length > enemyArmor && enemyArmor <= 1) ||
+                (!isLongMap && armor.length >= 2 && enemyArmor === 0 && targetDist <= 45)
+            ))
+        );
         if (canAssault ||
             air.length >= 2 || units.some(unit => unit.name === "ZEP") || infantry.length >= 20) {
             this.attacking = true;
         }
         const outnumbered = enemyArmor > 0 && armor.length < Math.min(enemyArmor, 6);
-        const decimated = armor.length < (isLateGame ? 2 : (canAssault ? 2 : 3));
-        if (decimated || outnumbered || (units.length < 2 && !air.length)) {
+        const powerDeficit = enemyPower > 300 && forceRatio < 0.65;
+        const decimated = armor.length < (isLateGame ? 2 : (hasHeavyDefences ? 5 : (canAssault ? 2 : 4)));
+        if (decimated || outnumbered || powerDeficit || (units.length < 2 && !air.length)) {
             if (!air.length && !units.some(unit => unit.name === "ZEP")) {
                 this.attacking = false;
             }
@@ -93,6 +124,11 @@ export class FieldArmyMission extends Mission {
                 const enemy = [...homeThreats].sort((a, b) => location(a).distanceTo(rally) - location(b).distanceTo(rally) || a.id - b.id)[0];
                 this.attackArea = location(enemy);
                 this.targetId = undefined;
+            } else if (incomingStrikeForce && center.distanceTo(rally) < 45) {
+                // Intercept incoming enemy strike force before it reaches our buildings!
+                const intercept = [...approachThreats].sort((a, b) => location(a).distanceTo(center) - location(b).distanceTo(center) || a.id - b.id)[0];
+                this.attackArea = location(intercept);
+                this.targetId = intercept.id;
             } else {
                 const previous = enemies.find(enemy => enemy.id === this.targetId);
                 const prevDist = previous ? center.distanceTo(location(previous)) : Infinity;
