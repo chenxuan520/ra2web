@@ -122,7 +122,11 @@ export class QueueController {
                     const situation = readStrategicSituation(game, playerData);
                     const core = countCoreTanks(situation);
                     const minCoreBeforeMiner2 = isSovietCountry(playerData.country?.name) ? 2 : 1;
-                    priority = Math.max(priority, miners === 0 ? 120 : (core >= minCoreBeforeMiner2 && miners < 2 ? 90 : (miners < 4 ? 80 : 60)));
+                    const wantExtraMiner = miners >= 2 && core >= 6 && situation.credits >= 1200;
+                    const minerPriority = miners === 0 ? 120
+                        : (core >= minCoreBeforeMiner2 && miners < 2 ? 90
+                        : wantExtraMiner ? 60 : 30);
+                    priority = Math.max(priority, minerPriority);
                 }
             }
             if (priority > (requests.get(option.name)?.priority ?? 0)) {

@@ -52,8 +52,20 @@ export class InfantryHomeMission extends Mission {
             this.squad.setAttackArea(new Vector2(nearestThreat.tile.rx, nearestThreat.tile.ry));
             this.squad.setDefensiveRadius(22);
         } else {
-            this.squad.setAttackArea(rally);
-            this.squad.setDefensiveRadius(12);
+            const army = this.controller.getMissions().find(m => m.getUniqueName() === "fieldArmy") as any;
+            const armyTarget = army?.getAttackArea?.();
+            if (armyTarget && army?.isAttacking?.()) {
+                const forwardVector = armyTarget.clone().sub(rally);
+                const advanceDist = Math.min(20, forwardVector.length() * 0.4);
+                if (forwardVector.length() > 0) forwardVector.multiplyScalar(advanceDist / forwardVector.length());
+                const screenPoint = rally.clone().add(forwardVector);
+                screenPoint.set(Math.round(screenPoint.x), Math.round(screenPoint.y));
+                this.squad.setAttackArea(screenPoint);
+                this.squad.setDefensiveRadius(18);
+            } else {
+                this.squad.setAttackArea(rally);
+                this.squad.setDefensiveRadius(12);
+            }
         }
         this.squad.onAiUpdate(context, this, this.logger);
 
@@ -61,8 +73,11 @@ export class InfantryHomeMission extends Mission {
         const conscripts = game.getVisibleUnits(player.name, "self", r => r.name === "E2");
         const free = conscripts.filter(id => !assigned.has(id));
         if (free.length) return requestSpecificUnits(free, 20);
+        const factories = game.getVisibleUnits(player.name, "self", rules => rules.weaponsFactory).length;
+        const core = game.getVisibleUnits(player.name, "self", rules => ["HTNK", "MTNK", "MGTK", "APOC", "SREF"].includes(rules.name)).length;
         const underThreat = homeThreats.length > 0;
-        if (!underThreat) return noop();
+        const openingSafe = factories > 0 && core >= 1;
+        if (!underThreat && !openingSafe) return noop();
         const hasIncome = game.getVisibleUnits(player.name, "self", r => r.harvester).length > 0;
         return hasIncome && conscripts.length < budget.total &&
             player.production.getAvailableObjects().some(r => r.name === "E2")

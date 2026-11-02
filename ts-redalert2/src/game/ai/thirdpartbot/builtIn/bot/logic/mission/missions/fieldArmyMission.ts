@@ -94,9 +94,8 @@ export class FieldArmyMission extends Mission {
         const canAssault = defenseReady && (
             (armor.length >= minArmor && (armor.length >= enemyArmor || armor.length >= 6) && forceRatio >= 0.9) ||
             (factories > 0 && (
-                (!isLongMap && armor.length >= 3 && enemyArmor <= 1 && enemyDefences === 0 && targetDist <= 45) ||
-                (isLateGame && armor.length >= 2 && armor.length > enemyArmor && enemyArmor <= 1) ||
-                (!isLongMap && armor.length >= 2 && enemyArmor === 0 && targetDist <= 45)
+                (!isLongMap && armor.length >= 4 && enemyArmor <= 1 && enemyDefences === 0 && targetDist <= 45) ||
+                (isLateGame && armor.length >= 2 && armor.length > enemyArmor && enemyArmor <= 1)
             ))
         );
         if (canAssault ||
@@ -105,8 +104,9 @@ export class FieldArmyMission extends Mission {
         }
         const outnumbered = enemyArmor > 0 && armor.length < Math.min(enemyArmor, 6);
         const powerDeficit = enemyPower > 300 && forceRatio < 0.65;
-        const decimated = armor.length < (isLateGame ? 2 : (hasHeavyDefences ? 5 : (canAssault ? 2 : 4)));
-        if (decimated || outnumbered || powerDeficit || (units.length < 2 && !air.length)) {
+        const enemyHasCombatants = enemyArmor > 0 || hasHeavyDefences || enemyPower > 200;
+        const decimated = armor.length < (isLateGame || !enemyHasCombatants ? 2 : (hasHeavyDefences ? 5 : (canAssault ? 2 : 4)));
+        if ((decimated && enemyHasCombatants) || outnumbered || powerDeficit || (units.length < 2 && !air.length)) {
             if (!air.length && !units.some(unit => unit.name === "ZEP")) {
                 this.attacking = false;
             }
@@ -118,6 +118,7 @@ export class FieldArmyMission extends Mission {
                 const forward = rally.clone().sub(playerData.startLocation);
                 if (forward.length() > 4) forward.multiplyScalar(4 / forward.length());
                 this.attackArea = playerData.startLocation.clone().add(forward);
+                this.targetId = undefined;
             } else if (homeThreats.length && (center.distanceTo(rally) < 40 || homeThreats.length >= 4 ||
                 homeThreats.some(enemy => enemy.rules.primary && ((enemy.type as any) === ObjectType.Vehicle ||
                     anchors.some(base => location(base).distanceTo(location(enemy)) <= 14))))) {
