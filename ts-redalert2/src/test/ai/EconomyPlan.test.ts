@@ -1,5 +1,6 @@
 import { expect, test } from "bun:test";
 import { getEconomyBuildingPriority } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/economyPlan";
+import { ObjectType, Vector2 } from "../../game/ai/thirdpartbot/builtIn/game-api";
 
 function scenario(names: string[], credits = 5000, distance = 120, country = "Arabs") {
     const owned = names.map(name => ({ name, harvester: ["HARV", "CMIN"].includes(name) }));
@@ -58,4 +59,77 @@ test("two opening rocketeers fund a second refinery before another military fact
     expect(one("GAREFN", { refinery: true })).toBe(0);
     const covered = scenario(["GAREFN", "CMIN", "GAAIRC", "JUMPJET", "JUMPJET"]);
     expect(covered("GAREFN", { refinery: true })).toBeGreaterThan(covered("GAWEAP")!);
+});
+
+test("two miners and four tanks can fund a second refinery incrementally when cash is drained", () => {
+    for (const credits of [62, 500, 999]) {
+        const established = scenario(["NAREFN", "NAWEAP", "HARV", "HARV", "HTNK", "HTNK", "HTNK", "HTNK"], credits);
+        expect(established("NAREFN", { refinery: true })).toBeGreaterThan(0);
+    }
+});
+
+test("a cash-starved one-miner or incomplete tank opening does not add a second refinery", () => {
+    for (const names of [
+        ["NAREFN", "NAWEAP", "HARV", "HTNK", "HTNK", "HTNK", "HTNK"],
+        ["NAREFN", "NAWEAP", "HARV", "HARV", "HTNK", "HTNK"],
+    ]) {
+        expect(scenario(names, 62)("NAREFN", { refinery: true })).toBe(0);
+    }
+});
+
+test.each([
+    ["NAREFN", "NAWEAP", "HARV", "HTNK"],
+    ["GAREFN", "GAWEAP", "CMIN", "MTNK"],
+])("a funded %s opening uses the second refinery's supplied miner after the first tank", (refinery, factory, miner, tank) => {
+    const opening = scenario([refinery, factory, miner, tank], 3000);
+    expect(opening(refinery, { refinery: true, cost: 2000, freeUnit: miner })).toBeGreaterThan(0);
+    expect(scenario([refinery, factory, miner, tank], 2399)(refinery, { refinery: true, cost: 2000, freeUnit: miner })).toBe(0);
+    expect(scenario([refinery, factory, miner], 3000)(refinery, { refinery: true, cost: 2000, freeUnit: miner })).toBe(0);
+    expect(opening(refinery, { refinery: true, cost: 2000, freeUnit: "DOG" })).toBe(0);
+});
+
+function defensiveScenario(name: string, initialTick: number) {
+    let tick = initialTick;
+    const own = { id: 1, tile: { rx: 0, ry: 0 }, type: ObjectType.Building,
+        rules: { name: "NACNST", constructionYard: true } };
+    const enemy = { id: 2, tile: { rx: 3, ry: 3 }, type: ObjectType.Vehicle,
+        rules: { name: "HTNK", type: ObjectType.Vehicle, isSelectableCombatant: true, primary: "120mm" } };
+    const player: any = { name, credits: 5000, country: { name: "Arabs" }, startLocation: new Vector2() };
+    const game: any = {
+        getCurrentTick: () => tick,
+        getVisibleUnits: (_name: string, relation: string, predicate: any) =>
+            [relation === "self" ? own : enemy].filter(unit => predicate(unit.rules)).map(unit => unit.id),
+        getUnitData: (id: number) => id === own.id ? own : enemy,
+    };
+    return { game, player, at(value: number) { tick = value; },
+        priority: (committed = false) => getEconomyBuildingPriority(game, player, { name: "NALASR" } as any, committed) };
+}
+
+test("a previous match cannot suppress reactive defence for the same player name", () => {
+    const previous = defensiveScenario("defence-restart", 1000);
+    expect(previous.priority(true)).toBe(70);
+    const next = defensiveScenario("defence-restart", 1500);
+    expect(next.priority()).toBe(70);
+});
+
+test("independent games at the same tick retain independent defence cooldowns", () => {
+    const first = defensiveScenario("defence-parallel", 6000);
+    expect(first.priority(true)).toBe(70);
+    const second = defensiveScenario("defence-parallel", 6000);
+    expect(second.priority()).toBe(70);
+});
+
+test("reactive defence still respects its cooldown within a match", () => {
+    const current = defensiveScenario("defence-current", 1000);
+    expect(current.priority(true)).toBe(70);
+    current.at(1500);
+    expect(current.priority()).toBe(0);
+    current.at(2800);
+    expect(current.priority()).toBe(70);
+});
+
+test("different players sharing a game do not share a defence cooldown", () => {
+    const current = defensiveScenario("defence-player-one", 1000);
+    expect(current.priority(true)).toBe(70);
+    expect(getEconomyBuildingPriority(current.game, { ...current.player, name: "defence-player-two" }, { name: "NALASR" } as any, false)).toBe(70);
 });

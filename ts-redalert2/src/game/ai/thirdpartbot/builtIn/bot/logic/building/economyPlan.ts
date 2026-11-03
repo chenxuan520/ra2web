@@ -2,7 +2,7 @@ import { GameApi, ObjectType, PlayerData, TechnoRules, UnitData } from "../../..
 import { readStrategicSituation } from "../../strategy/nationalComposition";
 import { getOpeningAirBudget } from "../../strategy/openingAirBudget";
 
-const lastDefenseBuiltTick = new Map<string, number>();
+const lastDefenseBuiltTick = new WeakMap<GameApi, Map<string, number>>();
 
 /** Fund income before duplicating production capacity that the miners cannot supply. */
 export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, rules: TechnoRules, committed: boolean): number | undefined {
@@ -20,7 +20,9 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
                 if (intruders.length >= 3 && s.credits < 3000) return 0;
             }
             const core = (s.own.MTNK ?? 0) + (s.own.HTNK ?? 0);
-            const canExpand = s.harvesters >= 2 && (s.credits >= 2000 || (s.credits >= 1000 && core >= 4) || core >= 6);
+            const canExpand = (s.harvesters >= 2 && (s.credits >= 2000 || core >= 4)) ||
+                (s.harvesters === 1 && factories > 0 && core >= 1 && s.credits >= rules.cost + 400 &&
+                    (rules.freeUnit === "HARV" || rules.freeUnit === "CMIN"));
             return (committed || (factories > 0 && canExpand) ||
                 (!factories && (s.own.JUMPJET ?? 0) >= 2 && getOpeningAirBudget(game, player) === 2)) ? 50 : 0;
         }
@@ -47,9 +49,14 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
     if (rules.name === "GAPILL" || rules.name === "NALASR") {
         if (count >= 1 || s.credits < 1000) return 0;
         const currentTick = game.getCurrentTick();
-        const lastTick = lastDefenseBuiltTick.get(player.name) ?? -Infinity;
-        if (currentTick < lastTick) lastDefenseBuiltTick.set(player.name, -Infinity); // game reset
-        if (currentTick - (lastDefenseBuiltTick.get(player.name) ?? -Infinity) < 1800) return 0;
+        let playerCooldowns = lastDefenseBuiltTick.get(game);
+        if (!playerCooldowns) {
+            playerCooldowns = new Map();
+            lastDefenseBuiltTick.set(game, playerCooldowns);
+        }
+        const lastTick = playerCooldowns.get(player.name) ?? -Infinity;
+        if (currentTick < lastTick) playerCooldowns.set(player.name, -Infinity); // game reset
+        if (currentTick - (playerCooldowns.get(player.name) ?? -Infinity) < 1800) return 0;
 
         const anchors = game.getVisibleUnits(player.name, "self", r =>
             r.constructionYard || r.refinery || r.weaponsFactory)
@@ -63,7 +70,7 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
         // Only build defensively when enemy combatants are actively invading the base!
         const hasVehicleIntruder = intruders.some(u => (u.type as any) === ObjectType.Vehicle);
         if (intruders.length >= 2 || (intruders.length >= 1 && hasVehicleIntruder)) {
-            if (committed) lastDefenseBuiltTick.set(player.name, currentTick);
+            if (committed) playerCooldowns.set(player.name, currentTick);
             return 70;
         }
         return 0;

@@ -81,7 +81,10 @@ export class FieldArmyMission extends Mission {
         const enemyDefences = (s.enemy.defences ?? 0);
         const enemyInfantry = (s.enemy.infantry ?? 0);
         const enemyAircraft = (s.enemy.aircraft ?? 0);
-        const enemyPower = enemyArmor * 100 + enemyDefences * 140 + enemyInfantry * 15 + enemyAircraft * 70;
+        const lightDefences = tick >= 10000 && armor.length >= 3 ? enemies.filter(enemy =>
+            (enemy.type as any) === ObjectType.Building && (enemy.rules.primary || enemy.rules.secondary) &&
+            ["GAPILL", "NALASR"].includes(enemy.name)).length : 0;
+        const enemyPower = enemyArmor * 100 + (enemyDefences - lightDefences) * 140 + lightDefences * 40 + enemyInfantry * 15 + enemyAircraft * 70;
         const forceRatio = enemyPower > 0 ? ourPower / enemyPower : 2.0;
         const hasHeavyDefences = enemyDefences >= 2;
         const hasSiege = units.some(u => ["SREF", "ZEP", "V3"].includes(u.name));
@@ -91,8 +94,11 @@ export class FieldArmyMission extends Mission {
         const isLateGame = tick >= 10000;
         // Against heavy static defenses (2+ towers), require either siege weapons or decisive armor mass
         const defenseReady = !hasHeavyDefences || hasSiege || (armor.length >= Math.max(8, enemyArmor + enemyDefences * 2) && forceRatio >= 1.2);
+        const lateArmorAdvantage = defenseReady && isLateGame && armor.length >= 3 && armor.length > enemyArmor &&
+            enemyAircraft === 0 && enemyDefences === lightDefences && forceRatio >= 1.05 &&
+            armor.every(unit => unit.hitPoints >= unit.maxHitPoints * 0.7);
         const canAssault = defenseReady && (
-            (enemyArmor === 0
+            lateArmorAdvantage || (enemyArmor === 0
                 ? armor.length >= minArmor && forceRatio >= 0.9
                 : armor.length >= 6 && (armor.length >= enemyArmor + 2 || armor.length >= 12) && forceRatio >= 1.15
             ) ||
@@ -133,7 +139,7 @@ export class FieldArmyMission extends Mission {
                 if (shouldDefendHomeThreat && nearestHomeThreat) {
                     this.attackArea = location(nearestHomeThreat);
                     this.targetId = undefined;
-                } else if (incomingStrikeForce && center.distanceTo(rally) < 45) {
+                } else if (isArmorFormed && incomingStrikeForce && center.distanceTo(rally) < 45) {
                     const intercept = [...approachThreats].sort((a, b) => location(a).distanceTo(center) - location(b).distanceTo(center) || a.id - b.id)[0];
                     this.attackArea = location(intercept);
                     this.targetId = undefined;
@@ -206,7 +212,7 @@ export class FieldArmyMission extends Mission {
                 }
             }
         }
-        const isIntercepting = !this.attacking && incomingStrikeForce && center.distanceTo(rally) < 45;
+        const isIntercepting = !this.attacking && isArmorFormed && incomingStrikeForce && center.distanceTo(rally) < 45;
         this.squad.setDefensiveRadius(this.attacking ? undefined : (shouldDefendHomeThreat || isIntercepting ? 25 : 7));
         this.squad.setAttackArea(this.attackArea);
         this.squad.onAiUpdate(context, this, this.logger);

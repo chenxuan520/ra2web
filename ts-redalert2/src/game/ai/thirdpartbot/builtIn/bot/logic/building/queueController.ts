@@ -113,6 +113,12 @@ export class QueueController {
             if (!option.harvester) continue;
             const logic = BUILDING_NAME_TO_RULES.get(option.name);
             if (!logic) continue;
+            if (context.difficulty === "brutal" && game.getVisibleUnits(player.name, "self", rules => rules.harvester).length > 0 &&
+                !productionApi.getQueueData(QueueType.Vehicles).items.some(item => item.rules.name === option.name) &&
+                (productionApi.getQueueData(QueueType.Structures).items.some(item =>
+                    item.rules.refinery && item.rules.freeUnit === option.name) ||
+                 productionApi.getAvailableObjects(QueueType.Structures).some(rules =>
+                    rules.refinery && rules.freeUnit === option.name && (requests.get(rules.name)?.priority ?? 0) > 0))) continue;
             let priority = logic.getPriority(game, playerData, option, threatCache);
             if (context.difficulty === "brutal") {
                 const miners = game.getVisibleUnits(player.name, "self", rules => rules.harvester).length;

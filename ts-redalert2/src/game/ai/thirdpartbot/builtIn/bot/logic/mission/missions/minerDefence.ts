@@ -33,39 +33,40 @@ export class MinerDefence {
                 home.distanceTo(new Vector2(unit.tile.rx, unit.tile.ry)) <= 28).sort((a, b) => a.id - b.id)[0];
             if (miner) this.active = { id: miner.id, until: tick + 300, lastOrder: -Infinity };
         }
-        if (!this.active || !miner) return;
-        let destination: Vector2 | null = null;
-        if (tick < this.active.until && !armorThreat && approaching.length >= 2 && miner.hitPoints >= miner.maxHitPoints * 0.55 &&
-            home.distanceTo(new Vector2(miner.tile.rx, miner.tile.ry)) <= 28) {
-            destination = getInfantryCrushPoint(miner, enemies, game.mapApi, game);
+        if (this.active && miner) {
+            let destination: Vector2 | null = null;
+            if (tick < this.active.until && !armorThreat && approaching.length >= 2 && miner.hitPoints >= miner.maxHitPoints * 0.55 &&
+                home.distanceTo(new Vector2(miner.tile.rx, miner.tile.ry)) <= 28) {
+                destination = getInfantryCrushPoint(miner, enemies, game.mapApi, game);
+                if (!destination) {
+                    const center = new Vector2(approaching.reduce((sum, unit) => sum + unit.tile.rx, 0) / approaching.length,
+                        approaching.reduce((sum, unit) => sum + unit.tile.ry, 0) / approaching.length);
+                    const forward = center.sub(home);
+                    if (forward.length() > 10) forward.multiplyScalar(10 / forward.length());
+                    destination = home.clone().add(forward);
+                    destination.set(Math.round(destination.x), Math.round(destination.y));
+                }
+            }
             if (!destination) {
-                const center = new Vector2(approaching.reduce((sum, unit) => sum + unit.tile.rx, 0) / approaching.length,
-                    approaching.reduce((sum, unit) => sum + unit.tile.ry, 0) / approaching.length);
-                const forward = center.sub(home);
-                if (forward.length() > 10) forward.multiplyScalar(10 / forward.length());
-                destination = home.clone().add(forward);
-                destination.set(Math.round(destination.x), Math.round(destination.y));
+                // Only known ore is a legal Gather target. Docking is a fallback when
+                // no resource tile remains visible; the engine handles unloading.
+                const ore = game.mapApi.getAllTilesResourceData().filter(resource => game.mapApi.isVisibleTile(resource.tile, player.name) &&
+                    resource.ore + resource.gems > 0).sort((a, b) =>
+                    (a.tile.rx - miner!.tile.rx) ** 2 + (a.tile.ry - miner!.tile.ry) ** 2 -
+                    ((b.tile.rx - miner!.tile.rx) ** 2 + (b.tile.ry - miner!.tile.ry) ** 2))[0];
+                if (ore) player.actions.orderUnits([miner.id], OrderType.Gather, ore.tile.rx, ore.tile.ry);
+                else {
+                    const refinery = game.getVisibleUnits(player.name, "self", rules => rules.refinery)[0];
+                    if (refinery !== undefined) player.actions.orderUnits([miner.id], OrderType.Dock, refinery);
+                }
+                this.active = undefined;
+                this.nextDefenceAt = tick + 300;
+            } else if (tick - this.active.lastOrder >= 18 &&
+                (miner.isIdle || !this.active.destination?.equals(destination))) {
+                player.actions.orderUnits([miner.id], OrderType.Move, destination.x, destination.y);
+                this.active.lastOrder = tick;
+                this.active.destination = destination;
             }
-        }
-        if (!destination) {
-            // Only known ore is a legal Gather target. Docking is a fallback when
-            // no resource tile remains visible; the engine handles unloading.
-            const ore = game.mapApi.getAllTilesResourceData().filter(resource => resource.ore + resource.gems > 0 &&
-                game.mapApi.isVisibleTile(resource.tile, player.name)).sort((a, b) =>
-                (a.tile.rx - miner!.tile.rx) ** 2 + (a.tile.ry - miner!.tile.ry) ** 2 -
-                ((b.tile.rx - miner!.tile.rx) ** 2 + (b.tile.ry - miner!.tile.ry) ** 2))[0];
-            if (ore) player.actions.orderUnits([miner.id], OrderType.Gather, ore.tile.rx, ore.tile.ry);
-            else {
-                const refinery = game.getVisibleUnits(player.name, "self", rules => rules.refinery)[0];
-                if (refinery !== undefined) player.actions.orderUnits([miner.id], OrderType.Dock, refinery);
-            }
-            this.active = undefined;
-            this.nextDefenceAt = tick + 300;
-        } else if (tick - this.active.lastOrder >= 18 &&
-            (miner.isIdle || !this.active.destination?.equals(destination))) {
-            player.actions.orderUnits([miner.id], OrderType.Move, destination.x, destination.y);
-            this.active.lastOrder = tick;
-            this.active.destination = destination;
         }
 
         // Harvester safety: if an endangered harvester (< 50% HP) is under direct hostile threat, dock at nearest safe refinery
@@ -78,8 +79,11 @@ export class MinerDefence {
                         new Vector2(e.tile.rx, e.tile.ry).distanceTo(new Vector2(m.tile.rx, m.tile.ry)) <= 10);
                     if (nearbyHostiles.length > 0) {
                         const refinery = game.getVisibleUnits(player.name, "self", rules => rules.refinery)
-                            .map(id => game.getUnitData(id)).filter(Boolean)
-                            .sort((a, b) => new Vector2(a!.tile.rx, a!.tile.ry).distanceTo(home) - new Vector2(b!.tile.rx, b!.tile.ry).distanceTo(home))[0];
+                            .map(id => game.getUnitData(id)).filter((unit): unit is UnitData => !!unit && !enemies.some(enemy =>
+                                enemy.rules.isSelectableCombatant && !enemy.rules.harvester &&
+                                (enemy.tile.rx - unit.tile.rx) ** 2 + (enemy.tile.ry - unit.tile.ry) ** 2 <= 10 ** 2))
+                            .sort((a, b) => (a.tile.rx - m.tile.rx) ** 2 + (a.tile.ry - m.tile.ry) ** 2 -
+                                ((b.tile.rx - m.tile.rx) ** 2 + (b.tile.ry - m.tile.ry) ** 2) || a.id - b.id)[0];
                         if (refinery) {
                             player.actions.orderUnits([m.id], OrderType.Dock, refinery.id);
                         }
@@ -93,7 +97,7 @@ export class MinerDefence {
             const refineries = game.getVisibleUnits(player.name, "self", rules => rules.refinery)
                 .map(id => game.getUnitData(id)).filter((u): u is UnitData => !!u);
             const gemResources = game.mapApi.getAllTilesResourceData().filter(res =>
-                res.gems > 0 && game.mapApi.isVisibleTile(res.tile, player.name) &&
+                game.mapApi.isVisibleTile(res.tile, player.name) && res.gems > 0 &&
                 (home.distanceTo(new Vector2(res.tile.rx, res.tile.ry)) <= 32 ||
                  refineries.some(ref => new Vector2(ref.tile.rx, ref.tile.ry).distanceTo(new Vector2(res.tile.rx, res.tile.ry)) <= 25)) &&
                 !enemyCombatants.some(e => (e.tile.rx - res.tile.rx) ** 2 + (e.tile.ry - res.tile.ry) ** 2 <= 14 ** 2)
@@ -110,12 +114,15 @@ export class MinerDefence {
                     if (isMiningGems) continue;
                     if (!m.isIdle) continue;
 
-                    const reachableGems = [...gemResources].sort((a, b) =>
-                        mPos.distanceTo(new Vector2(a.tile.rx, a.tile.ry)) - mPos.distanceTo(new Vector2(b.tile.rx, b.tile.ry))
-                    );
+                    const targetGem = [...gemResources].sort((a, b) =>
+                        mPos.distanceToSquared(new Vector2(a.tile.rx, a.tile.ry)) - mPos.distanceToSquared(new Vector2(b.tile.rx, b.tile.ry)) ||
+                        a.tile.rx - b.tile.rx || a.tile.ry - b.tile.ry
+                    ).find(resource => game.mapApi.findPath(m.rules.speedType,
+                        { tile: m.tile, onBridge: !!m.onBridge }, { tile: resource.tile, onBridge: false },
+                        { bestEffort: false, maxExpandedNodes: 256 }).some(node =>
+                            node.tile.rx === resource.tile.rx && node.tile.ry === resource.tile.ry));
 
-                    if (reachableGems.length > 0) {
-                        const targetGem = reachableGems[m.id % reachableGems.length];
+                    if (targetGem) {
                         player.actions.orderUnits([m.id], OrderType.Gather, targetGem.tile.rx, targetGem.tile.ry);
                         this.lastGemOrder.set(m.id, tick);
                     }
