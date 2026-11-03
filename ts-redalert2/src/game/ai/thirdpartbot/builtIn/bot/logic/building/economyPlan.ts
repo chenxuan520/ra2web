@@ -1,6 +1,8 @@
-import { GameApi, PlayerData, TechnoRules } from "../../../game-api";
+import { GameApi, ObjectType, PlayerData, TechnoRules, UnitData } from "../../../game-api";
 import { readStrategicSituation } from "../../strategy/nationalComposition";
 import { getOpeningAirBudget } from "../../strategy/openingAirBudget";
+
+const lastDefenseBuiltTick = new Map<string, number>();
 
 /** Fund income before duplicating production capacity that the miners cannot supply. */
 export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, rules: TechnoRules, committed: boolean): number | undefined {
@@ -18,7 +20,7 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
                 if (intruders.length >= 3 && s.credits < 3000) return 0;
             }
             const core = (s.own.MTNK ?? 0) + (s.own.HTNK ?? 0);
-            const canExpand = s.harvesters >= 2 && (s.credits >= 1500 || core >= 3);
+            const canExpand = s.harvesters >= 2 && (s.credits >= 2000 || (s.credits >= 1000 && core >= 4) || core >= 6);
             return (committed || (factories > 0 && canExpand) ||
                 (!factories && (s.own.JUMPJET ?? 0) >= 2 && getOpeningAirBudget(game, player) === 2)) ? 50 : 0;
         }
@@ -43,10 +45,43 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
     if (["GAAIRC", "AMRADR", "NARADR"].includes(rules.name) &&
         (!factories || s.harvesters < 2 || (s.harvesters < 3 && armor < 2))) return 0;
     if (rules.name === "GAPILL" || rules.name === "NALASR") {
-        const intruders = game.getVisibleUnits(player.name, "enemy", option => option.isSelectableCombatant)
-            .map(id => game.getUnitData(id)).filter(unit => unit &&
-                (unit.tile.rx - player.startLocation.x) ** 2 + (unit.tile.ry - player.startLocation.y) ** 2 <= 25 ** 2);
-        return intruders.length >= 5 && count < Math.min(3, Math.ceil(intruders.length / 10)) ? 24 : 0;
+        if (count >= 1 || s.credits < 1000) return 0;
+        const currentTick = game.getCurrentTick();
+        const lastTick = lastDefenseBuiltTick.get(player.name) ?? -Infinity;
+        if (currentTick < lastTick) lastDefenseBuiltTick.set(player.name, -Infinity); // game reset
+        if (currentTick - (lastDefenseBuiltTick.get(player.name) ?? -Infinity) < 1800) return 0;
+
+        const anchors = game.getVisibleUnits(player.name, "self", r =>
+            r.constructionYard || r.refinery || r.weaponsFactory)
+            .map(id => (game.getUnitData?.(id) ?? game.getGameObjectData?.(id)) as UnitData).filter((u): u is UnitData => !!u);
+        const start = player.startLocation;
+        const intruders = game.getVisibleUnits(player.name, "enemy", option => option.isSelectableCombatant && !option.harvester)
+            .map(id => (game.getUnitData?.(id) ?? game.getGameObjectData?.(id)) as UnitData).filter(unit => unit && (
+                (unit.tile.rx - start.x) ** 2 + (unit.tile.ry - start.y) ** 2 <= 20 ** 2 ||
+                anchors.some(a => (unit.tile.rx - a.tile.rx) ** 2 + (unit.tile.ry - a.tile.ry) ** 2 <= 18 ** 2)
+            ));
+        // Only build defensively when enemy combatants are actively invading the base!
+        const hasVehicleIntruder = intruders.some(u => (u.type as any) === ObjectType.Vehicle);
+        if (intruders.length >= 2 || (intruders.length >= 1 && hasVehicleIntruder)) {
+            if (committed) lastDefenseBuiltTick.set(player.name, currentTick);
+            return 70;
+        }
+        return 0;
+    }
+    if (rules.name === "TESLA" || rules.name === "ATESLA") {
+        // High-tech static defenses cost $1500 and drain huge power.
+        // Never build unless base has massive surplus economy and active vehicle assault.
+        const powerMargin = (player.power?.total ?? 0) - (player.power?.drain ?? 0);
+        if (powerMargin < 75 || player.power?.isLowPower || count >= 1) return 0;
+        const start = player.startLocation;
+        const intruders = game.getVisibleUnits(player.name, "enemy", option => option.isSelectableCombatant && !option.harvester)
+            .map(id => (game.getUnitData?.(id) ?? game.getGameObjectData?.(id)) as UnitData).filter(unit => unit &&
+                (unit.tile.rx - start.x) ** 2 + (unit.tile.ry - start.y) ** 2 <= 18 ** 2);
+        const hasVehicleIntruder = intruders.some(u => (u.type as any) === ObjectType.Vehicle);
+        if (hasVehicleIntruder && s.credits >= 3500 && armor >= 8) {
+            return 60;
+        }
+        return 0;
     }
     if (rules.name === "GAWEAP" || rules.name === "NAWEAP") {
         if (!factories) {

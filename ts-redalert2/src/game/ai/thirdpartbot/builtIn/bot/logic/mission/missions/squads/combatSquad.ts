@@ -184,7 +184,9 @@ export class CombatSquad implements Squad {
                             if (!unitDataCache.has(unitId)) unitDataCache.set(unitId, game.getUnitData(unitId));
                             return unitDataCache.get(unitId);
                         }).filter((target): target is UnitData => !!target && !isOwnedByNeutral(target) &&
-                            (!this.defendArea || targetPoint.distanceTo(new Vector2(target.tile.rx, target.tile.ry)) <= this.radius)) : nearbyHostiles;
+                            (!this.defendArea || targetPoint.distanceTo(new Vector2(target.tile.rx, target.tile.ry)) <= this.radius ||
+                             (new Vector2(unit.tile.rx, unit.tile.ry).distanceTo(new Vector2(target.tile.rx, target.tile.ry)) <= (unit.primaryWeapon?.maxRange ?? 5) + 1 &&
+                              (!!target.rules.primary || !!target.rules.secondary || !!target.rules.isSelectableCombatant)))) : nearbyHostiles;
                     const crush = brutal && !unit.isFiring &&
                         ![AttackState.FireUp, AttackState.Firing].includes(unit.attackState as any)
                         ? getInfantryCrushPoint(unit, hostiles, game.mapApi, game) : null;

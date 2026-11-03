@@ -7,6 +7,7 @@ import { getInfantryCrushPoint } from "./squads/infantryCrushing";
 export class MinerDefence {
     private active?: { id: number; until: number; lastOrder: number; destination?: Vector2 };
     private nextDefenceAt = 0;
+    private lastGemOrder = new Map<number, number>();
 
     onAiUpdate(context: SupabotContext) {
         if (context.difficulty !== "brutal") return;
@@ -82,6 +83,41 @@ export class MinerDefence {
                         if (refinery) {
                             player.actions.orderUnits([m.id], OrderType.Dock, refinery.id);
                         }
+                    }
+                }
+            }
+
+            // Gem Resource Prioritization: When visible safe gem fields exist (yielding 2x income),
+            // guide healthy miners to gather gems first!
+            const enemyCombatants = enemies.filter(e => e.rules.isSelectableCombatant);
+            const refineries = game.getVisibleUnits(player.name, "self", rules => rules.refinery)
+                .map(id => game.getUnitData(id)).filter((u): u is UnitData => !!u);
+            const gemResources = game.mapApi.getAllTilesResourceData().filter(res =>
+                res.gems > 0 && game.mapApi.isVisibleTile(res.tile, player.name) &&
+                (home.distanceTo(new Vector2(res.tile.rx, res.tile.ry)) <= 32 ||
+                 refineries.some(ref => new Vector2(ref.tile.rx, ref.tile.ry).distanceTo(new Vector2(res.tile.rx, res.tile.ry)) <= 25)) &&
+                !enemyCombatants.some(e => (e.tile.rx - res.tile.rx) ** 2 + (e.tile.ry - res.tile.ry) ** 2 <= 14 ** 2)
+            );
+
+            if (gemResources.length > 0) {
+                for (const m of allMiners) {
+                    if (this.active?.id === m.id || m.hitPoints < m.maxHitPoints * 0.7) continue;
+                    const last = this.lastGemOrder.get(m.id) ?? -Infinity;
+                    if (tick - last < 90) continue;
+                    const mPos = new Vector2(m.tile.rx, m.tile.ry);
+                    const currentTileRes = game.mapApi.getTileResourceData(m.tile);
+                    const isMiningGems = currentTileRes && currentTileRes.gems > 0;
+                    if (isMiningGems) continue;
+                    if (!m.isIdle) continue;
+
+                    const reachableGems = [...gemResources].sort((a, b) =>
+                        mPos.distanceTo(new Vector2(a.tile.rx, a.tile.ry)) - mPos.distanceTo(new Vector2(b.tile.rx, b.tile.ry))
+                    );
+
+                    if (reachableGems.length > 0) {
+                        const targetGem = reachableGems[m.id % reachableGems.length];
+                        player.actions.orderUnits([m.id], OrderType.Gather, targetGem.tile.rx, targetGem.tile.ry);
+                        this.lastGemOrder.set(m.id, tick);
                     }
                 }
             }

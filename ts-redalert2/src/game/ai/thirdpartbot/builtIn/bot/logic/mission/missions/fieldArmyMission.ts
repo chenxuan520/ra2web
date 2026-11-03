@@ -92,10 +92,14 @@ export class FieldArmyMission extends Mission {
         // Against heavy static defenses (2+ towers), require either siege weapons or decisive armor mass
         const defenseReady = !hasHeavyDefences || hasSiege || (armor.length >= Math.max(8, enemyArmor + enemyDefences * 2) && forceRatio >= 1.2);
         const canAssault = defenseReady && (
-            (armor.length >= minArmor && (armor.length >= enemyArmor || armor.length >= 6) && forceRatio >= 0.9) ||
+            (enemyArmor === 0
+                ? armor.length >= minArmor && forceRatio >= 0.9
+                : armor.length >= 6 && (armor.length >= enemyArmor + 2 || armor.length >= 12) && forceRatio >= 1.15
+            ) ||
             (factories > 0 && (
                 (!isLongMap && armor.length >= 4 && enemyArmor <= 1 && enemyDefences === 0 && targetDist <= 45) ||
-                (isLateGame && armor.length >= 2 && armor.length > enemyArmor && enemyArmor <= 1)
+                (isLateGame && armor.length >= 2 && armor.length > enemyArmor && enemyArmor <= 1) ||
+                (!isLongMap && armor.length >= 2 && enemyArmor === 0 && targetDist <= 45)
             ))
         );
         if (canAssault ||
@@ -104,29 +108,48 @@ export class FieldArmyMission extends Mission {
         }
         const outnumbered = enemyArmor > 0 && armor.length < Math.min(enemyArmor, 6);
         const powerDeficit = enemyPower > 300 && forceRatio < 0.65;
-        const enemyHasCombatants = enemyArmor > 0 || hasHeavyDefences || enemyPower > 200;
-        const decimated = armor.length < (isLateGame || !enemyHasCombatants ? 2 : (hasHeavyDefences ? 5 : (canAssault ? 2 : 4)));
-        if ((decimated && enemyHasCombatants) || outnumbered || powerDeficit || (units.length < 2 && !air.length)) {
+        const decimated = armor.length < (isLateGame ? 2 : (hasHeavyDefences ? 5 : 3));
+        if (decimated || outnumbered || powerDeficit || (units.length < 2 && !air.length)) {
             if (!air.length && !units.some(unit => unit.name === "ZEP")) {
                 this.attacking = false;
             }
         }
         const center = this.getCenterOfMass() ?? rally;
+        const nearestHomeThreat = homeThreats.length
+            ? [...homeThreats].sort((a, b) => location(a).distanceTo(center) - location(b).distanceTo(center) || a.id - b.id)[0]
+            : undefined;
+
+        const isArmorFormed = armor.length >= 4;
+        const isDirectBaseAssault = !!nearestHomeThreat && (
+            (nearestHomeThreat.type as any) === ObjectType.Vehicle ||
+            nearestHomeThreat.rules.crushable === false ||
+            anchors.some(base => location(base).distanceTo(location(nearestHomeThreat!)) <= 10)
+        );
+        const shouldDefendHomeThreat = !!nearestHomeThreat && (isArmorFormed || isDirectBaseAssault);
+
         if (tick >= this.nextTargetCheck) {
             this.nextTargetCheck = tick + 30;
             if (!this.attacking) {
-                const forward = rally.clone().sub(playerData.startLocation);
-                if (forward.length() > 4) forward.multiplyScalar(4 / forward.length());
-                this.attackArea = playerData.startLocation.clone().add(forward);
-                this.targetId = undefined;
-            } else if (homeThreats.length && (center.distanceTo(rally) < 40 || homeThreats.length >= 4 ||
+                if (shouldDefendHomeThreat && nearestHomeThreat) {
+                    this.attackArea = location(nearestHomeThreat);
+                    this.targetId = undefined;
+                } else if (incomingStrikeForce && center.distanceTo(rally) < 45) {
+                    const intercept = [...approachThreats].sort((a, b) => location(a).distanceTo(center) - location(b).distanceTo(center) || a.id - b.id)[0];
+                    this.attackArea = location(intercept);
+                    this.targetId = undefined;
+                } else {
+                    const forward = rally.clone().sub(playerData.startLocation);
+                    if (forward.length() > 4) forward.multiplyScalar(4 / forward.length());
+                    this.attackArea = playerData.startLocation.clone().add(forward);
+                    this.targetId = undefined;
+                }
+            } else if ((homeThreats.length && (center.distanceTo(rally) < 40 || homeThreats.length >= 3 || isDirectBaseAssault ||
                 homeThreats.some(enemy => enemy.rules.primary && ((enemy.type as any) === ObjectType.Vehicle ||
-                    anchors.some(base => location(base).distanceTo(location(enemy)) <= 14))))) {
-                const enemy = [...homeThreats].sort((a, b) => location(a).distanceTo(rally) - location(b).distanceTo(rally) || a.id - b.id)[0];
-                this.attackArea = location(enemy);
+                    anchors.some(base => location(base).distanceTo(location(enemy)) <= 14))))) && nearestHomeThreat) {
+                // Respond immediately to defend base against intruders
+                this.attackArea = location(nearestHomeThreat);
                 this.targetId = undefined;
             } else if (incomingStrikeForce && center.distanceTo(rally) < 45) {
-                // Intercept incoming enemy strike force before it reaches our buildings!
                 const intercept = [...approachThreats].sort((a, b) => location(a).distanceTo(center) - location(b).distanceTo(center) || a.id - b.id)[0];
                 this.attackArea = location(intercept);
                 this.targetId = intercept.id;
@@ -152,12 +175,12 @@ export class FieldArmyMission extends Mission {
                         (enemy.rules.primary || enemy.rules.secondary);
                     const isCombatVehicle = (enemy.type as any) === ObjectType.Vehicle && enemy.rules.isSelectableCombatant && !enemy.rules.harvester;
                     let value = isArmedDefense ? 135
+                        : enemy.rules.weaponsFactory ? 130
                         : isCombatVehicle ? 120
-                        : (!hasEnemyCombatants && (enemy.type as any) === ObjectType.Building) ? 150
+                        : enemy.rules.constructionYard ? 115
                         : enemy.rules.refinery ? 110
-                        : enemy.rules.constructionYard ? 105
-                        : enemy.rules.weaponsFactory ? 90
-                        : enemy.rules.harvester ? 80
+                        : (!hasEnemyCombatants && (enemy.type as any) === ObjectType.Building) ? 150
+                        : enemy.rules.harvester ? 25
                         : (enemy.type as any) === ObjectType.Building ? 60
                         : 20;
                     value -= center.distanceTo(location(enemy)) * 0.5;
@@ -183,7 +206,8 @@ export class FieldArmyMission extends Mission {
                 }
             }
         }
-        this.squad.setDefensiveRadius(this.attacking ? undefined : 7);
+        const isIntercepting = !this.attacking && incomingStrikeForce && center.distanceTo(rally) < 45;
+        this.squad.setDefensiveRadius(this.attacking ? undefined : (shouldDefendHomeThreat || isIntercepting ? 25 : 7));
         this.squad.setAttackArea(this.attackArea);
         this.squad.onAiUpdate(context, this, this.logger);
 

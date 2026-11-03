@@ -117,15 +117,29 @@ export class QueueController {
             if (context.difficulty === "brutal") {
                 const miners = game.getVisibleUnits(player.name, "self", rules => rules.harvester).length;
                 const refineries = game.getVisibleUnits(player.name, "self", rules => rules.refinery).length;
-                const desired = Math.min(6, refineries * 2);
-                if (miners < desired) {
-                    const situation = readStrategicSituation(game, playerData);
-                    const core = countCoreTanks(situation);
-                    const minCoreBeforeMiner2 = isSovietCountry(playerData.country?.name) ? 2 : 1;
-                    const wantExtraMiner = miners >= 2 && core >= 6 && situation.credits >= 1200;
-                    const minerPriority = miners === 0 ? 120
-                        : (core >= minCoreBeforeMiner2 && miners < 2 ? 90
-                        : wantExtraMiner ? 60 : 30);
+                const tick = game.getCurrentTick();
+                const situation = readStrategicSituation(game, playerData);
+                const core = countCoreTanks(situation);
+                const hasOreFields = !game.mapApi?.getAllTilesResourceData || (game.mapApi.getAllTilesResourceData()?.some(r =>
+                    (r.ore > 0 || r.gems > 0) && (!game.mapApi.isVisibleTile || game.mapApi.isVisibleTile(r.tile, playerData.name))
+                ) ?? true);
+                const intruders = game.getVisibleUnits(player.name, "enemy", option => option.isSelectableCombatant && !option.harvester)
+                    .map(id => game.getUnitData?.(id) ?? game.getGameObjectData?.(id)).filter((unit): unit is UnitData => !!unit &&
+                        (unit.tile.rx - playerData.startLocation.x) ** 2 + (unit.tile.ry - playerData.startLocation.y) ** 2 <= 22 ** 2);
+                const baseUnderSiege = intruders.length > 0;
+                const minCoreBeforeMiner2 = isSovietCountry(playerData.country?.name) ? 2 : 1;
+
+                let minerPriority = 0;
+                if (miners === 0) {
+                    minerPriority = 120;
+                } else if (miners < 2 && core >= minCoreBeforeMiner2) {
+                    minerPriority = 90;
+                } else if (miners === 2 && !baseUnderSiege && hasOreFields && (core >= 6 || (refineries >= 2 && core >= 4))) {
+                    minerPriority = 78;
+                } else if (miners === 3 && !baseUnderSiege && hasOreFields && (core >= 8 || (refineries >= 2 && core >= 6))) {
+                    minerPriority = 70;
+                }
+                if (minerPriority > 0) {
                     priority = Math.max(priority, minerPriority);
                 }
             }
@@ -162,10 +176,10 @@ export class QueueController {
                     const hasDualRefinery = (situation.own.NAREFN ?? 0) + (situation.own.GAREFN ?? 0) >= 2;
                     if ((core < 1 && situation.harvesters >= 1) || (core < 4 && (situation.harvesters >= 2 || hasDualRefinery))) {
                         requests.set(tank.name, { priority: 85, specificLocation: null });
-                    } else if (core < 8 && (requests.get(tank.name)?.priority ?? 0) < 65) {
-                        requests.set(tank.name, { priority: 65, specificLocation: null });
-                    } else if (core < 16 && (requests.get(tank.name)?.priority ?? 0) < 55) {
-                        requests.set(tank.name, { priority: 55, specificLocation: null });
+                    } else if (core < 8 && (requests.get(tank.name)?.priority ?? 0) < 75) {
+                        requests.set(tank.name, { priority: 75, specificLocation: null });
+                    } else if (core < 16 && (requests.get(tank.name)?.priority ?? 0) < 60) {
+                        requests.set(tank.name, { priority: 60, specificLocation: null });
                     } else if ((requests.get(tank.name)?.priority ?? 0) < 50) {
                         requests.set(tank.name, { priority: 50, specificLocation: null });
                     }
@@ -355,7 +369,8 @@ export class QueueController {
             } else {
                 // Not changing our mind, but maybe other queues are more important for now.
                 // Do not pause if we can easily afford this unit, or if it is an active military response
-                if (totalCostAcrossQueues > myCredits && myCredits < decision.unit.cost && decision.priority < minimumPriority) {
+                const isVitalBuilding = isBuildingQueue(queueType) && currentProduction && (currentProduction.refinery || currentProduction.weaponsFactory);
+                if (!isVitalBuilding && totalCostAcrossQueues > myCredits && myCredits < (isBuildingQueue(queueType) ? 200 : decision.unit.cost) && decision.priority < minimumPriority) {
                     logger(
                         `Pausing queue ${queueTypeToName(queueData.type)} because weight is low (${
                             decision.priority
@@ -374,8 +389,9 @@ export class QueueController {
                 return;
             }
             // Consider resuming queue if priority is high relative to other queues or if we can afford this item.
+            const affordable = isBuildingQueue(queueData.type) ? myCredits >= 200 : (decision && myCredits >= decision.unit.cost);
             if (totalWeightAcrossQueues === 0 || myCredits >= totalCostAcrossQueues ||
-                (decision && myCredits >= decision.unit.cost && decision.priority >= 15)) {
+                (decision && affordable && decision.priority >= 15)) {
                 logger(`Resuming queue ${queueTypeToName(queueData.type)} because credits are high or item is affordable`);
                 actionsApi.resumeProduction(queueData.type);
             } else if (decision && decision.priority >= minimumPriority) {

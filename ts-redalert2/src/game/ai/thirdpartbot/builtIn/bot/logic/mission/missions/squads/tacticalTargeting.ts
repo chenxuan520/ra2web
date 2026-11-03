@@ -89,25 +89,31 @@ export function chooseTacticalTarget(
         const damageEfficiency = attack.damage / Math.max(1,
             Math.abs(attack.weapon.rules?.damage ?? attack.damage) * Math.max(1, attack.weapon.rules?.burst ?? 1));
         let score = 40 * Math.min(2, damageEfficiency) + 60 * Math.min(1, attack.damage / remainingHealth);
-        score += threat ? 40 + Math.min(40, threat.damage / Math.max(1, threat.weapon.rules?.rof ?? 1) * 4) : 0;
+        if (threat) {
+            score += target.rules.harvester ? 5 : (40 + Math.min(40, threat.damage / Math.max(1, threat.weapon.rules?.rof ?? 1) * 4));
+        }
         const isArmedDefense = (target.type as any) === ObjectType.Building &&
             (target.rules.primary || target.rules.secondary);
         const isCombatVehicle = ((target.rules.type === ObjectType.Vehicle || (target.type as any) === ObjectType.Vehicle)) &&
             (target.rules.primary || target.rules.secondary) && !target.rules.harvester;
-        if (isArmedDefense) score += 45;
-        else if (isCombatVehicle) score += 42;
-        else if (target.rules.weaponsFactory || target.rules.refinery) score += 35;
-        else if (target.rules.barracks || target.rules.constructionYard) score += 30;
-        else if (target.rules.harvester) score += 25;
+        const hasCombatVehicleThreat = isCombatVehicle || targets.some(t => t.id !== target.id &&
+            ((t.rules.type === ObjectType.Vehicle || (t.type as any) === ObjectType.Vehicle) && (t.rules.primary || t.rules.secondary) && !t.rules.harvester));
+        if (isArmedDefense) score += 50;
+        else if (isCombatVehicle) score += 60;
+        else if (target.rules.weaponsFactory) score += 65;
+        else if (target.rules.constructionYard) score += 45;
+        else if (target.rules.refinery) score += 40;
+        else if (target.rules.barracks) score += 30;
+        else if (target.rules.harvester) score += hasCombatVehicleThreat ? -25 : 35;
         else if (target.rules.power > 0) score += 10;
         if (target.zone === ZoneType.Air) score += target.name === "ZEP" ? 70 : 50;
-        if (remainingHealth <= (estimatedMaxHitPoints(target) ?? 100) * 0.35) score += 20;
+        if (remainingHealth <= (estimatedMaxHitPoints(target) ?? 100) * 0.35 && (!target.rules.harvester || !hasCombatVehicleThreat)) score += 35;
         // Never march past something we can shoot to chase a slightly higher value target.
         score += distance <= attack.range ? 35 : -12 * (distance - attack.range);
         score -= distance * 1.5;
         if (committed > 0) score += 25;
         if (target.id === currentTargetId) score += 15;
-        if (committed >= (estimatedHitPoints(target, game) ?? estimatedMaxHitPoints(target) ?? 100)) score -= 160;
+        if (committed >= (estimatedHitPoints(target, game) ?? estimatedMaxHitPoints(target) ?? 100)) score -= 300;
         if (score > bestScore || (score === bestScore && target.id < (best?.id ?? Infinity))) {
             best = target;
             bestScore = score;
