@@ -1,0 +1,251 @@
+{
+  "passed": true,
+  "equalSamples": 0,
+  "newWinSamples": 0,
+  "summaries": [
+    {
+      "country": "Americans",
+      "seed": 101,
+      "swapped": false,
+      "result": "candidate-win",
+      "reason": "engine-victory-conditions",
+      "ticks": 24477,
+      "errors": 0,
+      "issues": [],
+      "originalRawSha256": "486aa42fac16a2ad3e1c2836f5a5f527dff746f93e2c7ae07a0d1175f02741c3",
+      "aaType": "FV",
+      "purchasedAAProducedTicks": [
+        8349,
+        11041
+      ],
+      "recordedWeaponShots": {
+        "HoverMissile": {
+          "count": 19,
+          "firstTick": 10407,
+          "lastTick": 10928
+        }
+      },
+      "recordedShotCount": 19,
+      "nativeDamageBySource": {
+        "enemyHitPoints": 342,
+        "friendlyHitPoints": 0,
+        "otherHitPoints": 0,
+        "enemyKills": 5,
+        "friendlyKills": 0,
+        "otherKills": 0,
+        "damagedTypes": {
+          "JUMPJET": 225,
+          "MTNK": 32,
+          "ADOG": 85
+        },
+        "killedTypes": {
+          "JUMPJET": 4,
+          "ADOG": 1
+        }
+      },
+      "enemyJumpjetDamageLowerBound": 225,
+      "enemyJumpjetKillsLowerBound": 4
+    },
+    {
+      "country": "Americans",
+      "seed": 101,
+      "swapped": true,
+      "result": "candidate-win",
+      "reason": "engine-victory-conditions",
+      "ticks": 15428,
+      "errors": 0,
+      "issues": [],
+      "originalRawSha256": "486aa42fac16a2ad3e1c2836f5a5f527dff746f93e2c7ae07a0d1175f02741c3",
+      "aaType": "FV",
+      "purchasedAAProducedTicks": [
+        9317
+      ],
+      "recordedWeaponShots": {
+        "HoverMissile": {
+          "count": 42,
+          "firstTick": 11273,
+          "lastTick": 14058
+        }
+      },
+      "recordedShotCount": 42,
+      "nativeDamageBySource": {
+        "enemyHitPoints": 352,
+        "friendlyHitPoints": 0,
+        "otherHitPoints": 0,
+        "enemyKills": 0,
+        "friendlyKills": 0,
+        "otherKills": 0,
+        "damagedTypes": {
+          "MTNK": 56,
+          "E1": 186,
+          "GAPILL": 54,
+          "GACNST": 56
+        },
+        "killedTypes": {}
+      },
+      "enemyJumpjetDamageLowerBound": 0,
+      "enemyJumpjetKillsLowerBound": 0
+    },
+    {
+      "country": "Americans",
+      "seed": 202,
+      "swapped": false,
+      "result": "candidate-win",
+      "reason": "engine-victory-conditions",
+      "ticks": 18447,
+      "errors": 0,
+      "issues": [],
+      "originalRawSha256": "0fb3abfa942c7f637d05db1fe283c5f371eed440d622466c1aa0e6b852512cd5",
+      "aaType": "FV",
+      "purchasedAAProducedTicks": [
+        8397,
+        12957
+      ],
+      "recordedWeaponShots": {
+        "HoverMissile": {
+          "count": 47,
+          "firstTick": 10512,
+          "lastTick": 15004
+        }
+      },
+      "recordedShotCount": 47,
+      "nativeDamageBySource": {
+        "enemyHitPoints": 456,
+        "friendlyHitPoints": 0,
+        "otherHitPoints": 0,
+        "enemyKills": 4,
+        "friendlyKills": 0,
+        "otherKills": 0,
+        "damagedTypes": {
+          "JUMPJET": 175,
+          "MTNK": 148,
+          "E1": 133
+        },
+        "killedTypes": {
+          "JUMPJET": 2,
+          "MTNK": 1,
+          "E1": 1
+        }
+      },
+      "enemyJumpjetDamageLowerBound": 175,
+      "enemyJumpjetKillsLowerBound": 2
+    },
+    {
+      "country": "Americans",
+      "seed": 202,
+      "swapped": true,
+      "result": "candidate-win",
+      "reason": "engine-victory-conditions",
+      "ticks": 13860,
+      "errors": 0,
+      "issues": [],
+      "originalRawSha256": "0fb3abfa942c7f637d05db1fe283c5f371eed440d622466c1aa0e6b852512cd5",
+      "aaType": "FV",
+      "purchasedAAProducedTicks": [
+        10830
+      ],
+      "recordedWeaponShots": {
+        "HoverMissile": {
+          "count": 78,
+          "firstTick": 11348,
+          "lastTick": 13834
+        }
+      },
+      "recordedShotCount": 78,
+      "nativeDamageBySource": {
+        "enemyHitPoints": 561,
+        "friendlyHitPoints": 0,
+        "otherHitPoints": 0,
+        "enemyKills": 2,
+        "friendlyKills": 0,
+        "otherKills": 0,
+        "damagedTypes": {
+          "E1": 252,
+          "GAPILL": 81,
+          "GACNST": 92,
+          "GAPOWR": 50,
+          "GAPILE": 22,
+          "CMIN": 64
+        },
+        "killedTypes": {
+          "E1": 1,
+          "GAPOWR": 1
+        }
+      },
+      "enemyJumpjetDamageLowerBound": 0,
+      "enemyJumpjetKillsLowerBound": 0
+    },
+    {
+      "country": "Russians",
+      "seed": 101,
+      "swapped": false,
+      "result": "candidate-win",
+      "reason": "engine-victory-conditions",
+      "ticks": 25017,
+      "errors": 0,
+      "issues": [],
+      "originalRawSha256": "52c94fc409941c285e3b2a5ef0ab848c4f89f49304fce84964c15a851e58622f",
+      "aaType": "HTK",
+      "purchasedAAProducedTicks": [],
+      "recordedWeaponShots": {},
+      "recordedShotCount": 0,
+      "nativeDamageBySource": null,
+      "enemyJumpjetDamageLowerBound": null,
+      "enemyJumpjetKillsLowerBound": null
+    },
+    {
+      "country": "Russians",
+      "seed": 101,
+      "swapped": true,
+      "result": "candidate-win",
+      "reason": "engine-victory-conditions",
+      "ticks": 25437,
+      "errors": 0,
+      "issues": [],
+      "originalRawSha256": "52c94fc409941c285e3b2a5ef0ab848c4f89f49304fce84964c15a851e58622f",
+      "aaType": "HTK",
+      "purchasedAAProducedTicks": [],
+      "recordedWeaponShots": {},
+      "recordedShotCount": 0,
+      "nativeDamageBySource": null,
+      "enemyJumpjetDamageLowerBound": null,
+      "enemyJumpjetKillsLowerBound": null
+    },
+    {
+      "country": "Russians",
+      "seed": 202,
+      "swapped": false,
+      "result": "candidate-win",
+      "reason": "engine-victory-conditions",
+      "ticks": 24132,
+      "errors": 0,
+      "issues": [],
+      "originalRawSha256": "acd5f79cb977f9e392195910f60ccb0e0f4c5bb3e553064a49f647130f2ab2d3",
+      "aaType": "HTK",
+      "purchasedAAProducedTicks": [],
+      "recordedWeaponShots": {},
+      "recordedShotCount": 0,
+      "nativeDamageBySource": null,
+      "enemyJumpjetDamageLowerBound": null,
+      "enemyJumpjetKillsLowerBound": null
+    },
+    {
+      "country": "Russians",
+      "seed": 202,
+      "swapped": true,
+      "result": "candidate-win",
+      "reason": "engine-victory-conditions",
+      "ticks": 17187,
+      "errors": 0,
+      "issues": [],
+      "originalRawSha256": "acd5f79cb977f9e392195910f60ccb0e0f4c5bb3e553064a49f647130f2ab2d3",
+      "aaType": "HTK",
+      "purchasedAAProducedTicks": [],
+      "recordedWeaponShots": {},
+      "recordedShotCount": 0,
+      "nativeDamageBySource": null,
+      "enemyJumpjetDamageLowerBound": null,
+      "enemyJumpjetKillsLowerBound": null
+    }
+  ]
+}

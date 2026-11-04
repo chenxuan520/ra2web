@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "equalSamples": 61,
+  "newWinSamples": 0,
+  "originalSha256": "7d7900f7bdf63e82ca0d55fb7c0c7a885551e14243c6303104fa818c1c2055a7",
+  "replaySha256": "0dfdea9809237c81c58822949389bcf9e7497edc8ad77788e88713aba48de63d",
+  "matches": [
+    {
+      "swapped": false,
+      "result": "candidate-win",
+      "ticks": 25752
+    },
+    {
+      "swapped": true,
+      "result": "baseline-win",
+      "ticks": 26637
+    }
+  ]
+}

@@ -1,0 +1,421 @@
+{
+  "baseline": {
+    "commit": "abb981272e6b91b43cea812d0b8de8bb3754612a",
+    "profile": "brutal"
+  },
+  "candidate": {
+    "commit": "abb981272e6b91b43cea812d0b8de8bb3754612a",
+    "profile": "brutal",
+    "source": "working-tree",
+    "dirty": true,
+    "workingTreeStatus": "M ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/building/economyPlan.ts\n M ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/building/queueController.ts\n M ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/fieldArmyMission.ts\n M ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/minerDefence.ts",
+    "diffSha256": "476403338168c030ef8ed4a2a63f22bb5f5812f690ef8ef62502eda07b163f8a",
+    "sourceSha256": "ed4db92cd5714c5c93aa824e186a67c49827d748edcdae68536f41b31b0933ea"
+  },
+  "engineCommit": "abb981272e6b91b43cea812d0b8de8bb3754612a",
+  "frozenSourceBeforeAndAfterEqual": true,
+  "sourceSha256After": "ed4db92cd5714c5c93aa824e186a67c49827d748edcdae68536f41b31b0933ea",
+  "rawSha256": "45f92b6f8744e42a6cb0343cb090cbe89619d0a33ccbdfed056274005bdc0c94",
+  "scheduleVerified": true,
+  "total": 8,
+  "totals": {
+    "wins": 8,
+    "losses": 0,
+    "unfinished": 0,
+    "draws": 0,
+    "errors": 0
+  },
+  "byCountry": {
+    "Americans": {
+      "wins": 4,
+      "losses": 0,
+      "unfinished": 0,
+      "draws": 0,
+      "errors": 0
+    },
+    "Russians": {
+      "wins": 4,
+      "losses": 0,
+      "unfinished": 0,
+      "draws": 0,
+      "errors": 0
+    }
+  },
+  "candidateWinRateAllGames": 1,
+  "games": [
+    {
+      "id": "Americans-101-original",
+      "country": "Americans",
+      "seed": 101,
+      "swapped": false,
+      "candidateSpawn": {
+        "x": 27,
+        "y": 50
+      },
+      "baselineSpawn": {
+        "x": 82,
+        "y": 87
+      },
+      "outcome": "wins",
+      "runnerResult": "candidate-win",
+      "reason": "engine-victory-conditions",
+      "ticks": 20457,
+      "errors": 0,
+      "warnings": 0,
+      "issues": [],
+      "gatherOrders": [
+        0,
+        0
+      ],
+      "dockOrders": [
+        0,
+        0
+      ],
+      "creditsReceived": [
+        25775,
+        26821
+      ],
+      "minersRemaining": [
+        3,
+        0
+      ],
+      "firstShotTicks": [
+        1422,
+        1872
+      ],
+      "weaponShots": [
+        526,
+        302
+      ],
+      "wallSeconds": 118.21163661499999
+    },
+    {
+      "id": "Americans-101-swap",
+      "country": "Americans",
+      "seed": 101,
+      "swapped": true,
+      "candidateSpawn": {
+        "x": 82,
+        "y": 87
+      },
+      "baselineSpawn": {
+        "x": 27,
+        "y": 50
+      },
+      "outcome": "wins",
+      "runnerResult": "candidate-win",
+      "reason": "engine-victory-conditions",
+      "ticks": 14644,
+      "errors": 0,
+      "warnings": 0,
+      "issues": [],
+      "gatherOrders": [
+        0,
+        0
+      ],
+      "dockOrders": [
+        0,
+        0
+      ],
+      "creditsReceived": [
+        20575,
+        15249
+      ],
+      "minersRemaining": [
+        3,
+        0
+      ],
+      "firstShotTicks": [
+        1872,
+        1422
+      ],
+      "weaponShots": [
+        753,
+        143
+      ],
+      "wallSeconds": 81.464783786
+    },
+    {
+      "id": "Americans-202-original",
+      "country": "Americans",
+      "seed": 202,
+      "swapped": false,
+      "candidateSpawn": {
+        "x": 27,
+        "y": 50
+      },
+      "baselineSpawn": {
+        "x": 82,
+        "y": 87
+      },
+      "outcome": "wins",
+      "runnerResult": "candidate-win",
+      "reason": "engine-victory-conditions",
+      "ticks": 12484,
+      "errors": 0,
+      "warnings": 0,
+      "issues": [],
+      "gatherOrders": [
+        0,
+        0
+      ],
+      "dockOrders": [
+        0,
+        0
+      ],
+      "creditsReceived": [
+        13000,
+        10313
+      ],
+      "minersRemaining": [
+        4,
+        0
+      ],
+      "firstShotTicks": [
+        1422,
+        1872
+      ],
+      "weaponShots": [
+        306,
+        115
+      ],
+      "wallSeconds": 69.090006392
+    },
+    {
+      "id": "Americans-202-swap",
+      "country": "Americans",
+      "seed": 202,
+      "swapped": true,
+      "candidateSpawn": {
+        "x": 82,
+        "y": 87
+      },
+      "baselineSpawn": {
+        "x": 27,
+        "y": 50
+      },
+      "outcome": "wins",
+      "runnerResult": "candidate-win",
+      "reason": "engine-victory-conditions",
+      "ticks": 14868,
+      "errors": 0,
+      "warnings": 0,
+      "issues": [],
+      "gatherOrders": [
+        0,
+        0
+      ],
+      "dockOrders": [
+        0,
+        0
+      ],
+      "creditsReceived": [
+        21075,
+        16086
+      ],
+      "minersRemaining": [
+        3,
+        0
+      ],
+      "firstShotTicks": [
+        1872,
+        1422
+      ],
+      "weaponShots": [
+        868,
+        144
+      ],
+      "wallSeconds": 86.83989684800001
+    },
+    {
+      "id": "Russians-101-original",
+      "country": "Russians",
+      "seed": 101,
+      "swapped": false,
+      "candidateSpawn": {
+        "x": 27,
+        "y": 50
+      },
+      "baselineSpawn": {
+        "x": 82,
+        "y": 87
+      },
+      "outcome": "wins",
+      "runnerResult": "candidate-win",
+      "reason": "engine-victory-conditions",
+      "ticks": 21387,
+      "errors": 0,
+      "warnings": 0,
+      "issues": [],
+      "gatherOrders": [
+        0,
+        0
+      ],
+      "dockOrders": [
+        0,
+        0
+      ],
+      "creditsReceived": [
+        24200,
+        25402
+      ],
+      "minersRemaining": [
+        3,
+        0
+      ],
+      "firstShotTicks": [
+        1259,
+        1671
+      ],
+      "weaponShots": [
+        544,
+        276
+      ],
+      "wallSeconds": 127.08465613399999
+    },
+    {
+      "id": "Russians-101-swap",
+      "country": "Russians",
+      "seed": 101,
+      "swapped": true,
+      "candidateSpawn": {
+        "x": 82,
+        "y": 87
+      },
+      "baselineSpawn": {
+        "x": 27,
+        "y": 50
+      },
+      "outcome": "wins",
+      "runnerResult": "candidate-win",
+      "reason": "engine-victory-conditions",
+      "ticks": 15492,
+      "errors": 0,
+      "warnings": 0,
+      "issues": [],
+      "gatherOrders": [
+        0,
+        0
+      ],
+      "dockOrders": [
+        0,
+        0
+      ],
+      "creditsReceived": [
+        14678,
+        14677
+      ],
+      "minersRemaining": [
+        3,
+        0
+      ],
+      "firstShotTicks": [
+        1671,
+        1259
+      ],
+      "weaponShots": [
+        269,
+        163
+      ],
+      "wallSeconds": 94.53296897499996
+    },
+    {
+      "id": "Russians-202-original",
+      "country": "Russians",
+      "seed": 202,
+      "swapped": false,
+      "candidateSpawn": {
+        "x": 27,
+        "y": 50
+      },
+      "baselineSpawn": {
+        "x": 82,
+        "y": 87
+      },
+      "outcome": "wins",
+      "runnerResult": "candidate-win",
+      "reason": "engine-victory-conditions",
+      "ticks": 21807,
+      "errors": 0,
+      "warnings": 0,
+      "issues": [],
+      "gatherOrders": [
+        0,
+        0
+      ],
+      "dockOrders": [
+        0,
+        0
+      ],
+      "creditsReceived": [
+        24200,
+        25770
+      ],
+      "minersRemaining": [
+        3,
+        0
+      ],
+      "firstShotTicks": [
+        1259,
+        1671
+      ],
+      "weaponShots": [
+        548,
+        378
+      ],
+      "wallSeconds": 147.77842814699991
+    },
+    {
+      "id": "Russians-202-swap",
+      "country": "Russians",
+      "seed": 202,
+      "swapped": true,
+      "candidateSpawn": {
+        "x": 82,
+        "y": 87
+      },
+      "baselineSpawn": {
+        "x": 27,
+        "y": 50
+      },
+      "outcome": "wins",
+      "runnerResult": "candidate-win",
+      "reason": "engine-victory-conditions",
+      "ticks": 18312,
+      "errors": 0,
+      "warnings": 0,
+      "issues": [],
+      "gatherOrders": [
+        0,
+        0
+      ],
+      "dockOrders": [
+        0,
+        0
+      ],
+      "creditsReceived": [
+        18903,
+        16184
+      ],
+      "minersRemaining": [
+        3,
+        0
+      ],
+      "firstShotTicks": [
+        1671,
+        1259
+      ],
+      "weaponShots": [
+        408,
+        235
+      ],
+      "wallSeconds": 114.38115180700005
+    }
+  ],
+  "limitation": "Eight-game, one-map development comparison only; no general-strength or 405-game qualification claim.",
+  "metricNotes": {
+    "creditsReceived": "Mining plus positive sales/cancellation refunds; not pure gem/mining income.",
+    "gatherOrders": "All Gather orders, not proof that a miner completed a gem load.",
+    "result": "Native wins/losses only. Runner tick-limit draws are reported separately as unfinished U."
+  }
+}

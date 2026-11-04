@@ -1,0 +1,443 @@
+{
+  "passed": true,
+  "equalSamples": 0,
+  "newWinSamples": 0,
+  "summaries": [
+    {
+      "country": "Americans",
+      "seed": 101,
+      "swapped": false,
+      "originalRawSha256": "9b8b2539748f71ad0607eb7fb47baaede1101163e65379daf75358bf86ccff18",
+      "sampledBudgetOverlap": 3,
+      "examples": [
+        {
+          "tick": 14400,
+          "ownCredits": 75,
+          "ownMiners": 4,
+          "ownFactories": 2,
+          "ownQueues": [
+            {
+              "type": 2,
+              "status": 1,
+              "items": [
+                {
+                  "name": "JUMPJET",
+                  "quantity": 1,
+                  "progress": 0.7733333333333333
+                }
+              ]
+            },
+            {
+              "type": 3,
+              "status": 1,
+              "items": [
+                {
+                  "name": "MTNK",
+                  "quantity": 1,
+                  "progress": 0.37285714285714283
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tick": 16200,
+          "ownCredits": 0,
+          "ownMiners": 4,
+          "ownFactories": 2,
+          "ownQueues": [
+            {
+              "type": 2,
+              "status": 1,
+              "items": [
+                {
+                  "name": "JUMPJET",
+                  "quantity": 1,
+                  "progress": 0.41
+                }
+              ]
+            },
+            {
+              "type": 3,
+              "status": 1,
+              "items": [
+                {
+                  "name": "MTNK",
+                  "quantity": 1,
+                  "progress": 0.2557142857142857
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "Americans",
+      "seed": 101,
+      "swapped": true,
+      "originalRawSha256": "9b8b2539748f71ad0607eb7fb47baaede1101163e65379daf75358bf86ccff18",
+      "sampledBudgetOverlap": 5,
+      "examples": [
+        {
+          "tick": 9900,
+          "ownCredits": 0,
+          "ownMiners": 4,
+          "ownFactories": 2,
+          "ownQueues": [
+            {
+              "type": 2,
+              "status": 2,
+              "items": [
+                {
+                  "name": "JUMPJET",
+                  "quantity": 1,
+                  "progress": 0.61
+                }
+              ]
+            },
+            {
+              "type": 3,
+              "status": 1,
+              "items": [
+                {
+                  "name": "MTNK",
+                  "quantity": 1,
+                  "progress": 0.8342857142857143
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tick": 10800,
+          "ownCredits": 0,
+          "ownMiners": 4,
+          "ownFactories": 2,
+          "ownQueues": [
+            {
+              "type": 2,
+              "status": 1,
+              "items": [
+                {
+                  "name": "JUMPJET",
+                  "quantity": 1,
+                  "progress": 0.7283333333333334
+                }
+              ]
+            },
+            {
+              "type": 3,
+              "status": 1,
+              "items": [
+                {
+                  "name": "MTNK",
+                  "quantity": 1,
+                  "progress": 0.7328571428571429
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "Americans",
+      "seed": 202,
+      "swapped": false,
+      "originalRawSha256": "baf0359947e6a359fb9a5a39bb0c4a199e1fe05e8eee23f116396385e3864b90",
+      "sampledBudgetOverlap": 0,
+      "examples": []
+    },
+    {
+      "country": "Americans",
+      "seed": 202,
+      "swapped": true,
+      "originalRawSha256": "baf0359947e6a359fb9a5a39bb0c4a199e1fe05e8eee23f116396385e3864b90",
+      "sampledBudgetOverlap": 3,
+      "examples": [
+        {
+          "tick": 10800,
+          "ownCredits": 0,
+          "ownMiners": 4,
+          "ownFactories": 2,
+          "ownQueues": [
+            {
+              "type": 2,
+              "status": 1,
+              "items": [
+                {
+                  "name": "JUMPJET",
+                  "quantity": 1,
+                  "progress": 0.94
+                }
+              ]
+            },
+            {
+              "type": 3,
+              "status": 1,
+              "items": [
+                {
+                  "name": "MTNK",
+                  "quantity": 1,
+                  "progress": 0.26571428571428574
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tick": 12600,
+          "ownCredits": 0,
+          "ownMiners": 4,
+          "ownFactories": 2,
+          "ownQueues": [
+            {
+              "type": 0,
+              "status": 2,
+              "items": [
+                {
+                  "name": "GATECH",
+                  "quantity": 1,
+                  "progress": 0.1775
+                }
+              ]
+            },
+            {
+              "type": 2,
+              "status": 1,
+              "items": [
+                {
+                  "name": "JUMPJET",
+                  "quantity": 1,
+                  "progress": 0.64
+                }
+              ]
+            },
+            {
+              "type": 3,
+              "status": 1,
+              "items": [
+                {
+                  "name": "MTNK",
+                  "quantity": 1,
+                  "progress": 0.30142857142857143
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "Russians",
+      "seed": 101,
+      "swapped": false,
+      "originalRawSha256": "31b15f2fd9d7887e2a672a7d3e0d804d85f6a143da62ba16d4305b315a707f5f",
+      "sampledBudgetOverlap": 2,
+      "examples": [
+        {
+          "tick": 15300,
+          "ownCredits": 0,
+          "ownMiners": 4,
+          "ownFactories": 2,
+          "ownQueues": [
+            {
+              "type": 3,
+              "status": 1,
+              "items": [
+                {
+                  "name": "HTNK",
+                  "quantity": 1,
+                  "progress": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tick": 16722,
+          "ownCredits": 128,
+          "ownMiners": 4,
+          "ownFactories": 2,
+          "ownQueues": [
+            {
+              "type": 0,
+              "status": 2,
+              "items": [
+                {
+                  "name": "NANRCT",
+                  "quantity": 1,
+                  "progress": 0.582
+                }
+              ]
+            },
+            {
+              "type": 3,
+              "status": 1,
+              "items": [
+                {
+                  "name": "HTNK",
+                  "quantity": 1,
+                  "progress": 0.6555555555555556
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "Russians",
+      "seed": 101,
+      "swapped": true,
+      "originalRawSha256": "31b15f2fd9d7887e2a672a7d3e0d804d85f6a143da62ba16d4305b315a707f5f",
+      "sampledBudgetOverlap": 2,
+      "examples": [
+        {
+          "tick": 15300,
+          "ownCredits": 107,
+          "ownMiners": 4,
+          "ownFactories": 2,
+          "ownQueues": [
+            {
+              "type": 3,
+              "status": 1,
+              "items": [
+                {
+                  "name": "HTNK",
+                  "quantity": 1,
+                  "progress": 0.13111111111111112
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tick": 15444,
+          "ownCredits": 0,
+          "ownMiners": 4,
+          "ownFactories": 2,
+          "ownQueues": [
+            {
+              "type": 3,
+              "status": 1,
+              "items": [
+                {
+                  "name": "HTNK",
+                  "quantity": 1,
+                  "progress": 0.25
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "Russians",
+      "seed": 202,
+      "swapped": false,
+      "originalRawSha256": "1baa317071acb64e60aa5d1b0761a9107ae05184644dc53d0334dd5df0c966dd",
+      "sampledBudgetOverlap": 2,
+      "examples": [
+        {
+          "tick": 15300,
+          "ownCredits": 0,
+          "ownMiners": 4,
+          "ownFactories": 2,
+          "ownQueues": [
+            {
+              "type": 3,
+              "status": 1,
+              "items": [
+                {
+                  "name": "HTNK",
+                  "quantity": 1,
+                  "progress": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tick": 16572,
+          "ownCredits": 90,
+          "ownMiners": 4,
+          "ownFactories": 2,
+          "ownQueues": [
+            {
+              "type": 0,
+              "status": 2,
+              "items": [
+                {
+                  "name": "NANRCT",
+                  "quantity": 1,
+                  "progress": 0.582
+                }
+              ]
+            },
+            {
+              "type": 3,
+              "status": 1,
+              "items": [
+                {
+                  "name": "HTNK",
+                  "quantity": 1,
+                  "progress": 0.5033333333333333
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "Russians",
+      "seed": 202,
+      "swapped": true,
+      "originalRawSha256": "1baa317071acb64e60aa5d1b0761a9107ae05184644dc53d0334dd5df0c966dd",
+      "sampledBudgetOverlap": 2,
+      "examples": [
+        {
+          "tick": 14400,
+          "ownCredits": 0,
+          "ownMiners": 4,
+          "ownFactories": 2,
+          "ownQueues": [
+            {
+              "type": 3,
+              "status": 1,
+              "items": [
+                {
+                  "name": "HTNK",
+                  "quantity": 1,
+                  "progress": 0.8055555555555556
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tick": 15300,
+          "ownCredits": 173,
+          "ownMiners": 4,
+          "ownFactories": 2,
+          "ownQueues": [
+            {
+              "type": 3,
+              "status": 1,
+              "items": [
+                {
+                  "name": "HTNK",
+                  "quantity": 1,
+                  "progress": 0.8355555555555556
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

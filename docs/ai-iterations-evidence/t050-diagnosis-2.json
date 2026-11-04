@@ -1,0 +1,233 @@
+{
+  "passed": true,
+  "equalSamples": 0,
+  "newWinSamples": 0,
+  "summaries": [
+    {
+      "country": "Americans",
+      "seed": 101,
+      "swapped": false,
+      "outcome": "unfinished",
+      "ticks": 27000,
+      "originalRawSha256": "3beea31b8dcc2e69e65b8fa6eb8245c223991868fd9f03035fe421e5891ecfbd",
+      "aaType": "FV",
+      "purchasedAAProducedTicks": [
+        8349,
+        8675,
+        10635,
+        11429,
+        11755,
+        21007,
+        21836
+      ],
+      "recordedWeaponShots": {
+        "HoverMissile": {
+          "count": 103,
+          "firstTick": 10141,
+          "lastTick": 24979
+        }
+      },
+      "recordedShotCount": 103,
+      "nativeDamageBySource": {
+        "enemyHitPoints": 984,
+        "friendlyHitPoints": 0,
+        "otherHitPoints": 0,
+        "enemyKills": 7,
+        "friendlyKills": 0,
+        "otherKills": 0,
+        "damagedTypes": {
+          "MTNK": 475,
+          "JUMPJET": 475,
+          "PDPLANE": 34
+        },
+        "killedTypes": {
+          "JUMPJET": 6,
+          "MTNK": 1
+        }
+      },
+      "enemyJumpjetDamageLowerBound": 475,
+      "exactEnemyJumpjetDamage": 475,
+      "enemyJumpjetKillsLowerBound": 6,
+      "exactEnemyJumpjetKills": 6
+    },
+    {
+      "country": "Americans",
+      "seed": 101,
+      "swapped": true,
+      "outcome": "error",
+      "ticks": 15684,
+      "originalRawSha256": "3beea31b8dcc2e69e65b8fa6eb8245c223991868fd9f03035fe421e5891ecfbd",
+      "aaType": "FV",
+      "purchasedAAProducedTicks": [
+        9317,
+        9719
+      ],
+      "recordedWeaponShots": {},
+      "recordedShotCount": 0,
+      "nativeDamageBySource": null,
+      "enemyJumpjetDamageLowerBound": null,
+      "exactEnemyJumpjetDamage": null,
+      "enemyJumpjetKillsLowerBound": null,
+      "exactEnemyJumpjetKills": null
+    },
+    {
+      "country": "Americans",
+      "seed": 202,
+      "swapped": false,
+      "outcome": "loss",
+      "ticks": 13556,
+      "originalRawSha256": "62936e1f0d62726f0a1ef0fe9815d49e176b27cbf73f33dc21afae07d7f5c223",
+      "aaType": "FV",
+      "purchasedAAProducedTicks": [
+        8397,
+        8723,
+        10635,
+        11203,
+        11645,
+        11971
+      ],
+      "recordedWeaponShots": {
+        "HoverMissile": {
+          "count": 39,
+          "firstTick": 9793,
+          "lastTick": 11827
+        }
+      },
+      "recordedShotCount": 39,
+      "nativeDamageBySource": {
+        "enemyHitPoints": 494,
+        "friendlyHitPoints": 0,
+        "otherHitPoints": 0,
+        "enemyKills": 2,
+        "friendlyKills": 0,
+        "otherKills": 0,
+        "damagedTypes": {
+          "PDPLANE": 136,
+          "JUMPJET": 250,
+          "MTNK": 108
+        },
+        "killedTypes": {
+          "JUMPJET": 2
+        }
+      },
+      "enemyJumpjetDamageLowerBound": 250,
+      "exactEnemyJumpjetDamage": 250,
+      "enemyJumpjetKillsLowerBound": 2,
+      "exactEnemyJumpjetKills": 2
+    },
+    {
+      "country": "Americans",
+      "seed": 202,
+      "swapped": true,
+      "outcome": "win",
+      "ticks": 13316,
+      "originalRawSha256": "62936e1f0d62726f0a1ef0fe9815d49e176b27cbf73f33dc21afae07d7f5c223",
+      "aaType": "FV",
+      "purchasedAAProducedTicks": [
+        10830,
+        11505
+      ],
+      "recordedWeaponShots": {
+        "HoverMissile": {
+          "count": 103,
+          "firstTick": 11348,
+          "lastTick": 13299
+        }
+      },
+      "recordedShotCount": 103,
+      "nativeDamageBySource": {
+        "enemyHitPoints": 666,
+        "friendlyHitPoints": 0,
+        "otherHitPoints": 0,
+        "enemyKills": 2,
+        "friendlyKills": 0,
+        "otherKills": 0,
+        "damagedTypes": {
+          "E1": 189,
+          "GAPILL": 81,
+          "GACNST": 144,
+          "GAREFN": 54,
+          "GAPOWR": 90,
+          "GAPILE": 44,
+          "AMRADR": 48,
+          "CMIN": 16
+        },
+        "killedTypes": {
+          "E1": 2
+        }
+      },
+      "enemyJumpjetDamageLowerBound": 0,
+      "exactEnemyJumpjetDamage": 0,
+      "enemyJumpjetKillsLowerBound": 0,
+      "exactEnemyJumpjetKills": 0
+    },
+    {
+      "country": "Russians",
+      "seed": 101,
+      "swapped": false,
+      "outcome": "win",
+      "ticks": 25017,
+      "originalRawSha256": "8282e08450d19e00e778bca8c56832deac6c5869d728b467c54b465010047d6e",
+      "aaType": "HTK",
+      "purchasedAAProducedTicks": [],
+      "recordedWeaponShots": {},
+      "recordedShotCount": 0,
+      "nativeDamageBySource": null,
+      "enemyJumpjetDamageLowerBound": null,
+      "exactEnemyJumpjetDamage": null,
+      "enemyJumpjetKillsLowerBound": null,
+      "exactEnemyJumpjetKills": null
+    },
+    {
+      "country": "Russians",
+      "seed": 101,
+      "swapped": true,
+      "outcome": "win",
+      "ticks": 25437,
+      "originalRawSha256": "8282e08450d19e00e778bca8c56832deac6c5869d728b467c54b465010047d6e",
+      "aaType": "HTK",
+      "purchasedAAProducedTicks": [],
+      "recordedWeaponShots": {},
+      "recordedShotCount": 0,
+      "nativeDamageBySource": null,
+      "enemyJumpjetDamageLowerBound": null,
+      "exactEnemyJumpjetDamage": null,
+      "enemyJumpjetKillsLowerBound": null,
+      "exactEnemyJumpjetKills": null
+    },
+    {
+      "country": "Russians",
+      "seed": 202,
+      "swapped": false,
+      "outcome": "win",
+      "ticks": 24132,
+      "originalRawSha256": "0131c9e0a3dce241ee02472f5df2ce670ed830893f4028f7cb55b1ea9625d231",
+      "aaType": "HTK",
+      "purchasedAAProducedTicks": [],
+      "recordedWeaponShots": {},
+      "recordedShotCount": 0,
+      "nativeDamageBySource": null,
+      "enemyJumpjetDamageLowerBound": null,
+      "exactEnemyJumpjetDamage": null,
+      "enemyJumpjetKillsLowerBound": null,
+      "exactEnemyJumpjetKills": null
+    },
+    {
+      "country": "Russians",
+      "seed": 202,
+      "swapped": true,
+      "outcome": "win",
+      "ticks": 17187,
+      "originalRawSha256": "0131c9e0a3dce241ee02472f5df2ce670ed830893f4028f7cb55b1ea9625d231",
+      "aaType": "HTK",
+      "purchasedAAProducedTicks": [],
+      "recordedWeaponShots": {},
+      "recordedShotCount": 0,
+      "nativeDamageBySource": null,
+      "enemyJumpjetDamageLowerBound": null,
+      "exactEnemyJumpjetDamage": null,
+      "enemyJumpjetKillsLowerBound": null,
+      "exactEnemyJumpjetKills": null
+    }
+  ]
+}

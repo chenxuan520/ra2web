@@ -1,0 +1,106 @@
+{
+  "passed": true,
+  "equalSamples": 50,
+  "newWinSamples": 0,
+  "originalSha256": "3beea31b8dcc2e69e65b8fa6eb8245c223991868fd9f03035fe421e5891ecfbd",
+  "replaySha256": "16b863cc15e227cfb4f9bd921e86cd3a22e8a0f724af84cc569ba797d6984ed0",
+  "diagnosticSha256": "01809f0cef4f93c9ffc8191d6c937db79982d20054288a0ccf512a1cdb8ddd91",
+  "summaries": [
+    {
+      "seed": 101,
+      "swapped": false,
+      "player": "@@AI1@@",
+      "country": "Americans",
+      "invalidPointCount": 289,
+      "escortOriginCount": 289,
+      "representativeCases": [
+        {
+          "tick": 12932,
+          "id": 1338,
+          "owned": true,
+          "name": "FV",
+          "unitTile": {
+            "x": 24,
+            "y": 54
+          },
+          "orderType": 0,
+          "originalPoint": {
+            "x": 18,
+            "y": 55
+          },
+          "decodedPoint": {
+            "x": 18,
+            "y": 55
+          },
+          "caller": "Error: read-only invalid point provenance\n    at <anonymous> (/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-allied-air-response-20261104/ts-redalert2/e2e/ai-invalid-point-observer.ts:29:29)\n    at submitActionIfNew (/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-allied-air-response-20261104/ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/squads/combatSquad.ts:330:27)\n    at submitMovement (/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-allied-air-response-20261104/ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/squads/combatSquad.ts:317:14)\n    at followTankEscort (/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-allied-air-response-20261104/ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/squads/combatSquad.ts:297:22)\n    at onAiUpdate (/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-allied-air-response-20261104/ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/squads/combatSquad.ts:262:34)\n    at _onAiUpdate (/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-allied-air-response-20261104/ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/fieldArmyMission.ts:229:20)\n    at <anonymous> (/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-allied-air-response-20261104/ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/mission/missionController.ts:84:29)\n    at map (native:1:11)\n    at onAiUpdate (/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-allied-air-response-20261104/ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/mission/missionController.ts:82:72)\n    at onGameTick (/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-allied-air-response-20261104/ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/bot.ts:146:36)"
+        }
+      ]
+    },
+    {
+      "seed": 101,
+      "swapped": true,
+      "player": "@@AI2@@",
+      "country": "Americans",
+      "invalidPointCount": 254,
+      "escortOriginCount": 254,
+      "representativeCases": [
+        {
+          "tick": 10224,
+          "id": 1086,
+          "owned": true,
+          "name": "FV",
+          "unitTile": {
+            "x": 93,
+            "y": 63
+          },
+          "orderType": 0,
+          "originalPoint": {
+            "x": 96,
+            "y": 60
+          },
+          "decodedPoint": {
+            "x": 96,
+            "y": 60
+          },
+          "caller": "Error: read-only invalid point provenance\n    at <anonymous> (/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-allied-air-response-20261104/ts-redalert2/e2e/ai-invalid-point-observer.ts:29:29)\n    at submitActionIfNew (/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-allied-air-response-20261104/ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/squads/combatSquad.ts:330:27)\n    at submitMovement (/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-allied-air-response-20261104/ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/squads/combatSquad.ts:317:14)\n    at followTankEscort (/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-allied-air-response-20261104/ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/squads/combatSquad.ts:297:22)\n    at onAiUpdate (/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-allied-air-response-20261104/ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/squads/combatSquad.ts:262:34)\n    at _onAiUpdate (/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-allied-air-response-20261104/ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/fieldArmyMission.ts:229:20)\n    at <anonymous> (/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-allied-air-response-20261104/ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/mission/missionController.ts:84:29)\n    at map (native:1:11)\n    at onAiUpdate (/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-allied-air-response-20261104/ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/mission/missionController.ts:82:72)\n    at onGameTick (/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-allied-air-response-20261104/ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/bot.ts:146:36)"
+        },
+        {
+          "tick": 10248,
+          "id": 1086,
+          "owned": true,
+          "name": "FV",
+          "unitTile": {
+            "x": 94,
+            "y": 62
+          },
+          "orderType": 0,
+          "originalPoint": {
+            "x": 97,
+            "y": 57
+          },
+          "decodedPoint": {
+            "x": 97,
+            "y": 57
+          },
+          "caller": "Error: read-only invalid point provenance\n    at <anonymous> (/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-allied-air-response-20261104/ts-redalert2/e2e/ai-invalid-point-observer.ts:29:29)\n    at submitActionIfNew (/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-allied-air-response-20261104/ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/squads/combatSquad.ts:330:27)\n    at submitMovement (/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-allied-air-response-20261104/ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/squads/combatSquad.ts:317:14)\n    at followTankEscort (/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-allied-air-response-20261104/ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/squads/combatSquad.ts:297:22)\n    at onAiUpdate (/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-allied-air-response-20261104/ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/squads/combatSquad.ts:262:34)\n    at _onAiUpdate (/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-allied-air-response-20261104/ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/fieldArmyMission.ts:229:20)\n    at <anonymous> (/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-allied-air-response-20261104/ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/mission/missionController.ts:84:29)\n    at map (native:1:11)\n    at onAiUpdate (/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-allied-air-response-20261104/ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/logic/mission/missionController.ts:82:72)\n    at onGameTick (/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-allied-air-response-20261104/ts-redalert2/src/game/ai/thirdpartbot/builtIn/bot/bot.ts:146:36)"
+        }
+      ]
+    }
+  ],
+  "matches": [
+    {
+      "seed": 101,
+      "swapped": false,
+      "result": "draw",
+      "ticks": 27000,
+      "errors": 0
+    },
+    {
+      "seed": 101,
+      "swapped": true,
+      "result": "error",
+      "ticks": 15684,
+      "errors": 22
+    }
+  ]
+}

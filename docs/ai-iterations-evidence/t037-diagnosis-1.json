@@ -1,0 +1,111 @@
+{
+  "passed": true,
+  "equalSamples": 194,
+  "newWinSamples": 0,
+  "summaries": [
+    {
+      "country": "Americans",
+      "seed": 101,
+      "swapped": false,
+      "result": "baseline-win",
+      "ticks": 16092,
+      "equalSamples": 19,
+      "priorCommit": "1cce1a306745e6f8c4c8f4f3dff743425baf0f5e",
+      "candidateCommit": "a2f1a9dc4c3ef362a2e1bf0b133d6ce7992edbae",
+      "priorRawSha256": "8c0ba4c23af166521683645141919b38a631f714884399d0d04c0bfdbf6d7d6f",
+      "candidateRawSha256": "017de30b92764c07d68ac88d5c0b140b47dff25a1efe460598dc467f56be7c90",
+      "rawTelemetryAndSamplesUnchanged": true
+    },
+    {
+      "country": "Americans",
+      "seed": 101,
+      "swapped": true,
+      "result": "candidate-win",
+      "ticks": 16092,
+      "equalSamples": 19,
+      "priorCommit": "1cce1a306745e6f8c4c8f4f3dff743425baf0f5e",
+      "candidateCommit": "a2f1a9dc4c3ef362a2e1bf0b133d6ce7992edbae",
+      "priorRawSha256": "8c0ba4c23af166521683645141919b38a631f714884399d0d04c0bfdbf6d7d6f",
+      "candidateRawSha256": "017de30b92764c07d68ac88d5c0b140b47dff25a1efe460598dc467f56be7c90",
+      "rawTelemetryAndSamplesUnchanged": true
+    },
+    {
+      "country": "Americans",
+      "seed": 202,
+      "swapped": false,
+      "result": "baseline-win",
+      "ticks": 13652,
+      "equalSamples": 17,
+      "priorCommit": "1cce1a306745e6f8c4c8f4f3dff743425baf0f5e",
+      "candidateCommit": "a2f1a9dc4c3ef362a2e1bf0b133d6ce7992edbae",
+      "priorRawSha256": "188cbe50f41b58566ec1aeb6a98e1991adcd95c032e5f0b2b79a8c8ba3e5db5c",
+      "candidateRawSha256": "a68eee0ececf6952deb6fc21b3979b232af1fde5740678be88e49247afbda2f7",
+      "rawTelemetryAndSamplesUnchanged": true
+    },
+    {
+      "country": "Americans",
+      "seed": 202,
+      "swapped": true,
+      "result": "candidate-win",
+      "ticks": 13652,
+      "equalSamples": 17,
+      "priorCommit": "1cce1a306745e6f8c4c8f4f3dff743425baf0f5e",
+      "candidateCommit": "a2f1a9dc4c3ef362a2e1bf0b133d6ce7992edbae",
+      "priorRawSha256": "188cbe50f41b58566ec1aeb6a98e1991adcd95c032e5f0b2b79a8c8ba3e5db5c",
+      "candidateRawSha256": "a68eee0ececf6952deb6fc21b3979b232af1fde5740678be88e49247afbda2f7",
+      "rawTelemetryAndSamplesUnchanged": true
+    },
+    {
+      "country": "Russians",
+      "seed": 101,
+      "swapped": false,
+      "result": "draw",
+      "ticks": 27000,
+      "equalSamples": 31,
+      "priorCommit": "1cce1a306745e6f8c4c8f4f3dff743425baf0f5e",
+      "candidateCommit": "a2f1a9dc4c3ef362a2e1bf0b133d6ce7992edbae",
+      "priorRawSha256": "2d91ef81b595ca9e398dd923e86769ebd8b2a1a12795ec2481438d4228b022de",
+      "candidateRawSha256": "fdb68e89da418d5ab8dbfd2c599b22cd06675147c08b9517c6ef365e8f15cfde",
+      "rawTelemetryAndSamplesUnchanged": true
+    },
+    {
+      "country": "Russians",
+      "seed": 101,
+      "swapped": true,
+      "result": "draw",
+      "ticks": 27000,
+      "equalSamples": 31,
+      "priorCommit": "1cce1a306745e6f8c4c8f4f3dff743425baf0f5e",
+      "candidateCommit": "a2f1a9dc4c3ef362a2e1bf0b133d6ce7992edbae",
+      "priorRawSha256": "2d91ef81b595ca9e398dd923e86769ebd8b2a1a12795ec2481438d4228b022de",
+      "candidateRawSha256": "fdb68e89da418d5ab8dbfd2c599b22cd06675147c08b9517c6ef365e8f15cfde",
+      "rawTelemetryAndSamplesUnchanged": true
+    },
+    {
+      "country": "Russians",
+      "seed": 202,
+      "swapped": false,
+      "result": "baseline-win",
+      "ticks": 25692,
+      "equalSamples": 30,
+      "priorCommit": "1cce1a306745e6f8c4c8f4f3dff743425baf0f5e",
+      "candidateCommit": "a2f1a9dc4c3ef362a2e1bf0b133d6ce7992edbae",
+      "priorRawSha256": "41686a3148664911b8cb5b2854ffc0a6b3c22a48aae2299a5a5c8b6e6d23cb34",
+      "candidateRawSha256": "5e4ac3d60c7e8c8691c87174e8edee9ed5ebb227c96725cfeba84a66da7e5773",
+      "rawTelemetryAndSamplesUnchanged": true
+    },
+    {
+      "country": "Russians",
+      "seed": 202,
+      "swapped": true,
+      "result": "candidate-win",
+      "ticks": 25692,
+      "equalSamples": 30,
+      "priorCommit": "1cce1a306745e6f8c4c8f4f3dff743425baf0f5e",
+      "candidateCommit": "a2f1a9dc4c3ef362a2e1bf0b133d6ce7992edbae",
+      "priorRawSha256": "41686a3148664911b8cb5b2854ffc0a6b3c22a48aae2299a5a5c8b6e6d23cb34",
+      "candidateRawSha256": "5e4ac3d60c7e8c8691c87174e8edee9ed5ebb227c96725cfeba84a66da7e5773",
+      "rawTelemetryAndSamplesUnchanged": true
+    }
+  ]
+}

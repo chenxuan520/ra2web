@@ -1,0 +1,4928 @@
+{
+  "objective": "Five accepted successor versions (V1-V5); each must natively win all eight fixed matches against the immediately preceding accepted version. The user reduced the original ten-generation goal to five on 2026-11-04; the acceptance protocol is unchanged.",
+  "requiredAcceptedSuccessors": 5,
+  "acceptedSuccessors": 4,
+  "protocol": {
+    "map": "mp08t2.map",
+    "seeds": [
+      101,
+      202
+    ],
+    "matchups": [
+      "Americans:Americans",
+      "Russians:Russians"
+    ],
+    "bothProfiles": "brutal",
+    "engineDifficulty": "Normal",
+    "credits": 10000,
+    "units": 0,
+    "maxTicks": 27000,
+    "swapPhysicalStartsAndPlayerOrder": true,
+    "matchesPerComparison": 8,
+    "acceptance": "8 native wins, 0 losses, 0 unfinished, 0 native draws, 0 runtime errors; deterministic mechanics, focused/full regression, typechecks and build pass.",
+    "scopeLimit": "Win rate only for this verified eight-game schedule; no claim of universal or stochastic 100% win rate."
+  },
+  "rawEvidenceRoot": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-10-generations-20261103",
+  "baseline": {
+    "generation": 0,
+    "commit": "05d2f493baf727c4b19866bef933026a2103437f",
+    "sourceSha256": "ed4db92cd5714c5c93aa824e186a67c49827d748edcdae68536f41b31b0933ea"
+  },
+  "generations": [
+    {
+      "generation": 1,
+      "commit": "adb68682136bf5c889a3043457c0c9abe4318ae4",
+      "sourceSha256": "d946db261c22992a84a6f3bbed862a15588e34c49b8010e6f308492f7c8c1e4a",
+      "previousCommit": "05d2f493baf727c4b19866bef933026a2103437f",
+      "nativeWins": 8,
+      "matches": 8,
+      "report": "attempts/010-soviet-armor-opening/report.json"
+    },
+    {
+      "generation": 2,
+      "commit": "85d5f45120762d3f5d96bb8a715618580b95b47d",
+      "sourceSha256": "01ea9b93a7e5e5b7980d5efb28bf3e036bf61709bd0289d3e6b720e80513ee93",
+      "previousCommit": "adb68682136bf5c889a3043457c0c9abe4318ae4",
+      "nativeWins": 8,
+      "matches": 8,
+      "report": "attempts/026-reserve-before-tech/report.json"
+    },
+    {
+      "generation": 3,
+      "commit": "0f93e48c9a970a3afdf25e73b86e8365651cb607",
+      "sourceSha256": "babb71b5ff98073a9543ee1b71e63b6bcffc663ce4192adeec9a42bd4c91ba2a",
+      "previousCommit": "85d5f45120762d3f5d96bb8a715618580b95b47d",
+      "nativeWins": 8,
+      "matches": 8,
+      "report": "attempts/033-gem-tempo-reserve/report.json"
+    },
+    {
+      "generation": 4,
+      "commit": "b0f3881c884319b69d8fc1818a24edc126beea33",
+      "sourceSha256": "b16d9953d7a7a9c44c6a9950d6546dc8d829670c571e770b0da4ac45caa6f75b",
+      "previousCommit": "0f93e48c9a970a3afdf25e73b86e8365651cb607",
+      "nativeWins": 8,
+      "matches": 8,
+      "report": "attempts/052-single-ifv-response/report.json"
+    }
+  ],
+  "attempts": [
+    {
+      "id": 1,
+      "title": "工程师运输起点／返程",
+      "status": "rejected",
+      "change": "Fix carrier planning start and return after real MCV deployment, then test the transported engineer capture-sale candidate against V0.",
+      "acceptedGeneration": null,
+      "candidateCommit": "de738d0ba0d57013d497112d49213eabbd4c5576",
+      "sourceSha256": "1f5d2b5145497053e46e864636d4b1278a4e340a6af5a5972d06a1bea7dfe312",
+      "opponentCommit": "05d2f493baf727c4b19866bef933026a2103437f",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-engineer-transport-fix-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 465,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23109
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 4,
+        "loss": 4,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/001-start-fix/report.json",
+      "reportSha256": "d80dfc6f350cdfd76515b3883f9232da947fc8629b9b46980ecd1624015e52f8",
+      "manifestSha256": "1d3952d3dfff5840bc19f4dc4fecb9eb9ed54ac554a81f586a322a35377d9a99",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "1e62c800ae0e8774fda4ef5b05a1be05059c9b36f3c67ec13676c2292ce406cc",
+          "transportSha256": "8da3ef053cdcc60ad2fbdee3246ec010d156c549f726525c630a68d0fac0adba"
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "489ae641100a78b2918b74aa2331d3269c52e57c1a0365649e0829dc72431978",
+          "transportSha256": "1e6f4c5e7705898574edfd2fe0b07703246091a31c35735361b61f9be0ad5a61"
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "f03795b4125bd8d773ee7e013d9be8781c11cff0da4bb4d9eae4a299ca449f92",
+          "transportSha256": "8108d4d44f0f5320fa958431522ae81a2fdf40e826975e7de0cff630d4e28393"
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "ef060842462b34d0b404631bd5171a0b30dae4e54dc3423803e44cf807b01130",
+          "transportSha256": "d7323ba22499c20cf9d4dfc2050ffbf1eaf9fcea3e91f3078dffbd04f2be93a6"
+        }
+      ],
+      "actualTransportChains": 0,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 2,
+      "title": "等射程冷却拉距",
+      "status": "rejected",
+      "change": "Allow equal-range armor to restore safe firing distance only during its own known cooldown, retaining fire-animation/path/crossfire protections.",
+      "acceptedGeneration": null,
+      "candidateCommit": "f84dd23babc78e93e950ba298c63d8e1febccdea",
+      "sourceSha256": "3efa5aa84fba0636b88039103fa06b3d58f0d6036d8f162557bb6840c85732a1",
+      "opponentCommit": "05d2f493baf727c4b19866bef933026a2103437f",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-cooldown-kite-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 440,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23058
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 4,
+        "loss": 4,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/002-cooldown-kite/report.json",
+      "reportSha256": "98f7d7d095a81e6fbc2e8589da7897a110728c5de775ecd3d4aeeede866cd5d4",
+      "manifestSha256": "bb3172e42034e837db0cddce7b2cd71f0fef16e95be24b63e3019666bef9d714",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "e307ee9e9beeb1e9f5880a694a7a6e9d5e565d2e7e5ef8809b8e1731b5491412",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "44547026613fa6a2c4cba3767a11770458e685a59fae89b8e80fe7923b02d7ce",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "86d0742ae28c31a9a2a6795e87fe728292e8387c8fa5409b0fcd3042ef2cdff2",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "94492a4c9f3becf23275e4f97f84350fbaf1be934219ca2d3211d24c8c653a34",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 3,
+      "title": "就绪集火预留",
+      "status": "rejected",
+      "change": "Reserve immediate focus-fire damage only for own weapons ready within six ticks; cooling guns must not divert ready guns from a kill.",
+      "acceptedGeneration": null,
+      "candidateCommit": "53b09408714a154cc76e781db2627f75d21d46d9",
+      "sourceSha256": "b9c49d7879699bd852fbd1803049f5d6f364cd91fd553b25725874bec23a7c3e",
+      "opponentCommit": "05d2f493baf727c4b19866bef933026a2103437f",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-volley-ready-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 440,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23054
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 4,
+        "loss": 4,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/003-ready-volley/report.json",
+      "reportSha256": "429ffb9c81fcb2aca06a076a4019579b94b8dcbf16bafed2b4e484fb28d25f72",
+      "manifestSha256": "77e4565f9d1a524e681d8fcdc3f13e58ab0435b899e7b9a1d976e47eed30a9e5",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "7506c0950aaeee0ad5b165c6665c98dd380ddf3f6827230efc316dc9abbb5598",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "15724e0fa8c6bc8e4acc23edb8955a76865f4b5bda99e56c6467df96d59e151c",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "6d150143055ccb917739fd74017686ee5dc6a38e0f9e07891fa870b9ca160c1b",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "615d867399081c101c4e58113c17df3e97fc1f5862e0e14ffecf9d2d7754062a",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 4,
+      "title": "统一提前第三矿车",
+      "status": "rejected",
+      "change": "Fund the third miner at two refineries and three tanks when the base is not under visible siege, preserving weaker openings and normal behavior.",
+      "acceptedGeneration": null,
+      "candidateCommit": "99dde031bc6d68180094dc264b62e427f4aa5488",
+      "sourceSha256": "f97345024e507ea7f3e7cafe30eb86da89b77487d19eca13317f519be8ce84b9",
+      "opponentCommit": "05d2f493baf727c4b19866bef933026a2103437f",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-early-miner3-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 441,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23056
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 3,
+        "loss": 5,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 0,
+          "loss": 4,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 3,
+          "loss": 1,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/004-miner3/report.json",
+      "reportSha256": "e9359a85a2ac8d68671ed3c26dcb14de97630831c54a393d94f9247f2f4c2870",
+      "manifestSha256": "6f1b4b6f0620dd639dbce67c2e426b1be9a5782ac67664d8d92ae0340212410f",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "f77532534d391edf343c13cc98c4034481d0c058fdcf3f5e4bc3b1cd307d37e7",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "1f16f6b81d772a682ba8879a5ad8ed7ac27cd4ffaadab5ab9093e388384b509a",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "4db015790812acae2cfb8e56da89b6ccd59860e872ac93606093e292fc975bdc",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "4fa6f5ea2ceeab6256f97b0316270f13a708b1dccc67beaa21ca5d03956840ae",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 5,
+      "title": "国别开局组合",
+      "status": "rejected",
+      "change": "National opening: close allied starts fund first War Factory and second refinery before barracks; Soviet third-miner timing is advanced without changing Soviet barracks priority.",
+      "acceptedGeneration": null,
+      "candidateCommit": "d0288a791657fb863366be1464ef64b3017a7f28",
+      "sourceSha256": "c9a86d0219dcebba609b5d9f2fc66f58e85162fe1d8789437d5b8921f812f29f",
+      "opponentCommit": "05d2f493baf727c4b19866bef933026a2103437f",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-ground-opening-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 443,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23061
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 7,
+        "loss": 1,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 4,
+          "loss": 0,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 3,
+          "loss": 1,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/005-national-opening/report.json",
+      "reportSha256": "63c4d727385bbd6156f51ddd6e90d362afc42558a4a498dcc682f1401bf19e9f",
+      "manifestSha256": "a2cf40e372edb9dd3cbc1539a2c0f4f6f283ea95659ba0ea4a83b98df02fb352",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "1106ad58e8751f1c62dfb87de01205744fcaf2cb3c021c742675f6d85f6a3f28",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "ea49996a4339a5c67c96577c7f2afa45e9c5322d27adde3b158187ad90188aef",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "7d7900f7bdf63e82ca0d55fb7c0c7a885551e14243c6303104fa818c1c2055a7",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "9cfba78abe6810b0a13d07c8b337fff9abe0193bc7aa9b7e53fae6baa366d216",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": [
+        {
+          "originalReport": "attempts/005-national-opening/diagnostics/verified-detail.json",
+          "originalReportSha256": "f86bd3918313e759e16ad097a75af80b5695c435f713fd9b7042787db04f59c6",
+          "published": "t005-diagnosis-1.json",
+          "newWinSamples": 0
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "国别开局＋就绪集火",
+      "status": "rejected",
+      "change": "Keep the seven-win national opening; reserve focus-fire damage only for own weapons ready within six ticks.",
+      "acceptedGeneration": null,
+      "candidateCommit": "6ed505d31fb356e6a98db1eba6bfc581c363c50d",
+      "sourceSha256": "26a1596a50fdedefd3d3389cdce23c62085832cdf1548459adecb0e4c1a191c5",
+      "opponentCommit": "05d2f493baf727c4b19866bef933026a2103437f",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-national-ready-volley-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 444,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23062
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 7,
+        "loss": 1,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 4,
+          "loss": 0,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 3,
+          "loss": 1,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/006-national-ready-volley/report.json",
+      "reportSha256": "f1f387c4bb30592d247066bb9bed3187e7ce5398d8185b4ec39bb752260ec514",
+      "manifestSha256": "4bd250be77fb175c19cc7e8f30d35d29ba53eecea8ee3a36b904799c4e4a172b",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "d8df7db36b1cee654f9357ca84f5f59b78ee15b905e763a65ffe87fe3abfb899",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "dd338ad78b348fc7431203015a485327d332630f7be8268c6f8a97b74f68d1a9",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "9b5a62617a73422861ef753315bb83c839d469ccb3cf8a6ae6c1c6d164ceb517",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "a00e3e605efb950c3cbbeecb6069046a6c89d364782a2ebccf4b86b642d329dc",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 7,
+      "title": "拦截遵守恢复门槛",
+      "status": "rejected",
+      "change": "Honor the existing outnumbered/power-deficit regrouping gate in the approaching-force interception branch, while retaining direct base defence.",
+      "acceptedGeneration": null,
+      "candidateCommit": "c4e42254b2045622403eb0538270fb51828e3ed2",
+      "sourceSha256": "d58b905f4fbfa1d2bf37154fbf66d2f338c089fadc133a185e40bcb5d3601709",
+      "opponentCommit": "05d2f493baf727c4b19866bef933026a2103437f",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-intercept-readiness-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 446,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23073
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 7,
+        "loss": 1,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 4,
+          "loss": 0,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 3,
+          "loss": 1,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/007-intercept-readiness/report.json",
+      "reportSha256": "35ef1b37c706b0c624b053c6f6d04cd73ccf57eb6a8e545a261cf6dd051a1f09",
+      "manifestSha256": "9dc875e4fc81a752f05a0f5cf3b5a771c98a8a5c4068541daf0011c9d56c0dbf",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "4f6a2203a20fa8d10ec0e89d53d3db7495af0ede083b7036824f09f10d2a9886",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "e2ddfd760d2be4b9e5060538c7f936ad81d1d26181d8082dfbcf5f5f797f4e0e",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "538629c29772a8d2ed0a4b557738f088f03c3169003790fa0c8170c73a84515e",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "f6fc0d215d632fe92eec74578a1134a424e3217638e12a9f34ee67173536609d",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 8,
+      "title": "局部装甲支援",
+      "status": "rejected",
+      "change": "Prevent isolated leading tanks from approaching a locally superior observed armor line; keep in-range firing and let distant reinforcements join.",
+      "acceptedGeneration": null,
+      "candidateCommit": "cc16e38eec2aecdc43a1017b532dac9f19c7153e",
+      "sourceSha256": "7535375bc87b2eae519b764eef92ce97249608949e3a83732984545b8f207861",
+      "opponentCommit": "05d2f493baf727c4b19866bef933026a2103437f",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-local-armor-support-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 449,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23078
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 6,
+        "loss": 2,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 4,
+          "loss": 0,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/008-local-armor-support/report.json",
+      "reportSha256": "00137666b707b45db92c1171661e93690372c45e6e1d30a8c16cbbc71fe9801f",
+      "manifestSha256": "845b674230b50cca7291b2c9ea003eb93fa9f857e6eaa43e4505485259eef553",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "9397ab1663e24b0a821a66dcbbe106248637e50cfde60878a9bf6cc531da6d33",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "8a0f3a737ff2a50906b21ec853e531c3364900ba1674b26ac5ccdfacc5c86728",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "69af4e1c3de0e5f232a200e6af3f16965c786a534cdc6769eeabba66f613a39a",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "20612c0745c1f3bfc8c0e8019f98214c7bc31ddf12a117260f1a093bd8b9ce63",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 9,
+      "title": "射程内支援计数",
+      "status": "rejected",
+      "change": "Use the leading tank's actual own firing range instead of an eight-tile circle when counting nearby armored support.",
+      "acceptedGeneration": null,
+      "candidateCommit": "707fa60561f9e9ecdf41f393142621b4d70b08fc",
+      "sourceSha256": "eb337c05fe9c8fe7ae889badf1e8b6280bd3ae6dbd5b1c36be8262c355817047",
+      "opponentCommit": "05d2f493baf727c4b19866bef933026a2103437f",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-firing-line-support-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 450,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23080
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 6,
+        "loss": 1,
+        "unfinished": 1,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 4,
+          "loss": 0,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 2,
+          "loss": 1,
+          "unfinished": 1,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/009-firing-line-support/report.json",
+      "reportSha256": "484e0aee576aded39878d13cbf9922d20d9a092f75af806d89d1185553c71d96",
+      "manifestSha256": "e838a4a8b003080da26787f873124f51a6ce8e5d6122ddc4374e50c6efc7c51f",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "83f1d56e825090a2eb9fd8fb8984d9a31b39623ec15814371158efa55b26c7c3",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "10bd1aff6c0f55aab2b902a7d11ab04c003c2234609ff6d17b0edacedb3145d6",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "1755e8836a073eb5218e6c4623e76a884c5be99c769269f07f6823ec6adb09b2",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "3f87971a4cc67b7061e5b8f2206914a05f28db47af66cb0c6bdfc5318a30a1e7",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 10,
+      "title": "苏军首矿场先行",
+      "status": "accepted",
+      "change": "Build the first Soviet refinery before barracks, then retain the required barracks-to-War-Factory chain; keep the seven-win national opening without failed micro additions.",
+      "acceptedGeneration": 1,
+      "candidateCommit": "adb68682136bf5c889a3043457c0c9abe4318ae4",
+      "sourceSha256": "d946db261c22992a84a6f3bbed862a15588e34c49b8010e6f308492f7c8c1e4a",
+      "opponentCommit": "05d2f493baf727c4b19866bef933026a2103437f",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-soviet-armor-opening-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 447,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23082
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 8,
+        "loss": 0,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 4,
+          "loss": 0,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 4,
+          "loss": 0,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/010-soviet-armor-opening/report.json",
+      "reportSha256": "d70b016cecccb39dd6d981dc2c4ddfa1dd9f7e6688e4a23bdef00b15b14229d3",
+      "manifestSha256": "62f2a717d627ea71d6e6a9e37ba82c480c11786c3b949fd00909fa6c99674095",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "048cfcd8d00f99058096767459f1d657f1fa748cd101818e8c633f0a85721a13",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "24097cde6c248fe36ae783a121f514e86f4bd2b062af4eac96c3e357f9a1b818",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "17b11f45b2c14391be513f0cc012079a9f285a682d9d14314be03a86799407ab",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "4269afab70b6c6d895cef074cc42ec68c99add38a474ea8d9ff1953bf4e04b43",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 11,
+      "title": "第四矿车先于扩产",
+      "status": "rejected",
+      "change": "Fund a fourth miner before a second War Factory for both sides; preserve already-committed buildings and normal behavior. The initial Soviet-only proposal was not benchmarked because allied strategy was unchanged from V1.",
+      "acceptedGeneration": null,
+      "candidateCommit": "66e9051626e2b69cfcaa2494af2ef498beb56227",
+      "sourceSha256": "c0b07bfc587fcd668e19084616a76d267dbe1bf1245c5900aac10668d51a87e5",
+      "opponentCommit": "adb68682136bf5c889a3043457c0c9abe4318ae4",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-income-capacity-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 450,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23089
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 4,
+        "loss": 4,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/011-soviet-income-capacity/report.json",
+      "reportSha256": "0605f013364aa9b3ccfba725f07be962dd0cffe32a6d768843a65815e4e64e1d",
+      "manifestSha256": "f597fc9f51cddfb7a3836f13e04c0b74c64258150820b95238569aebfa238a29",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "b2a678064ec1749d788fa7920044c7384446a2960d0f5a657197d2df0f245150",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "9fcd6c50a40aa2d13a197f6028c76657d4fcb3fc8b65224d6d2ad6dfe202cdb0",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "e5cf4b622108505cfd78096d146c433ed97c30ff7c27155eda7a9b4282eefd0b",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "5aa435e525cc6869da573edfc14b8b7b094cec23c214f8a08f91b0982b84295f",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 12,
+      "title": "供给优先＋就绪集火",
+      "status": "rejected",
+      "change": "Add ready-volley focus-fire reservation to the income-capacity candidate; cooling own guns do not divert ready guns away from a kill.",
+      "acceptedGeneration": null,
+      "candidateCommit": "e02efc984e9191f69a4cfa59d928799e3866fb1b",
+      "sourceSha256": "1de94a0a57f27c09a5337a45fcb8b36efa9e1bc48e0d09a09d4298cfecb5a54c",
+      "opponentCommit": "adb68682136bf5c889a3043457c0c9abe4318ae4",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-income-ready-volley-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 451,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23090
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 4,
+        "loss": 4,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/012-income-ready-volley/report.json",
+      "reportSha256": "b23270d74e66df0310bbf38190904585ebc37bd52517ce53151c633b819f3c33",
+      "manifestSha256": "a2de4fd091e437f13dc825460a659f9726b5bcb5c1020244f4870f4aef77befd",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "b987cb6a9e2cb982cad42acab449c218aa63892283785c92754ea988ebd6d2f9",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "4b695d22ebea80d8e3b2b886fb59aafb1ec218be82f121b6c9f9b55b2285b44f",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "6cc483d9bb04707f2cdd3f0ea86bfbd7d8781d3e3e2a8230dbb66875189f133a",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "cdd2aa2534e5d56fd2f564654054933c0789fa589555995e3d2c79668d0b0b1b",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 13,
+      "title": "己方血量加权战力",
+      "status": "rejected",
+      "change": "Weight own field-army strength by its exact known remaining health instead of rating critically damaged tanks at full strength.",
+      "acceptedGeneration": null,
+      "candidateCommit": "91bba22bf0e5cea54ac7c91558c71fd07a01e4bd",
+      "sourceSha256": "0ba897232759a792da5c577aa8fb3dbfbedeeed5094171357293c7befdb0b65d",
+      "opponentCommit": "adb68682136bf5c889a3043457c0c9abe4318ae4",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-health-weighted-army-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 449,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23086
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 4,
+        "loss": 4,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/013-health-weighted-army/report.json",
+      "reportSha256": "1cc4f671fb62ab1f8900b147b05b9c0fd9d22ee5921c5033bf53940236c8eff0",
+      "manifestSha256": "deee6f60dfbbb96449faf5ee507c7ec4420556b58fd4717cccddce31f0a4c06c",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "06da99bb0974cc878803f99ba905ec66a6e338b4ae036782d109e32a07397f3f",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "1b4e31f702605df595872d3b9149164fda2830a317a6d1f7c537c74ff7c4b9c1",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "9cc90cc5c28374bfa4af7905b778ed241afb1c4322ddce3cc82de7ff52e4f3f1",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "b8124526c421a121eec77fc5bd06e47e67eca5da585833bccf3e6f7e59167e1b",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 14,
+      "title": "空仓忙碌矿车转向宝石",
+      "status": "rejected",
+      "change": "Allow known-empty busy miners to select currently visible safe gems; do not interrupt loaded or unknown-cargo busy miners and bound busy redirection to one per 900 ticks.",
+      "acceptedGeneration": null,
+      "candidateCommit": "45ba15e5147f29a570a8c8bb790b55f75fe707bc",
+      "sourceSha256": "b597a5ea752b590b80e1a974ae9742e724e5386740ebeb84b891f3ae47ed87f3",
+      "opponentCommit": "adb68682136bf5c889a3043457c0c9abe4318ae4",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-empty-miner-gems-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 449,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23089
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 4,
+        "loss": 4,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/014-empty-miner-gems/report.json",
+      "reportSha256": "ae5f5029ab2997044a60c434e6bfb91a1b6996ea05f72290d4d6cc5ffccedc4d",
+      "manifestSha256": "9fffa7152e9d59fb6e7b4a4dd1b2ee462b7d65e5e4ebc4d557050c87fce8a8d3",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "3feb94e757d91e9f2e5601a06b8840fd14672a9f411a93a39a8e11021aab40b0",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "a5b4800f0a1b9753310efc0a43d5340899f68da264d444425f2991e762972cb3",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "a2cd288b95e4b4e4378d18b49fc24e7b34413e8346763ef5c94e9dc9c094425d",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "6dd8ad6595f147aa3bd8410370c208412ab124261f7b944f4b38de1769f614cf",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": [
+        {
+          "originalReport": "attempts/014-empty-miner-gems/diagnostics/verified-replay.json",
+          "originalReportSha256": "6ff9af4407c34eefe600f97743607000131bcba6514efed9b1c38817b615b78e",
+          "published": "t014-diagnosis-1.json",
+          "newWinSamples": 0
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "title": "同轮宝石目标分散",
+      "status": "rejected",
+      "change": "Assign distinct visible gem tiles to eligible miners within one redirection cycle instead of sending them all to the same tile.",
+      "acceptedGeneration": null,
+      "candidateCommit": "6d1fc9bc14ca6000b7fae07d8a19fa57cd0bffd2",
+      "sourceSha256": "243041233f24118922f7508e42942ac4304fc2c809214597f83c106c06efbfa6",
+      "opponentCommit": "adb68682136bf5c889a3043457c0c9abe4318ae4",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-gem-target-spread-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 451,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23093
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 4,
+        "loss": 4,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/015-gem-target-spread/report.json",
+      "reportSha256": "7bdc600d23c802c153ca83e6f5a36dbe8930afa867f567aa5752f56686882f66",
+      "manifestSha256": "c68db37aa48dc9fd53d89820530cce1f6d721c5b26c41b1178258d2d8474b5ce",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "63969c49008442ae81512c487919fa705ded26904deb8d4ed85f88987dd3884b",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "236aca35a21832fa3d23e07e7144dc2bceda7bd25375c842f99e3457f2506a61",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "64ef480577033e1ba412e60713a33d1f80845636a1f2334fa8954eba87357282",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "dfe6977e163f6a1e6f64a0f8949f1f2a2eb481b70b11c0c9cefcaa8f96e2b6cf",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 16,
+      "title": "基地周边未知区域侦察",
+      "status": "rejected",
+      "change": "Prioritize public unexplored sectors within 32 tiles of the own start once the existing brutal scouting missions are created, keeping scout counts and production priorities unchanged; pair with known-empty miner redirection.",
+      "acceptedGeneration": null,
+      "candidateCommit": "2e74a11829c3d878af9c19e5bb444d04d82f099e",
+      "sourceSha256": "cb14c3887c01ba87528233cf305b4c584b104a8dc81905229f6c2a539cb3ad34",
+      "opponentCommit": "adb68682136bf5c889a3043457c0c9abe4318ae4",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-local-resource-scout-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 451,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23104
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 4,
+        "loss": 4,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/016-local-resource-scout/report.json",
+      "reportSha256": "34d964cf84b7a59786161a82de0c9c06ebffd8fd5fc5feee01f079a4b08600e0",
+      "manifestSha256": "f5594abaec500b40c62507410fea44b8ed8fc8cc627942f186c512509f756214",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "9be742392cd1bf1d2bdda912b2f91c15ba211dd4c5962fae473147dff89d9df2",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "888464cde9c63449d2c4f80d5308c33645830e2d7d0c5a7ea1243f6d525be467",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "135c985b84e90dcc57c36b2a37e1b58865aa3cc81125cfe86f5b945efd01a0fc",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "70cd0d7f307dab6cf4dfe7bec8d6dfb058a884d92752c22d58b3997e713bee7c",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 17,
+      "title": "侦察纯移动",
+      "status": "rejected",
+      "change": "Use direct Move rather than AttackMove for brutal scout travel, while normal scouts retain their existing orders and all scout budgets remain unchanged.",
+      "acceptedGeneration": null,
+      "candidateCommit": "4ffef53be4e7780530d7a9dcbe9f87a6a4e6fb49",
+      "sourceSha256": "7027d5380f008289c8e7d066464b1166b16b6584a4b49e94ec62f034bba656e2",
+      "opponentCommit": "adb68682136bf5c889a3043457c0c9abe4318ae4",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-scout-direct-move-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 453,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23116
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 4,
+        "loss": 4,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/017-scout-direct-move/report.json",
+      "reportSha256": "da540377f27e57021856a96891e05ad95d9c18d116b449d134ace5c19e4fe3aa",
+      "manifestSha256": "16a6d4828ef0b713463255148ffeadc7bd0ef5a4422bd02666901eabc3e9791d",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "b761fef9da59bf31fe497ff2e79a82451df566161acb469f658ae20755fc9786",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "b507af7351c8c4a055d06d63d81dc73651e810f3f55d2fccfdaa847c79ea963d",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "e7c9f760b1c8504634aba827494980dfe7f5d5b31e674da95b581ea613d95a72",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "3054450c2b85d8d4f2382968a465b30930d4384769d33991b5d28849a9755a9f",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 18,
+      "title": "六坦克成形再远征",
+      "status": "rejected",
+      "change": "Raise short/medium-map blind assault and non-base interception formation from four to six tanks while preserving direct base defence and close-range or late opportunity exceptions.",
+      "acceptedGeneration": null,
+      "candidateCommit": "3b2c25e83b867664cc9eaea77f4f563761210528",
+      "sourceSha256": "93619081f0c7bb8e54fe054140d3985bd7d2bd9f9194826b0f8d68eb7af9ea7f",
+      "opponentCommit": "adb68682136bf5c889a3043457c0c9abe4318ae4",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-six-tank-formation-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 454,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23111
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 4,
+        "loss": 3,
+        "unfinished": 1,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 2,
+          "loss": 1,
+          "unfinished": 1,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/018-six-tank-formation/report.json",
+      "reportSha256": "785958c1f054f844c00c60989a0e6f46023ee3e5e21a63ef162bc099fe914051",
+      "manifestSha256": "87f4fe5cd017a2f5492398031c2e301e257355ee38bbbc24934acbc5dc609b2b",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "c7710bb212657e080e8cccdf60310da03f442b72a93b0818fd966b57f01dcd14",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "f965ec33819b1391f6164c59bd43de662a000ee80e8ea5d6b2ae336001c8b536",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "c8015085cd577f475c96a076dc9f74ad2214760ac8647576526994c102cb2885",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "52a47f81bbc85c3c671f5dae422aeff7e78caf28579e5e45a615160e02899f9b",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 19,
+      "title": "成形与矿业供给配套",
+      "status": "rejected",
+      "change": "Pair six-tank reserve formation with fourth-miner funding before new dual-factory capacity, while preserving committed buildings, visible-invasion tank priority and normal production; check resource visibility before reading quantities.",
+      "acceptedGeneration": null,
+      "candidateCommit": "7179c498ca1fd3dbf230d0b8f311c3a059d22cad",
+      "sourceSha256": "0f34fc1086990d583f82e221e48d795fcc1e7ca8617e7b6a6bc0837089e9b78b",
+      "opponentCommit": "adb68682136bf5c889a3043457c0c9abe4318ae4",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-formation-income-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 462,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23125
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 4,
+        "loss": 4,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 3,
+          "loss": 1,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 1,
+          "loss": 3,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/019-formation-income/report.json",
+      "reportSha256": "a6ea2d96642e786109e6828fce5b873716db7ec3d614efb4937e110ec9d57454",
+      "manifestSha256": "8f84609a5f2331c83132f5ab7759daa72d0ac49366c3fce2f018ada3a22e6aef",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "fe752bca624a4124127f6e47330d8fb843c683c336662760345179bd425d891b",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "c4319339849f5f16fd1e4bbb96c51a68699796761df8e47bb60eafa22db0f736",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "405f2ae2f3a45b048d4cbaebcd5d0b6598f368d172287ad8a4e3a0d139bad5f7",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "323ab1d573984324be2d22c63c321284051b24510b883675b71691cf973407f6",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 20,
+      "title": "成形供给＋就绪集火",
+      "status": "rejected",
+      "change": "Apply the existing ready-volley focus-fire fix to the formation/income combination; do not reserve immediate damage from cooling own guns.",
+      "acceptedGeneration": null,
+      "candidateCommit": "7f7efcc2a7527826c4e821bc1c61db29a4da815a",
+      "sourceSha256": "b95bce66b20a37bad026a97412407d5dfba59fcda635b427e4d11adf3fcbbfd6",
+      "opponentCommit": "adb68682136bf5c889a3043457c0c9abe4318ae4",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-formation-ready-volley-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 463,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23126
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 3,
+        "loss": 3,
+        "unfinished": 2,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 1,
+          "loss": 1,
+          "unfinished": 2,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/020-formation-ready-volley/report.json",
+      "reportSha256": "aefc348c1bab0acb9f569c56ff4d1b234493556959967200ea8ad8e2a4e556f0",
+      "manifestSha256": "a20f7a925a10b91a275640ce27f123208b0f0dd007ca997f46719d14d2dcdfb0",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "00f4b25f7102ef84e4a5b031992b88e8348d437a0c5f8835ac419d20fd035dc4",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "e3d1452599f05336a18a2760280b23f92fd770775215222cdcec153f3aa09eb1",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "347fad7c6d98e1ea59e6d765c8214e4c0263400fe2f44557043bec5e623f3aba",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "7146c89dc6b09ea8dc462d1a601b763a254fccc27a0a91c260b59ef02da28a69",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 21,
+      "title": "恢复主力后扩矿场",
+      "status": "rejected",
+      "change": "Rebuild at least six own core tanks before starting further refineries beyond the opening pair; preserve committed investments, miner coverage, refinery caps and normal strategy.",
+      "acceptedGeneration": null,
+      "candidateCommit": "da722a54896b87aebadb7da37c4b7a311335a8aa",
+      "sourceSha256": "d1c88813b8fd0e814b34a8c61cd5928eba0196467478938429ee054394a55dd8",
+      "opponentCommit": "adb68682136bf5c889a3043457c0c9abe4318ae4",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-reserve-before-expansion-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 466,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23142
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 4,
+        "loss": 2,
+        "unfinished": 2,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 0,
+          "unfinished": 2,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/021-reserve-before-expansion/report.json",
+      "reportSha256": "288e09bd4d56c9292a67e9144dc10ddcd512020cb64a4b3be6cadd2f68dbf739",
+      "manifestSha256": "8d084054373aab7007d6266e9ed5f31e50f876abb669ad3b912b795118575e7d",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "a6ec83188de76d8107e8709b5d902640885aa556d7fcd2981c42164177a488af",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "c096fa653936c1fe39257a134cbc097c8dedf74a7d5dcf47be89f1d3aa5c5237",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "e30bddcc1bfeb0e8927d573855d5b698240fc99883c855fe786e3b617f491190",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "7a264498024bc1895485b0b3049e7bc91ce533360a9ac696ef256893d0588ded",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 22,
+      "title": "重工后提前第二矿场",
+      "status": "rejected",
+      "change": "Allow the funded second refinery to provide its miner after the own first factory exists without waiting for the first tank; retain funding, genuine free-unit, intrusion and normal-strategy conditions.",
+      "acceptedGeneration": null,
+      "candidateCommit": "9eb9075cb0ea0282e1d14bfc42cae1bd317279d0",
+      "sourceSha256": "95077a378a9a99ef304f1401411e032f76d785c4ffca65eaa102bf287fd43000",
+      "opponentCommit": "adb68682136bf5c889a3043457c0c9abe4318ae4",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-funded-second-refinery-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 466,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23144
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 5,
+        "loss": 3,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 3,
+          "loss": 1,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/022-funded-second-refinery/report.json",
+      "reportSha256": "d8d7081d1fe7e32f6eeea446c6c8a8827fc4b23e80fe1b730f7fac5817a70be6",
+      "manifestSha256": "e3ec8d0c7040ab772abdfa6ecd04df11600f9cfe6c79f137a07388bc1873c856",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "7d165956c66367f4cda674ab7abe6174e187ad4f1021e6f8185f97f49483f4df",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "d47325e25977fe27b691e03009bbb004063b2c02ef535892d7b7b11afa141e6b",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "30052e59c5728eaada86a8d422929c049d6899acaafd4ebac0255826fa28b3e6",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "2273c4e7c7fbb57b10a3f039fd4d3f6b22da9310a68a24d4fb1a39383767dea7",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": [
+        {
+          "originalReport": "attempts/022-funded-second-refinery/diagnostics/verified-details.json",
+          "originalReportSha256": "8fe1976ca65d78f2ec311690b30b3d53b1b29468a778f30eaf5e8e1f5d40efde",
+          "published": "t022-diagnosis-1.json",
+          "newWinSamples": 0
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "title": "已见本地宝石开局适应",
+      "status": "rejected",
+      "change": "Adapt the supplied armed-miner opening using currently visible local gems: finish a first tank when local gems are known, otherwise keep the funded early second refinery; chrono-miner opening unchanged.",
+      "acceptedGeneration": null,
+      "candidateCommit": "45a4b5d84ee40a3f2ad5bec9c48acce9e8bdcd7d",
+      "sourceSha256": "a967d7a34c27c26be76459326babc26eb7934d8e0f584620c403a825b115e373",
+      "opponentCommit": "adb68682136bf5c889a3043457c0c9abe4318ae4",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-visible-gem-opening-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 468,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23149
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 7,
+        "loss": 1,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 3,
+          "loss": 1,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 4,
+          "loss": 0,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/023-visible-gem-opening/report.json",
+      "reportSha256": "dac74144289dc007816b163d5e7f4d73aae9b6726dbc075cec55ff30e6a5369b",
+      "manifestSha256": "2e3b3c963e58606d9adf41feffae33e0c23eacdbc209e63ff4d3a5b6b8bf221a",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "9d519838e5074a9cec508647c6f800067171f8ea303ae87c2314e4a4194f9517",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "50cca1b4b0a0de68fb31ba1970b8bf9de25998fe1879066e8d4039901e10276c",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "6054f6a4aba79aeedb9b30a4a03a0ce79aa05e9ef260051ea7eb00ce44378055",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "af5a5e2cffcf839b9cf77ed5eb7ad97311165ced3a1f03f67efa7b372dfc69ca",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 24,
+      "title": "混编空军不绕过地面恢复",
+      "status": "rejected",
+      "change": "In a mixed army, air support no longer bypasses the ground assault formation or outnumbered recovery checks; preserve pure-air assaults and formed combined-arms opportunities.",
+      "acceptedGeneration": null,
+      "candidateCommit": "92bab898e29f68dd0433bbf0ad0234b58a440731",
+      "sourceSha256": "5423525524e843c7080b76e250aea14b8b62f480656fb0a9d67574df72a9ce6d",
+      "opponentCommit": "adb68682136bf5c889a3043457c0c9abe4318ae4",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-mixed-army-recovery-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 473,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23157
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 7,
+        "loss": 1,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 3,
+          "loss": 1,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 4,
+          "loss": 0,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/024-mixed-army-recovery/report.json",
+      "reportSha256": "c6f5f2c45adea2e44e19e3554c2d953011add4e4b01181bd225f458df7142fdd",
+      "manifestSha256": "9eedf7953034af5452c13415f18691db2bbc38a9cca05c09e8609acb9136bce2",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "83e0e304211ace70bd31e008a95cba1fde75c14d648f9983bd50710bbcdecaf0",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "00284869679d2556cd743cfcb958680d6dd72f5deaa9a3a90ac6d49b1830e2c0",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "c9b85d5a616960cbfa21d686d2ca83ee499a77c85d9f1b4b7a48ff597191585e",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "d6c09287194f8969709bf5ec65b094f11d48a04a6850de0a8c09492317dae37c",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 25,
+      "title": "已见外围压力暂缓第四矿车",
+      "status": "rejected",
+      "change": "Before six own core tanks, postpone the early fourth-miner investment if a currently visible combat vehicle is within the existing 48-tile base approach perimeter. Preserve third-miner timing, unpressured fourth-miner investment, formed reserves and normal production.",
+      "acceptedGeneration": null,
+      "candidateCommit": "c0ad8e3e4708600097a575f04a33e6f88b1a7955",
+      "sourceSha256": "03de21ca87504814b2ad37cc7464885f9e92db757f6ae00a866c7292febb579b",
+      "opponentCommit": "adb68682136bf5c889a3043457c0c9abe4318ae4",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-fourth-miner-pressure-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 479,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23164
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 7,
+        "loss": 1,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 3,
+          "loss": 1,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 4,
+          "loss": 0,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/025-fourth-miner-pressure/report.json",
+      "reportSha256": "cc5f2473a4e652f4ef6f35566e4b926cb63cdb4bf91c3b353ac84fc93ff9052d",
+      "manifestSha256": "e03b29e96ff5e1030319eabc9b92521f8f2e4763d4261496e1cf36cd6a056ed1",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "3614d8af5d106f8e5788f01beea3403935223bacb217d1184dfd4208ed15a76b",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "25272cacc048f76d5c29828c7a36a6454d92d62fa1cbf9614376c7e3e5425a13",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "c1c8c69904896856ac4f3f7f1f2dd5c57e18b3a9ebbb234a974599f3c808ecbd",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "cf42d95505297dc63ca6e7eeaa55952f58f2b2d737d46e0897290a38e3b4ba5e",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 26,
+      "title": "六装甲前暂缓高级科技",
+      "status": "accepted",
+      "change": "Do not start advanced NATECH/GATECH before six own core armor units; keep the existing committed-tech and refinery/harvester logic without reordering it.",
+      "acceptedGeneration": 2,
+      "candidateCommit": "85d5f45120762d3f5d96bb8a715618580b95b47d",
+      "sourceSha256": "01ea9b93a7e5e5b7980d5efb28bf3e036bf61709bd0289d3e6b720e80513ee93",
+      "opponentCommit": "adb68682136bf5c889a3043457c0c9abe4318ae4",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-reserve-before-tech-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 481,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23176
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 8,
+        "loss": 0,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 4,
+          "loss": 0,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 4,
+          "loss": 0,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/026-reserve-before-tech/report.json",
+      "reportSha256": "0e91f5b18c3b960120a09b3ff0e5ec5ca2cde62de753aa2b3cf382853d1bd5f4",
+      "manifestSha256": "c6029e0b29f7b4849be7a3806e282d7914153993a5023e1f5ff452007aa991ed",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "2242d34583dc0bd3c04413d5ad04920484e6192a1567f0755d4a9f3787f8e4f8",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "8c496b79792d2c9136a6bde0b29f76f49b3081ec6e4b5a9d36b5b053804af0bf",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "d741a98185f71df735b16006f4b5abd554f82ce03b97cea89564069a5c983dd5",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "b46a3937ea57a8898767916921c18cd9e5183ae65d5f39f27358e234583ab4c6",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": [
+        {
+          "originalReport": "attempts/026-reserve-before-tech/diagnostics/verified-path-budget.json",
+          "originalReportSha256": "f793e75bdf3f7c233200b134fe28444b67d17d65062edcb927778775dcbdf5a5",
+          "published": "t026-diagnosis-1.json",
+          "newWinSamples": 0
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "title": "先射击射程内未覆盖装甲",
+      "status": "rejected",
+      "change": "When unreserved enemy armor is inside a core tank's actual current-stance range, exclude unsuitable combat-vehicle alternatives while preserving non-armor target scores, bursts, minimum range, overkill avoidance and other weapon roles.",
+      "acceptedGeneration": null,
+      "candidateCommit": "832652133d20e2205378e6ebd233e9d1cd4233a6",
+      "sourceSha256": "faad92ddc8bfd94c8aed974c5d49c0013a4e41ff4c81e15897da130012ae1c75",
+      "opponentCommit": "85d5f45120762d3f5d96bb8a715618580b95b47d",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-shootable-armor-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 486,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23183
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 2,
+        "loss": 4,
+        "unfinished": 2,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 1,
+          "loss": 3,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 1,
+          "loss": 1,
+          "unfinished": 2,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/027-shootable-armor/report.json",
+      "reportSha256": "c16bfef88f6124153e12a92ad178c1dc3f54d82d416e06e68cf0e44ccfc7b195",
+      "manifestSha256": "835f16ccd24f9d4333da3f2457f22963a6f1203b33a670f71214129cdbe86a0f",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "04e4400078e1be5f78f6a8d20dc0c35a6dc95341d31cbe87bbb2b1a4f4cab912",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "3ae495a7006658364c0a28252cccff54b32c48d6bc6cdde91df7e9e708ab107d",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "8f637c73776c368053fa107ae51cad33c885f7f93dd8b63e2b73ee2ea196223b",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "0e4bffa58294435191f55d8d0f32c78abf2adcb91eb3c41dcecb50f8bcfe997c",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 28,
+      "title": "矿场朝已见安全宝石布置",
+      "status": "rejected",
+      "change": "For brutal only, align refinery placement with the existing safe-visible-gem miner preference: favor eligible gem tiles within 32 tiles of own construction yards and outside 14 tiles of observed combatants or armed structures; retain original resource and placement fallback otherwise.",
+      "acceptedGeneration": null,
+      "candidateCommit": "880aa1c1c995e943ecd14bb71faaa15a5bc4b16d",
+      "sourceSha256": "bcc6b987260f14cdb1586e6b61cff9cee5bfa751d073e7cd3912697943eaa1ed",
+      "opponentCommit": "85d5f45120762d3f5d96bb8a715618580b95b47d",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-refinery-gem-placement-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 486,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23209
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 5,
+        "loss": 2,
+        "unfinished": 1,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 4,
+          "loss": 0,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 1,
+          "loss": 2,
+          "unfinished": 1,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/028-refinery-gem-placement/report.json",
+      "reportSha256": "508b2b961e74e0ef62825daa3c701e92c02f6f212607e31b3a33557d96c99cbe",
+      "manifestSha256": "cd9d6b18aceb493a5910f16cd2082be191a93d3b20282e7052344a16d6895b28",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "7ea9294d591b80e6f83505409c9cb07f5139d08252fe28981d3fd2f9bbc81f17",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "6bce5d363166519a9eb5f25bf782d8b85e39106609338e9dd92437ceaef8b998",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "d4593c82f8597f65a6a023436be254c551826eca63cae99c18f87cbb0d425830",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "049198b8551fc8d219b4dfc7f994b675bd3e2feb18c9f5cda444103c44b104f4",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 29,
+      "title": "足额预算六装甲后扩第二重工",
+      "status": "rejected",
+      "change": "Allow new dual-factory capacity with three miners and two refineries only once six own core armor units exist and credits cover the actual factory cost plus 400; keep the original four-miner and committed-factory paths.",
+      "acceptedGeneration": null,
+      "candidateCommit": "cd59f8e407831b9238dadbd58b4524e72c3c4076",
+      "sourceSha256": "1a47b211e7d1eefd1ca7f8a51e5d48053e5ac595ac4b73cd8300b15aaed13d30",
+      "opponentCommit": "85d5f45120762d3f5d96bb8a715618580b95b47d",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-funded-dual-factory-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 488,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23221
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 5,
+        "loss": 2,
+        "unfinished": 1,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 4,
+          "loss": 0,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 1,
+          "loss": 2,
+          "unfinished": 1,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/029-funded-dual-factory/report.json",
+      "reportSha256": "37426defe125f40c4199cf4a2265ae5fb92b074f467dd014a795a94ca00e6f80",
+      "manifestSha256": "7cbc42e89b2b0a127ea2c68a88327049a9fa8ebeb9c0a6f7031cbabf5504dbd5",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "2fb771576324cbeec04e1db09fe57493e7506fdce750570b9d43e8022ed7ed43",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "b6606504d9bc3338b8e221f22167b57976452732cf2d3260f341eac390babba9",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "7244de7698ab860e56e28ae7c3800d81a602bb30831ef361fbd5b9f7861a1364",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "9273077fb95c6e822443f80ffeb76df298cd502170c054c5425d50992a2df507",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": [
+        {
+          "originalReport": "attempts/029-funded-dual-factory/parent-comparison.json",
+          "originalReportSha256": "e65ab7ccb557c7b97593b1d7ad7fe47d7a5b44319d91981d8fd0056fd193dcc4",
+          "published": "t029-diagnosis-1.json",
+          "newWinSamples": 0
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "title": "只在远征等待局部装甲支援",
+      "status": "rejected",
+      "change": "Apply local tank support readiness only during nondefensive assaults: an out-of-range isolated leader waits for nearby armor, while in-range fire, defensive response and distant reinforcement advance stay active.",
+      "acceptedGeneration": null,
+      "candidateCommit": "cec6ec803abf2eec070e1bddca7c494a24fbd095",
+      "sourceSha256": "188ec1031bc8f2ddd76695acbe16207e84954b46849dd570cb13180cf10ad8fa",
+      "opponentCommit": "85d5f45120762d3f5d96bb8a715618580b95b47d",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-assault-local-support-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 491,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23232
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 4,
+        "loss": 4,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 4,
+          "loss": 0,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 0,
+          "loss": 4,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/030-assault-local-support/report.json",
+      "reportSha256": "d7c4bc54578d13d7cf953f8db0463dcaa683d2d236337f0e21d41654eda0a1a3",
+      "manifestSha256": "5173e70b39f6d37207bc0b84af9537962ba6935644fb94f826c231c9f8ff4ef9",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "5921fcd530749ce621c4822b641cfad03cca9cd419aa56a5b82f292aa0b0d6a8",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "7388a66ade376bcd7231a95db883e86f21a0efbe454eec2b9cdb9d6466ef5dff",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "36e19b1ff957700042a91b7de6ae31f15d836800e782663bbed388c43b778028",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "57120e1c400515f01fb4ea5f3374c537280ac2d89a0cc0a214341ea5a6bb65f9",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 31,
+      "title": "矿车型别选址＋苏军八装甲开局",
+      "status": "rejected",
+      "change": "Keep gem-facing refinery placement only for genuine CMIN-supplying refineries; HARV returns to V2 placement. For brutal Soviet non-close short/medium openings, require eight own core tanks before new strategic assaults and external reserve interceptions; retain normal, known-close, long-map, late and direct base-defence behavior.",
+      "acceptedGeneration": null,
+      "candidateCommit": "6ed92aa3526e711eb2a32f9ff720b9c194245c5d",
+      "sourceSha256": "4ceb1efd20217a01f55fd38381ae9b3ead306ce2e1eee401e5288c7102cb4847",
+      "opponentCommit": "85d5f45120762d3f5d96bb8a715618580b95b47d",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-armed-miner-reserve-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 497,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23227
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 7,
+        "loss": 1,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 4,
+          "loss": 0,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 3,
+          "loss": 1,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/031-armed-miner-reserve/report.json",
+      "reportSha256": "b6930cccfb2190a1a269311f94a87f909c40a565d46ceaee74fccf851fc7c584",
+      "manifestSha256": "f5f178b9eb6c21b15048c95db7333b4df04a52ca845eb05462e196b679d56f91",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "d9688fdfcb6a5532f9fabdae575b8c23db32419d60f3757eab136df1e02479a8",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "bc78c32ef798852b599484e4a14a726926ad04ec0e8376a4b67b947ca3171749",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "b8957bc812ea33ee89bfd346bca3765a9f92f0cb9b2c15db46b41a5717282170",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "3a9da05ff12d7303713ae788afc77bad30010597737f97949ca4737955c5c266",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 32,
+      "title": "苏军库存门槛覆盖早期恢复",
+      "status": "rejected",
+      "change": "Extend the existing Soviet eight-core non-close assault/reserve-interception gate through 12000 ticks instead of expiring at the generic 10000-tick late-game boundary; keep eight-core readiness and all other exceptions unchanged.",
+      "acceptedGeneration": null,
+      "candidateCommit": "8919cd96319b5c0983f051469ff58c4bd1d6efc9",
+      "sourceSha256": "6c5d6d2d409e813abe11b3d4648bb487302172ba36377478832bd934b43b94f8",
+      "opponentCommit": "85d5f45120762d3f5d96bb8a715618580b95b47d",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-midgame-reserve-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 497,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23228
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 6,
+        "loss": 2,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 4,
+          "loss": 0,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/032-midgame-reserve/report.json",
+      "reportSha256": "e4f3afc194deb840e4382defd8215bccb4293e0d2f31baea96dc9cbe570e14b0",
+      "manifestSha256": "1cdc17f059c751b9aac68bc75a000b006541682b539ee6688abb5046787614e8",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "c2aa485f0569109e3bcdda35e06414a2f93b37e9283bbc0b65cfcaa9575d6fca",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "35fed6f6dc65d981b1cb610f0139a647c5c975bb2ac67bce95f39d7c8f83ef2d",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "27c387f68be7524caf97ef2d9c9399c750eb218852095ece3d99d581c4d27331",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "e4b521c5e85ce3aea70e780f894f9b94709a76f0868111b14e203156ca368ec7",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 33,
+      "title": "首重工已见宝石决定恢复节奏",
+      "status": "accepted",
+      "change": "Choose Soviet reserve expiry from own visible local gems when the first own factory and a miner are present: remember that opening observation, using 12000 ticks for gem-backed openings and 10000 otherwise. Preserve eight-core readiness, all exceptions and miner-specific placement; no seed or player-slot branch.",
+      "acceptedGeneration": 3,
+      "candidateCommit": "0f93e48c9a970a3afdf25e73b86e8365651cb607",
+      "sourceSha256": "babb71b5ff98073a9543ee1b71e63b6bcffc663ce4192adeec9a42bd4c91ba2a",
+      "opponentCommit": "85d5f45120762d3f5d96bb8a715618580b95b47d",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-gem-tempo-reserve-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 503,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23237
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 8,
+        "loss": 0,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 4,
+          "loss": 0,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 4,
+          "loss": 0,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/033-gem-tempo-reserve/report.json",
+      "reportSha256": "bc5151d778b0af48cf6b925584e05473ac41e7d1117cd7c1f5a7140180064dbb",
+      "manifestSha256": "8795b99cae9b2255d18a8be4fe02a300cad2dab48082b7286d5c19fbf3e135fc",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "9b8b2539748f71ad0607eb7fb47baaede1101163e65379daf75358bf86ccff18",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "baf0359947e6a359fb9a5a39bb0c4a199e1fe05e8eee23f116396385e3864b90",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "31b15f2fd9d7887e2a672a7d3e0d804d85f6a143da62ba16d4305b315a707f5f",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "1baa317071acb64e60aa5d1b0761a9107ae05184644dc53d0334dd5df0c966dd",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": [
+        {
+          "originalReport": "attempts/033-gem-tempo-reserve/diagnostics/verified-opening.json",
+          "originalReportSha256": "88b84323bafd5cf38fac2ca134415af346aeafa3e2f8ba816843dc427199c1ee",
+          "published": "t033-diagnosis-1.json",
+          "newWinSamples": 0
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "title": "受保护就绪直接攻击纳入预留",
+      "status": "rejected",
+      "change": "During a protected firing sequence, reserve only known ready single-shot damage for a still-visible in-range target of the own last direct Attack order. Do not infer AttackMove targets, unknown impact, remaining burst subshots, cooling or minimum-range-invalid fire; preserve animation protection and normal behavior.",
+      "acceptedGeneration": null,
+      "candidateCommit": "0001a3ee966140dcbebca4c81193f6f88be03129",
+      "sourceSha256": "9b747f0deba002f4fe6416b9338daaa9f2c970b7d13d9b53b47f3815042dc22f",
+      "opponentCommit": "0f93e48c9a970a3afdf25e73b86e8365651cb607",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-direct-volley-reservation-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 509,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23254
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 4,
+        "loss": 4,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/034-direct-volley-reservation/report.json",
+      "reportSha256": "2a00dd1eaf41b82efa9d540fd235eb3b9615cb7969d4a02c79408909c140686e",
+      "manifestSha256": "d754995ff85598161cff1dca9a6e48d78fb93b8c7b5ee9a5eeab782bad24183b",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "4318b66eed46f4bcefd515f27a740c81f0737bb2464cdc10b302b8b2442c2c56",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "7118209d001d0a625944dd336607ea1a7e98a48ca2980f492a0472abf68a7019",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "8d3fc1d77da4f4f1c4f5e1dafb2afb5d33f6ec0965af4ce3d5af5552d8ea6778",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "cbcdf34256f3c49c8a2a71e5f9f130cb305f54703a153696532dce39739582ea",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 35,
+      "title": "新高级科技等待八装甲",
+      "status": "rejected",
+      "change": "Raise only the noncommitted advanced NATECH/GATECH core-armor gate from six to eight; keep committed technology, miner prerequisites and all V3 strategy/micro unchanged. Failed T034 reservation is excluded.",
+      "acceptedGeneration": null,
+      "candidateCommit": "24afd6211c7b28ba8805009df4b0c5a4d8afb10b",
+      "sourceSha256": "3615a49e76165fe26d1c1128c9a56a9eb68edeeb177caf83afa8bebbb179cc66",
+      "opponentCommit": "0f93e48c9a970a3afdf25e73b86e8365651cb607",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-eight-core-tech-only-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 503,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23245
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 3,
+        "loss": 4,
+        "unfinished": 1,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 1,
+          "loss": 2,
+          "unfinished": 1,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/035-eight-core-tech/report.json",
+      "reportSha256": "f188ac0e9289b3bddf6dfbba2366bb508f36e3ef3a7a5ad038649b8103a3bb11",
+      "manifestSha256": "6a15d7623fbf5e1fff0c95dd5b034c7f2a2125dcb5ae12de9eccc164cb77e0d8",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "d1d2a530a3fe15bc292ddbd6c6c8229b907e8457d4b6420978a7ccbcb3f2934a",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "27a373e30fd203f889680bd5a77668c128587901f22837da19c4bb67ead6f73b",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "bec21188f67a42819ca38d6dded3420716bf9c7a9ade42f5c5f227437ed1a207",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "0eb6ebcb18f96b219a34b44b883c33fa06e7cd5e1b3bb4267a020734f779bee3",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 36,
+      "title": "少量矿石货舱补已见宝石",
+      "status": "rejected",
+      "change": "Allow only known quarter-load ore/no-gem miners that are busy, stationary on a visible ore tile, not firing and more than six tiles from all own refineries to redirect to the existing safe visible reachable gem targets. Preserve full/unknown/moving/idle cargo protections, 900-tick busy cadence and all V3 macro/micro; no engine harvesting or capacity changes.",
+      "acceptedGeneration": null,
+      "candidateCommit": "1cce1a306745e6f8c4c8f4f3dff743425baf0f5e",
+      "sourceSha256": "3b7b8da88b2600db71c804fbcb9eac2d4aed82128849a899cce06c124a7eefd1",
+      "opponentCommit": "0f93e48c9a970a3afdf25e73b86e8365651cb607",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-partial-ore-gem-topup-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 514,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23253
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 3,
+        "loss": 3,
+        "unfinished": 2,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 1,
+          "loss": 1,
+          "unfinished": 2,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/036-partial-ore-gem-topup/report.json",
+      "reportSha256": "ff646b8d57c1b293af34949dc1763522fa5e7f60805331b373185159e802af84",
+      "manifestSha256": "f99bf67b7e99bc1535bb8979b4470cfb04a8d0da6d04f431d00d92626a5480b1",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "8c0ba4c23af166521683645141919b38a631f714884399d0d04c0bfdbf6d7d6f",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "188cbe50f41b58566ec1aeb6a98e1991adcd95c032e5f0b2b79a8c8ba3e5db5c",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "2d91ef81b595ca9e398dd923e86769ebd8b2a1a12795ec2481438d4228b022de",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "41686a3148664911b8cb5b2854ffc0a6b3c22a48aae2299a5a5c8b6e6d23cb34",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": [
+        {
+          "originalReport": "attempts/036-partial-ore-gem-topup/diagnostics/verified-cargo.json",
+          "originalReportSha256": "c0bc5320863a9392cdba30846ddba23467253d06ec80cb47bfc798a7d58443dc",
+          "published": "t036-diagnosis-1.json",
+          "newWinSamples": 0
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "title": "连续增矿观测后补宝石",
+      "status": "rejected",
+      "change": "Use two consecutive own cargo observations 30 ticks apart, with ore increasing on the same tile, as recent-harvesting evidence for quarter-load gem top-up. Remove T036's blanket refinery-distance exclusion; keep known cargo/capacity, stationary visible-ore, no-fire, original safe reachable gem targets and busy 900-tick cadence. V3 base only.",
+      "acceptedGeneration": null,
+      "candidateCommit": "a2f1a9dc4c3ef362a2e1bf0b133d6ce7992edbae",
+      "sourceSha256": "7831ef4898316be7a5a3f1c12b2924c78cccb08c2925d93c6783184627a5d98a",
+      "opponentCommit": "0f93e48c9a970a3afdf25e73b86e8365651cb607",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-observed-ore-growth-topup-20261103",
+      "validation": {
+        "fullTests": {
+          "passed": 517,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23258
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 3,
+        "loss": 3,
+        "unfinished": 2,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 1,
+          "loss": 1,
+          "unfinished": 2,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/037-observed-ore-growth-topup/report.json",
+      "reportSha256": "4dd500cf841bb9ef58eb02dfa760821b2b85535d2afcde8e119f6fecee72466a",
+      "manifestSha256": "10e4e39cdc4653bc94eb7377095a9876d5afbbf7fa5832bfd77311310bdb8769",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "017de30b92764c07d68ac88d5c0b140b47dff25a1efe460598dc467f56be7c90",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "a68eee0ececf6952deb6fc21b3979b232af1fde5740678be88e49247afbda2f7",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "fdb68e89da418d5ab8dbfd2c599b22cd06675147c08b9517c6ef365e8f15cfde",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "5e4ac3d60c7e8c8691c87174e8edee9ed5ebb227c96725cfeba84a66da7e5773",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": [
+        {
+          "originalReport": "attempts/037-observed-ore-growth-topup/t036-comparison.json",
+          "originalReportSha256": "5613806cb75e739771f7e4e3161824c46d89e39e1bd87d2004eec2cfb53a7014",
+          "published": "t037-diagnosis-1.json",
+          "newWinSamples": 0
+        },
+        {
+          "originalReport": "attempts/037-observed-ore-growth-topup/diagnostics/verified-gem-entry.json",
+          "originalReportSha256": "4e0fd1cdd7f3e8a08c41f9569a1f781df1681bdbc9f4862c67093287e5dc75d6",
+          "published": "t037-diagnosis-2.json",
+          "newWinSamples": 0
+        },
+        {
+          "originalReport": "attempts/037-observed-ore-growth-topup/diagnostics/verified-path-start.json",
+          "originalReportSha256": "f2c2a51a9da8d18cfb3c4e75e17fb6f1b3a6786dfae44ab4a05ce5ddb3c51f1d",
+          "published": "t037-diagnosis-3.json",
+          "newWinSamples": 0
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "title": "近期增矿低载量使用短改道间隔",
+      "status": "rejected",
+      "change": "For quarter-load miners with consecutive owned ore-growth observations, use the existing 90-tick gem retry minimum instead of the generic 900-tick busy cadence. Keep stationary/known-cargo/no-fire/visible-ore checks and original visible safe reachable gem selection; other busy miners retain 900 ticks.",
+      "acceptedGeneration": null,
+      "candidateCommit": "2d8a5d868e80edd6f4b986dd8f35a30a7708acd7",
+      "sourceSha256": "22ed30385ec3d8e68ab58eac47aeca316429d1a6dcff5d36ff248fae674f3b6e",
+      "opponentCommit": "0f93e48c9a970a3afdf25e73b86e8365651cb607",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-economy-entry-20261104",
+      "validation": {
+        "fullTests": {
+          "passed": 517,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23264
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 4,
+        "loss": 2,
+        "unfinished": 2,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 3,
+          "loss": 1,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 1,
+          "loss": 1,
+          "unfinished": 2,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/038-mining-topup-cadence/report.json",
+      "reportSha256": "1d42fbea1c3d655c6a86c89dedd2487f36edb9150ce6870be10ebf55be8e0da0",
+      "manifestSha256": "86fc3deb5d74b36f2fecf3679781bd1d879e2ddc3c0085b309c9c8261832e4cb",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "2eee90fa193353a0a483e2878356882dc86071756dd60d7a30ec7a3a8e0fb7a8",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "8e355ad4c576265c91633cdde2a86e952da032353318296cb1711e745e8285b8",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "db0b1b3e0ba4dc048950ccde1557c7d1d7086a9206c938208778ee5e493dd3db",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "ef5b68ab35031461dce954c63d869a14ff7f2d73d712ae3521036d08bc8becba",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": [
+        {
+          "originalReport": "attempts/038-mining-topup-cadence/diagnostics/verified-effects.json",
+          "originalReportSha256": "fd4518f7ad1e960d91feec625c5e12bc6969b1ec0eae571d6c6254edef1648d4",
+          "published": "t038-diagnosis-1.json",
+          "newWinSamples": 0
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "title": "内圈部分未知区域优先侦察",
+      "status": "rejected",
+      "change": "Append one higher-priority 24-tile inner-local unknown-sector scan to the existing brutal initial 32-tile scan. Keep original visibility cutoff, public coordinates, scout counts/budgets, normal behavior and all V3 economics/combat unchanged.",
+      "acceptedGeneration": null,
+      "candidateCommit": "9968f9abd2cbf1f274cd478a698078a5e879ea1e",
+      "sourceSha256": "3adf706f2a2a3718222f096b7222d07fccc7b1b2cedcbd3f0500389b54d73699",
+      "opponentCommit": "0f93e48c9a970a3afdf25e73b86e8365651cb607",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-inner-local-scout-20261104",
+      "validation": {
+        "fullTests": {
+          "passed": 506,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23259
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 3,
+        "loss": 5,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 1,
+          "loss": 3,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/039-inner-local-scout/report.json",
+      "reportSha256": "db09cc7bf550159b784bff9e5e040fcbd103e4a7d846a57ff524f84cb599220f",
+      "manifestSha256": "ac27931e523587e83d7579e2e01e849e3a4d061ade3ed001d876f41ffb6cb35c",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "480ca83d23c916e0d2a18ea902dca660b59bec170f9418db8ef556ee4e97f5b4",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "9528144165d3fd0105edd160237d8e9bb5dab0d5287f9245ca32dbaeee1db2f2",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "d8fbc8e01b92f7536b0832f56fceb76c951d8fb6416da7345744da393be9dc36",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "d2744db3b63e260b68359186a1113388ca2f228a83e26e0197712f6283fd6798",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 40,
+      "title": "限时完成当前本地侦察目标",
+      "status": "rejected",
+      "change": "After the original 3600-tick cutoff, let a living brutal scout finish its current nonpermanent unknown target inside 32 tiles, at most through 5399 ticks. Preserve normal/far/permanent/visible/no-target/dead-scout exits and original unit budget/travel/timeout behavior.",
+      "acceptedGeneration": null,
+      "candidateCommit": "69555a027954128c0c8cfc80998b655cf78efa39",
+      "sourceSha256": "39f7162b6941da23e566e36a802787910a603c83a94b6fbb59706cb52a020cb3",
+      "opponentCommit": "0f93e48c9a970a3afdf25e73b86e8365651cb607",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-finish-local-scout-20261104",
+      "validation": {
+        "fullTests": {
+          "passed": 512,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23255
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 4,
+        "loss": 3,
+        "unfinished": 1,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 2,
+          "loss": 1,
+          "unfinished": 1,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/040-finish-local-scout/report.json",
+      "reportSha256": "c8825383f383a4a20a9d51e9f06d7032c2f89f018c49db8af55388a75fa107c1",
+      "manifestSha256": "19114146c092701f1635387d8b42635da02df273349ef95793ec5cc67e2bb14a",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "f79f863dbf8cbcc1428298745bf8389b473314368cfc79bb0c3194e55663a366",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "c8e36484dc18428ddc4c2370634995fcbf48b3004a0dc84801d347a85b94275e",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "9152d1a3f7f14f842ad60ce1ab51a99f2e4158535612f189ca71ea9ca264b27c",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "47a437b9ca5984d444504bcae8923697e465444b8eddbcc1a7a6641ec406346a",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 41,
+      "title": "射程内目标计入己方转炮等待",
+      "status": "rejected",
+      "change": "For known core tank turrets scoring in-range combat vehicles, subtract bounded estimated turning delay beyond the own remaining cooldown. Use own turret facing/public rotation rates and observed target coordinates, preserving firing protection and native weapons/turning/damage.",
+      "acceptedGeneration": null,
+      "candidateCommit": "c408b48864baa85b8cbdda18593cbc6b98ceaadd",
+      "sourceSha256": "f5fed168043138ddd99f3efd011f7125d58195600fabd699e20361fc5eb9bd0d",
+      "opponentCommit": "0f93e48c9a970a3afdf25e73b86e8365651cb607",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-turret-readiness-20261104",
+      "validation": {
+        "fullTests": {
+          "passed": 516,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23252
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 3,
+        "loss": 5,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 1,
+          "loss": 3,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/041-turret-readiness/report.json",
+      "reportSha256": "ca4cd328a1e1af9f6ebbe595e93e297f9414859224e34488d50883fee3a2b42a",
+      "manifestSha256": "491f01d7c5703645997576d878e95d79fa7bade469fcd66fa7b29b972d075230",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "26d5031d43c2a4d9ab334d53e4f6d6e89a9fc5f2348b156cef06331381758b10",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "01752f2a055acd48ae587d24b3d2c91f9c703d317d77b62c86c134567c6ffe05",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "31470548edcad809c1f578e44b6f0b3109d9b1e022c3f436e62ad790947a140a",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "638bfecff41f710f07aaa5d9ed2e9b1eee35ea9e14e7b2fa73ae5ae7aad1434f",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 42,
+      "title": "矿车交付采用已见重工出口寻路",
+      "status": "rejected",
+      "change": "For known empty harvesters already moving along a matched own factory delivery row, validate gem reachability from the observed native +rx exit when the interior tile is blocked. Preserve stationary deployment, ownership/delivery-ID checks, exit visibility/passability, original cargo/cadence/safety and V3 policy; no generic API or delivery-task changes.",
+      "acceptedGeneration": null,
+      "candidateCommit": "599e8b9cdb9360e364545f73046091014fe2d93e",
+      "sourceSha256": "0451a4d5c0319dda3757ca7698f56512dd6f6dc5290209994006dcecba6fb641",
+      "opponentCommit": "0f93e48c9a970a3afdf25e73b86e8365651cb607",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-miner-factory-exit-20261104",
+      "validation": {
+        "fullTests": {
+          "passed": 518,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23270
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 3,
+        "loss": 3,
+        "unfinished": 2,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 1,
+          "loss": 1,
+          "unfinished": 2,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/042-miner-factory-exit/report.json",
+      "reportSha256": "e2abb7b28cb8ec7139ade1f22fac8d76201739b8767ef65947188703f06b0da2",
+      "manifestSha256": "32dbea42c3e9cce9f1bdae8a28009088b736fefc79ecf85a6cf21fbcb59760b3",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "58b442c1bf4f0d7cfeada07cbf703b73f9b97c27b6fda06fa386203e0db177ad",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "790ae305cd607731181da9b1755219690bf824920abff7dab680c7e531e7aa12",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "7a5ea8cc9f437ebffeccf703f38255da9f977f81693e43c2e5b13b619de57488",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "be5c210b2ea1734ef19d3827d14d4e35c5bae1a62eb8aa0ed57630a089ff3ff4",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": [
+        {
+          "originalReport": "attempts/042-miner-factory-exit/diagnostics/verified-delivery.json",
+          "originalReportSha256": "444f4045ffc71039c6dae2a0249a2babd363385b67192bc7b378923b7d5c955d",
+          "published": "t042-diagnosis-1.json",
+          "newWinSamples": 0
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "title": "分配时跳过已见侦察队列点",
+      "status": "rejected",
+      "change": "At brutal scout target allocation, consume queued public coordinates that are already visible before assigning an unknown point. Keep normal allocation, original manager expansion/head cleanup, unit budgets/lifetimes and all V3 economics/combat unchanged.",
+      "acceptedGeneration": null,
+      "candidateCommit": "7ff008b60cd3018c7e2a92105129713a1e8bb41e",
+      "sourceSha256": "e053871e28dfa648526ed11ff98a396aebc3562a1051c38e6241625537b86607",
+      "opponentCommit": "0f93e48c9a970a3afdf25e73b86e8365651cb607",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-fresh-scout-targets-20261104",
+      "validation": {
+        "fullTests": {
+          "passed": 507,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23247
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 3,
+        "loss": 3,
+        "unfinished": 2,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 1,
+          "loss": 1,
+          "unfinished": 2,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/043-fresh-scout-targets/report.json",
+      "reportSha256": "d2777b4573b835dd0adf24341156013213b95e21894f05f3c5908889704a59e8",
+      "manifestSha256": "f5e89c3a5fbc9448e4c16ed3459fe5c62d63e42013e1a69bcd98e16647947e6e",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "ef33e195444860509acdae321401db36d804e690138e964f0bf6495ec2d0a953",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "f2e38b5a0a671ee31ae8da6f3d8d6167efc4ce393c2bb05b226f15c21916e332",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "653d13c32f7a60443df06121a8893f4345b5b90a184c8362c5a4bddf38f28b37",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "9252e1eb75bc38d7ab25b63ca934ac5be60247a26bb5ce8517837e5143166920",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 44,
+      "title": "第五矿车先于新扩产及高级科技",
+      "status": "rejected",
+      "change": "Behind eight core tanks and an actual miner-cost-plus-400 cash buffer, prioritize a fifth miner. Require five miners before new second-factory or advanced-tech investments while preserving committed structures and all other V3 production/strategy logic.",
+      "acceptedGeneration": null,
+      "candidateCommit": "79b575b9d928a5b596ba28ceedbfe829a9f3df26",
+      "sourceSha256": "07436b38526e1cc8db354028d4fb25ff137938a2fe7df2426b8ce6de73693b76",
+      "opponentCommit": "0f93e48c9a970a3afdf25e73b86e8365651cb607",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-fifth-income-20261104",
+      "validation": {
+        "fullTests": {
+          "passed": 512,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23264
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 6,
+        "loss": 2,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 4,
+          "loss": 0,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/044-fifth-income/report.json",
+      "reportSha256": "23d317f1aec917306d307ffca318f904fbdaf4948cabc01979ec9deaa2729ddd",
+      "manifestSha256": "893c1a7c03a029c704525c4343e17460fea6d53de96c668736104953589054d4",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "9d18203a1d99d1dfb3b2cd4f8a6eddef1ab4937a580954b2b05d0d1eb7fd652f",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "18930c4d2a575322425ec78c64c750b4682b0e71e96ca841086c8c5515d73d34",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "058018605546fa73a91d6612084c82962f04f2a8cc807e8ef9a808a5db334bab",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "fa0de88bef04901024fa82adc011daa606c4ac1df8c32f8522cb472041f209b8",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": [
+        {
+          "originalReport": "attempts/044-fifth-income/diagnostics/verified-budget.json",
+          "originalReportSha256": "dafa0bab655893136d730e5798ff2bd80eb720bab1132e43859187a9bdd2fa53",
+          "published": "t044-diagnosis-1.json",
+          "newWinSamples": 0
+        },
+        {
+          "originalReport": "attempts/044-fifth-income/diagnostics/verified-investments.json",
+          "originalReportSha256": "f11cb58363e22faf835aee8b7463b4b2b4e565e003810a90b20bf2c3c1bfb980",
+          "published": "t044-diagnosis-2.json",
+          "newWinSamples": 0
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "title": "CMIN 宝石开局与矿车型别投资",
+      "status": "rejected",
+      "change": "Retest T044's HARV income gate while pure owned CMIN income permits new factory/tech investment at four miners. A two-miner CMIN opening with currently visible gems within 32 tiles can fund the third miner after three core tanks; preserve ordinary ore/hidden/distant/normal behavior and all other T044 components.",
+      "acceptedGeneration": null,
+      "candidateCommit": "93df964c82b2aba2629dab37ebb5da7631d1dc84",
+      "sourceSha256": "daed445c981b01fae7d587e570736985042c5f6ed5230b531681c8f9b5665f55",
+      "opponentCommit": "0f93e48c9a970a3afdf25e73b86e8365651cb607",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-chrono-gem-income-20261104",
+      "validation": {
+        "fullTests": {
+          "passed": 518,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23276
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 6,
+        "loss": 2,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 4,
+          "loss": 0,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/045-chrono-gem-income/report.json",
+      "reportSha256": "931d03d149d4bc961f25883dd2e47a2a4d7ee370689f7dfdbc6ef109eb6dabc4",
+      "manifestSha256": "62ce7798e2b0d0fb534f1d76fbf15c0faf05ee71816467fa14ac035b41ca49d9",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "7f2d22944384eab058bd2ecced5488deaf0d18558ee7710b78a96c0af5980490",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "70a0e88e0724653ff596de6af210ce60bea110a99621b1905d4e9b47d57d6b76",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "72944a225438f380df0fdc2488adc8758ab5df2d7f4648eed7b30141be4757b7",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "e54fd07e79fdce7e3cd49bcce9bd7afd6cb4d2100a3d952048a9c770a220b9be",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": [
+        {
+          "originalReport": "attempts/045-chrono-gem-income/diagnostics/verified-production-events.json",
+          "originalReportSha256": "1f90bc83a229d19e4a56fd04328d44167db7644b0e6c1867ee3d208c8b75d0ed",
+          "published": "t045-diagnosis-1.json",
+          "newWinSamples": 0
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "title": "第四 CMIN 等六装甲成形",
+      "status": "rejected",
+      "change": "Require six core tanks for fourth-CMIN investment and use existing priority 78 at six/seven tanks, preserving explicit higher requests and the original eight-core priority. HARV investment, T045 gem opening and miner-specific factory/tech gates remain.",
+      "acceptedGeneration": null,
+      "candidateCommit": "a33b4ee23d3bfafefb25af33ff00d73bf472d5e5",
+      "sourceSha256": "b5208fcceb67b2fab44f9636506d7cfacf0572ed4507683104f4d947405ba071",
+      "opponentCommit": "0f93e48c9a970a3afdf25e73b86e8365651cb607",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-chrono-fourth-reserve-20261104",
+      "validation": {
+        "fullTests": {
+          "passed": 524,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23282
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 7,
+        "loss": 1,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 3,
+          "loss": 1,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 4,
+          "loss": 0,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/046-chrono-fourth-reserve/report.json",
+      "reportSha256": "24f4b2a34aa2573974b78d5ffe813d8d10e0904ab4dddfa2623eeb7d0002de14",
+      "manifestSha256": "9e5d70ae9793fa8e9f358cb9f3ce6249bd1b5fd2d5d370eade815d94bf3e29c1",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "5abcd9522d156c3abba46280828764a7084c30c13e1c970d2a26193f1f6f5338",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "e96393d09cb7b2c2c2a34935181ce53908772cd970af29c38a258c785794078a",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "db6ad59be6fa0fd61a01aeee626aa972e28320c1d84ceb1c20f815831d5639a1",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "90d18f70a0e785b0eec8f39f9fd0bfaace70dfb46a210c2598b764b0f3bcff8e",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": [
+        {
+          "originalReport": "attempts/046-chrono-fourth-reserve/diagnostics/verified-budget-comparison.json",
+          "originalReportSha256": "c2d806f935271e7d3175d7a71c203cb63d6a91d783bf4ad7fea634b0b9e4a68f",
+          "published": "t046-diagnosis-1.json",
+          "newWinSamples": 0
+        },
+        {
+          "originalReport": "attempts/046-chrono-fourth-reserve/diagnostics/verified-investment-orders.json",
+          "originalReportSha256": "12315f9f7fef40940c71407e649b2e827d881f03857783973f2005e0fd4532a0",
+          "published": "t046-diagnosis-2.json",
+          "newWinSamples": 0
+        },
+        {
+          "originalReport": "attempts/046-chrono-fourth-reserve/diagnostics/verified-production-budget.json",
+          "originalReportSha256": "27facfc034bc2d6b0743b942349bb09125df5e8471045809df931c0a54f9fc80",
+          "published": "t046-diagnosis-3.json",
+          "newWinSamples": 0
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "title": "保留已排队第四 CMIN 投资",
+      "status": "rejected",
+      "change": "Retain an already queued fourth CMIN with a 45 priority floor outside visible direct siege, with two refineries and observed resources. New fourth-CMIN requests still wait for six core tanks; preserve the original 2x cancellation rule, effective 100-priority emergencies, HARV production and T046 policy.",
+      "acceptedGeneration": null,
+      "candidateCommit": "a6ae3c9049132b2838c1c6a89aa893ddf41d1b0d",
+      "sourceSha256": "a782e25e887cb1087b6af355a06181039bd539708cc10386e457724f066f05e1",
+      "opponentCommit": "0f93e48c9a970a3afdf25e73b86e8365651cb607",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-committed-chrono-income-20261104",
+      "validation": {
+        "fullTests": {
+          "passed": 535,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23304
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 6,
+        "loss": 2,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 4,
+          "loss": 0,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/047-committed-chrono-income/report.json",
+      "reportSha256": "4f9a209039a959dc756f063b6cbb5441863c16426c683166b718ec9a8367a092",
+      "manifestSha256": "4d3a47cbf3c87201b40705755d9f9ee8afc6aab58c2c04e3a17cbd4582389a82",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "09b8da28e54e8fadd116380f7d7d8111a809ff81677134b3e72bd838810fce81",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "d8504fc6528dfb1f3f0b5916a1ea837af026b4865afefaaca08b2ac8413888dd",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "cb8ad53214e2e23a6ef23b7930849a5031346543842249021116611ab47b23ed",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "cf6fb0e025519fc7ef8af11f145ceeceb60503a3cfc3fff2a5d8fca4d47511da",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": [
+        {
+          "originalReport": "attempts/047-committed-chrono-income/verified-investment-comparison.json",
+          "originalReportSha256": "34084996da93ccabb72e424ca6b784f761808df413079f018a216737a02ee978",
+          "published": "t047-diagnosis-1.json",
+          "newWinSamples": 0
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "title": "第四 CMIN 等八装甲成形",
+      "status": "rejected",
+      "change": "Delay fourth-CMIN investment from six to eight core tanks, retaining original priority 70 at eight and explicit higher requests. Preserve HARV investment and the T046 bundle; failed T047 queued-miner retention is excluded.",
+      "acceptedGeneration": null,
+      "candidateCommit": "3878b95a301a525d8b72c9bbd757dedd72a92778",
+      "sourceSha256": "7e91b46f2b996f9462e5333e5eb98c5482a1bdb15cb864794f65f5c4e307dfda",
+      "opponentCommit": "0f93e48c9a970a3afdf25e73b86e8365651cb607",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-chrono-eight-reserve-20261104",
+      "validation": {
+        "fullTests": {
+          "passed": 524,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23282
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 6,
+        "loss": 2,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 4,
+          "loss": 0,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/048-chrono-eight-reserve/report.json",
+      "reportSha256": "92beb6a9e2daaff487a7e845ad6e51e610ab9fa20e5c4761e26c853cdd060f00",
+      "manifestSha256": "74e5622848f5f3a6af9675767c9b886e7f14d7d478477401aa60e578fcf90a22",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "afcc0827d2b8f001b019257df934c206bcf385de834446a31be4f16cdebd8eef",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "39d65e9e9f7a0ea09b6852c7b2c04c423df27e199685497fec56dc257fffab7c",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "5355ed54105e4abe9f55dc118f0dd7aef8929fddd07d91c12ffb7d57a2111ec6",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "47d53f2baa08833fc8fd68b68a07a5c4a8a906d666c4ab66789545947c2ff0db",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": [
+        {
+          "originalReport": "attempts/048-chrono-eight-reserve/diagnostics/verified-production-comparison.json",
+          "originalReportSha256": "deeda5a1fddd2a64c0169272d3311e0d75ba4c735152f22dceb129f07de8c9d2",
+          "published": "t048-diagnosis-1.json",
+          "newWinSamples": 0
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "title": "第四 CMIN 等七装甲成形",
+      "status": "rejected",
+      "change": "Test the intermediate seven-core fourth-CMIN investment window. Preserve original priority 78 at seven, 70 at eight, explicit higher requests, HARV and the T046 bundle. Failed T047 retention is excluded.",
+      "acceptedGeneration": null,
+      "candidateCommit": "600b73cfd18c50625c0d621c022db9a130792896",
+      "sourceSha256": "733498a9988c68020bb3f050f1e75ac9cf3add93aaffd726521b294a538a5b06",
+      "opponentCommit": "0f93e48c9a970a3afdf25e73b86e8365651cb607",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-chrono-seven-reserve-20261104",
+      "validation": {
+        "fullTests": {
+          "passed": 524,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23282
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 6,
+        "loss": 2,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 4,
+          "loss": 0,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/049-chrono-seven-reserve/report.json",
+      "reportSha256": "76c53d9b1b52834235929bed1cda231df8dd09e596f99fd8737e827612084237",
+      "manifestSha256": "8eaba2f91345a5b45ab2d01a2cafa6f068bd209b365606412227946347d0d7a0",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "030fa6df70d0e94a03c9f63a540d3795d6738fc8c17d763fb899333f4aee493d",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "81b1deb3899072338f73eb8e9067bcc66515691702e6c7a51c759681aa5a2ff5",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "6a72a8aad8cf9166df1800b8d6b13c2aa431ca12233925701b6314ee98f3f6ba",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "949a9e57ef085c5d14ae66a9b31f47267a3e1fde7d480da1197c296cfe1181ef",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": [
+        {
+          "originalReport": "attempts/049-chrono-seven-reserve/diagnostics/verified-production-comparison.json",
+          "originalReportSha256": "2769fc422711ad7f9051d9ebe7b7b709a2159df5776a48d37fee944b5c08e226",
+          "published": "t049-diagnosis-1.json",
+          "newWinSamples": 0
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "title": "已见空中压力时优先盟军原生 FV",
+      "status": "rejected",
+      "change": "Enable the existing bounded visible-air response for an available allied FV, choosing/counting the native AA type. Preserve Soviet HTK, priority 100, the 2-to-6 target, 600-tick memory, normal behavior and the T046 bundle; exclude failed T047-T049 changes.",
+      "acceptedGeneration": null,
+      "candidateCommit": "4fd5d4cb446d60ec20be6d77abd1096704232ae8",
+      "sourceSha256": "3464c1f06362d8b5da1b851dfee988926afeb71abd0ae9dd013c6ccedd055fba",
+      "opponentCommit": "0f93e48c9a970a3afdf25e73b86e8365651cb607",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-allied-air-response-20261104",
+      "validation": {
+        "fullTests": {
+          "passed": 531,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23296
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 5,
+        "loss": 1,
+        "unfinished": 1,
+        "draw": 0,
+        "error": 1
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 1,
+          "loss": 1,
+          "unfinished": 1,
+          "draw": 0,
+          "error": 1
+        },
+        "Russians": {
+          "win": 4,
+          "loss": 0,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/050-allied-air-response/report.json",
+      "reportSha256": "0820c6121bf790a990e85c4323bf7e247ef585973af48d94e5e1434bcfe1d307",
+      "manifestSha256": "d205135b23bbf0c14dc570e618dcce879d1eccb328725a59af38f146b2947c46",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "3beea31b8dcc2e69e65b8fa6eb8245c223991868fd9f03035fe421e5891ecfbd",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "62936e1f0d62726f0a1ef0fe9815d49e176b27cbf73f33dc21afae07d7f5c223",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "8282e08450d19e00e778bca8c56832deac6c5869d728b467c54b465010047d6e",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "0131c9e0a3dce241ee02472f5df2ce670ed830893f4028f7cb55b1ea9625d231",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": [
+        {
+          "originalReport": "attempts/050-allied-air-response/diagnostics/verified-production-comparison.json",
+          "originalReportSha256": "769a8d83475fea6a768b4bbd144082069ec920e4d1b66395596be3cab252da13",
+          "published": "t050-diagnosis-1.json",
+          "newWinSamples": 0
+        },
+        {
+          "originalReport": "attempts/050-allied-air-response/verified-aa-effects.json",
+          "originalReportSha256": "6749fc80ccfaaac4d815610701188d6dabea8030c33d31bc5b45a05ce0e3f39c",
+          "published": "t050-diagnosis-2.json",
+          "newWinSamples": 0
+        },
+        {
+          "originalReport": "attempts/050-allied-air-response/diagnostics/verified-invalid-points.json",
+          "originalReportSha256": "8cb120fde9c5bfdc5978cd071f3bee1351973d03fa88858075d6466d468cad99",
+          "published": "t050-diagnosis-3.json",
+          "newWinSamples": 0
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "title": "护送后侧点越界时回退己方实际位置",
+      "status": "rejected",
+      "change": "Repair the escort point generator exposed by T050: when the computed rear tile is missing/nonplayable, use the owned escort unit's actual tile. Retain valid rear offsets, normal behavior, existing action API validation and the T050 bundle; no engine or general API changes.",
+      "acceptedGeneration": null,
+      "candidateCommit": "9d7d24801748607bb98210b9728352e7eb05935b",
+      "sourceSha256": "533576e38e091610999f756d14217c3d7b1190c52669d72a4bb458e16f1cb4ce",
+      "opponentCommit": "0f93e48c9a970a3afdf25e73b86e8365651cb607",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-escort-map-boundary-20261104",
+      "validation": {
+        "fullTests": {
+          "passed": 534,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23305
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 6,
+        "loss": 2,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 4,
+          "loss": 0,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/051-escort-map-boundary/report.json",
+      "reportSha256": "1bc6d1c4cc67c8620566055fa1d6571912733587a2eb5ad613b98518d7b9b40c",
+      "manifestSha256": "7117eabc3bb4ceb8f39df2a2ecd4179adac15f636acd03f5c2272561983cab46",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "2714a537eea059ee5cbeed7e81564302cf7e7643c8172b23d9374abb94dd069c",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "d456ec2a6f95e01ec71b2e9dd366e22d223a72071844c6dae2c9cc5a0cddc036",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "079c0db00aa944ecd873d5c54c25b5a22601fa9af4d2320ac578a5bb31c9b5b5",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "c49a2cb5cc54c3f8313f801774eeecbf66b15028b56500e18b64c46f0d9fcf17",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": [
+        {
+          "originalReport": "attempts/051-escort-map-boundary/verified-effects.json",
+          "originalReportSha256": "dcdaf131f8933091623a314940d7ee4c627c1cca7a98025855ed6bec28391b8b",
+          "published": "t051-diagnosis-1.json",
+          "newWinSamples": 0
+        },
+        {
+          "originalReport": "attempts/051-escort-map-boundary/diagnostics/verified-production-comparison.json",
+          "originalReportSha256": "0df3867864cf4f6d742b37496af7fc149fcb94ba3eb92509b77c70c5273b5317",
+          "published": "t051-diagnosis-2.json",
+          "newWinSamples": 0
+        },
+        {
+          "originalReport": "attempts/051-escort-map-boundary/diagnostics/verified-escort-recipient.json",
+          "originalReportSha256": "26cda4e7595871cc3768f0c660870034e5bb4d65fcae8323df8536c4ea3d1702",
+          "published": "t051-diagnosis-3.json",
+          "newWinSamples": 0
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "title": "盟军最低防空目标为一辆 FV",
+      "status": "accepted",
+      "change": "Reduce the available allied FV air-response minimum from two to one, preserving ceil(visible aircraft/2), cap six, priority 100 and 600-tick memory. Keep Soviet minimum two, the corrected escort boundary and the T051 bundle; native costs/weapons and normal behavior are unchanged.",
+      "acceptedGeneration": 4,
+      "candidateCommit": "b0f3881c884319b69d8fc1818a24edc126beea33",
+      "sourceSha256": "b16d9953d7a7a9c44c6a9950d6546dc8d829670c571e770b0da4ac45caa6f75b",
+      "opponentCommit": "0f93e48c9a970a3afdf25e73b86e8365651cb607",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-single-ifv-response-20261104",
+      "validation": {
+        "fullTests": {
+          "passed": 536,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23309
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 8,
+        "loss": 0,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 4,
+          "loss": 0,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 4,
+          "loss": 0,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/052-single-ifv-response/report.json",
+      "reportSha256": "a7fd5b70f20e1e2f9016cf20d391b64ab69ebf21e541f8497363ddc4243f174e",
+      "manifestSha256": "16fbd9e01e5c315d7f2a04a672748d835200b51fa57e4969abd5e87d8a3f193c",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "486aa42fac16a2ad3e1c2836f5a5f527dff746f93e2c7ae07a0d1175f02741c3",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "0fb3abfa942c7f637d05db1fe283c5f371eed440d622466c1aa0e6b852512cd5",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "52c94fc409941c285e3b2a5ef0ab848c4f89f49304fce84964c15a851e58622f",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "acd5f79cb977f9e392195910f60ccb0e0f4c5bb3e553064a49f647130f2ab2d3",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": [
+        {
+          "originalReport": "attempts/052-single-ifv-response/diagnostics/verified-production-comparison.json",
+          "originalReportSha256": "4656e240008fcbc4018a8e8f8844616c0bca9cb84bc09b5132bf514ad6702892",
+          "published": "t052-diagnosis-1.json",
+          "newWinSamples": 0
+        },
+        {
+          "originalReport": "attempts/052-single-ifv-response/verified-effects.json",
+          "originalReportSha256": "149939efd7f9757c93040cb0b4ef28323c1ea3558424ff813a3ffa4f1bda579a",
+          "published": "t052-diagnosis-2.json",
+          "newWinSamples": 0
+        },
+        {
+          "originalReport": "attempts/052-single-ifv-response/diagnostics/verified-armor-health.json",
+          "originalReportSha256": "1e089c28244c9ad2ec6496667c86f16f0d6dafdf98326b2a794e7078e11588b6",
+          "published": "t052-diagnosis-3.json",
+          "newWinSamples": 0
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "title": "开局新雷达等待八装甲至 10000 tick",
+      "status": "rejected",
+      "change": "Before tick 10000 at ground-first public starts, defer new AMRADR/GAAIRC/NARADR until eight own core tanks. Preserve committed requests, distant air openings, late fallback and all V4 components. The fresh fixed schedule must use frozen V4 as opponent.",
+      "acceptedGeneration": null,
+      "candidateCommit": "ecc47f9f8012911812a6a70f096281c97c1ecf1a",
+      "sourceSha256": "cccd94c058653b17fa69037c9be1fce81f00aa51e85db725e928d62d48a45b2d",
+      "opponentCommit": "b0f3881c884319b69d8fc1818a24edc126beea33",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-radar-eight-reserve-20261104",
+      "validation": {
+        "fullTests": {
+          "passed": 539,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23338
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 2,
+        "loss": 5,
+        "unfinished": 1,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 0,
+          "loss": 4,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 2,
+          "loss": 1,
+          "unfinished": 1,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/053-radar-eight-reserve/report.json",
+      "reportSha256": "43658543d8cadc46b07afc9fcf7bc107be5c4e0e3881137c6a0e04a1b4e38aa6",
+      "manifestSha256": "86dc418728f7553608ada45e406ab5431451b9311930eceb8b3d3b45d6d18090",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "b8f57f4d0dca830e352c280dd91b173c8fb74177c6d27731832f354be41bc3c6",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "4fe7eb1a069fa7feef00e3dcad454d56feb7d918aa8b1b57a3ce1aa44b1f25f7",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "262b2d07c60e38988a964371ec44e398dc059f28dcf7275a7279c2db4b7bc9e3",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "2db562fbc5befed7d9562bf51a2f9e25f4ae3efd4d43c7dca9d21cbabe83a88d",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 54,
+      "title": "己方残余血量的有下限战力权重",
+      "status": "rejected",
+      "change": "Test bounded own-health power weights: known own units retain 50% nominal power plus 50% times remaining-health fraction. Preserve normal/unknown-health fallback, force/armor thresholds and all V4 components; exclude failed T053 radar gating.",
+      "acceptedGeneration": null,
+      "candidateCommit": "b2cd6ec309528eb446e811d73dce2f539a189f99",
+      "sourceSha256": "cc6fe832292fa431c22c53829cab1510de1245d7ff0c2d78af5b674762d42dab",
+      "opponentCommit": "b0f3881c884319b69d8fc1818a24edc126beea33",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-half-weight-own-health-20261104",
+      "validation": {
+        "fullTests": {
+          "passed": 541,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23349
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 4,
+        "loss": 4,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/054-bounded-owned-health/report.json",
+      "reportSha256": "caaa361cb29c6b56392224ca833505d64fbe709b93441a810c701236d77d294e",
+      "manifestSha256": "e643b82cf6a688881830fa304f7a01e96080b29fa95fadca38d29bf30228c447",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "586d1e7e1d47065da5ad81eeec89549a0c343c4b67c8987810ec56e6085da9aa",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "ec1039f26758269460cc52b9048e16ca2e440a795f159624dab2e251d30e59ee",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "9f7deb4d924b6f4553f07f2c82f539b2468cd17bc71e2c30207e79b6fbc80612",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "a5cdf6a6feb734615627916614f5c80a958cbb2bd616c672c47807f5ff764659",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": [
+        {
+          "originalReport": "attempts/054-bounded-owned-health/diagnostics/verified-mirror-comparison.json",
+          "originalReportSha256": "f5886be813f932e0e7ca6d99cdd5ceb3556fedf8d7707d4e06037d2fc27ece39",
+          "published": "t054-diagnosis-1.json",
+          "newWinSamples": 0
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "title": "四分之三战力下限与 1.25 主装甲出击比",
+      "status": "rejected",
+      "change": "Retest force evaluation with a 75% nominal own-power floor plus 25% remaining-health contribution and a brutal major-armor assault ratio of 1.25. Preserve normal, direct defense, existing late/air exceptions, armor counts and V4 policy; exclude failed radar gating.",
+      "acceptedGeneration": null,
+      "candidateCommit": "cd32cd4e66d98fd8c63f7a17f8efaefd7101751d",
+      "sourceSha256": "e69d261df5643df3e33d7e84ccdb84bf3cec4593f8c2c09be2680410def23e24",
+      "opponentCommit": "b0f3881c884319b69d8fc1818a24edc126beea33",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-quarter-owned-health-20261104",
+      "validation": {
+        "fullTests": {
+          "passed": 545,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23373
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 4,
+        "loss": 4,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/055-assault-power-margin/report.json",
+      "reportSha256": "232672394622e4dc802d79e06f4200858e53d83be88dc9d97931e506a5b03834",
+      "manifestSha256": "c6643813bf2dfa5c4e815a359355bc2543dba76bde16f9f8780b7b990a63c41c",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "04d60d5bccba4e4b86bc9630a525b569f2f0792db2eb4aa77db74e4b6025d054",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "fe7a0e7a804a0ce11db98cd9e017cb48f0f9635c51772fbe1ba3a4d8797bb38c",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "bb15dd97a4abe0b1f05c31dec2b58a2b9781c55113062f6ab7d67403db113c8d",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "28f12bf22066e665ab68b685dab8c263a5c72bdb0e84f8ae59232819f581a762",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": [
+        {
+          "originalReport": "attempts/055-assault-power-margin/diagnostics/verified-production-comparison.json",
+          "originalReportSha256": "6b4b21d3a85f41d3455e053a066b9cdb6f660440abf464d2eda8b08f060176fb",
+          "published": "t055-diagnosis-1.json",
+          "newWinSamples": 0
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "title": "冷却恢复期保留仍可接战的直接目标",
+      "status": "rejected",
+      "change": "Keep a core tank's last observed in-range direct target during explicit known single-shot cooldown recovery, unless already covered by immediate volley reservation. Preserve lost/invalid/minimum-range targets, initial/burst protection, support roles, normal and all frozen V4 policies; exclude T053-T055 components.",
+      "acceptedGeneration": null,
+      "candidateCommit": "874d3f2895396dc39fec8b6f947d3d19360dd2b9",
+      "sourceSha256": "87f6c35e4719ca535a6413f8c818d48643a0b9981c96387b3a5ec103b8be6e85",
+      "opponentCommit": "b0f3881c884319b69d8fc1818a24edc126beea33",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-stable-cooldown-target-20261104",
+      "validation": {
+        "fullTests": {
+          "passed": 548,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23327
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 5,
+        "loss": 2,
+        "unfinished": 1,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 1,
+          "unfinished": 1,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 3,
+          "loss": 1,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/056-cooldown-target-stability/report.json",
+      "reportSha256": "57794448f00f2342b169667ddd9bdb8f2ccb1469bdfe8aa49544b33ae1276676",
+      "manifestSha256": "9352c31a99d76d20c3afac64194f96cf246b3ab29eb7ea053c590d37a619ae9f",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "d5ded3a3707256d2f9fbfd2cb9727a8642b2d6decb60560190cc0cb5eae290c8",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "3152ba8908e0fe8d4a6587809b26bbe73bdc18168e6ea591620350ecfa7e0750",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "7330c8942115afc7b164e508baaab302d40a6500a82643bbdba93d6db80dd332",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "51945796d52612659eba2764718d690d684f6b1dfbfbeb952e47c18d699ae4be",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": [
+        {
+          "originalReport": "diagnostics/v4-mirror/verified-core-orders.json",
+          "originalReportSha256": "fc51cf5562aa728f55752522342ee3aafcbd684530468c448628d11bd68cd81d",
+          "published": "t056-diagnosis-1.json",
+          "newWinSamples": 0
+        },
+        {
+          "originalReport": "attempts/056-cooldown-target-stability/verified-core-effects.json",
+          "originalReportSha256": "ab5f617988e1b7a89e244c94cc8c04090ca5b6ad8bee3ca274f2aa43a0a365bc",
+          "published": "t056-diagnosis-2.json",
+          "newWinSamples": 0
+        },
+        {
+          "originalReport": "attempts/056-cooldown-target-stability/diagnostics/verified-state-review.json",
+          "originalReportSha256": "7a134fb618bd902d3fcc1a8b74ce027efe037303d3f9180f9f808ca3d56c1828",
+          "published": "t056-diagnosis-3.json",
+          "newWinSamples": 0
+        }
+      ]
+    },
+    {
+      "id": 57,
+      "title": "仅受损旧目标保留冷却期稳定性",
+      "status": "rejected",
+      "change": "Retest T056 cooldown stability only for observed wounded direct targets at no more than half apparent HP. Healthy/unknown-health targets retain original scoring; recovery, visibility, min/max range, immediate volley and firing protection remain. Normal and frozen V4 economic/assault policies are unchanged.",
+      "acceptedGeneration": null,
+      "candidateCommit": "a112e533733f34610dd15ef4eb3ddffaaa83b3c4",
+      "sourceSha256": "8b2582a84c6952262fbf5560a418a149b6b5f52ff3ff9abbd7a8c96e4bd22810",
+      "opponentCommit": "b0f3881c884319b69d8fc1818a24edc126beea33",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-wounded-cooldown-target-20261104",
+      "validation": {
+        "fullTests": {
+          "passed": 553,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23333
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 4,
+        "loss": 4,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/057-wounded-target-stability/report.json",
+      "reportSha256": "f630d3779817d8864f4cb6e72074ec4d1ba4a1327b11061a319f9ecf4619d39b",
+      "manifestSha256": "08d138eeb63c91815139c61457b8039c3bc37fa0c1a22790a17065251d5e73bf",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "cced98e1721a4f9b74e4d6009397c5626b3c1b175441bcc2b3c43cc21b3291fd",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "46d88367eaab3df7ab498f07868ea41f16dd065d9a0ce78e0bc7f875a2fcda65",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "22740417f3f0b5e77dea08b9b129cd33d211aca3a440600abc0d7ac3ea1a944c",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "9959ae2b7085d5e92d7243051413448519c6cb6011da8db4d1bae8aed7ff3860",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": [
+        {
+          "originalReport": "attempts/057-wounded-target-stability/verified-core-effects.json",
+          "originalReportSha256": "02619425cb4aa6b3d452f76cb2a903b4b0d94b8be23a6c119d1ffb2cb0d5a0d7",
+          "published": "t057-diagnosis-1.json",
+          "newWinSamples": 0
+        }
+      ]
+    },
+    {
+      "id": 58,
+      "title": "第三／第四矿车前保留五／八核心装甲",
+      "status": "rejected",
+      "change": "From frozen V4, reserve five core tanks before a third miner (preserving six-core single-refinery fallback), and eight before a fourth HARV/CMIN. Preserve observed-resource/siege gates, fifth-miner budget, refinery-supplied miner dedup, cancellation and normal behavior; exclude failed T053-T057 tactics.",
+      "acceptedGeneration": null,
+      "candidateCommit": "0a2ed7bec04b22b203c0999532b0a7e2dddfb4f7",
+      "sourceSha256": "823713a6feaad78c93fb62a291bc7074daa1ff2a9b9e108266ebcbf76490f849",
+      "opponentCommit": "b0f3881c884319b69d8fc1818a24edc126beea33",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-miner-armor-reserve-20261104",
+      "validation": {
+        "fullTests": {
+          "passed": 549,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23324
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 2,
+        "loss": 5,
+        "unfinished": 1,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 1,
+          "loss": 2,
+          "unfinished": 1,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 1,
+          "loss": 3,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/058-miner-armor-reserve/report.json",
+      "reportSha256": "c395c96830df1a6cc90fc2c5868c6c04806fcad689c916576358214651134037",
+      "manifestSha256": "8aac1d1fb616b952adb26c99ae967d421fa6baeb2c7702fab85e9a320d45b8b6",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "df960034e13eaa4cd13e28a014766140e04751a4eb6d3b39a1ee7f9438f41404",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "3d950e6832b8e2466368b2ead38ab6adb28bdf7cc22d84d6ced86b8055dff723",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "0ba7f8e4c1fbacbce785e92e703a920a0f6e14baddd8bc3871dc1ae4df69075d",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "174ec659faddd81fe25e59c23ee99a7cbe39363e8ba4ccbccbd918a9d94d814e",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 59,
+      "title": "明确冷却中的忙碌坦克保持原订单",
+      "status": "rejected",
+      "change": "After existing emergency escapes/retreat and unless holding an injured reserve, retain busy core tanks' ongoing orders in explicit CheckRange/PrepareToFire with known primary cooldown over six ticks and isFiring false. Do not infer native target IDs. Preserve idle/recovered/unknown/support/normal behavior and all frozen V4 policy.",
+      "acceptedGeneration": null,
+      "candidateCommit": "12aa3ecc7f67e695fc1e28387d9ead5d48724180",
+      "sourceSha256": "29cbac82a64b7696549db94b26306069c4dfe0502fd3a9e4dfcf8175a78c5955",
+      "opponentCommit": "b0f3881c884319b69d8fc1818a24edc126beea33",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-cooling-order-continuity-20261104",
+      "validation": {
+        "fullTests": {
+          "passed": 549,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23323
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 3,
+        "loss": 2,
+        "unfinished": 3,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 0,
+          "loss": 2,
+          "unfinished": 2,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 3,
+          "loss": 0,
+          "unfinished": 1,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/059-cooling-order-continuity/report.json",
+      "reportSha256": "9a7ea45d4f0ce90a18e2383be51f80dc29f374b29cfec8e38038001b799467f8",
+      "manifestSha256": "321aef43e4edabafac3eadd9daedf339a773b8ea90a9b653838e86f6d0006bf1",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "36ed9399e0422a0fa3bb3d6d62da7e2005b80868a29657403864e9e1d2750624",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "4ae28984c6bb332bbd605aaaf6d47e14ef974e9cb4a9a1771bb5eaa224fd3f31",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "ecda9e75d1e3d090323b7d19a5f8f06b26e9bd806df47fb2725c0b1dda6df219",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "8209060bf9d227a7336509b16352eafc58339a21b6f2e92a581101d671dc0f64",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": [
+        {
+          "originalReport": "diagnostics/v4-mirror/verified-core-orders.json",
+          "originalReportSha256": "fc51cf5562aa728f55752522342ee3aafcbd684530468c448628d11bd68cd81d",
+          "published": "t059-diagnosis-1.json",
+          "newWinSamples": 0
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "title": "HTNK 稳定冷却与主队已见防空避让",
+      "status": "rejected",
+      "change": "Retest T059 busy cooldown continuity only for HTNK in PrepareToFire, restoring allied tanks and CheckRange, and enable existing visible-AA air safety for brutal field armies. Preserve normal distance-dependent safety, original emergency/reserve paths, V4 economy, assault policy, native costs/weapons and observation boundaries.",
+      "acceptedGeneration": null,
+      "candidateCommit": "ff90ef720e7a8b1d3a9f6e14b2626a38b05d21ef",
+      "sourceSha256": "bfe45d26b64568c7797585d42af48328e2bcb86d41d7e1d78eb7ac1a75580ae7",
+      "opponentCommit": "b0f3881c884319b69d8fc1818a24edc126beea33",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-protected-air-core-recovery-20261104",
+      "validation": {
+        "fullTests": {
+          "passed": 554,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23328
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 3,
+        "loss": 4,
+        "unfinished": 1,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 1,
+          "loss": 3,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 2,
+          "loss": 1,
+          "unfinished": 1,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/060-air-safety-core-recovery/report.json",
+      "reportSha256": "566d81e864f9f31ba05570e42c198ec903881dc9c649992b22ade9e4ea2587a7",
+      "manifestSha256": "1c74467263fbe15d739e268c7558a3a01354bf0d90bbc3dc9fc091b006803d60",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "99640e7227babd7f4e00cf0c0e627550365235cac4f64b7602ca199857c40c0b",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "9fcdf3a4389d9f1c545b969965bffc8e36da826dfbae77be86a96478f3f45ced",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "04d4a6e56b2df04af4909df297b0ed4fe8a3d04aa2f69bcfd88455566e3b48c1",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "8ab77512cbaf1300fea462faf099abfc68c6589dd120742fb69fc00b08af36f7",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 61,
+      "title": "基础装甲射程外采用安全原生 AttackMove",
+      "status": "rejected",
+      "change": "From frozen V4, use the original safe coordinate AttackMove helper for movable ordinary MTNK/HTNK approaching a visible target beyond weapon range, with the existing strategic point. Keep in-range direct volleys, critical/unknown own health, immobile/prevented moves, support/siege/normal and original safety paths unchanged.",
+      "acceptedGeneration": null,
+      "candidateCommit": "52c2b6d9b65aa708ec78b5307a5f608c2eea8dce",
+      "sourceSha256": "22a6e90efa5b15f30cda24affac22d2bafe8d6aa578dc405b79bc9b657cad1f2",
+      "opponentCommit": "b0f3881c884319b69d8fc1818a24edc126beea33",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-native-armor-attackmove-20261104",
+      "validation": {
+        "fullTests": {
+          "passed": 552,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23325
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 0,
+        "loss": 4,
+        "unfinished": 4,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 0,
+          "loss": 0,
+          "unfinished": 4,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 0,
+          "loss": 4,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/061-native-armor-attackmove/report.json",
+      "reportSha256": "1f9d35da111c12210221cc5bc65eda8fdfd9b270527387449c090dc109019eca",
+      "manifestSha256": "cea9ce45ed3ebde3c373b229108bee4318c55b85527d340e0670fe80cac5868b",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "eaad7ea44bac675b2697a89b9fa7b50c2d0cc1b44c13eefffb134daef3afdb37",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "a69c73f41470a4474fe6a085dad61eb8451c7d020371a27589c8caa0ad1df36b",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "011577e14be2c99db9f40feb3d1f85148315f40ad71e5de53243349440f55de9",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "1eded0bd05ba3375341dc104463a0ef5d97ee5f5430e3ad6ca6fce364c6a57aa",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    },
+    {
+      "id": 62,
+      "title": "在 V4 复测矿车出厂可见出口寻路起点",
+      "status": "rejected",
+      "change": "Retest exact T042 matched-owned-factory native-exit gem-path origin on frozen V4. Preserve real unit position/delivery, cargo/timing/visibility and V4 macro/micro; require fresh same-source native delivery observation plus a new eight-game run against V4.",
+      "acceptedGeneration": null,
+      "candidateCommit": "2bbc0e79e971edb01da686dbb701938cd834cb3f",
+      "sourceSha256": "eab3176565af57cdcd354301e0f694e3bf8395f92ac54898e32a9c49f86af278",
+      "opponentCommit": "b0f3881c884319b69d8fc1818a24edc126beea33",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-factory-resource-egress-20261104",
+      "validation": {
+        "fullTests": {
+          "passed": 551,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23342
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 4,
+        "loss": 4,
+        "unfinished": 0,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 2,
+          "loss": 2,
+          "unfinished": 0,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/062-factory-resource-egress/report.json",
+      "reportSha256": "3c0ff43ac3f57cebbcd5809a5e6e366f9caa08a918c9aa24c4531faf3b534a29",
+      "manifestSha256": "7e28d24f30cad54b569272853bfc940518c4ef51cd47fbf58c01af0ef25a6d36",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "99990cf0f9dcbf240e15856554237c94053c040096119273af07edd3fdf8485d",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "8736f730db029041b2cbf7a45591ae57047b4afedfc42fab37823d5e5e4b90b4",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "bb76ee873f416d0c86c5b3e1324c0da6499a51ff3a9351db5276fe295389d424",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "a4741deabf8c84ad5ef218fef04b00546b9c2b0b43b56c34567a5fad83605d3a",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": [
+        {
+          "originalReport": "attempts/062-factory-resource-egress/diagnostics/verified-delivery.json",
+          "originalReportSha256": "0c900e82e090ddffedd3da0c9e14314d06557aab85eac36e23a45894061a2d5a",
+          "published": "t062-diagnosis-1.json",
+          "newWinSamples": 0
+        }
+      ]
+    },
+    {
+      "id": 63,
+      "title": "真实维修厂预算与原生付费装甲恢复",
+      "status": "rejected",
+      "change": "From frozen V4, fund native repair depots for two-core damaged armies with real cost plus 400 reserve; send nearby damaged core armor to own ready depots outside visible weapon coverage and on safe routes, retaining valid Dock intent to full native paid recovery. Normal, costs/HP/rules/API and prior emergency micro are unchanged; require same-source repair/payment observation and new eight-game wins.",
+      "acceptedGeneration": null,
+      "candidateCommit": "94ed44cda3e6d9add98fe00246540a0e9995cb2b",
+      "sourceSha256": "f10a6aadbcc485cf7ebcfa4a19569cd06d07b8891af529cbf5f73813c25349ec",
+      "opponentCommit": "b0f3881c884319b69d8fc1818a24edc126beea33",
+      "workspace": "/data00/home/lingchen.judy/.local/state/opencode2/tmp/opencode/ra2web-ai-paid-armor-recovery-20261104",
+      "validation": {
+        "fullTests": {
+          "passed": 558,
+          "skipped": 11,
+          "failed": 0,
+          "assertions": 23335
+        },
+        "typechecksPassed": true,
+        "buildPassed": true,
+        "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+      },
+      "counts": {
+        "win": 4,
+        "loss": 2,
+        "unfinished": 2,
+        "draw": 0,
+        "error": 0
+      },
+      "byCountry": {
+        "Americans": {
+          "win": 2,
+          "loss": 1,
+          "unfinished": 1,
+          "draw": 0,
+          "error": 0
+        },
+        "Russians": {
+          "win": 2,
+          "loss": 1,
+          "unfinished": 1,
+          "draw": 0,
+          "error": 0
+        }
+      },
+      "report": "attempts/063-paid-armor-recovery/report.json",
+      "reportSha256": "1b610446bc1af160ef44598e9db479898386fa3aaf6f2d01126db410d0801645",
+      "manifestSha256": "4f504fa072a450f113d56a31c5e2dd6bf3cc1385f48e0123d478c3a1f7837396",
+      "rawMatchInputs": [
+        {
+          "name": "Americans-101",
+          "sha256": "bb04fbda23239e33a28b1cab424964660303f90e8b820437322313b1296a7e72",
+          "transportSha256": null
+        },
+        {
+          "name": "Americans-202",
+          "sha256": "9228b6713440bbca1c5a8bed2077ca294900536a7fc2a5cab46bf6587cecfcb5",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-101",
+          "sha256": "a724d8ef95a1eeec04e9272327d39ea5a555a2d1a6f60a8294abf30402d22697",
+          "transportSha256": null
+        },
+        {
+          "name": "Russians-202",
+          "sha256": "498b817e1073fed9079f11a1d5fc04289df4d1a61710698ea21ada47f691fe63",
+          "transportSha256": null
+        }
+      ],
+      "actualTransportChains": null,
+      "diagnosticOrInvalidLaunchCountedAsWins": false,
+      "diagnostics": []
+    }
+  ],
+  "completedMatchSamples": 504,
+  "fixturesAndDiagnosticReplaysCountedAsWins": false,
+  "scopeLimit": "Win rate only for this verified eight-game schedule; no claim of universal or stochastic 100% win rate.",
+  "pushed": false,
+  "deployed": false
+}

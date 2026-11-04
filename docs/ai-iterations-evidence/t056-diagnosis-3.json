@@ -1,0 +1,1661 @@
+{
+  "passed": true,
+  "equalSamples": 0,
+  "newWinSamples": 0,
+  "summaries": [
+    {
+      "country": "Americans",
+      "seed": 101,
+      "swapped": true,
+      "result": "baseline-win",
+      "reason": "engine-victory-conditions",
+      "ticks": 13076,
+      "originalRawSha256": "d5ded3a3707256d2f9fbfd2cb9727a8642b2d6decb60560190cc0cb5eae290c8",
+      "samples": [
+        {
+          "tick": 7200,
+          "players": [
+            {
+              "name": "@@AI2@@",
+              "counts": {
+                "CMIN": 3,
+                "MTNK": 6,
+                "GACNST": 1,
+                "GAPOWR": 2,
+                "GAREFN": 2,
+                "GAPILE": 1,
+                "GAWEAP": 1,
+                "AMRADR": 1,
+                "ADOG": 2,
+                "E1": 3,
+                "JUMPJET": 2
+              },
+              "miners": 3,
+              "buildings": 8,
+              "credits": 507,
+              "received": 8000,
+              "coreHealth": {
+                "count": 6,
+                "value": 4200,
+                "hitPoints": 1800,
+                "maxHitPoints": 1800,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 8,
+                "target": {
+                  "x": 27,
+                  "y": 50
+                },
+                "center": {
+                  "x": 72,
+                  "y": 81
+                }
+              }
+            },
+            {
+              "name": "@@AI1@@",
+              "counts": {
+                "CMIN": 3,
+                "MTNK": 5,
+                "GACNST": 1,
+                "GAPOWR": 2,
+                "GAREFN": 2,
+                "GAPILE": 1,
+                "GAWEAP": 1,
+                "AMRADR": 1,
+                "ADOG": 2,
+                "E1": 3
+              },
+              "miners": 3,
+              "buildings": 8,
+              "credits": 734,
+              "received": 6500,
+              "coreHealth": {
+                "count": 5,
+                "value": 3500,
+                "hitPoints": 1500,
+                "maxHitPoints": 1500,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 5,
+                "target": {
+                  "x": 30.2,
+                  "y": 52.4
+                },
+                "center": {
+                  "x": 31,
+                  "y": 53
+                }
+              }
+            }
+          ]
+        },
+        {
+          "tick": 8100,
+          "players": [
+            {
+              "name": "@@AI2@@",
+              "counts": {
+                "CMIN": 3,
+                "MTNK": 4,
+                "FV": 1,
+                "GACNST": 1,
+                "GAPOWR": 2,
+                "GAREFN": 2,
+                "GAPILE": 1,
+                "GAWEAP": 1,
+                "AMRADR": 1,
+                "ADOG": 2,
+                "E1": 3,
+                "JUMPJET": 2
+              },
+              "miners": 3,
+              "buildings": 8,
+              "credits": 375,
+              "received": 10104,
+              "coreHealth": {
+                "count": 4,
+                "value": 2800,
+                "hitPoints": 1135,
+                "maxHitPoints": 1200,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 7,
+                "target": {
+                  "x": 57,
+                  "y": 73
+                },
+                "center": {
+                  "x": 78,
+                  "y": 83
+                }
+              }
+            },
+            {
+              "name": "@@AI1@@",
+              "counts": {
+                "CMIN": 3,
+                "MTNK": 5,
+                "FV": 1,
+                "GACNST": 1,
+                "GAPOWR": 2,
+                "GAREFN": 2,
+                "GAPILE": 1,
+                "GAWEAP": 1,
+                "AMRADR": 1,
+                "ADOG": 2,
+                "E1": 3,
+                "JUMPJET": 1
+              },
+              "miners": 3,
+              "buildings": 8,
+              "credits": 0,
+              "received": 7500,
+              "coreHealth": {
+                "count": 5,
+                "value": 3500,
+                "hitPoints": 1363,
+                "maxHitPoints": 1500,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 7,
+                "target": {
+                  "x": 61,
+                  "y": 76
+                },
+                "center": {
+                  "x": 52,
+                  "y": 69
+                }
+              }
+            }
+          ]
+        },
+        {
+          "tick": 9000,
+          "players": [
+            {
+              "name": "@@AI2@@",
+              "counts": {
+                "CMIN": 3,
+                "MTNK": 1,
+                "GACNST": 1,
+                "GAPOWR": 2,
+                "GAREFN": 2,
+                "GAPILE": 1,
+                "GAWEAP": 1,
+                "AMRADR": 1,
+                "GAPILL": 1,
+                "ADOG": 1,
+                "E1": 1
+              },
+              "miners": 3,
+              "buildings": 9,
+              "credits": 248,
+              "received": 11979,
+              "coreHealth": {
+                "count": 1,
+                "value": 700,
+                "hitPoints": 300,
+                "maxHitPoints": 300,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 1,
+                "target": {
+                  "x": 66,
+                  "y": 79
+                },
+                "center": {
+                  "x": 84,
+                  "y": 78
+                }
+              }
+            },
+            {
+              "name": "@@AI1@@",
+              "counts": {
+                "CMIN": 3,
+                "MTNK": 3,
+                "FV": 1,
+                "GACNST": 1,
+                "GAPOWR": 2,
+                "GAREFN": 2,
+                "GAPILE": 1,
+                "GAWEAP": 1,
+                "AMRADR": 1,
+                "ADOG": 1,
+                "E1": 3,
+                "JUMPJET": 2
+              },
+              "miners": 3,
+              "buildings": 8,
+              "credits": 0,
+              "received": 10000,
+              "coreHealth": {
+                "count": 3,
+                "value": 2100,
+                "hitPoints": 619,
+                "maxHitPoints": 900,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 6,
+                "target": {
+                  "x": 72,
+                  "y": 87
+                },
+                "center": {
+                  "x": 57,
+                  "y": 73
+                }
+              }
+            }
+          ]
+        },
+        {
+          "tick": 10800,
+          "players": [
+            {
+              "name": "@@AI2@@",
+              "counts": {
+                "CMIN": 3,
+                "GACNST": 1,
+                "GAPOWR": 2,
+                "GAPILE": 1,
+                "GAREFN": 1,
+                "AMRADR": 1,
+                "GAPILL": 1,
+                "E1": 7
+              },
+              "miners": 3,
+              "buildings": 7,
+              "credits": 0,
+              "received": 14008,
+              "coreHealth": null,
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 7,
+                "target": {
+                  "x": 79,
+                  "y": 79
+                },
+                "center": {
+                  "x": 81,
+                  "y": 85
+                }
+              }
+            },
+            {
+              "name": "@@AI1@@",
+              "counts": {
+                "CMIN": 3,
+                "MTNK": 5,
+                "GACNST": 1,
+                "GAPOWR": 2,
+                "GAREFN": 2,
+                "GAPILE": 1,
+                "GAWEAP": 1,
+                "AMRADR": 1,
+                "ADOG": 1,
+                "E1": 3,
+                "JUMPJET": 2,
+                "PDPLANE": 1
+              },
+              "miners": 3,
+              "buildings": 8,
+              "credits": 0,
+              "received": 11729,
+              "coreHealth": {
+                "count": 5,
+                "value": 3500,
+                "hitPoints": 885,
+                "maxHitPoints": 1500,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 7,
+                "target": {
+                  "x": 72,
+                  "y": 87
+                },
+                "center": {
+                  "x": 68,
+                  "y": 81
+                }
+              }
+            }
+          ]
+        },
+        {
+          "tick": 13076,
+          "players": [
+            {
+              "name": "@@AI2@@",
+              "counts": {},
+              "miners": 0,
+              "buildings": 0,
+              "credits": 1367,
+              "received": 18389,
+              "coreHealth": null,
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 0,
+                "target": {
+                  "x": 78.8,
+                  "y": 84.6
+                },
+                "center": null
+              }
+            },
+            {
+              "name": "@@AI1@@",
+              "counts": {
+                "CMIN": 3,
+                "MTNK": 5,
+                "FV": 1,
+                "GACNST": 1,
+                "GAPOWR": 2,
+                "GAREFN": 2,
+                "GAPILE": 1,
+                "GAWEAP": 1,
+                "AMRADR": 1,
+                "ADOG": 2,
+                "E1": 11,
+                "JUMPJET": 4
+              },
+              "miners": 3,
+              "buildings": 8,
+              "credits": 310,
+              "received": 15729,
+              "coreHealth": {
+                "count": 5,
+                "value": 3500,
+                "hitPoints": 612,
+                "maxHitPoints": 1500,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 18,
+                "target": {
+                  "x": 85,
+                  "y": 83
+                },
+                "center": {
+                  "x": 73,
+                  "y": 86
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "Americans",
+      "seed": 202,
+      "swapped": false,
+      "result": "draw",
+      "reason": "tick-limit",
+      "ticks": 27000,
+      "originalRawSha256": "3152ba8908e0fe8d4a6587809b26bbe73bdc18168e6ea591620350ecfa7e0750",
+      "samples": [
+        {
+          "tick": 7200,
+          "players": [
+            {
+              "name": "@@AI1@@",
+              "counts": {
+                "CMIN": 3,
+                "MTNK": 5,
+                "GACNST": 1,
+                "GAPOWR": 2,
+                "GAREFN": 2,
+                "GAPILE": 1,
+                "GAWEAP": 1,
+                "AMRADR": 1,
+                "ADOG": 2,
+                "E1": 3
+              },
+              "miners": 3,
+              "buildings": 8,
+              "credits": 734,
+              "received": 6500,
+              "coreHealth": {
+                "count": 5,
+                "value": 3500,
+                "hitPoints": 1500,
+                "maxHitPoints": 1500,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 5,
+                "target": {
+                  "x": 30.2,
+                  "y": 52.4
+                },
+                "center": {
+                  "x": 31,
+                  "y": 53
+                }
+              }
+            },
+            {
+              "name": "@@AI2@@",
+              "counts": {
+                "CMIN": 3,
+                "MTNK": 6,
+                "GACNST": 1,
+                "GAPOWR": 2,
+                "GAREFN": 2,
+                "GAPILE": 1,
+                "GAWEAP": 1,
+                "AMRADR": 1,
+                "ADOG": 2,
+                "E1": 3,
+                "JUMPJET": 2
+              },
+              "miners": 3,
+              "buildings": 8,
+              "credits": 507,
+              "received": 8000,
+              "coreHealth": {
+                "count": 6,
+                "value": 4200,
+                "hitPoints": 1800,
+                "maxHitPoints": 1800,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 8,
+                "target": {
+                  "x": 27,
+                  "y": 50
+                },
+                "center": {
+                  "x": 72,
+                  "y": 81
+                }
+              }
+            }
+          ]
+        },
+        {
+          "tick": 8100,
+          "players": [
+            {
+              "name": "@@AI1@@",
+              "counts": {
+                "CMIN": 3,
+                "MTNK": 3,
+                "FV": 1,
+                "GACNST": 1,
+                "GAPOWR": 2,
+                "GAREFN": 2,
+                "GAPILE": 1,
+                "GAWEAP": 1,
+                "AMRADR": 1,
+                "ADOG": 2,
+                "E1": 3,
+                "JUMPJET": 1
+              },
+              "miners": 3,
+              "buildings": 8,
+              "credits": 0,
+              "received": 7500,
+              "coreHealth": {
+                "count": 3,
+                "value": 2100,
+                "hitPoints": 640,
+                "maxHitPoints": 900,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 5,
+                "target": {
+                  "x": 48,
+                  "y": 67
+                },
+                "center": {
+                  "x": 42,
+                  "y": 64
+                }
+              }
+            },
+            {
+              "name": "@@AI2@@",
+              "counts": {
+                "CMIN": 3,
+                "MTNK": 1,
+                "FV": 1,
+                "GACNST": 1,
+                "GAPOWR": 2,
+                "GAREFN": 2,
+                "GAPILE": 1,
+                "GAWEAP": 1,
+                "AMRADR": 1,
+                "ADOG": 2,
+                "E1": 3,
+                "JUMPJET": 2
+              },
+              "miners": 3,
+              "buildings": 8,
+              "credits": 375,
+              "received": 10104,
+              "coreHealth": {
+                "count": 1,
+                "value": 700,
+                "hitPoints": 300,
+                "maxHitPoints": 300,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 4,
+                "target": {
+                  "x": 78.8,
+                  "y": 84.6
+                },
+                "center": {
+                  "x": 77,
+                  "y": 84
+                }
+              }
+            }
+          ]
+        },
+        {
+          "tick": 9000,
+          "players": [
+            {
+              "name": "@@AI1@@",
+              "counts": {
+                "CMIN": 3,
+                "FV": 1,
+                "MTNK": 1,
+                "GACNST": 1,
+                "GAPOWR": 2,
+                "GAREFN": 2,
+                "GAPILE": 1,
+                "GAWEAP": 1,
+                "AMRADR": 1,
+                "ADOG": 1,
+                "E1": 3,
+                "JUMPJET": 1
+              },
+              "miners": 3,
+              "buildings": 8,
+              "credits": 570,
+              "received": 10000,
+              "coreHealth": {
+                "count": 1,
+                "value": 700,
+                "hitPoints": 300,
+                "maxHitPoints": 300,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 3,
+                "target": {
+                  "x": 30.2,
+                  "y": 52.4
+                },
+                "center": {
+                  "x": 42,
+                  "y": 61
+                }
+              }
+            },
+            {
+              "name": "@@AI2@@",
+              "counts": {
+                "CMIN": 3,
+                "MTNK": 2,
+                "GACNST": 1,
+                "GAPOWR": 2,
+                "GAREFN": 2,
+                "GAPILE": 1,
+                "GAWEAP": 1,
+                "AMRADR": 1,
+                "GAPILL": 1,
+                "ADOG": 1,
+                "E1": 3
+              },
+              "miners": 3,
+              "buildings": 9,
+              "credits": 448,
+              "received": 11979,
+              "coreHealth": {
+                "count": 2,
+                "value": 1400,
+                "hitPoints": 568,
+                "maxHitPoints": 600,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 2,
+                "target": {
+                  "x": 65,
+                  "y": 80
+                },
+                "center": {
+                  "x": 78,
+                  "y": 79
+                }
+              }
+            }
+          ]
+        },
+        {
+          "tick": 10800,
+          "players": [
+            {
+              "name": "@@AI1@@",
+              "counts": {
+                "CMIN": 3,
+                "MTNK": 2,
+                "GACNST": 1,
+                "GAPOWR": 2,
+                "GAREFN": 2,
+                "GAPILE": 1,
+                "GAWEAP": 1,
+                "AMRADR": 1,
+                "ADOG": 1,
+                "E1": 11,
+                "JUMPJET": 1,
+                "PDPLANE": 1
+              },
+              "miners": 3,
+              "buildings": 8,
+              "credits": 115,
+              "received": 12416,
+              "coreHealth": {
+                "count": 2,
+                "value": 1400,
+                "hitPoints": 600,
+                "maxHitPoints": 600,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 11,
+                "target": {
+                  "x": 38,
+                  "y": 58
+                },
+                "center": {
+                  "x": 31,
+                  "y": 56
+                }
+              }
+            },
+            {
+              "name": "@@AI2@@",
+              "counts": {
+                "CMIN": 3,
+                "MTNK": 3,
+                "GACNST": 1,
+                "GAPOWR": 2,
+                "GAREFN": 2,
+                "GAPILE": 1,
+                "GAWEAP": 1,
+                "AMRADR": 1,
+                "GAPILL": 1,
+                "ADOG": 1,
+                "E1": 11
+              },
+              "miners": 3,
+              "buildings": 9,
+              "credits": 283,
+              "received": 14345,
+              "coreHealth": {
+                "count": 3,
+                "value": 2100,
+                "hitPoints": 554,
+                "maxHitPoints": 900,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 11,
+                "target": {
+                  "x": 37,
+                  "y": 57
+                },
+                "center": {
+                  "x": 61,
+                  "y": 75
+                }
+              }
+            }
+          ]
+        },
+        {
+          "tick": 14400,
+          "players": [
+            {
+              "name": "@@AI1@@",
+              "counts": {
+                "CMIN": 3,
+                "MTNK": 2,
+                "GACNST": 1,
+                "GAPOWR": 2,
+                "GAREFN": 2,
+                "GAPILE": 1,
+                "GAWEAP": 1,
+                "AMRADR": 1,
+                "JUMPJET": 1,
+                "ADOG": 1,
+                "PDPLANE": 1
+              },
+              "miners": 3,
+              "buildings": 8,
+              "credits": 452,
+              "received": 18916,
+              "coreHealth": {
+                "count": 2,
+                "value": 1400,
+                "hitPoints": 600,
+                "maxHitPoints": 600,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 3,
+                "target": {
+                  "x": 30.2,
+                  "y": 52.4
+                },
+                "center": {
+                  "x": 49,
+                  "y": 67
+                }
+              }
+            },
+            {
+              "name": "@@AI2@@",
+              "counts": {
+                "CMIN": 3,
+                "MTNK": 2,
+                "FV": 1,
+                "GACNST": 1,
+                "GAPOWR": 2,
+                "GAREFN": 2,
+                "GAPILE": 1,
+                "GAWEAP": 1,
+                "AMRADR": 1,
+                "GAPILL": 1,
+                "E1": 15
+              },
+              "miners": 3,
+              "buildings": 9,
+              "credits": 212,
+              "received": 20040,
+              "coreHealth": {
+                "count": 2,
+                "value": 1400,
+                "hitPoints": 313,
+                "maxHitPoints": 600,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 18,
+                "target": {
+                  "x": 72,
+                  "y": 83
+                },
+                "center": {
+                  "x": 71,
+                  "y": 82
+                }
+              }
+            }
+          ]
+        },
+        {
+          "tick": 18000,
+          "players": [
+            {
+              "name": "@@AI1@@",
+              "counts": {
+                "CMIN": 3,
+                "MTNK": 1,
+                "GACNST": 1,
+                "GAPOWR": 2,
+                "GAREFN": 2,
+                "GAPILE": 1,
+                "GAWEAP": 1,
+                "AMRADR": 1,
+                "ADOG": 2,
+                "E1": 8,
+                "JUMPJET": 1,
+                "PDPLANE": 1
+              },
+              "miners": 3,
+              "buildings": 8,
+              "credits": 355,
+              "received": 24455,
+              "coreHealth": {
+                "count": 1,
+                "value": 700,
+                "hitPoints": 300,
+                "maxHitPoints": 300,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 7,
+                "target": {
+                  "x": 30.2,
+                  "y": 52.4
+                },
+                "center": {
+                  "x": 58,
+                  "y": 74
+                }
+              }
+            },
+            {
+              "name": "@@AI2@@",
+              "counts": {
+                "CMIN": 3,
+                "MTNK": 2,
+                "FV": 1,
+                "GACNST": 1,
+                "GAPOWR": 2,
+                "GAREFN": 2,
+                "GAPILE": 1,
+                "GAWEAP": 1,
+                "AMRADR": 1,
+                "GAPILL": 1,
+                "E1": 23,
+                "ADOG": 1,
+                "PDPLANE": 1
+              },
+              "miners": 3,
+              "buildings": 9,
+              "credits": 414,
+              "received": 23040,
+              "coreHealth": {
+                "count": 2,
+                "value": 1400,
+                "hitPoints": 544,
+                "maxHitPoints": 600,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 26,
+                "target": {
+                  "x": 71,
+                  "y": 77
+                },
+                "center": {
+                  "x": 72,
+                  "y": 81
+                }
+              }
+            }
+          ]
+        },
+        {
+          "tick": 22500,
+          "players": [
+            {
+              "name": "@@AI1@@",
+              "counts": {
+                "CMIN": 4,
+                "MTNK": 6,
+                "FV": 1,
+                "GACNST": 1,
+                "GAPOWR": 2,
+                "GAREFN": 2,
+                "GAPILE": 1,
+                "GAWEAP": 1,
+                "AMRADR": 1,
+                "E1": 22,
+                "ADOG": 2
+              },
+              "miners": 4,
+              "buildings": 8,
+              "credits": 358,
+              "received": 30457,
+              "coreHealth": {
+                "count": 6,
+                "value": 4200,
+                "hitPoints": 1800,
+                "maxHitPoints": 1800,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 26,
+                "target": {
+                  "x": 30.2,
+                  "y": 52.4
+                },
+                "center": {
+                  "x": 30,
+                  "y": 53
+                }
+              }
+            },
+            {
+              "name": "@@AI2@@",
+              "counts": {
+                "CMIN": 3,
+                "MTNK": 3,
+                "FV": 2,
+                "GACNST": 1,
+                "GAPOWR": 2,
+                "GAREFN": 2,
+                "GAPILE": 1,
+                "GAWEAP": 1,
+                "AMRADR": 1,
+                "GAPILL": 1,
+                "E1": 31,
+                "JUMPJET": 1
+              },
+              "miners": 3,
+              "buildings": 9,
+              "credits": 0,
+              "received": 24540,
+              "coreHealth": {
+                "count": 3,
+                "value": 2100,
+                "hitPoints": 669,
+                "maxHitPoints": 900,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 37,
+                "target": {
+                  "x": 78.8,
+                  "y": 84.6
+                },
+                "center": {
+                  "x": 78,
+                  "y": 84
+                }
+              }
+            }
+          ]
+        },
+        {
+          "tick": 27000,
+          "players": [
+            {
+              "name": "@@AI1@@",
+              "counts": {
+                "CMIN": 4,
+                "MTNK": 2,
+                "GACNST": 1,
+                "GAPOWR": 2,
+                "GAREFN": 2,
+                "GAPILE": 1,
+                "GAWEAP": 2,
+                "AMRADR": 1,
+                "E1": 29
+              },
+              "miners": 4,
+              "buildings": 9,
+              "credits": 0,
+              "received": 37192,
+              "coreHealth": {
+                "count": 2,
+                "value": 1400,
+                "hitPoints": 600,
+                "maxHitPoints": 600,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 28,
+                "target": {
+                  "x": 30.2,
+                  "y": 52.4
+                },
+                "center": {
+                  "x": 31,
+                  "y": 53
+                }
+              }
+            },
+            {
+              "name": "@@AI2@@",
+              "counts": {
+                "CMIN": 3,
+                "MTNK": 5,
+                "GACNST": 1,
+                "GAPOWR": 2,
+                "GAREFN": 2,
+                "GAPILE": 1,
+                "GAWEAP": 1,
+                "AMRADR": 1,
+                "GAPILL": 1,
+                "E1": 38,
+                "JUMPJET": 1
+              },
+              "miners": 3,
+              "buildings": 9,
+              "credits": 0,
+              "received": 26640,
+              "coreHealth": {
+                "count": 5,
+                "value": 3500,
+                "hitPoints": 994,
+                "maxHitPoints": 1500,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 44,
+                "target": {
+                  "x": 31,
+                  "y": 49
+                },
+                "center": {
+                  "x": 51,
+                  "y": 74
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "Russians",
+      "seed": 101,
+      "swapped": true,
+      "result": "baseline-win",
+      "reason": "engine-victory-conditions",
+      "ticks": 19872,
+      "originalRawSha256": "7330c8942115afc7b164e508baaab302d40a6500a82643bbdba93d6db80dd332",
+      "samples": [
+        {
+          "tick": 7200,
+          "players": [
+            {
+              "name": "@@AI2@@",
+              "counts": {
+                "HARV": 3,
+                "HTNK": 4,
+                "NACNST": 1,
+                "NAPOWR": 2,
+                "NAREFN": 2,
+                "NAHAND": 1,
+                "NAWEAP": 1,
+                "DOG": 2,
+                "E2": 4
+              },
+              "miners": 3,
+              "buildings": 7,
+              "credits": 0,
+              "received": 4000,
+              "coreHealth": {
+                "count": 4,
+                "value": 3600,
+                "hitPoints": 1600,
+                "maxHitPoints": 1600,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 4,
+                "target": {
+                  "x": 78.8,
+                  "y": 84.6
+                },
+                "center": {
+                  "x": 78,
+                  "y": 84
+                }
+              }
+            },
+            {
+              "name": "@@AI1@@",
+              "counts": {
+                "HARV": 3,
+                "HTNK": 3,
+                "NACNST": 1,
+                "NAPOWR": 2,
+                "NAREFN": 2,
+                "NAHAND": 1,
+                "NAWEAP": 1,
+                "DOG": 2,
+                "E2": 4
+              },
+              "miners": 3,
+              "buildings": 7,
+              "credits": 2585,
+              "received": 6000,
+              "coreHealth": {
+                "count": 3,
+                "value": 2700,
+                "hitPoints": 1200,
+                "maxHitPoints": 1200,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 3,
+                "target": {
+                  "x": 30.2,
+                  "y": 52.4
+                },
+                "center": {
+                  "x": 31,
+                  "y": 52
+                }
+              }
+            }
+          ]
+        },
+        {
+          "tick": 8100,
+          "players": [
+            {
+              "name": "@@AI2@@",
+              "counts": {
+                "HARV": 4,
+                "HTNK": 4,
+                "NACNST": 1,
+                "NAPOWR": 2,
+                "NAREFN": 2,
+                "NAHAND": 1,
+                "NAWEAP": 1,
+                "DOG": 2,
+                "E2": 4
+              },
+              "miners": 4,
+              "buildings": 7,
+              "credits": 2592,
+              "received": 8000,
+              "coreHealth": {
+                "count": 4,
+                "value": 3600,
+                "hitPoints": 1600,
+                "maxHitPoints": 1600,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 4,
+                "target": {
+                  "x": 78.8,
+                  "y": 84.6
+                },
+                "center": {
+                  "x": 78,
+                  "y": 84
+                }
+              }
+            },
+            {
+              "name": "@@AI1@@",
+              "counts": {
+                "HARV": 3,
+                "HTNK": 4,
+                "NACNST": 1,
+                "NAPOWR": 2,
+                "NAREFN": 2,
+                "NAHAND": 1,
+                "NAWEAP": 1,
+                "DOG": 2,
+                "E2": 4
+              },
+              "miners": 3,
+              "buildings": 7,
+              "credits": 1128,
+              "received": 6000,
+              "coreHealth": {
+                "count": 4,
+                "value": 3600,
+                "hitPoints": 1600,
+                "maxHitPoints": 1600,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 4,
+                "target": {
+                  "x": 30.2,
+                  "y": 52.4
+                },
+                "center": {
+                  "x": 31,
+                  "y": 53
+                }
+              }
+            }
+          ]
+        },
+        {
+          "tick": 9000,
+          "players": [
+            {
+              "name": "@@AI2@@",
+              "counts": {
+                "HARV": 4,
+                "HTNK": 6,
+                "NACNST": 1,
+                "NAPOWR": 2,
+                "NAREFN": 2,
+                "NAHAND": 1,
+                "NAWEAP": 1,
+                "DOG": 2,
+                "E2": 4
+              },
+              "miners": 4,
+              "buildings": 7,
+              "credits": 2974,
+              "received": 10075,
+              "coreHealth": {
+                "count": 6,
+                "value": 5400,
+                "hitPoints": 2400,
+                "maxHitPoints": 2400,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 6,
+                "target": {
+                  "x": 78.8,
+                  "y": 84.6
+                },
+                "center": {
+                  "x": 79,
+                  "y": 83
+                }
+              }
+            },
+            {
+              "name": "@@AI1@@",
+              "counts": {
+                "HARV": 4,
+                "HTNK": 5,
+                "NACNST": 1,
+                "NAPOWR": 2,
+                "NAREFN": 2,
+                "NAHAND": 1,
+                "NAWEAP": 1,
+                "DOG": 2,
+                "E2": 4
+              },
+              "miners": 4,
+              "buildings": 7,
+              "credits": 2835,
+              "received": 9200,
+              "coreHealth": {
+                "count": 5,
+                "value": 4500,
+                "hitPoints": 2000,
+                "maxHitPoints": 2000,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 5,
+                "target": {
+                  "x": 30.2,
+                  "y": 52.4
+                },
+                "center": {
+                  "x": 31,
+                  "y": 53
+                }
+              }
+            }
+          ]
+        },
+        {
+          "tick": 10800,
+          "players": [
+            {
+              "name": "@@AI2@@",
+              "counts": {
+                "HARV": 4,
+                "HTNK": 5,
+                "NACNST": 1,
+                "NAPOWR": 2,
+                "NAREFN": 2,
+                "NAHAND": 1,
+                "NAWEAP": 1,
+                "NARADR": 1,
+                "DOG": 1,
+                "E2": 4
+              },
+              "miners": 4,
+              "buildings": 8,
+              "credits": 693,
+              "received": 13125,
+              "coreHealth": {
+                "count": 5,
+                "value": 4500,
+                "hitPoints": 1640,
+                "maxHitPoints": 2000,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 5,
+                "target": {
+                  "x": 52,
+                  "y": 73
+                },
+                "center": {
+                  "x": 57,
+                  "y": 73
+                }
+              }
+            },
+            {
+              "name": "@@AI1@@",
+              "counts": {
+                "HARV": 4,
+                "HTNK": 5,
+                "NACNST": 1,
+                "NAPOWR": 2,
+                "NAREFN": 2,
+                "NAHAND": 1,
+                "NAWEAP": 1,
+                "NARADR": 1,
+                "DOG": 1,
+                "E2": 4
+              },
+              "miners": 4,
+              "buildings": 8,
+              "credits": 1488,
+              "received": 12100,
+              "coreHealth": {
+                "count": 5,
+                "value": 4500,
+                "hitPoints": 1190,
+                "maxHitPoints": 2000,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 5,
+                "target": {
+                  "x": 51,
+                  "y": 72
+                },
+                "center": {
+                  "x": 49,
+                  "y": 71
+                }
+              }
+            }
+          ]
+        },
+        {
+          "tick": 14400,
+          "players": [
+            {
+              "name": "@@AI2@@",
+              "counts": {
+                "HARV": 5,
+                "NACNST": 1,
+                "NAPOWR": 3,
+                "NAREFN": 3,
+                "NAHAND": 1,
+                "NAWEAP": 2,
+                "NARADR": 1,
+                "NALASR": 1
+              },
+              "miners": 5,
+              "buildings": 12,
+              "credits": 816,
+              "received": 21125,
+              "coreHealth": null,
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 0,
+                "target": {
+                  "x": 73,
+                  "y": 80
+                },
+                "center": null
+              }
+            },
+            {
+              "name": "@@AI1@@",
+              "counts": {
+                "HARV": 4,
+                "HTNK": 4,
+                "NACNST": 1,
+                "NAPOWR": 2,
+                "NAREFN": 2,
+                "NAHAND": 1,
+                "NAWEAP": 1,
+                "NARADR": 1,
+                "NALASR": 1,
+                "E2": 4,
+                "DOG": 2,
+                "SENGINEER": 1
+              },
+              "miners": 4,
+              "buildings": 9,
+              "credits": 1669,
+              "received": 20100,
+              "coreHealth": {
+                "count": 4,
+                "value": 3600,
+                "hitPoints": 1228,
+                "maxHitPoints": 1600,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 4,
+                "target": {
+                  "x": 85,
+                  "y": 83
+                },
+                "center": {
+                  "x": 65,
+                  "y": 76
+                }
+              }
+            }
+          ]
+        },
+        {
+          "tick": 18000,
+          "players": [
+            {
+              "name": "@@AI2@@",
+              "counts": {
+                "HARV": 5,
+                "NACNST": 1,
+                "NAPOWR": 1,
+                "NAREFN": 1,
+                "NAHAND": 1,
+                "E2": 3
+              },
+              "miners": 5,
+              "buildings": 4,
+              "credits": 0,
+              "received": 24937,
+              "coreHealth": null,
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 0,
+                "target": {
+                  "x": 75,
+                  "y": 81
+                },
+                "center": null
+              }
+            },
+            {
+              "name": "@@AI1@@",
+              "counts": {
+                "HARV": 4,
+                "HTNK": 8,
+                "NACNST": 1,
+                "NAPOWR": 2,
+                "NAREFN": 2,
+                "NAHAND": 1,
+                "NAWEAP": 1,
+                "NARADR": 1,
+                "NALASR": 1,
+                "E2": 4,
+                "SENGINEER": 1,
+                "DOG": 1
+              },
+              "miners": 4,
+              "buildings": 9,
+              "credits": 0,
+              "received": 24200,
+              "coreHealth": {
+                "count": 8,
+                "value": 7200,
+                "hitPoints": 2079,
+                "maxHitPoints": 3200,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 8,
+                "target": {
+                  "x": 80,
+                  "y": 82
+                },
+                "center": {
+                  "x": 77,
+                  "y": 82
+                }
+              }
+            }
+          ]
+        },
+        {
+          "tick": 19872,
+          "players": [
+            {
+              "name": "@@AI2@@",
+              "counts": {},
+              "miners": 0,
+              "buildings": 0,
+              "credits": 120,
+              "received": 28030,
+              "coreHealth": null,
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 0,
+                "target": {
+                  "x": 78.8,
+                  "y": 84.6
+                },
+                "center": null
+              }
+            },
+            {
+              "name": "@@AI1@@",
+              "counts": {
+                "HARV": 4,
+                "HTNK": 11,
+                "NACNST": 1,
+                "NAPOWR": 2,
+                "NAREFN": 2,
+                "NAHAND": 1,
+                "NAWEAP": 1,
+                "NARADR": 1,
+                "NALASR": 1,
+                "E2": 4,
+                "SENGINEER": 1,
+                "DOG": 1
+              },
+              "miners": 4,
+              "buildings": 9,
+              "credits": 1395,
+              "received": 28200,
+              "coreHealth": {
+                "count": 11,
+                "value": 9900,
+                "hitPoints": 2790,
+                "maxHitPoints": 4400,
+                "deployed": 0
+              },
+              "field": {
+                "name": "fieldArmy",
+                "combatState": 1,
+                "units": 11,
+                "target": {
+                  "x": 77,
+                  "y": 91
+                },
+                "center": {
+                  "x": 76,
+                  "y": 87
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

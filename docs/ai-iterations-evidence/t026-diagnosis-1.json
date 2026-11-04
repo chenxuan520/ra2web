@@ -1,0 +1,42 @@
+{
+  "passed": true,
+  "equalSamples": 35,
+  "newWinSamples": 0,
+  "originalSha256": "d741a98185f71df735b16006f4b5abd554f82ce03b97cea89564069a5c983dd5",
+  "replaySha256": "232def0de6a6190111f7eb4f986747ab16d30705c12937ba138c2d65326ae482",
+  "diagnosticSha256": "7dd5ba0a9663b410b93321afab265f1904cb8b871d43ebb92b875532d40b91f6",
+  "summaries": [
+    {
+      "player": "@@AI1@@",
+      "country": "Russians",
+      "pathAttempts": 47,
+      "originalReached": 5,
+      "failedOriginal": 42,
+      "expandedBudgetProbes": 42,
+      "expandedBudgetReached": 0
+    },
+    {
+      "player": "@@AI2@@",
+      "country": "Russians",
+      "pathAttempts": 47,
+      "originalReached": 8,
+      "failedOriginal": 39,
+      "expandedBudgetProbes": 39,
+      "expandedBudgetReached": 0
+    }
+  ],
+  "matches": [
+    {
+      "swapped": false,
+      "result": "candidate-win",
+      "ticks": 13396,
+      "errors": 0
+    },
+    {
+      "swapped": true,
+      "result": "candidate-win",
+      "ticks": 15684,
+      "errors": 0
+    }
+  ]
+}

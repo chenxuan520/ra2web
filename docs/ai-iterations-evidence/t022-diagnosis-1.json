@@ -1,0 +1,2937 @@
+{
+  "passed": true,
+  "equalSamples": 45,
+  "newWinSamples": 0,
+  "originalSha256": "d47325e25977fe27b691e03009bbb004063b2c02ef535892d7b7b11afa141e6b",
+  "replaySha256": "3468d3aee4cadf015a2ec19956d9134090c151979d061b491d6e330531650346",
+  "diagnosticSha256": "3468d3aee4cadf015a2ec19956d9134090c151979d061b491d6e330531650346",
+  "summaries": [
+    {
+      "swapped": false,
+      "result": "baseline-win",
+      "ticks": 22047,
+      "errors": 0,
+      "windows": [
+        {
+          "tick": 5400,
+          "players": [
+            {
+              "credits": 426,
+              "received": 2500,
+              "harvesters": 2,
+              "tanks": 4,
+              "factories": 1,
+              "army": {
+                "name": "fieldArmy",
+                "unitIds": [
+                  886,
+                  890,
+                  894,
+                  899
+                ],
+                "combatState": 1,
+                "units": 4,
+                "target": {
+                  "x": 30.2,
+                  "y": 52.4
+                },
+                "center": {
+                  "x": 32,
+                  "y": 52
+                }
+              },
+              "tankDetails": [
+                {
+                  "id": 886,
+                  "name": "MTNK",
+                  "x": 31,
+                  "y": 52,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 890,
+                  "name": "MTNK",
+                  "x": 32,
+                  "y": 52,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": -20
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 894,
+                  "name": "MTNK",
+                  "x": 30,
+                  "y": 53,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 899,
+                  "name": "MTNK",
+                  "x": 34,
+                  "y": 52,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackMoveTask",
+                      "status": 1,
+                      "targetTile": {
+                        "x": 30,
+                        "y": 52
+                      },
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "credits": 2080,
+              "received": 4000,
+              "harvesters": 2,
+              "tanks": 4,
+              "factories": 1,
+              "army": {
+                "name": "fieldArmy",
+                "unitIds": [
+                  884,
+                  889,
+                  891,
+                  898
+                ],
+                "combatState": 1,
+                "units": 4,
+                "target": {
+                  "x": 78.8,
+                  "y": 84.6
+                },
+                "center": {
+                  "x": 79,
+                  "y": 84
+                }
+              },
+              "tankDetails": [
+                {
+                  "id": 884,
+                  "name": "MTNK",
+                  "x": 78,
+                  "y": 84,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": -7.0710678118654755,
+                    "y": 0,
+                    "z": -7.0710678118654755
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 889,
+                  "name": "MTNK",
+                  "x": 79,
+                  "y": 84,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 891,
+                  "name": "MTNK",
+                  "x": 80,
+                  "y": 83,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 898,
+                  "name": "MTNK",
+                  "x": 79,
+                  "y": 86,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackMoveTask",
+                      "status": 1,
+                      "targetTile": {
+                        "x": 77,
+                        "y": 85
+                      },
+                      "children": [
+                        "TurnTask"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tick": 6300,
+          "players": [
+            {
+              "credits": 696,
+              "received": 4500,
+              "harvesters": 2,
+              "tanks": 4,
+              "factories": 1,
+              "army": {
+                "name": "fieldArmy",
+                "unitIds": [
+                  886,
+                  890,
+                  894,
+                  899
+                ],
+                "combatState": 1,
+                "units": 4,
+                "target": {
+                  "x": 30.2,
+                  "y": 52.4
+                },
+                "center": {
+                  "x": 31,
+                  "y": 53
+                }
+              },
+              "tankDetails": [
+                {
+                  "id": 886,
+                  "name": "MTNK",
+                  "x": 31,
+                  "y": 52,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 890,
+                  "name": "MTNK",
+                  "x": 32,
+                  "y": 52,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": -20
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 894,
+                  "name": "MTNK",
+                  "x": 30,
+                  "y": 53,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 899,
+                  "name": "MTNK",
+                  "x": 29,
+                  "y": 53,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                }
+              ]
+            },
+            {
+              "credits": 932,
+              "received": 5000,
+              "harvesters": 3,
+              "tanks": 4,
+              "factories": 1,
+              "army": {
+                "name": "fieldArmy",
+                "unitIds": [
+                  884,
+                  889,
+                  891,
+                  898
+                ],
+                "combatState": 1,
+                "units": 4,
+                "target": {
+                  "x": 78.8,
+                  "y": 84.6
+                },
+                "center": {
+                  "x": 79,
+                  "y": 84
+                }
+              },
+              "tankDetails": [
+                {
+                  "id": 884,
+                  "name": "MTNK",
+                  "x": 78,
+                  "y": 84,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": -7.0710678118654755,
+                    "y": 0,
+                    "z": -7.0710678118654755
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 889,
+                  "name": "MTNK",
+                  "x": 79,
+                  "y": 84,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 891,
+                  "name": "MTNK",
+                  "x": 80,
+                  "y": 83,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 898,
+                  "name": "MTNK",
+                  "x": 77,
+                  "y": 85,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tick": 7200,
+          "players": [
+            {
+              "credits": 1375,
+              "received": 6500,
+              "harvesters": 3,
+              "tanks": 4,
+              "factories": 1,
+              "army": {
+                "name": "fieldArmy",
+                "unitIds": [
+                  886,
+                  890,
+                  894,
+                  899
+                ],
+                "combatState": 1,
+                "units": 4,
+                "target": {
+                  "x": 30.2,
+                  "y": 52.4
+                },
+                "center": {
+                  "x": 31,
+                  "y": 53
+                }
+              },
+              "tankDetails": [
+                {
+                  "id": 886,
+                  "name": "MTNK",
+                  "x": 31,
+                  "y": 52,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 890,
+                  "name": "MTNK",
+                  "x": 32,
+                  "y": 52,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": -20
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 894,
+                  "name": "MTNK",
+                  "x": 30,
+                  "y": 53,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 899,
+                  "name": "MTNK",
+                  "x": 29,
+                  "y": 53,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                }
+              ]
+            },
+            {
+              "credits": 581,
+              "received": 7500,
+              "harvesters": 3,
+              "tanks": 6,
+              "factories": 1,
+              "army": {
+                "name": "fieldArmy",
+                "unitIds": [
+                  884,
+                  889,
+                  891,
+                  898,
+                  904,
+                  905
+                ],
+                "combatState": 1,
+                "units": 6,
+                "target": {
+                  "x": 31,
+                  "y": 49
+                },
+                "center": {
+                  "x": 63,
+                  "y": 76
+                }
+              },
+              "tankDetails": [
+                {
+                  "id": 884,
+                  "name": "MTNK",
+                  "x": 71,
+                  "y": 85,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": -7.0710678118654755,
+                    "y": 0,
+                    "z": -7.0710678118654755
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackMoveTask",
+                      "status": 1,
+                      "targetTile": {
+                        "x": 31,
+                        "y": 49
+                      },
+                      "children": [
+                        "TurnTask"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 889,
+                  "name": "MTNK",
+                  "x": 63,
+                  "y": 73,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackMoveTask",
+                      "status": 1,
+                      "targetTile": {
+                        "x": 31,
+                        "y": 49
+                      },
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "id": 891,
+                  "name": "MTNK",
+                  "x": 60,
+                  "y": 73,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackMoveTask",
+                      "status": 1,
+                      "targetTile": {
+                        "x": 31,
+                        "y": 49
+                      },
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "id": 898,
+                  "name": "MTNK",
+                  "x": 56,
+                  "y": 75,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackMoveTask",
+                      "status": 1,
+                      "targetTile": {
+                        "x": 31,
+                        "y": 49
+                      },
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "id": 904,
+                  "name": "MTNK",
+                  "x": 57,
+                  "y": 76,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 10
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackMoveTask",
+                      "status": 1,
+                      "targetTile": {
+                        "x": 31,
+                        "y": 49
+                      },
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "id": 905,
+                  "name": "MTNK",
+                  "x": 67,
+                  "y": 73,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackMoveTask",
+                      "status": 1,
+                      "targetTile": {
+                        "x": 31,
+                        "y": 49
+                      },
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tick": 8100,
+          "players": [
+            {
+              "credits": 0,
+              "received": 8661,
+              "harvesters": 3,
+              "tanks": 1,
+              "factories": 1,
+              "army": {
+                "name": "fieldArmy",
+                "unitIds": [
+                  991
+                ],
+                "combatState": 1,
+                "units": 1,
+                "target": {
+                  "x": 39,
+                  "y": 60
+                },
+                "center": {
+                  "x": 34,
+                  "y": 57
+                }
+              },
+              "tankDetails": [
+                {
+                  "id": 991,
+                  "name": "MTNK",
+                  "x": 34,
+                  "y": 57,
+                  "hp": 300,
+                  "attackState": 2,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 20,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackTask",
+                      "status": 1,
+                      "targetId": 908,
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "credits": 712,
+              "received": 10000,
+              "harvesters": 3,
+              "tanks": 3,
+              "factories": 2,
+              "army": {
+                "name": "fieldArmy",
+                "unitIds": [
+                  908,
+                  965,
+                  1068
+                ],
+                "combatState": 1,
+                "units": 3,
+                "target": {
+                  "x": 38,
+                  "y": 60
+                },
+                "center": {
+                  "x": 59,
+                  "y": 71
+                }
+              },
+              "tankDetails": [
+                {
+                  "id": 908,
+                  "name": "MTNK",
+                  "x": 38,
+                  "y": 59,
+                  "hp": 160,
+                  "attackState": 2,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackTask",
+                      "status": 1,
+                      "targetId": 991,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "id": 965,
+                  "name": "MTNK",
+                  "x": 55,
+                  "y": 75,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackMoveTask",
+                      "status": 1,
+                      "targetTile": {
+                        "x": 38,
+                        "y": 60
+                      },
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "id": 1068,
+                  "name": "MTNK",
+                  "x": 85,
+                  "y": 78,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackMoveTask",
+                      "status": 1,
+                      "targetTile": {
+                        "x": 38,
+                        "y": 60
+                      },
+                      "children": [
+                        "TurnTask"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tick": 9000,
+          "players": [
+            {
+              "credits": 636,
+              "received": 11661,
+              "harvesters": 3,
+              "tanks": 3,
+              "factories": 1,
+              "army": {
+                "name": "fieldArmy",
+                "unitIds": [
+                  991,
+                  1100,
+                  1102
+                ],
+                "combatState": 1,
+                "units": 3,
+                "target": {
+                  "x": 30.2,
+                  "y": 52.4
+                },
+                "center": {
+                  "x": 31,
+                  "y": 52
+                }
+              },
+              "tankDetails": [
+                {
+                  "id": 991,
+                  "name": "MTNK",
+                  "x": 30,
+                  "y": 52,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 20,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 1100,
+                  "name": "MTNK",
+                  "x": 32,
+                  "y": 52,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 1102,
+                  "name": "MTNK",
+                  "x": 30,
+                  "y": 53,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                }
+              ]
+            },
+            {
+              "credits": 42,
+              "received": 11550,
+              "harvesters": 3,
+              "tanks": 4,
+              "factories": 2,
+              "army": {
+                "name": "fieldArmy",
+                "unitIds": [
+                  965,
+                  1068,
+                  1101,
+                  1104
+                ],
+                "combatState": 1,
+                "units": 4,
+                "target": {
+                  "x": 78.8,
+                  "y": 84.6
+                },
+                "center": {
+                  "x": 80,
+                  "y": 83
+                }
+              },
+              "tankDetails": [
+                {
+                  "id": 965,
+                  "name": "MTNK",
+                  "x": 77,
+                  "y": 85,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 1068,
+                  "name": "MTNK",
+                  "x": 78,
+                  "y": 84,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 1101,
+                  "name": "MTNK",
+                  "x": 79,
+                  "y": 83,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 1104,
+                  "name": "MTNK",
+                  "x": 85,
+                  "y": 78,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackMoveTask",
+                      "status": 3,
+                      "targetTile": {
+                        "x": 78,
+                        "y": 84
+                      },
+                      "children": [
+                        "TurnTask"
+                      ]
+                    },
+                    {
+                      "name": "AttackMoveTask",
+                      "status": 0,
+                      "targetTile": {
+                        "x": 78,
+                        "y": 84
+                      },
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tick": 9900,
+          "players": [
+            {
+              "credits": 97,
+              "received": 12261,
+              "harvesters": 3,
+              "tanks": 4,
+              "factories": 1,
+              "army": {
+                "name": "fieldArmy",
+                "unitIds": [
+                  991,
+                  1100,
+                  1102,
+                  1106
+                ],
+                "combatState": 1,
+                "units": 4,
+                "target": {
+                  "x": 30.2,
+                  "y": 52.4
+                },
+                "center": {
+                  "x": 30,
+                  "y": 53
+                }
+              },
+              "tankDetails": [
+                {
+                  "id": 991,
+                  "name": "MTNK",
+                  "x": 30,
+                  "y": 52,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 20,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 1100,
+                  "name": "MTNK",
+                  "x": 32,
+                  "y": 52,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 1102,
+                  "name": "MTNK",
+                  "x": 30,
+                  "y": 53,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 1106,
+                  "name": "MTNK",
+                  "x": 29,
+                  "y": 53,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                }
+              ]
+            },
+            {
+              "credits": 580,
+              "received": 13050,
+              "harvesters": 3,
+              "tanks": 4,
+              "factories": 2,
+              "army": {
+                "name": "fieldArmy",
+                "unitIds": [
+                  965,
+                  1068,
+                  1101,
+                  1104
+                ],
+                "combatState": 1,
+                "units": 4,
+                "target": {
+                  "x": 78.8,
+                  "y": 84.6
+                },
+                "center": {
+                  "x": 78,
+                  "y": 84
+                }
+              },
+              "tankDetails": [
+                {
+                  "id": 965,
+                  "name": "MTNK",
+                  "x": 77,
+                  "y": 85,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 1068,
+                  "name": "MTNK",
+                  "x": 78,
+                  "y": 84,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 1101,
+                  "name": "MTNK",
+                  "x": 79,
+                  "y": 83,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 1104,
+                  "name": "MTNK",
+                  "x": 78,
+                  "y": 85,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tick": 10800,
+          "players": [
+            {
+              "credits": 121,
+              "received": 13761,
+              "harvesters": 4,
+              "tanks": 1,
+              "factories": 1,
+              "army": {
+                "name": "fieldArmy",
+                "unitIds": [
+                  991
+                ],
+                "combatState": 1,
+                "units": 1,
+                "target": {
+                  "x": 43,
+                  "y": 65
+                },
+                "center": {
+                  "x": 30,
+                  "y": 52
+                }
+              },
+              "tankDetails": [
+                {
+                  "id": 991,
+                  "name": "MTNK",
+                  "x": 30,
+                  "y": 52,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 20,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackMoveTask",
+                      "status": 1,
+                      "targetTile": {
+                        "x": 43,
+                        "y": 65
+                      },
+                      "children": [
+                        "TurnTask"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "credits": 244,
+              "received": 14050,
+              "harvesters": 3,
+              "tanks": 5,
+              "factories": 2,
+              "army": {
+                "name": "fieldArmy",
+                "unitIds": [
+                  1068,
+                  1101,
+                  1104,
+                  1107,
+                  1108,
+                  1153,
+                  1154
+                ],
+                "combatState": 1,
+                "units": 7,
+                "target": {
+                  "x": 39,
+                  "y": 61
+                },
+                "center": {
+                  "x": 50,
+                  "y": 67
+                }
+              },
+              "tankDetails": [
+                {
+                  "id": 1068,
+                  "name": "MTNK",
+                  "x": 43,
+                  "y": 65,
+                  "hp": 105,
+                  "attackState": 1,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackTask",
+                      "status": 1,
+                      "targetId": 877,
+                      "children": [
+                        "MoveInWeaponRangeTask"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 1101,
+                  "name": "MTNK",
+                  "x": 41,
+                  "y": 63,
+                  "hp": 300,
+                  "attackState": 2,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackTask",
+                      "status": 1,
+                      "targetId": 877,
+                      "children": [
+                        "MoveInWeaponRangeTask"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 1104,
+                  "name": "MTNK",
+                  "x": 44,
+                  "y": 67,
+                  "hp": 300,
+                  "attackState": 1,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackTask",
+                      "status": 1,
+                      "targetId": 877,
+                      "children": [
+                        "MoveInWeaponRangeTask"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 1107,
+                  "name": "MTNK",
+                  "x": 45,
+                  "y": 67,
+                  "hp": 235,
+                  "attackState": 1,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackTask",
+                      "status": 1,
+                      "targetId": 877,
+                      "children": [
+                        "MoveInWeaponRangeTask"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 1153,
+                  "name": "MTNK",
+                  "x": 82,
+                  "y": 78,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "TaskGroup",
+                      "status": 1,
+                      "children": [
+                        "WaitMinutesTask",
+                        "CallbackTask"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "swapped": true,
+      "result": "candidate-win",
+      "ticks": 15762,
+      "errors": 0,
+      "windows": [
+        {
+          "tick": 5400,
+          "players": [
+            {
+              "credits": 537,
+              "received": 3000,
+              "harvesters": 2,
+              "tanks": 4,
+              "factories": 1,
+              "army": {
+                "name": "fieldArmy",
+                "unitIds": [
+                  895,
+                  899,
+                  904,
+                  908
+                ],
+                "combatState": 1,
+                "units": 4,
+                "target": {
+                  "x": 78.8,
+                  "y": 84.6
+                },
+                "center": {
+                  "x": 79,
+                  "y": 84
+                }
+              },
+              "tankDetails": [
+                {
+                  "id": 895,
+                  "name": "MTNK",
+                  "x": 78,
+                  "y": 84,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 899,
+                  "name": "MTNK",
+                  "x": 80,
+                  "y": 83,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 14.142135623730951,
+                    "y": 0,
+                    "z": -14.142135623730951
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 904,
+                  "name": "MTNK",
+                  "x": 78,
+                  "y": 85,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 908,
+                  "name": "MTNK",
+                  "x": 79,
+                  "y": 83,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                }
+              ]
+            },
+            {
+              "credits": 717,
+              "received": 2000,
+              "harvesters": 2,
+              "tanks": 4,
+              "factories": 1,
+              "army": {
+                "name": "fieldArmy",
+                "unitIds": [
+                  896,
+                  901,
+                  905,
+                  911
+                ],
+                "combatState": 1,
+                "units": 4,
+                "target": {
+                  "x": 30.010306778827513,
+                  "y": 52.634018431474075
+                },
+                "center": {
+                  "x": 32,
+                  "y": 52
+                }
+              },
+              "tankDetails": [
+                {
+                  "id": 896,
+                  "name": "MTNK",
+                  "x": 30,
+                  "y": 52,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 901,
+                  "name": "MTNK",
+                  "x": 32,
+                  "y": 52,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 905,
+                  "name": "MTNK",
+                  "x": 31,
+                  "y": 53,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 911,
+                  "name": "MTNK",
+                  "x": 34,
+                  "y": 52,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackMoveTask",
+                      "status": 1,
+                      "targetTile": {
+                        "x": 30,
+                        "y": 52
+                      },
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tick": 6300,
+          "players": [
+            {
+              "credits": 82,
+              "received": 5000,
+              "harvesters": 3,
+              "tanks": 4,
+              "factories": 1,
+              "army": {
+                "name": "fieldArmy",
+                "unitIds": [
+                  895,
+                  899,
+                  904,
+                  908
+                ],
+                "combatState": 1,
+                "units": 4,
+                "target": {
+                  "x": 78.8,
+                  "y": 84.6
+                },
+                "center": {
+                  "x": 79,
+                  "y": 84
+                }
+              },
+              "tankDetails": [
+                {
+                  "id": 895,
+                  "name": "MTNK",
+                  "x": 78,
+                  "y": 84,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 899,
+                  "name": "MTNK",
+                  "x": 80,
+                  "y": 83,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 14.142135623730951,
+                    "y": 0,
+                    "z": -14.142135623730951
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 904,
+                  "name": "MTNK",
+                  "x": 78,
+                  "y": 85,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 908,
+                  "name": "MTNK",
+                  "x": 79,
+                  "y": 83,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                }
+              ]
+            },
+            {
+              "credits": 343,
+              "received": 3000,
+              "harvesters": 3,
+              "tanks": 4,
+              "factories": 1,
+              "army": {
+                "name": "fieldArmy",
+                "unitIds": [
+                  896,
+                  901,
+                  905,
+                  911
+                ],
+                "combatState": 1,
+                "units": 4,
+                "target": {
+                  "x": 30.010306778827513,
+                  "y": 52.634018431474075
+                },
+                "center": {
+                  "x": 31,
+                  "y": 53
+                }
+              },
+              "tankDetails": [
+                {
+                  "id": 896,
+                  "name": "MTNK",
+                  "x": 30,
+                  "y": 52,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 901,
+                  "name": "MTNK",
+                  "x": 32,
+                  "y": 52,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 905,
+                  "name": "MTNK",
+                  "x": 31,
+                  "y": 53,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 911,
+                  "name": "MTNK",
+                  "x": 29,
+                  "y": 53,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tick": 7200,
+          "players": [
+            {
+              "credits": 603,
+              "received": 7000,
+              "harvesters": 4,
+              "tanks": 4,
+              "factories": 1,
+              "army": {
+                "name": "fieldArmy",
+                "unitIds": [
+                  895,
+                  899,
+                  904,
+                  908
+                ],
+                "combatState": 1,
+                "units": 4,
+                "target": {
+                  "x": 78.8,
+                  "y": 84.6
+                },
+                "center": {
+                  "x": 79,
+                  "y": 84
+                }
+              },
+              "tankDetails": [
+                {
+                  "id": 895,
+                  "name": "MTNK",
+                  "x": 78,
+                  "y": 84,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 899,
+                  "name": "MTNK",
+                  "x": 80,
+                  "y": 83,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 14.142135623730951,
+                    "y": 0,
+                    "z": -14.142135623730951
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 904,
+                  "name": "MTNK",
+                  "x": 78,
+                  "y": 85,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 908,
+                  "name": "MTNK",
+                  "x": 79,
+                  "y": 83,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                }
+              ]
+            },
+            {
+              "credits": 600,
+              "received": 4500,
+              "harvesters": 3,
+              "tanks": 6,
+              "factories": 1,
+              "army": {
+                "name": "fieldArmy",
+                "unitIds": [
+                  896,
+                  901,
+                  905,
+                  911,
+                  915
+                ],
+                "combatState": 1,
+                "units": 5,
+                "target": {
+                  "x": 30.2,
+                  "y": 52.4
+                },
+                "center": {
+                  "x": 30,
+                  "y": 52
+                }
+              },
+              "tankDetails": [
+                {
+                  "id": 896,
+                  "name": "MTNK",
+                  "x": 30,
+                  "y": 52,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 901,
+                  "name": "MTNK",
+                  "x": 32,
+                  "y": 52,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 905,
+                  "name": "MTNK",
+                  "x": 31,
+                  "y": 53,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 911,
+                  "name": "MTNK",
+                  "x": 29,
+                  "y": 53,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 915,
+                  "name": "MTNK",
+                  "x": 30,
+                  "y": 51,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": -14.14213562373095,
+                    "y": 0,
+                    "z": -14.14213562373095
+                  },
+                  "tasks": []
+                },
+                {
+                  "id": 917,
+                  "name": "MTNK",
+                  "x": 33,
+                  "y": 50,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "TaskGroup",
+                      "status": 0,
+                      "children": [
+                        "WaitMinutesTask",
+                        "CallbackTask"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tick": 8100,
+          "players": [
+            {
+              "credits": 598,
+              "received": 10218,
+              "harvesters": 4,
+              "tanks": 3,
+              "factories": 1,
+              "army": {
+                "name": "fieldArmy",
+                "unitIds": [
+                  899,
+                  918,
+                  919,
+                  923,
+                  993
+                ],
+                "combatState": 1,
+                "units": 5,
+                "target": {
+                  "x": 69,
+                  "y": 78
+                },
+                "center": {
+                  "x": 74,
+                  "y": 79
+                }
+              },
+              "tankDetails": [
+                {
+                  "id": 899,
+                  "name": "MTNK",
+                  "x": 71,
+                  "y": 79,
+                  "hp": 235,
+                  "attackState": 2,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 14.142135623730951,
+                    "y": 0,
+                    "z": -14.142135623730951
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackTask",
+                      "status": 1,
+                      "targetId": 917,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "id": 919,
+                  "name": "MTNK",
+                  "x": 72,
+                  "y": 79,
+                  "hp": 235,
+                  "attackState": 2,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackTask",
+                      "status": 1,
+                      "targetId": 917,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "id": 993,
+                  "name": "MTNK",
+                  "x": 82,
+                  "y": 78,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "TaskGroup",
+                      "status": 1,
+                      "children": [
+                        "WaitMinutesTask",
+                        "CallbackTask"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "credits": 650,
+              "received": 6000,
+              "harvesters": 3,
+              "tanks": 4,
+              "factories": 1,
+              "army": {
+                "name": "fieldArmy",
+                "unitIds": [
+                  901,
+                  917,
+                  920,
+                  992
+                ],
+                "combatState": 1,
+                "units": 4,
+                "target": {
+                  "x": 80,
+                  "y": 77
+                },
+                "center": {
+                  "x": 57,
+                  "y": 71
+                }
+              },
+              "tankDetails": [
+                {
+                  "id": 901,
+                  "name": "MTNK",
+                  "x": 68,
+                  "y": 79,
+                  "hp": 235,
+                  "attackState": 5,
+                  "isFiring": true,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackTask",
+                      "status": 1,
+                      "targetId": 899,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "id": 917,
+                  "name": "MTNK",
+                  "x": 69,
+                  "y": 78,
+                  "hp": 217,
+                  "attackState": 2,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackTask",
+                      "status": 1,
+                      "targetId": 899,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "id": 920,
+                  "name": "MTNK",
+                  "x": 58,
+                  "y": 77,
+                  "hp": 300,
+                  "attackState": 1,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackTask",
+                      "status": 3,
+                      "targetId": 876,
+                      "children": [
+                        "MoveInWeaponRangeTask"
+                      ]
+                    },
+                    {
+                      "name": "AttackTask",
+                      "status": 0,
+                      "targetId": 899,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "id": 992,
+                  "name": "MTNK",
+                  "x": 33,
+                  "y": 50,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "TaskGroup",
+                      "status": 1,
+                      "children": [
+                        "WaitMinutesTask",
+                        "CallbackTask"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tick": 9000,
+          "players": [
+            {
+              "credits": 255,
+              "received": 10718,
+              "harvesters": 4,
+              "tanks": 1,
+              "factories": 1,
+              "army": {
+                "name": "fieldArmy",
+                "unitIds": [
+                  918,
+                  919,
+                  923
+                ],
+                "combatState": 1,
+                "units": 3,
+                "target": {
+                  "x": 35,
+                  "y": 56
+                },
+                "center": {
+                  "x": 39,
+                  "y": 58
+                }
+              },
+              "tankDetails": [
+                {
+                  "id": 919,
+                  "name": "MTNK",
+                  "x": 41,
+                  "y": 63,
+                  "hp": 105,
+                  "attackState": 1,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackTask",
+                      "status": 1,
+                      "targetId": 992,
+                      "children": [
+                        "MoveInWeaponRangeTask"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "credits": 698,
+              "received": 7500,
+              "harvesters": 3,
+              "tanks": 3,
+              "factories": 1,
+              "army": {
+                "name": "fieldArmy",
+                "unitIds": [
+                  992,
+                  1060,
+                  1084
+                ],
+                "combatState": 1,
+                "units": 3,
+                "target": {
+                  "x": 38,
+                  "y": 55
+                },
+                "center": {
+                  "x": 35,
+                  "y": 56
+                }
+              },
+              "tankDetails": [
+                {
+                  "id": 992,
+                  "name": "MTNK",
+                  "x": 37,
+                  "y": 60,
+                  "hp": 291,
+                  "attackState": 1,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackTask",
+                      "status": 1,
+                      "targetId": 919,
+                      "children": [
+                        "MoveInWeaponRangeTask"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 1060,
+                  "name": "MTNK",
+                  "x": 35,
+                  "y": 58,
+                  "hp": 300,
+                  "attackState": 1,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackTask",
+                      "status": 1,
+                      "targetId": 919,
+                      "children": [
+                        "MoveInWeaponRangeTask"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 1084,
+                  "name": "MTNK",
+                  "x": 35,
+                  "y": 50,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "ExitFactoryTask",
+                      "status": 1,
+                      "targetTile": {
+                        "x": 36,
+                        "y": 50
+                      },
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tick": 9900,
+          "players": [
+            {
+              "credits": 427,
+              "received": 12718,
+              "harvesters": 4,
+              "tanks": 2,
+              "factories": 2,
+              "army": {
+                "name": "fieldArmy",
+                "unitIds": [
+                  918,
+                  923,
+                  1103,
+                  1123
+                ],
+                "combatState": 1,
+                "units": 4,
+                "target": {
+                  "x": 36,
+                  "y": 55
+                },
+                "center": {
+                  "x": 47,
+                  "y": 62
+                }
+              },
+              "tankDetails": [
+                {
+                  "id": 1103,
+                  "name": "MTNK",
+                  "x": 37,
+                  "y": 61,
+                  "hp": 300,
+                  "attackState": 2,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackTask",
+                      "status": 1,
+                      "targetId": 992,
+                      "children": [
+                        "MoveInWeaponRangeTask"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 1123,
+                  "name": "MTNK",
+                  "x": 78,
+                  "y": 76,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackMoveTask",
+                      "status": 1,
+                      "targetTile": {
+                        "x": 36,
+                        "y": 55
+                      },
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "credits": 890,
+              "received": 9500,
+              "harvesters": 3,
+              "tanks": 4,
+              "factories": 1,
+              "army": {
+                "name": "fieldArmy",
+                "unitIds": [
+                  992,
+                  1060,
+                  1084,
+                  1109
+                ],
+                "combatState": 1,
+                "units": 4,
+                "target": {
+                  "x": 36,
+                  "y": 51
+                },
+                "center": {
+                  "x": 36,
+                  "y": 57
+                }
+              },
+              "tankDetails": [
+                {
+                  "id": 992,
+                  "name": "MTNK",
+                  "x": 36,
+                  "y": 57,
+                  "hp": 190,
+                  "attackState": 2,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackTask",
+                      "status": 1,
+                      "targetId": 1103,
+                      "children": [
+                        "MoveInWeaponRangeTask"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 1060,
+                  "name": "MTNK",
+                  "x": 35,
+                  "y": 56,
+                  "hp": 282,
+                  "attackState": 1,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackTask",
+                      "status": 1,
+                      "targetId": 1103,
+                      "children": [
+                        "MoveInWeaponRangeTask"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 1084,
+                  "name": "MTNK",
+                  "x": 36,
+                  "y": 58,
+                  "hp": 291,
+                  "attackState": 2,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackTask",
+                      "status": 1,
+                      "targetId": 1103,
+                      "children": [
+                        "MoveInWeaponRangeTask"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 1109,
+                  "name": "MTNK",
+                  "x": 36,
+                  "y": 56,
+                  "hp": 156,
+                  "attackState": 1,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackTask",
+                      "status": 1,
+                      "targetId": 1103,
+                      "children": [
+                        "MoveInWeaponRangeTask"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tick": 10800,
+          "players": [
+            {
+              "credits": 183,
+              "received": 14218,
+              "harvesters": 4,
+              "tanks": 1,
+              "factories": 2,
+              "army": {
+                "name": "fieldArmy",
+                "unitIds": [
+                  918,
+                  923,
+                  1171,
+                  1173,
+                  1174,
+                  1178,
+                  1179,
+                  1181,
+                  1182,
+                  1189,
+                  1192
+                ],
+                "combatState": 1,
+                "units": 11,
+                "target": {
+                  "x": 42,
+                  "y": 65
+                },
+                "center": {
+                  "x": 66,
+                  "y": 75
+                }
+              },
+              "tankDetails": [
+                {
+                  "id": 1192,
+                  "name": "MTNK",
+                  "x": 69,
+                  "y": 75,
+                  "hp": 300,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": -18.909654478678277,
+                    "y": 0,
+                    "z": -6.513445132723748
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackMoveTask",
+                      "status": 1,
+                      "targetTile": {
+                        "x": 42,
+                        "y": 65
+                      },
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "credits": 432,
+              "received": 10500,
+              "harvesters": 3,
+              "tanks": 5,
+              "factories": 1,
+              "army": {
+                "name": "fieldArmy",
+                "unitIds": [
+                  1060,
+                  1084,
+                  1109,
+                  1136,
+                  1168
+                ],
+                "combatState": 1,
+                "units": 5,
+                "target": {
+                  "x": 38,
+                  "y": 58
+                },
+                "center": {
+                  "x": 41,
+                  "y": 64
+                }
+              },
+              "tankDetails": [
+                {
+                  "id": 1060,
+                  "name": "MTNK",
+                  "x": 41,
+                  "y": 63,
+                  "hp": 282,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackMoveTask",
+                      "status": 1,
+                      "targetTile": {
+                        "x": 38,
+                        "y": 58
+                      },
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "id": 1084,
+                  "name": "MTNK",
+                  "x": 42,
+                  "y": 65,
+                  "hp": 96,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackMoveTask",
+                      "status": 1,
+                      "targetTile": {
+                        "x": 38,
+                        "y": 58
+                      },
+                      "children": [
+                        "TurnTask"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 1109,
+                  "name": "MTNK",
+                  "x": 40,
+                  "y": 63,
+                  "hp": 102,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackMoveTask",
+                      "status": 1,
+                      "targetTile": {
+                        "x": 38,
+                        "y": 58
+                      },
+                      "children": [
+                        "TurnTask"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 1136,
+                  "name": "MTNK",
+                  "x": 42,
+                  "y": 63,
+                  "hp": 165,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackMoveTask",
+                      "status": 1,
+                      "targetTile": {
+                        "x": 38,
+                        "y": 58
+                      },
+                      "children": [
+                        "TurnTask"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 1168,
+                  "name": "MTNK",
+                  "x": 40,
+                  "y": 64,
+                  "hp": 192,
+                  "attackState": 0,
+                  "isFiring": false,
+                  "movementZone": 9,
+                  "velocity": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "tasks": [
+                    {
+                      "name": "AttackMoveTask",
+                      "status": 1,
+                      "targetTile": {
+                        "x": 38,
+                        "y": 58
+                      },
+                      "children": [
+                        "TurnTask"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "matches": [
+    {
+      "swapped": false,
+      "result": "baseline-win",
+      "ticks": 22047,
+      "errors": 0
+    },
+    {
+      "swapped": true,
+      "result": "candidate-win",
+      "ticks": 15762,
+      "errors": 0
+    }
+  ]
+}

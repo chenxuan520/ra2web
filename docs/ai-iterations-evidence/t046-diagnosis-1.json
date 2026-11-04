@@ -1,0 +1,675 @@
+{
+  "passed": true,
+  "equalSamples": 108,
+  "newWinSamples": 0,
+  "summaries": [
+    {
+      "country": "Americans",
+      "seed": 101,
+      "swapped": false,
+      "beforeRawSha256": "7f2d22944384eab058bd2ecced5488deaf0d18558ee7710b78a96c0af5980490",
+      "afterRawSha256": "5abcd9522d156c3abba46280828764a7084c30c13e1c970d2a26193f1f6f5338",
+      "rawTelemetryAndSamplesEqual": false,
+      "previous": {
+        "result": "baseline-win",
+        "ticks": 13988,
+        "boughtMinerProducedTicks": [
+          5854,
+          7426
+        ],
+        "selectedSamples": [
+          {
+            "tick": 6300,
+            "miners": 3,
+            "received": 4500,
+            "credits": 629,
+            "core": 4
+          },
+          {
+            "tick": 7200,
+            "miners": 3,
+            "received": 6500,
+            "credits": 1167,
+            "core": 4
+          },
+          {
+            "tick": 8100,
+            "miners": 4,
+            "received": 7500,
+            "credits": 0,
+            "core": 5
+          },
+          {
+            "tick": 9000,
+            "miners": 4,
+            "received": 10100,
+            "credits": 101,
+            "core": 2
+          }
+        ]
+      },
+      "current": {
+        "result": "candidate-win",
+        "ticks": 16347,
+        "boughtMinerProducedTicks": [
+          5854
+        ],
+        "selectedSamples": [
+          {
+            "tick": 6300,
+            "miners": 3,
+            "received": 4500,
+            "credits": 629,
+            "core": 4
+          },
+          {
+            "tick": 7200,
+            "miners": 3,
+            "received": 6500,
+            "credits": 734,
+            "core": 5
+          },
+          {
+            "tick": 8100,
+            "miners": 3,
+            "received": 7942,
+            "credits": 179,
+            "core": 5
+          },
+          {
+            "tick": 9000,
+            "miners": 3,
+            "received": 10442,
+            "credits": 169,
+            "core": 2
+          }
+        ]
+      }
+    },
+    {
+      "country": "Americans",
+      "seed": 101,
+      "swapped": true,
+      "beforeRawSha256": "7f2d22944384eab058bd2ecced5488deaf0d18558ee7710b78a96c0af5980490",
+      "afterRawSha256": "5abcd9522d156c3abba46280828764a7084c30c13e1c970d2a26193f1f6f5338",
+      "rawTelemetryAndSamplesEqual": false,
+      "previous": {
+        "result": "candidate-win",
+        "ticks": 12212,
+        "boughtMinerProducedTicks": [
+          5607,
+          6907
+        ],
+        "selectedSamples": [
+          {
+            "tick": 6300,
+            "miners": 3,
+            "received": 5000,
+            "credits": 284,
+            "core": 4
+          },
+          {
+            "tick": 7200,
+            "miners": 4,
+            "received": 8000,
+            "credits": 781,
+            "core": 4
+          },
+          {
+            "tick": 8100,
+            "miners": 4,
+            "received": 9300,
+            "credits": 0,
+            "core": 5
+          },
+          {
+            "tick": 9000,
+            "miners": 4,
+            "received": 11675,
+            "credits": 0,
+            "core": 4
+          }
+        ]
+      },
+      "current": {
+        "result": "candidate-win",
+        "ticks": 14868,
+        "boughtMinerProducedTicks": [
+          5607
+        ],
+        "selectedSamples": [
+          {
+            "tick": 6300,
+            "miners": 3,
+            "received": 5000,
+            "credits": 75,
+            "core": 4
+          },
+          {
+            "tick": 7200,
+            "miners": 3,
+            "received": 8000,
+            "credits": 507,
+            "core": 6
+          },
+          {
+            "tick": 8100,
+            "miners": 3,
+            "received": 10433,
+            "credits": 454,
+            "core": 3
+          },
+          {
+            "tick": 9000,
+            "miners": 3,
+            "received": 12704,
+            "credits": 955,
+            "core": 4
+          }
+        ]
+      }
+    },
+    {
+      "country": "Americans",
+      "seed": 202,
+      "swapped": false,
+      "beforeRawSha256": "70a0e88e0724653ff596de6af210ce60bea110a99621b1905d4e9b47d57d6b76",
+      "afterRawSha256": "e96393d09cb7b2c2c2a34935181ce53908772cd970af29c38a258c785794078a",
+      "rawTelemetryAndSamplesEqual": false,
+      "previous": {
+        "result": "baseline-win",
+        "ticks": 15882,
+        "boughtMinerProducedTicks": [
+          5854,
+          7426
+        ],
+        "selectedSamples": [
+          {
+            "tick": 6300,
+            "miners": 3,
+            "received": 4500,
+            "credits": 629,
+            "core": 4
+          },
+          {
+            "tick": 7200,
+            "miners": 3,
+            "received": 6500,
+            "credits": 1167,
+            "core": 4
+          },
+          {
+            "tick": 8100,
+            "miners": 4,
+            "received": 7500,
+            "credits": 0,
+            "core": 5
+          },
+          {
+            "tick": 9000,
+            "miners": 4,
+            "received": 10592,
+            "credits": 334,
+            "core": 2
+          }
+        ]
+      },
+      "current": {
+        "result": "baseline-win",
+        "ticks": 24507,
+        "boughtMinerProducedTicks": [
+          5854
+        ],
+        "selectedSamples": [
+          {
+            "tick": 6300,
+            "miners": 3,
+            "received": 4500,
+            "credits": 629,
+            "core": 4
+          },
+          {
+            "tick": 7200,
+            "miners": 3,
+            "received": 6500,
+            "credits": 734,
+            "core": 5
+          },
+          {
+            "tick": 8100,
+            "miners": 3,
+            "received": 7942,
+            "credits": 346,
+            "core": 5
+          },
+          {
+            "tick": 9000,
+            "miners": 3,
+            "received": 10442,
+            "credits": 405,
+            "core": 2
+          }
+        ]
+      }
+    },
+    {
+      "country": "Americans",
+      "seed": 202,
+      "swapped": true,
+      "beforeRawSha256": "70a0e88e0724653ff596de6af210ce60bea110a99621b1905d4e9b47d57d6b76",
+      "afterRawSha256": "e96393d09cb7b2c2c2a34935181ce53908772cd970af29c38a258c785794078a",
+      "rawTelemetryAndSamplesEqual": false,
+      "previous": {
+        "result": "candidate-win",
+        "ticks": 12404,
+        "boughtMinerProducedTicks": [
+          5607,
+          6907
+        ],
+        "selectedSamples": [
+          {
+            "tick": 6300,
+            "miners": 3,
+            "received": 5000,
+            "credits": 284,
+            "core": 4
+          },
+          {
+            "tick": 7200,
+            "miners": 4,
+            "received": 8000,
+            "credits": 781,
+            "core": 4
+          },
+          {
+            "tick": 8100,
+            "miners": 4,
+            "received": 9300,
+            "credits": 0,
+            "core": 5
+          },
+          {
+            "tick": 9000,
+            "miners": 4,
+            "received": 11675,
+            "credits": 0,
+            "core": 4
+          }
+        ]
+      },
+      "current": {
+        "result": "candidate-win",
+        "ticks": 13492,
+        "boughtMinerProducedTicks": [
+          5607
+        ],
+        "selectedSamples": [
+          {
+            "tick": 6300,
+            "miners": 3,
+            "received": 5000,
+            "credits": 75,
+            "core": 4
+          },
+          {
+            "tick": 7200,
+            "miners": 3,
+            "received": 8000,
+            "credits": 507,
+            "core": 6
+          },
+          {
+            "tick": 8100,
+            "miners": 3,
+            "received": 10356,
+            "credits": 454,
+            "core": 3
+          },
+          {
+            "tick": 9000,
+            "miners": 3,
+            "received": 12231,
+            "credits": 159,
+            "core": 5
+          }
+        ]
+      }
+    },
+    {
+      "country": "Russians",
+      "seed": 101,
+      "swapped": false,
+      "beforeRawSha256": "72944a225438f380df0fdc2488adc8758ab5df2d7f4648eed7b30141be4757b7",
+      "afterRawSha256": "db6ad59be6fa0fd61a01aeee626aa972e28320c1d84ceb1c20f815831d5639a1",
+      "rawTelemetryAndSamplesEqual": true,
+      "previous": {
+        "result": "candidate-win",
+        "ticks": 25017,
+        "boughtMinerProducedTicks": [
+          6709,
+          8117
+        ],
+        "selectedSamples": [
+          {
+            "tick": 6300,
+            "miners": 2,
+            "received": 2000,
+            "credits": 0,
+            "core": 3
+          },
+          {
+            "tick": 7200,
+            "miners": 3,
+            "received": 6000,
+            "credits": 2585,
+            "core": 3
+          },
+          {
+            "tick": 8100,
+            "miners": 3,
+            "received": 6000,
+            "credits": 1128,
+            "core": 4
+          },
+          {
+            "tick": 9000,
+            "miners": 4,
+            "received": 9200,
+            "credits": 2835,
+            "core": 5
+          }
+        ]
+      },
+      "current": {
+        "result": "candidate-win",
+        "ticks": 25017,
+        "boughtMinerProducedTicks": [
+          6709,
+          8117
+        ],
+        "selectedSamples": [
+          {
+            "tick": 6300,
+            "miners": 2,
+            "received": 2000,
+            "credits": 0,
+            "core": 3
+          },
+          {
+            "tick": 7200,
+            "miners": 3,
+            "received": 6000,
+            "credits": 2585,
+            "core": 3
+          },
+          {
+            "tick": 8100,
+            "miners": 3,
+            "received": 6000,
+            "credits": 1128,
+            "core": 4
+          },
+          {
+            "tick": 9000,
+            "miners": 4,
+            "received": 9200,
+            "credits": 2835,
+            "core": 5
+          }
+        ]
+      }
+    },
+    {
+      "country": "Russians",
+      "seed": 101,
+      "swapped": true,
+      "beforeRawSha256": "72944a225438f380df0fdc2488adc8758ab5df2d7f4648eed7b30141be4757b7",
+      "afterRawSha256": "db6ad59be6fa0fd61a01aeee626aa972e28320c1d84ceb1c20f815831d5639a1",
+      "rawTelemetryAndSamplesEqual": true,
+      "previous": {
+        "result": "candidate-win",
+        "ticks": 25437,
+        "boughtMinerProducedTicks": [
+          6155,
+          7793
+        ],
+        "selectedSamples": [
+          {
+            "tick": 6300,
+            "miners": 3,
+            "received": 4000,
+            "credits": 269,
+            "core": 4
+          },
+          {
+            "tick": 7200,
+            "miners": 3,
+            "received": 4000,
+            "credits": 0,
+            "core": 4
+          },
+          {
+            "tick": 8100,
+            "miners": 4,
+            "received": 8000,
+            "credits": 2592,
+            "core": 4
+          },
+          {
+            "tick": 9000,
+            "miners": 4,
+            "received": 10075,
+            "credits": 2974,
+            "core": 6
+          }
+        ]
+      },
+      "current": {
+        "result": "candidate-win",
+        "ticks": 25437,
+        "boughtMinerProducedTicks": [
+          6155,
+          7793
+        ],
+        "selectedSamples": [
+          {
+            "tick": 6300,
+            "miners": 3,
+            "received": 4000,
+            "credits": 269,
+            "core": 4
+          },
+          {
+            "tick": 7200,
+            "miners": 3,
+            "received": 4000,
+            "credits": 0,
+            "core": 4
+          },
+          {
+            "tick": 8100,
+            "miners": 4,
+            "received": 8000,
+            "credits": 2592,
+            "core": 4
+          },
+          {
+            "tick": 9000,
+            "miners": 4,
+            "received": 10075,
+            "credits": 2974,
+            "core": 6
+          }
+        ]
+      }
+    },
+    {
+      "country": "Russians",
+      "seed": 202,
+      "swapped": false,
+      "beforeRawSha256": "e54fd07e79fdce7e3cd49bcce9bd7afd6cb4d2100a3d952048a9c770a220b9be",
+      "afterRawSha256": "90d18f70a0e785b0eec8f39f9fd0bfaace70dfb46a210c2598b764b0f3bcff8e",
+      "rawTelemetryAndSamplesEqual": true,
+      "previous": {
+        "result": "candidate-win",
+        "ticks": 24132,
+        "boughtMinerProducedTicks": [
+          6709,
+          8117
+        ],
+        "selectedSamples": [
+          {
+            "tick": 6300,
+            "miners": 2,
+            "received": 2000,
+            "credits": 0,
+            "core": 3
+          },
+          {
+            "tick": 7200,
+            "miners": 3,
+            "received": 6000,
+            "credits": 2585,
+            "core": 3
+          },
+          {
+            "tick": 8100,
+            "miners": 3,
+            "received": 6000,
+            "credits": 1128,
+            "core": 4
+          },
+          {
+            "tick": 9000,
+            "miners": 4,
+            "received": 9200,
+            "credits": 2835,
+            "core": 5
+          }
+        ]
+      },
+      "current": {
+        "result": "candidate-win",
+        "ticks": 24132,
+        "boughtMinerProducedTicks": [
+          6709,
+          8117
+        ],
+        "selectedSamples": [
+          {
+            "tick": 6300,
+            "miners": 2,
+            "received": 2000,
+            "credits": 0,
+            "core": 3
+          },
+          {
+            "tick": 7200,
+            "miners": 3,
+            "received": 6000,
+            "credits": 2585,
+            "core": 3
+          },
+          {
+            "tick": 8100,
+            "miners": 3,
+            "received": 6000,
+            "credits": 1128,
+            "core": 4
+          },
+          {
+            "tick": 9000,
+            "miners": 4,
+            "received": 9200,
+            "credits": 2835,
+            "core": 5
+          }
+        ]
+      }
+    },
+    {
+      "country": "Russians",
+      "seed": 202,
+      "swapped": true,
+      "beforeRawSha256": "e54fd07e79fdce7e3cd49bcce9bd7afd6cb4d2100a3d952048a9c770a220b9be",
+      "afterRawSha256": "90d18f70a0e785b0eec8f39f9fd0bfaace70dfb46a210c2598b764b0f3bcff8e",
+      "rawTelemetryAndSamplesEqual": true,
+      "previous": {
+        "result": "candidate-win",
+        "ticks": 17187,
+        "boughtMinerProducedTicks": [
+          6155,
+          7793
+        ],
+        "selectedSamples": [
+          {
+            "tick": 6300,
+            "miners": 3,
+            "received": 4000,
+            "credits": 269,
+            "core": 4
+          },
+          {
+            "tick": 7200,
+            "miners": 3,
+            "received": 4000,
+            "credits": 0,
+            "core": 4
+          },
+          {
+            "tick": 8100,
+            "miners": 4,
+            "received": 8000,
+            "credits": 2592,
+            "core": 4
+          },
+          {
+            "tick": 9000,
+            "miners": 4,
+            "received": 10075,
+            "credits": 2974,
+            "core": 6
+          }
+        ]
+      },
+      "current": {
+        "result": "candidate-win",
+        "ticks": 17187,
+        "boughtMinerProducedTicks": [
+          6155,
+          7793
+        ],
+        "selectedSamples": [
+          {
+            "tick": 6300,
+            "miners": 3,
+            "received": 4000,
+            "credits": 269,
+            "core": 4
+          },
+          {
+            "tick": 7200,
+            "miners": 3,
+            "received": 4000,
+            "credits": 0,
+            "core": 4
+          },
+          {
+            "tick": 8100,
+            "miners": 4,
+            "received": 8000,
+            "credits": 2592,
+            "core": 4
+          },
+          {
+            "tick": 9000,
+            "miners": 4,
+            "received": 10075,
+            "credits": 2974,
+            "core": 6
+          }
+        ]
+      }
+    }
+  ]
+}

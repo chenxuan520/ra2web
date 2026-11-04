@@ -1,0 +1,1869 @@
+{
+  "passed": true,
+  "equalSamples": 0,
+  "newWinSamples": 0,
+  "summaries": [
+    {
+      "country": "Americans",
+      "seed": 101,
+      "swapped": false,
+      "outcome": "win",
+      "reason": "engine-victory-conditions",
+      "ticks": 10740,
+      "errors": 0,
+      "originalRawSha256": "cced98e1721a4f9b74e4d6009397c5626b3c1b175441bcc2b3c43cc21b3291fd",
+      "lostRulesValue": [
+        3700,
+        30900
+      ],
+      "players": [
+        {
+          "player": "@@AI1@@",
+          "role": "candidate",
+          "core": [
+            {
+              "type": "MTNK",
+              "purchasedProducedTicks": [
+                3983,
+                4417,
+                4851,
+                6289,
+                6994,
+                7429,
+                8609,
+                9989
+              ],
+              "recordedWeaponShots": {
+                "105mm": {
+                  "count": 136,
+                  "firstTick": 7555,
+                  "lastTick": 10692
+                }
+              },
+              "recordedShotCount": 136,
+              "nativeDamageBySource": {
+                "enemyHitPoints": 5648,
+                "friendlyHitPoints": 0,
+                "otherHitPoints": 0,
+                "enemyKills": 21,
+                "friendlyKills": 0,
+                "otherKills": 0,
+                "damagedTypes": {
+                  "MTNK": 2361,
+                  "ADOG": 64,
+                  "FV": 301,
+                  "E1": 195,
+                  "GAREFN": 868,
+                  "GACNST": 946,
+                  "GAWEAP": 520,
+                  "GAPILL": 119,
+                  "GAPOWR": 166,
+                  "ENGINEER": 21,
+                  "GAPILE": 87
+                },
+                "killedTypes": {
+                  "MTNK": 8,
+                  "FV": 1,
+                  "E1": 8,
+                  "ADOG": 2,
+                  "GAPOWR": 1,
+                  "ENGINEER": 1
+                }
+              },
+              "enemyDamageHitPoints": 5648,
+              "enemyKills": 21
+            },
+            {
+              "type": "HTNK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "MGTK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "APOC",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "SREF",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            }
+          ],
+          "recordedCoreShotCount": 136
+        },
+        {
+          "player": "@@AI2@@",
+          "role": "opponent",
+          "core": [
+            {
+              "type": "MTNK",
+              "purchasedProducedTicks": [
+                3873,
+                4307,
+                4741,
+                6041,
+                6629,
+                7063,
+                8494,
+                8929
+              ],
+              "recordedWeaponShots": {
+                "105mm": {
+                  "count": 18,
+                  "firstTick": 7556,
+                  "lastTick": 9207
+                }
+              },
+              "recordedShotCount": 18,
+              "nativeDamageBySource": {
+                "enemyHitPoints": 1025,
+                "friendlyHitPoints": 0,
+                "otherHitPoints": 0,
+                "enemyKills": 3,
+                "friendlyKills": 0,
+                "otherKills": 0,
+                "damagedTypes": {
+                  "MTNK": 1009,
+                  "ADOG": 16
+                },
+                "killedTypes": {
+                  "MTNK": 3
+                }
+              },
+              "enemyDamageHitPoints": 1025,
+              "enemyKills": 3
+            },
+            {
+              "type": "HTNK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "MGTK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "APOC",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "SREF",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            }
+          ],
+          "recordedCoreShotCount": 18
+        }
+      ]
+    },
+    {
+      "country": "Americans",
+      "seed": 101,
+      "swapped": true,
+      "outcome": "loss",
+      "reason": "engine-victory-conditions",
+      "ticks": 21507,
+      "errors": 0,
+      "originalRawSha256": "cced98e1721a4f9b74e4d6009397c5626b3c1b175441bcc2b3c43cc21b3291fd",
+      "lostRulesValue": [
+        49500,
+        21800
+      ],
+      "players": [
+        {
+          "player": "@@AI2@@",
+          "role": "candidate",
+          "core": [
+            {
+              "type": "MTNK",
+              "purchasedProducedTicks": [
+                3873,
+                4307,
+                4741,
+                6041,
+                6629,
+                7063,
+                8494,
+                8929,
+                10061,
+                11123,
+                12395,
+                12829,
+                13579,
+                14628,
+                15897,
+                18065
+              ],
+              "recordedWeaponShots": {
+                "105mm": {
+                  "count": 64,
+                  "firstTick": 7556,
+                  "lastTick": 19594
+                }
+              },
+              "recordedShotCount": 64,
+              "nativeDamageBySource": {
+                "enemyHitPoints": 3332,
+                "friendlyHitPoints": 0,
+                "otherHitPoints": 0,
+                "enemyKills": 17,
+                "friendlyKills": 0,
+                "otherKills": 0,
+                "damagedTypes": {
+                  "MTNK": 3236,
+                  "ADOG": 48,
+                  "E1": 48
+                },
+                "killedTypes": {
+                  "MTNK": 13,
+                  "E1": 4
+                }
+              },
+              "enemyDamageHitPoints": 3332,
+              "enemyKills": 17
+            },
+            {
+              "type": "HTNK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "MGTK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "APOC",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "SREF",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            }
+          ],
+          "recordedCoreShotCount": 64
+        },
+        {
+          "player": "@@AI1@@",
+          "role": "opponent",
+          "core": [
+            {
+              "type": "MTNK",
+              "purchasedProducedTicks": [
+                3983,
+                4417,
+                4851,
+                6289,
+                6994,
+                7429,
+                8609,
+                9989,
+                10423,
+                11296,
+                11807,
+                12241,
+                12675,
+                13157,
+                13591,
+                14427,
+                15523,
+                16986,
+                17935,
+                18702,
+                20165,
+                20969
+              ],
+              "recordedWeaponShots": {
+                "105mm": {
+                  "count": 183,
+                  "firstTick": 7555,
+                  "lastTick": 21497
+                }
+              },
+              "recordedShotCount": 183,
+              "nativeDamageBySource": {
+                "enemyHitPoints": 7960,
+                "friendlyHitPoints": 0,
+                "otherHitPoints": 4,
+                "enemyKills": 38,
+                "friendlyKills": 0,
+                "otherKills": 4,
+                "damagedTypes": {
+                  "MTNK": 3713,
+                  "ADOG": 149,
+                  "FV": 449,
+                  "E1": 237,
+                  "GAREFN": 894,
+                  "GAWEAP": 672,
+                  "AMRADR": 203,
+                  "CMIN": 1000,
+                  "TIB08": 2,
+                  "GAPOWR": 252,
+                  "TIB03": 1,
+                  "TIB07": 1,
+                  "GACNST": 304,
+                  "GAPILE": 87
+                },
+                "killedTypes": {
+                  "MTNK": 14,
+                  "E1": 20,
+                  "ADOG": 1,
+                  "FV": 2,
+                  "TIB08": 2,
+                  "TIB03": 1,
+                  "TIB07": 1,
+                  "CMIN": 1
+                }
+              },
+              "enemyDamageHitPoints": 7960,
+              "enemyKills": 38
+            },
+            {
+              "type": "HTNK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "MGTK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "APOC",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "SREF",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            }
+          ],
+          "recordedCoreShotCount": 183
+        }
+      ]
+    },
+    {
+      "country": "Americans",
+      "seed": 202,
+      "swapped": false,
+      "outcome": "win",
+      "reason": "engine-victory-conditions",
+      "ticks": 26697,
+      "errors": 0,
+      "originalRawSha256": "46d88367eaab3df7ab498f07868ea41f16dd065d9a0ce78e0bc7f875a2fcda65",
+      "lostRulesValue": [
+        29200,
+        54100
+      ],
+      "players": [
+        {
+          "player": "@@AI1@@",
+          "role": "candidate",
+          "core": [
+            {
+              "type": "MTNK",
+              "purchasedProducedTicks": [
+                3983,
+                4417,
+                4851,
+                6289,
+                6994,
+                7429,
+                8609,
+                9043,
+                10308,
+                10743,
+                11633,
+                12067,
+                12501,
+                12935,
+                13385,
+                13923,
+                14357,
+                15101,
+                15535,
+                16928,
+                17363,
+                17797,
+                18445,
+                19231,
+                20198,
+                20633,
+                21383,
+                22411,
+                23159,
+                24590,
+                25254
+              ],
+              "recordedWeaponShots": {
+                "105mm": {
+                  "count": 202,
+                  "firstTick": 7555,
+                  "lastTick": 26683
+                }
+              },
+              "recordedShotCount": 202,
+              "nativeDamageBySource": {
+                "enemyHitPoints": 8579,
+                "friendlyHitPoints": 0,
+                "otherHitPoints": 1,
+                "enemyKills": 23,
+                "friendlyKills": 0,
+                "otherKills": 1,
+                "damagedTypes": {
+                  "MTNK": 5228,
+                  "ADOG": 101,
+                  "FV": 474,
+                  "E1": 511,
+                  "TIB09": 1,
+                  "GAREFN": 1151,
+                  "GAWEAP": 252,
+                  "AMRADR": 87,
+                  "GAPILL": 174,
+                  "GAPOWR": 126,
+                  "GACNST": 76,
+                  "CMIN": 325,
+                  "ENGINEER": 16,
+                  "GAPILE": 58
+                },
+                "killedTypes": {
+                  "MTNK": 15,
+                  "ADOG": 1,
+                  "FV": 1,
+                  "E1": 5,
+                  "TIB09": 1,
+                  "GAREFN": 1
+                }
+              },
+              "enemyDamageHitPoints": 8579,
+              "enemyKills": 23
+            },
+            {
+              "type": "HTNK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "MGTK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "APOC",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "SREF",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            }
+          ],
+          "recordedCoreShotCount": 202
+        },
+        {
+          "player": "@@AI2@@",
+          "role": "opponent",
+          "core": [
+            {
+              "type": "MTNK",
+              "purchasedProducedTicks": [
+                3873,
+                4307,
+                4741,
+                6041,
+                6629,
+                7063,
+                8494,
+                8929,
+                11395,
+                12741,
+                13175,
+                13879,
+                14313,
+                14812,
+                15904,
+                16339,
+                17099,
+                17533,
+                18835,
+                19566,
+                20452,
+                21481,
+                23506,
+                24632
+              ],
+              "recordedWeaponShots": {
+                "105mm": {
+                  "count": 122,
+                  "firstTick": 7556,
+                  "lastTick": 24897
+                }
+              },
+              "recordedShotCount": 122,
+              "nativeDamageBySource": {
+                "enemyHitPoints": 6516,
+                "friendlyHitPoints": 0,
+                "otherHitPoints": 8,
+                "enemyKills": 17,
+                "friendlyKills": 0,
+                "otherKills": 8,
+                "damagedTypes": {
+                  "MTNK": 5058,
+                  "ADOG": 37,
+                  "FV": 184,
+                  "E1": 132,
+                  "TIB12": 1,
+                  "CMIN": 1105,
+                  "TIB07": 1,
+                  "TIB11": 1,
+                  "TIB05": 3,
+                  "TIB01": 1,
+                  "TIB08": 1
+                },
+                "killedTypes": {
+                  "MTNK": 13,
+                  "ADOG": 1,
+                  "FV": 1,
+                  "E1": 2,
+                  "TIB12": 1,
+                  "TIB07": 1,
+                  "TIB11": 1,
+                  "TIB05": 3,
+                  "TIB01": 1,
+                  "TIB08": 1
+                }
+              },
+              "enemyDamageHitPoints": 6516,
+              "enemyKills": 17
+            },
+            {
+              "type": "HTNK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "MGTK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "APOC",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "SREF",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            }
+          ],
+          "recordedCoreShotCount": 122
+        }
+      ]
+    },
+    {
+      "country": "Americans",
+      "seed": 202,
+      "swapped": true,
+      "outcome": "loss",
+      "reason": "engine-victory-conditions",
+      "ticks": 26427,
+      "errors": 0,
+      "originalRawSha256": "46d88367eaab3df7ab498f07868ea41f16dd065d9a0ce78e0bc7f875a2fcda65",
+      "lostRulesValue": [
+        53900,
+        25600
+      ],
+      "players": [
+        {
+          "player": "@@AI2@@",
+          "role": "candidate",
+          "core": [
+            {
+              "type": "MTNK",
+              "purchasedProducedTicks": [
+                3873,
+                4307,
+                4741,
+                6041,
+                6629,
+                7063,
+                8494,
+                8929,
+                11395,
+                12741,
+                13175,
+                13879,
+                14313,
+                14812,
+                15904,
+                16339,
+                17099,
+                17533,
+                18835,
+                19566,
+                20452,
+                21481,
+                23506,
+                25001
+              ],
+              "recordedWeaponShots": {
+                "105mm": {
+                  "count": 131,
+                  "firstTick": 7556,
+                  "lastTick": 25393
+                }
+              },
+              "recordedShotCount": 131,
+              "nativeDamageBySource": {
+                "enemyHitPoints": 6745,
+                "friendlyHitPoints": 126,
+                "otherHitPoints": 9,
+                "enemyKills": 18,
+                "friendlyKills": 0,
+                "otherKills": 9,
+                "damagedTypes": {
+                  "MTNK": 5201,
+                  "ADOG": 37,
+                  "FV": 136,
+                  "E1": 201,
+                  "TIB12": 1,
+                  "CMIN": 1170,
+                  "TIB07": 1,
+                  "TIB11": 1,
+                  "TIB05": 3,
+                  "TIB01": 1,
+                  "TIB08": 1,
+                  "TIB09": 1,
+                  "GAREFN": 126
+                },
+                "killedTypes": {
+                  "MTNK": 13,
+                  "ADOG": 1,
+                  "FV": 1,
+                  "E1": 3,
+                  "TIB12": 1,
+                  "TIB07": 1,
+                  "TIB11": 1,
+                  "TIB05": 3,
+                  "TIB01": 1,
+                  "TIB08": 1,
+                  "TIB09": 1
+                }
+              },
+              "enemyDamageHitPoints": 6745,
+              "enemyKills": 18
+            },
+            {
+              "type": "HTNK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "MGTK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "APOC",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "SREF",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            }
+          ],
+          "recordedCoreShotCount": 131
+        },
+        {
+          "player": "@@AI1@@",
+          "role": "opponent",
+          "core": [
+            {
+              "type": "MTNK",
+              "purchasedProducedTicks": [
+                3983,
+                4417,
+                4851,
+                6289,
+                6994,
+                7429,
+                8609,
+                9043,
+                10308,
+                10743,
+                11633,
+                12067,
+                12501,
+                12935,
+                13385,
+                13923,
+                14357,
+                15101,
+                15535,
+                16928,
+                17363,
+                17797,
+                18445,
+                19231,
+                20198,
+                20633,
+                21383,
+                22411,
+                23159,
+                24828,
+                26128
+              ],
+              "recordedWeaponShots": {
+                "105mm": {
+                  "count": 176,
+                  "firstTick": 7555,
+                  "lastTick": 26416
+                }
+              },
+              "recordedShotCount": 176,
+              "nativeDamageBySource": {
+                "enemyHitPoints": 7753,
+                "friendlyHitPoints": 0,
+                "otherHitPoints": 1,
+                "enemyKills": 31,
+                "friendlyKills": 0,
+                "otherKills": 1,
+                "damagedTypes": {
+                  "MTNK": 5367,
+                  "ADOG": 101,
+                  "FV": 508,
+                  "E1": 420,
+                  "TIB09": 1,
+                  "GAREFN": 378,
+                  "GACNST": 540,
+                  "AMRADR": 87,
+                  "GAWEAP": 21,
+                  "GAPOWR": 126,
+                  "CMIN": 176,
+                  "GAPILE": 29
+                },
+                "killedTypes": {
+                  "MTNK": 17,
+                  "ADOG": 1,
+                  "FV": 2,
+                  "E1": 9,
+                  "TIB09": 1,
+                  "GAWEAP": 1,
+                  "CMIN": 1
+                }
+              },
+              "enemyDamageHitPoints": 7753,
+              "enemyKills": 31
+            },
+            {
+              "type": "HTNK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "MGTK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "APOC",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "SREF",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            }
+          ],
+          "recordedCoreShotCount": 176
+        }
+      ]
+    },
+    {
+      "country": "Russians",
+      "seed": 101,
+      "swapped": false,
+      "outcome": "win",
+      "reason": "engine-victory-conditions",
+      "ticks": 18882,
+      "errors": 0,
+      "originalRawSha256": "22740417f3f0b5e77dea08b9b129cd33d211aca3a440600abc0d7ac3ea1a944c",
+      "lostRulesValue": [
+        12900,
+        44000
+      ],
+      "players": [
+        {
+          "player": "@@AI1@@",
+          "role": "candidate",
+          "core": [
+            {
+              "type": "MTNK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "HTNK",
+              "purchasedProducedTicks": [
+                3663,
+                4205,
+                4747,
+                7251,
+                8659,
+                9201,
+                9743,
+                10285,
+                10827,
+                11369,
+                11911,
+                12453,
+                12995,
+                13537,
+                14079,
+                14621,
+                15163,
+                16211
+              ],
+              "recordedWeaponShots": {
+                "120mm": {
+                  "count": 395,
+                  "firstTick": 10335,
+                  "lastTick": 18867
+                },
+                "120mmE": {
+                  "count": 36,
+                  "firstTick": 16111,
+                  "lastTick": 18867
+                }
+              },
+              "recordedShotCount": 431,
+              "nativeDamageBySource": {
+                "enemyHitPoints": 23426,
+                "friendlyHitPoints": 0,
+                "otherHitPoints": 0,
+                "enemyKills": 66,
+                "friendlyKills": 0,
+                "otherKills": 0,
+                "damagedTypes": {
+                  "HTNK": 7104,
+                  "DOG": 66,
+                  "E2": 2390,
+                  "NAPOWR": 3127,
+                  "NAREFN": 4306,
+                  "NAWEAP": 2233,
+                  "HARV": 1522,
+                  "NACNST": 1086,
+                  "NALASR": 495,
+                  "NARADR": 302,
+                  "NAHAND": 720,
+                  "ENGINEER": 75
+                },
+                "killedTypes": {
+                  "HTNK": 17,
+                  "E2": 36,
+                  "NAPOWR": 3,
+                  "NAREFN": 3,
+                  "NAWEAP": 2,
+                  "NALASR": 1,
+                  "NACNST": 1,
+                  "ENGINEER": 1,
+                  "HARV": 1,
+                  "NAHAND": 1
+                }
+              },
+              "enemyDamageHitPoints": 23426,
+              "enemyKills": 66
+            },
+            {
+              "type": "MGTK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "APOC",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "SREF",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            }
+          ],
+          "recordedCoreShotCount": 431
+        },
+        {
+          "player": "@@AI2@@",
+          "role": "opponent",
+          "core": [
+            {
+              "type": "MTNK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "HTNK",
+              "purchasedProducedTicks": [
+                3663,
+                4205,
+                4747,
+                5289,
+                8335,
+                8877,
+                9419,
+                9961,
+                10503,
+                11091,
+                11633,
+                13314,
+                13857,
+                14437,
+                15296,
+                15781,
+                16323,
+                17406
+              ],
+              "recordedWeaponShots": {
+                "120mm": {
+                  "count": 84,
+                  "firstTick": 10331,
+                  "lastTick": 17587
+                }
+              },
+              "recordedShotCount": 84,
+              "nativeDamageBySource": {
+                "enemyHitPoints": 5482,
+                "friendlyHitPoints": 0,
+                "otherHitPoints": 0,
+                "enemyKills": 13,
+                "friendlyKills": 0,
+                "otherKills": 0,
+                "damagedTypes": {
+                  "HTNK": 5185,
+                  "DOG": 209,
+                  "E2": 88
+                },
+                "killedTypes": {
+                  "HTNK": 13
+                }
+              },
+              "enemyDamageHitPoints": 5482,
+              "enemyKills": 13
+            },
+            {
+              "type": "MGTK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "APOC",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "SREF",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            }
+          ],
+          "recordedCoreShotCount": 84
+        }
+      ]
+    },
+    {
+      "country": "Russians",
+      "seed": 101,
+      "swapped": true,
+      "outcome": "loss",
+      "reason": "engine-victory-conditions",
+      "ticks": 18117,
+      "errors": 0,
+      "originalRawSha256": "22740417f3f0b5e77dea08b9b129cd33d211aca3a440600abc0d7ac3ea1a944c",
+      "lostRulesValue": [
+        43900,
+        11000
+      ],
+      "players": [
+        {
+          "player": "@@AI2@@",
+          "role": "candidate",
+          "core": [
+            {
+              "type": "MTNK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "HTNK",
+              "purchasedProducedTicks": [
+                3663,
+                4205,
+                4747,
+                5289,
+                8335,
+                8877,
+                9419,
+                9961,
+                10503,
+                11091,
+                11633,
+                12856,
+                13399,
+                13941,
+                14483,
+                15646,
+                16168,
+                16711
+              ],
+              "recordedWeaponShots": {
+                "120mm": {
+                  "count": 89,
+                  "firstTick": 10331,
+                  "lastTick": 16950
+                }
+              },
+              "recordedShotCount": 89,
+              "nativeDamageBySource": {
+                "enemyHitPoints": 5641,
+                "friendlyHitPoints": 0,
+                "otherHitPoints": 1,
+                "enemyKills": 12,
+                "friendlyKills": 0,
+                "otherKills": 1,
+                "damagedTypes": {
+                  "HTNK": 5201,
+                  "DOG": 209,
+                  "TIB10": 1,
+                  "E2": 231
+                },
+                "killedTypes": {
+                  "HTNK": 11,
+                  "TIB10": 1,
+                  "E2": 1
+                }
+              },
+              "enemyDamageHitPoints": 5641,
+              "enemyKills": 12
+            },
+            {
+              "type": "MGTK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "APOC",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "SREF",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            }
+          ],
+          "recordedCoreShotCount": 89
+        },
+        {
+          "player": "@@AI1@@",
+          "role": "opponent",
+          "core": [
+            {
+              "type": "MTNK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "HTNK",
+              "purchasedProducedTicks": [
+                3663,
+                4205,
+                4747,
+                7251,
+                8659,
+                9201,
+                9743,
+                10285,
+                10827,
+                11369,
+                11911,
+                12453,
+                12995,
+                13537,
+                14079,
+                14621,
+                15163,
+                15705,
+                16247,
+                16789
+              ],
+              "recordedWeaponShots": {
+                "120mm": {
+                  "count": 360,
+                  "firstTick": 10335,
+                  "lastTick": 18108
+                },
+                "120mmE": {
+                  "count": 64,
+                  "firstTick": 16748,
+                  "lastTick": 18110
+                }
+              },
+              "recordedShotCount": 424,
+              "nativeDamageBySource": {
+                "enemyHitPoints": 21466,
+                "friendlyHitPoints": 62,
+                "otherHitPoints": 0,
+                "enemyKills": 64,
+                "friendlyKills": 0,
+                "otherKills": 0,
+                "damagedTypes": {
+                  "HTNK": 7194,
+                  "DOG": 121,
+                  "E2": 3118,
+                  "NAPOWR": 2681,
+                  "NAREFN": 3959,
+                  "NAWEAP": 2279,
+                  "NACNST": 1085,
+                  "NALASR": 565,
+                  "NAHAND": 526
+                },
+                "killedTypes": {
+                  "HTNK": 18,
+                  "E2": 34,
+                  "NAPOWR": 3,
+                  "NAREFN": 3,
+                  "NAWEAP": 2,
+                  "NALASR": 1,
+                  "NACNST": 1,
+                  "ENGINEER": 1,
+                  "NAHAND": 1
+                }
+              },
+              "enemyDamageHitPoints": 21466,
+              "enemyKills": 64
+            },
+            {
+              "type": "MGTK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "APOC",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "SREF",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            }
+          ],
+          "recordedCoreShotCount": 424
+        }
+      ]
+    },
+    {
+      "country": "Russians",
+      "seed": 202,
+      "swapped": false,
+      "outcome": "loss",
+      "reason": "engine-victory-conditions",
+      "ticks": 23787,
+      "errors": 0,
+      "originalRawSha256": "9959ae2b7085d5e92d7243051413448519c6cb6011da8db4d1bae8aed7ff3860",
+      "lostRulesValue": [
+        43000,
+        18300
+      ],
+      "players": [
+        {
+          "player": "@@AI1@@",
+          "role": "candidate",
+          "core": [
+            {
+              "type": "MTNK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "HTNK",
+              "purchasedProducedTicks": [
+                3663,
+                4205,
+                4747,
+                7251,
+                8659,
+                9201,
+                9743,
+                10285,
+                10827,
+                11369,
+                11911,
+                12453,
+                12995,
+                13537,
+                14079,
+                14621,
+                15163,
+                15705,
+                16247,
+                16789,
+                18964
+              ],
+              "recordedWeaponShots": {
+                "120mm": {
+                  "count": 96,
+                  "firstTick": 10335,
+                  "lastTick": 19771
+                }
+              },
+              "recordedShotCount": 96,
+              "nativeDamageBySource": {
+                "enemyHitPoints": 7008,
+                "friendlyHitPoints": 0,
+                "otherHitPoints": 0,
+                "enemyKills": 20,
+                "friendlyKills": 0,
+                "otherKills": 0,
+                "damagedTypes": {
+                  "HTNK": 6851,
+                  "DOG": 157
+                },
+                "killedTypes": {
+                  "HTNK": 19,
+                  "DOG": 1
+                }
+              },
+              "enemyDamageHitPoints": 7008,
+              "enemyKills": 20
+            },
+            {
+              "type": "MGTK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "APOC",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "SREF",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            }
+          ],
+          "recordedCoreShotCount": 96
+        },
+        {
+          "player": "@@AI2@@",
+          "role": "opponent",
+          "core": [
+            {
+              "type": "MTNK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "HTNK",
+              "purchasedProducedTicks": [
+                3663,
+                4205,
+                4747,
+                5289,
+                8335,
+                8877,
+                9419,
+                9961,
+                10503,
+                11091,
+                11633,
+                12913,
+                13741,
+                14199,
+                14710,
+                15575,
+                16009,
+                16443,
+                18098,
+                18533,
+                18967,
+                19556,
+                20951,
+                21994,
+                22509,
+                23147
+              ],
+              "recordedWeaponShots": {
+                "120mm": {
+                  "count": 412,
+                  "firstTick": 10331,
+                  "lastTick": 23766
+                },
+                "120mmE": {
+                  "count": 40,
+                  "firstTick": 22600,
+                  "lastTick": 23781
+                }
+              },
+              "recordedShotCount": 452,
+              "nativeDamageBySource": {
+                "enemyHitPoints": 23382,
+                "friendlyHitPoints": 75,
+                "otherHitPoints": 202,
+                "enemyKills": 84,
+                "friendlyKills": 0,
+                "otherKills": 22,
+                "damagedTypes": {
+                  "HTNK": 8400,
+                  "DOG": 573,
+                  "E2": 3686,
+                  "TREE07": 116,
+                  "NAWEAP": 1290,
+                  "NALASR": 480,
+                  "TIB01": 3,
+                  "TIB08": 3,
+                  "TIB06": 2,
+                  "TIB05": 5,
+                  "HARV": 4648,
+                  "TIB03": 1,
+                  "TIB10": 2,
+                  "TIB02": 1,
+                  "TIB09": 1,
+                  "TIB07": 2,
+                  "TIB12": 1,
+                  "TIB11": 1,
+                  "NAREFN": 1097,
+                  "NACNST": 1226,
+                  "TREE10": 64,
+                  "ENGINEER": 75,
+                  "NAHAND": 540,
+                  "NAPOWR": 1442
+                },
+                "killedTypes": {
+                  "HTNK": 21,
+                  "E2": 47,
+                  "DOG": 5,
+                  "TIB01": 3,
+                  "TIB08": 3,
+                  "TIB06": 2,
+                  "TIB05": 5,
+                  "TIB03": 1,
+                  "TIB10": 2,
+                  "TIB02": 1,
+                  "TIB09": 1,
+                  "HARV": 4,
+                  "TIB07": 2,
+                  "TIB12": 1,
+                  "TIB11": 1,
+                  "NALASR": 1,
+                  "NAWEAP": 1,
+                  "NAREFN": 1,
+                  "NACNST": 1,
+                  "ENGINEER": 1,
+                  "NAPOWR": 1,
+                  "NAHAND": 1
+                }
+              },
+              "enemyDamageHitPoints": 23382,
+              "enemyKills": 84
+            },
+            {
+              "type": "MGTK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "APOC",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "SREF",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            }
+          ],
+          "recordedCoreShotCount": 452
+        }
+      ]
+    },
+    {
+      "country": "Russians",
+      "seed": 202,
+      "swapped": true,
+      "outcome": "win",
+      "reason": "engine-victory-conditions",
+      "ticks": 22587,
+      "errors": 0,
+      "originalRawSha256": "9959ae2b7085d5e92d7243051413448519c6cb6011da8db4d1bae8aed7ff3860",
+      "lostRulesValue": [
+        14300,
+        44200
+      ],
+      "players": [
+        {
+          "player": "@@AI2@@",
+          "role": "candidate",
+          "core": [
+            {
+              "type": "MTNK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "HTNK",
+              "purchasedProducedTicks": [
+                3663,
+                4205,
+                4747,
+                5289,
+                8335,
+                8877,
+                9419,
+                9961,
+                10503,
+                11091,
+                11633,
+                12913,
+                13741,
+                14199,
+                14633,
+                15819,
+                17861,
+                18295,
+                18729,
+                19163,
+                19597,
+                20839,
+                21273,
+                21735
+              ],
+              "recordedWeaponShots": {
+                "120mm": {
+                  "count": 604,
+                  "firstTick": 10331,
+                  "lastTick": 22569
+                }
+              },
+              "recordedShotCount": 604,
+              "nativeDamageBySource": {
+                "enemyHitPoints": 27353,
+                "friendlyHitPoints": 158,
+                "otherHitPoints": 180,
+                "enemyKills": 96,
+                "friendlyKills": 0,
+                "otherKills": 6,
+                "damagedTypes": {
+                  "HTNK": 7358,
+                  "DOG": 276,
+                  "E2": 4553,
+                  "SROCK01": 1,
+                  "TREE10": 174,
+                  "NAWEAP": 2613,
+                  "NALASR": 1260,
+                  "NACNST": 1346,
+                  "ENGINEER": 75,
+                  "HARV": 4422,
+                  "TIB04": 1,
+                  "TIB08": 1,
+                  "NAPOWR": 2696,
+                  "TIB01": 1,
+                  "TIB05": 1,
+                  "TIB09": 1,
+                  "NAREFN": 2284,
+                  "NAHAND": 628
+                },
+                "killedTypes": {
+                  "HTNK": 18,
+                  "E2": 61,
+                  "SROCK01": 1,
+                  "DOG": 3,
+                  "NAWEAP": 2,
+                  "NALASR": 2,
+                  "NACNST": 1,
+                  "ENGINEER": 1,
+                  "TIB04": 1,
+                  "TIB08": 1,
+                  "TIB01": 1,
+                  "TIB05": 1,
+                  "TIB09": 1,
+                  "HARV": 4,
+                  "NAREFN": 1,
+                  "NAPOWR": 2,
+                  "NAHAND": 1
+                }
+              },
+              "enemyDamageHitPoints": 27353,
+              "enemyKills": 96
+            },
+            {
+              "type": "MGTK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "APOC",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "SREF",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            }
+          ],
+          "recordedCoreShotCount": 604
+        },
+        {
+          "player": "@@AI1@@",
+          "role": "opponent",
+          "core": [
+            {
+              "type": "MTNK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "HTNK",
+              "purchasedProducedTicks": [
+                3663,
+                4205,
+                4747,
+                7251,
+                8659,
+                9201,
+                9743,
+                10285,
+                10827,
+                11369,
+                11911,
+                12453,
+                12995,
+                15303,
+                15845,
+                16387,
+                16929,
+                19778
+              ],
+              "recordedWeaponShots": {
+                "120mm": {
+                  "count": 69,
+                  "firstTick": 10335,
+                  "lastTick": 20018
+                }
+              },
+              "recordedShotCount": 69,
+              "nativeDamageBySource": {
+                "enemyHitPoints": 4930,
+                "friendlyHitPoints": 0,
+                "otherHitPoints": 1,
+                "enemyKills": 13,
+                "friendlyKills": 0,
+                "otherKills": 1,
+                "damagedTypes": {
+                  "HTNK": 4798,
+                  "DOG": 132,
+                  "TIB05": 1
+                },
+                "killedTypes": {
+                  "HTNK": 13,
+                  "TIB05": 1
+                }
+              },
+              "enemyDamageHitPoints": 4930,
+              "enemyKills": 13
+            },
+            {
+              "type": "MGTK",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "APOC",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            },
+            {
+              "type": "SREF",
+              "purchasedProducedTicks": [],
+              "recordedWeaponShots": {},
+              "recordedShotCount": 0,
+              "nativeDamageBySource": null,
+              "enemyDamageHitPoints": null,
+              "enemyKills": null
+            }
+          ],
+          "recordedCoreShotCount": 69
+        }
+      ]
+    }
+  ]
+}

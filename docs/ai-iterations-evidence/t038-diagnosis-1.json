@@ -1,0 +1,139 @@
+{
+  "passed": true,
+  "equalSamples": 71,
+  "newWinSamples": 0,
+  "replaySha256": "bd37cec75aaa48b8ee3db27f29c69d54db94cbb9961196124a3e56d3935e41de",
+  "diagnosticSha256": "374983d2cfdc9e0aa48e180d87e8758c0c4cd43ac55a4bada0eccdd762c5ca36",
+  "summaries": [
+    {
+      "seed": 101,
+      "swapped": false,
+      "player": "@@AI1@@",
+      "country": "Americans",
+      "loadedGatherOrders": 1,
+      "mixedCargoAfterLoadedOrder": 1,
+      "confirmedNativeMixedUnloads": 1,
+      "confirmedCreditedValue": 950,
+      "loadedOrderChains": [
+        {
+          "tick": 6780,
+          "id": 904,
+          "name": "CMIN",
+          "ore": 2,
+          "gems": 0,
+          "storage": 20,
+          "target": {
+            "x": 37,
+            "y": 29
+          },
+          "firstMixedCargo": {
+            "tick": 7236,
+            "ore": 2,
+            "gems": 1
+          },
+          "nativeUnloadTick": 8111,
+          "nativeUnload": {
+            "tick": 8111,
+            "id": 904,
+            "ore": 2,
+            "gems": 18,
+            "credited": 950
+          }
+        }
+      ]
+    },
+    {
+      "seed": 101,
+      "swapped": true,
+      "player": "@@AI2@@",
+      "country": "Americans",
+      "loadedGatherOrders": 0,
+      "mixedCargoAfterLoadedOrder": 0,
+      "confirmedNativeMixedUnloads": 0,
+      "confirmedCreditedValue": 0,
+      "loadedOrderChains": []
+    },
+    {
+      "seed": 202,
+      "swapped": false,
+      "player": "@@AI1@@",
+      "country": "Americans",
+      "loadedGatherOrders": 1,
+      "mixedCargoAfterLoadedOrder": 1,
+      "confirmedNativeMixedUnloads": 1,
+      "confirmedCreditedValue": 950,
+      "loadedOrderChains": [
+        {
+          "tick": 6780,
+          "id": 904,
+          "name": "CMIN",
+          "ore": 2,
+          "gems": 0,
+          "storage": 20,
+          "target": {
+            "x": 37,
+            "y": 29
+          },
+          "firstMixedCargo": {
+            "tick": 7236,
+            "ore": 2,
+            "gems": 1
+          },
+          "nativeUnloadTick": 8111,
+          "nativeUnload": {
+            "tick": 8111,
+            "id": 904,
+            "ore": 2,
+            "gems": 18,
+            "credited": 950
+          }
+        }
+      ]
+    },
+    {
+      "seed": 202,
+      "swapped": true,
+      "player": "@@AI2@@",
+      "country": "Americans",
+      "loadedGatherOrders": 0,
+      "mixedCargoAfterLoadedOrder": 0,
+      "confirmedNativeMixedUnloads": 0,
+      "confirmedCreditedValue": 0,
+      "loadedOrderChains": []
+    }
+  ],
+  "matches": [
+    {
+      "seed": 101,
+      "swapped": false,
+      "result": "baseline-win",
+      "ticks": 12500,
+      "errors": 0,
+      "originalRawSha256": "2eee90fa193353a0a483e2878356882dc86071756dd60d7a30ec7a3a8e0fb7a8"
+    },
+    {
+      "seed": 101,
+      "swapped": true,
+      "result": "candidate-win",
+      "ticks": 16092,
+      "errors": 0,
+      "originalRawSha256": "2eee90fa193353a0a483e2878356882dc86071756dd60d7a30ec7a3a8e0fb7a8"
+    },
+    {
+      "seed": 202,
+      "swapped": false,
+      "result": "candidate-win",
+      "ticks": 16332,
+      "errors": 0,
+      "originalRawSha256": "8e355ad4c576265c91633cdde2a86e952da032353318296cb1711e745e8285b8"
+    },
+    {
+      "seed": 202,
+      "swapped": true,
+      "result": "candidate-win",
+      "ticks": 13652,
+      "errors": 0,
+      "originalRawSha256": "8e355ad4c576265c91633cdde2a86e952da032353318296cb1711e745e8285b8"
+    }
+  ]
+}

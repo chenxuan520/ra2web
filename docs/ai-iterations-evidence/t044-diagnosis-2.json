@@ -1,0 +1,727 @@
+{
+  "passed": true,
+  "equalSamples": 0,
+  "newWinSamples": 0,
+  "summaries": [
+    {
+      "country": "Americans",
+      "seed": 101,
+      "swapped": false,
+      "outcome": "loss",
+      "ticks": 16407,
+      "originalRawSha256": "9d18203a1d99d1dfb3b2cd4f8a6eddef1ab4937a580954b2b05d0d1eb7fd652f",
+      "players": [
+        {
+          "side": "candidate",
+          "firstFiveMinerObservedTick": null,
+          "firstDualFactoryObservedTick": null,
+          "firstAdvancedTechInvestmentObservedTick": null,
+          "selectedSamples": [
+            {
+              "tick": 8100,
+              "miners": 4,
+              "cash": 418,
+              "cashReceived": 8000,
+              "coreTanks": 5,
+              "factories": 1
+            },
+            {
+              "tick": 9000,
+              "miners": 4,
+              "cash": 0,
+              "cashReceived": 10100,
+              "coreTanks": 2,
+              "factories": 1
+            },
+            {
+              "tick": 10800,
+              "miners": 4,
+              "cash": 729,
+              "cashReceived": 13100,
+              "coreTanks": 3,
+              "factories": 1
+            },
+            {
+              "tick": 12600,
+              "miners": 4,
+              "cash": 1544,
+              "cashReceived": 17100,
+              "coreTanks": 1,
+              "factories": 1
+            }
+          ]
+        },
+        {
+          "side": "opponent",
+          "firstFiveMinerObservedTick": null,
+          "firstDualFactoryObservedTick": 9900,
+          "firstAdvancedTechInvestmentObservedTick": null,
+          "selectedSamples": [
+            {
+              "tick": 8100,
+              "miners": 4,
+              "cash": 0,
+              "cashReceived": 10050,
+              "coreTanks": 6,
+              "factories": 1
+            },
+            {
+              "tick": 9000,
+              "miners": 4,
+              "cash": 301,
+              "cashReceived": 11050,
+              "coreTanks": 2,
+              "factories": 1
+            },
+            {
+              "tick": 10800,
+              "miners": 4,
+              "cash": 0,
+              "cashReceived": 14550,
+              "coreTanks": 1,
+              "factories": 2
+            },
+            {
+              "tick": 12600,
+              "miners": 4,
+              "cash": 0,
+              "cashReceived": 17809,
+              "coreTanks": 3,
+              "factories": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "Americans",
+      "seed": 101,
+      "swapped": true,
+      "outcome": "win",
+      "ticks": 12660,
+      "originalRawSha256": "9d18203a1d99d1dfb3b2cd4f8a6eddef1ab4937a580954b2b05d0d1eb7fd652f",
+      "players": [
+        {
+          "side": "candidate",
+          "firstFiveMinerObservedTick": null,
+          "firstDualFactoryObservedTick": null,
+          "firstAdvancedTechInvestmentObservedTick": null,
+          "selectedSamples": [
+            {
+              "tick": 8100,
+              "miners": 4,
+              "cash": 244,
+              "cashReceived": 10050,
+              "coreTanks": 6,
+              "factories": 1
+            },
+            {
+              "tick": 9000,
+              "miners": 4,
+              "cash": 285,
+              "cashReceived": 11050,
+              "coreTanks": 5,
+              "factories": 1
+            },
+            {
+              "tick": 10800,
+              "miners": 4,
+              "cash": 0,
+              "cashReceived": 14550,
+              "coreTanks": 7,
+              "factories": 1
+            },
+            {
+              "tick": 12600,
+              "miners": 4,
+              "cash": 214,
+              "cashReceived": 17550,
+              "coreTanks": 9,
+              "factories": 1
+            }
+          ]
+        },
+        {
+          "side": "opponent",
+          "firstFiveMinerObservedTick": null,
+          "firstDualFactoryObservedTick": null,
+          "firstAdvancedTechInvestmentObservedTick": null,
+          "selectedSamples": [
+            {
+              "tick": 8100,
+              "miners": 4,
+              "cash": 418,
+              "cashReceived": 8000,
+              "coreTanks": 5,
+              "factories": 1
+            },
+            {
+              "tick": 9000,
+              "miners": 4,
+              "cash": 285,
+              "cashReceived": 10100,
+              "coreTanks": 1,
+              "factories": 1
+            },
+            {
+              "tick": 10800,
+              "miners": 4,
+              "cash": 1912,
+              "cashReceived": 14693,
+              "coreTanks": 0,
+              "factories": 0
+            },
+            {
+              "tick": 12600,
+              "miners": 0,
+              "cash": 1968,
+              "cashReceived": 15768,
+              "coreTanks": 0,
+              "factories": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "Americans",
+      "seed": 202,
+      "swapped": false,
+      "outcome": "loss",
+      "ticks": 14180,
+      "originalRawSha256": "18930c4d2a575322425ec78c64c750b4682b0e71e96ca841086c8c5515d73d34",
+      "players": [
+        {
+          "side": "candidate",
+          "firstFiveMinerObservedTick": null,
+          "firstDualFactoryObservedTick": null,
+          "firstAdvancedTechInvestmentObservedTick": null,
+          "selectedSamples": [
+            {
+              "tick": 8100,
+              "miners": 4,
+              "cash": 418,
+              "cashReceived": 8000,
+              "coreTanks": 5,
+              "factories": 1
+            },
+            {
+              "tick": 9000,
+              "miners": 4,
+              "cash": 125,
+              "cashReceived": 10100,
+              "coreTanks": 2,
+              "factories": 1
+            },
+            {
+              "tick": 10800,
+              "miners": 4,
+              "cash": 784,
+              "cashReceived": 13100,
+              "coreTanks": 1,
+              "factories": 1
+            },
+            {
+              "tick": 12600,
+              "miners": 4,
+              "cash": 1599,
+              "cashReceived": 17917,
+              "coreTanks": 0,
+              "factories": 0
+            }
+          ]
+        },
+        {
+          "side": "opponent",
+          "firstFiveMinerObservedTick": null,
+          "firstDualFactoryObservedTick": 9900,
+          "firstAdvancedTechInvestmentObservedTick": 11700,
+          "selectedSamples": [
+            {
+              "tick": 8100,
+              "miners": 4,
+              "cash": 0,
+              "cashReceived": 10050,
+              "coreTanks": 6,
+              "factories": 1
+            },
+            {
+              "tick": 9000,
+              "miners": 4,
+              "cash": 301,
+              "cashReceived": 11050,
+              "coreTanks": 3,
+              "factories": 1
+            },
+            {
+              "tick": 10800,
+              "miners": 4,
+              "cash": 0,
+              "cashReceived": 14916,
+              "coreTanks": 5,
+              "factories": 2
+            },
+            {
+              "tick": 12600,
+              "miners": 4,
+              "cash": 0,
+              "cashReceived": 17916,
+              "coreTanks": 5,
+              "factories": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "Americans",
+      "seed": 202,
+      "swapped": true,
+      "outcome": "win",
+      "ticks": 13940,
+      "originalRawSha256": "18930c4d2a575322425ec78c64c750b4682b0e71e96ca841086c8c5515d73d34",
+      "players": [
+        {
+          "side": "candidate",
+          "firstFiveMinerObservedTick": null,
+          "firstDualFactoryObservedTick": null,
+          "firstAdvancedTechInvestmentObservedTick": null,
+          "selectedSamples": [
+            {
+              "tick": 8100,
+              "miners": 4,
+              "cash": 244,
+              "cashReceived": 10050,
+              "coreTanks": 6,
+              "factories": 1
+            },
+            {
+              "tick": 9000,
+              "miners": 4,
+              "cash": 399,
+              "cashReceived": 11050,
+              "coreTanks": 3,
+              "factories": 1
+            },
+            {
+              "tick": 10800,
+              "miners": 4,
+              "cash": 0,
+              "cashReceived": 14550,
+              "coreTanks": 5,
+              "factories": 1
+            },
+            {
+              "tick": 12600,
+              "miners": 4,
+              "cash": 0,
+              "cashReceived": 17550,
+              "coreTanks": 4,
+              "factories": 1
+            }
+          ]
+        },
+        {
+          "side": "opponent",
+          "firstFiveMinerObservedTick": null,
+          "firstDualFactoryObservedTick": null,
+          "firstAdvancedTechInvestmentObservedTick": null,
+          "selectedSamples": [
+            {
+              "tick": 8100,
+              "miners": 4,
+              "cash": 418,
+              "cashReceived": 8000,
+              "coreTanks": 5,
+              "factories": 1
+            },
+            {
+              "tick": 9000,
+              "miners": 4,
+              "cash": 495,
+              "cashReceived": 10100,
+              "coreTanks": 2,
+              "factories": 1
+            },
+            {
+              "tick": 10800,
+              "miners": 4,
+              "cash": 1081,
+              "cashReceived": 13100,
+              "coreTanks": 3,
+              "factories": 1
+            },
+            {
+              "tick": 12600,
+              "miners": 4,
+              "cash": 970,
+              "cashReceived": 16846,
+              "coreTanks": 0,
+              "factories": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "Russians",
+      "seed": 101,
+      "swapped": false,
+      "outcome": "win",
+      "ticks": 25017,
+      "originalRawSha256": "058018605546fa73a91d6612084c82962f04f2a8cc807e8ef9a808a5db334bab",
+      "players": [
+        {
+          "side": "candidate",
+          "firstFiveMinerObservedTick": null,
+          "firstDualFactoryObservedTick": null,
+          "firstAdvancedTechInvestmentObservedTick": null,
+          "selectedSamples": [
+            {
+              "tick": 8100,
+              "miners": 3,
+              "cash": 1128,
+              "cashReceived": 6000,
+              "coreTanks": 4,
+              "factories": 1
+            },
+            {
+              "tick": 9000,
+              "miners": 4,
+              "cash": 2835,
+              "cashReceived": 9200,
+              "coreTanks": 5,
+              "factories": 1
+            },
+            {
+              "tick": 10800,
+              "miners": 4,
+              "cash": 1345,
+              "cashReceived": 12100,
+              "coreTanks": 3,
+              "factories": 1
+            },
+            {
+              "tick": 12600,
+              "miners": 4,
+              "cash": 2359,
+              "cashReceived": 16100,
+              "coreTanks": 3,
+              "factories": 1
+            }
+          ]
+        },
+        {
+          "side": "opponent",
+          "firstFiveMinerObservedTick": null,
+          "firstDualFactoryObservedTick": 9900,
+          "firstAdvancedTechInvestmentObservedTick": null,
+          "selectedSamples": [
+            {
+              "tick": 8100,
+              "miners": 4,
+              "cash": 2101,
+              "cashReceived": 8000,
+              "coreTanks": 4,
+              "factories": 1
+            },
+            {
+              "tick": 9000,
+              "miners": 4,
+              "cash": 1679,
+              "cashReceived": 10075,
+              "coreTanks": 5,
+              "factories": 1
+            },
+            {
+              "tick": 10800,
+              "miners": 4,
+              "cash": 515,
+              "cashReceived": 13125,
+              "coreTanks": 5,
+              "factories": 2
+            },
+            {
+              "tick": 12600,
+              "miners": 4,
+              "cash": 1172,
+              "cashReceived": 17125,
+              "coreTanks": 2,
+              "factories": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "Russians",
+      "seed": 101,
+      "swapped": true,
+      "outcome": "win",
+      "ticks": 25437,
+      "originalRawSha256": "058018605546fa73a91d6612084c82962f04f2a8cc807e8ef9a808a5db334bab",
+      "players": [
+        {
+          "side": "candidate",
+          "firstFiveMinerObservedTick": 11700,
+          "firstDualFactoryObservedTick": 14400,
+          "firstAdvancedTechInvestmentObservedTick": 23400,
+          "selectedSamples": [
+            {
+              "tick": 8100,
+              "miners": 4,
+              "cash": 2592,
+              "cashReceived": 8000,
+              "coreTanks": 4,
+              "factories": 1
+            },
+            {
+              "tick": 9000,
+              "miners": 4,
+              "cash": 2974,
+              "cashReceived": 10075,
+              "coreTanks": 6,
+              "factories": 1
+            },
+            {
+              "tick": 10800,
+              "miners": 4,
+              "cash": 693,
+              "cashReceived": 13125,
+              "coreTanks": 4,
+              "factories": 1
+            },
+            {
+              "tick": 12600,
+              "miners": 5,
+              "cash": 1316,
+              "cashReceived": 17125,
+              "coreTanks": 2,
+              "factories": 1
+            }
+          ]
+        },
+        {
+          "side": "opponent",
+          "firstFiveMinerObservedTick": null,
+          "firstDualFactoryObservedTick": 16200,
+          "firstAdvancedTechInvestmentObservedTick": 9900,
+          "selectedSamples": [
+            {
+              "tick": 8100,
+              "miners": 3,
+              "cash": 1128,
+              "cashReceived": 6000,
+              "coreTanks": 4,
+              "factories": 1
+            },
+            {
+              "tick": 9000,
+              "miners": 4,
+              "cash": 2835,
+              "cashReceived": 9200,
+              "coreTanks": 5,
+              "factories": 1
+            },
+            {
+              "tick": 10800,
+              "miners": 4,
+              "cash": 138,
+              "cashReceived": 12100,
+              "coreTanks": 4,
+              "factories": 1
+            },
+            {
+              "tick": 12600,
+              "miners": 4,
+              "cash": 735,
+              "cashReceived": 16100,
+              "coreTanks": 1,
+              "factories": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "Russians",
+      "seed": 202,
+      "swapped": false,
+      "outcome": "win",
+      "ticks": 24132,
+      "originalRawSha256": "fa0de88bef04901024fa82adc011daa606c4ac1df8c32f8522cb472041f209b8",
+      "players": [
+        {
+          "side": "candidate",
+          "firstFiveMinerObservedTick": 21600,
+          "firstDualFactoryObservedTick": null,
+          "firstAdvancedTechInvestmentObservedTick": null,
+          "selectedSamples": [
+            {
+              "tick": 8100,
+              "miners": 3,
+              "cash": 1128,
+              "cashReceived": 6000,
+              "coreTanks": 4,
+              "factories": 1
+            },
+            {
+              "tick": 9000,
+              "miners": 4,
+              "cash": 2835,
+              "cashReceived": 9200,
+              "coreTanks": 5,
+              "factories": 1
+            },
+            {
+              "tick": 10800,
+              "miners": 4,
+              "cash": 1345,
+              "cashReceived": 12100,
+              "coreTanks": 3,
+              "factories": 1
+            },
+            {
+              "tick": 12600,
+              "miners": 4,
+              "cash": 2359,
+              "cashReceived": 16100,
+              "coreTanks": 3,
+              "factories": 1
+            }
+          ]
+        },
+        {
+          "side": "opponent",
+          "firstFiveMinerObservedTick": null,
+          "firstDualFactoryObservedTick": 9900,
+          "firstAdvancedTechInvestmentObservedTick": null,
+          "selectedSamples": [
+            {
+              "tick": 8100,
+              "miners": 4,
+              "cash": 2101,
+              "cashReceived": 8000,
+              "coreTanks": 4,
+              "factories": 1
+            },
+            {
+              "tick": 9000,
+              "miners": 4,
+              "cash": 1679,
+              "cashReceived": 10075,
+              "coreTanks": 5,
+              "factories": 1
+            },
+            {
+              "tick": 10800,
+              "miners": 4,
+              "cash": 515,
+              "cashReceived": 13125,
+              "coreTanks": 5,
+              "factories": 2
+            },
+            {
+              "tick": 12600,
+              "miners": 4,
+              "cash": 1172,
+              "cashReceived": 17125,
+              "coreTanks": 2,
+              "factories": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "Russians",
+      "seed": 202,
+      "swapped": true,
+      "outcome": "win",
+      "ticks": 17187,
+      "originalRawSha256": "fa0de88bef04901024fa82adc011daa606c4ac1df8c32f8522cb472041f209b8",
+      "players": [
+        {
+          "side": "candidate",
+          "firstFiveMinerObservedTick": 11700,
+          "firstDualFactoryObservedTick": 14400,
+          "firstAdvancedTechInvestmentObservedTick": 14400,
+          "selectedSamples": [
+            {
+              "tick": 8100,
+              "miners": 4,
+              "cash": 2592,
+              "cashReceived": 8000,
+              "coreTanks": 4,
+              "factories": 1
+            },
+            {
+              "tick": 9000,
+              "miners": 4,
+              "cash": 2974,
+              "cashReceived": 10075,
+              "coreTanks": 6,
+              "factories": 1
+            },
+            {
+              "tick": 10800,
+              "miners": 4,
+              "cash": 693,
+              "cashReceived": 13125,
+              "coreTanks": 4,
+              "factories": 1
+            },
+            {
+              "tick": 12600,
+              "miners": 5,
+              "cash": 1316,
+              "cashReceived": 17125,
+              "coreTanks": 5,
+              "factories": 1
+            }
+          ]
+        },
+        {
+          "side": "opponent",
+          "firstFiveMinerObservedTick": null,
+          "firstDualFactoryObservedTick": null,
+          "firstAdvancedTechInvestmentObservedTick": 9900,
+          "selectedSamples": [
+            {
+              "tick": 8100,
+              "miners": 3,
+              "cash": 1128,
+              "cashReceived": 6000,
+              "coreTanks": 4,
+              "factories": 1
+            },
+            {
+              "tick": 9000,
+              "miners": 4,
+              "cash": 2835,
+              "cashReceived": 9200,
+              "coreTanks": 5,
+              "factories": 1
+            },
+            {
+              "tick": 10800,
+              "miners": 4,
+              "cash": 138,
+              "cashReceived": 12100,
+              "coreTanks": 4,
+              "factories": 1
+            },
+            {
+              "tick": 12600,
+              "miners": 4,
+              "cash": 917,
+              "cashReceived": 16321,
+              "coreTanks": 0,
+              "factories": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

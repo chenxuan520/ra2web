@@ -1,0 +1,646 @@
+{
+  "passed": true,
+  "equalSamples": 48,
+  "newWinSamples": 0,
+  "originalSha256": "2714a537eea059ee5cbeed7e81564302cf7e7643c8172b23d9374abb94dd069c",
+  "replaySha256": "a52bc1fe101966880c5092f55b3b1482becc354421c17d2dfe5e926cc0e38300",
+  "diagnosticSha256": "72b52dd0ff51a272f2be21f85878b0bb1c7c819b7ecb5d204a487ceb9e8937fb",
+  "summaries": [
+    {
+      "seed": 101,
+      "swapped": false,
+      "player": "@@AI1@@",
+      "calls": 2728,
+      "peerCalls": 2540,
+      "coreCalls": 188,
+      "examples": [
+        {
+          "tick": 9116,
+          "follower": {
+            "id": 1036,
+            "name": "FV",
+            "x": 31,
+            "y": 53
+          },
+          "selected": {
+            "id": 1073,
+            "name": "FV",
+            "x": 31,
+            "y": 52
+          },
+          "nearestCore": {
+            "id": 1074,
+            "name": "MTNK",
+            "x": 33,
+            "y": 50
+          },
+          "target": {
+            "x": 30.2,
+            "y": 52.4
+          }
+        },
+        {
+          "tick": 9116,
+          "follower": {
+            "id": 1073,
+            "name": "FV",
+            "x": 31,
+            "y": 52
+          },
+          "selected": {
+            "id": 1036,
+            "name": "FV",
+            "x": 31,
+            "y": 53
+          },
+          "nearestCore": {
+            "id": 1074,
+            "name": "MTNK",
+            "x": 33,
+            "y": 50
+          },
+          "target": {
+            "x": 30.2,
+            "y": 52.4
+          }
+        },
+        {
+          "tick": 9122,
+          "follower": {
+            "id": 1036,
+            "name": "FV",
+            "x": 31,
+            "y": 53
+          },
+          "selected": {
+            "id": 1073,
+            "name": "FV",
+            "x": 31,
+            "y": 52
+          },
+          "nearestCore": {
+            "id": 1074,
+            "name": "MTNK",
+            "x": 33,
+            "y": 50
+          },
+          "target": {
+            "x": 30.2,
+            "y": 52.4
+          }
+        },
+        {
+          "tick": 9122,
+          "follower": {
+            "id": 1073,
+            "name": "FV",
+            "x": 31,
+            "y": 52
+          },
+          "selected": {
+            "id": 1036,
+            "name": "FV",
+            "x": 31,
+            "y": 53
+          },
+          "nearestCore": {
+            "id": 1074,
+            "name": "MTNK",
+            "x": 33,
+            "y": 50
+          },
+          "target": {
+            "x": 30.2,
+            "y": 52.4
+          }
+        },
+        {
+          "tick": 9128,
+          "follower": {
+            "id": 1036,
+            "name": "FV",
+            "x": 31,
+            "y": 53
+          },
+          "selected": {
+            "id": 1073,
+            "name": "FV",
+            "x": 31,
+            "y": 52
+          },
+          "nearestCore": {
+            "id": 1074,
+            "name": "MTNK",
+            "x": 33,
+            "y": 50
+          },
+          "target": {
+            "x": 30.2,
+            "y": 52.4
+          }
+        },
+        {
+          "tick": 9128,
+          "follower": {
+            "id": 1073,
+            "name": "FV",
+            "x": 31,
+            "y": 52
+          },
+          "selected": {
+            "id": 1036,
+            "name": "FV",
+            "x": 31,
+            "y": 53
+          },
+          "nearestCore": {
+            "id": 1074,
+            "name": "MTNK",
+            "x": 33,
+            "y": 50
+          },
+          "target": {
+            "x": 30.2,
+            "y": 52.4
+          }
+        },
+        {
+          "tick": 9134,
+          "follower": {
+            "id": 1036,
+            "name": "FV",
+            "x": 31,
+            "y": 53
+          },
+          "selected": {
+            "id": 1073,
+            "name": "FV",
+            "x": 31,
+            "y": 52
+          },
+          "nearestCore": {
+            "id": 1074,
+            "name": "MTNK",
+            "x": 33,
+            "y": 50
+          },
+          "target": {
+            "x": 30.2,
+            "y": 52.4
+          }
+        },
+        {
+          "tick": 9134,
+          "follower": {
+            "id": 1073,
+            "name": "FV",
+            "x": 31,
+            "y": 52
+          },
+          "selected": {
+            "id": 1036,
+            "name": "FV",
+            "x": 31,
+            "y": 53
+          },
+          "nearestCore": {
+            "id": 1074,
+            "name": "MTNK",
+            "x": 33,
+            "y": 50
+          },
+          "target": {
+            "x": 30.2,
+            "y": 52.4
+          }
+        },
+        {
+          "tick": 9140,
+          "follower": {
+            "id": 1036,
+            "name": "FV",
+            "x": 31,
+            "y": 53
+          },
+          "selected": {
+            "id": 1073,
+            "name": "FV",
+            "x": 31,
+            "y": 52
+          },
+          "nearestCore": {
+            "id": 1074,
+            "name": "MTNK",
+            "x": 33,
+            "y": 50
+          },
+          "target": {
+            "x": 30.2,
+            "y": 52.4
+          }
+        },
+        {
+          "tick": 9140,
+          "follower": {
+            "id": 1073,
+            "name": "FV",
+            "x": 31,
+            "y": 52
+          },
+          "selected": {
+            "id": 1036,
+            "name": "FV",
+            "x": 31,
+            "y": 53
+          },
+          "nearestCore": {
+            "id": 1074,
+            "name": "MTNK",
+            "x": 33,
+            "y": 50
+          },
+          "target": {
+            "x": 30.2,
+            "y": 52.4
+          }
+        },
+        {
+          "tick": 9146,
+          "follower": {
+            "id": 1036,
+            "name": "FV",
+            "x": 32,
+            "y": 53
+          },
+          "selected": {
+            "id": 1073,
+            "name": "FV",
+            "x": 31,
+            "y": 52
+          },
+          "nearestCore": {
+            "id": 1074,
+            "name": "MTNK",
+            "x": 33,
+            "y": 50
+          },
+          "target": {
+            "x": 30.2,
+            "y": 52.4
+          }
+        },
+        {
+          "tick": 9146,
+          "follower": {
+            "id": 1073,
+            "name": "FV",
+            "x": 31,
+            "y": 52
+          },
+          "selected": {
+            "id": 1036,
+            "name": "FV",
+            "x": 32,
+            "y": 53
+          },
+          "nearestCore": {
+            "id": 1074,
+            "name": "MTNK",
+            "x": 33,
+            "y": 50
+          },
+          "target": {
+            "x": 30.2,
+            "y": 52.4
+          }
+        }
+      ]
+    },
+    {
+      "seed": 101,
+      "swapped": true,
+      "player": "@@AI2@@",
+      "calls": 2037,
+      "peerCalls": 1970,
+      "coreCalls": 67,
+      "examples": [
+        {
+          "tick": 9726,
+          "follower": {
+            "id": 1086,
+            "name": "FV",
+            "x": 80,
+            "y": 80
+          },
+          "selected": {
+            "id": 1088,
+            "name": "FV",
+            "x": 82,
+            "y": 78
+          },
+          "nearestCore": {
+            "id": 1080,
+            "name": "MTNK",
+            "x": 79,
+            "y": 83
+          },
+          "target": {
+            "x": 78.8,
+            "y": 84.6
+          }
+        },
+        {
+          "tick": 9726,
+          "follower": {
+            "id": 1088,
+            "name": "FV",
+            "x": 82,
+            "y": 78
+          },
+          "selected": {
+            "id": 1086,
+            "name": "FV",
+            "x": 80,
+            "y": 80
+          },
+          "nearestCore": {
+            "id": 1080,
+            "name": "MTNK",
+            "x": 79,
+            "y": 83
+          },
+          "target": {
+            "x": 78.8,
+            "y": 84.6
+          }
+        },
+        {
+          "tick": 9732,
+          "follower": {
+            "id": 1086,
+            "name": "FV",
+            "x": 80,
+            "y": 80
+          },
+          "selected": {
+            "id": 1088,
+            "name": "FV",
+            "x": 82,
+            "y": 78
+          },
+          "nearestCore": {
+            "id": 1080,
+            "name": "MTNK",
+            "x": 79,
+            "y": 83
+          },
+          "target": {
+            "x": 78.8,
+            "y": 84.6
+          }
+        },
+        {
+          "tick": 9732,
+          "follower": {
+            "id": 1088,
+            "name": "FV",
+            "x": 82,
+            "y": 78
+          },
+          "selected": {
+            "id": 1086,
+            "name": "FV",
+            "x": 80,
+            "y": 80
+          },
+          "nearestCore": {
+            "id": 1080,
+            "name": "MTNK",
+            "x": 79,
+            "y": 83
+          },
+          "target": {
+            "x": 78.8,
+            "y": 84.6
+          }
+        },
+        {
+          "tick": 9738,
+          "follower": {
+            "id": 1086,
+            "name": "FV",
+            "x": 80,
+            "y": 80
+          },
+          "selected": {
+            "id": 1088,
+            "name": "FV",
+            "x": 82,
+            "y": 78
+          },
+          "nearestCore": {
+            "id": 1080,
+            "name": "MTNK",
+            "x": 79,
+            "y": 83
+          },
+          "target": {
+            "x": 78.8,
+            "y": 84.6
+          }
+        },
+        {
+          "tick": 9738,
+          "follower": {
+            "id": 1088,
+            "name": "FV",
+            "x": 82,
+            "y": 78
+          },
+          "selected": {
+            "id": 1086,
+            "name": "FV",
+            "x": 80,
+            "y": 80
+          },
+          "nearestCore": {
+            "id": 1080,
+            "name": "MTNK",
+            "x": 79,
+            "y": 83
+          },
+          "target": {
+            "x": 78.8,
+            "y": 84.6
+          }
+        },
+        {
+          "tick": 9744,
+          "follower": {
+            "id": 1086,
+            "name": "FV",
+            "x": 79,
+            "y": 79
+          },
+          "selected": {
+            "id": 1088,
+            "name": "FV",
+            "x": 82,
+            "y": 78
+          },
+          "nearestCore": {
+            "id": 1080,
+            "name": "MTNK",
+            "x": 79,
+            "y": 83
+          },
+          "target": {
+            "x": 78.8,
+            "y": 84.6
+          }
+        },
+        {
+          "tick": 9744,
+          "follower": {
+            "id": 1088,
+            "name": "FV",
+            "x": 82,
+            "y": 78
+          },
+          "selected": {
+            "id": 1086,
+            "name": "FV",
+            "x": 79,
+            "y": 79
+          },
+          "nearestCore": {
+            "id": 1080,
+            "name": "MTNK",
+            "x": 79,
+            "y": 83
+          },
+          "target": {
+            "x": 78.8,
+            "y": 84.6
+          }
+        },
+        {
+          "tick": 9750,
+          "follower": {
+            "id": 1086,
+            "name": "FV",
+            "x": 79,
+            "y": 79
+          },
+          "selected": {
+            "id": 1088,
+            "name": "FV",
+            "x": 82,
+            "y": 78
+          },
+          "nearestCore": {
+            "id": 1080,
+            "name": "MTNK",
+            "x": 79,
+            "y": 83
+          },
+          "target": {
+            "x": 78.8,
+            "y": 84.6
+          }
+        },
+        {
+          "tick": 9750,
+          "follower": {
+            "id": 1088,
+            "name": "FV",
+            "x": 82,
+            "y": 78
+          },
+          "selected": {
+            "id": 1086,
+            "name": "FV",
+            "x": 79,
+            "y": 79
+          },
+          "nearestCore": {
+            "id": 1080,
+            "name": "MTNK",
+            "x": 79,
+            "y": 83
+          },
+          "target": {
+            "x": 78.8,
+            "y": 84.6
+          }
+        },
+        {
+          "tick": 9756,
+          "follower": {
+            "id": 1086,
+            "name": "FV",
+            "x": 79,
+            "y": 78
+          },
+          "selected": {
+            "id": 1088,
+            "name": "FV",
+            "x": 82,
+            "y": 78
+          },
+          "nearestCore": {
+            "id": 1080,
+            "name": "MTNK",
+            "x": 79,
+            "y": 83
+          },
+          "target": {
+            "x": 78.8,
+            "y": 84.6
+          }
+        },
+        {
+          "tick": 9756,
+          "follower": {
+            "id": 1088,
+            "name": "FV",
+            "x": 82,
+            "y": 78
+          },
+          "selected": {
+            "id": 1086,
+            "name": "FV",
+            "x": 79,
+            "y": 78
+          },
+          "nearestCore": {
+            "id": 1080,
+            "name": "MTNK",
+            "x": 79,
+            "y": 83
+          },
+          "target": {
+            "x": 78.8,
+            "y": 84.6
+          }
+        }
+      ]
+    }
+  ],
+  "matches": [
+    {
+      "seed": 101,
+      "swapped": false,
+      "result": "baseline-win",
+      "ticks": 24867,
+      "errors": 0
+    },
+    {
+      "seed": 101,
+      "swapped": true,
+      "result": "candidate-win",
+      "ticks": 15636,
+      "errors": 0
+    }
+  ]
+}

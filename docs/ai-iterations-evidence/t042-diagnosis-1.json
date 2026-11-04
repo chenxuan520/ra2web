@@ -1,0 +1,403 @@
+{
+  "passed": true,
+  "equalSamples": 109,
+  "newWinSamples": 0,
+  "replaySha256": "fac562b695990cbce59fb17db8f8af57362fadfc92b42a57b414844dfaec842a",
+  "diagnosticSha256": "7bd057bef63827a30cde191f0500838cbc13556d46a6fef1792f6f8238f21d17",
+  "summaries": [
+    {
+      "seed": 101,
+      "swapped": false,
+      "player": "@@AI1@@",
+      "country": "Americans",
+      "earlyFactoryGatherOrders": 2,
+      "nativeOrdersObserved": 2,
+      "protectedOrdersPreserved": 2,
+      "unstartedProtectedTasksRemoved": 0,
+      "actualFactoryExits": 2,
+      "actualGemCargo": 1,
+      "orders": [
+        {
+          "tick": 6330,
+          "id": 904,
+          "name": "CMIN",
+          "from": {
+            "x": 33,
+            "y": 50
+          },
+          "target": {
+            "x": 37,
+            "y": 29
+          },
+          "factory": {
+            "id": 880,
+            "name": "GAWEAP",
+            "x": 31,
+            "y": 49,
+            "width": 5,
+            "height": 3
+          },
+          "nativeOrder": {
+            "queued": true,
+            "protectedFactoryTasks": 1,
+            "preserved": true,
+            "unstartedProtectedTasksRemoved": 0,
+            "tasksBefore": [
+              {
+                "name": "ExitFactoryTask",
+                "status": 1,
+                "cancellable": false
+              },
+              {
+                "name": "GatherOreTask",
+                "status": 0,
+                "cancellable": true
+              }
+            ]
+          },
+          "clearedFactoryAt": 6436,
+          "firstGemCargo": {
+            "tick": 7006,
+            "ore": 0,
+            "gems": 1
+          }
+        },
+        {
+          "tick": 7470,
+          "id": 909,
+          "name": "CMIN",
+          "from": {
+            "x": 33,
+            "y": 50
+          },
+          "target": {
+            "x": 39,
+            "y": 29
+          },
+          "factory": {
+            "id": 880,
+            "name": "GAWEAP",
+            "x": 31,
+            "y": 49,
+            "width": 5,
+            "height": 3
+          },
+          "nativeOrder": {
+            "queued": true,
+            "protectedFactoryTasks": 1,
+            "preserved": true,
+            "unstartedProtectedTasksRemoved": 0,
+            "tasksBefore": [
+              {
+                "name": "ExitFactoryTask",
+                "status": 1,
+                "cancellable": false
+              },
+              {
+                "name": "GatherOreTask",
+                "status": 0,
+                "cancellable": true
+              }
+            ]
+          },
+          "clearedFactoryAt": 7576
+        }
+      ]
+    },
+    {
+      "seed": 101,
+      "swapped": true,
+      "player": "@@AI2@@",
+      "country": "Americans",
+      "earlyFactoryGatherOrders": 2,
+      "nativeOrdersObserved": 2,
+      "protectedOrdersPreserved": 2,
+      "unstartedProtectedTasksRemoved": 0,
+      "actualFactoryExits": 2,
+      "actualGemCargo": 1,
+      "orders": [
+        {
+          "tick": 6090,
+          "id": 902,
+          "name": "CMIN",
+          "from": {
+            "x": 82,
+            "y": 78
+          },
+          "target": {
+            "x": 78,
+            "y": 96
+          },
+          "factory": {
+            "id": 879,
+            "name": "GAWEAP",
+            "x": 80,
+            "y": 77,
+            "width": 5,
+            "height": 3
+          },
+          "nativeOrder": {
+            "queued": true,
+            "protectedFactoryTasks": 1,
+            "preserved": true,
+            "unstartedProtectedTasksRemoved": 0,
+            "tasksBefore": [
+              {
+                "name": "ExitFactoryTask",
+                "status": 1,
+                "cancellable": false
+              },
+              {
+                "name": "GatherOreTask",
+                "status": 0,
+                "cancellable": true
+              }
+            ]
+          },
+          "clearedFactoryAt": 6190,
+          "firstGemCargo": {
+            "tick": 6678,
+            "ore": 0,
+            "gems": 1
+          }
+        },
+        {
+          "tick": 6960,
+          "id": 905,
+          "name": "CMIN",
+          "from": {
+            "x": 82,
+            "y": 78
+          },
+          "target": {
+            "x": 77,
+            "y": 96
+          },
+          "factory": {
+            "id": 879,
+            "name": "GAWEAP",
+            "x": 80,
+            "y": 77,
+            "width": 5,
+            "height": 3
+          },
+          "nativeOrder": {
+            "queued": true,
+            "protectedFactoryTasks": 1,
+            "preserved": true,
+            "unstartedProtectedTasksRemoved": 0,
+            "tasksBefore": [
+              {
+                "name": "ExitFactoryTask",
+                "status": 1,
+                "cancellable": false
+              },
+              {
+                "name": "GatherOreTask",
+                "status": 0,
+                "cancellable": true
+              }
+            ]
+          },
+          "clearedFactoryAt": 7056
+        }
+      ]
+    },
+    {
+      "seed": 101,
+      "swapped": false,
+      "player": "@@AI1@@",
+      "country": "Russians",
+      "earlyFactoryGatherOrders": 2,
+      "nativeOrdersObserved": 2,
+      "protectedOrdersPreserved": 2,
+      "unstartedProtectedTasksRemoved": 0,
+      "actualFactoryExits": 2,
+      "actualGemCargo": 1,
+      "orders": [
+        {
+          "tick": 6780,
+          "id": 904,
+          "name": "HARV",
+          "from": {
+            "x": 34,
+            "y": 50
+          },
+          "target": {
+            "x": 41,
+            "y": 31
+          },
+          "factory": {
+            "id": 879,
+            "name": "NAWEAP",
+            "x": 31,
+            "y": 49,
+            "width": 5,
+            "height": 3
+          },
+          "nativeOrder": {
+            "queued": true,
+            "protectedFactoryTasks": 1,
+            "preserved": true,
+            "unstartedProtectedTasksRemoved": 0,
+            "tasksBefore": [
+              {
+                "name": "ExitFactoryTask",
+                "status": 1,
+                "cancellable": false
+              },
+              {
+                "name": "GatherOreTask",
+                "status": 0,
+                "cancellable": true
+              }
+            ]
+          },
+          "clearedFactoryAt": 6858,
+          "firstGemCargo": {
+            "tick": 7436,
+            "ore": 0,
+            "gems": 1
+          }
+        },
+        {
+          "tick": 8160,
+          "id": 907,
+          "name": "HARV",
+          "from": {
+            "x": 33,
+            "y": 50
+          },
+          "target": {
+            "x": 40,
+            "y": 27
+          },
+          "factory": {
+            "id": 879,
+            "name": "NAWEAP",
+            "x": 31,
+            "y": 49,
+            "width": 5,
+            "height": 3
+          },
+          "nativeOrder": {
+            "queued": true,
+            "protectedFactoryTasks": 1,
+            "preserved": true,
+            "unstartedProtectedTasksRemoved": 0,
+            "tasksBefore": [
+              {
+                "name": "ExitFactoryTask",
+                "status": 1,
+                "cancellable": false
+              },
+              {
+                "name": "GatherOreTask",
+                "status": 0,
+                "cancellable": true
+              }
+            ]
+          },
+          "clearedFactoryAt": 8266
+        }
+      ]
+    },
+    {
+      "seed": 101,
+      "swapped": true,
+      "player": "@@AI2@@",
+      "country": "Russians",
+      "earlyFactoryGatherOrders": 1,
+      "nativeOrdersObserved": 1,
+      "protectedOrdersPreserved": 1,
+      "unstartedProtectedTasksRemoved": 0,
+      "actualFactoryExits": 1,
+      "actualGemCargo": 1,
+      "orders": [
+        {
+          "tick": 6210,
+          "id": 902,
+          "name": "HARV",
+          "from": {
+            "x": 83,
+            "y": 78
+          },
+          "target": {
+            "x": 78,
+            "y": 96
+          },
+          "factory": {
+            "id": 880,
+            "name": "NAWEAP",
+            "x": 81,
+            "y": 77,
+            "width": 5,
+            "height": 3
+          },
+          "nativeOrder": {
+            "queued": true,
+            "protectedFactoryTasks": 1,
+            "preserved": true,
+            "unstartedProtectedTasksRemoved": 0,
+            "tasksBefore": [
+              {
+                "name": "ExitFactoryTask",
+                "status": 1,
+                "cancellable": false
+              },
+              {
+                "name": "GatherOreTask",
+                "status": 0,
+                "cancellable": true
+              }
+            ]
+          },
+          "clearedFactoryAt": 6304,
+          "firstGemCargo": {
+            "tick": 6814,
+            "ore": 0,
+            "gems": 1
+          }
+        }
+      ]
+    }
+  ],
+  "matches": [
+    {
+      "country": "Americans",
+      "seed": 101,
+      "swapped": false,
+      "result": "baseline-win",
+      "ticks": 23742,
+      "errors": 0,
+      "originalRawSha256": "58b442c1bf4f0d7cfeada07cbf703b73f9b97c27b6fda06fa386203e0db177ad"
+    },
+    {
+      "country": "Americans",
+      "seed": 101,
+      "swapped": true,
+      "result": "candidate-win",
+      "ticks": 16092,
+      "errors": 0,
+      "originalRawSha256": "58b442c1bf4f0d7cfeada07cbf703b73f9b97c27b6fda06fa386203e0db177ad"
+    },
+    {
+      "country": "Russians",
+      "seed": 101,
+      "swapped": false,
+      "result": "draw",
+      "ticks": 27000,
+      "errors": 0,
+      "originalRawSha256": "7a5ea8cc9f437ebffeccf703f38255da9f977f81693e43c2e5b13b619de57488"
+    },
+    {
+      "country": "Russians",
+      "seed": 101,
+      "swapped": true,
+      "result": "draw",
+      "ticks": 27000,
+      "errors": 0,
+      "originalRawSha256": "7a5ea8cc9f437ebffeccf703f38255da9f977f81693e43c2e5b13b619de57488"
+    }
+  ]
+}

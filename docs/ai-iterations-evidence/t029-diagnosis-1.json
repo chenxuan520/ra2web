@@ -1,0 +1,111 @@
+{
+  "passed": true,
+  "equalSamples": 162,
+  "newWinSamples": 0,
+  "summaries": [
+    {
+      "country": "Americans",
+      "seed": 101,
+      "swapped": false,
+      "result": "candidate-win",
+      "ticks": 17007,
+      "equalSamples": 20,
+      "parentCommit": "880aa1c1c995e943ecd14bb71faaa15a5bc4b16d",
+      "candidateCommit": "cd59f8e407831b9238dadbd58b4524e72c3c4076",
+      "parentRawSha256": "7ea9294d591b80e6f83505409c9cb07f5139d08252fe28981d3fd2f9bbc81f17",
+      "candidateRawSha256": "2fb771576324cbeec04e1db09fe57493e7506fdce750570b9d43e8022ed7ed43",
+      "rawTelemetryAndSamplesUnchanged": true
+    },
+    {
+      "country": "Americans",
+      "seed": 101,
+      "swapped": true,
+      "result": "candidate-win",
+      "ticks": 15028,
+      "equalSamples": 18,
+      "parentCommit": "880aa1c1c995e943ecd14bb71faaa15a5bc4b16d",
+      "candidateCommit": "cd59f8e407831b9238dadbd58b4524e72c3c4076",
+      "parentRawSha256": "7ea9294d591b80e6f83505409c9cb07f5139d08252fe28981d3fd2f9bbc81f17",
+      "candidateRawSha256": "2fb771576324cbeec04e1db09fe57493e7506fdce750570b9d43e8022ed7ed43",
+      "rawTelemetryAndSamplesUnchanged": true
+    },
+    {
+      "country": "Americans",
+      "seed": 202,
+      "swapped": false,
+      "result": "candidate-win",
+      "ticks": 14212,
+      "equalSamples": 17,
+      "parentCommit": "880aa1c1c995e943ecd14bb71faaa15a5bc4b16d",
+      "candidateCommit": "cd59f8e407831b9238dadbd58b4524e72c3c4076",
+      "parentRawSha256": "6bce5d363166519a9eb5f25bf782d8b85e39106609338e9dd92437ceaef8b998",
+      "candidateRawSha256": "b6606504d9bc3338b8e221f22167b57976452732cf2d3260f341eac390babba9",
+      "rawTelemetryAndSamplesUnchanged": true
+    },
+    {
+      "country": "Americans",
+      "seed": 202,
+      "swapped": true,
+      "result": "candidate-win",
+      "ticks": 12932,
+      "equalSamples": 16,
+      "parentCommit": "880aa1c1c995e943ecd14bb71faaa15a5bc4b16d",
+      "candidateCommit": "cd59f8e407831b9238dadbd58b4524e72c3c4076",
+      "parentRawSha256": "6bce5d363166519a9eb5f25bf782d8b85e39106609338e9dd92437ceaef8b998",
+      "candidateRawSha256": "b6606504d9bc3338b8e221f22167b57976452732cf2d3260f341eac390babba9",
+      "rawTelemetryAndSamplesUnchanged": true
+    },
+    {
+      "country": "Russians",
+      "seed": 101,
+      "swapped": false,
+      "result": "candidate-win",
+      "ticks": 21432,
+      "equalSamples": 25,
+      "parentCommit": "880aa1c1c995e943ecd14bb71faaa15a5bc4b16d",
+      "candidateCommit": "cd59f8e407831b9238dadbd58b4524e72c3c4076",
+      "parentRawSha256": "d4593c82f8597f65a6a023436be254c551826eca63cae99c18f87cbb0d425830",
+      "candidateRawSha256": "7244de7698ab860e56e28ae7c3800d81a602bb30831ef361fbd5b9f7861a1364",
+      "rawTelemetryAndSamplesUnchanged": true
+    },
+    {
+      "country": "Russians",
+      "seed": 101,
+      "swapped": true,
+      "result": "baseline-win",
+      "ticks": 13684,
+      "equalSamples": 17,
+      "parentCommit": "880aa1c1c995e943ecd14bb71faaa15a5bc4b16d",
+      "candidateCommit": "cd59f8e407831b9238dadbd58b4524e72c3c4076",
+      "parentRawSha256": "d4593c82f8597f65a6a023436be254c551826eca63cae99c18f87cbb0d425830",
+      "candidateRawSha256": "7244de7698ab860e56e28ae7c3800d81a602bb30831ef361fbd5b9f7861a1364",
+      "rawTelemetryAndSamplesUnchanged": true
+    },
+    {
+      "country": "Russians",
+      "seed": 202,
+      "swapped": false,
+      "result": "draw",
+      "ticks": 27000,
+      "equalSamples": 31,
+      "parentCommit": "880aa1c1c995e943ecd14bb71faaa15a5bc4b16d",
+      "candidateCommit": "cd59f8e407831b9238dadbd58b4524e72c3c4076",
+      "parentRawSha256": "049198b8551fc8d219b4dfc7f994b675bd3e2feb18c9f5cda444103c44b104f4",
+      "candidateRawSha256": "9273077fb95c6e822443f80ffeb76df298cd502170c054c5425d50992a2df507",
+      "rawTelemetryAndSamplesUnchanged": true
+    },
+    {
+      "country": "Russians",
+      "seed": 202,
+      "swapped": true,
+      "result": "baseline-win",
+      "ticks": 14500,
+      "equalSamples": 18,
+      "parentCommit": "880aa1c1c995e943ecd14bb71faaa15a5bc4b16d",
+      "candidateCommit": "cd59f8e407831b9238dadbd58b4524e72c3c4076",
+      "parentRawSha256": "049198b8551fc8d219b4dfc7f994b675bd3e2feb18c9f5cda444103c44b104f4",
+      "candidateRawSha256": "9273077fb95c6e822443f80ffeb76df298cd502170c054c5425d50992a2df507",
+      "rawTelemetryAndSamplesUnchanged": true
+    }
+  ]
+}

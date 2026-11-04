@@ -1,0 +1,971 @@
+{
+  "passed": true,
+  "equalSamples": 108,
+  "newWinSamples": 0,
+  "summaries": [
+    {
+      "country": "Americans",
+      "seed": 101,
+      "swapped": false,
+      "previousRawSha256": "2714a537eea059ee5cbeed7e81564302cf7e7643c8172b23d9374abb94dd069c",
+      "currentRawSha256": "486aa42fac16a2ad3e1c2836f5a5f527dff746f93e2c7ae07a0d1175f02741c3",
+      "nativeResultsTelemetryAndSamplesEqual": false,
+      "previous": {
+        "result": "baseline-win",
+        "reason": "engine-victory-conditions",
+        "ticks": 24867,
+        "lostValue": [
+          49400,
+          29500
+        ],
+        "purchasedMinerProducedTicks": [
+          5854
+        ],
+        "factoryReadyTicks": [
+          3602
+        ],
+        "samples": [
+          {
+            "tick": 7200,
+            "ownMiners": 3,
+            "ownCredits": 734,
+            "receivedCash": 6500,
+            "ownCore": 5
+          },
+          {
+            "tick": 8100,
+            "ownMiners": 3,
+            "ownCredits": 462,
+            "receivedCash": 8258,
+            "ownCore": 5
+          },
+          {
+            "tick": 9000,
+            "ownMiners": 3,
+            "ownCredits": 370,
+            "receivedCash": 10758,
+            "ownCore": 0
+          },
+          {
+            "tick": 10800,
+            "ownMiners": 3,
+            "ownCredits": 0,
+            "receivedCash": 12765,
+            "ownCore": 2
+          },
+          {
+            "tick": 14400,
+            "ownMiners": 3,
+            "ownCredits": 617,
+            "receivedCash": 19265,
+            "ownCore": 4
+          },
+          {
+            "tick": 16200,
+            "ownMiners": 3,
+            "ownCredits": 163,
+            "receivedCash": 21916,
+            "ownCore": 2
+          }
+        ]
+      },
+      "current": {
+        "result": "candidate-win",
+        "reason": "engine-victory-conditions",
+        "ticks": 24477,
+        "lostValue": [
+          26700,
+          58900
+        ],
+        "purchasedMinerProducedTicks": [
+          5854
+        ],
+        "factoryReadyTicks": [
+          3602
+        ],
+        "samples": [
+          {
+            "tick": 7200,
+            "ownMiners": 3,
+            "ownCredits": 734,
+            "receivedCash": 6500,
+            "ownCore": 5
+          },
+          {
+            "tick": 8100,
+            "ownMiners": 3,
+            "ownCredits": 462,
+            "receivedCash": 8258,
+            "ownCore": 5
+          },
+          {
+            "tick": 9000,
+            "ownMiners": 3,
+            "ownCredits": 408,
+            "receivedCash": 10758,
+            "ownCore": 1
+          },
+          {
+            "tick": 10800,
+            "ownMiners": 3,
+            "ownCredits": 0,
+            "receivedCash": 12802,
+            "ownCore": 4
+          },
+          {
+            "tick": 14400,
+            "ownMiners": 3,
+            "ownCredits": 69,
+            "receivedCash": 19244,
+            "ownCore": 4
+          },
+          {
+            "tick": 16200,
+            "ownMiners": 3,
+            "ownCredits": 0,
+            "receivedCash": 22244,
+            "ownCore": 4
+          }
+        ]
+      }
+    },
+    {
+      "country": "Americans",
+      "seed": 101,
+      "swapped": true,
+      "previousRawSha256": "2714a537eea059ee5cbeed7e81564302cf7e7643c8172b23d9374abb94dd069c",
+      "currentRawSha256": "486aa42fac16a2ad3e1c2836f5a5f527dff746f93e2c7ae07a0d1175f02741c3",
+      "nativeResultsTelemetryAndSamplesEqual": false,
+      "previous": {
+        "result": "candidate-win",
+        "reason": "engine-victory-conditions",
+        "ticks": 15636,
+        "lostValue": [
+          9100,
+          42600
+        ],
+        "purchasedMinerProducedTicks": [
+          5607
+        ],
+        "factoryReadyTicks": [
+          3492
+        ],
+        "samples": [
+          {
+            "tick": 7200,
+            "ownMiners": 3,
+            "ownCredits": 507,
+            "receivedCash": 8000,
+            "ownCore": 6
+          },
+          {
+            "tick": 8100,
+            "ownMiners": 3,
+            "ownCredits": 454,
+            "receivedCash": 10433,
+            "ownCore": 3
+          },
+          {
+            "tick": 9000,
+            "ownMiners": 3,
+            "ownCredits": 963,
+            "receivedCash": 12704,
+            "ownCore": 4
+          },
+          {
+            "tick": 10800,
+            "ownMiners": 3,
+            "ownCredits": 197,
+            "receivedCash": 14704,
+            "ownCore": 5
+          },
+          {
+            "tick": 14400,
+            "ownMiners": 3,
+            "ownCredits": 0,
+            "receivedCash": 19777,
+            "ownCore": 4
+          }
+        ]
+      },
+      "current": {
+        "result": "candidate-win",
+        "reason": "engine-victory-conditions",
+        "ticks": 15428,
+        "lostValue": [
+          9400,
+          42400
+        ],
+        "purchasedMinerProducedTicks": [
+          5607
+        ],
+        "factoryReadyTicks": [
+          3492
+        ],
+        "samples": [
+          {
+            "tick": 7200,
+            "ownMiners": 3,
+            "ownCredits": 507,
+            "receivedCash": 8000,
+            "ownCore": 6
+          },
+          {
+            "tick": 8100,
+            "ownMiners": 3,
+            "ownCredits": 454,
+            "receivedCash": 10433,
+            "ownCore": 3
+          },
+          {
+            "tick": 9000,
+            "ownMiners": 3,
+            "ownCredits": 963,
+            "receivedCash": 12704,
+            "ownCore": 4
+          },
+          {
+            "tick": 10800,
+            "ownMiners": 3,
+            "ownCredits": 181,
+            "receivedCash": 14704,
+            "ownCore": 5
+          },
+          {
+            "tick": 14400,
+            "ownMiners": 3,
+            "ownCredits": 348,
+            "receivedCash": 20333,
+            "ownCore": 5
+          }
+        ]
+      }
+    },
+    {
+      "country": "Americans",
+      "seed": 202,
+      "swapped": false,
+      "previousRawSha256": "d456ec2a6f95e01ec71b2e9dd366e22d223a72071844c6dae2c9cc5a0cddc036",
+      "currentRawSha256": "0fb3abfa942c7f637d05db1fe283c5f371eed440d622466c1aa0e6b852512cd5",
+      "nativeResultsTelemetryAndSamplesEqual": false,
+      "previous": {
+        "result": "baseline-win",
+        "reason": "engine-victory-conditions",
+        "ticks": 13556,
+        "lostValue": [
+          34500,
+          8800
+        ],
+        "purchasedMinerProducedTicks": [
+          5854
+        ],
+        "factoryReadyTicks": [
+          3602
+        ],
+        "samples": [
+          {
+            "tick": 7200,
+            "ownMiners": 3,
+            "ownCredits": 734,
+            "receivedCash": 6500,
+            "ownCore": 5
+          },
+          {
+            "tick": 8100,
+            "ownMiners": 3,
+            "ownCredits": 550,
+            "receivedCash": 8258,
+            "ownCore": 5
+          },
+          {
+            "tick": 9000,
+            "ownMiners": 3,
+            "ownCredits": 352,
+            "receivedCash": 10758,
+            "ownCore": 0
+          },
+          {
+            "tick": 10800,
+            "ownMiners": 3,
+            "ownCredits": 0,
+            "receivedCash": 12861,
+            "ownCore": 2
+          }
+        ]
+      },
+      "current": {
+        "result": "candidate-win",
+        "reason": "engine-victory-conditions",
+        "ticks": 18447,
+        "lostValue": [
+          16900,
+          47500
+        ],
+        "purchasedMinerProducedTicks": [
+          5854
+        ],
+        "factoryReadyTicks": [
+          3602
+        ],
+        "samples": [
+          {
+            "tick": 7200,
+            "ownMiners": 3,
+            "ownCredits": 734,
+            "receivedCash": 6500,
+            "ownCore": 5
+          },
+          {
+            "tick": 8100,
+            "ownMiners": 3,
+            "ownCredits": 550,
+            "receivedCash": 8258,
+            "ownCore": 5
+          },
+          {
+            "tick": 9000,
+            "ownMiners": 3,
+            "ownCredits": 390,
+            "receivedCash": 10758,
+            "ownCore": 1
+          },
+          {
+            "tick": 10800,
+            "ownMiners": 3,
+            "ownCredits": 0,
+            "receivedCash": 12898,
+            "ownCore": 3
+          },
+          {
+            "tick": 14400,
+            "ownMiners": 3,
+            "ownCredits": 694,
+            "receivedCash": 20015,
+            "ownCore": 2
+          },
+          {
+            "tick": 16200,
+            "ownMiners": 3,
+            "ownCredits": 0,
+            "receivedCash": 22015,
+            "ownCore": 3
+          }
+        ]
+      }
+    },
+    {
+      "country": "Americans",
+      "seed": 202,
+      "swapped": true,
+      "previousRawSha256": "d456ec2a6f95e01ec71b2e9dd366e22d223a72071844c6dae2c9cc5a0cddc036",
+      "currentRawSha256": "0fb3abfa942c7f637d05db1fe283c5f371eed440d622466c1aa0e6b852512cd5",
+      "nativeResultsTelemetryAndSamplesEqual": false,
+      "previous": {
+        "result": "candidate-win",
+        "reason": "engine-victory-conditions",
+        "ticks": 13316,
+        "lostValue": [
+          4600,
+          37200
+        ],
+        "purchasedMinerProducedTicks": [
+          5607
+        ],
+        "factoryReadyTicks": [
+          3492
+        ],
+        "samples": [
+          {
+            "tick": 7200,
+            "ownMiners": 3,
+            "ownCredits": 507,
+            "receivedCash": 8000,
+            "ownCore": 6
+          },
+          {
+            "tick": 8100,
+            "ownMiners": 3,
+            "ownCredits": 454,
+            "receivedCash": 10356,
+            "ownCore": 3
+          },
+          {
+            "tick": 9000,
+            "ownMiners": 3,
+            "ownCredits": 159,
+            "receivedCash": 12231,
+            "ownCore": 5
+          },
+          {
+            "tick": 10800,
+            "ownMiners": 3,
+            "ownCredits": 330,
+            "receivedCash": 14798,
+            "ownCore": 5
+          }
+        ]
+      },
+      "current": {
+        "result": "candidate-win",
+        "reason": "engine-victory-conditions",
+        "ticks": 13860,
+        "lostValue": [
+          5300,
+          37400
+        ],
+        "purchasedMinerProducedTicks": [
+          5607
+        ],
+        "factoryReadyTicks": [
+          3492
+        ],
+        "samples": [
+          {
+            "tick": 7200,
+            "ownMiners": 3,
+            "ownCredits": 507,
+            "receivedCash": 8000,
+            "ownCore": 6
+          },
+          {
+            "tick": 8100,
+            "ownMiners": 3,
+            "ownCredits": 454,
+            "receivedCash": 10356,
+            "ownCore": 3
+          },
+          {
+            "tick": 9000,
+            "ownMiners": 3,
+            "ownCredits": 159,
+            "receivedCash": 12231,
+            "ownCore": 5
+          },
+          {
+            "tick": 10800,
+            "ownMiners": 3,
+            "ownCredits": 330,
+            "receivedCash": 14798,
+            "ownCore": 5
+          }
+        ]
+      }
+    },
+    {
+      "country": "Russians",
+      "seed": 101,
+      "swapped": false,
+      "previousRawSha256": "079c0db00aa944ecd873d5c54c25b5a22601fa9af4d2320ac578a5bb31c9b5b5",
+      "currentRawSha256": "52c94fc409941c285e3b2a5ef0ab848c4f89f49304fce84964c15a851e58622f",
+      "nativeResultsTelemetryAndSamplesEqual": true,
+      "previous": {
+        "result": "candidate-win",
+        "reason": "engine-victory-conditions",
+        "ticks": 25017,
+        "lostValue": [
+          21500,
+          45600
+        ],
+        "purchasedMinerProducedTicks": [
+          6709,
+          8117
+        ],
+        "factoryReadyTicks": [
+          3174
+        ],
+        "samples": [
+          {
+            "tick": 7200,
+            "ownMiners": 3,
+            "ownCredits": 2585,
+            "receivedCash": 6000,
+            "ownCore": 3
+          },
+          {
+            "tick": 8100,
+            "ownMiners": 3,
+            "ownCredits": 1128,
+            "receivedCash": 6000,
+            "ownCore": 4
+          },
+          {
+            "tick": 9000,
+            "ownMiners": 4,
+            "ownCredits": 2835,
+            "receivedCash": 9200,
+            "ownCore": 5
+          },
+          {
+            "tick": 10800,
+            "ownMiners": 4,
+            "ownCredits": 1345,
+            "receivedCash": 12100,
+            "ownCore": 3
+          },
+          {
+            "tick": 14400,
+            "ownMiners": 4,
+            "ownCredits": 2869,
+            "receivedCash": 20100,
+            "ownCore": 3
+          },
+          {
+            "tick": 16200,
+            "ownMiners": 4,
+            "ownCredits": 3004,
+            "receivedCash": 23925,
+            "ownCore": 2
+          }
+        ]
+      },
+      "current": {
+        "result": "candidate-win",
+        "reason": "engine-victory-conditions",
+        "ticks": 25017,
+        "lostValue": [
+          21500,
+          45600
+        ],
+        "purchasedMinerProducedTicks": [
+          6709,
+          8117
+        ],
+        "factoryReadyTicks": [
+          3174
+        ],
+        "samples": [
+          {
+            "tick": 7200,
+            "ownMiners": 3,
+            "ownCredits": 2585,
+            "receivedCash": 6000,
+            "ownCore": 3
+          },
+          {
+            "tick": 8100,
+            "ownMiners": 3,
+            "ownCredits": 1128,
+            "receivedCash": 6000,
+            "ownCore": 4
+          },
+          {
+            "tick": 9000,
+            "ownMiners": 4,
+            "ownCredits": 2835,
+            "receivedCash": 9200,
+            "ownCore": 5
+          },
+          {
+            "tick": 10800,
+            "ownMiners": 4,
+            "ownCredits": 1345,
+            "receivedCash": 12100,
+            "ownCore": 3
+          },
+          {
+            "tick": 14400,
+            "ownMiners": 4,
+            "ownCredits": 2869,
+            "receivedCash": 20100,
+            "ownCore": 3
+          },
+          {
+            "tick": 16200,
+            "ownMiners": 4,
+            "ownCredits": 3004,
+            "receivedCash": 23925,
+            "ownCore": 2
+          }
+        ]
+      }
+    },
+    {
+      "country": "Russians",
+      "seed": 101,
+      "swapped": true,
+      "previousRawSha256": "079c0db00aa944ecd873d5c54c25b5a22601fa9af4d2320ac578a5bb31c9b5b5",
+      "currentRawSha256": "52c94fc409941c285e3b2a5ef0ab848c4f89f49304fce84964c15a851e58622f",
+      "nativeResultsTelemetryAndSamplesEqual": true,
+      "previous": {
+        "result": "candidate-win",
+        "reason": "engine-victory-conditions",
+        "ticks": 25437,
+        "lostValue": [
+          19900,
+          47400
+        ],
+        "purchasedMinerProducedTicks": [
+          6155,
+          7793
+        ],
+        "factoryReadyTicks": [
+          3174,
+          13934
+        ],
+        "samples": [
+          {
+            "tick": 7200,
+            "ownMiners": 3,
+            "ownCredits": 0,
+            "receivedCash": 4000,
+            "ownCore": 4
+          },
+          {
+            "tick": 8100,
+            "ownMiners": 4,
+            "ownCredits": 2592,
+            "receivedCash": 8000,
+            "ownCore": 4
+          },
+          {
+            "tick": 9000,
+            "ownMiners": 4,
+            "ownCredits": 2974,
+            "receivedCash": 10075,
+            "ownCore": 6
+          },
+          {
+            "tick": 10800,
+            "ownMiners": 4,
+            "ownCredits": 693,
+            "receivedCash": 13125,
+            "ownCore": 4
+          },
+          {
+            "tick": 14400,
+            "ownMiners": 5,
+            "ownCredits": 873,
+            "receivedCash": 21125,
+            "ownCore": 3
+          },
+          {
+            "tick": 16200,
+            "ownMiners": 5,
+            "ownCredits": 883,
+            "receivedCash": 24275,
+            "ownCore": 3
+          }
+        ]
+      },
+      "current": {
+        "result": "candidate-win",
+        "reason": "engine-victory-conditions",
+        "ticks": 25437,
+        "lostValue": [
+          19900,
+          47400
+        ],
+        "purchasedMinerProducedTicks": [
+          6155,
+          7793
+        ],
+        "factoryReadyTicks": [
+          3174,
+          13934
+        ],
+        "samples": [
+          {
+            "tick": 7200,
+            "ownMiners": 3,
+            "ownCredits": 0,
+            "receivedCash": 4000,
+            "ownCore": 4
+          },
+          {
+            "tick": 8100,
+            "ownMiners": 4,
+            "ownCredits": 2592,
+            "receivedCash": 8000,
+            "ownCore": 4
+          },
+          {
+            "tick": 9000,
+            "ownMiners": 4,
+            "ownCredits": 2974,
+            "receivedCash": 10075,
+            "ownCore": 6
+          },
+          {
+            "tick": 10800,
+            "ownMiners": 4,
+            "ownCredits": 693,
+            "receivedCash": 13125,
+            "ownCore": 4
+          },
+          {
+            "tick": 14400,
+            "ownMiners": 5,
+            "ownCredits": 873,
+            "receivedCash": 21125,
+            "ownCore": 3
+          },
+          {
+            "tick": 16200,
+            "ownMiners": 5,
+            "ownCredits": 883,
+            "receivedCash": 24275,
+            "ownCore": 3
+          }
+        ]
+      }
+    },
+    {
+      "country": "Russians",
+      "seed": 202,
+      "swapped": false,
+      "previousRawSha256": "c49a2cb5cc54c3f8313f801774eeecbf66b15028b56500e18b64c46f0d9fcf17",
+      "currentRawSha256": "acd5f79cb977f9e392195910f60ccb0e0f4c5bb3e553064a49f647130f2ab2d3",
+      "nativeResultsTelemetryAndSamplesEqual": true,
+      "previous": {
+        "result": "candidate-win",
+        "reason": "engine-victory-conditions",
+        "ticks": 24132,
+        "lostValue": [
+          21100,
+          46400
+        ],
+        "purchasedMinerProducedTicks": [
+          6709,
+          8117
+        ],
+        "factoryReadyTicks": [
+          3174
+        ],
+        "samples": [
+          {
+            "tick": 7200,
+            "ownMiners": 3,
+            "ownCredits": 2585,
+            "receivedCash": 6000,
+            "ownCore": 3
+          },
+          {
+            "tick": 8100,
+            "ownMiners": 3,
+            "ownCredits": 1128,
+            "receivedCash": 6000,
+            "ownCore": 4
+          },
+          {
+            "tick": 9000,
+            "ownMiners": 4,
+            "ownCredits": 2835,
+            "receivedCash": 9200,
+            "ownCore": 5
+          },
+          {
+            "tick": 10800,
+            "ownMiners": 4,
+            "ownCredits": 1345,
+            "receivedCash": 12100,
+            "ownCore": 3
+          },
+          {
+            "tick": 14400,
+            "ownMiners": 4,
+            "ownCredits": 2869,
+            "receivedCash": 20100,
+            "ownCore": 3
+          },
+          {
+            "tick": 16200,
+            "ownMiners": 4,
+            "ownCredits": 3404,
+            "receivedCash": 23925,
+            "ownCore": 3
+          }
+        ]
+      },
+      "current": {
+        "result": "candidate-win",
+        "reason": "engine-victory-conditions",
+        "ticks": 24132,
+        "lostValue": [
+          21100,
+          46400
+        ],
+        "purchasedMinerProducedTicks": [
+          6709,
+          8117
+        ],
+        "factoryReadyTicks": [
+          3174
+        ],
+        "samples": [
+          {
+            "tick": 7200,
+            "ownMiners": 3,
+            "ownCredits": 2585,
+            "receivedCash": 6000,
+            "ownCore": 3
+          },
+          {
+            "tick": 8100,
+            "ownMiners": 3,
+            "ownCredits": 1128,
+            "receivedCash": 6000,
+            "ownCore": 4
+          },
+          {
+            "tick": 9000,
+            "ownMiners": 4,
+            "ownCredits": 2835,
+            "receivedCash": 9200,
+            "ownCore": 5
+          },
+          {
+            "tick": 10800,
+            "ownMiners": 4,
+            "ownCredits": 1345,
+            "receivedCash": 12100,
+            "ownCore": 3
+          },
+          {
+            "tick": 14400,
+            "ownMiners": 4,
+            "ownCredits": 2869,
+            "receivedCash": 20100,
+            "ownCore": 3
+          },
+          {
+            "tick": 16200,
+            "ownMiners": 4,
+            "ownCredits": 3404,
+            "receivedCash": 23925,
+            "ownCore": 3
+          }
+        ]
+      }
+    },
+    {
+      "country": "Russians",
+      "seed": 202,
+      "swapped": true,
+      "previousRawSha256": "c49a2cb5cc54c3f8313f801774eeecbf66b15028b56500e18b64c46f0d9fcf17",
+      "currentRawSha256": "acd5f79cb977f9e392195910f60ccb0e0f4c5bb3e553064a49f647130f2ab2d3",
+      "nativeResultsTelemetryAndSamplesEqual": true,
+      "previous": {
+        "result": "candidate-win",
+        "reason": "engine-victory-conditions",
+        "ticks": 17187,
+        "lostValue": [
+          6000,
+          39700
+        ],
+        "purchasedMinerProducedTicks": [
+          6155,
+          7793
+        ],
+        "factoryReadyTicks": [
+          3174,
+          13914
+        ],
+        "samples": [
+          {
+            "tick": 7200,
+            "ownMiners": 3,
+            "ownCredits": 0,
+            "receivedCash": 4000,
+            "ownCore": 4
+          },
+          {
+            "tick": 8100,
+            "ownMiners": 4,
+            "ownCredits": 2592,
+            "receivedCash": 8000,
+            "ownCore": 4
+          },
+          {
+            "tick": 9000,
+            "ownMiners": 4,
+            "ownCredits": 2974,
+            "receivedCash": 10075,
+            "ownCore": 6
+          },
+          {
+            "tick": 10800,
+            "ownMiners": 4,
+            "ownCredits": 693,
+            "receivedCash": 13125,
+            "ownCore": 4
+          },
+          {
+            "tick": 14400,
+            "ownMiners": 5,
+            "ownCredits": 764,
+            "receivedCash": 21125,
+            "ownCore": 8
+          },
+          {
+            "tick": 16200,
+            "ownMiners": 5,
+            "ownCredits": 156,
+            "receivedCash": 24275,
+            "ownCore": 10
+          }
+        ]
+      },
+      "current": {
+        "result": "candidate-win",
+        "reason": "engine-victory-conditions",
+        "ticks": 17187,
+        "lostValue": [
+          6000,
+          39700
+        ],
+        "purchasedMinerProducedTicks": [
+          6155,
+          7793
+        ],
+        "factoryReadyTicks": [
+          3174,
+          13914
+        ],
+        "samples": [
+          {
+            "tick": 7200,
+            "ownMiners": 3,
+            "ownCredits": 0,
+            "receivedCash": 4000,
+            "ownCore": 4
+          },
+          {
+            "tick": 8100,
+            "ownMiners": 4,
+            "ownCredits": 2592,
+            "receivedCash": 8000,
+            "ownCore": 4
+          },
+          {
+            "tick": 9000,
+            "ownMiners": 4,
+            "ownCredits": 2974,
+            "receivedCash": 10075,
+            "ownCore": 6
+          },
+          {
+            "tick": 10800,
+            "ownMiners": 4,
+            "ownCredits": 693,
+            "receivedCash": 13125,
+            "ownCore": 4
+          },
+          {
+            "tick": 14400,
+            "ownMiners": 5,
+            "ownCredits": 764,
+            "receivedCash": 21125,
+            "ownCore": 8
+          },
+          {
+            "tick": 16200,
+            "ownMiners": 5,
+            "ownCredits": 156,
+            "receivedCash": 24275,
+            "ownCore": 10
+          }
+        ]
+      }
+    }
+  ]
+}

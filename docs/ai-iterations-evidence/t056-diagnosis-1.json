@@ -1,0 +1,711 @@
+{
+  "passed": true,
+  "equalSamples": 52,
+  "newWinSamples": 0,
+  "originalSha256": "0c52540188d2d1e10da2785ef19c120de3a210c459478b890fccdbd277c75b21",
+  "replaySha256": "d133b87e40adf7f8585da53d0b25a6f60a629539cc4316ff8fbf0dde862d208f",
+  "diagnosticSha256": "08f4b86f1bdd6223e2028886c07d5eddfa3d2767e11c1f326c2d7e03deed756d",
+  "summaries": [
+    {
+      "seed": 101,
+      "swapped": false,
+      "player": "@@AI1@@",
+      "country": "Russians",
+      "coreOrders": 1394,
+      "directAttackOrders": 307,
+      "directRetargetOrders": 173,
+      "retargetFromStillVisibleInRange": 41,
+      "cooldownRetargetFromStillVisibleInRange": 41,
+      "examples": [
+        {
+          "tick": 10548,
+          "ownedUnit": {
+            "id": 912,
+            "name": "HTNK",
+            "x": 49,
+            "y": 70,
+            "hitPoints": 400,
+            "maxHitPoints": 400,
+            "attackState": 2,
+            "isFiring": false
+          },
+          "priorVisibleTarget": {
+            "id": 918,
+            "name": "HTNK",
+            "x": 54,
+            "y": 72,
+            "healthLevel": 0
+          },
+          "nextTargetId": 910,
+          "estimatedPriorDistance": 5.385164807134505,
+          "ownRange": 5.75,
+          "ownCooldown": 63,
+          "protectedBurst": false
+        },
+        {
+          "tick": 10752,
+          "ownedUnit": {
+            "id": 895,
+            "name": "HTNK",
+            "x": 49,
+            "y": 72,
+            "hitPoints": 130,
+            "maxHitPoints": 400,
+            "attackState": 2,
+            "isFiring": false
+          },
+          "priorVisibleTarget": {
+            "id": 908,
+            "name": "HTNK",
+            "x": 53,
+            "y": 75,
+            "healthLevel": 1
+          },
+          "nextTargetId": 896,
+          "estimatedPriorDistance": 5,
+          "ownRange": 5.75,
+          "ownCooldown": 34,
+          "protectedBurst": false
+        },
+        {
+          "tick": 10794,
+          "ownedUnit": {
+            "id": 905,
+            "name": "HTNK",
+            "x": 50,
+            "y": 70,
+            "hitPoints": 400,
+            "maxHitPoints": 400,
+            "attackState": 2,
+            "isFiring": false
+          },
+          "priorVisibleTarget": {
+            "id": 901,
+            "name": "HTNK",
+            "x": 55,
+            "y": 72,
+            "healthLevel": 0
+          },
+          "nextTargetId": 908,
+          "estimatedPriorDistance": 5.385164807134505,
+          "ownRange": 5.75,
+          "ownCooldown": 53,
+          "protectedBurst": false
+        },
+        {
+          "tick": 10920,
+          "ownedUnit": {
+            "id": 891,
+            "name": "HTNK",
+            "x": 50,
+            "y": 72,
+            "hitPoints": 220,
+            "maxHitPoints": 400,
+            "attackState": 2,
+            "isFiring": false
+          },
+          "priorVisibleTarget": {
+            "id": 883,
+            "name": "HTNK",
+            "x": 54,
+            "y": 74,
+            "healthLevel": 0
+          },
+          "nextTargetId": 901,
+          "estimatedPriorDistance": 4.47213595499958,
+          "ownRange": 5.75,
+          "ownCooldown": 21,
+          "protectedBurst": false
+        },
+        {
+          "tick": 10920,
+          "ownedUnit": {
+            "id": 919,
+            "name": "HTNK",
+            "x": 50,
+            "y": 71,
+            "hitPoints": 400,
+            "maxHitPoints": 400,
+            "attackState": 2,
+            "isFiring": false
+          },
+          "priorVisibleTarget": {
+            "id": 883,
+            "name": "HTNK",
+            "x": 54,
+            "y": 74,
+            "healthLevel": 0
+          },
+          "nextTargetId": 901,
+          "estimatedPriorDistance": 5,
+          "ownRange": 5.75,
+          "ownCooldown": 57,
+          "protectedBurst": false
+        },
+        {
+          "tick": 12924,
+          "ownedUnit": {
+            "id": 1007,
+            "name": "HTNK",
+            "x": 63,
+            "y": 79,
+            "hitPoints": 220,
+            "maxHitPoints": 400,
+            "attackState": 2,
+            "isFiring": false
+          },
+          "priorVisibleTarget": {
+            "id": 889,
+            "name": "E2",
+            "x": 68,
+            "y": 80,
+            "healthLevel": 0
+          },
+          "nextTargetId": 890,
+          "estimatedPriorDistance": 5.0990195135927845,
+          "ownRange": 5.75,
+          "ownCooldown": 59,
+          "protectedBurst": false
+        },
+        {
+          "tick": 13566,
+          "ownedUnit": {
+            "id": 1073,
+            "name": "HTNK",
+            "x": 70,
+            "y": 78,
+            "hitPoints": 199,
+            "maxHitPoints": 400,
+            "attackState": 2,
+            "isFiring": false
+          },
+          "priorVisibleTarget": {
+            "id": 1043,
+            "name": "NAPOWR",
+            "x": 70,
+            "y": 82,
+            "healthLevel": 0
+          },
+          "nextTargetId": 1163,
+          "estimatedPriorDistance": 4,
+          "ownRange": 5.75,
+          "ownCooldown": 58,
+          "protectedBurst": false
+        },
+        {
+          "tick": 14094,
+          "ownedUnit": {
+            "id": 1007,
+            "name": "HTNK",
+            "x": 71,
+            "y": 75,
+            "hitPoints": 154,
+            "maxHitPoints": 400,
+            "attackState": 2,
+            "isFiring": false
+          },
+          "priorVisibleTarget": {
+            "id": 898,
+            "name": "NAREFN",
+            "x": 75,
+            "y": 75,
+            "healthLevel": 0
+          },
+          "nextTargetId": 1206,
+          "estimatedPriorDistance": 4,
+          "ownRange": 5.75,
+          "ownCooldown": 14,
+          "protectedBurst": false
+        },
+        {
+          "tick": 14112,
+          "ownedUnit": {
+            "id": 1131,
+            "name": "HTNK",
+            "x": 68,
+            "y": 79,
+            "hitPoints": 400,
+            "maxHitPoints": 400,
+            "attackState": 2,
+            "isFiring": false
+          },
+          "priorVisibleTarget": {
+            "id": 1043,
+            "name": "NAPOWR",
+            "x": 70,
+            "y": 82,
+            "healthLevel": 0
+          },
+          "nextTargetId": 1206,
+          "estimatedPriorDistance": 3.6055512754639896,
+          "ownRange": 5.75,
+          "ownCooldown": 11,
+          "protectedBurst": false
+        },
+        {
+          "tick": 14118,
+          "ownedUnit": {
+            "id": 1073,
+            "name": "HTNK",
+            "x": 66,
+            "y": 80,
+            "hitPoints": 19,
+            "maxHitPoints": 400,
+            "attackState": 2,
+            "isFiring": false
+          },
+          "priorVisibleTarget": {
+            "id": 1043,
+            "name": "NAPOWR",
+            "x": 70,
+            "y": 82,
+            "healthLevel": 0
+          },
+          "nextTargetId": 1206,
+          "estimatedPriorDistance": 4.47213595499958,
+          "ownRange": 5.75,
+          "ownCooldown": 58,
+          "protectedBurst": false
+        },
+        {
+          "tick": 14184,
+          "ownedUnit": {
+            "id": 1112,
+            "name": "HTNK",
+            "x": 67,
+            "y": 84,
+            "hitPoints": 400,
+            "maxHitPoints": 400,
+            "attackState": 2,
+            "isFiring": false
+          },
+          "priorVisibleTarget": {
+            "id": 1035,
+            "name": "NAREFN",
+            "x": 69,
+            "y": 86,
+            "healthLevel": 0
+          },
+          "nextTargetId": 1206,
+          "estimatedPriorDistance": 2.82842712474619,
+          "ownRange": 5.75,
+          "ownCooldown": 50,
+          "protectedBurst": false
+        },
+        {
+          "tick": 14328,
+          "ownedUnit": {
+            "id": 1112,
+            "name": "HTNK",
+            "x": 70,
+            "y": 81,
+            "hitPoints": 400,
+            "maxHitPoints": 400,
+            "attackState": 2,
+            "isFiring": false
+          },
+          "priorVisibleTarget": {
+            "id": 1043,
+            "name": "NAPOWR",
+            "x": 70,
+            "y": 82,
+            "healthLevel": 0
+          },
+          "nextTargetId": 1035,
+          "estimatedPriorDistance": 1,
+          "ownRange": 5.75,
+          "ownCooldown": 58,
+          "protectedBurst": false
+        },
+        {
+          "tick": 14454,
+          "ownedUnit": {
+            "id": 1112,
+            "name": "HTNK",
+            "x": 69,
+            "y": 82,
+            "hitPoints": 400,
+            "maxHitPoints": 400,
+            "attackState": 2,
+            "isFiring": false
+          },
+          "priorVisibleTarget": {
+            "id": 1035,
+            "name": "NAREFN",
+            "x": 69,
+            "y": 86,
+            "healthLevel": 0
+          },
+          "nextTargetId": 1043,
+          "estimatedPriorDistance": 4,
+          "ownRange": 5.75,
+          "ownCooldown": 62,
+          "protectedBurst": false
+        },
+        {
+          "tick": 14670,
+          "ownedUnit": {
+            "id": 1112,
+            "name": "HTNK",
+            "x": 69,
+            "y": 82,
+            "hitPoints": 397,
+            "maxHitPoints": 400,
+            "attackState": 2,
+            "isFiring": false
+          },
+          "priorVisibleTarget": {
+            "id": 1035,
+            "name": "NAREFN",
+            "x": 69,
+            "y": 86,
+            "healthLevel": 0
+          },
+          "nextTargetId": 1240,
+          "estimatedPriorDistance": 4,
+          "ownRange": 5.75,
+          "ownCooldown": 47,
+          "protectedBurst": false
+        },
+        {
+          "tick": 14706,
+          "ownedUnit": {
+            "id": 1073,
+            "name": "HTNK",
+            "x": 67,
+            "y": 84,
+            "hitPoints": 19,
+            "maxHitPoints": 400,
+            "attackState": 2,
+            "isFiring": false
+          },
+          "priorVisibleTarget": {
+            "id": 1035,
+            "name": "NAREFN",
+            "x": 69,
+            "y": 86,
+            "healthLevel": 0
+          },
+          "nextTargetId": 1240,
+          "estimatedPriorDistance": 2.82842712474619,
+          "ownRange": 5.75,
+          "ownCooldown": 39,
+          "protectedBurst": false
+        },
+        {
+          "tick": 14874,
+          "ownedUnit": {
+            "id": 1184,
+            "name": "HTNK",
+            "x": 66,
+            "y": 82,
+            "hitPoints": 376,
+            "maxHitPoints": 400,
+            "attackState": 1,
+            "isFiring": false
+          },
+          "priorVisibleTarget": {
+            "id": 1035,
+            "name": "NAREFN",
+            "x": 69,
+            "y": 86,
+            "healthLevel": 0
+          },
+          "nextTargetId": 1249,
+          "estimatedPriorDistance": 5,
+          "ownRange": 5.75,
+          "ownCooldown": 47,
+          "protectedBurst": false
+        }
+      ]
+    },
+    {
+      "seed": 101,
+      "swapped": true,
+      "player": "@@AI2@@",
+      "country": "Russians",
+      "coreOrders": 998,
+      "directAttackOrders": 97,
+      "directRetargetOrders": 57,
+      "retargetFromStillVisibleInRange": 11,
+      "cooldownRetargetFromStillVisibleInRange": 11,
+      "examples": [
+        {
+          "tick": 10536,
+          "ownedUnit": {
+            "id": 908,
+            "name": "HTNK",
+            "x": 53,
+            "y": 75,
+            "hitPoints": 400,
+            "maxHitPoints": 400,
+            "attackState": 2,
+            "isFiring": false
+          },
+          "priorVisibleTarget": {
+            "id": 891,
+            "name": "HTNK",
+            "x": 49,
+            "y": 71,
+            "healthLevel": 0
+          },
+          "nextTargetId": 916,
+          "estimatedPriorDistance": 5.65685424949238,
+          "ownRange": 5.75,
+          "ownCooldown": 30,
+          "protectedBurst": false
+        },
+        {
+          "tick": 10572,
+          "ownedUnit": {
+            "id": 896,
+            "name": "HTNK",
+            "x": 53,
+            "y": 74,
+            "hitPoints": 400,
+            "maxHitPoints": 400,
+            "attackState": 2,
+            "isFiring": false
+          },
+          "priorVisibleTarget": {
+            "id": 895,
+            "name": "HTNK",
+            "x": 49,
+            "y": 72,
+            "healthLevel": 0
+          },
+          "nextTargetId": 912,
+          "estimatedPriorDistance": 4.47213595499958,
+          "ownRange": 5.75,
+          "ownCooldown": 47,
+          "protectedBurst": false
+        },
+        {
+          "tick": 10572,
+          "ownedUnit": {
+            "id": 908,
+            "name": "HTNK",
+            "x": 53,
+            "y": 75,
+            "hitPoints": 400,
+            "maxHitPoints": 400,
+            "attackState": 2,
+            "isFiring": false
+          },
+          "priorVisibleTarget": {
+            "id": 895,
+            "name": "HTNK",
+            "x": 49,
+            "y": 72,
+            "healthLevel": 0
+          },
+          "nextTargetId": 912,
+          "estimatedPriorDistance": 5,
+          "ownRange": 5.75,
+          "ownCooldown": 59,
+          "protectedBurst": false
+        },
+        {
+          "tick": 10572,
+          "ownedUnit": {
+            "id": 918,
+            "name": "HTNK",
+            "x": 54,
+            "y": 72,
+            "hitPoints": 220,
+            "maxHitPoints": 400,
+            "attackState": 2,
+            "isFiring": false
+          },
+          "priorVisibleTarget": {
+            "id": 882,
+            "name": "HTNK",
+            "x": 50,
+            "y": 69,
+            "healthLevel": 0
+          },
+          "nextTargetId": 912,
+          "estimatedPriorDistance": 5,
+          "ownRange": 5.75,
+          "ownCooldown": 25,
+          "protectedBurst": false
+        },
+        {
+          "tick": 10632,
+          "ownedUnit": {
+            "id": 883,
+            "name": "HTNK",
+            "x": 54,
+            "y": 74,
+            "hitPoints": 400,
+            "maxHitPoints": 400,
+            "attackState": 2,
+            "isFiring": false
+          },
+          "priorVisibleTarget": {
+            "id": 895,
+            "name": "HTNK",
+            "x": 49,
+            "y": 72,
+            "healthLevel": 0
+          },
+          "nextTargetId": 912,
+          "estimatedPriorDistance": 5.385164807134505,
+          "ownRange": 5.75,
+          "ownCooldown": 24,
+          "protectedBurst": false
+        },
+        {
+          "tick": 10650,
+          "ownedUnit": {
+            "id": 896,
+            "name": "HTNK",
+            "x": 53,
+            "y": 74,
+            "hitPoints": 400,
+            "maxHitPoints": 400,
+            "attackState": 2,
+            "isFiring": false
+          },
+          "priorVisibleTarget": {
+            "id": 895,
+            "name": "HTNK",
+            "x": 49,
+            "y": 72,
+            "healthLevel": 0
+          },
+          "nextTargetId": 882,
+          "estimatedPriorDistance": 4.47213595499958,
+          "ownRange": 5.75,
+          "ownCooldown": 34,
+          "protectedBurst": false
+        },
+        {
+          "tick": 10650,
+          "ownedUnit": {
+            "id": 901,
+            "name": "HTNK",
+            "x": 55,
+            "y": 72,
+            "hitPoints": 400,
+            "maxHitPoints": 400,
+            "attackState": 2,
+            "isFiring": false
+          },
+          "priorVisibleTarget": {
+            "id": 905,
+            "name": "HTNK",
+            "x": 50,
+            "y": 70,
+            "healthLevel": 0
+          },
+          "nextTargetId": 882,
+          "estimatedPriorDistance": 5.385164807134505,
+          "ownRange": 5.75,
+          "ownCooldown": 60,
+          "protectedBurst": false
+        },
+        {
+          "tick": 10650,
+          "ownedUnit": {
+            "id": 908,
+            "name": "HTNK",
+            "x": 53,
+            "y": 75,
+            "hitPoints": 310,
+            "maxHitPoints": 400,
+            "attackState": 2,
+            "isFiring": false
+          },
+          "priorVisibleTarget": {
+            "id": 895,
+            "name": "HTNK",
+            "x": 49,
+            "y": 72,
+            "healthLevel": 0
+          },
+          "nextTargetId": 882,
+          "estimatedPriorDistance": 5,
+          "ownRange": 5.75,
+          "ownCooldown": 46,
+          "protectedBurst": false
+        },
+        {
+          "tick": 10776,
+          "ownedUnit": {
+            "id": 883,
+            "name": "HTNK",
+            "x": 54,
+            "y": 74,
+            "hitPoints": 400,
+            "maxHitPoints": 400,
+            "attackState": 2,
+            "isFiring": false
+          },
+          "priorVisibleTarget": {
+            "id": 895,
+            "name": "HTNK",
+            "x": 49,
+            "y": 72,
+            "healthLevel": 1
+          },
+          "nextTargetId": 882,
+          "estimatedPriorDistance": 5.385164807134505,
+          "ownRange": 5.75,
+          "ownCooldown": 10,
+          "protectedBurst": false
+        },
+        {
+          "tick": 10806,
+          "ownedUnit": {
+            "id": 892,
+            "name": "HTNK",
+            "x": 55,
+            "y": 73,
+            "hitPoints": 400,
+            "maxHitPoints": 400,
+            "attackState": 2,
+            "isFiring": false
+          },
+          "priorVisibleTarget": {
+            "id": 919,
+            "name": "HTNK",
+            "x": 50,
+            "y": 71,
+            "healthLevel": 0
+          },
+          "nextTargetId": 895,
+          "estimatedPriorDistance": 5.385164807134505,
+          "ownRange": 5.75,
+          "ownCooldown": 43,
+          "protectedBurst": false
+        },
+        {
+          "tick": 10806,
+          "ownedUnit": {
+            "id": 901,
+            "name": "HTNK",
+            "x": 55,
+            "y": 72,
+            "hitPoints": 310,
+            "maxHitPoints": 400,
+            "attackState": 2,
+            "isFiring": false
+          },
+          "priorVisibleTarget": {
+            "id": 919,
+            "name": "HTNK",
+            "x": 50,
+            "y": 71,
+            "healthLevel": 0
+          },
+          "nextTargetId": 895,
+          "estimatedPriorDistance": 5.0990195135927845,
+          "ownRange": 5.75,
+          "ownCooldown": 34,
+          "protectedBurst": false
+        }
+      ]
+    }
+  ]
+}

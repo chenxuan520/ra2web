@@ -1,0 +1,734 @@
+{
+  "passed": true,
+  "equalSamples": 45,
+  "newWinSamples": 0,
+  "originalSha256": "e96393d09cb7b2c2c2a34935181ce53908772cd970af29c38a258c785794078a",
+  "replaySha256": "233946bb9faad3dec967a516c0949e448b04dcf7db67b7a4134329352e5b96a9",
+  "diagnosticSha256": "01b5d98a4d3418e642e2108967cd8909bce53566170cac843dc528c5a9d694f0",
+  "summaries": [
+    {
+      "seed": 202,
+      "swapped": false,
+      "player": "@@AI1@@",
+      "country": "Americans",
+      "minerQueueRequests": 4,
+      "minerUnqueueRequests": 3,
+      "cancellations": [
+        {
+          "tick": 8070,
+          "method": "unqueueFromProduction",
+          "arguments": [
+            3,
+            "CMIN",
+            7,
+            1
+          ],
+          "ownedMiners": 3,
+          "ownedCore": 5,
+          "ownedRefineries": 2,
+          "visibleIntrudersWithin22": 0,
+          "visibleVehiclesWithin48": 0,
+          "currentQueue": {
+            "status": 1,
+            "items": [
+              {
+                "name": "CMIN",
+                "quantity": 1
+              }
+            ]
+          },
+          "selected": {
+            "name": "MTNK",
+            "priority": 75
+          },
+          "priorities": [
+            {
+              "name": "CMIN",
+              "priority": 18.75
+            },
+            {
+              "name": "FV",
+              "priority": 45
+            },
+            {
+              "name": "MTNK",
+              "priority": 75
+            }
+          ]
+        },
+        {
+          "tick": 15352,
+          "method": "unqueueFromProduction",
+          "arguments": [
+            3,
+            "CMIN",
+            7,
+            1
+          ],
+          "ownedMiners": 3,
+          "ownedCore": 5,
+          "ownedRefineries": 2,
+          "visibleIntrudersWithin22": 0,
+          "visibleVehiclesWithin48": 1,
+          "currentQueue": {
+            "status": 1,
+            "items": [
+              {
+                "name": "CMIN",
+                "quantity": 1
+              }
+            ]
+          },
+          "selected": {
+            "name": "MTNK",
+            "priority": 75
+          },
+          "priorities": [
+            {
+              "name": "CMIN",
+              "priority": 18.75
+            },
+            {
+              "name": "FV",
+              "priority": 65
+            },
+            {
+              "name": "MTNK",
+              "priority": 75
+            }
+          ]
+        },
+        {
+          "tick": 19308,
+          "method": "unqueueFromProduction",
+          "arguments": [
+            3,
+            "CMIN",
+            7,
+            1
+          ],
+          "ownedMiners": 3,
+          "ownedCore": 5,
+          "ownedRefineries": 2,
+          "visibleIntrudersWithin22": 0,
+          "visibleVehiclesWithin48": 1,
+          "currentQueue": {
+            "status": 1,
+            "items": [
+              {
+                "name": "CMIN",
+                "quantity": 1
+              }
+            ]
+          },
+          "selected": {
+            "name": "MTNK",
+            "priority": 75
+          },
+          "priorities": [
+            {
+              "name": "CMIN",
+              "priority": 18.75
+            },
+            {
+              "name": "FV",
+              "priority": 65
+            },
+            {
+              "name": "MTNK",
+              "priority": 75
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "tick": 4852,
+          "method": "queueForProduction",
+          "arguments": [
+            3,
+            "CMIN",
+            7,
+            1
+          ],
+          "ownedMiners": 2,
+          "ownedCore": 3,
+          "ownedRefineries": 2,
+          "visibleIntrudersWithin22": 0,
+          "visibleVehiclesWithin48": 0,
+          "currentQueue": {
+            "status": 0,
+            "items": []
+          },
+          "selected": {
+            "name": "CMIN",
+            "priority": 90
+          },
+          "priorities": [
+            {
+              "name": "MTNK",
+              "priority": 85
+            },
+            {
+              "name": "CMIN",
+              "priority": 90
+            }
+          ]
+        },
+        {
+          "tick": 7430,
+          "method": "queueForProduction",
+          "arguments": [
+            3,
+            "CMIN",
+            7,
+            1
+          ],
+          "ownedMiners": 3,
+          "ownedCore": 6,
+          "ownedRefineries": 2,
+          "visibleIntrudersWithin22": 0,
+          "visibleVehiclesWithin48": 0,
+          "currentQueue": {
+            "status": 0,
+            "items": []
+          },
+          "selected": {
+            "name": "CMIN",
+            "priority": 78
+          },
+          "priorities": [
+            {
+              "name": "MTNK",
+              "priority": 75
+            },
+            {
+              "name": "CMIN",
+              "priority": 78
+            }
+          ]
+        },
+        {
+          "tick": 8070,
+          "method": "unqueueFromProduction",
+          "arguments": [
+            3,
+            "CMIN",
+            7,
+            1
+          ],
+          "ownedMiners": 3,
+          "ownedCore": 5,
+          "ownedRefineries": 2,
+          "visibleIntrudersWithin22": 0,
+          "visibleVehiclesWithin48": 0,
+          "currentQueue": {
+            "status": 1,
+            "items": [
+              {
+                "name": "CMIN",
+                "quantity": 1
+              }
+            ]
+          },
+          "selected": {
+            "name": "MTNK",
+            "priority": 75
+          },
+          "priorities": [
+            {
+              "name": "CMIN",
+              "priority": 18.75
+            },
+            {
+              "name": "FV",
+              "priority": 45
+            },
+            {
+              "name": "MTNK",
+              "priority": 75
+            }
+          ]
+        },
+        {
+          "tick": 14998,
+          "method": "queueForProduction",
+          "arguments": [
+            3,
+            "CMIN",
+            7,
+            1
+          ],
+          "ownedMiners": 3,
+          "ownedCore": 6,
+          "ownedRefineries": 2,
+          "visibleIntrudersWithin22": 0,
+          "visibleVehiclesWithin48": 0,
+          "currentQueue": {
+            "status": 0,
+            "items": []
+          },
+          "selected": {
+            "name": "CMIN",
+            "priority": 78
+          },
+          "priorities": [
+            {
+              "name": "MTNK",
+              "priority": 75
+            },
+            {
+              "name": "CMIN",
+              "priority": 78
+            }
+          ]
+        },
+        {
+          "tick": 15352,
+          "method": "unqueueFromProduction",
+          "arguments": [
+            3,
+            "CMIN",
+            7,
+            1
+          ],
+          "ownedMiners": 3,
+          "ownedCore": 5,
+          "ownedRefineries": 2,
+          "visibleIntrudersWithin22": 0,
+          "visibleVehiclesWithin48": 1,
+          "currentQueue": {
+            "status": 1,
+            "items": [
+              {
+                "name": "CMIN",
+                "quantity": 1
+              }
+            ]
+          },
+          "selected": {
+            "name": "MTNK",
+            "priority": 75
+          },
+          "priorities": [
+            {
+              "name": "CMIN",
+              "priority": 18.75
+            },
+            {
+              "name": "FV",
+              "priority": 65
+            },
+            {
+              "name": "MTNK",
+              "priority": 75
+            }
+          ]
+        },
+        {
+          "tick": 18694,
+          "method": "queueForProduction",
+          "arguments": [
+            3,
+            "CMIN",
+            7,
+            1
+          ],
+          "ownedMiners": 3,
+          "ownedCore": 6,
+          "ownedRefineries": 2,
+          "visibleIntrudersWithin22": 0,
+          "visibleVehiclesWithin48": 0,
+          "currentQueue": {
+            "status": 0,
+            "items": []
+          },
+          "selected": {
+            "name": "CMIN",
+            "priority": 78
+          },
+          "priorities": [
+            {
+              "name": "MTNK",
+              "priority": 75
+            },
+            {
+              "name": "CMIN",
+              "priority": 78
+            }
+          ]
+        },
+        {
+          "tick": 19308,
+          "method": "unqueueFromProduction",
+          "arguments": [
+            3,
+            "CMIN",
+            7,
+            1
+          ],
+          "ownedMiners": 3,
+          "ownedCore": 5,
+          "ownedRefineries": 2,
+          "visibleIntrudersWithin22": 0,
+          "visibleVehiclesWithin48": 1,
+          "currentQueue": {
+            "status": 1,
+            "items": [
+              {
+                "name": "CMIN",
+                "quantity": 1
+              }
+            ]
+          },
+          "selected": {
+            "name": "MTNK",
+            "priority": 75
+          },
+          "priorities": [
+            {
+              "name": "CMIN",
+              "priority": 18.75
+            },
+            {
+              "name": "FV",
+              "priority": 65
+            },
+            {
+              "name": "MTNK",
+              "priority": 75
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "seed": 202,
+      "swapped": true,
+      "player": "@@AI2@@",
+      "country": "Americans",
+      "minerQueueRequests": 4,
+      "minerUnqueueRequests": 2,
+      "cancellations": [
+        {
+          "tick": 7634,
+          "method": "unqueueFromProduction",
+          "arguments": [
+            3,
+            "CMIN",
+            7,
+            1
+          ],
+          "ownedMiners": 3,
+          "ownedCore": 5,
+          "ownedRefineries": 2,
+          "visibleIntrudersWithin22": 0,
+          "visibleVehiclesWithin48": 0,
+          "currentQueue": {
+            "status": 1,
+            "items": [
+              {
+                "name": "CMIN",
+                "quantity": 1
+              }
+            ]
+          },
+          "selected": {
+            "name": "MTNK",
+            "priority": 75
+          },
+          "priorities": [
+            {
+              "name": "CMIN",
+              "priority": 18.75
+            },
+            {
+              "name": "FV",
+              "priority": 45
+            },
+            {
+              "name": "MTNK",
+              "priority": 75
+            }
+          ]
+        },
+        {
+          "tick": 10398,
+          "method": "unqueueFromProduction",
+          "arguments": [
+            3,
+            "CMIN",
+            7,
+            1
+          ],
+          "ownedMiners": 3,
+          "ownedCore": 5,
+          "ownedRefineries": 2,
+          "visibleIntrudersWithin22": 0,
+          "visibleVehiclesWithin48": 4,
+          "currentQueue": {
+            "status": 1,
+            "items": [
+              {
+                "name": "CMIN",
+                "quantity": 1
+              }
+            ]
+          },
+          "selected": {
+            "name": "MTNK",
+            "priority": 75
+          },
+          "priorities": [
+            {
+              "name": "CMIN",
+              "priority": 18.75
+            },
+            {
+              "name": "FV",
+              "priority": 45
+            },
+            {
+              "name": "MTNK",
+              "priority": 75
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "tick": 4742,
+          "method": "queueForProduction",
+          "arguments": [
+            3,
+            "CMIN",
+            7,
+            1
+          ],
+          "ownedMiners": 2,
+          "ownedCore": 3,
+          "ownedRefineries": 2,
+          "visibleIntrudersWithin22": 0,
+          "visibleVehiclesWithin48": 0,
+          "currentQueue": {
+            "status": 0,
+            "items": []
+          },
+          "selected": {
+            "name": "CMIN",
+            "priority": 90
+          },
+          "priorities": [
+            {
+              "name": "MTNK",
+              "priority": 85
+            },
+            {
+              "name": "CMIN",
+              "priority": 90
+            }
+          ]
+        },
+        {
+          "tick": 7064,
+          "method": "queueForProduction",
+          "arguments": [
+            3,
+            "CMIN",
+            7,
+            1
+          ],
+          "ownedMiners": 3,
+          "ownedCore": 6,
+          "ownedRefineries": 2,
+          "visibleIntrudersWithin22": 0,
+          "visibleVehiclesWithin48": 0,
+          "currentQueue": {
+            "status": 0,
+            "items": []
+          },
+          "selected": {
+            "name": "CMIN",
+            "priority": 78
+          },
+          "priorities": [
+            {
+              "name": "MTNK",
+              "priority": 75
+            },
+            {
+              "name": "CMIN",
+              "priority": 78
+            }
+          ]
+        },
+        {
+          "tick": 7634,
+          "method": "unqueueFromProduction",
+          "arguments": [
+            3,
+            "CMIN",
+            7,
+            1
+          ],
+          "ownedMiners": 3,
+          "ownedCore": 5,
+          "ownedRefineries": 2,
+          "visibleIntrudersWithin22": 0,
+          "visibleVehiclesWithin48": 0,
+          "currentQueue": {
+            "status": 1,
+            "items": [
+              {
+                "name": "CMIN",
+                "quantity": 1
+              }
+            ]
+          },
+          "selected": {
+            "name": "MTNK",
+            "priority": 75
+          },
+          "priorities": [
+            {
+              "name": "CMIN",
+              "priority": 18.75
+            },
+            {
+              "name": "FV",
+              "priority": 45
+            },
+            {
+              "name": "MTNK",
+              "priority": 75
+            }
+          ]
+        },
+        {
+          "tick": 9978,
+          "method": "queueForProduction",
+          "arguments": [
+            3,
+            "CMIN",
+            7,
+            1
+          ],
+          "ownedMiners": 3,
+          "ownedCore": 6,
+          "ownedRefineries": 2,
+          "visibleIntrudersWithin22": 0,
+          "visibleVehiclesWithin48": 0,
+          "currentQueue": {
+            "status": 0,
+            "items": []
+          },
+          "selected": {
+            "name": "CMIN",
+            "priority": 78
+          },
+          "priorities": [
+            {
+              "name": "MTNK",
+              "priority": 75
+            },
+            {
+              "name": "CMIN",
+              "priority": 78
+            }
+          ]
+        },
+        {
+          "tick": 10398,
+          "method": "unqueueFromProduction",
+          "arguments": [
+            3,
+            "CMIN",
+            7,
+            1
+          ],
+          "ownedMiners": 3,
+          "ownedCore": 5,
+          "ownedRefineries": 2,
+          "visibleIntrudersWithin22": 0,
+          "visibleVehiclesWithin48": 4,
+          "currentQueue": {
+            "status": 1,
+            "items": [
+              {
+                "name": "CMIN",
+                "quantity": 1
+              }
+            ]
+          },
+          "selected": {
+            "name": "MTNK",
+            "priority": 75
+          },
+          "priorities": [
+            {
+              "name": "CMIN",
+              "priority": 18.75
+            },
+            {
+              "name": "FV",
+              "priority": 45
+            },
+            {
+              "name": "MTNK",
+              "priority": 75
+            }
+          ]
+        },
+        {
+          "tick": 12300,
+          "method": "queueForProduction",
+          "arguments": [
+            3,
+            "CMIN",
+            7,
+            1
+          ],
+          "ownedMiners": 3,
+          "ownedCore": 6,
+          "ownedRefineries": 2,
+          "visibleIntrudersWithin22": 0,
+          "visibleVehiclesWithin48": 0,
+          "currentQueue": {
+            "status": 0,
+            "items": []
+          },
+          "selected": {
+            "name": "CMIN",
+            "priority": 78
+          },
+          "priorities": [
+            {
+              "name": "MTNK",
+              "priority": 75
+            },
+            {
+              "name": "CMIN",
+              "priority": 78
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "matches": [
+    {
+      "seed": 202,
+      "swapped": false,
+      "result": "baseline-win",
+      "ticks": 24507,
+      "errors": 0
+    },
+    {
+      "seed": 202,
+      "swapped": true,
+      "result": "candidate-win",
+      "ticks": 13492,
+      "errors": 0
+    }
+  ]
+}

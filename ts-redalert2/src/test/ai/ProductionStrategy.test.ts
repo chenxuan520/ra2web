@@ -141,6 +141,74 @@ describe("AI production economy", () => {
         expect(s.requests.has("CMIN")).toBe(false);
     });
 
+    test("a planned refinery's supplied miner leaves the idle vehicle queue available for armor", () => {
+        const s = productionScenario(3000, "brutal");
+        s.owned.push({ name: "NAREFN", refinery: true }, { name: "HARV", harvester: true }, { name: "HTNK" }, { name: "HTNK" });
+        Object.assign(s.request(QueueType.Structures, "NAREFN", 50, 2000), { refinery: true, freeUnit: "HARV" });
+        s.request(QueueType.Vehicles, "HTNK", 75, 900);
+        s.available.get(QueueType.Vehicles)!.push({ name: "HARV", cost: 1400, type: ObjectType.Vehicle, harvester: true });
+        s.run();
+        expect(s.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTNK", ObjectType.Vehicle, 1);
+        expect(s.actions.queueForProduction).not.toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
+    });
+
+    test("the allied first tank is followed by armor while the second refinery supplies its miner", () => {
+        const s = productionScenario(3000, "brutal");
+        s.country("Americans");
+        s.owned.push({ name: "GAREFN", refinery: true }, { name: "CMIN", harvester: true }, { name: "MTNK" });
+        Object.assign(s.request(QueueType.Structures, "GAREFN", 50, 2000), { refinery: true, freeUnit: "CMIN" });
+        s.request(QueueType.Vehicles, "MTNK", 75, 700);
+        s.available.get(QueueType.Vehicles)!.push({ name: "CMIN", cost: 1400, type: ObjectType.Vehicle, harvester: true });
+        s.run();
+        expect(s.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "MTNK", ObjectType.Vehicle, 1);
+    });
+
+    test("an active refinery with a supplied miner avoids buying the same economic unit twice", () => {
+        const s = productionScenario(3000, "brutal");
+        s.owned.push({ name: "NAREFN", refinery: true }, { name: "HARV", harvester: true }, { name: "HTNK" }, { name: "HTNK" });
+        Object.assign(s.request(QueueType.Structures, "NAREFN", 50, 2000, QueueStatus.Active), { refinery: true, freeUnit: "HARV" });
+        Object.assign(s.queues.get(QueueType.Structures)!.items[0].rules, { refinery: true, freeUnit: "HARV" });
+        s.request(QueueType.Vehicles, "HTNK", 75, 900);
+        s.available.get(QueueType.Vehicles)!.push({ name: "HARV", cost: 1400, type: ObjectType.Vehicle, harvester: true });
+        s.run();
+        expect(s.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTNK", ObjectType.Vehicle, 1);
+    });
+
+    test("loss of the last miner does not wait for a refinery that has not completed", () => {
+        const s = productionScenario(3000, "brutal");
+        s.owned.push({ name: "NAREFN", refinery: true }, { name: "HTNK" }, { name: "HTNK" });
+        Object.assign(s.request(QueueType.Structures, "NAREFN", 50, 2000), { refinery: true, freeUnit: "HARV" });
+        s.request(QueueType.Vehicles, "HTNK", 75, 900);
+        s.available.get(QueueType.Vehicles)!.push({ name: "HARV", cost: 1400, type: ObjectType.Vehicle, harvester: true });
+        s.run();
+        expect(s.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
+    });
+
+    test("an already funded miner is completed instead of cancelled when a refinery is planned", () => {
+        const s = productionScenario(3000, "brutal");
+        s.owned.push({ name: "NAREFN", refinery: true }, { name: "HARV", harvester: true }, { name: "HTNK" }, { name: "HTNK" });
+        Object.assign(s.request(QueueType.Structures, "NAREFN", 50, 2000), { refinery: true, freeUnit: "HARV" });
+        s.request(QueueType.Vehicles, "HTNK", 75, 900);
+        const miner = { name: "HARV", cost: 1400, type: ObjectType.Vehicle, harvester: true };
+        s.available.get(QueueType.Vehicles)!.push(miner);
+        s.requests.set("HARV", { priority: 90, specificLocation: null });
+        s.queues.set(QueueType.Vehicles, { type: QueueType.Vehicles, status: QueueStatus.Active,
+            items: [{ rules: miner, quantity: 1 }], size: 1 });
+        s.run();
+        expect(s.actions.unqueueFromProduction).not.toHaveBeenCalled();
+        expect(s.actions.pauseProduction).not.toHaveBeenCalledWith(QueueType.Vehicles);
+    });
+
+    test.each(["normal", "brutal"] as const)("%s never assumes an unsupplied refinery creates a miner", difficulty => {
+        const s = productionScenario(3000, difficulty);
+        s.owned.push({ name: "NAREFN", refinery: true }, { name: "HARV", harvester: true }, { name: "HTNK" }, { name: "HTNK" });
+        Object.assign(s.request(QueueType.Structures, "NAREFN", 50, 2000), { refinery: true, freeUnit: "DOG" });
+        s.request(QueueType.Vehicles, "HTNK", 40, 900);
+        s.available.get(QueueType.Vehicles)!.push({ name: "HARV", cost: 1400, type: ObjectType.Vehicle, harvester: true });
+        s.run();
+        expect(s.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
+    });
+
     test.each([0, 2])("with %i refineries, saturated income leaves the tank queue available", refineries => {
         const s = productionScenario(2000);
         for (let i = 0; i < refineries; i++) s.owned.push({ refinery: true }, { harvester: true }, { harvester: true });

@@ -1,0 +1,47 @@
+{
+  "passed": true,
+  "equalSamples": 108,
+  "newWinSamples": 0,
+  "summaries": [
+    {
+      "seed": 101,
+      "swapped": false,
+      "result": "candidate-win",
+      "ticks": 21777,
+      "equalSamples": 26,
+      "candidateRawSha256": "9f7deb4d924b6f4553f07f2c82f539b2468cd17bc71e2c30207e79b6fbc80612",
+      "mirrorRawSha256": "0c52540188d2d1e10da2785ef19c120de3a210c459478b890fccdbd277c75b21",
+      "nativeTelemetryAndSamplesEqual": true
+    },
+    {
+      "seed": 101,
+      "swapped": true,
+      "result": "baseline-win",
+      "ticks": 21777,
+      "equalSamples": 26,
+      "candidateRawSha256": "9f7deb4d924b6f4553f07f2c82f539b2468cd17bc71e2c30207e79b6fbc80612",
+      "mirrorRawSha256": "0c52540188d2d1e10da2785ef19c120de3a210c459478b890fccdbd277c75b21",
+      "nativeTelemetryAndSamplesEqual": true
+    },
+    {
+      "seed": 202,
+      "swapped": false,
+      "result": "baseline-win",
+      "ticks": 23472,
+      "equalSamples": 28,
+      "candidateRawSha256": "a5cdf6a6feb734615627916614f5c80a958cbb2bd616c672c47807f5ff764659",
+      "mirrorRawSha256": "0c52540188d2d1e10da2785ef19c120de3a210c459478b890fccdbd277c75b21",
+      "nativeTelemetryAndSamplesEqual": true
+    },
+    {
+      "seed": 202,
+      "swapped": true,
+      "result": "candidate-win",
+      "ticks": 23472,
+      "equalSamples": 28,
+      "candidateRawSha256": "a5cdf6a6feb734615627916614f5c80a958cbb2bd616c672c47807f5ff764659",
+      "mirrorRawSha256": "0c52540188d2d1e10da2785ef19c120de3a210c459478b890fccdbd277c75b21",
+      "nativeTelemetryAndSamplesEqual": true
+    }
+  ]
+}

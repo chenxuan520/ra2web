@@ -1,0 +1,48 @@
+{
+  "passed": true,
+  "equalSamples": 38,
+  "newWinSamples": 0,
+  "originalSha256": "8c0ba4c23af166521683645141919b38a631f714884399d0d04c0bfdbf6d7d6f",
+  "replaySha256": "93f45d7d91e88029601d6a213f23eeed6c6b401beb0926fc6eba146d1cf5cd7f",
+  "diagnosticSha256": "1cb4c44cff1e1de9a6d78904612ee658f078ba3349dd481ac8da7def5fc02e44",
+  "summaries": [
+    {
+      "player": "@@AI1@@",
+      "country": "Americans",
+      "loadedGatherOrders": 0,
+      "eligiblePartialTopups": 0,
+      "mixedCargoObserved": 0,
+      "completedMixedUnloads": 0,
+      "quarterCargoObservations": 116,
+      "zeroVelocityQuarterObservations": 89,
+      "oreIncreasingOnSameTile": 79,
+      "growingOreOnVisibleOre": 75
+    },
+    {
+      "player": "@@AI2@@",
+      "country": "Americans",
+      "loadedGatherOrders": 0,
+      "eligiblePartialTopups": 0,
+      "mixedCargoObserved": 0,
+      "completedMixedUnloads": 0,
+      "quarterCargoObservations": 178,
+      "zeroVelocityQuarterObservations": 108,
+      "oreIncreasingOnSameTile": 93,
+      "growingOreOnVisibleOre": 83
+    }
+  ],
+  "matches": [
+    {
+      "swapped": false,
+      "result": "baseline-win",
+      "ticks": 16092,
+      "errors": 0
+    },
+    {
+      "swapped": true,
+      "result": "candidate-win",
+      "ticks": 16092,
+      "errors": 0
+    }
+  ]
+}

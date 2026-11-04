@@ -1,0 +1,292 @@
+{
+  "passed": true,
+  "equalSamples": 38,
+  "newWinSamples": 0,
+  "originalSha256": "017de30b92764c07d68ac88d5c0b140b47dff25a1efe460598dc467f56be7c90",
+  "replaySha256": "994a589e3b43aa0cee91b272b7974e322a6be76f768a376367d61f015cf29e65",
+  "diagnosticSha256": "20b666be16d6b37cee0ee6a6d6e92ff48cccb14f8b5e2ebcc66526b3e7ebb86d",
+  "summaries": [
+    {
+      "player": "@@AI1@@",
+      "country": "Americans",
+      "pathQueries": 100,
+      "failedQueries": 87,
+      "failedFromOwnBuilding": 87,
+      "reachableFromLegalExit": 87,
+      "representativeCases": [
+        {
+          "tick": 6300,
+          "start": {
+            "x": 33,
+            "y": 50,
+            "onBridge": false
+          },
+          "end": {
+            "x": 37,
+            "y": 29
+          },
+          "nodes": 0,
+          "reached": false,
+          "startVisible": true,
+          "startPassable": false,
+          "ownStartBuilding": {
+            "id": 880,
+            "name": "GAWEAP",
+            "x": 31,
+            "y": 49,
+            "width": 5,
+            "height": 3
+          },
+          "rightExit": {
+            "x": 36,
+            "y": 50,
+            "nodes": 22,
+            "reached": true
+          },
+          "fullExitProbeCount": 20
+        },
+        {
+          "tick": 6300,
+          "start": {
+            "x": 33,
+            "y": 50,
+            "onBridge": false
+          },
+          "end": {
+            "x": 41,
+            "y": 30
+          },
+          "nodes": 0,
+          "reached": false,
+          "startVisible": true,
+          "startPassable": false,
+          "ownStartBuilding": {
+            "id": 880,
+            "name": "GAWEAP",
+            "x": 31,
+            "y": 49,
+            "width": 5,
+            "height": 3
+          },
+          "rightExit": {
+            "x": 36,
+            "y": 50,
+            "nodes": 24,
+            "reached": true
+          },
+          "fullExitProbeCount": 20
+        },
+        {
+          "tick": 6300,
+          "start": {
+            "x": 33,
+            "y": 50,
+            "onBridge": false
+          },
+          "end": {
+            "x": 38,
+            "y": 29
+          },
+          "nodes": 0,
+          "reached": false,
+          "startVisible": true,
+          "startPassable": false,
+          "ownStartBuilding": {
+            "id": 880,
+            "name": "GAWEAP",
+            "x": 31,
+            "y": 49,
+            "width": 5,
+            "height": 3
+          },
+          "rightExit": {
+            "x": 36,
+            "y": 50,
+            "nodes": 22,
+            "reached": true
+          },
+          "fullExitProbeCount": 20
+        },
+        {
+          "tick": 6300,
+          "start": {
+            "x": 33,
+            "y": 50,
+            "onBridge": false
+          },
+          "end": {
+            "x": 39,
+            "y": 29
+          },
+          "nodes": 0,
+          "reached": false,
+          "startVisible": true,
+          "startPassable": false,
+          "ownStartBuilding": {
+            "id": 880,
+            "name": "GAWEAP",
+            "x": 31,
+            "y": 49,
+            "width": 5,
+            "height": 3
+          },
+          "rightExit": {
+            "x": 36,
+            "y": 50,
+            "nodes": 22,
+            "reached": true
+          },
+          "fullExitProbeCount": 20
+        }
+      ]
+    },
+    {
+      "player": "@@AI2@@",
+      "country": "Americans",
+      "pathQueries": 78,
+      "failedQueries": 66,
+      "failedFromOwnBuilding": 66,
+      "reachableFromLegalExit": 66,
+      "representativeCases": [
+        {
+          "tick": 6060,
+          "start": {
+            "x": 82,
+            "y": 78,
+            "onBridge": false
+          },
+          "end": {
+            "x": 78,
+            "y": 96
+          },
+          "nodes": 0,
+          "reached": false,
+          "startVisible": true,
+          "startPassable": false,
+          "ownStartBuilding": {
+            "id": 879,
+            "name": "GAWEAP",
+            "x": 80,
+            "y": 77,
+            "width": 5,
+            "height": 3
+          },
+          "rightExit": {
+            "x": 85,
+            "y": 78,
+            "nodes": 19,
+            "reached": true
+          },
+          "fullExitProbeCount": 20
+        },
+        {
+          "tick": 6060,
+          "start": {
+            "x": 82,
+            "y": 78,
+            "onBridge": false
+          },
+          "end": {
+            "x": 77,
+            "y": 96
+          },
+          "nodes": 0,
+          "reached": false,
+          "startVisible": true,
+          "startPassable": false,
+          "ownStartBuilding": {
+            "id": 879,
+            "name": "GAWEAP",
+            "x": 80,
+            "y": 77,
+            "width": 5,
+            "height": 3
+          },
+          "rightExit": {
+            "x": 85,
+            "y": 78,
+            "nodes": 19,
+            "reached": true
+          },
+          "fullExitProbeCount": 20
+        },
+        {
+          "tick": 6060,
+          "start": {
+            "x": 82,
+            "y": 78,
+            "onBridge": false
+          },
+          "end": {
+            "x": 79,
+            "y": 97
+          },
+          "nodes": 0,
+          "reached": false,
+          "startVisible": true,
+          "startPassable": false,
+          "ownStartBuilding": {
+            "id": 879,
+            "name": "GAWEAP",
+            "x": 80,
+            "y": 77,
+            "width": 5,
+            "height": 3
+          },
+          "rightExit": {
+            "x": 85,
+            "y": 78,
+            "nodes": 20,
+            "reached": true
+          },
+          "fullExitProbeCount": 20
+        },
+        {
+          "tick": 6060,
+          "start": {
+            "x": 82,
+            "y": 78,
+            "onBridge": false
+          },
+          "end": {
+            "x": 78,
+            "y": 97
+          },
+          "nodes": 0,
+          "reached": false,
+          "startVisible": true,
+          "startPassable": false,
+          "ownStartBuilding": {
+            "id": 879,
+            "name": "GAWEAP",
+            "x": 80,
+            "y": 77,
+            "width": 5,
+            "height": 3
+          },
+          "rightExit": {
+            "x": 85,
+            "y": 78,
+            "nodes": 20,
+            "reached": true
+          },
+          "fullExitProbeCount": 20
+        }
+      ]
+    }
+  ],
+  "matches": [
+    {
+      "swapped": false,
+      "result": "baseline-win",
+      "ticks": 16092,
+      "errors": 0
+    },
+    {
+      "swapped": true,
+      "result": "candidate-win",
+      "ticks": 16092,
+      "errors": 0
+    }
+  ]
+}

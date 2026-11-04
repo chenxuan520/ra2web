@@ -1,0 +1,2115 @@
+{
+  "passed": true,
+  "equalSamples": 107,
+  "newWinSamples": 0,
+  "replaySha256": "169a905f6bfe5d630b1d18c5a2b276a3edd1a934e31e66df6584a37f99835afb",
+  "diagnosticSha256": "361a9d286f55d9b2979b649bfc0f224878c9312612945f69f4db62d1e9b8bfcb",
+  "summaries": [
+    {
+      "seed": 101,
+      "swapped": false,
+      "player": "@@AI1@@",
+      "country": "Americans",
+      "sampledUpdates": 815,
+      "damagedSixCoreSamples": 2,
+      "damagedSixCoreAttackingSamples": 2,
+      "examples": [
+        {
+          "tick": 7980,
+          "ownCoreCount": 6,
+          "knownOwnHealthCount": 6,
+          "minimumOwnHealth": 0.5666666666666667,
+          "averageOwnHealth": 0.9277777777777777,
+          "visibleEnemyTypeCounts": {
+            "infantry": 3,
+            "vehicles": 3,
+            "aircraft": 2,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 883,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 890,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 896,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 904,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 907,
+              "name": "MTNK",
+              "hitPoints": 170,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 911,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            }
+          ]
+        },
+        {
+          "tick": 8010,
+          "ownCoreCount": 6,
+          "knownOwnHealthCount": 6,
+          "minimumOwnHealth": 0.13333333333333333,
+          "averageOwnHealth": 0.8555555555555556,
+          "visibleEnemyTypeCounts": {
+            "infantry": 5,
+            "vehicles": 4,
+            "aircraft": 2,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 883,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 890,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 896,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 904,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 907,
+              "name": "MTNK",
+              "hitPoints": 40,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 911,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "seed": 101,
+      "swapped": true,
+      "player": "@@AI2@@",
+      "country": "Americans",
+      "sampledUpdates": 514,
+      "damagedSixCoreSamples": 33,
+      "damagedSixCoreAttackingSamples": 33,
+      "examples": [
+        {
+          "tick": 7590,
+          "ownCoreCount": 6,
+          "knownOwnHealthCount": 6,
+          "minimumOwnHealth": 0.35,
+          "averageOwnHealth": 0.8916666666666666,
+          "visibleEnemyTypeCounts": {
+            "infantry": 5,
+            "vehicles": 4,
+            "aircraft": 0,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 881,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 888,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 893,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 902,
+              "name": "MTNK",
+              "hitPoints": 105,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 905,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 909,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            }
+          ]
+        },
+        {
+          "tick": 7620,
+          "ownCoreCount": 6,
+          "knownOwnHealthCount": 6,
+          "minimumOwnHealth": 0.35,
+          "averageOwnHealth": 0.8916666666666666,
+          "visibleEnemyTypeCounts": {
+            "infantry": 5,
+            "vehicles": 4,
+            "aircraft": 0,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 881,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 888,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 893,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 902,
+              "name": "MTNK",
+              "hitPoints": 105,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 905,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 909,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            }
+          ]
+        },
+        {
+          "tick": 14520,
+          "ownCoreCount": 6,
+          "knownOwnHealthCount": 6,
+          "minimumOwnHealth": 0.18,
+          "averageOwnHealth": 0.7683333333333334,
+          "visibleEnemyTypeCounts": {
+            "infantry": 7,
+            "vehicles": 1,
+            "aircraft": 0,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 1314,
+              "name": "MTNK",
+              "hitPoints": 54,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1390,
+              "name": "MTNK",
+              "hitPoints": 215,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1415,
+              "name": "MTNK",
+              "hitPoints": 214,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1550,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1974,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 2231,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            }
+          ]
+        },
+        {
+          "tick": 14550,
+          "ownCoreCount": 6,
+          "knownOwnHealthCount": 6,
+          "minimumOwnHealth": 0.18,
+          "averageOwnHealth": 0.7655555555555557,
+          "visibleEnemyTypeCounts": {
+            "infantry": 6,
+            "vehicles": 0,
+            "aircraft": 0,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 1314,
+              "name": "MTNK",
+              "hitPoints": 54,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1390,
+              "name": "MTNK",
+              "hitPoints": 210,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1415,
+              "name": "MTNK",
+              "hitPoints": 214,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1550,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1974,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 2231,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            }
+          ]
+        },
+        {
+          "tick": 14580,
+          "ownCoreCount": 6,
+          "knownOwnHealthCount": 6,
+          "minimumOwnHealth": 0.18,
+          "averageOwnHealth": 0.7655555555555557,
+          "visibleEnemyTypeCounts": {
+            "infantry": 6,
+            "vehicles": 0,
+            "aircraft": 0,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 1314,
+              "name": "MTNK",
+              "hitPoints": 54,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1390,
+              "name": "MTNK",
+              "hitPoints": 210,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1415,
+              "name": "MTNK",
+              "hitPoints": 214,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1550,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1974,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 2231,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            }
+          ]
+        },
+        {
+          "tick": 14610,
+          "ownCoreCount": 6,
+          "knownOwnHealthCount": 6,
+          "minimumOwnHealth": 0.18,
+          "averageOwnHealth": 0.7655555555555557,
+          "visibleEnemyTypeCounts": {
+            "infantry": 5,
+            "vehicles": 0,
+            "aircraft": 0,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 1314,
+              "name": "MTNK",
+              "hitPoints": 54,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1390,
+              "name": "MTNK",
+              "hitPoints": 210,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1415,
+              "name": "MTNK",
+              "hitPoints": 214,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1550,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1974,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 2231,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            }
+          ]
+        },
+        {
+          "tick": 14640,
+          "ownCoreCount": 6,
+          "knownOwnHealthCount": 6,
+          "minimumOwnHealth": 0.18,
+          "averageOwnHealth": 0.7655555555555557,
+          "visibleEnemyTypeCounts": {
+            "infantry": 4,
+            "vehicles": 0,
+            "aircraft": 0,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 1314,
+              "name": "MTNK",
+              "hitPoints": 54,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1390,
+              "name": "MTNK",
+              "hitPoints": 210,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1415,
+              "name": "MTNK",
+              "hitPoints": 214,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1550,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1974,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 2231,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            }
+          ]
+        },
+        {
+          "tick": 14670,
+          "ownCoreCount": 6,
+          "knownOwnHealthCount": 6,
+          "minimumOwnHealth": 0.18,
+          "averageOwnHealth": 0.7655555555555557,
+          "visibleEnemyTypeCounts": {
+            "infantry": 3,
+            "vehicles": 0,
+            "aircraft": 0,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 1314,
+              "name": "MTNK",
+              "hitPoints": 54,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1390,
+              "name": "MTNK",
+              "hitPoints": 210,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1415,
+              "name": "MTNK",
+              "hitPoints": 214,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1550,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1974,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 2231,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            }
+          ]
+        },
+        {
+          "tick": 14700,
+          "ownCoreCount": 6,
+          "knownOwnHealthCount": 6,
+          "minimumOwnHealth": 0.18,
+          "averageOwnHealth": 0.7655555555555557,
+          "visibleEnemyTypeCounts": {
+            "infantry": 4,
+            "vehicles": 0,
+            "aircraft": 0,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 1314,
+              "name": "MTNK",
+              "hitPoints": 54,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1390,
+              "name": "MTNK",
+              "hitPoints": 210,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1415,
+              "name": "MTNK",
+              "hitPoints": 214,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1550,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1974,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 2231,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            }
+          ]
+        },
+        {
+          "tick": 14730,
+          "ownCoreCount": 6,
+          "knownOwnHealthCount": 6,
+          "minimumOwnHealth": 0.18,
+          "averageOwnHealth": 0.7655555555555557,
+          "visibleEnemyTypeCounts": {
+            "infantry": 5,
+            "vehicles": 1,
+            "aircraft": 0,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 1314,
+              "name": "MTNK",
+              "hitPoints": 54,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1390,
+              "name": "MTNK",
+              "hitPoints": 210,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1415,
+              "name": "MTNK",
+              "hitPoints": 214,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1550,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1974,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 2231,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            }
+          ]
+        },
+        {
+          "tick": 14760,
+          "ownCoreCount": 6,
+          "knownOwnHealthCount": 6,
+          "minimumOwnHealth": 0.18,
+          "averageOwnHealth": 0.7627777777777777,
+          "visibleEnemyTypeCounts": {
+            "infantry": 5,
+            "vehicles": 1,
+            "aircraft": 0,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 1314,
+              "name": "MTNK",
+              "hitPoints": 54,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1390,
+              "name": "MTNK",
+              "hitPoints": 205,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1415,
+              "name": "MTNK",
+              "hitPoints": 214,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1550,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1974,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 2231,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            }
+          ]
+        },
+        {
+          "tick": 14790,
+          "ownCoreCount": 6,
+          "knownOwnHealthCount": 6,
+          "minimumOwnHealth": 0.18,
+          "averageOwnHealth": 0.7611111111111111,
+          "visibleEnemyTypeCounts": {
+            "infantry": 9,
+            "vehicles": 0,
+            "aircraft": 0,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 1314,
+              "name": "MTNK",
+              "hitPoints": 54,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1390,
+              "name": "MTNK",
+              "hitPoints": 200,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1415,
+              "name": "MTNK",
+              "hitPoints": 216,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1550,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 1974,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            },
+            {
+              "id": 2231,
+              "name": "MTNK",
+              "hitPoints": 300,
+              "maxHitPoints": 300
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "seed": 101,
+      "swapped": false,
+      "player": "@@AI1@@",
+      "country": "Russians",
+      "sampledUpdates": 833,
+      "damagedSixCoreSamples": 73,
+      "damagedSixCoreAttackingSamples": 73,
+      "examples": [
+        {
+          "tick": 10320,
+          "ownCoreCount": 8,
+          "knownOwnHealthCount": 8,
+          "minimumOwnHealth": 0.55,
+          "averageOwnHealth": 0.94375,
+          "visibleEnemyTypeCounts": {
+            "infantry": 0,
+            "vehicles": 3,
+            "aircraft": 0,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 882,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 891,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 895,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 905,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 909,
+              "name": "HTNK",
+              "hitPoints": 220,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 912,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 915,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 918,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            }
+          ]
+        },
+        {
+          "tick": 10350,
+          "ownCoreCount": 8,
+          "knownOwnHealthCount": 8,
+          "minimumOwnHealth": 0.55,
+          "averageOwnHealth": 0.94375,
+          "visibleEnemyTypeCounts": {
+            "infantry": 0,
+            "vehicles": 4,
+            "aircraft": 0,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 882,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 891,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 895,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 905,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 909,
+              "name": "HTNK",
+              "hitPoints": 220,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 912,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 915,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 918,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            }
+          ]
+        },
+        {
+          "tick": 10440,
+          "ownCoreCount": 7,
+          "knownOwnHealthCount": 7,
+          "minimumOwnHealth": 0.325,
+          "averageOwnHealth": 0.9035714285714286,
+          "visibleEnemyTypeCounts": {
+            "infantry": 1,
+            "vehicles": 6,
+            "aircraft": 0,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 882,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 891,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 895,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 905,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 912,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 915,
+              "name": "HTNK",
+              "hitPoints": 130,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 918,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            }
+          ]
+        },
+        {
+          "tick": 10500,
+          "ownCoreCount": 6,
+          "knownOwnHealthCount": 6,
+          "minimumOwnHealth": 0.55,
+          "averageOwnHealth": 0.8874999999999998,
+          "visibleEnemyTypeCounts": {
+            "infantry": 2,
+            "vehicles": 6,
+            "aircraft": 0,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 882,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 891,
+              "name": "HTNK",
+              "hitPoints": 220,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 895,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 905,
+              "name": "HTNK",
+              "hitPoints": 310,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 912,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 918,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            }
+          ]
+        },
+        {
+          "tick": 10530,
+          "ownCoreCount": 6,
+          "knownOwnHealthCount": 6,
+          "minimumOwnHealth": 0.1,
+          "averageOwnHealth": 0.8125,
+          "visibleEnemyTypeCounts": {
+            "infantry": 2,
+            "vehicles": 6,
+            "aircraft": 0,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 882,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 891,
+              "name": "HTNK",
+              "hitPoints": 40,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 895,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 905,
+              "name": "HTNK",
+              "hitPoints": 310,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 912,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 918,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            }
+          ]
+        },
+        {
+          "tick": 10560,
+          "ownCoreCount": 6,
+          "knownOwnHealthCount": 6,
+          "minimumOwnHealth": 0.1,
+          "averageOwnHealth": 0.8125,
+          "visibleEnemyTypeCounts": {
+            "infantry": 2,
+            "vehicles": 5,
+            "aircraft": 0,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 882,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 891,
+              "name": "HTNK",
+              "hitPoints": 40,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 895,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 905,
+              "name": "HTNK",
+              "hitPoints": 310,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 912,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 918,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            }
+          ]
+        },
+        {
+          "tick": 23010,
+          "ownCoreCount": 6,
+          "knownOwnHealthCount": 6,
+          "minimumOwnHealth": 0.0175,
+          "averageOwnHealth": 0.6925,
+          "visibleEnemyTypeCounts": {
+            "infantry": 1,
+            "vehicles": 0,
+            "aircraft": 0,
+            "defences": 1
+          },
+          "ownArmor": [
+            {
+              "id": 1490,
+              "name": "HTNK",
+              "hitPoints": 214,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1516,
+              "name": "HTNK",
+              "hitPoints": 7,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1668,
+              "name": "HTNK",
+              "hitPoints": 241,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1723,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1765,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1813,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            }
+          ]
+        },
+        {
+          "tick": 23040,
+          "ownCoreCount": 6,
+          "knownOwnHealthCount": 6,
+          "minimumOwnHealth": 0.0175,
+          "averageOwnHealth": 0.6925,
+          "visibleEnemyTypeCounts": {
+            "infantry": 1,
+            "vehicles": 0,
+            "aircraft": 0,
+            "defences": 1
+          },
+          "ownArmor": [
+            {
+              "id": 1490,
+              "name": "HTNK",
+              "hitPoints": 214,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1516,
+              "name": "HTNK",
+              "hitPoints": 7,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1668,
+              "name": "HTNK",
+              "hitPoints": 241,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1723,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1765,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1813,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            }
+          ]
+        },
+        {
+          "tick": 23070,
+          "ownCoreCount": 6,
+          "knownOwnHealthCount": 6,
+          "minimumOwnHealth": 0.0175,
+          "averageOwnHealth": 0.6925,
+          "visibleEnemyTypeCounts": {
+            "infantry": 1,
+            "vehicles": 0,
+            "aircraft": 0,
+            "defences": 1
+          },
+          "ownArmor": [
+            {
+              "id": 1490,
+              "name": "HTNK",
+              "hitPoints": 214,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1516,
+              "name": "HTNK",
+              "hitPoints": 7,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1668,
+              "name": "HTNK",
+              "hitPoints": 241,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1723,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1765,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1813,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            }
+          ]
+        },
+        {
+          "tick": 23100,
+          "ownCoreCount": 6,
+          "knownOwnHealthCount": 6,
+          "minimumOwnHealth": 0.0175,
+          "averageOwnHealth": 0.6925,
+          "visibleEnemyTypeCounts": {
+            "infantry": 1,
+            "vehicles": 0,
+            "aircraft": 0,
+            "defences": 1
+          },
+          "ownArmor": [
+            {
+              "id": 1490,
+              "name": "HTNK",
+              "hitPoints": 214,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1516,
+              "name": "HTNK",
+              "hitPoints": 7,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1668,
+              "name": "HTNK",
+              "hitPoints": 241,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1723,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1765,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1813,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            }
+          ]
+        },
+        {
+          "tick": 23130,
+          "ownCoreCount": 6,
+          "knownOwnHealthCount": 6,
+          "minimumOwnHealth": 0.0175,
+          "averageOwnHealth": 0.6925,
+          "visibleEnemyTypeCounts": {
+            "infantry": 1,
+            "vehicles": 0,
+            "aircraft": 0,
+            "defences": 1
+          },
+          "ownArmor": [
+            {
+              "id": 1490,
+              "name": "HTNK",
+              "hitPoints": 214,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1516,
+              "name": "HTNK",
+              "hitPoints": 7,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1668,
+              "name": "HTNK",
+              "hitPoints": 241,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1723,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1765,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1813,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            }
+          ]
+        },
+        {
+          "tick": 23160,
+          "ownCoreCount": 6,
+          "knownOwnHealthCount": 6,
+          "minimumOwnHealth": 0.0175,
+          "averageOwnHealth": 0.6925,
+          "visibleEnemyTypeCounts": {
+            "infantry": 1,
+            "vehicles": 0,
+            "aircraft": 0,
+            "defences": 1
+          },
+          "ownArmor": [
+            {
+              "id": 1490,
+              "name": "HTNK",
+              "hitPoints": 214,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1516,
+              "name": "HTNK",
+              "hitPoints": 7,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1668,
+              "name": "HTNK",
+              "hitPoints": 241,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1723,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1765,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1813,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "seed": 101,
+      "swapped": true,
+      "player": "@@AI2@@",
+      "country": "Russians",
+      "sampledUpdates": 847,
+      "damagedSixCoreSamples": 106,
+      "damagedSixCoreAttackingSamples": 106,
+      "examples": [
+        {
+          "tick": 10380,
+          "ownCoreCount": 8,
+          "knownOwnHealthCount": 8,
+          "minimumOwnHealth": 0.55,
+          "averageOwnHealth": 0.94375,
+          "visibleEnemyTypeCounts": {
+            "infantry": 0,
+            "vehicles": 4,
+            "aircraft": 0,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 883,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 892,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 896,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 901,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 908,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 910,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 914,
+              "name": "HTNK",
+              "hitPoints": 220,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 918,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            }
+          ]
+        },
+        {
+          "tick": 10410,
+          "ownCoreCount": 8,
+          "knownOwnHealthCount": 8,
+          "minimumOwnHealth": 0.1,
+          "averageOwnHealth": 0.8875,
+          "visibleEnemyTypeCounts": {
+            "infantry": 0,
+            "vehicles": 5,
+            "aircraft": 0,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 883,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 892,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 896,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 901,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 908,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 910,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 914,
+              "name": "HTNK",
+              "hitPoints": 40,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 918,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            }
+          ]
+        },
+        {
+          "tick": 10500,
+          "ownCoreCount": 7,
+          "knownOwnHealthCount": 7,
+          "minimumOwnHealth": 0.325,
+          "averageOwnHealth": 0.8714285714285716,
+          "visibleEnemyTypeCounts": {
+            "infantry": 3,
+            "vehicles": 6,
+            "aircraft": 0,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 883,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 892,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 896,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 901,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 908,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 910,
+              "name": "HTNK",
+              "hitPoints": 130,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 918,
+              "name": "HTNK",
+              "hitPoints": 310,
+              "maxHitPoints": 400
+            }
+          ]
+        },
+        {
+          "tick": 10530,
+          "ownCoreCount": 8,
+          "knownOwnHealthCount": 8,
+          "minimumOwnHealth": 0.325,
+          "averageOwnHealth": 0.8875000000000001,
+          "visibleEnemyTypeCounts": {
+            "infantry": 3,
+            "vehicles": 6,
+            "aircraft": 0,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 883,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 892,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 896,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 901,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 908,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 910,
+              "name": "HTNK",
+              "hitPoints": 130,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 918,
+              "name": "HTNK",
+              "hitPoints": 310,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 946,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            }
+          ]
+        },
+        {
+          "tick": 10560,
+          "ownCoreCount": 7,
+          "knownOwnHealthCount": 7,
+          "minimumOwnHealth": 0.55,
+          "averageOwnHealth": 0.9357142857142857,
+          "visibleEnemyTypeCounts": {
+            "infantry": 3,
+            "vehicles": 5,
+            "aircraft": 0,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 883,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 892,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 896,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 901,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 908,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 918,
+              "name": "HTNK",
+              "hitPoints": 220,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 946,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            }
+          ]
+        },
+        {
+          "tick": 10590,
+          "ownCoreCount": 7,
+          "knownOwnHealthCount": 7,
+          "minimumOwnHealth": 0.55,
+          "averageOwnHealth": 0.9357142857142857,
+          "visibleEnemyTypeCounts": {
+            "infantry": 3,
+            "vehicles": 5,
+            "aircraft": 0,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 883,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 892,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 896,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 901,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 908,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 918,
+              "name": "HTNK",
+              "hitPoints": 220,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 946,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            }
+          ]
+        },
+        {
+          "tick": 10620,
+          "ownCoreCount": 7,
+          "knownOwnHealthCount": 7,
+          "minimumOwnHealth": 0.325,
+          "averageOwnHealth": 0.8714285714285716,
+          "visibleEnemyTypeCounts": {
+            "infantry": 3,
+            "vehicles": 5,
+            "aircraft": 0,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 883,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 892,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 896,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 901,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 908,
+              "name": "HTNK",
+              "hitPoints": 310,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 918,
+              "name": "HTNK",
+              "hitPoints": 130,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 946,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            }
+          ]
+        },
+        {
+          "tick": 10680,
+          "ownCoreCount": 6,
+          "knownOwnHealthCount": 6,
+          "minimumOwnHealth": 0.55,
+          "averageOwnHealth": 0.9249999999999999,
+          "visibleEnemyTypeCounts": {
+            "infantry": 2,
+            "vehicles": 5,
+            "aircraft": 0,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 883,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 892,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 896,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 901,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 908,
+              "name": "HTNK",
+              "hitPoints": 220,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 946,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            }
+          ]
+        },
+        {
+          "tick": 10710,
+          "ownCoreCount": 6,
+          "knownOwnHealthCount": 6,
+          "minimumOwnHealth": 0.55,
+          "averageOwnHealth": 0.8875000000000001,
+          "visibleEnemyTypeCounts": {
+            "infantry": 2,
+            "vehicles": 5,
+            "aircraft": 0,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 883,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 892,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 896,
+              "name": "HTNK",
+              "hitPoints": 310,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 901,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 908,
+              "name": "HTNK",
+              "hitPoints": 220,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 946,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            }
+          ]
+        },
+        {
+          "tick": 10740,
+          "ownCoreCount": 6,
+          "knownOwnHealthCount": 6,
+          "minimumOwnHealth": 0.325,
+          "averageOwnHealth": 0.775,
+          "visibleEnemyTypeCounts": {
+            "infantry": 2,
+            "vehicles": 5,
+            "aircraft": 0,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 883,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 892,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 896,
+              "name": "HTNK",
+              "hitPoints": 130,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 901,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 908,
+              "name": "HTNK",
+              "hitPoints": 130,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 946,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            }
+          ]
+        },
+        {
+          "tick": 22560,
+          "ownCoreCount": 6,
+          "knownOwnHealthCount": 6,
+          "minimumOwnHealth": 0.03,
+          "averageOwnHealth": 0.6491666666666667,
+          "visibleEnemyTypeCounts": {
+            "infantry": 0,
+            "vehicles": 0,
+            "aircraft": 0,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 1358,
+              "name": "HTNK",
+              "hitPoints": 12,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1391,
+              "name": "HTNK",
+              "hitPoints": 246,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1417,
+              "name": "HTNK",
+              "hitPoints": 105,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1527,
+              "name": "HTNK",
+              "hitPoints": 395,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1576,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1671,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            }
+          ]
+        },
+        {
+          "tick": 22590,
+          "ownCoreCount": 6,
+          "knownOwnHealthCount": 6,
+          "minimumOwnHealth": 0.03,
+          "averageOwnHealth": 0.6491666666666667,
+          "visibleEnemyTypeCounts": {
+            "infantry": 0,
+            "vehicles": 0,
+            "aircraft": 0,
+            "defences": 0
+          },
+          "ownArmor": [
+            {
+              "id": 1358,
+              "name": "HTNK",
+              "hitPoints": 12,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1391,
+              "name": "HTNK",
+              "hitPoints": 246,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1417,
+              "name": "HTNK",
+              "hitPoints": 105,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1527,
+              "name": "HTNK",
+              "hitPoints": 395,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1576,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            },
+            {
+              "id": 1671,
+              "name": "HTNK",
+              "hitPoints": 400,
+              "maxHitPoints": 400
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "matches": [
+    {
+      "country": "Americans",
+      "seed": 101,
+      "swapped": false,
+      "result": "candidate-win",
+      "ticks": 24477,
+      "errors": 0
+    },
+    {
+      "country": "Americans",
+      "seed": 101,
+      "swapped": true,
+      "result": "candidate-win",
+      "ticks": 15428,
+      "errors": 0
+    },
+    {
+      "country": "Russians",
+      "seed": 101,
+      "swapped": false,
+      "result": "candidate-win",
+      "ticks": 25017,
+      "errors": 0
+    },
+    {
+      "country": "Russians",
+      "seed": 101,
+      "swapped": true,
+      "result": "candidate-win",
+      "ticks": 25437,
+      "errors": 0
+    }
+  ]
+}

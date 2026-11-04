@@ -113,6 +113,12 @@ export class QueueController {
             if (!option.harvester) continue;
             const logic = BUILDING_NAME_TO_RULES.get(option.name);
             if (!logic) continue;
+            if (context.difficulty === "brutal" && game.getVisibleUnits(player.name, "self", rules => rules.harvester).length > 0 &&
+                !productionApi.getQueueData(QueueType.Vehicles).items.some(item => item.rules.name === option.name) &&
+                (productionApi.getQueueData(QueueType.Structures).items.some(item =>
+                    item.rules.refinery && item.rules.freeUnit === option.name) ||
+                 productionApi.getAvailableObjects(QueueType.Structures).some(rules =>
+                    rules.refinery && rules.freeUnit === option.name && (requests.get(rules.name)?.priority ?? 0) > 0))) continue;
             let priority = logic.getPriority(game, playerData, option, threatCache);
             if (context.difficulty === "brutal") {
                 const miners = game.getVisibleUnits(player.name, "self", rules => rules.harvester).length;
@@ -184,12 +190,12 @@ export class QueueController {
                         requests.set(tank.name, { priority: 50, specificLocation: null });
                     }
                 }
-                if (!isSovietCountry(playerData.country?.name)) {
-                    const heavyName = productionApi.getAvailableObjects(QueueType.Vehicles).some(o => o.name === "SREF") ? "SREF" : "MGTK";
-                    const heavy = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === heavyName);
-                    if (heavy && situation.credits >= heavy.cost && (requests.get(heavy.name)?.priority ?? 0) < 60) {
-                        requests.set(heavy.name, { priority: 60, specificLocation: null });
-                    }
+                const heavyName = !isSovietCountry(playerData.country?.name)
+                    ? (productionApi.getAvailableObjects(QueueType.Vehicles).some(o => o.name === "SREF") ? "SREF" : "MGTK")
+                    : "APOC";
+                const heavy = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === heavyName);
+                if (heavy && (requests.get(heavy.name)?.priority ?? 0) < 65) {
+                    requests.set(heavy.name, { priority: 65, specificLocation: null });
                 }
             }
         }
@@ -294,7 +300,12 @@ export class QueueController {
         if (queueData.status == QueueStatus.Idle) {
             this.placementFailures.clear();
             // Start building the decided item.
-            const canAffordBuilding = isBuildingQueue(queueType) && decision !== undefined && decision.priority >= 18 && myCredits >= decision.unit.cost + 400;
+            const isMajorTechOrFactory = decision !== undefined && ["GATECH", "NATECH", "GAWEAP", "NAWEAP"].includes(decision.unit.name);
+            const miners = isMajorTechOrFactory ? game.getVisibleUnits(playerData.name, "self", (r: TechnoRules) => !!r.harvester).length : 0;
+            const neededCredits = isMajorTechOrFactory && miners >= 3
+                ? Math.min(decision.unit.cost, 800)
+                : (decision ? decision.unit.cost + (decision.priority <= 18 ? 1000 : 400) : 0);
+            const canAffordBuilding = isBuildingQueue(queueType) && decision !== undefined && decision.priority >= 18 && myCredits >= neededCredits;
             if (decision !== undefined && (canAffordBuilding || !(totalCostAcrossQueues > myCredits && decision.priority < minimumPriority))) {
                 logger(`Decision (${queueTypeToName(queueType)}): ${decision.unit.name}`);
                 actionsApi.queueForProduction(queueType, decision.unit.name, decision.unit.type, 1);

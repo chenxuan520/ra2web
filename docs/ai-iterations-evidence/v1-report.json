@@ -1,0 +1,278 @@
+{
+  "attempt": 10,
+  "candidate": "adb68682136bf5c889a3043457c0c9abe4318ae4",
+  "sourceSha256": "d946db261c22992a84a6f3bbed862a15588e34c49b8010e6f308492f7c8c1e4a",
+  "opponent": "05d2f493baf727c4b19866bef933026a2103437f",
+  "total": 8,
+  "scheduleVerified": true,
+  "sourceFrozen": true,
+  "counts": {
+    "win": 8,
+    "loss": 0,
+    "unfinished": 0,
+    "draw": 0,
+    "error": 0
+  },
+  "accepted": true,
+  "actualTransportChains": null,
+  "games": [
+    {
+      "id": "Americans-101-original",
+      "country": "Americans",
+      "seed": 101,
+      "swapped": false,
+      "startingLocations": [
+        {
+          "x": 27,
+          "y": 50
+        },
+        {
+          "x": 82,
+          "y": 87
+        }
+      ],
+      "outcome": "win",
+      "reason": "engine-victory-conditions",
+      "ticks": 12660,
+      "errors": 0,
+      "warnings": 0,
+      "issues": [],
+      "feature": null,
+      "lostValue": [
+        3200,
+        31600
+      ],
+      "wallSeconds": 81.783974983
+    },
+    {
+      "id": "Americans-101-swap",
+      "country": "Americans",
+      "seed": 101,
+      "swapped": true,
+      "startingLocations": [
+        {
+          "x": 82,
+          "y": 87
+        },
+        {
+          "x": 27,
+          "y": 50
+        }
+      ],
+      "outcome": "win",
+      "reason": "engine-victory-conditions",
+      "ticks": 11348,
+      "errors": 0,
+      "warnings": 0,
+      "issues": [],
+      "feature": null,
+      "lostValue": [
+        5300,
+        26200
+      ],
+      "wallSeconds": 72.40063855
+    },
+    {
+      "id": "Americans-202-original",
+      "country": "Americans",
+      "seed": 202,
+      "swapped": false,
+      "startingLocations": [
+        {
+          "x": 27,
+          "y": 50
+        },
+        {
+          "x": 82,
+          "y": 87
+        }
+      ],
+      "outcome": "win",
+      "reason": "engine-victory-conditions",
+      "ticks": 12500,
+      "errors": 0,
+      "warnings": 0,
+      "issues": [],
+      "feature": null,
+      "lostValue": [
+        1100,
+        31000
+      ],
+      "wallSeconds": 88.679432479
+    },
+    {
+      "id": "Americans-202-swap",
+      "country": "Americans",
+      "seed": 202,
+      "swapped": true,
+      "startingLocations": [
+        {
+          "x": 82,
+          "y": 87
+        },
+        {
+          "x": 27,
+          "y": 50
+        }
+      ],
+      "outcome": "win",
+      "reason": "engine-victory-conditions",
+      "ticks": 11972,
+      "errors": 0,
+      "warnings": 0,
+      "issues": [],
+      "feature": null,
+      "lostValue": [
+        5300,
+        26000
+      ],
+      "wallSeconds": 84.90728868299999
+    },
+    {
+      "id": "Russians-101-original",
+      "country": "Russians",
+      "seed": 101,
+      "swapped": false,
+      "startingLocations": [
+        {
+          "x": 27,
+          "y": 50
+        },
+        {
+          "x": 82,
+          "y": 87
+        }
+      ],
+      "outcome": "win",
+      "reason": "engine-victory-conditions",
+      "ticks": 16197,
+      "errors": 0,
+      "warnings": 0,
+      "issues": [],
+      "feature": null,
+      "lostValue": [
+        4600,
+        36200
+      ],
+      "wallSeconds": 127.077619171
+    },
+    {
+      "id": "Russians-101-swap",
+      "country": "Russians",
+      "seed": 101,
+      "swapped": true,
+      "startingLocations": [
+        {
+          "x": 82,
+          "y": 87
+        },
+        {
+          "x": 27,
+          "y": 50
+        }
+      ],
+      "outcome": "win",
+      "reason": "engine-victory-conditions",
+      "ticks": 14212,
+      "errors": 0,
+      "warnings": 0,
+      "issues": [],
+      "feature": null,
+      "lostValue": [
+        6000,
+        27300
+      ],
+      "wallSeconds": 98.79914885299999
+    },
+    {
+      "id": "Russians-202-original",
+      "country": "Russians",
+      "seed": 202,
+      "swapped": false,
+      "startingLocations": [
+        {
+          "x": 27,
+          "y": 50
+        },
+        {
+          "x": 82,
+          "y": 87
+        }
+      ],
+      "outcome": "win",
+      "reason": "engine-victory-conditions",
+      "ticks": 15652,
+      "errors": 0,
+      "warnings": 0,
+      "issues": [],
+      "feature": null,
+      "lostValue": [
+        3700,
+        32700
+      ],
+      "wallSeconds": 120.085341617
+    },
+    {
+      "id": "Russians-202-swap",
+      "country": "Russians",
+      "seed": 202,
+      "swapped": true,
+      "startingLocations": [
+        {
+          "x": 82,
+          "y": 87
+        },
+        {
+          "x": 27,
+          "y": 50
+        }
+      ],
+      "outcome": "win",
+      "reason": "engine-victory-conditions",
+      "ticks": 14884,
+      "errors": 0,
+      "warnings": 0,
+      "issues": [],
+      "feature": null,
+      "lostValue": [
+        6000,
+        28200
+      ],
+      "wallSeconds": 100.73956778999998
+    }
+  ],
+  "inputs": [
+    {
+      "name": "Americans-101",
+      "sha256": "048cfcd8d00f99058096767459f1d657f1fa748cd101818e8c633f0a85721a13",
+      "transportSha256": null
+    },
+    {
+      "name": "Americans-202",
+      "sha256": "24097cde6c248fe36ae783a121f514e86f4bd2b062af4eac96c3e357f9a1b818",
+      "transportSha256": null
+    },
+    {
+      "name": "Russians-101",
+      "sha256": "17b11f45b2c14391be513f0cc012079a9f285a682d9d14314be03a86799407ab",
+      "transportSha256": null
+    },
+    {
+      "name": "Russians-202",
+      "sha256": "4269afab70b6c6d895cef074cc42ec68c99add38a474ea8d9ff1953bf4e04b43",
+      "transportSha256": null
+    }
+  ],
+  "validation": {
+    "fullTests": {
+      "passed": 447,
+      "skipped": 11,
+      "failed": 0,
+      "assertions": 23082
+    },
+    "typechecksPassed": true,
+    "buildPassed": true,
+    "buildWarnings": "existing dependency/chunk/dynamic-import warnings"
+  },
+  "fixturesOrDiagnosticReplaysCountedAsWins": false
+}
