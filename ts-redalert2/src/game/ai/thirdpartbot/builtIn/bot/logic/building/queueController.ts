@@ -1,6 +1,7 @@
 import {
     ActionsApi,
     GameApi,
+    ObjectType,
     PlayerData,
     ProductionApi,
     QueueStatus,
@@ -127,12 +128,21 @@ export class QueueController {
                 const situation = readStrategicSituation(game, playerData);
                 const core = countCoreTanks(situation);
                 const hasOreFields = !game.mapApi?.getAllTilesResourceData || (game.mapApi.getAllTilesResourceData()?.some(r =>
-                    (r.ore > 0 || r.gems > 0) && (!game.mapApi.isVisibleTile || game.mapApi.isVisibleTile(r.tile, playerData.name))
+                    (!game.mapApi.isVisibleTile || game.mapApi.isVisibleTile(r.tile, playerData.name)) && (r.ore > 0 || r.gems > 0)
                 ) ?? true);
+                const chronoGemOpening = miners === 2 && option.name === "CMIN" && (game.mapApi?.getAllTilesResourceData?.() ?? []).some(resource =>
+                    game.mapApi.isVisibleTile?.(resource.tile, player.name) && resource.gems > 0 &&
+                    Math.hypot(resource.tile.rx - playerData.startLocation.x, resource.tile.ry - playerData.startLocation.y) <= 32);
                 const intruders = game.getVisibleUnits(player.name, "enemy", option => option.isSelectableCombatant && !option.harvester)
                     .map(id => game.getUnitData?.(id) ?? game.getGameObjectData?.(id)).filter((unit): unit is UnitData => !!unit &&
                         (unit.tile.rx - playerData.startLocation.x) ** 2 + (unit.tile.ry - playerData.startLocation.y) ** 2 <= 22 ** 2);
                 const baseUnderSiege = intruders.length > 0;
+                const fourthMinerUnderPressure = miners === 3 && core < 6 && game.getVisibleUnits(player.name, "enemy", rules =>
+                    rules.type === ObjectType.Vehicle && rules.isSelectableCombatant && !rules.harvester).some(id => {
+                        const unit = game.getUnitData?.(id) ?? game.getGameObjectData?.(id);
+                        return !!unit && (unit.tile.rx - playerData.startLocation.x) ** 2 +
+                            (unit.tile.ry - playerData.startLocation.y) ** 2 <= 48 ** 2;
+                    });
                 const minCoreBeforeMiner2 = isSovietCountry(playerData.country?.name) ? 2 : 1;
 
                 let minerPriority = 0;
@@ -140,9 +150,13 @@ export class QueueController {
                     minerPriority = 120;
                 } else if (miners < 2 && core >= minCoreBeforeMiner2) {
                     minerPriority = 90;
-                } else if (miners === 2 && !baseUnderSiege && hasOreFields && (core >= 6 || (refineries >= 2 && core >= 4))) {
-                    minerPriority = 78;
-                } else if (miners === 3 && !baseUnderSiege && hasOreFields && (core >= 8 || (refineries >= 2 && core >= 6))) {
+                } else if (miners === 2 && !baseUnderSiege && hasOreFields &&
+                    (core >= 6 || (refineries >= 2 && core >= (isSovietCountry(playerData.country?.name) || chronoGemOpening ? 3 : 4)))) {
+                    minerPriority = core < 4 ? 90 : 78;
+                } else if (miners === 3 && !baseUnderSiege && !fourthMinerUnderPressure && hasOreFields && (core >= 8 || (refineries >= 2 && core >= (option.name === "CMIN" ? 6 : 4) && (option.name !== "CMIN" || playerData.credits >= option.cost + 400)))) {
+                    minerPriority = option.name === "CMIN" && core < 8 ? 78 : core < 6 ? 86 : 70;
+                } else if (miners === 4 && refineries >= 2 && !baseUnderSiege && hasOreFields && core >= 8 &&
+                    playerData.credits >= option.cost + 400) {
                     minerPriority = 70;
                 }
                 if (minerPriority > 0) {
@@ -155,15 +169,16 @@ export class QueueController {
         }
         if (context.difficulty === "brutal") {
             const situation = readStrategicSituation(game, playerData);
-            if (isSovietCountry(playerData.country?.name)) {
+            if (isSovietCountry(playerData.country?.name) || productionApi.getAvailableObjects(QueueType.Vehicles).some(option => option.name === "FV")) {
                 const tick = game.getCurrentTick();
                 if (situation.enemy.aircraft > 0) {
                     this.airResponseTarget = Math.max(this.airResponseTarget,
-                        Math.min(6, Math.max(2, Math.ceil(situation.enemy.aircraft / 2))));
+                        Math.min(6, Math.max(isSovietCountry(playerData.country?.name) ? 2 : 1, Math.ceil(situation.enemy.aircraft / 2))));
                     this.airResponseUntil = tick + 600;
                 } else if (tick >= this.airResponseUntil) this.airResponseTarget = 0;
-                const aa = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === "HTK");
-                if (aa && (situation.own.HTK ?? 0) < this.airResponseTarget && (requests.get(aa.name)?.priority ?? 0) < 100) {
+                const aa = productionApi.getAvailableObjects(QueueType.Vehicles).find(option =>
+                    option.name === (isSovietCountry(playerData.country?.name) ? "HTK" : "FV"));
+                if (aa && (situation.own[aa.name] ?? 0) < this.airResponseTarget && (requests.get(aa.name)?.priority ?? 0) < 100) {
                     // Visible air pressure needs actual counters before another
                     // miner is sent out. Retain the observation briefly across fog.
                     requests.set(aa.name, { priority: 100, specificLocation: null });

@@ -1,4 +1,4 @@
-import { GameApi, ObjectType, PlayerData, TechnoRules, UnitData } from "../../../game-api";
+import { GameApi, MovementZone, ObjectType, PlayerData, TechnoRules, UnitData } from "../../../game-api";
 import { readStrategicSituation } from "../../strategy/nationalComposition";
 import { getOpeningAirBudget } from "../../strategy/openingAirBudget";
 
@@ -67,14 +67,18 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
             r.constructionYard || r.refinery || r.weaponsFactory)
             .map(id => (game.getUnitData?.(id) ?? game.getGameObjectData?.(id)) as UnitData).filter((u): u is UnitData => !!u);
         const start = player.startLocation;
-        const intruders = game.getVisibleUnits(player.name, "enemy", option => option.isSelectableCombatant && !option.harvester)
+        const intruders = game.getVisibleUnits(player.name, "enemy", option => option.isSelectableCombatant && !option.harvester && option.movementZone !== MovementZone.Fly)
             .map(id => (game.getUnitData?.(id) ?? game.getGameObjectData?.(id)) as UnitData).filter(unit => unit && (
                 (unit.tile.rx - start.x) ** 2 + (unit.tile.ry - start.y) ** 2 <= 20 ** 2 ||
                 anchors.some(a => (unit.tile.rx - a.tile.rx) ** 2 + (unit.tile.ry - a.tile.ry) ** 2 <= 18 ** 2)
             ));
         // Only build defensively when enemy combatants are actively invading the base!
         const hasVehicleIntruder = intruders.some(u => (u.type as any) === ObjectType.Vehicle);
-        if (intruders.length >= 2 || (intruders.length >= 1 && hasVehicleIntruder)) {
+        const armedInfantry = intruders.filter(u => !["ADOG", "DOG"].includes(u.name));
+        const needsMobileAA = !hasVehicleIntruder && (s.own.FV ?? 0) === 0 && (s.own.HTK ?? 0) === 0 &&
+            (s.enemy.aircraft ?? 0) > 0;
+        if (needsMobileAA) return 0;
+        if (hasVehicleIntruder || armedInfantry.length >= 3) {
             if (committed) playerCooldowns.set(player.name, currentTick);
             return 70;
         }
