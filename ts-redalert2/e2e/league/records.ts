@@ -8,11 +8,12 @@ export function validateGame(value: unknown): asserts value is LeagueGame {
     if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('Game row must be an object');
     const game = value as LeagueGame;
     if (Object.keys(value).length !== fields.length || fields.some(field => !Object.hasOwn(value, field))) throw new Error('Game row fields are incomplete');
-    if (!Number.isSafeInteger(game.round) || game.round < 0 || !['qualify', 'dev'].includes(game.kind)) throw new Error('Invalid game round/kind');
+    if (!Number.isSafeInteger(game.round) || game.round < 0 || !['qualify', 'dev', 'evolve'].includes(game.kind)) throw new Error('Invalid game round/kind');
     if (![game.a, game.b].every(id => typeof id === 'string' && /^[a-z][a-z0-9-]*$/.test(id)) ||
         ![game.aTree, game.bTree].every(tree => typeof tree === 'string' && /^(?:[0-9a-f]{40}|[0-9a-f]{64})$/.test(tree))) throw new Error('Invalid game member identity');
     const index = (MAPS as readonly string[]).indexOf(game.map);
-    if (index < 0 || game.seed !== seedFor(game.round, index + 1, game.kind) ||
+    const generation = game.kind === 'evolve' ? (game.seed - game.round * 1000 - 600 - index - 1) / 10 : undefined;
+    if (index < 0 || game.seed !== seedFor(game.round, index + 1, game.kind, generation) ||
         !MATCHUPS.some(([a, b]) => a === game.aCountry && b === game.bCountry)) throw new Error('Invalid game scenario or seed');
     if (typeof game.swapped !== 'boolean' || !['a-win', 'b-win', 'timeout', 'error'].includes(game.result) ||
         typeof game.reason !== 'string' || !game.reason || !Number.isSafeInteger(game.ticks) || game.ticks < 0 || game.ticks > 27000) throw new Error('Invalid game result fields');

@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test';
-import { MAPS, MATCHUPS, pairingJobs, roundRobinJobs, shardJobs, seedFor, convertResult, compareGames, assertSelfMirror, type LeagueGame } from '../../../e2e/league/schedule';
+import { MAPS, MATCHUPS, pairingJobs, lightPairingJobs, roundRobinJobs, shardJobs, seedFor, convertResult, compareGames, assertSelfMirror, type LeagueGame } from '../../../e2e/league/schedule';
 import { reportGames, type FrozenMember } from '../../../e2e/league/run';
 
 function row(swapped = false, result: LeagueGame['result'] = 'a-win'): LeagueGame {
@@ -45,6 +45,22 @@ describe('league schedule', () => {
         }
         expect([...qualify].some(seed => dev.has(seed))).toBe(false);
         expect(qualify.has(101)).toBe(false); expect(dev.has(202)).toBe(false);
+    });
+    test('evolve seeds are unique and disjoint from qualification and development for rounds 1-50', () => {
+        const ordinary = new Set<number>(), evolve = new Set<number>();
+        for (let round = 1; round <= 50; round++) for (let index = 1; index <= 3; index++) {
+            ordinary.add(seedFor(round, index, 'qualify')); ordinary.add(seedFor(round, index, 'dev'));
+            for (let generation = 0; generation < 40; generation++) evolve.add(seedFor(round, index, 'evolve', generation));
+        }
+        expect(evolve.size).toBe(6000); expect([...evolve].some(seed => ordinary.has(seed))).toBe(false);
+        expect(seedFor(1, 1, 'evolve', 0)).toBe(1601); expect(seedFor(1, 3, 'evolve', 39)).toBe(1993);
+    });
+    test('light evolution pairings cover two maps and all countries; invalid generations fail', () => {
+        const jobs = lightPairingJobs('p', 'v0', 1, 'evolve', 3);
+        expect(jobs).toHaveLength(8); expect([...new Set(jobs.map(job => job.map))]).toEqual(['mp08t2', 'tn01t2']);
+        expect(jobs.map(job => job.seed)).toEqual([1631, 1631, 1631, 1631, 1632, 1632, 1632, 1632]);
+        for (const generation of [-1, 40, 0.5]) expect(() => seedFor(1, 1, 'evolve', generation)).toThrow();
+        expect(() => seedFor(1, 1, 'evolve')).toThrow(); expect(() => seedFor(1, 1, 'qualify', 0)).toThrow();
     });
     test('eight-member round robin has 336 jobs and preserves input member order', () => {
         const jobs = roundRobinJobs(['orig', 'r4', 'v0', 'v1', 'v2', 'v3', 'v4', 'm0'], 0, 'qualify');

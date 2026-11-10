@@ -3,7 +3,7 @@ export const MATCHUPS = [
     ['Americans', 'Americans'], ['Russians', 'Russians'],
     ['Americans', 'Russians'], ['Russians', 'Americans'],
 ] as const;
-export type Kind = 'qualify' | 'dev';
+export type Kind = 'qualify' | 'dev' | 'evolve';
 export type Country = typeof MATCHUPS[number][number];
 export type GameResult = 'a-win' | 'b-win' | 'timeout' | 'error';
 export interface LeagueJob {
@@ -31,26 +31,31 @@ export interface LeagueGame {
     reason: string;
     ticks: number;
 }
-export function seedFor(round: number, mapIndex: number, kind: Kind): number {
+export function seedFor(round: number, mapIndex: number, kind: Kind, generation?: number): number {
     if (!Number.isSafeInteger(round) || round < 0 || !Number.isInteger(mapIndex) || mapIndex < 1 || mapIndex > MAPS.length ||
-        !['qualify', 'dev'].includes(kind)) throw new Error('Invalid league seed inputs');
-    const seed = round * 1000 + (kind === 'dev' ? 500 : 0) + mapIndex;
+        !['qualify', 'dev', 'evolve'].includes(kind)) throw new Error('Invalid league seed inputs');
+    if (kind === 'evolve' ? !Number.isInteger(generation) || generation! < 0 || generation! > 39 : generation !== undefined)
+        throw new Error('Evolve generation must be 0-39 and is only valid for evolve seeds');
+    const seed = round * 1000 + (kind === 'evolve' ? 600 + generation! * 10 : kind === 'dev' ? 500 : 0) + mapIndex;
     if (!Number.isSafeInteger(seed)) throw new Error('League seed exceeds safe integer range');
     return seed;
 }
 export function jobId(job: Omit<LeagueJob, 'id'>): string {
     return `${job.a}__${job.b}__${job.map}__${job.seed}__${job.aCountry}-${job.bCountry}`;
 }
-export function pairingJobs(a: string, b: string, round: number, kind: Kind): LeagueJob[] {
+export function pairingJobs(a: string, b: string, round: number, kind: Kind, generation?: number): LeagueJob[] {
     if (![a, b].every(id => /^[a-z][a-z0-9-]*$/.test(id))) throw new Error('Invalid pairing member id');
     return MAPS.flatMap((map, index) => MATCHUPS.map(([aCountry, bCountry]) => {
-        const job = { a, b, map, seed: seedFor(round, index + 1, kind), aCountry, bCountry };
+        const job = { a, b, map, seed: seedFor(round, index + 1, kind, generation), aCountry, bCountry };
         return { id: jobId(job), ...job };
     }));
 }
-export function roundRobinJobs(members: string[], round: number, kind: Kind): LeagueJob[] {
+export function lightPairingJobs(a: string, b: string, round: number, kind: Kind, generation?: number): LeagueJob[] {
+    return pairingJobs(a, b, round, kind, generation).filter(job => job.map !== MAPS[2]);
+}
+export function roundRobinJobs(members: string[], round: number, kind: Kind, generation?: number): LeagueJob[] {
     if (new Set(members).size !== members.length) throw new Error('Duplicate round-robin member');
-    return members.flatMap((a, index) => members.slice(index + 1).flatMap(b => pairingJobs(a, b, round, kind)));
+    return members.flatMap((a, index) => members.slice(index + 1).flatMap(b => pairingJobs(a, b, round, kind, generation)));
 }
 export function shardJobs(jobs: readonly LeagueJob[], shard: string): LeagueJob[] {
     const match = /^(\d+)\/(\d+)$/.exec(shard);

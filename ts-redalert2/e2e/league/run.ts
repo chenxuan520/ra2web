@@ -5,7 +5,7 @@ import { parseArgs } from 'node:util';
 import { archiveJobAttempt } from '../ai-tournament-storage';
 import { validateJobReport } from '../ai-tournament-plan';
 import { BUILTIN, loadLeague, gitQuery, type Profile } from './registry';
-import { MAPS, pairingJobs, roundRobinJobs, shardJobs, compareGames, convertResult, assertSelfMirror, type Kind, type LeagueGame, type LeagueJob } from './schedule';
+import { MAPS, pairingJobs, lightPairingJobs, roundRobinJobs, shardJobs, compareGames, convertResult, assertSelfMirror, type Kind, type LeagueGame, type LeagueJob } from './schedule';
 
 const projectRoot = resolve(import.meta.dir, '../..');
 const hash = (data: string | Uint8Array) => createHash('sha256').update(data).digest('hex');
@@ -72,18 +72,21 @@ export function reportGames(report: any, job: LeagueJob, a: FrozenMember, b: Fro
 export async function main() {
     const started = performance.now();
     const { values } = parseArgs({ options: {
-        round: { type: 'string' }, kind: { type: 'string' }, a: { type: 'string' }, vs: { type: 'string' },
+        round: { type: 'string' }, kind: { type: 'string' }, generation: { type: 'string' }, a: { type: 'string' }, vs: { type: 'string' },
         'round-robin': { type: 'boolean' }, ref: { type: 'string', multiple: true },
         concurrency: { type: 'string', default: '4' }, out: { type: 'string' }, resume: { type: 'boolean' },
         cdn: { type: 'string' }, shard: { type: 'string' }, help: { type: 'boolean' },
     } });
     if (values.help) {
-        console.log('bun e2e/league/run.ts --round N --kind qualify|dev (--round-robin | --a ID --vs active|ID,ID) [--ref ID=COMMIT] --out DIR [--resume] [--concurrency 4] [--cdn PATH] [--shard I/M]');
+        console.log('bun e2e/league/run.ts --round N --kind qualify|dev|evolve (--round-robin | --a ID --vs active|ID,ID) [--generation G for evolve/light games] [--ref ID=COMMIT] --out DIR [--resume] [--concurrency 4] [--cdn PATH] [--shard I/M]');
         return;
     }
     const round = integer(values.round, 'round'), concurrency = integer(values.concurrency, 'concurrency', 1);
-    if (!['qualify', 'dev'].includes(values.kind ?? '')) throw new Error('--kind must be qualify or dev');
+    if (!['qualify', 'dev', 'evolve'].includes(values.kind ?? '')) throw new Error('--kind must be qualify, dev or evolve');
     const kind = values.kind as Kind;
+    const generation = kind === 'evolve' ? integer(values.generation, 'generation') : undefined;
+    if ((generation !== undefined && generation > 39) || (kind !== 'evolve' && values.generation !== undefined))
+        throw new Error('--generation 0-39 is required only for evolve games');
     if (!values.out) throw new Error('--out is required');
     const cdnInput = values.cdn ?? process.env.RA2_BENCHMARK_CDN;
     if (!cdnInput) throw new Error('Pass --cdn or set RA2_BENCHMARK_CDN');
@@ -100,13 +103,13 @@ export async function main() {
     let jobs: LeagueJob[];
     if (values['round-robin']) {
         if (values.a || values.vs || overrides.size) throw new Error('--round-robin is mutually exclusive with --a, --vs and --ref');
-        jobs = roundRobinJobs(league.members.filter(member => member.active).map(member => member.id), round, kind);
+        jobs = roundRobinJobs(league.members.filter(member => member.active).map(member => member.id), round, kind, generation);
     } else {
         if (!values.a || !values.vs) throw new Error('--a and --vs are required without --round-robin');
         const opponents = values.vs === 'active' ? league.members.filter(member => member.active && member.id !== values.a).map(member => member.id) : values.vs.split(',');
         if (!opponents.length || new Set(opponents).size !== opponents.length) throw new Error('--vs must contain unique members');
         if (opponents.some(id => !league.members.some(member => member.id === id))) throw new Error('--vs must identify registered opponents');
-        jobs = opponents.flatMap(b => pairingJobs(values.a!, b, round, kind));
+        jobs = opponents.flatMap(b => kind === 'evolve' ? lightPairingJobs(values.a!, b, round, kind, generation) : pairingJobs(values.a!, b, round, kind));
     }
     jobs.sort((a, b) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
     if (!jobs.length) throw new Error('League schedule is empty');
@@ -122,7 +125,7 @@ export async function main() {
     }
     if ([...overrides.keys()].some(id => !versions[id])) throw new Error('Unused --ref candidate');
     const runtime = await runtimeSnapshot(), resources = await readResources(cdn);
-    const config = { round, kind, versions, runtime, resources, jobs, cdn, shard: values.shard ?? null };
+    const config = { round, kind, generation: generation ?? null, versions, runtime, resources, jobs, cdn, shard: values.shard ?? null };
     if (values.shard !== undefined) jobs = shardJobs(jobs, values.shard);
     const fingerprint = hash(JSON.stringify(config)), manifestPath = join(output, 'manifest.json');
     const verifyRuntime = async () => {
