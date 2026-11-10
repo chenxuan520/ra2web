@@ -47,6 +47,42 @@
       "role": "history",
       "active": false,
       "note": "用户授权以m0的非法坐标修补版替代初始参赛；未改引擎或策略阈值，不是原m0的别名"
+    },
+    {
+      "id": "x-rush-01",
+      "tag": "league/x-rush-01",
+      "tree": "ff90f830302f2f66da743f370f6c47960636ccf1",
+      "profile": "brutal",
+      "role": "exploiter",
+      "active": true,
+      "style": "rush",
+      "target": "v0",
+      "winsVsTarget": 8,
+      "note": "admitted round 1"
+    },
+    {
+      "id": "x-air-01",
+      "tag": "league/x-air-01",
+      "tree": "9b5d93f27bbaf0e347dc05dfacea196e9bc5f355",
+      "profile": "brutal",
+      "role": "exploiter",
+      "active": true,
+      "style": "air",
+      "target": "v0",
+      "winsVsTarget": 8,
+      "note": "admitted round 1"
+    },
+    {
+      "id": "x-harass-01",
+      "tag": "league/x-harass-01",
+      "tree": "eed2820781a331df3f0caac559e76ef268dcbf90",
+      "profile": "brutal",
+      "role": "exploiter",
+      "active": true,
+      "style": "harass",
+      "target": "v0",
+      "winsVsTarget": 9,
+      "note": "admitted round 1"
     }
   ]
 }
