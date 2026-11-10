@@ -11,6 +11,9 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
     const refineries = (s.own.GAREFN ?? 0) + (s.own.NAREFN ?? 0);
     const factories = (s.own.GAWEAP ?? 0) + (s.own.NAWEAP ?? 0);
     const count = s.own[rules.name] ?? 0;
+    if (rules.refinery && refineries > 0) return 0;
+    if (["GAAIRC", "AMRADR", "NARADR", "GATECH", "NATECH"].includes(rules.name)) return 0;
+    if (["GAWEAP", "NAWEAP"].includes(rules.name) && factories >= BRUTAL_PARAMS.economy.maxFactories) return 0;
     if (rules.refinery) {
         if (!refineries) return BRUTAL_PARAMS.economy.firstRefineryPriority;
         if (refineries === 1) {

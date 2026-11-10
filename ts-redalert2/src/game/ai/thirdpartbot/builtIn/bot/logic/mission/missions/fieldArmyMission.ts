@@ -18,6 +18,7 @@ const location = (unit: UnitData) => new Vector2(unit.tile.rx, unit.tile.ry);
 export class FieldArmyMission extends Mission {
     private squad?: CombatSquad;
     private attacking = false;
+    private rushLaunched = false;
     private attackArea = new Vector2();
     private nextTargetCheck = 0;
     private targetId?: number;
@@ -121,6 +122,8 @@ export class FieldArmyMission extends Mission {
                 this.attacking = false;
             }
         }
+        this.rushLaunched ||= armor.length >= BRUTAL_PARAMS.assault.assaultMinArmor;
+        this.attacking = this.rushLaunched;
         const center = this.getCenterOfMass() ?? rally;
         const nearestHomeThreat = homeThreats.length
             ? [...homeThreats].sort((a, b) => location(a).distanceTo(center) - location(b).distanceTo(center) || a.id - b.id)[0]
