@@ -3,6 +3,7 @@ import { GameApi, ObjectType, UnitData, Vector2, ZoneType } from "../../../../ga
 import { SideComposition } from "../../../strategy/compositionUtils";
 import { countCoreTanks, readStrategicSituation } from "../../../strategy/nationalComposition";
 import { getOpeningAirBudget } from "../../../strategy/openingAirBudget";
+import { BRUTAL_PARAMS } from "../../../strategy/brutalParams";
 import { getBasicInfantryBudget, isSovietCountry } from "../../../strategy/basicInfantryBudget";
 import { getKnownEnemyDirections } from "../../common/knownEnemyDirections";
 import { MissionContext } from "../../common/context";
@@ -81,29 +82,29 @@ export class FieldArmyMission extends Mission {
         const enemyDefences = (s.enemy.defences ?? 0);
         const enemyInfantry = (s.enemy.infantry ?? 0);
         const enemyAircraft = (s.enemy.aircraft ?? 0);
-        const lightDefences = tick >= 10000 && armor.length >= 3 ? enemies.filter(enemy =>
+        const lightDefences = tick >= BRUTAL_PARAMS.assault.lateGameTick && armor.length >= BRUTAL_PARAMS.assault.lateAdvantageMinArmor ? enemies.filter(enemy =>
             (enemy.type as any) === ObjectType.Building && (enemy.rules.primary || enemy.rules.secondary) &&
             ["GAPILL", "NALASR"].includes(enemy.name)).length : 0;
         const enemyPower = enemyArmor * 100 + (enemyDefences - lightDefences) * 140 + lightDefences * 40 + enemyInfantry * 15 + enemyAircraft * 70;
         const forceRatio = enemyPower > 0 ? ourPower / enemyPower : 2.0;
-        const hasHeavyDefences = enemyDefences >= 2;
+        const hasHeavyDefences = enemyDefences >= BRUTAL_PARAMS.assault.heavyDefenceCount;
         const hasSiege = units.some(u => ["SREF", "ZEP", "V3"].includes(u.name));
 
         const factories = (s.own.GAWEAP ?? 0) + (s.own.NAWEAP ?? 0);
-        const minArmor = isLongMap ? (enemyArmor > 3 ? 6 : 4) : 4;
-        const isLateGame = tick >= 10000;
+        const minArmor = isLongMap ? (enemyArmor > 3 ? BRUTAL_PARAMS.assault.minArmorLongMapVsArmor : BRUTAL_PARAMS.assault.minArmorShortMap) : BRUTAL_PARAMS.assault.minArmorShortMap;
+        const isLateGame = tick >= BRUTAL_PARAMS.assault.lateGameTick;
         // Against heavy static defenses (2+ towers), require either siege weapons or decisive armor mass
-        const defenseReady = !hasHeavyDefences || hasSiege || (armor.length >= Math.max(8, enemyArmor + enemyDefences * 2) && forceRatio >= 1.2);
-        const lateArmorAdvantage = defenseReady && isLateGame && armor.length >= 3 && armor.length > enemyArmor &&
-            enemyAircraft === 0 && enemyDefences === lightDefences && forceRatio >= 1.05 &&
-            armor.every(unit => unit.hitPoints >= unit.maxHitPoints * 0.7);
+        const defenseReady = !hasHeavyDefences || hasSiege || (armor.length >= Math.max(BRUTAL_PARAMS.assault.defenceArmorFloor, enemyArmor + enemyDefences * 2) && forceRatio >= BRUTAL_PARAMS.assault.defenceForceRatio);
+        const lateArmorAdvantage = defenseReady && isLateGame && armor.length >= BRUTAL_PARAMS.assault.lateAdvantageMinArmor && armor.length > enemyArmor &&
+            enemyAircraft === 0 && enemyDefences === lightDefences && forceRatio >= BRUTAL_PARAMS.assault.lateAdvantageForceRatio &&
+            armor.every(unit => unit.hitPoints >= unit.maxHitPoints * BRUTAL_PARAMS.assault.lateAdvantageMinHpFraction);
         const canAssault = defenseReady && (
             lateArmorAdvantage || (enemyArmor === 0
-                ? armor.length >= minArmor && forceRatio >= 0.9
-                : armor.length >= 6 && (armor.length >= enemyArmor + 2 || armor.length >= 12) && forceRatio >= 1.15
+                ? armor.length >= minArmor && forceRatio >= BRUTAL_PARAMS.assault.emptyFieldForceRatio
+                : armor.length >= BRUTAL_PARAMS.assault.assaultMinArmor && (armor.length >= enemyArmor + BRUTAL_PARAMS.assault.assaultArmorLead || armor.length >= BRUTAL_PARAMS.assault.assaultArmorCap) && forceRatio >= BRUTAL_PARAMS.assault.assaultForceRatio
             ) ||
             (factories > 0 && (
-                (!isLongMap && armor.length >= 4 && enemyArmor <= 1 && enemyDefences === 0 && targetDist <= 45) ||
+                (!isLongMap && armor.length >= BRUTAL_PARAMS.assault.minArmorShortMap && enemyArmor <= 1 && enemyDefences === 0 && targetDist <= 45) ||
                 (isLateGame && armor.length >= 2 && armor.length > enemyArmor && enemyArmor <= 1) ||
                 (!isLongMap && armor.length >= 2 && enemyArmor === 0 && targetDist <= 45)
             ))
@@ -112,9 +113,9 @@ export class FieldArmyMission extends Mission {
             air.length >= 2 || units.some(unit => unit.name === "ZEP") || infantry.length >= 20) {
             this.attacking = true;
         }
-        const outnumbered = enemyArmor > 0 && armor.length < Math.min(enemyArmor, 6);
-        const powerDeficit = enemyPower > 300 && forceRatio < 0.65;
-        const decimated = armor.length < (isLateGame ? 2 : (hasHeavyDefences ? 5 : 3));
+        const outnumbered = enemyArmor > 0 && armor.length < Math.min(enemyArmor, BRUTAL_PARAMS.assault.retreatArmorCap);
+        const powerDeficit = enemyPower > BRUTAL_PARAMS.assault.retreatPowerFloor && forceRatio < BRUTAL_PARAMS.assault.retreatForceRatio;
+        const decimated = armor.length < (isLateGame ? BRUTAL_PARAMS.assault.decimatedLate : (hasHeavyDefences ? BRUTAL_PARAMS.assault.decimatedVsHeavyDefence : BRUTAL_PARAMS.assault.decimatedEarly));
         if (decimated || outnumbered || powerDeficit || (units.length < 2 && !air.length)) {
             if (!air.length && !units.some(unit => unit.name === "ZEP")) {
                 this.attacking = false;
@@ -125,7 +126,7 @@ export class FieldArmyMission extends Mission {
             ? [...homeThreats].sort((a, b) => location(a).distanceTo(center) - location(b).distanceTo(center) || a.id - b.id)[0]
             : undefined;
 
-        const isArmorFormed = armor.length >= 4;
+        const isArmorFormed = armor.length >= BRUTAL_PARAMS.assault.formedArmor;
         const isDirectBaseAssault = !!nearestHomeThreat && (
             (nearestHomeThreat.type as any) === ObjectType.Vehicle ||
             nearestHomeThreat.rules.crushable === false ||
