@@ -72,15 +72,6 @@ export function chooseTacticalTarget(
         !!getCombatWeapon(target, attacker, true, game));
     const currentTarget = targets.find(target => target.id === currentTargetId);
     if (currentTarget && isFiringBurst(attacker) && getCombatWeapon(attacker, currentTarget, false, game)) return currentTarget;
-    if (currentTarget && ["HTNK", "MTNK", "MGTK", "APOC"].includes(attacker.name) &&
-        (attacker.attackState as any) === AttackState.PrepareToFire && attacker.isFiring === false) {
-        const currentAttack = getCombatWeapon(attacker, currentTarget, true, game);
-        const distance = getDistanceBetweenUnits(attacker, currentTarget);
-        // Ordinary ground Attack orders cancel the old task; keep its known recovery when it can still engage.
-        if (currentAttack && currentAttack.weapon.cooldownTicks > 6 && distance <= currentAttack.range &&
-            distance >= (currentAttack.weapon.minRange ?? 0) && (committedDamage.get(currentTarget.id) ?? 0) <
-            (estimatedHitPoints(currentTarget, game) ?? estimatedMaxHitPoints(currentTarget) ?? 100)) return currentTarget;
-    }
 
     let best: UnitData | null = null;
     let bestScore = -Infinity;

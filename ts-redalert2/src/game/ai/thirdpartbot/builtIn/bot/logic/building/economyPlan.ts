@@ -1,4 +1,4 @@
-import { GameApi, MovementZone, ObjectType, PlayerData, TechnoRules, UnitData } from "../../../game-api";
+import { GameApi, ObjectType, PlayerData, TechnoRules, UnitData } from "../../../game-api";
 import { readStrategicSituation } from "../../strategy/nationalComposition";
 import { getOpeningAirBudget } from "../../strategy/openingAirBudget";
 
@@ -25,11 +25,6 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
                     (rules.freeUnit === "HARV" || rules.freeUnit === "CMIN"));
             return (committed || (factories > 0 && canExpand) ||
                 (!factories && (s.own.JUMPJET ?? 0) >= 2 && getOpeningAirBudget(game, player) === 2)) ? 50 : 0;
-        }
-        if (refineries >= 2 && !committed) {
-            const enemyVehicles = s.enemy.vehicles ?? 0;
-            const coreArmor = (s.own.MTNK ?? 0) + (s.own.HTNK ?? 0);
-            if (enemyVehicles >= 4 && coreArmor < enemyVehicles + 4 && s.credits < 4500) return 0;
         }
         return refineries < 4 && s.harvesters >= refineries * 2 ? 18 : 0;
     }
@@ -67,18 +62,14 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
             r.constructionYard || r.refinery || r.weaponsFactory)
             .map(id => (game.getUnitData?.(id) ?? game.getGameObjectData?.(id)) as UnitData).filter((u): u is UnitData => !!u);
         const start = player.startLocation;
-        const intruders = game.getVisibleUnits(player.name, "enemy", option => option.isSelectableCombatant && !option.harvester && option.movementZone !== MovementZone.Fly)
+        const intruders = game.getVisibleUnits(player.name, "enemy", option => option.isSelectableCombatant && !option.harvester)
             .map(id => (game.getUnitData?.(id) ?? game.getGameObjectData?.(id)) as UnitData).filter(unit => unit && (
                 (unit.tile.rx - start.x) ** 2 + (unit.tile.ry - start.y) ** 2 <= 20 ** 2 ||
                 anchors.some(a => (unit.tile.rx - a.tile.rx) ** 2 + (unit.tile.ry - a.tile.ry) ** 2 <= 18 ** 2)
             ));
         // Only build defensively when enemy combatants are actively invading the base!
         const hasVehicleIntruder = intruders.some(u => (u.type as any) === ObjectType.Vehicle);
-        const armedInfantry = intruders.filter(u => !["ADOG", "DOG"].includes(u.name));
-        const needsMobileAA = !hasVehicleIntruder && (s.own.FV ?? 0) === 0 && (s.own.HTK ?? 0) === 0 &&
-            (s.enemy.aircraft ?? 0) > 0;
-        if (needsMobileAA) return 0;
-        if (hasVehicleIntruder || armedInfantry.length >= 3) {
+        if (intruders.length >= 2 || (intruders.length >= 1 && hasVehicleIntruder)) {
             if (committed) playerCooldowns.set(player.name, currentTick);
             return 70;
         }
