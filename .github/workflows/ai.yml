@@ -93,6 +93,8 @@ jobs:
           bun run typecheck:entry
           bun run typecheck:server
           bun --bun tsc -p e2e/tsconfig.ai-benchmark.json
+          bun --bun tsc -p e2e/tsconfig.ai-league.json
+          bun e2e/league/registry.ts --check
           bun --bun tsc -p e2e/tsconfig.ai-sneak-capture-scenario.json
           bun --bun tsc -p e2e/tsconfig.ai-rhino-dog-scenario.json
           bun --bun tsc -p e2e/tsconfig.ai-information-boundary.json

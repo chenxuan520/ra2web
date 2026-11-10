@@ -1,0 +1,6 @@
+{
+  "extends": "../tsconfig.build.json",
+  "compilerOptions": { "types": ["bun", "vite/client"] },
+  "include": ["league/**/*.ts", "../src/types/**/*.d.ts"],
+  "exclude": []
+}

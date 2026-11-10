@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "round": 0,
+  "champion": null,
+  "members": [
+    { "id": "orig", "tag": "league/orig", "tree": "2b6a510e854bdb6fdd6f068b79be2d02cdaa04a2", "profile": "normal", "role": "history", "active": true, "note": "初始化提交的 normal bot" },
+    { "id": "r4", "tag": "league/r4", "tree": "177259377732a61ca7e7b34bb20ad35cd8bd347c", "profile": "brutal", "role": "history", "active": true, "note": "2026-10-25 的 R4" },
+    { "id": "v0", "tag": "league/v0", "tree": "ffa625613930d9916ad71720a42f4b6763007733", "profile": "brutal", "role": "history", "active": true, "note": "旧五代迭代起点；从原冻结仓库恢复" },
+    { "id": "m0", "tag": "league/m0", "tree": "cd91f9ea48f1d11f3cc25035547645d8be6a0e29", "profile": "brutal", "role": "history", "active": true, "note": "master 89871d0；用户授权缺失 V1–V4 时缩减初始池" }
+  ]
+}
