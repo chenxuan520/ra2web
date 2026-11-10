@@ -20,7 +20,6 @@ import { MissionController } from "../logic/mission/missionController";
 import { DebugLogger } from "../logic/common/utils";
 import { Compositions, getValidCompositions, SideComposition } from "./compositionUtils";
 import { readStrategicSituation, selectNationalComposition } from "./nationalComposition";
-import { getOpeningAirBudget } from "./openingAirBudget";
 
 // These could be loaded from ai.ini
 export const DEFAULT_COMPOSITIONS: Compositions = {
@@ -166,16 +165,11 @@ export class DefaultStrategy implements Strategy {
 
         if (context.difficulty === "brutal") {
             const situation = readStrategicSituation(context.game, playerData);
-            const threat = context.matchAwareness.getThreatCache();
-            const aggressiveAir = getOpeningAirBudget(context.game, playerData) === 8;
-            if (validCompositions.includes("rocketeers") && (situation.own.JUMPJET ?? 0) < 8 &&
-                (threat?.totalOffensiveAntiAirThreat ?? 0) < Math.max(aggressiveAir ? 3 : 0.1,
-                    (threat?.totalAvailableAirPower ?? 0) * (aggressiveAir ? 0.6 : 0.25))) {
-                return { ...DEFAULT_COMPOSITIONS.rocketeers, maximumUnits: 4 };
+            if (validCompositions.includes("rocketeers") && (situation.own.JUMPJET ?? 0) < 10) {
+                return { ...DEFAULT_COMPOSITIONS.rocketeers, maximumUnits: 10 };
             }
-            if (validCompositions.includes("kirovs") && (situation.own.ZEP ?? 0) < 2 &&
-                (threat?.totalOffensiveAntiAirThreat ?? 0) < Math.max(6, (threat?.totalAvailableAirPower ?? 0) * 0.8)) {
-                return { ...DEFAULT_COMPOSITIONS.kirovs, maximumUnits: 2 };
+            if (validCompositions.includes("kirovs") && (situation.own.ZEP ?? 0) < 4) {
+                return { ...DEFAULT_COMPOSITIONS.kirovs, maximumUnits: 4 };
             }
             const reservedSupport: Record<string, number> = {};
             for (const mission of missionController.getMissions()) {

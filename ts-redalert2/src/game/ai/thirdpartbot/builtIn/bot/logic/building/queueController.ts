@@ -199,6 +199,17 @@ export class QueueController {
                 }
             }
         }
+        if (context.difficulty === "brutal") {
+            const situation = readStrategicSituation(game, playerData);
+            const available = new Set(productionApi.getAvailableObjects().map(option => option.name));
+            for (const [name, cap] of [["JUMPJET", 10], ["ZEP", 4]] as const) {
+                if (available.has(name) && (situation.own[name] ?? 0) < cap) requests.set(name, { priority: 120, specificLocation: null });
+            }
+            if (countCoreTanks(situation) >= 4) {
+                requests.delete("MTNK"); requests.delete("HTNK");
+            }
+            for (const name of ["APOC", "MGTK", "SREF", "V3"]) requests.delete(name);
+        }
         this.queueStates = QUEUES.map((queueType) => {
             const options = productionApi.getAvailableObjects(queueType);
             const items = QueueController.getPrioritiesForBuildingOptions(options, requests);

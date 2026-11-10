@@ -229,18 +229,16 @@ export class FieldArmyMission extends Mission {
         const tank = allied ? "MTNK" : "HTNK", aa = allied ? "FV" : "HTK";
         const heavyTank = allied ? (available.has("SREF") ? "SREF" : (available.has("MGTK") ? "MGTK" : "MTNK")) : null;
         const core = countCoreTanks(s);
-        const airPlan = this.plan?.composition.JUMPJET || this.plan?.composition.ZEP;
         if (heavyTank && available.has(heavyTank) && heavyTank !== tank) want(heavyTank, 4, 60);
-        want(tank, airPlan ? 4 : 50, core < 4 ? 75 : core < 8 ? 65 : 55);
+        want(tank, 4, core < 4 ? 75 : core < 8 ? 65 : 55);
         const airThreat = matchAwareness.getThreatCache()?.totalOffensiveAirThreat ?? 0;
         const enemyInf = s.enemy.infantry ?? 0;
         const aaTarget = airThreat > 0 ? Math.max(2, Math.ceil(core / 3)) : enemyInf >= 6 ? Math.min(3, Math.max(1, Math.ceil(enemyInf / 6))) : Math.max(1, Math.ceil(core / 8));
         if (core >= 4 || airThreat > 0 || enemyInf >= 6) want(aa, aaTarget, enemyInf >= 8 ? 65 : 45);
         for (const name of Object.keys(this.plan?.composition ?? {})) {
             if (name === tank || name === aa || name === "E1" || name === "E2" || name === "DESO") continue;
-            const openingAir = name === "JUMPJET" ? getOpeningAirBudget(game, playerData) : 0;
-            const cap = name === "JUMPJET" ? s.harvesters < 2 ? openingAir : s.harvesters < 4 ? Math.max(openingAir, 4) : 8
-                : name === "ZEP" ? 2 : name === "V3" || name === "SREF" ? 3 : 2;
+            const cap = name === "JUMPJET" ? 10
+                : name === "ZEP" ? 4 : name === "V3" || name === "SREF" ? 3 : 2;
             want(name, cap, name === "ZEP" && !(s.own.ZEP > 0) && s.harvesters >= 2 ? 100 : 40);
         }
         // Take command of free paradrops and returning units. The queue controller
