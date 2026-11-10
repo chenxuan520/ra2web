@@ -121,6 +121,7 @@ export class FieldArmyMission extends Mission {
                 this.attacking = false;
             }
         }
+        if (armor.length < BRUTAL_PARAMS.assault.assaultMinArmor) this.attacking = false;
         const center = this.getCenterOfMass() ?? rally;
         const nearestHomeThreat = homeThreats.length
             ? [...homeThreats].sort((a, b) => location(a).distanceTo(center) - location(b).distanceTo(center) || a.id - b.id)[0]
@@ -190,6 +191,8 @@ export class FieldArmyMission extends Mission {
                         : enemy.rules.harvester ? 25
                         : (enemy.type as any) === ObjectType.Building ? 60
                         : 20;
+                    if (enemy.rules.harvester) value += 1000;
+                    if (enemy.rules.refinery) value += 500;
                     value -= center.distanceTo(location(enemy)) * 0.5;
                     return { enemy, value };
                 }).sort((a, b) => b.value - a.value || a.enemy.id - b.enemy.id)[0]?.enemy;

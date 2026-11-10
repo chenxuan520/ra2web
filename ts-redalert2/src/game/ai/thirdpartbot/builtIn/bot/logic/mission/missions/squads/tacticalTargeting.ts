@@ -114,6 +114,9 @@ export function chooseTacticalTarget(
         if (committed > 0) score += 25;
         if (target.id === currentTargetId) score += 15;
         if (committed >= (estimatedHitPoints(target, game) ?? estimatedMaxHitPoints(target) ?? 100)) score -= 300;
+        // Public weapon coverage is enough to retain immediate combat threats; no hidden target is read.
+        if (threat && !target.rules.harvester && distance <= threat.range) score += 2000;
+        else if (target.rules.harvester && distance <= attack.range) score += 1000;
         if (score > bestScore || (score === bestScore && target.id < (best?.id ?? Infinity))) {
             best = target;
             bestScore = score;
