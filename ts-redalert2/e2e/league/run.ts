@@ -5,7 +5,7 @@ import { parseArgs } from 'node:util';
 import { archiveJobAttempt } from '../ai-tournament-storage';
 import { validateJobReport } from '../ai-tournament-plan';
 import { BUILTIN, loadLeague, gitQuery, type Profile } from './registry';
-import { MAPS, pairingJobs, roundRobinJobs, compareGames, convertResult, assertSelfMirror, type Kind, type LeagueGame, type LeagueJob } from './schedule';
+import { MAPS, pairingJobs, roundRobinJobs, shardJobs, compareGames, convertResult, assertSelfMirror, type Kind, type LeagueGame, type LeagueJob } from './schedule';
 
 const projectRoot = resolve(import.meta.dir, '../..');
 const hash = (data: string | Uint8Array) => createHash('sha256').update(data).digest('hex');
@@ -75,10 +75,10 @@ export async function main() {
         round: { type: 'string' }, kind: { type: 'string' }, a: { type: 'string' }, vs: { type: 'string' },
         'round-robin': { type: 'boolean' }, ref: { type: 'string', multiple: true },
         concurrency: { type: 'string', default: '4' }, out: { type: 'string' }, resume: { type: 'boolean' },
-        cdn: { type: 'string' }, help: { type: 'boolean' },
+        cdn: { type: 'string' }, shard: { type: 'string' }, help: { type: 'boolean' },
     } });
     if (values.help) {
-        console.log('bun e2e/league/run.ts --round N --kind qualify|dev (--round-robin | --a ID --vs active|ID,ID) [--ref ID=COMMIT] --out DIR [--resume] [--concurrency 4] [--cdn PATH]');
+        console.log('bun e2e/league/run.ts --round N --kind qualify|dev (--round-robin | --a ID --vs active|ID,ID) [--ref ID=COMMIT] --out DIR [--resume] [--concurrency 4] [--cdn PATH] [--shard I/M]');
         return;
     }
     const round = integer(values.round, 'round'), concurrency = integer(values.concurrency, 'concurrency', 1);
@@ -122,7 +122,8 @@ export async function main() {
     }
     if ([...overrides.keys()].some(id => !versions[id])) throw new Error('Unused --ref candidate');
     const runtime = await runtimeSnapshot(), resources = await readResources(cdn);
-    const config = { round, kind, versions, runtime, resources, jobs, cdn };
+    const config = { round, kind, versions, runtime, resources, jobs, cdn, shard: values.shard ?? null };
+    if (values.shard !== undefined) jobs = shardJobs(jobs, values.shard);
     const fingerprint = hash(JSON.stringify(config)), manifestPath = join(output, 'manifest.json');
     const verifyRuntime = async () => {
         if (JSON.stringify(await runtimeSnapshot()) !== JSON.stringify(runtime) || JSON.stringify(await readResources(cdn)) !== JSON.stringify(resources))

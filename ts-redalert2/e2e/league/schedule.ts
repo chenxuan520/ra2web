@@ -52,6 +52,14 @@ export function roundRobinJobs(members: string[], round: number, kind: Kind): Le
     if (new Set(members).size !== members.length) throw new Error('Duplicate round-robin member');
     return members.flatMap((a, index) => members.slice(index + 1).flatMap(b => pairingJobs(a, b, round, kind)));
 }
+export function shardJobs(jobs: readonly LeagueJob[], shard: string): LeagueJob[] {
+    const match = /^(\d+)\/(\d+)$/.exec(shard);
+    const shardIndex = Number(match?.[1]), shardCount = Number(match?.[2]);
+    if (!match || !Number.isSafeInteger(shardIndex) || !Number.isSafeInteger(shardCount) ||
+        shardCount < 1 || shardIndex < 0 || shardIndex >= shardCount) throw new Error(`Invalid shard ${shard}; expected I/M with 0 <= I < M`);
+    return [...jobs].sort((a, b) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0)
+        .filter((_, index) => index % shardCount === shardIndex);
+}
 export function convertResult(result: string): GameResult {
     const value = ({ 'candidate-win': 'a-win', 'baseline-win': 'b-win', draw: 'timeout', error: 'error' } as const)[result];
     if (!value) throw new Error(`Unknown benchmark result ${result}`);

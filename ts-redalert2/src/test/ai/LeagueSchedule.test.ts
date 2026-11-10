@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test';
-import { MAPS, MATCHUPS, pairingJobs, roundRobinJobs, seedFor, convertResult, compareGames, assertSelfMirror, type LeagueGame } from '../../../e2e/league/schedule';
+import { MAPS, MATCHUPS, pairingJobs, roundRobinJobs, shardJobs, seedFor, convertResult, compareGames, assertSelfMirror, type LeagueGame } from '../../../e2e/league/schedule';
 import { reportGames, type FrozenMember } from '../../../e2e/league/run';
 
 function row(swapped = false, result: LeagueGame['result'] = 'a-win'): LeagueGame {
@@ -51,6 +51,20 @@ describe('league schedule', () => {
         expect(jobs).toHaveLength(336); expect(new Set(jobs.map(job => job.id)).size).toBe(336);
         expect(jobs[0].a).toBe('orig'); expect(jobs[0].b).toBe('r4');
         expect(roundRobinJobs(['orig', 'r4', 'v0', 'm0'], 0, 'qualify')).toHaveLength(72);
+    });
+    test('twelve shards partition 144 sorted jobs without overlaps or omissions', () => {
+        const jobs = Array.from({ length: 12 }, (_, index) => pairingJobs('c1', `v${index}`, 1, 'qualify')).flat();
+        const shards = Array.from({ length: 12 }, (_, index) => shardJobs([...jobs].reverse(), `${index}/12`));
+        expect(shards.every(shard => shard.length === 12)).toBe(true);
+        expect(new Set(shards.flat().map(job => job.id)).size).toBe(144);
+        expect(shards.flat().map(job => job.id).sort()).toEqual(jobs.map(job => job.id).sort());
+        const sorted = [...jobs].sort((a, b) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+        expect(shards[3]).toEqual(sorted.filter((_, index) => index % 12 === 3));
+    });
+    test('invalid shard indices fail and a valid empty shard has no jobs', () => {
+        for (const shard of ['-1/12', '12/12', '0/0', '0/1.5', 'bad', '', '0/9007199254740992'])
+            expect(() => shardJobs(pairingJobs('c1', 'm0', 0, 'dev'), shard)).toThrow();
+        expect(shardJobs(pairingJobs('c1', 'm0', 0, 'dev'), '23/24')).toEqual([]);
     });
     test.each([['candidate-win', 'a-win'], ['baseline-win', 'b-win'], ['draw', 'timeout'], ['error', 'error']])('%s normalizes to %s', (input, output) => {
         expect(convertResult(input)).toBe(output);
