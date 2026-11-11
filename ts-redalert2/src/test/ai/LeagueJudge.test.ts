@@ -141,6 +141,36 @@ describe('round zero decisions and write policies', () => {
         expect(pool.members.filter(member => member.active).map(member => member.id)).toEqual(['orig', 'r4', 'c2', 'c3', 'c4', 'c5']);
         expect(pool.members).toHaveLength(8);
     });
+    test('a blocked former champion is not reactivated and does not consume the recent-history quota', () => {
+        const pool = league(); pool.champion = 'c4'; pool.members[2].role = 'history'; pool.members[2].active = false;
+        pool.members[2].blockedReason = 'invalid coordinate orders';
+        pool.members.push(member('v5'), member('c1'), member('c2'), { ...member('c3'), active: false, blockedReason: 'invalid coordinate orders' }, member('c4', 'champion'));
+        trimHistory(pool, ['m0', 'v5', 'c1', 'c2', 'c3', 'c4']);
+        expect(pool.members.find(member => member.id === 'm0')!.active).toBe(false);
+        expect(pool.members.find(member => member.id === 'c3')!.active).toBe(false);
+        expect(pool.members.filter(member => member.active).map(member => member.id)).toEqual(['orig', 'r4', 'v5', 'c1', 'c2', 'c4']);
+    });
+    test('safety replacement is disclosed separately without inventing a round-zero victory or upgrade', () => {
+        const f = tiedRound(12); f.pool.champion = 'v5'; f.pool.members[3].active = false;
+        f.pool.members[3].blockedReason = 'invalid coordinate orders';
+        f.pool.members.push({ ...member('v5', 'champion'), replaces: 'm0' });
+        const markdown = leaderboardMarkdown(f.pool, f.rows);
+        expect(markdown).toContain('| 0 | m0 |'); expect(markdown).not.toContain('| 0 | v5 |');
+        expect(markdown).toContain('## 安全基线替换'); expect(markdown).toContain('| v5 | m0 | invalid coordinate orders | 非 G1–G5 晋级 |');
+    });
+    test('the next actual promotion compares against the safety baseline, not the blocked original', () => {
+        const f = tiedRound(12); f.pool.members[2].active = false;
+        f.pool.members[3].active = false; f.pool.members[3].blockedReason = 'invalid coordinate orders';
+        f.pool.members.push({ ...member('v5', 'champion'), replaces: 'm0' }); f.pool.champion = 'v5';
+        const candidate = [...pair('c1', 'orig'), ...pair('c1', 'r4'), ...pair('c1', 'v5', 13)];
+        const baseline = [...pair('v5', 'orig', 10), ...pair('v5', 'r4', 10)];
+        const decision = judgeChampion(f.pool, 'c1', 'v5', candidate, baseline, 3);
+        expect(decision.pass).toBe(true);
+        const all = [...f.rows, ...candidate, ...baseline], next = applyDecision(f.pool, decision, candidate, all);
+        expect(next.members.find(member => member.id === 'm0')!.active).toBe(false);
+        expect(next.members.find(member => member.id === 'v5')!.active).toBe(true);
+        expect(leaderboardMarkdown(next, all)).toContain('| 1 | c1 | 58.3% | 41.7% | 3 |');
+    });
     test('seventh exploiter deactivates fewest wins, then the oldest member', () => {
         const pool = league();
         const exploiters = Array.from({ length: 7 }, (_, index) => ({ ...member(`x-${String.fromCharCode(97 + index)}-01`, 'exploiter'),

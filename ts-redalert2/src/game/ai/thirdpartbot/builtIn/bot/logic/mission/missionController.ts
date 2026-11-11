@@ -316,7 +316,7 @@ export class MissionController {
         this.updateRequestedUnitTypes(unitTypeToHighestRequest, context.difficulty === "brutal");
 
         // Send all actions that can be batched together.
-        actionBatcher.resolve(context.player.actions);
+        actionBatcher.resolve(context.player.actions, context.game.mapApi);
 
         // Remove disbanded and merged missions.
         this.missions

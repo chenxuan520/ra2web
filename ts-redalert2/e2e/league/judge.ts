@@ -84,8 +84,9 @@ export function judgeChampion(league: League, id: string, champion: string, cand
 }
 
 export function trimHistory(league: League, formerChampions: readonly string[]): void {
-    const keep = new Set(['orig', 'r4', ...formerChampions.filter(id => id !== league.champion).slice(-3)]);
-    for (const member of league.members) if (member.role === 'history') member.active = keep.has(member.id);
+    const blocked = new Set(league.members.filter(member => member.blockedReason).map(member => member.id));
+    const keep = new Set(['orig', 'r4', ...formerChampions.filter(id => id !== league.champion && !blocked.has(id)).slice(-3)]);
+    for (const member of league.members) if (member.role === 'history') member.active = !member.blockedReason && keep.has(member.id);
 }
 export function trimExploiters(league: League): void {
     const active = league.members.filter(member => member.active && member.role === 'exploiter');
@@ -106,8 +107,13 @@ function formerChampions(league: League, games: readonly LeagueGame[]): string[]
     const round0 = games.filter(game => game.round === 0 && game.kind === 'qualify');
     const ids = new Set(round0.flatMap(game => [game.a, game.b]));
     const initial = round0.length ? initialWinner({ ...league, members: league.members.filter(member => ids.has(member.id)).map(member => ({ ...member, active: true })) }, round0) : null;
-    return [...(initial ? [initial] : []), ...league.members.filter(member => member.id !== 'c0' && /^c[0-9]+$/.test(member.id))
+    const history = [...(initial ? [initial] : []), ...league.members.filter(member => member.id !== 'c0' && /^c[0-9]+$/.test(member.id))
         .sort((a, b) => Number(a.id.slice(1)) - Number(b.id.slice(1))).map(member => member.id)];
+    for (const member of league.members.filter(member => member.replaces)) {
+        const previous = history.indexOf(member.replaces!);
+        if (previous >= 0) history.splice(previous + 1, 0, member.id);
+    }
+    return history;
 }
 export function applyDecision(league: League, decision: Decision, games: readonly LeagueGame[], allGames: readonly LeagueGame[]): League {
     if (!decision.valid || !decision.pass) throw new Error('Failed or invalid qualification may not change the registry');
@@ -158,6 +164,7 @@ export function leaderboardMarkdown(league: League, games: readonly LeagueGame[]
     lines.push('', '## 主力更替', '', '| 轮次 | 新主力 | 对共同对手胜率 | 前任胜率 | 验收次数 |', '| ---: | --- | ---: | ---: | ---: |');
     const history = formerChampions(league, games);
     for (const [index, id] of history.entries()) {
+        if (league.members.find(member => member.id === id)?.replaces) continue;
         const round = /^c[0-9]+$/.test(id) ? Number(id.slice(1)) : 0;
         const rows = games.filter(game => game.round === round && game.kind === 'qualify');
         if (!round) lines.push(`| 0 | ${id} | ${rate(statsFor(rows, id))} | — | 0 |`);
@@ -166,6 +173,11 @@ export function leaderboardMarkdown(league: League, games: readonly LeagueGame[]
             const common = [...new Set(candidateRows.map(game => game.b))].filter(opponent => opponent !== previous);
             lines.push(`| ${round} | ${id} | ${rate(statsFor(candidateRows, id, common))} | ${rate(statsFor(rows.filter(game => game.a === previous), previous, common))} | ${league.members.find(member => member.id === id)?.attempts ?? '—'} |`);
         }
+    }
+    const replacements = league.members.filter(member => member.replaces);
+    if (replacements.length) {
+        lines.push('', '## 安全基线替换', '', '| 安全基线 | 替代冻结版本 | 原因 | 性质 |', '| --- | --- | --- | --- |');
+        for (const member of replacements) lines.push(`| ${member.id} | ${member.replaces} | ${league.members.find(previous => previous.id === member.replaces)?.blockedReason} | 非 G1–G5 晋级 |`);
     }
     lines.push('', '## 找茬者', '', '| 编号 | 打法 | 入池时针对主力 | 入池胜局数 | 活跃 | 最近针对主力 | 最近胜局数 |', '| --- | --- | --- | ---: | --- | --- | ---: |');
     for (const member of league.members.filter(member => member.role === 'exploiter')) {

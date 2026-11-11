@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "round": 0,
-  "champion": "v0",
+  "champion": "v5",
   "members": [
     {
       "id": "orig",
@@ -26,8 +26,9 @@
       "tag": "league/v0",
       "tree": "ffa625613930d9916ad71720a42f4b6763007733",
       "profile": "brutal",
-      "role": "champion",
-      "active": true,
+      "role": "history",
+      "active": false,
+      "blockedReason": "已实测非法坐标订单；原 tag 与旧证据保留，由独立安全版 v5 替代参赛",
       "note": "旧五代迭代起点；从原冻结仓库恢复"
     },
     {
@@ -56,7 +57,7 @@
       "role": "exploiter",
       "active": true,
       "style": "rush",
-      "target": "v0",
+      "target": "v5",
       "winsVsTarget": 8,
       "note": "admitted round 1"
     },
@@ -68,8 +69,8 @@
       "role": "exploiter",
       "active": true,
       "style": "air",
-      "target": "v0",
-      "winsVsTarget": 8,
+      "target": "v5",
+      "winsVsTarget": 7,
       "note": "admitted round 1"
     },
     {
@@ -80,9 +81,19 @@
       "role": "exploiter",
       "active": true,
       "style": "harass",
-      "target": "v0",
+      "target": "v5",
       "winsVsTarget": 9,
       "note": "admitted round 1"
+    },
+    {
+      "id": "v5",
+      "tag": "league/v5",
+      "tree": "5e5318235bc03f4e17de7a651f30e89c7a1a3b3e",
+      "profile": "brutal",
+      "role": "champion",
+      "active": true,
+      "replaces": "v0",
+      "note": "V0 等价策略的坐标安全修补版；v5 是独立安全编号，不是旧流程 V5，也不是 G1–G5 晋级"
     }
   ]
 }

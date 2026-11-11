@@ -78,6 +78,28 @@ describe('league registry', () => {
         if (kind === 'late-null') { league.champion = null; league.round = 1; league.members[3].role = 'history'; }
         await expect(valid(league)).rejects.toThrow();
     });
+    test('an independently frozen safety replacement retains its blocked predecessor', async () => {
+        const league = fixture(); league.members[2].active = false; league.members[2].blockedReason = 'invalid coordinate orders';
+        league.members.push({ ...member('v5', 'champion'), tree: 'b'.repeat(40), replaces: 'v0' }); league.champion = 'v5';
+        expect(await valid(league)).toEqual(league);
+    });
+    test.each(['active', 'empty', 'not-string'])('a blocked member cannot be %s', async reason => {
+        const league: any = fixture(); league.members[2].active = false; league.members[2].blockedReason = 'invalid coordinates';
+        if (reason === 'active') league.members[2].active = true;
+        if (reason === 'empty') league.members[2].blockedReason = '';
+        if (reason === 'not-string') league.members[2].blockedReason = true;
+        await expect(valid(league)).rejects.toThrow('blocked');
+    });
+    test.each(['missing', 'self', 'unblocked', 'same-tree'])('a safety replacement rejects its %s predecessor', async reason => {
+        const league = fixture(); league.members[2].active = false; league.members[2].blockedReason = 'invalid coordinates';
+        const replacement = { ...member('v5', 'champion'), tree: 'b'.repeat(40), replaces: 'v0' };
+        if (reason === 'missing') replacement.replaces = 'c9';
+        if (reason === 'self') replacement.replaces = 'v5';
+        if (reason === 'unblocked') delete league.members[2].blockedReason;
+        if (reason === 'same-tree') replacement.tree = league.members[2].tree;
+        league.members.push(replacement); league.champion = 'v5';
+        await expect(valid(league)).rejects.toThrow('safety replacement');
+    });
     test('empty members and null input are rejected', async () => {
         await expect(validateLeague(null, () => '')).rejects.toThrow();
         const league = fixture(); league.members = []; await expect(valid(league)).rejects.toThrow();

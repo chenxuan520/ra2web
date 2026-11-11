@@ -18,6 +18,8 @@ export interface Member {
     target?: string;
     winsVsTarget?: number;
     attempts?: number;
+    blockedReason?: string;
+    replaces?: string;
 }
 export interface League {
     schema: 1;
@@ -54,6 +56,8 @@ export async function validateLeague(value: unknown, query: GitQuery = gitQuery)
         check(entry.id === 'orig' ? entry.profile === 'normal' : entry.profile === 'brutal', `profile violates fixed protocol for ${entry.id}`);
         check(['history', 'champion', 'exploiter'].includes(entry.role as string), `invalid role for ${entry.id}`);
         check(typeof entry.active === 'boolean' && typeof entry.note === 'string', `invalid active/note for ${entry.id}`);
+        if (entry.blockedReason !== undefined) check(typeof entry.blockedReason === 'string' && entry.blockedReason.trim().length > 0 && !entry.active,
+            `blocked member ${entry.id} must remain inactive with a reason`);
         if (entry.role === 'exploiter') {
             check(typeof entry.style === 'string' && entry.style.trim().length > 0, `missing style for ${entry.id}`);
             check(!styles.has(entry.style), `duplicate exploiter style ${entry.style}`); styles.add(entry.style);
@@ -75,6 +79,11 @@ export async function validateLeague(value: unknown, query: GitQuery = gitQuery)
             'champion must identify the only active champion member');
     }
     for (const member of members) {
+        if (member.replaces !== undefined) {
+            const previous = members.find(entry => entry.id === member.replaces);
+            check(previous && previous.id !== member.id && previous.blockedReason && !previous.active &&
+                previous.profile === member.profile && previous.tree !== member.tree, `invalid safety replacement ${member.id}`);
+        }
         const commit = (await query(['rev-parse', '--verify', '--end-of-options', `${member.tag}^{commit}`])).trim();
         check(treeHash.test(commit), `tag ${member.tag} does not resolve to a commit`);
         const tree = (await query(['rev-parse', '--verify', '--end-of-options', `${member.tag}:${BUILTIN}`])).trim();
