@@ -55,7 +55,7 @@
       "tree": "ff90f830302f2f66da743f370f6c47960636ccf1",
       "profile": "brutal",
       "role": "exploiter",
-      "active": true,
+      "active": false,
       "style": "rush",
       "target": "c2",
       "winsVsTarget": 5,
@@ -128,6 +128,30 @@
       "active": true,
       "attempts": 1,
       "note": "round 2; G1-G5 passed"
+    },
+    {
+      "id": "x-crawl-01",
+      "tag": "league/x-crawl-01",
+      "tree": "62e32eca9e8cda8f5218f7662aee49e4a225b92a",
+      "profile": "brutal",
+      "role": "exploiter",
+      "active": true,
+      "style": "crawl",
+      "target": "c2",
+      "winsVsTarget": 8,
+      "note": "admitted round 3"
+    },
+    {
+      "id": "x-mixed-01",
+      "tag": "league/x-mixed-01",
+      "tree": "a3b557fc1f1190f1927fef645992da5005133d2d",
+      "profile": "brutal",
+      "role": "exploiter",
+      "active": true,
+      "style": "mixed",
+      "target": "c2",
+      "winsVsTarget": 10,
+      "note": "admitted round 3"
     }
   ]
 }
