@@ -5,6 +5,7 @@ import { ScoutingMissionFactory } from "../logic/mission/missions/scoutingMissio
 import { AttackMission, AttackMissionFactory } from "../logic/mission/missions/attackMission";
 import { DefenceMissionFactory } from "../logic/mission/missions/defenceMission";
 import { EngineerMissionFactory } from "../logic/mission/missions/engineerMission";
+import { EngineerTransportFactory } from "../logic/mission/missions/engineerTransportMission";
 import { ParaDropSupport } from "../logic/mission/missions/paraDropSupport";
 import { SneakCaptureMissionFactory } from "../logic/mission/missions/sneakCaptureMission";
 import { ensureBaseReserve } from "../logic/mission/missions/baseReserveMission";
@@ -108,6 +109,7 @@ export class DefaultStrategy implements Strategy {
     private attackFactory = new AttackMissionFactory();
     private defenceFactory = new DefenceMissionFactory();
     private engineerFactory = new EngineerMissionFactory();
+    private engineerTransport = new EngineerTransportFactory();
     private paraDropSupport = new ParaDropSupport();
     private sneakCaptureFactory = new SneakCaptureMissionFactory();
     private minerDefence = new MinerDefence();
@@ -144,6 +146,7 @@ export class DefaultStrategy implements Strategy {
 
         this.defenceFactory.maybeCreateMissions(context, missionController, logger);
         this.engineerFactory.maybeCreateMissions(context, missionController, logger);
+        this.engineerTransport.maybeCreateMissions(context, missionController, logger);
         this.sneakCaptureFactory.maybeCreateMissions(context, missionController, logger);
 
         return this;
