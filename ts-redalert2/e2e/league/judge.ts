@@ -2,12 +2,13 @@ import { mkdir, rename, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import { loadLeague, validateLeague, LEAGUE_PATH, REPO_ROOT, type League } from './registry';
-import { pairingJobs, roundRobinJobs, compareGames, type LeagueGame } from './schedule';
+import { mapsForRound, pairingJobs, roundRobinJobs, compareGames, type LeagueGame } from './schedule';
 import { parseGames, validateSchedule, statsFor, median, gameKey, type Stats } from './records';
 import { computeRatings } from './rating';
 
 export type Mode = 'round0' | 'exploiter' | 'champion';
 export interface OpponentScore { opponent: string; candidate: Stats; baseline: Stats | null; difference: number | null }
+export interface RepairRetest { fixes: string; before: number; after: number }
 export interface Decision {
     mode: Mode;
     valid: boolean;
@@ -17,6 +18,8 @@ export interface Decision {
     target?: string;
     winner?: string;
     attempt?: number;
+    fixes?: string;
+    repair?: RepairRetest;
     gates: Record<string, boolean>;
     table: OpponentScore[];
     reason?: string;
@@ -54,20 +57,35 @@ export function judgeExploiter(league: League, id: string, target: string, games
             gates: { G1: true, winsAtLeastTwelveAndMajority: admitted }, table: [{ opponent: target, candidate, baseline: null, difference: null }], candidate };
     } catch (error) { return invalid('exploiter', error); }
 }
-export function championGates(candidate: Stats, baseline: Stats, direct: Stats, table: readonly OpponentScore[]): Record<string, boolean> {
+function repairRetest(fixes: string, id: string, champion: string, candidateGames: readonly LeagueGame[], baselineGames: readonly LeagueGame[], common: readonly string[]): RepairRetest {
+    if (fixes.startsWith('member:')) {
+        const opponent = fixes.slice(7);
+        return { fixes, before: statsFor(baselineGames, opponent, [champion]).wins, after: statsFor(candidateGames, opponent, [id]).wins };
+    }
+    const map = fixes.slice(4), candidate = statsFor(candidateGames.filter(game => game.map === map), id, common),
+        baseline = statsFor(baselineGames.filter(game => game.map === map), champion, common);
+    return { fixes, before: baseline.losses + baseline.timeouts, after: candidate.losses + candidate.timeouts };
+}
+export function championGates(candidate: Stats, baseline: Stats, direct: Stats, table: readonly OpponentScore[], repair: RepairRetest): Record<string, boolean> {
     const candidateMedian = median(candidate.winTicks), baselineMedian = median(baseline.winTicks);
     return { G1: true,
         G2: baseline.total > 0 && candidate.total === baseline.total && (candidate.wins - baseline.wins) * 20 >= baseline.total,
         G3: direct.wins > direct.losses,
         G4: table.every(row => row.baseline !== null && row.candidate.wins >= row.baseline.wins - 2),
-        G5: candidateMedian !== null && baselineMedian !== null && candidateMedian * 10 <= baselineMedian * 11 && candidate.timeouts <= baseline.timeouts + 2 };
+        G5: candidateMedian !== null && baselineMedian !== null && candidateMedian * 10 <= baselineMedian * 11 && candidate.timeouts <= baseline.timeouts + 2,
+        G6: repair.fixes.startsWith('member:') ? repair.after <= 8 && repair.after <= repair.before - 3 : repair.after <= repair.before - 4 };
 }
-export function judgeChampion(league: League, id: string, champion: string, candidateGames: readonly LeagueGame[], baselineGames: readonly LeagueGame[], attempt: number): Decision {
+export function judgeChampion(league: League, id: string, champion: string, candidateGames: readonly LeagueGame[], baselineGames: readonly LeagueGame[], attempt: number, fixes?: string): Decision {
     try {
         const round = candidateGames[0]?.round;
         if (!Number.isInteger(round) || round < 1 || id !== `c${round}` || champion !== league.champion ||
-            league.members.some(member => member.id === id) || !Number.isInteger(attempt) || attempt < 1 || attempt > 3)
-            throw new Error('Invalid current champion, candidate round/id or attempt (must be 1-3)');
+            league.members.some(member => member.id === id) || !Number.isInteger(attempt) || attempt < 1 || attempt > 2)
+            throw new Error('Invalid current champion, candidate round/id or attempt (must be 1-2)');
+        if (!fixes || !/^(member:(x-[a-z]+-[0-9]{2})|map:[a-z0-9]+)$/.test(fixes)) throw new Error('Missing or invalid --fixes declaration');
+        if (fixes.startsWith('member:')) {
+            const target = league.members.find(member => member.id === fixes.slice(7));
+            if (!target?.active || (target.role !== 'exploiter' && target.role !== 'sparring')) throw new Error('--fixes member must be an active exploiter or sparring');
+        } else if (!mapsForRound(round).includes(fixes.slice(4))) throw new Error('--fixes map is not used this round');
         const active = league.members.filter(member => member.active).map(member => member.id), common = active.filter(member => member !== champion);
         if (!common.length) throw new Error('Champion qualification needs common opponents');
         validateSchedule(candidateGames, active.flatMap(opponent => pairingJobs(id, opponent, round, 'qualify')), league, round, [id]);
@@ -77,8 +95,8 @@ export function judgeChampion(league: League, id: string, champion: string, cand
             return { opponent, candidate, baseline, difference: candidate.wins - baseline.wins };
         });
         const candidate = statsFor(candidateGames, id, common), baseline = statsFor(baselineGames, champion, common), direct = statsFor(candidateGames, id, [champion]);
-        const gates = championGates(candidate, baseline, direct, table);
-        return { mode: 'champion', valid: true, pass: Object.values(gates).every(Boolean), round, id, target: champion, attempt,
+        const repair = repairRetest(fixes, id, champion, candidateGames, baselineGames, common), gates = championGates(candidate, baseline, direct, table, repair);
+        return { mode: 'champion', valid: true, pass: Object.values(gates).every(Boolean), round, id, target: champion, attempt, fixes, repair,
             gates, table: [...table, { opponent: champion, candidate: direct, baseline: null, difference: null }], candidate, baseline, direct };
     } catch (error) { return invalid('champion', error); }
 }
@@ -144,7 +162,7 @@ export function applyDecision(league: League, decision: Decision, games: readonl
         } else {
             next.members.find(member => member.id === next.champion)!.role = 'history';
             next.members.push({ id: decision.id!, tag: `league/${decision.id}`, tree, profile: 'brutal', role: 'champion', active: true,
-                attempts: decision.attempt, note: `round ${decision.round}; G1-G5 passed` });
+                attempts: decision.attempt, fixes: decision.fixes, note: `round ${decision.round}; G1-G6 passed` });
             next.champion = decision.id!; next.round = decision.round;
             for (const member of next.members.filter(member => (member.role === 'exploiter' || member.role === 'sparring') && member.active)) {
                 member.winsVsTarget = statsFor(games, member.id, [decision.id!]).wins; member.target = decision.id;
@@ -172,17 +190,19 @@ export function leaderboardMarkdown(league: League, games: readonly LeagueGame[]
         const stats = statsFor(games, member.id);
         lines.push(`| ${member.id} | ${member.role} | ${member.active ? '是' : '否'} | ${ratings[member.id] ?? '—'} | ${stats.total} | ${rate(stats)} | ${median(stats.winTicks) ?? '—'} |`);
     }
-    lines.push('', '## 主力更替', '', '| 轮次 | 新主力 | 对共同对手胜率 | 前任胜率 | 验收次数 |', '| ---: | --- | ---: | ---: | ---: |');
+    lines.push('', '## 主力更替', '', '| 轮次 | 新主力 | 对共同对手胜率 | 前任胜率 | 验收次数 | 声明修复 | 复测 |', '| ---: | --- | ---: | ---: | ---: | --- | --- |');
     const history = formerChampions(league, games);
     for (const [index, id] of history.entries()) {
         if (league.members.find(member => member.id === id)?.replaces) continue;
         const round = /^c[0-9]+$/.test(id) ? Number(id.slice(1)) : 0;
         const rows = games.filter(game => game.round === round && game.kind === 'qualify');
-        if (!round) lines.push(`| 0 | ${id} | ${rate(statsFor(rows, id))} | — | 0 |`);
+        if (!round) lines.push(`| 0 | ${id} | ${rate(statsFor(rows, id))} | — | 0 | — | — |`);
         else {
             const previous = history[index - 1], candidateRows = rows.filter(game => game.a === id);
             const common = [...new Set(candidateRows.map(game => game.b))].filter(opponent => opponent !== previous);
-            lines.push(`| ${round} | ${id} | ${rate(statsFor(candidateRows, id, common))} | ${rate(statsFor(rows.filter(game => game.a === previous), previous, common))} | ${league.members.find(member => member.id === id)?.attempts ?? '—'} |`);
+            const member = league.members.find(member => member.id === id), baselineRows = rows.filter(game => game.a === previous);
+            const repair = member?.fixes ? repairRetest(member.fixes, id, previous, candidateRows, baselineRows, common) : null;
+            lines.push(`| ${round} | ${id} | ${rate(statsFor(candidateRows, id, common))} | ${rate(statsFor(baselineRows, previous, common))} | ${member?.attempts ?? '—'} | ${member?.fixes ?? '—'} | ${repair ? `${repair.before} → ${repair.after}` : '—'} |`);
         }
     }
     const replacements = league.members.filter(member => member.replaces);
@@ -221,7 +241,9 @@ function printDecision(decision: Decision) {
         commonWinRate: decision.candidate ? rate(decision.candidate) : undefined,
         baselineWinRate: decision.baseline ? rate(decision.baseline) : undefined,
         candidateWinningTickMedian: decision.candidate ? median(decision.candidate.winTicks) : undefined,
-        baselineWinningTickMedian: decision.baseline ? median(decision.baseline.winTicks) : undefined }, null, 2));
+        baselineWinningTickMedian: decision.baseline ? median(decision.baseline.winTicks) : undefined,
+        fixes: decision.fixes, repair: decision.repair }, null, 2));
+    if (decision.repair) console.log(`repair\t${decision.repair.fixes}\t${decision.repair.before} → ${decision.repair.after}`);
     if (decision.table.length) {
         console.log('opponent\tcandidate W/L/timeout\tchampion W/L/timeout\tdelta');
         for (const row of decision.table) console.log(`${row.opponent}\t${row.candidate.wins}/${row.candidate.losses}/${row.candidate.timeouts}\t${row.baseline ? `${row.baseline.wins}/${row.baseline.losses}/${row.baseline.timeouts}` : '—'}\t${row.difference ?? '—'}`);
@@ -230,7 +252,7 @@ function printDecision(decision: Decision) {
 export async function main() {
     const { values } = parseArgs({ options: { mode: { type: 'string' }, games: { type: 'string' }, id: { type: 'string' }, target: { type: 'string' },
         candidate: { type: 'string' }, champion: { type: 'string' }, 'candidate-games': { type: 'string' }, 'baseline-games': { type: 'string' },
-        attempt: { type: 'string' }, write: { type: 'boolean' } } });
+        attempt: { type: 'string' }, fixes: { type: 'string' }, write: { type: 'boolean' } } });
     const league = await loadLeague();
     if (values.mode === 'readme') {
         const directory = resolve(REPO_ROOT, 'docs/ai-league'), games = parseGames(await Bun.file(resolve(directory, 'results.jsonl')).text());
@@ -247,12 +269,12 @@ export async function main() {
             decision = judgeExploiter(league, values.id, values.target, used);
         }
     } else if (values.mode === 'champion') {
-        if (!values.candidate || !values.champion || !values['candidate-games'] || !values['baseline-games'] || !values.attempt)
-            throw new Error('Champion mode requires --candidate, --champion, --candidate-games, --baseline-games and --attempt');
+        if (!values.candidate || !values.champion || !values['candidate-games'] || !values['baseline-games'] || !values.attempt || !values.fixes)
+            throw new Error('Champion mode requires --candidate, --champion, --candidate-games, --baseline-games, --attempt and --fixes');
         candidateGames = parseGames(await Bun.file(values['candidate-games']).text());
         const baselineGames = parseGames(await Bun.file(values['baseline-games']).text());
         used = [...candidateGames, ...baselineGames];
-        decision = judgeChampion(league, values.candidate, values.champion, candidateGames, baselineGames, Number(values.attempt));
+        decision = judgeChampion(league, values.candidate, values.champion, candidateGames, baselineGames, Number(values.attempt), values.fixes);
     } else throw new Error('--mode must be round0, exploiter, champion or readme');
     printDecision(decision);
     if (values.write && decision.pass) await publish(league, decision, used, candidateGames);

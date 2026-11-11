@@ -23,21 +23,23 @@ function pair(a: string, b: string, wins = 14, timeouts = 0, round = 1, ticks = 
 function qualification() {
     const pool = league();
     return { pool, candidate: [...pair('c1', 'orig'), ...pair('c1', 'r4'), ...pair('c1', 'm0', 13)],
-        baseline: [...pair('m0', 'orig', 10), ...pair('m0', 'r4', 10)] };
+        baseline: [...pair('m0', 'orig', 10), ...pair('m0', 'r4', 10)],
+        history: [...pair('orig', 'r4', 12, 0, 0), ...pair('orig', 'm0', 8, 0, 0), ...pair('r4', 'm0', 8, 0, 0)] };
 }
 function stats(wins: number, total = 100, tick = 100, timeouts = 0): Stats {
     return { wins, losses: total - wins - timeouts, timeouts, total, winTicks: Array.from({ length: wins }, () => tick) };
 }
 function gates(delta = 5, tick = 100, lead = 1, opponentLoss = 0, timeouts = 0) {
     return championGates(stats(50 + delta, 100, tick, timeouts), stats(50),
-        { ...stats(12 + lead, 24), losses: 12 - lead }, [{ opponent: 'r4', candidate: stats(10 - opponentLoss, 24), baseline: stats(10, 24), difference: -opponentLoss }]);
+        { ...stats(12 + lead, 24), losses: 12 - lead }, [{ opponent: 'r4', candidate: stats(10 - opponentLoss, 24), baseline: stats(10, 24), difference: -opponentLoss }],
+        { fixes: 'map:tn01t2', before: 8, after: 4 });
 }
 
 describe('league admission gates', () => {
     test('complete candidate strictly meets all champion conditions', () => {
-        const f = qualification(), result = judgeChampion(f.pool, 'c1', 'm0', f.candidate, f.baseline, 1);
+        const f = qualification(), result = judgeChampion(f.pool, 'c1', 'm0', f.candidate, f.baseline, 1, 'map:tn01t2');
         expect(result.valid).toBe(true); expect(result.pass).toBe(true);
-        expect(result.gates).toEqual({ G1: true, G2: true, G3: true, G4: true, G5: true });
+        expect(result.gates).toEqual({ G1: true, G2: true, G3: true, G4: true, G5: true, G6: true });
     });
     test('G2 rejects four points and accepts five points exactly', () => {
         expect(gates(4).G2).toBe(false); expect(gates(5).G2).toBe(true);
@@ -76,8 +78,52 @@ describe('league admission gates', () => {
         if (reason === 'round') f.baseline[0].round = 2;
         if (reason === 'seed') f.candidate[0].seed = 1501;
         if (reason === 'error') { f.baseline[0].result = 'error'; f.baseline[0].reason = 'runtime-error'; }
-        if (reason === 'attempt') attempt = 4;
-        expect(judgeChampion(f.pool, 'c1', 'm0', f.candidate, f.baseline, attempt).valid).toBe(false);
+        if (reason === 'attempt') attempt = 3;
+        expect(judgeChampion(f.pool, 'c1', 'm0', f.candidate, f.baseline, attempt, 'map:tn01t2').valid).toBe(false);
+    });
+    test.each([[11, 8, true], [11, 9, false], [10, 8, false]] as const)(
+        'G6 member repair compares %s baseline wins to %s candidate wins', (before, after, pass) => {
+            const f = qualification(); f.pool.members.push({ ...member('x-air-01', 'sparring'), style: 'air', target: 'm0', winsVsTarget: 1 });
+            f.candidate.push(...pair('c1', 'x-air-01', 24 - after)); f.baseline.push(...pair('m0', 'x-air-01', 24 - before));
+            const decision = judgeChampion(f.pool, 'c1', 'm0', f.candidate, f.baseline, 1, 'member:x-air-01');
+            expect(decision.valid).toBe(true); expect(decision.gates.G6).toBe(pass); expect(decision.pass).toBe(pass);
+            expect(decision.repair).toEqual({ fixes: 'member:x-air-01', before, after });
+            expect(['G1', 'G2', 'G3', 'G4', 'G5'].every(gate => decision.gates[gate])).toBe(true);
+        });
+    test.each([[4, true], [3, false]] as const)('G6 map repair needs four fewer common-opponent non-wins, not %s', (reduction, pass) => {
+        const f = qualification();
+        for (const [opponent, wins] of [['orig', 4], ['r4', reduction]] as const) {
+            f.candidate.filter(game => game.b === opponent && game.map === 'tn01t2').forEach((game, index) => { game.result = index < wins ? 'a-win' : 'b-win'; });
+        }
+        const decision = judgeChampion(f.pool, 'c1', 'm0', f.candidate, f.baseline, 1, 'map:tn01t2');
+        expect(decision.valid).toBe(true); expect(decision.gates.G6).toBe(pass); expect(decision.pass).toBe(pass);
+        expect(decision.repair).toEqual({ fixes: 'map:tn01t2', before: 12, after: 12 - reduction });
+        expect(['G1', 'G2', 'G3', 'G4', 'G5'].every(gate => decision.gates[gate])).toBe(true);
+    });
+    test.each(['missing', 'inactive', 'history', 'absent', 'off-map', 'malformed'])( '%s repair declarations are invalid', kind => {
+        const f = qualification(); const target = { ...member('x-air-01', 'sparring'), style: 'air', target: 'm0', winsVsTarget: 12 };
+        f.pool.members.push(target); f.candidate.push(...pair('c1', 'x-air-01', 16)); f.baseline.push(...pair('m0', 'x-air-01', 13));
+        let fixes: string | undefined = 'member:x-air-01';
+        if (kind === 'missing') fixes = undefined;
+        if (kind === 'inactive') { target.active = false; f.candidate.splice(-24); f.baseline.splice(-24); }
+        if (kind === 'history') target.role = 'history';
+        if (kind === 'absent') fixes = 'member:x-rush-01';
+        if (kind === 'off-map') fixes = 'map:tn04t2';
+        if (kind === 'malformed') fixes = 'unknown:tn01t2';
+        const decision = judgeChampion(f.pool, 'c1', 'm0', f.candidate, f.baseline, 1, fixes);
+        expect(decision.valid).toBe(false); expect(decision.pass).toBe(false);
+    });
+    test('promotion records the declared repair and recomputes its README retest', () => {
+        const f = qualification(), decision = judgeChampion(f.pool, 'c1', 'm0', f.candidate, f.baseline, 1, 'map:tn01t2');
+        const all = [...f.history, ...f.candidate, ...f.baseline], next = applyDecision(f.pool, decision, f.candidate, all);
+        expect(next.members.find(member => member.id === 'c1')).toMatchObject({ fixes: 'map:tn01t2', note: 'round 1; G1-G6 passed' });
+        expect(leaderboardMarkdown(next, all)).toContain('| map:tn01t2 | 12 → 4 |');
+    });
+    test('historical promotions without fixes retain blank repair and retest columns', () => {
+        const f = qualification(), decision = judgeChampion(f.pool, 'c1', 'm0', f.candidate, f.baseline, 1, 'map:tn01t2');
+        const all = [...f.history, ...f.candidate, ...f.baseline], next = applyDecision(f.pool, decision, f.candidate, all);
+        delete next.members.find(member => member.id === 'c1')!.fixes;
+        expect(leaderboardMarkdown(next, all)).toContain('| 1 | c1 | 58.3% | 41.7% | 1 | — | — |');
     });
     test('input parsing rejects forged wins and incomplete rows', () => {
         const row = pair('c1', 'm0')[0]; row.reason = 'tick-limit';
@@ -178,12 +224,12 @@ describe('round zero decisions and write policies', () => {
         f.pool.members.push({ ...member('v5', 'champion'), replaces: 'm0' }); f.pool.champion = 'v5';
         const candidate = [...pair('c1', 'orig'), ...pair('c1', 'r4'), ...pair('c1', 'v5', 13)];
         const baseline = [...pair('v5', 'orig', 10), ...pair('v5', 'r4', 10)];
-        const decision = judgeChampion(f.pool, 'c1', 'v5', candidate, baseline, 3);
+        const decision = judgeChampion(f.pool, 'c1', 'v5', candidate, baseline, 2, 'map:tn01t2');
         expect(decision.pass).toBe(true);
         const all = [...f.rows, ...candidate, ...baseline], next = applyDecision(f.pool, decision, candidate, all);
         expect(next.members.find(member => member.id === 'm0')!.active).toBe(false);
         expect(next.members.find(member => member.id === 'v5')!.active).toBe(true);
-        expect(leaderboardMarkdown(next, all)).toContain('| 1 | c1 | 58.3% | 41.7% | 3 |');
+        expect(leaderboardMarkdown(next, all)).toContain('| 1 | c1 | 58.3% | 41.7% | 2 | map:tn01t2 | 12 → 4 |');
     });
     test('fifth exploiter demotes fewest wins, then the oldest member, without deactivation', () => {
         const pool = league();
@@ -229,7 +275,7 @@ describe('round zero decisions and write policies', () => {
         expect(pool.members.find(member => member.id === 'orig')!.active).toBe(false);
     });
     test('failed decision never changes the input registry', () => {
-        const f = qualification(), decision = judgeChampion(f.pool, 'c1', 'm0', f.candidate, f.baseline, 1); decision.pass = false;
+        const f = qualification(), decision = judgeChampion(f.pool, 'c1', 'm0', f.candidate, f.baseline, 1, 'map:tn01t2'); decision.pass = false;
         const before = JSON.stringify(f.pool);
         expect(() => applyDecision(f.pool, decision, f.candidate, f.candidate)).toThrow(); expect(JSON.stringify(f.pool)).toBe(before);
     });
@@ -240,7 +286,7 @@ describe('round zero decisions and write policies', () => {
                 { ...member('x-air-01', 'sparring'), style: 'air', target: 'm0', winsVsTarget: 8 });
             f.candidate.push(...pair('c1', 'x-rush-01', wins), ...pair('c1', 'x-air-01', 15));
             f.baseline.push(...pair('m0', 'x-rush-01', 10), ...pair('m0', 'x-air-01', 10));
-            const decision = judgeChampion(f.pool, 'c1', 'm0', f.candidate, f.baseline, 1);
+            const decision = judgeChampion(f.pool, 'c1', 'm0', f.candidate, f.baseline, 1, 'map:tn01t2');
             const next = applyDecision(f.pool, decision, f.candidate, [...f.candidate, ...f.baseline]);
             expect(next.members.find(member => member.id === 'x-rush-01')).toMatchObject({ role, target: 'c1', winsVsTarget: opponentWins });
             expect(next.members.find(member => member.id === 'x-air-01')).toMatchObject({ role: 'sparring', target: 'c1', winsVsTarget: 9 });
@@ -248,7 +294,7 @@ describe('round zero decisions and write policies', () => {
     test('champion write updates exploiter target/wins and retains original input', () => {
         const f = qualification(); f.pool.members.push({ ...member('x-rush-01', 'exploiter'), style: 'rush', target: 'm0', winsVsTarget: 8 });
         f.candidate.push(...pair('c1', 'x-rush-01', 15)); f.baseline.push(...pair('m0', 'x-rush-01', 10));
-        const decision = judgeChampion(f.pool, 'c1', 'm0', f.candidate, f.baseline, 2);
+        const decision = judgeChampion(f.pool, 'c1', 'm0', f.candidate, f.baseline, 2, 'map:tn01t2');
         const next = applyDecision(f.pool, decision, f.candidate, [...f.candidate, ...f.baseline]);
         expect(next.champion).toBe('c1'); expect(next.round).toBe(1); expect(next.members.find(member => member.id === 'c1')!.attempts).toBe(2);
         expect(next.members.find(member => member.id === 'x-rush-01')!.winsVsTarget).toBe(9);

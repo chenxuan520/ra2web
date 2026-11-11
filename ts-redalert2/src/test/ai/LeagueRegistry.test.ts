@@ -111,6 +111,14 @@ describe('league registry', () => {
         league.members.push(replacement); league.champion = 'v5';
         await expect(valid(league)).rejects.toThrow('safety replacement');
     });
+    test.each(['member:x-air-01', 'map:mp11t2'])('optional repair %s is valid without changing historical attempts', async fixes => {
+        const league = fixture(); league.members[3].fixes = fixes; league.members[3].attempts = 3;
+        expect(await valid(league)).toEqual(league);
+    });
+    test.each(['', 'member:r4', 'member:x-Air-01', 'map:mp11-t2', 'map:../mp11t2', 'other:mp11t2', 1])('malformed repair %s is rejected', async fixes => {
+        const league: any = fixture(); league.members[3].fixes = fixes;
+        await expect(valid(league)).rejects.toThrow('fixes');
+    });
     test('empty members and null input are rejected', async () => {
         await expect(validateLeague(null, () => '')).rejects.toThrow();
         const league = fixture(); league.members = []; await expect(valid(league)).rejects.toThrow();
