@@ -41,12 +41,20 @@ describe('bounded paid infantry support during armor assembly', () => {
         actionBatcher.resolve({ orderUnits: (...args: any[]) => orders.push(args) } as any, f.game.mapApi);
         expect(army.isAttacking()).toBe(true); expect(orders.some(order => order[1] === OrderType.AttackMove && order[2] === 80)).toBe(true);
         expect(result.unitNameToPriority.E2).toBe(95);
-        f.at(4000); expect(army.onAiUpdate({ ...f.context, actionBatcher }).type).toBe('releaseUnits');
+        f.at(7000); expect(army.onAiUpdate({ ...f.context, actionBatcher }).type).toBe('releaseUnits');
+    });
+    test('the paid continuation window keeps a formed infantry strike on the field after tick 4000', () => {
+        const f = fixture(); f.at(6500); const plan = f.plan(); expect(plan.minimumUnits).toBe(8);
+        const army = new FieldArmyMission(plan, f.controller, () => {}); f.controller.addMission(army);
+        for (let id = 1; id <= 8; id++) army.addUnit(id);
+        const actionBatcher = new ActionBatcher(), result: any = army.onAiUpdate({ ...f.context, actionBatcher });
+        expect(result.type).not.toBe('releaseUnits'); expect(army.isAttacking()).toBe(true); expect(result.unitNameToPriority.E2).toBe(95);
+        f.at(7000); expect(army.onAiUpdate({ ...f.context, actionBatcher }).type).toBe('releaseUnits');
     });
     test('no income, normal difficulty and the fixed deadline do not opt into this plan', () => {
         const noIncome = fixture(); noIncome.units.delete(100); expect(noIncome.plan()?.minimumUnits).not.toBe(8);
         const normal = fixture(); normal.context.difficulty = 'normal'; expect(normal.plan().minimumUnits).toBe(3);
-        const late = fixture(); late.at(4000); expect(late.plan()?.composition.E2).toBeUndefined();
+        const late = fixture(); late.at(7000); expect(late.plan()?.composition.E2).toBeUndefined();
     });
     test('ordinary infantry plans preserve the original Soviet home role', () => {
         const f = fixture(), army = new FieldArmyMission({ composition: { E2: 1 }, minimumUnits: 3, maximumUnits: 10 }, f.controller, () => {});
@@ -68,6 +76,7 @@ function production(ownedCount: number, tick: number, priority: number) {
 
 test('opening production remains paid, capped and does not change ordinary requests', () => {
     expect(production(8, 3000, 95).queueForProduction).toHaveBeenCalledWith(QueueType.Infantry, 'E2', ObjectType.Infantry, 1);
-    for (const [count, tick, priority] of [[16, 3000, 95], [8, 4000, 95], [8, 3000, 20]])
+    expect(production(8, 6500, 95).queueForProduction).toHaveBeenCalledWith(QueueType.Infantry, 'E2', ObjectType.Infantry, 1);
+    for (const [count, tick, priority] of [[16, 3000, 95], [8, 7000, 95], [8, 3000, 20]])
         expect(production(count, tick, priority).queueForProduction).not.toHaveBeenCalled();
 });

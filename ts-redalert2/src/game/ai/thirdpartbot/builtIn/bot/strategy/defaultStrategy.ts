@@ -168,7 +168,7 @@ export class DefaultStrategy implements Strategy {
             const situation = readStrategicSituation(context.game, playerData);
             const infantryOpening = validCompositions.includes("conscripts") ? DEFAULT_COMPOSITIONS.conscripts :
                 validCompositions.includes("gis") ? DEFAULT_COMPOSITIONS.gis : undefined;
-            if (context.game.getCurrentTick() < 4000 && situation.harvesters > 0 && infantryOpening)
+            if (context.game.getCurrentTick() < 7000 && situation.harvesters > 0 && infantryOpening)
                 return { ...infantryOpening, minimumUnits: 8, maximumUnits: infantryOpening.composition.E2 ? 16 : 12 };
             const threat = context.matchAwareness.getThreatCache();
             const aggressiveAir = getOpeningAirBudget(context.game, playerData) === 8;
