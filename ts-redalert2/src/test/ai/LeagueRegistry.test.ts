@@ -3,7 +3,7 @@ import { BUILTIN, validateLeague, type GitQuery, type League, type Member } from
 
 function member(id: string, role: Member['role'] = 'history', active = true): Member {
     return { id, tag: `league/${id}`, tree: 'a'.repeat(40), profile: id === 'orig' ? 'normal' : 'brutal', role, active, note: id,
-        ...(role === 'exploiter' ? { style: id.split('-')[1], target: 'm0', winsVsTarget: 8 } : {}) };
+        ...(role === 'exploiter' || role === 'sparring' ? { style: id.split('-')[1], target: 'm0', winsVsTarget: 8 } : {}) };
 }
 function fixture(): League {
     return { schema: 1, round: 0, champion: null, members: ['orig', 'r4', 'v0', 'm0'].map(id => member(id)) };
@@ -60,14 +60,25 @@ describe('league registry', () => {
         await expect(valid(league)).rejects.toThrow('12 active');
         league.members[12].active = false; expect((await valid(league)).members).toHaveLength(13);
     });
-    test('active exploiter pool is bounded at six', async () => {
-        const league = fixture(); league.members = Array.from({ length: 7 }, (_, index) => member(`x-${String.fromCharCode(97 + index)}-01`, 'exploiter'));
-        await expect(valid(league)).rejects.toThrow('6 active exploiters');
+    test('active exploiter pool is bounded at four', async () => {
+        const league = fixture(); league.members = Array.from({ length: 5 }, (_, index) => member(`x-${String.fromCharCode(97 + index)}-01`, 'exploiter'));
+        await expect(valid(league)).rejects.toThrow('4 active exploiters');
+        league.members[4].active = false; expect((await valid(league)).members).toHaveLength(5);
+    });
+    test('sparring is valid and its active pool is bounded at six', async () => {
+        const league = fixture(); league.members = Array.from({ length: 7 }, (_, index) => member(`x-${String.fromCharCode(97 + index)}-01`, 'sparring'));
+        await expect(valid(league)).rejects.toThrow('6 active sparring');
         league.members[6].active = false; expect((await valid(league)).members).toHaveLength(7);
     });
-    test('styles are unique even when an old exploiter is inactive', async () => {
-        const league = fixture(); const first = member('x-rush-01', 'exploiter'), second = member('x-rush-02', 'exploiter', false);
-        league.members.push(first, second); await expect(valid(league)).rejects.toThrow('duplicate exploiter style');
+    test.each(['exploiter', 'sparring'] as const)('styles are unique across an inactive %s and exploiters', async role => {
+        const league = fixture(); const first = member('x-rush-01', 'exploiter'), second = member('x-rush-02', role, false);
+        league.members.push(first, second); await expect(valid(league)).rejects.toThrow('duplicate style');
+    });
+    test('sparring requires the same style, target and win-count fields', async () => {
+        for (const patch of [{ style: '' }, { target: '' }, { winsVsTarget: -1 }, { winsVsTarget: 25 }]) {
+            const league = fixture(); league.members.push({ ...member('x-rush-01', 'sparring'), ...patch });
+            await expect(valid(league)).rejects.toThrow();
+        }
     });
     test.each(['absent', 'inactive', 'wrong-role', 'extra', 'late-null'])( '%s champion reference is rejected', async kind => {
         const league = fixture(); league.champion = 'm0'; league.members[3].role = 'champion';

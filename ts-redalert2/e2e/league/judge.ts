@@ -49,9 +49,9 @@ export function judgeExploiter(league: League, id: string, target: string, games
         if (!Number.isInteger(round) || round < 1 || target !== league.champion || league.members.some(member => member.id === id))
             throw new Error('Exploiter must be a new member targeting the current champion in a positive round');
         validateSchedule(games, pairingJobs(id, target, round, 'qualify'), league, round, [id]);
-        const candidate = statsFor(games, id, [target]);
-        return { mode: 'exploiter', valid: true, pass: candidate.wins >= 8, round, id, target,
-            gates: { G1: true, winsAtLeastEight: candidate.wins >= 8 }, table: [{ opponent: target, candidate, baseline: null, difference: null }], candidate };
+        const candidate = statsFor(games, id, [target]), admitted = candidate.wins >= 12 && candidate.wins > candidate.losses;
+        return { mode: 'exploiter', valid: true, pass: admitted, round, id, target,
+            gates: { G1: true, winsAtLeastTwelveAndMajority: admitted }, table: [{ opponent: target, candidate, baseline: null, difference: null }], candidate };
     } catch (error) { return invalid('exploiter', error); }
 }
 export function championGates(candidate: Stats, baseline: Stats, direct: Stats, table: readonly OpponentScore[]): Record<string, boolean> {
@@ -85,11 +85,18 @@ export function judgeChampion(league: League, id: string, champion: string, cand
 
 export function trimHistory(league: League, formerChampions: readonly string[]): void {
     const blocked = new Set(league.members.filter(member => member.blockedReason).map(member => member.id));
-    const keep = new Set(['orig', 'r4', ...formerChampions.filter(id => id !== league.champion && !blocked.has(id)).slice(-3)]);
+    const keep = new Set(['r4', ...formerChampions.filter(id => id !== league.champion && !blocked.has(id)).slice(-3)]);
     for (const member of league.members) if (member.role === 'history') member.active = !member.blockedReason && keep.has(member.id);
 }
 export function trimExploiters(league: League): void {
     const active = league.members.filter(member => member.active && member.role === 'exploiter');
+    while (active.length > 4) {
+        active.sort((a, b) => (a.winsVsTarget ?? 0) - (b.winsVsTarget ?? 0) || league.members.indexOf(a) - league.members.indexOf(b));
+        active.shift()!.role = 'sparring';
+    }
+}
+export function trimSparring(league: League): void {
+    const active = league.members.filter(member => member.active && member.role === 'sparring');
     while (active.length > 6) {
         active.sort((a, b) => (a.winsVsTarget ?? 0) - (b.winsVsTarget ?? 0) || league.members.indexOf(a) - league.members.indexOf(b));
         active.shift()!.active = false;
@@ -97,7 +104,10 @@ export function trimExploiters(league: League): void {
 }
 export function trimPool(league: League, ratings: Record<string, number>): void {
     while (league.members.filter(member => member.active).length > 12) {
-        const candidates = league.members.filter(member => member.active && member.role === 'history' && !['orig', 'r4'].includes(member.id));
+        const sparring = league.members.filter(member => member.active && member.role === 'sparring');
+        sparring.sort((a, b) => (a.winsVsTarget ?? 0) - (b.winsVsTarget ?? 0) || league.members.indexOf(a) - league.members.indexOf(b));
+        if (sparring.length) { sparring[0].active = false; continue; }
+        const candidates = league.members.filter(member => member.active && member.role === 'history' && member.id !== 'r4');
         candidates.sort((a, b) => (ratings[a.id] ?? 1500) - (ratings[b.id] ?? 1500) || league.members.indexOf(a) - league.members.indexOf(b));
         if (!candidates.length) throw new Error('No eligible history member to trim the active pool');
         candidates[0].active = false;
@@ -128,7 +138,7 @@ export function applyDecision(league: League, decision: Decision, games: readonl
         if (!tree) throw new Error('Candidate tree is missing from qualification');
         if (decision.mode === 'exploiter') {
             const style = /^x-([a-z]+)-[0-9]{2}$/.exec(decision.id!)?.[1];
-            if (!style || next.members.some(member => member.role === 'exploiter' && member.style === style)) throw new Error('Invalid or previously registered exploiter style');
+            if (!style || next.members.some(member => (member.role === 'exploiter' || member.role === 'sparring') && member.style === style)) throw new Error('Invalid or previously registered exploiter style');
             next.members.push({ id: decision.id!, tag: `league/${decision.id}`, tree, profile: 'brutal', role: 'exploiter', active: true,
                 style, target: decision.target, winsVsTarget: decision.candidate!.wins, note: `admitted round ${decision.round}` });
         } else {
@@ -136,12 +146,13 @@ export function applyDecision(league: League, decision: Decision, games: readonl
             next.members.push({ id: decision.id!, tag: `league/${decision.id}`, tree, profile: 'brutal', role: 'champion', active: true,
                 attempts: decision.attempt, note: `round ${decision.round}; G1-G5 passed` });
             next.champion = decision.id!; next.round = decision.round;
-            for (const member of next.members.filter(member => member.role === 'exploiter' && member.active)) {
+            for (const member of next.members.filter(member => (member.role === 'exploiter' || member.role === 'sparring') && member.active)) {
                 member.winsVsTarget = statsFor(games, member.id, [decision.id!]).wins; member.target = decision.id;
+                if (member.role === 'exploiter' && member.winsVsTarget <= 8) member.role = 'sparring';
             }
         }
     }
-    trimHistory(next, formerChampions(next, allGames)); trimExploiters(next); trimPool(next, computeRatings(allGames));
+    trimHistory(next, formerChampions(next, allGames)); trimExploiters(next); trimSparring(next); trimPool(next, computeRatings(allGames));
     return next;
 }
 function appendUnique(existing: readonly LeagueGame[], incoming: readonly LeagueGame[]): LeagueGame[] {
@@ -179,12 +190,14 @@ export function leaderboardMarkdown(league: League, games: readonly LeagueGame[]
         lines.push('', '## 安全基线替换', '', '| 安全基线 | 替代冻结版本 | 原因 | 性质 |', '| --- | --- | --- | --- |');
         for (const member of replacements) lines.push(`| ${member.id} | ${member.replaces} | ${league.members.find(previous => previous.id === member.replaces)?.blockedReason} | 非 G1–G5 晋级 |`);
     }
-    lines.push('', '## 找茬者', '', '| 编号 | 打法 | 入池时针对主力 | 入池胜局数 | 活跃 | 最近针对主力 | 最近胜局数 |', '| --- | --- | --- | ---: | --- | --- | ---: |');
-    for (const member of league.members.filter(member => member.role === 'exploiter')) {
-        const admission = games.filter(game => game.a === member.id && game.kind === 'qualify').sort((a, b) => a.round - b.round);
-        const target = admission[0]?.b, firstRound = admission[0]?.round;
-        const wins = target ? statsFor(admission.filter(game => game.round === firstRound), member.id, [target]).wins : null;
-        lines.push(`| ${member.id} | ${member.style} | ${target ?? '—'} | ${wins ?? '—'} | ${member.active ? '是' : '否'} | ${member.target} | ${member.winsVsTarget} |`);
+    for (const role of ['exploiter', 'sparring'] as const) {
+        lines.push('', role === 'exploiter' ? '## 找茬者' : '## 陪练', '', '| 编号 | 打法 | 入池时针对主力 | 入池胜局数 | 活跃 | 最近针对主力 | 最近胜局数 |', '| --- | --- | --- | ---: | --- | --- | ---: |');
+        for (const member of league.members.filter(member => member.role === role)) {
+            const admission = games.filter(game => game.a === member.id && game.kind === 'qualify').sort((a, b) => a.round - b.round);
+            const target = admission[0]?.b, firstRound = admission[0]?.round;
+            const wins = target ? statsFor(admission.filter(game => game.round === firstRound), member.id, [target]).wins : null;
+            lines.push(`| ${member.id} | ${member.style} | ${target ?? '—'} | ${wins ?? '—'} | ${member.active ? '是' : '否'} | ${member.target} | ${member.winsVsTarget} |`);
+        }
     }
     return lines.join('\n') + '\n';
 }
@@ -219,6 +232,11 @@ export async function main() {
         candidate: { type: 'string' }, champion: { type: 'string' }, 'candidate-games': { type: 'string' }, 'baseline-games': { type: 'string' },
         attempt: { type: 'string' }, write: { type: 'boolean' } } });
     const league = await loadLeague();
+    if (values.mode === 'readme') {
+        const directory = resolve(REPO_ROOT, 'docs/ai-league'), games = parseGames(await Bun.file(resolve(directory, 'results.jsonl')).text());
+        await atomicText(resolve(directory, 'README.md'), leaderboardMarkdown(league, games));
+        process.exitCode = 0; return;
+    }
     let decision: Decision, used: LeagueGame[], candidateGames: LeagueGame[];
     if (values.mode === 'round0' || values.mode === 'exploiter') {
         if (!values.games) throw new Error('--games is required');
@@ -235,7 +253,7 @@ export async function main() {
         const baselineGames = parseGames(await Bun.file(values['baseline-games']).text());
         used = [...candidateGames, ...baselineGames];
         decision = judgeChampion(league, values.candidate, values.champion, candidateGames, baselineGames, Number(values.attempt));
-    } else throw new Error('--mode must be round0, exploiter or champion');
+    } else throw new Error('--mode must be round0, exploiter, champion or readme');
     printDecision(decision);
     if (values.write && decision.pass) await publish(league, decision, used, candidateGames);
     process.exitCode = !decision.valid ? 2 : decision.pass ? 0 : 1;

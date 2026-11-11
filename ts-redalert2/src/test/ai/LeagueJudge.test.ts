@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test';
-import { judgeRound0, judgeExploiter, judgeChampion, championGates, trimHistory, trimExploiters, trimPool, applyDecision, leaderboardMarkdown } from '../../../e2e/league/judge';
+import { judgeRound0, judgeExploiter, judgeChampion, championGates, trimHistory, trimExploiters, trimSparring, trimPool, applyDecision, leaderboardMarkdown } from '../../../e2e/league/judge';
 import { pairingJobs, type LeagueGame } from '../../../e2e/league/schedule';
 import { parseGames, type Stats } from '../../../e2e/league/records';
 import type { League, Member } from '../../../e2e/league/registry';
@@ -57,10 +57,12 @@ describe('league admission gates', () => {
         const result = judgeExploiter(pool, 'x-rush-01', 'm0', rows);
         expect(result.valid).toBe(true); expect(result.pass).toBe(false); expect(result.candidate!.wins).toBe(7);
     });
-    test('exploiter seven wins fail and eight wins pass', () => {
-        expect(judgeExploiter(league(), 'x-rush-01', 'm0', pair('x-rush-01', 'm0', 7)).pass).toBe(false);
-        expect(judgeExploiter(league(), 'x-rush-01', 'm0', pair('x-rush-01', 'm0', 8)).pass).toBe(true);
-    });
+    test.each([[11, 0, false], [12, 0, false], [12, 1, true], [13, 0, true]] as const)(
+        'exploiter %s wins and %s timeouts require twelve wins and more wins than losses', (wins, timeouts, pass) => {
+            const decision = judgeExploiter(league(), 'x-rush-01', 'm0', pair('x-rush-01', 'm0', wins, timeouts));
+            expect(decision.valid).toBe(true); expect(decision.pass).toBe(pass);
+            expect(decision.gates.winsAtLeastTwelveAndMajority).toBe(pass);
+        });
     test('one error makes exploiter qualification invalid', () => {
         const rows = pair('x-rush-01', 'm0', 24); rows[0].result = 'error'; rows[0].reason = 'logged-runtime-errors';
         const result = judgeExploiter(league(), 'x-rush-01', 'm0', rows);
@@ -127,18 +129,30 @@ describe('round zero decisions and write policies', () => {
         expect(next.champion).toBe('orig'); expect(next.members.find(member => member.id === 'c0')!.active).toBe(false);
     });
     test('exploiter write records admission and rejects a previously registered style', () => {
-        const pool = league(), rows = pair('x-rush-01', 'm0', 8);
+        const pool = league(), rows = pair('x-rush-01', 'm0', 13);
         const decision = judgeExploiter(pool, 'x-rush-01', 'm0', rows);
         const next = applyDecision(pool, decision, rows, rows);
-        expect(next.members.at(-1)).toMatchObject({ id: 'x-rush-01', role: 'exploiter', active: true, style: 'rush', target: 'm0', winsVsTarget: 8 });
+        expect(next.members.at(-1)).toMatchObject({ id: 'x-rush-01', role: 'exploiter', active: true, style: 'rush', target: 'm0', winsVsTarget: 13 });
         const retry = pair('x-rush-02', 'm0', 24), retryDecision = judgeExploiter(next, 'x-rush-02', 'm0', retry);
         expect(() => applyDecision(next, retryDecision, retry, [...rows, ...retry])).toThrow('previously registered exploiter style');
+    });
+    test('an existing sparring style cannot be admitted again as an exploiter', () => {
+        const pool = league(); pool.members.push({ ...member('x-rush-01', 'sparring'), active: false, style: 'rush', target: 'm0', winsVsTarget: 8 });
+        const rows = pair('x-rush-02', 'm0', 13), decision = judgeExploiter(pool, 'x-rush-02', 'm0', rows);
+        expect(() => applyDecision(pool, decision, rows, rows)).toThrow('previously registered exploiter style');
+    });
+    test('README separates exploiters from sparring and retains historical admission scores', () => {
+        const pool = league(); pool.members.push({ ...member('x-rush-01', 'sparring'), style: 'rush', target: 'm0', winsVsTarget: 5 });
+        const markdown = leaderboardMarkdown(pool, pair('x-rush-01', 'm0', 8));
+        const [exploiters, sparring] = markdown.slice(markdown.indexOf('## 找茬者')).split('## 陪练');
+        expect(exploiters).not.toContain('| x-rush-01 |');
+        expect(sparring).toContain('| x-rush-01 | rush | m0 | 8 | 是 | m0 | 5 |');
     });
     test('strict history policy keeps protected members and most recent three former champions', () => {
         const pool = league(); pool.champion = 'c5'; pool.members[2].role = 'history';
         pool.members.push(...[1, 2, 3, 4].map(index => member(`c${index}`)), member('c5', 'champion'));
         trimHistory(pool, ['m0', 'c1', 'c2', 'c3', 'c4', 'c5']);
-        expect(pool.members.filter(member => member.active).map(member => member.id)).toEqual(['orig', 'r4', 'c2', 'c3', 'c4', 'c5']);
+        expect(pool.members.filter(member => member.active).map(member => member.id)).toEqual(['r4', 'c2', 'c3', 'c4', 'c5']);
         expect(pool.members).toHaveLength(8);
     });
     test('a blocked former champion is not reactivated and does not consume the recent-history quota', () => {
@@ -148,7 +162,7 @@ describe('round zero decisions and write policies', () => {
         trimHistory(pool, ['m0', 'v5', 'c1', 'c2', 'c3', 'c4']);
         expect(pool.members.find(member => member.id === 'm0')!.active).toBe(false);
         expect(pool.members.find(member => member.id === 'c3')!.active).toBe(false);
-        expect(pool.members.filter(member => member.active).map(member => member.id)).toEqual(['orig', 'r4', 'v5', 'c1', 'c2', 'c4']);
+        expect(pool.members.filter(member => member.active).map(member => member.id)).toEqual(['r4', 'v5', 'c1', 'c2', 'c4']);
     });
     test('safety replacement is disclosed separately without inventing a round-zero victory or upgrade', () => {
         const f = tiedRound(12); f.pool.champion = 'v5'; f.pool.members[3].active = false;
@@ -171,26 +185,66 @@ describe('round zero decisions and write policies', () => {
         expect(next.members.find(member => member.id === 'v5')!.active).toBe(true);
         expect(leaderboardMarkdown(next, all)).toContain('| 1 | c1 | 58.3% | 41.7% | 3 |');
     });
-    test('seventh exploiter deactivates fewest wins, then the oldest member', () => {
+    test('fifth exploiter demotes fewest wins, then the oldest member, without deactivation', () => {
         const pool = league();
-        const exploiters = Array.from({ length: 7 }, (_, index) => ({ ...member(`x-${String.fromCharCode(97 + index)}-01`, 'exploiter'),
-            style: String.fromCharCode(97 + index), target: 'm0', winsVsTarget: index < 2 ? 5 : 8 }));
+        const exploiters = Array.from({ length: 5 }, (_, index) => ({ ...member(`x-${String.fromCharCode(97 + index)}-01`, 'exploiter'),
+            style: String.fromCharCode(97 + index), target: 'm0', winsVsTarget: index < 2 ? 9 : 12 }));
         pool.members.push(...exploiters); trimExploiters(pool);
-        expect(exploiters[0].active).toBe(false); expect(exploiters[1].active).toBe(true);
-        expect(pool.members.filter(member => member.role === 'exploiter' && member.active)).toHaveLength(6);
+        expect(exploiters[0].role).toBe('sparring'); expect(exploiters[0].active).toBe(true);
+        expect(exploiters[1].role).toBe('exploiter');
+        expect(pool.members.filter(member => member.role === 'exploiter' && member.active)).toHaveLength(4);
     });
-    test('pool capacity never removes orig/r4 or the champion and uses lowest history Elo', () => {
+    test('fifth admitted exploiter demotes the weakest registered exploiter to sparring', () => {
+        const pool = league(); pool.members.push(...Array.from({ length: 4 }, (_, index) => ({
+            ...member(`x-${String.fromCharCode(97 + index)}-01`, 'exploiter'), style: String.fromCharCode(97 + index), target: 'm0', winsVsTarget: 9 + index })));
+        const rows = pair('x-rush-01', 'm0', 13), decision = judgeExploiter(pool, 'x-rush-01', 'm0', rows);
+        const next = applyDecision(pool, decision, rows, rows);
+        expect(next.members.find(member => member.id === 'x-a-01')).toMatchObject({ role: 'sparring', active: true });
+        expect(next.members.find(member => member.id === 'x-rush-01')).toMatchObject({ role: 'exploiter', active: true });
+    });
+    test('seventh sparring deactivates the fewest wins, then the oldest, retaining identity', () => {
+        const pool = league(); const sparring = Array.from({ length: 7 }, (_, index) => ({
+            ...member(`x-${String.fromCharCode(97 + index)}-01`, 'sparring'), style: String.fromCharCode(97 + index), target: 'm0', winsVsTarget: index < 2 ? 4 : 8 }));
+        pool.members.push(...sparring); trimSparring(pool);
+        expect(sparring[0].active).toBe(false); expect(sparring[0].role).toBe('sparring'); expect(sparring[1].active).toBe(true);
+        expect(pool.members.filter(member => member.active && member.role === 'sparring')).toHaveLength(6);
+        expect(pool.members).toHaveLength(10);
+    });
+    test('pool capacity protects r4 and the champion but can remove orig by history Elo', () => {
         const pool = league(); pool.members.push(...Array.from({ length: 10 }, (_, index) => member(`v${index}`)));
         trimPool(pool, { orig: 800, r4: 900, v3: 1000 });
-        expect(pool.members.find(member => member.id === 'v3')!.active).toBe(false);
+        expect(pool.members.find(member => member.id === 'orig')!.active).toBe(false);
         expect(pool.members.filter(member => member.active)).toHaveLength(12);
-        expect(pool.members.filter(member => ['orig', 'r4', 'm0'].includes(member.id)).every(member => member.active)).toBe(true);
+        expect(pool.members.filter(member => ['r4', 'm0'].includes(member.id)).every(member => member.active)).toBe(true);
+    });
+    test('pool capacity removes the weakest sparring before the lowest-Elo history', () => {
+        const pool = league(); pool.members.push(...Array.from({ length: 9 }, (_, index) => member(`v${index}`)),
+            { ...member('x-air-01', 'sparring'), style: 'air', target: 'm0', winsVsTarget: 5 },
+            { ...member('x-rush-01', 'sparring'), style: 'rush', target: 'm0', winsVsTarget: 5 });
+        trimPool(pool, { orig: 800, v3: 900 });
+        expect(pool.members.find(member => member.id === 'x-air-01')!.active).toBe(false);
+        expect(pool.members.find(member => member.id === 'x-rush-01')!.active).toBe(false);
+        expect(pool.members.find(member => member.id === 'orig')!.active).toBe(true);
+        pool.members.push(member('v10')); trimPool(pool, { orig: 800 });
+        expect(pool.members.find(member => member.id === 'orig')!.active).toBe(false);
     });
     test('failed decision never changes the input registry', () => {
         const f = qualification(), decision = judgeChampion(f.pool, 'c1', 'm0', f.candidate, f.baseline, 1); decision.pass = false;
         const before = JSON.stringify(f.pool);
         expect(() => applyDecision(f.pool, decision, f.candidate, f.candidate)).toThrow(); expect(JSON.stringify(f.pool)).toBe(before);
     });
+    test.each([[16, 8, 'sparring'], [15, 9, 'exploiter']] as const)(
+        'promotion updates both tactic roles and demotes an exploiter with %s candidate wins to %s opponent wins', (wins, opponentWins, role) => {
+            const f = qualification();
+            f.pool.members.push({ ...member('x-rush-01', 'exploiter'), style: 'rush', target: 'm0', winsVsTarget: 12 },
+                { ...member('x-air-01', 'sparring'), style: 'air', target: 'm0', winsVsTarget: 8 });
+            f.candidate.push(...pair('c1', 'x-rush-01', wins), ...pair('c1', 'x-air-01', 15));
+            f.baseline.push(...pair('m0', 'x-rush-01', 10), ...pair('m0', 'x-air-01', 10));
+            const decision = judgeChampion(f.pool, 'c1', 'm0', f.candidate, f.baseline, 1);
+            const next = applyDecision(f.pool, decision, f.candidate, [...f.candidate, ...f.baseline]);
+            expect(next.members.find(member => member.id === 'x-rush-01')).toMatchObject({ role, target: 'c1', winsVsTarget: opponentWins });
+            expect(next.members.find(member => member.id === 'x-air-01')).toMatchObject({ role: 'sparring', target: 'c1', winsVsTarget: 9 });
+        });
     test('champion write updates exploiter target/wins and retains original input', () => {
         const f = qualification(); f.pool.members.push({ ...member('x-rush-01', 'exploiter'), style: 'rush', target: 'm0', winsVsTarget: 8 });
         f.candidate.push(...pair('c1', 'x-rush-01', 15)); f.baseline.push(...pair('m0', 'x-rush-01', 10));

@@ -5,7 +5,7 @@ export const BUILTIN = 'ts-redalert2/src/game/ai/thirdpartbot/builtIn';
 export const REPO_ROOT = resolve(import.meta.dir, '../../..');
 export const LEAGUE_PATH = resolve(import.meta.dir, 'league.json');
 export type Profile = 'normal' | 'brutal';
-export type Role = 'history' | 'champion' | 'exploiter';
+export type Role = 'history' | 'champion' | 'exploiter' | 'sparring';
 export interface Member {
     id: string;
     tag: string;
@@ -54,13 +54,13 @@ export async function validateLeague(value: unknown, query: GitQuery = gitQuery)
         check(typeof entry.tree === 'string' && treeHash.test(entry.tree), `invalid tree for ${entry.id}`);
         check(entry.profile === 'normal' || entry.profile === 'brutal', `invalid profile for ${entry.id}`);
         check(entry.id === 'orig' ? entry.profile === 'normal' : entry.profile === 'brutal', `profile violates fixed protocol for ${entry.id}`);
-        check(['history', 'champion', 'exploiter'].includes(entry.role as string), `invalid role for ${entry.id}`);
+        check(['history', 'champion', 'exploiter', 'sparring'].includes(entry.role as string), `invalid role for ${entry.id}`);
         check(typeof entry.active === 'boolean' && typeof entry.note === 'string', `invalid active/note for ${entry.id}`);
         if (entry.blockedReason !== undefined) check(typeof entry.blockedReason === 'string' && entry.blockedReason.trim().length > 0 && !entry.active,
             `blocked member ${entry.id} must remain inactive with a reason`);
-        if (entry.role === 'exploiter') {
+        if (entry.role === 'exploiter' || entry.role === 'sparring') {
             check(typeof entry.style === 'string' && entry.style.trim().length > 0, `missing style for ${entry.id}`);
-            check(!styles.has(entry.style), `duplicate exploiter style ${entry.style}`); styles.add(entry.style);
+            check(!styles.has(entry.style), `duplicate style ${entry.style}`); styles.add(entry.style);
             check(typeof entry.target === 'string' && memberId.test(entry.target), `invalid target for ${entry.id}`);
             check(Number.isInteger(entry.winsVsTarget) && (entry.winsVsTarget as number) >= 0 && (entry.winsVsTarget as number) <= 24,
                 `invalid winsVsTarget for ${entry.id}`);
@@ -70,7 +70,8 @@ export async function validateLeague(value: unknown, query: GitQuery = gitQuery)
     }
     const members = value.members as Member[], active = members.filter(member => member.active);
     check(active.length <= 12, 'more than 12 active members');
-    check(active.filter(member => member.role === 'exploiter').length <= 6, 'more than 6 active exploiters');
+    check(active.filter(member => member.role === 'exploiter').length <= 4, 'more than 4 active exploiters');
+    check(active.filter(member => member.role === 'sparring').length <= 6, 'more than 6 active sparring');
     const champions = members.filter(member => member.role === 'champion');
     if (value.champion === null) {
         check(value.round === 0 && champions.length === 0, 'null champion is only valid before round 0');
