@@ -94,6 +94,30 @@
       "active": true,
       "replaces": "v0",
       "note": "V0 等价策略的坐标安全修补版；v5 是独立安全编号，不是旧流程 V5，也不是 G1–G5 晋级"
+    },
+    {
+      "id": "x-engineer-01",
+      "tag": "league/x-engineer-01",
+      "tree": "0876a4c5db6145613685632c389600fa885b2ef5",
+      "profile": "brutal",
+      "role": "exploiter",
+      "active": true,
+      "style": "engineer",
+      "target": "v5",
+      "winsVsTarget": 9,
+      "note": "admitted round 2"
+    },
+    {
+      "id": "x-infantry-01",
+      "tag": "league/x-infantry-01",
+      "tree": "331ccebdfba8133aa5310c0029f4b0ac5d9f90d7",
+      "profile": "brutal",
+      "role": "exploiter",
+      "active": true,
+      "style": "infantry",
+      "target": "v5",
+      "winsVsTarget": 11,
+      "note": "admitted round 2"
     }
   ]
 }
