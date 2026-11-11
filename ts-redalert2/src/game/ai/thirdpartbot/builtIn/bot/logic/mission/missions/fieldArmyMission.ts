@@ -42,7 +42,9 @@ export class FieldArmyMission extends Mission {
         const s = readStrategicSituation(game, playerData);
         const units = this.getUnits(game);
         const mobileRoles = context.difficulty === "brutal" && isSovietCountry(playerData.country?.name);
-        const misplaced = mobileRoles ? units.filter(unit => unit.name === "E2").map(unit => unit.id) : [];
+        const openingInfantry = context.difficulty === "brutal" && tick < 4000 && s.harvesters > 0 && this.plan?.minimumUnits === 8 &&
+            !!(this.plan.composition.E1 || this.plan.composition.E2);
+        const misplaced = mobileRoles && !openingInfantry ? units.filter(unit => unit.name === "E2").map(unit => unit.id) : [];
         if (misplaced.length) return releaseUnits(misplaced);
         const armor = units.filter(unit => ["MTNK", "HTNK", "MGTK", "APOC", "SREF"].includes(unit.name));
         const air = units.filter(unit => unit.zone === ZoneType.Air);
@@ -109,14 +111,15 @@ export class FieldArmyMission extends Mission {
                 (!isLongMap && armor.length >= 2 && enemyArmor === 0 && targetDist <= 45)
             ))
         );
-        if (canAssault ||
+        const infantryPush = openingInfantry && infantry.length >= this.plan!.minimumUnits && enemyArmor <= 2 && enemyAircraft === 0 && enemyDefences < 2;
+        if (canAssault || infantryPush ||
             air.length >= 2 || units.some(unit => unit.name === "ZEP") || infantry.length >= 20) {
             this.attacking = true;
         }
         const outnumbered = enemyArmor > 0 && armor.length < Math.min(enemyArmor, BRUTAL_PARAMS.assault.retreatArmorCap);
         const powerDeficit = enemyPower > BRUTAL_PARAMS.assault.retreatPowerFloor && forceRatio < BRUTAL_PARAMS.assault.retreatForceRatio;
         const decimated = armor.length < (isLateGame ? BRUTAL_PARAMS.assault.decimatedLate : (hasHeavyDefences ? BRUTAL_PARAMS.assault.decimatedVsHeavyDefence : BRUTAL_PARAMS.assault.decimatedEarly));
-        if (decimated || outnumbered || powerDeficit || (units.length < 2 && !air.length)) {
+        if (!infantryPush && (decimated || outnumbered || powerDeficit || (units.length < 2 && !air.length))) {
             if (!air.length && !units.some(unit => unit.name === "ZEP")) {
                 this.attacking = false;
             }
@@ -225,6 +228,7 @@ export class FieldArmyMission extends Mission {
         };
         const allied = available.has("MTNK");
         const conscripts = getBasicInfantryBudget("E2", context.difficulty);
+        if (openingInfantry) want(this.plan!.composition.E2 ? "E2" : "E1", this.plan!.maximumUnits, 95);
         if (s.harvesters && !allied && !mobileRoles) want("E2", conscripts.total, 20);
         const tank = allied ? "MTNK" : "HTNK", aa = allied ? "FV" : "HTK";
         const heavyTank = allied ? (available.has("SREF") ? "SREF" : (available.has("MGTK") ? "MGTK" : "MTNK")) : null;
