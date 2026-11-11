@@ -12,6 +12,7 @@ import { ensureInfantryHome } from "../logic/mission/missions/infantryHomeMissio
 import { MinerDefence } from "../logic/mission/missions/minerDefence";
 import { ensureRadiationGuard } from "../logic/mission/missions/radiationGuardMission";
 import { RadiationTransportFactory } from "../logic/mission/missions/radiationTransportMission";
+import { AirFlankFactory } from "../logic/mission/missions/airFlankMission";
 import { FieldArmyMission } from "../logic/mission/missions/fieldArmyMission";
 import { DogEscortMission } from "../logic/mission/missions/dogEscortMission";
 import { HarassmentMissionFactory } from "../logic/mission/missions/harassmentMission";
@@ -115,6 +116,7 @@ export class DefaultStrategy implements Strategy {
     private dogEscort?: DogEscortMission;
     private fieldHarassment = new HarassmentMissionFactory();
     private radiationTransport = new RadiationTransportFactory();
+    private airFlank = new AirFlankFactory();
 
     onAiUpdate(context: SupabotContext, missionController: MissionController, logger: DebugLogger) {
         this.paraDropSupport.onAiUpdate(context);
@@ -138,6 +140,7 @@ export class DefaultStrategy implements Strategy {
                 missionController.addMission(this.dogEscort);
             }
             this.fieldHarassment.maybeCreateMissions(context, missionController, logger, [this.fieldArmy]);
+            this.airFlank.maybeCreateMissions(context, missionController, logger, this.fieldArmy);
         } else if (composition) {
             this.attackFactory.maybeCreateMissions(context, missionController, logger, composition);
         }
@@ -170,6 +173,8 @@ export class DefaultStrategy implements Strategy {
                 validCompositions.includes("gis") ? DEFAULT_COMPOSITIONS.gis : undefined;
             if (context.game.getCurrentTick() < 4000 && situation.harvesters > 0 && infantryOpening)
                 return { ...infantryOpening, minimumUnits: 8, maximumUnits: infantryOpening.composition.E2 ? 16 : 12 };
+            if (validCompositions.includes("sovietTanks")) return DEFAULT_COMPOSITIONS.sovietTanks;
+            if (validCompositions.includes("alliedTanks")) return DEFAULT_COMPOSITIONS.alliedTanks;
             const threat = context.matchAwareness.getThreatCache();
             const aggressiveAir = getOpeningAirBudget(context.game, playerData) === 8;
             if (validCompositions.includes("rocketeers") && (situation.own.JUMPJET ?? 0) < 8 &&
