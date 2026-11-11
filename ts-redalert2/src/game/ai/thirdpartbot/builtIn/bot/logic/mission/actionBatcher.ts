@@ -1,6 +1,6 @@
 // Used to group related actions together to minimise actionApi calls. For example, if multiple units
 
-import { ActionsApi, OrderType, Vector2 } from "../../../game-api";
+import { ActionsApi, MapApi, OrderType, Vector2 } from "../../../game-api";
 import { groupBy } from "../common/utils";
 
 // are ordered to move to the same location, all of them will be ordered to move in a single action.
@@ -73,7 +73,7 @@ export class ActionBatcher {
         this.actions.push(action);
     }
 
-    resolve(actionsApi: ActionsApi) {
+    resolve(actionsApi: ActionsApi, mapApi?: MapApi) {
         const groupedCommands = groupBy(this.actions, (action) => action.orderType.valueOf().toString());
         const vectorToStr = (v: Vector2) => v.x + "," + v.y;
         const strToVector = (str: string) => {
@@ -104,6 +104,7 @@ export class ActionBatcher {
             );
             Object.entries(byPosition).forEach(([point, unitCommands]) => {
                 const vector = strToVector(point);
+                if (mapApi && !mapApi.getTile(vector.x, vector.y)) return;
                 actionsApi.orderUnits(
                     unitCommands.map((command) => command.unitId),
                     commandType,
