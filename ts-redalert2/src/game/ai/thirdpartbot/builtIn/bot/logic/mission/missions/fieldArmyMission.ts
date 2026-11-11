@@ -42,7 +42,7 @@ export class FieldArmyMission extends Mission {
         const s = readStrategicSituation(game, playerData);
         const units = this.getUnits(game);
         const mobileRoles = context.difficulty === "brutal" && isSovietCountry(playerData.country?.name);
-        const openingInfantry = context.difficulty === "brutal" && tick < 4000 && s.harvesters > 0 && this.plan?.minimumUnits === 8 &&
+        const openingInfantry = context.difficulty === "brutal" && tick < 7000 && s.harvesters > 0 && this.plan?.minimumUnits === 8 &&
             !!(this.plan.composition.E1 || this.plan.composition.E2);
         const misplaced = mobileRoles && !openingInfantry ? units.filter(unit => unit.name === "E2").map(unit => unit.id) : [];
         if (misplaced.length) return releaseUnits(misplaced);

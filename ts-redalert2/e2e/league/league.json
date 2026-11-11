@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "round": 2,
-  "champion": "c2",
+  "round": 3,
+  "champion": "c3",
   "members": [
     {
       "id": "orig",
@@ -69,8 +69,8 @@
       "role": "exploiter",
       "active": true,
       "style": "air",
-      "target": "c2",
-      "winsVsTarget": 7,
+      "target": "c3",
+      "winsVsTarget": 8,
       "note": "admitted round 1"
     },
     {
@@ -81,7 +81,7 @@
       "role": "exploiter",
       "active": true,
       "style": "harass",
-      "target": "c2",
+      "target": "c3",
       "winsVsTarget": 9,
       "note": "admitted round 1"
     },
@@ -103,8 +103,8 @@
       "role": "exploiter",
       "active": true,
       "style": "engineer",
-      "target": "c2",
-      "winsVsTarget": 9,
+      "target": "c3",
+      "winsVsTarget": 7,
       "note": "admitted round 2"
     },
     {
@@ -115,8 +115,8 @@
       "role": "exploiter",
       "active": true,
       "style": "infantry",
-      "target": "c2",
-      "winsVsTarget": 13,
+      "target": "c3",
+      "winsVsTarget": 4,
       "note": "admitted round 2"
     },
     {
@@ -124,7 +124,7 @@
       "tag": "league/c2",
       "tree": "2fe55f3858b250d4c986998e5bcbf77f85a9e65c",
       "profile": "brutal",
-      "role": "champion",
+      "role": "history",
       "active": true,
       "attempts": 1,
       "note": "round 2; G1-G5 passed"
@@ -137,7 +137,7 @@
       "role": "exploiter",
       "active": true,
       "style": "crawl",
-      "target": "c2",
+      "target": "c3",
       "winsVsTarget": 8,
       "note": "admitted round 3"
     },
@@ -149,9 +149,19 @@
       "role": "exploiter",
       "active": true,
       "style": "mixed",
-      "target": "c2",
-      "winsVsTarget": 10,
+      "target": "c3",
+      "winsVsTarget": 7,
       "note": "admitted round 3"
+    },
+    {
+      "id": "c3",
+      "tag": "league/c3",
+      "tree": "5bd750e6673226789bbe4644083127b11e25baf1",
+      "profile": "brutal",
+      "role": "champion",
+      "active": true,
+      "attempts": 2,
+      "note": "round 3; G1-G5 passed"
     }
   ]
 }
