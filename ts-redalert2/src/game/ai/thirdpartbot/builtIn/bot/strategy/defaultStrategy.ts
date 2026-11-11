@@ -8,6 +8,7 @@ import { EngineerMissionFactory } from "../logic/mission/missions/engineerMissio
 import { ParaDropSupport } from "../logic/mission/missions/paraDropSupport";
 import { SneakCaptureMissionFactory } from "../logic/mission/missions/sneakCaptureMission";
 import { ensureBaseReserve } from "../logic/mission/missions/baseReserveMission";
+import { ensureCrawl } from "../logic/mission/missions/crawlMission";
 import { ensureInfantryHome } from "../logic/mission/missions/infantryHomeMission";
 import { MinerDefence } from "../logic/mission/missions/minerDefence";
 import { ensureRadiationGuard } from "../logic/mission/missions/radiationGuardMission";
@@ -120,6 +121,7 @@ export class DefaultStrategy implements Strategy {
         this.paraDropSupport.onAiUpdate(context);
         this.minerDefence.onAiUpdate(context);
         ensureBaseReserve(context, missionController, logger);
+        ensureCrawl(context, missionController, logger);
         ensureInfantryHome(context, missionController, logger);
         ensureRadiationGuard(context, missionController, logger);
         this.radiationTransport.maybeCreateMissions(context, missionController, logger);
