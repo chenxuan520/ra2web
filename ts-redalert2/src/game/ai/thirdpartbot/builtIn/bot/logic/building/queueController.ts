@@ -85,11 +85,14 @@ export class QueueController {
         if (context.difficulty === "brutal") {
             for (const name of ["E1", "E2"]) {
                 const count = game.getVisibleUnits(player.name, "self", rules => rules.name === name).length;
-                if (count >= getBasicInfantryBudget(name, context.difficulty).total) requests.delete(name);
+                const openingPressure = game.getCurrentTick() < 4000 && (requests.get(name)?.priority ?? 0) >= 95;
+                const limit = openingPressure ? (name === "E2" ? 32 : 24) : getBasicInfantryBudget(name, context.difficulty).total;
+                if (count >= limit) requests.delete(name);
             }
             // Before War Factory is established, never let basic foot infantry starve the refinery and factory
             const factories = game.getVisibleUnits(player.name, "self", rules => rules.weaponsFactory).length;
-            if (factories === 0) {
+            const openingPressure = game.getCurrentTick() < 4000 && ["E1", "E2"].some(name => (requests.get(name)?.priority ?? 0) >= 95);
+            if (factories === 0 && !openingPressure) {
                 const start = playerData.startLocation;
                 const hasHomeThreat = !start || game.getVisibleUnits(player.name, "enemy", rules => rules.isSelectableCombatant && !rules.harvester)
                     .some(id => {

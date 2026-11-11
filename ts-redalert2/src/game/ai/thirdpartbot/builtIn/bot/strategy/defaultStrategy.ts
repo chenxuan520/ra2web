@@ -9,6 +9,7 @@ import { ParaDropSupport } from "../logic/mission/missions/paraDropSupport";
 import { SneakCaptureMissionFactory } from "../logic/mission/missions/sneakCaptureMission";
 import { ensureBaseReserve } from "../logic/mission/missions/baseReserveMission";
 import { ensureInfantryHome } from "../logic/mission/missions/infantryHomeMission";
+import { ensureInfantryPressure } from "../logic/mission/missions/infantryPressureMission";
 import { MinerDefence } from "../logic/mission/missions/minerDefence";
 import { ensureRadiationGuard } from "../logic/mission/missions/radiationGuardMission";
 import { RadiationTransportFactory } from "../logic/mission/missions/radiationTransportMission";
@@ -142,6 +143,7 @@ export class DefaultStrategy implements Strategy {
             this.attackFactory.maybeCreateMissions(context, missionController, logger, composition);
         }
 
+        ensureInfantryPressure(context, missionController, logger);
         this.defenceFactory.maybeCreateMissions(context, missionController, logger);
         this.engineerFactory.maybeCreateMissions(context, missionController, logger);
         this.sneakCaptureFactory.maybeCreateMissions(context, missionController, logger);
