@@ -1,4 +1,4 @@
-export const MAPS = ['mp08t2', 'tn01t2', 'mp11t2'] as const;
+export const MAPS = ['mp08t2', 'tn01t2', 'mp11t2', 'tn04t2', 'mp06t2', 'mp29u2', 'mp31s2', 'mp02t2'] as const;
 export const MATCHUPS = [
     ['Americans', 'Americans'], ['Russians', 'Russians'],
     ['Americans', 'Russians'], ['Russians', 'Americans'],
@@ -43,15 +43,20 @@ export function seedFor(round: number, mapIndex: number, kind: Kind, generation?
 export function jobId(job: Omit<LeagueJob, 'id'>): string {
     return `${job.a}__${job.b}__${job.map}__${job.seed}__${job.aCountry}-${job.bCountry}`;
 }
+export function mapsForRound(round: number): string[] {
+    if (round <= 3) return MAPS.slice(0, 3);
+    return [0, 1, 2].map(index => MAPS[(2 * (round - 4) + 2 + index) % MAPS.length]);
+}
 export function pairingJobs(a: string, b: string, round: number, kind: Kind, generation?: number): LeagueJob[] {
     if (![a, b].every(id => /^[a-z][a-z0-9-]*$/.test(id))) throw new Error('Invalid pairing member id');
-    return MAPS.flatMap((map, index) => MATCHUPS.map(([aCountry, bCountry]) => {
-        const job = { a, b, map, seed: seedFor(round, index + 1, kind, generation), aCountry, bCountry };
+    return mapsForRound(round).flatMap(map => MATCHUPS.map(([aCountry, bCountry]) => {
+        const job = { a, b, map, seed: seedFor(round, (MAPS as readonly string[]).indexOf(map) + 1, kind, generation), aCountry, bCountry };
         return { id: jobId(job), ...job };
     }));
 }
 export function lightPairingJobs(a: string, b: string, round: number, kind: Kind, generation?: number): LeagueJob[] {
-    return pairingJobs(a, b, round, kind, generation).filter(job => job.map !== MAPS[2]);
+    const maps = mapsForRound(round).slice(0, 2);
+    return pairingJobs(a, b, round, kind, generation).filter(job => maps.includes(job.map));
 }
 export function roundRobinJobs(members: string[], round: number, kind: Kind, generation?: number): LeagueJob[] {
     if (new Set(members).size !== members.length) throw new Error('Duplicate round-robin member');

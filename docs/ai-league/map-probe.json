@@ -1,0 +1,79 @@
+[
+  {
+    "map": "tn04t2",
+    "seed": 9001,
+    "c3Wins": 6,
+    "v5Wins": 2,
+    "timeouts": 0,
+    "errors": 0,
+    "winsAtStart0": 6,
+    "winsAtStart1": 2,
+    "admitted": true
+  },
+  {
+    "map": "mp14t2",
+    "seed": 9001,
+    "c3Wins": 1,
+    "v5Wins": 2,
+    "timeouts": 5,
+    "errors": 0,
+    "winsAtStart0": 1,
+    "winsAtStart1": 2,
+    "admitted": false
+  },
+  {
+    "map": "mp06t2",
+    "seed": 9001,
+    "c3Wins": 8,
+    "v5Wins": 0,
+    "timeouts": 0,
+    "errors": 0,
+    "winsAtStart0": 4,
+    "winsAtStart1": 4,
+    "admitted": true
+  },
+  {
+    "map": "mp29u2",
+    "seed": 9001,
+    "c3Wins": 7,
+    "v5Wins": 1,
+    "timeouts": 0,
+    "errors": 0,
+    "winsAtStart0": 5,
+    "winsAtStart1": 3,
+    "admitted": true
+  },
+  {
+    "map": "mp31s2",
+    "seed": 9001,
+    "c3Wins": 6,
+    "v5Wins": 2,
+    "timeouts": 0,
+    "errors": 0,
+    "winsAtStart0": 2,
+    "winsAtStart1": 6,
+    "admitted": true
+  },
+  {
+    "map": "mp02t2",
+    "seed": 9001,
+    "c3Wins": 5,
+    "v5Wins": 1,
+    "timeouts": 2,
+    "errors": 0,
+    "winsAtStart0": 2,
+    "winsAtStart1": 4,
+    "admitted": true
+  },
+  {
+    "map": "eb3",
+    "seed": 9001,
+    "c3Wins": 0,
+    "v5Wins": 0,
+    "timeouts": 0,
+    "errors": 8,
+    "winsAtStart0": 0,
+    "winsAtStart1": 0,
+    "admitted": false
+  }
+]

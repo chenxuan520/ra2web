@@ -38,7 +38,7 @@ export async function main() {
     if (initialSource.trim() !== await gitQuery(['show', `${base}:${parameterPath}`])) throw new Error('Working parameters differ from frozen master');
     const initial = parseParams(initialSource), league = await loadLeague();
     if (!league.champion) throw new Error('Select the initial league champion before evolution');
-    const exploiters = league.members.filter(member => member.active && member.role === 'exploiter')
+    const exploiters = league.members.filter(member => member.active && (member.role === 'exploiter' || member.role === 'sparring'))
         .sort((a, b) => (b.winsVsTarget ?? 0) - (a.winsVsTarget ?? 0) || league.members.indexOf(a) - league.members.indexOf(b)).slice(0, 3);
     const opponents = [league.champion, ...exploiters.map(member => member.id)];
     const output = resolve(values.out), scratch = join(output, 'scratch');

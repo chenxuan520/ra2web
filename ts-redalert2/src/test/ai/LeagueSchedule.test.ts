@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'bun:test';
-import { MAPS, MATCHUPS, pairingJobs, lightPairingJobs, roundRobinJobs, shardJobs, seedFor, convertResult, compareGames, assertSelfMirror, type LeagueGame } from '../../../e2e/league/schedule';
+import { MAPS, MATCHUPS, mapsForRound, pairingJobs, lightPairingJobs, roundRobinJobs, shardJobs, seedFor, convertResult, compareGames, assertSelfMirror, type LeagueGame } from '../../../e2e/league/schedule';
 import { reportGames, type FrozenMember } from '../../../e2e/league/run';
+import { parseGames } from '../../../e2e/league/records';
 
 function row(swapped = false, result: LeagueGame['result'] = 'a-win'): LeagueGame {
     return { round: 0, kind: 'dev', a: 'm0', b: 'm0', aTree: 'a'.repeat(40), bTree: 'a'.repeat(40), map: 'mp08t2',
@@ -30,8 +31,40 @@ describe('league schedule', () => {
         const jobs = pairingJobs('c1', 'm0', 1, 'qualify');
         expect(jobs).toHaveLength(12); expect(new Set(jobs.map(job => job.id)).size).toBe(12);
         expect(new Set(jobs.map(job => job.map)).size).toBe(3);
-        for (const map of MAPS) for (const [aCountry, bCountry] of MATCHUPS)
+        for (const map of mapsForRound(1)) for (const [aCountry, bCountry] of MATCHUPS)
             expect(jobs.filter(job => job.map === map && job.aCountry === aCountry && job.bCountry === bCountry)).toHaveLength(1);
+    });
+    test.each([0, 1, 2, 3])('round %s preserves the original maps, pairing order and seeds', round => {
+        const maps = ['mp08t2', 'tn01t2', 'mp11t2'];
+        expect(mapsForRound(round)).toEqual(maps);
+        for (const kind of ['qualify', 'dev'] as const) {
+            const expected = maps.flatMap((map, index) => MATCHUPS.map(([aCountry, bCountry]) => ({
+                map, seed: round * 1000 + (kind === 'dev' ? 500 : 0) + index + 1, aCountry, bCountry })));
+            expect(pairingJobs('c3', 'v5', round, kind).map(({ map, seed, aCountry, bCountry }) => ({ map, seed, aCountry, bCountry }))).toEqual(expected);
+        }
+    });
+    test('round four starts with mp11t2 and the first two admitted new maps', () => {
+        expect(MAPS.length).toBeGreaterThanOrEqual(5);
+        expect(mapsForRound(4)).toEqual([MAPS[2], MAPS[3], MAPS[4]]);
+    });
+    test('rotating rounds have three distinct maps and retain exactly one from the preceding round', () => {
+        for (let round = 4; round <= 12; round++) {
+            const maps = mapsForRound(round), previous = mapsForRound(round - 1);
+            expect(maps).toHaveLength(3); expect(new Set(maps).size).toBe(3);
+            expect(maps.filter(map => previous.includes(map))).toHaveLength(1);
+            const jobs = pairingJobs('c3', 'v5', round, 'qualify');
+            expect(jobs).toHaveLength(12); expect(new Set(jobs.map(job => job.id)).size).toBe(12);
+            for (const job of jobs) expect(job.seed).toBe(seedFor(round, MAPS.indexOf(job.map as typeof MAPS[number]) + 1, 'qualify'));
+            const light = lightPairingJobs('p', 'v5', round, 'evolve', 0);
+            expect(light).toHaveLength(8); expect([...new Set(light.map(job => job.map))]).toEqual(maps.slice(0, 2));
+        }
+    });
+    test('all historical official rows still parse after rotation; off-round maps are rejected', async () => {
+        const text = await Bun.file(new URL('../../../../docs/ai-league/results.jsonl', import.meta.url)).text();
+        const historical = parseGames(text).filter(game => game.round <= 3);
+        expect(historical).toHaveLength(1272);
+        const game = { ...row(), round: 4, kind: 'qualify', seed: 4001 };
+        expect(() => parseGames(JSON.stringify(game))).toThrow('scenario');
     });
     test('qualification and development seeds match the handoff', () => {
         expect(seedFor(1, 1, 'qualify')).toBe(1001);
@@ -40,7 +73,7 @@ describe('league schedule', () => {
     });
     test('rounds 1-50 never reuse qualification seeds for development', () => {
         const qualify = new Set<number>(), dev = new Set<number>();
-        for (let round = 1; round <= 50; round++) for (let index = 1; index <= 3; index++) {
+        for (let round = 1; round <= 50; round++) for (let index = 1; index <= MAPS.length; index++) {
             qualify.add(seedFor(round, index, 'qualify')); dev.add(seedFor(round, index, 'dev'));
         }
         expect([...qualify].some(seed => dev.has(seed))).toBe(false);
@@ -48,11 +81,11 @@ describe('league schedule', () => {
     });
     test('evolve seeds are unique and disjoint from qualification and development for rounds 1-50', () => {
         const ordinary = new Set<number>(), evolve = new Set<number>();
-        for (let round = 1; round <= 50; round++) for (let index = 1; index <= 3; index++) {
+        for (let round = 1; round <= 50; round++) for (let index = 1; index <= MAPS.length; index++) {
             ordinary.add(seedFor(round, index, 'qualify')); ordinary.add(seedFor(round, index, 'dev'));
             for (let generation = 0; generation < 40; generation++) evolve.add(seedFor(round, index, 'evolve', generation));
         }
-        expect(evolve.size).toBe(6000); expect([...evolve].some(seed => ordinary.has(seed))).toBe(false);
+        expect(evolve.size).toBe(50 * MAPS.length * 40); expect([...evolve].some(seed => ordinary.has(seed))).toBe(false);
         expect(seedFor(1, 1, 'evolve', 0)).toBe(1601); expect(seedFor(1, 3, 'evolve', 39)).toBe(1993);
     });
     test('light evolution pairings cover two maps and all countries; invalid generations fail', () => {
@@ -87,7 +120,7 @@ describe('league schedule', () => {
     });
     test('invalid schedule and result inputs are rejected', () => {
         expect(() => seedFor(-1, 1, 'dev')).toThrow(); expect(() => seedFor(0, 0, 'dev')).toThrow();
-        expect(() => seedFor(1, 4, 'qualify')).toThrow(); expect(() => pairingJobs('../x', 'm0', 0, 'dev')).toThrow();
+        expect(() => seedFor(1, MAPS.length + 1, 'qualify')).toThrow(); expect(() => pairingJobs('../x', 'm0', 0, 'dev')).toThrow();
         expect(() => roundRobinJobs(['m0', 'm0'], 0, 'dev')).toThrow(); expect(() => convertResult('unknown')).toThrow();
     });
     test('game ordering is stable and false swap precedes true', () => {

@@ -1,4 +1,4 @@
-import { MATCHUPS, MAPS, seedFor, jobId, type LeagueGame, type LeagueJob } from './schedule';
+import { MATCHUPS, MAPS, mapsForRound, seedFor, jobId, type LeagueGame, type LeagueJob } from './schedule';
 import type { League } from './registry';
 
 export interface Stats { wins: number; losses: number; timeouts: number; total: number; winTicks: number[] }
@@ -13,7 +13,7 @@ export function validateGame(value: unknown): asserts value is LeagueGame {
         ![game.aTree, game.bTree].every(tree => typeof tree === 'string' && /^(?:[0-9a-f]{40}|[0-9a-f]{64})$/.test(tree))) throw new Error('Invalid game member identity');
     const index = (MAPS as readonly string[]).indexOf(game.map);
     const generation = game.kind === 'evolve' ? (game.seed - game.round * 1000 - 600 - index - 1) / 10 : undefined;
-    if (index < 0 || game.seed !== seedFor(game.round, index + 1, game.kind, generation) ||
+    if (index < 0 || !mapsForRound(game.round).includes(game.map) || game.seed !== seedFor(game.round, index + 1, game.kind, generation) ||
         !MATCHUPS.some(([a, b]) => a === game.aCountry && b === game.bCountry)) throw new Error('Invalid game scenario or seed');
     if (typeof game.swapped !== 'boolean' || !['a-win', 'b-win', 'timeout', 'error'].includes(game.result) ||
         typeof game.reason !== 'string' || !game.reason || !Number.isSafeInteger(game.ticks) || game.ticks < 0 || game.ticks > 27000) throw new Error('Invalid game result fields');
