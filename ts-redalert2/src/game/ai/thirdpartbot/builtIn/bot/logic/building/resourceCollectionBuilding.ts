@@ -27,11 +27,16 @@ export function planRefinery(game: GameApi, playerData: PlayerData, technoRules:
     for (const entry of scored) {
         const building = minBy(buildings, tile => patchDistance(tile, entry.patch));
         const target = building && minBy(entry.patch.tiles, tile => Math.hypot(tile.rx - building.rx, tile.ry - building.ry));
-        const location = target ? getDefaultPlacementLocation(game, playerData, new Vector2(target.rx, target.ry), technoRules, false, 2)
-            ?? getDefaultPlacementLocation(game, playerData, new Vector2(target.rx, target.ry), technoRules, false, 1)
-            ?? getDefaultPlacementLocation(game, playerData, new Vector2(target.rx, target.ry), technoRules, false, 0) : undefined;
-        const distance = location ? patchDistance(location, entry.patch) : undefined;
-        if (distance !== undefined && distance <= 9) return { patch: entry.patch, location, reachable: true, unreachable };
+        let location: PatchPoint | undefined, distance: number | undefined;
+        if (target) {
+            for (const spacing of [2, 1, 0]) {
+                const candidate = getDefaultPlacementLocation(game, playerData, new Vector2(target.rx, target.ry), technoRules, false, spacing);
+                const candidateDistance = candidate ? patchDistance(candidate, entry.patch) : undefined;
+                if (candidateDistance !== undefined && candidateDistance <= 9) return { patch: entry.patch, location: candidate, reachable: true, unreachable };
+                location ??= candidate;
+                distance ??= candidateDistance;
+            }
+        }
         unreachable.push({ ...entry, location, distance });
     }
     return { patch: scored[0]?.patch, location: undefined, reachable: false, unreachable };

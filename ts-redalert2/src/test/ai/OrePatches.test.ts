@@ -5,6 +5,7 @@ import { ResourceCollectionBuilding, planRefinery } from "../../game/ai/thirdpar
 import { findVisiblePatches, isServed, minersOn, patchDistance, scorePatch, type OrePatch }
     from "../../game/ai/thirdpartbot/builtIn/bot/logic/common/orePatches";
 import { findPatches } from "../../../e2e/league/ecoCore";
+import { getDefaultPlacementLocation } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/buildingRules";
 
 const values = { ore: 10, gems: 20 };
 const point = (rx: number, ry: number) => ({ rx, ry });
@@ -90,7 +91,7 @@ describe("visible economic patches", () => {
         [resource(0, 0), resource(2, 0, 0, 0, true), resource(4, 0)],
         [resource(10, 0), resource(8, 1), resource(8, 0), resource(8, 0, 100, 25), resource(8, 0, 0, 0, true)],
         [resource(-2, -2), resource(-1, -1)],
-    ])("matches every E1 field for clustering, values, IDs, centers and regrowth (%#)", (...input) => {
+    ].map(input => ({ input })))("matches every E1 field for clustering, values, IDs, centers and regrowth (%#)", ({ input }) => {
         const f = fixture();
         f.resources.splice(0, f.resources.length, ...input);
         const before = structuredClone(input);
@@ -277,6 +278,15 @@ describe("refinery patch placement", () => {
         expect(planRefinery(f.game, f.player as any, f.rules as any)).toMatchObject({ reachable: true, patch: { id: "0_6" } });
     });
 
+    test("a legal far point cannot stop the existing smaller-spacing fallback from serving the selected gem field", () => {
+        const f = fixture(); setCandidates(f, [point(0, -4), point(0, 1)]);
+        expect(getDefaultPlacementLocation(f.game, f.player as any, new Vector2(0, 6), f.rules as any, false, 2)).toMatchObject(point(0, -4));
+        expect(getDefaultPlacementLocation(f.game, f.player as any, new Vector2(0, 6), f.rules as any, false, 0)).toMatchObject(point(0, 1));
+        expect(f.game.canPlaceBuilding(f.player.name, f.rules.name, point(0, 1))).toBe(true);
+        expect(planRefinery(f.game, f.player as any, f.rules as any)).toMatchObject({
+            reachable: true, patch: { id: "0_6" }, location: point(0, 1), unreachable: [],
+        });
+    });
     test("all unreachable patches stay score-sorted; an existing refinery forbids the legacy fallback and mission requests nothing", () => {
         const f = fixture();
         f.buildings.push(object(2, 100, 100, { name: "GAREFN", refinery: true }));
