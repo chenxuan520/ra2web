@@ -42,9 +42,7 @@ export class FieldArmyMission extends Mission {
         const s = readStrategicSituation(game, playerData);
         const units = this.getUnits(game);
         const mobileRoles = context.difficulty === "brutal" && isSovietCountry(playerData.country?.name);
-        const openingInfantry = context.difficulty === "brutal" && tick < 7000 && s.harvesters > 0 && this.plan?.minimumUnits === 8 &&
-            !!(this.plan.composition.E1 || this.plan.composition.E2);
-        const misplaced = mobileRoles && !openingInfantry ? units.filter(unit => unit.name === "E2").map(unit => unit.id) : [];
+        const misplaced = mobileRoles ? units.filter(unit => unit.name === "E2").map(unit => unit.id) : [];
         if (misplaced.length) return releaseUnits(misplaced);
         const armor = units.filter(unit => ["MTNK", "HTNK", "MGTK", "APOC", "SREF"].includes(unit.name));
         const air = units.filter(unit => unit.zone === ZoneType.Air);
@@ -111,15 +109,14 @@ export class FieldArmyMission extends Mission {
                 (!isLongMap && armor.length >= 2 && enemyArmor === 0 && targetDist <= 45)
             ))
         );
-        const infantryPush = openingInfantry && infantry.length >= this.plan!.minimumUnits && enemyArmor <= 2 && enemyAircraft === 0 && enemyDefences < 2;
-        if (canAssault || infantryPush ||
+        if (canAssault ||
             air.length >= 2 || units.some(unit => unit.name === "ZEP") || infantry.length >= 20) {
             this.attacking = true;
         }
         const outnumbered = enemyArmor > 0 && armor.length < Math.min(enemyArmor, BRUTAL_PARAMS.assault.retreatArmorCap);
         const powerDeficit = enemyPower > BRUTAL_PARAMS.assault.retreatPowerFloor && forceRatio < BRUTAL_PARAMS.assault.retreatForceRatio;
         const decimated = armor.length < (isLateGame ? BRUTAL_PARAMS.assault.decimatedLate : (hasHeavyDefences ? BRUTAL_PARAMS.assault.decimatedVsHeavyDefence : BRUTAL_PARAMS.assault.decimatedEarly));
-        if (!infantryPush && (decimated || outnumbered || powerDeficit || (units.length < 2 && !air.length))) {
+        if (decimated || outnumbered || powerDeficit || (units.length < 2 && !air.length)) {
             if (!air.length && !units.some(unit => unit.name === "ZEP")) {
                 this.attacking = false;
             }
@@ -228,23 +225,20 @@ export class FieldArmyMission extends Mission {
         };
         const allied = available.has("MTNK");
         const conscripts = getBasicInfantryBudget("E2", context.difficulty);
-        if (openingInfantry) want(this.plan!.composition.E2 ? "E2" : "E1", this.plan!.maximumUnits, 95);
         if (s.harvesters && !allied && !mobileRoles) want("E2", conscripts.total, 20);
         const tank = allied ? "MTNK" : "HTNK", aa = allied ? "FV" : "HTK";
         const heavyTank = allied ? (available.has("SREF") ? "SREF" : (available.has("MGTK") ? "MGTK" : "MTNK")) : null;
         const core = countCoreTanks(s);
-        const airPlan = this.plan?.composition.JUMPJET || this.plan?.composition.ZEP;
         if (heavyTank && available.has(heavyTank) && heavyTank !== tank) want(heavyTank, 4, 60);
-        want(tank, airPlan ? 4 : 50, core < 4 ? 75 : core < 8 ? 65 : 55);
+        want(tank, 4, core < 4 ? 75 : core < 8 ? 65 : 55);
         const airThreat = matchAwareness.getThreatCache()?.totalOffensiveAirThreat ?? 0;
         const enemyInf = s.enemy.infantry ?? 0;
         const aaTarget = airThreat > 0 ? Math.max(2, Math.ceil(core / 3)) : enemyInf >= 6 ? Math.min(3, Math.max(1, Math.ceil(enemyInf / 6))) : Math.max(1, Math.ceil(core / 8));
         if (core >= 4 || airThreat > 0 || enemyInf >= 6) want(aa, aaTarget, enemyInf >= 8 ? 65 : 45);
         for (const name of Object.keys(this.plan?.composition ?? {})) {
             if (name === tank || name === aa || name === "E1" || name === "E2" || name === "DESO") continue;
-            const openingAir = name === "JUMPJET" ? getOpeningAirBudget(game, playerData) : 0;
-            const cap = name === "JUMPJET" ? s.harvesters < 2 ? openingAir : s.harvesters < 4 ? Math.max(openingAir, 4) : 8
-                : name === "ZEP" ? 2 : name === "V3" || name === "SREF" ? 3 : 2;
+            const cap = name === "JUMPJET" ? 10
+                : name === "ZEP" ? 4 : name === "V3" || name === "SREF" ? 3 : 2;
             want(name, cap, name === "ZEP" && !(s.own.ZEP > 0) && s.harvesters >= 2 ? 100 : 40);
         }
         // Take command of free paradrops and returning units. The queue controller

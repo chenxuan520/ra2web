@@ -85,14 +85,11 @@ export class QueueController {
         if (context.difficulty === "brutal") {
             for (const name of ["E1", "E2"]) {
                 const count = game.getVisibleUnits(player.name, "self", rules => rules.name === name).length;
-                const openingRequest = game.getCurrentTick() < 7000 && (requests.get(name)?.priority ?? 0) >= 95;
-                const limit = openingRequest ? (name === "E2" ? 16 : 12) : getBasicInfantryBudget(name, context.difficulty).total;
-                if (count >= limit) requests.delete(name);
+                if (count >= getBasicInfantryBudget(name, context.difficulty).total) requests.delete(name);
             }
             // Before War Factory is established, never let basic foot infantry starve the refinery and factory
             const factories = game.getVisibleUnits(player.name, "self", rules => rules.weaponsFactory).length;
-            const openingRequest = game.getCurrentTick() < 7000 && ["E1", "E2"].some(name => (requests.get(name)?.priority ?? 0) >= 95);
-            if (factories === 0 && !openingRequest) {
+            if (factories === 0) {
                 const start = playerData.startLocation;
                 const hasHomeThreat = !start || game.getVisibleUnits(player.name, "enemy", rules => rules.isSelectableCombatant && !rules.harvester)
                     .some(id => {
@@ -201,6 +198,17 @@ export class QueueController {
                     }
                 }
             }
+        }
+        if (context.difficulty === "brutal") {
+            const situation = readStrategicSituation(game, playerData);
+            const available = new Set(productionApi.getAvailableObjects().map(option => option.name));
+            for (const [name, cap] of [["JUMPJET", 10], ["ZEP", 4]] as const) {
+                if (available.has(name) && (situation.own[name] ?? 0) < cap) requests.set(name, { priority: 120, specificLocation: null });
+            }
+            if (countCoreTanks(situation) >= 4) {
+                requests.delete("MTNK"); requests.delete("HTNK");
+            }
+            for (const name of ["APOC", "MGTK", "SREF", "V3"]) requests.delete(name);
         }
         this.queueStates = QUEUES.map((queueType) => {
             const options = productionApi.getAvailableObjects(queueType);

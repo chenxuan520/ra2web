@@ -112,18 +112,22 @@ function fieldFixture() {
 }
 
 describe("persistent field army", () => {
-    test("the opening does not fund more than two rocketeers before its second miner", () => {
+    test("the frozen air tactic keeps its funded rocketeer request until ten are owned", () => {
         const f = fieldFixture();
         f.context.player.production.getAvailableObjects = () => ["MTNK", "JUMPJET"].map(name => ({ name }));
         f.mission.setPlan({ composition: { JUMPJET: 1 }, minimumUnits: 2, maximumUnits: 4 });
         for (let id = 1; id <= 2; id++) { f.add(id, "JUMPJET"); f.mission.addUnit(id); }
         const opening = f.step();
         expect(opening.type).toBe("request");
-        if (opening.type === "request") expect(opening.unitNameToPriority.JUMPJET).toBeUndefined();
+        if (opening.type === "request") expect(opening.unitNameToPriority.JUMPJET).toBe(40);
         f.add(102, "HARV");
         const funded = f.step(2);
         expect(funded.type).toBe("request");
         if (funded.type === "request") expect(funded.unitNameToPriority.JUMPJET).toBeGreaterThan(0);
+        for (let id = 3; id <= 10; id++) { f.add(id, "JUMPJET"); f.mission.addUnit(id); }
+        const capped = f.step(4);
+        expect(capped.type).toBe("request");
+        if (capped.type === "request") expect(capped.unitNameToPriority.JUMPJET).toBeUndefined();
     });
     test("assembling armor defends a short home perimeter instead of chasing the first infantry wave", () => {
         const f = fieldFixture();

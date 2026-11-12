@@ -1,5 +1,5 @@
 import { describe, expect, mock, test } from 'bun:test';
-import { ObjectType, OrderType, QueueStatus, QueueType, Vector2, ZoneType } from '../../game/ai/thirdpartbot/builtIn/game-api';
+import { ObjectType, QueueStatus, QueueType, Vector2, ZoneType } from '../../game/ai/thirdpartbot/builtIn/game-api';
 import { DefaultStrategy } from '../../game/ai/thirdpartbot/builtIn/bot/strategy/defaultStrategy';
 import { ActionBatcher } from '../../game/ai/thirdpartbot/builtIn/bot/logic/mission/actionBatcher';
 import { FieldArmyMission } from '../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/fieldArmyMission';
@@ -32,23 +32,21 @@ function fixture() {
 }
 
 describe('bounded paid infantry support during armor assembly', () => {
-    test('the explicit opening plan launches eight conscripts and requests bounded paid reinforcements', () => {
-        const f = fixture(), plan = f.plan(); expect(plan.minimumUnits).toBe(8); expect(plan.maximumUnits).toBe(16);
+    test('the frozen air tactic retains its armored fallback and releases Soviet foot to home', () => {
+        const f = fixture(), plan = f.plan(); expect(plan.minimumUnits).toBe(4); expect(plan.maximumUnits).toBe(6);
+        expect(plan.composition.HTNK).toBe(5); expect(plan.composition.E2).toBeUndefined();
         const army = new FieldArmyMission(plan, f.controller, () => {}); f.controller.addMission(army);
         for (let id = 1; id <= 8; id++) army.addUnit(id);
-        const actionBatcher = new ActionBatcher(), orders: any[][] = [];
-        const result: any = army.onAiUpdate({ ...f.context, actionBatcher });
-        actionBatcher.resolve({ orderUnits: (...args: any[]) => orders.push(args) } as any, f.game.mapApi);
-        expect(army.isAttacking()).toBe(true); expect(orders.some(order => order[1] === OrderType.AttackMove && order[2] === 80)).toBe(true);
-        expect(result.unitNameToPriority.E2).toBe(95);
-        f.at(7000); expect(army.onAiUpdate({ ...f.context, actionBatcher }).type).toBe('releaseUnits');
+        const result: any = army.onAiUpdate({ ...f.context, actionBatcher: new ActionBatcher() });
+        expect(result).toMatchObject({ type: 'releaseUnits', unitIds: [1, 2, 3, 4, 5, 6, 7, 8] });
     });
-    test('the paid continuation window keeps a formed infantry strike on the field after tick 4000', () => {
-        const f = fixture(); f.at(6500); const plan = f.plan(); expect(plan.minimumUnits).toBe(8);
+    test('the air tactic does not manufacture a timed Soviet infantry strike after tick 4000', () => {
+        const f = fixture(); f.at(6500); const plan = f.plan(); expect(plan.minimumUnits).toBe(4);
+        expect(plan.composition.E2).toBeUndefined();
         const army = new FieldArmyMission(plan, f.controller, () => {}); f.controller.addMission(army);
         for (let id = 1; id <= 8; id++) army.addUnit(id);
         const actionBatcher = new ActionBatcher(), result: any = army.onAiUpdate({ ...f.context, actionBatcher });
-        expect(result.type).not.toBe('releaseUnits'); expect(army.isAttacking()).toBe(true); expect(result.unitNameToPriority.E2).toBe(95);
+        expect(result.type).toBe('releaseUnits');
         f.at(7000); expect(army.onAiUpdate({ ...f.context, actionBatcher }).type).toBe('releaseUnits');
     });
     test('no income, normal difficulty and the fixed deadline do not opt into this plan', () => {
@@ -62,9 +60,10 @@ describe('bounded paid infantry support during armor assembly', () => {
     });
 });
 
-function production(ownedCount: number, tick: number, priority: number) {
+function production(ownedCount: number, tick: number, priority: number, hasFactory = false) {
     const rule: any = { name: 'E2', cost: 100, type: ObjectType.Infantry };
-    const own = Array.from({ length: ownedCount }, () => rule), queues = new Map(QUEUES.map(type => [type, { type, status: QueueStatus.Idle, items: [], size: 0 }]));
+    const own = [...Array.from({ length: ownedCount }, () => rule), ...(hasFactory ? [{ name: 'NAWEAP', weaponsFactory: true }] : [])],
+        queues = new Map(QUEUES.map(type => [type, { type, status: QueueStatus.Idle, items: [], size: 0 }]));
     const actions = { queueForProduction: mock(() => {}), unqueueFromProduction: mock(() => {}), pauseProduction: mock(() => {}), resumeProduction: mock(() => {}) };
     new QueueController().onAiUpdate({ difficulty: 'brutal', player: { name: 'bot', actions, production: {
         getAvailableObjects: (type: number) => type === QueueType.Infantry ? [rule] : [], getQueueData: (type: number) => queues.get(type) } },
@@ -74,9 +73,9 @@ function production(ownedCount: number, tick: number, priority: number) {
     return actions;
 }
 
-test('opening production remains paid, capped and does not change ordinary requests', () => {
-    expect(production(8, 3000, 95).queueForProduction).toHaveBeenCalledWith(QueueType.Infantry, 'E2', ObjectType.Infantry, 1);
-    expect(production(8, 6500, 95).queueForProduction).toHaveBeenCalledWith(QueueType.Infantry, 'E2', ObjectType.Infantry, 1);
-    for (const [count, tick, priority] of [[16, 3000, 95], [8, 7000, 95], [8, 3000, 20]])
-        expect(production(count, tick, priority).queueForProduction).not.toHaveBeenCalled();
+test('the air tactic retains paid ordinary infantry caps and the real-factory prerequisite', () => {
+    expect(production(3, 3000, 95).queueForProduction).not.toHaveBeenCalled();
+    expect(production(3, 3000, 95, true).queueForProduction).toHaveBeenCalledWith(QueueType.Infantry, 'E2', ObjectType.Infantry, 1);
+    for (const [count, tick, priority] of [[4, 3000, 95], [4, 6500, 95], [4, 7000, 95], [4, 3000, 20]])
+        expect(production(count, tick, priority, true).queueForProduction).not.toHaveBeenCalled();
 });
