@@ -226,9 +226,15 @@ export class FieldArmyMission extends Mission {
                         ? this.searchUnexplored(game, player.name, center, searchDirection) : searchDirection;
                 }
             }
+            if (fortifiedRearm && !this.rearmStarted) {
+                const tower = game.getVisibleUnits(player.name, "self", rules => rules.name === "GAPILL" || rules.name === "NALASR")
+                    .map(id => game.getUnitData(id)).filter((unit): unit is UnitData => !!unit).sort((a, b) => a.id - b.id)[0];
+                if (tower) this.attackArea = location(tower);
+                this.targetId = undefined;
+            }
         }
         const isIntercepting = !this.attacking && isArmorFormed && incomingStrikeForce && center.distanceTo(rally) < 45;
-        this.squad.setDefensiveRadius(this.attacking ? undefined : (shouldDefendHomeThreat || isIntercepting ? 25 : 7));
+        this.squad.setDefensiveRadius(this.attacking ? undefined : (fortifiedRearm && !this.rearmStarted ? 7 : shouldDefendHomeThreat || isIntercepting ? 25 : 7));
         this.squad.setAttackArea(this.attackArea);
         this.squad.onAiUpdate(context, this, this.logger);
 
