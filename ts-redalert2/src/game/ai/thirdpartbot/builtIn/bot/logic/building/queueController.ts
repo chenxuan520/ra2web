@@ -257,6 +257,7 @@ export class QueueController {
                 if (productionApi.getQueueData(decision.queue).status === QueueStatus.Active) actionsApi.pauseProduction(decision.queue);
                 return;
             }
+            const buildingLocation = decision.topItem && requests.get(decision.topItem.unit.name)?.specificLocation;
             this.updateBuildQueue(
                 game,
                 productionApi,
@@ -274,6 +275,9 @@ export class QueueController {
                 !!crawl && decision.queue === crawl.queue && decision.topItem?.unit.name === crawl.rules.name &&
                     requests.get(crawl.rules.name)?.specificLocation?.x === crawl.location.rx &&
                     requests.get(crawl.rules.name)?.specificLocation?.y === crawl.location.ry,
+                context.difficulty === "brutal" && decision.queue === QueueType.Structures && !!decision.topItem?.unit.refinery &&
+                    !!buildingLocation && !readPressure(context).pressured && game.canPlaceBuilding(player.name, decision.topItem.unit.name,
+                        { rx: buildingLocation.x, ry: buildingLocation.y }),
             );
         });
 
@@ -329,6 +333,7 @@ export class QueueController {
         cappedSupport: ReadonlySet<string>,
         difficulty?: "normal" | "brutal",
         requestedCrawl = false,
+        requestedRefinery = false,
     ): void {
         const myCredits = playerData.credits;
         // With five or six queues, every queue can fall below 25%. Always
@@ -348,7 +353,7 @@ export class QueueController {
             this.placementFailures.clear();
             // Start building the decided item.
             const canAffordBuilding = isBuildingQueue(queueType) && decision !== undefined && decision.priority >= 18 && myCredits >= decision.unit.cost + 400;
-            if (decision !== undefined && (requestedCrawl && myCredits >= decision.unit.cost || canAffordBuilding || !(totalCostAcrossQueues > myCredits && decision.priority < minimumPriority))) {
+            if (decision !== undefined && (requestedCrawl && myCredits >= decision.unit.cost || requestedRefinery && myCredits > 0 || canAffordBuilding || !(totalCostAcrossQueues > myCredits && decision.priority < minimumPriority))) {
                 logger(`Decision (${queueTypeToName(queueType)}): ${decision.unit.name}`);
                 actionsApi.queueForProduction(queueType, decision.unit.name, decision.unit.type, 1);
                 if (difficulty === "brutal") this.economicPlacementFailures.delete(decision.unit.name);

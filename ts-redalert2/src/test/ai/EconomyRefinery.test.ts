@@ -105,6 +105,19 @@ describe("brutal refinery investment", () => {
         expect(f.game.canPlaceBuilding).toHaveBeenCalledTimes(1);
         expect(f.game.getBuildingPlacementData).toHaveBeenCalledTimes(2);
     });
+    test("a legal unpressured second refinery can begin paid incremental construction at its specified cash gate", () => {
+        const f = fixture(2); f.player.credits = 1500;
+        const mission = new BaseBuildingMission(QueueType.Structures, () => {}), plan: any = mission._onAiUpdate(f.context);
+        expect(plan).toMatchObject({ type: "buildStructureAtLocation", rulesName: "NAREFN", priority: 50 });
+        const available = f.context.player.production.getAvailableObjects;
+        f.context.player.production.getAvailableObjects = (type: QueueType) => type === QueueType.Vehicles
+            ? [{ name: "HTNK", type: ObjectType.Vehicle, cost: 900 }] : available(type);
+        new QueueController().onAiUpdate(f.context, null, new Map<string, any>([
+            ["NAREFN", { priority: plan.priority, specificLocation: new Vector2(plan.rx, plan.ry) }],
+            ["HTNK", { priority: 85, specificLocation: null }],
+        ]), () => {});
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Structures, "NAREFN", ObjectType.Building, 1);
+    });
     test("the mission uses a subsidy landing site instead of E3's unreachable fallback", () => {
         const f = subsidyFixture();
         expect(f.priority()).toBe(40);
