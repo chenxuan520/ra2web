@@ -168,6 +168,10 @@ export class DefaultStrategy implements Strategy {
             const situation = readStrategicSituation(context.game, playerData);
             const infantryOpening = validCompositions.includes("conscripts") ? DEFAULT_COMPOSITIONS.conscripts :
                 validCompositions.includes("gis") ? DEFAULT_COMPOSITIONS.gis : undefined;
+            const armorOpening = validCompositions.includes("alliedTanks") ? DEFAULT_COMPOSITIONS.alliedTanks :
+                validCompositions.includes("sovietTanks") ? DEFAULT_COMPOSITIONS.sovietTanks : undefined;
+            if (armorOpening && (situation.own.GAPILL ?? 0) + (situation.own.NALASR ?? 0) >= 1)
+                return { ...armorOpening, minimumUnits: 4, maximumUnits: 20 };
             if (context.game.getCurrentTick() < 7000 && situation.harvesters > 0 && infantryOpening)
                 return { ...infantryOpening, minimumUnits: 8, maximumUnits: infantryOpening.composition.E2 ? 16 : 12 };
             const threat = context.matchAwareness.getThreatCache();

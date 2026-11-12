@@ -26,12 +26,15 @@ export class FieldArmyMission extends Mission {
     private searchDistance = Infinity;
     private failedSearches = new Map<string, number>();
     private lastEnemyLocation?: Vector2;
+    private observedRaid = false;
+    private rearmStarted = false;
 
     constructor(private plan: SideComposition | null, private controller: MissionController, logger: DebugLogger) { super("fieldArmy", logger); }
 
     setPlan(plan: SideComposition | null) { this.plan = plan; }
     getAttackArea() { return this.attackArea; }
     isAttacking() { return this.attacking; }
+    getState() { return this.rearmStarted ? this.attacking ? "counterattack" : "regrouping" : "assembling"; }
     getPriority() { return 50; }
     getGlobalDebugText() { return this.attacking ? "combined assault" : "building a mobile reserve"; }
 
@@ -40,9 +43,10 @@ export class FieldArmyMission extends Mission {
         const tick = game.getCurrentTick();
         const playerData = game.getPlayerData(player.name);
         const s = readStrategicSituation(game, playerData);
+        const fortifiedRearm = context.difficulty === "brutal" && (s.own.GAPILL ?? 0) + (s.own.NALASR ?? 0) >= 1;
         const units = this.getUnits(game);
         const mobileRoles = context.difficulty === "brutal" && isSovietCountry(playerData.country?.name);
-        const openingInfantry = context.difficulty === "brutal" && tick < 7000 && s.harvesters > 0 && this.plan?.minimumUnits === 8 &&
+        const openingInfantry = context.difficulty === "brutal" && !fortifiedRearm && tick < 7000 && s.harvesters > 0 && this.plan?.minimumUnits === 8 &&
             !!(this.plan.composition.E1 || this.plan.composition.E2);
         const misplaced = mobileRoles && !openingInfantry ? units.filter(unit => unit.name === "E2").map(unit => unit.id) : [];
         if (misplaced.length) return releaseUnits(misplaced);
@@ -60,7 +64,10 @@ export class FieldArmyMission extends Mission {
                 const d = location(base).distanceTo(location(enemy));
                 return d > 22 && d <= 48;
             }));
-        const incomingStrikeForce = approachThreats.length >= 2 || approachThreats.some(e => (e.type as any) === ObjectType.Vehicle);
+        if (context.difficulty === "brutal" && [...homeThreats, ...approachThreats].filter(enemy => enemy.zone !== ZoneType.Air).length >= 2)
+            this.observedRaid = true;
+        const incomingStrikeForce = (!fortifiedRearm || this.rearmStarted) &&
+            (approachThreats.length >= 2 || approachThreats.some(e => (e.type as any) === ObjectType.Vehicle));
         const rally = matchAwareness.getMainRallyPoint();
         this.squad ??= new CombatSquad(rally, rally, 15);
         this.squad.setAirSafety(getOpeningAirBudget(game, playerData) === 2);
@@ -123,6 +130,10 @@ export class FieldArmyMission extends Mission {
             if (!air.length && !units.some(unit => unit.name === "ZEP")) {
                 this.attacking = false;
             }
+        }
+        if (fortifiedRearm) {
+            if (tick >= 10800 && this.observedRaid && armor.length >= 4 && canAssault && homeThreats.length <= 1) this.rearmStarted = true;
+            this.attacking = this.rearmStarted && !(decimated || outnumbered || powerDeficit);
         }
         const center = this.getCenterOfMass() ?? rally;
         const nearestHomeThreat = homeThreats.length

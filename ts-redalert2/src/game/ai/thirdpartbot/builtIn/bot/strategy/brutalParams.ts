@@ -6,7 +6,7 @@ export const BRUTAL_PARAMS = {
         secondRefineryIntruderCount: 3,
         secondRefineryIntruderCreditsBelow: 3000,
         secondRefineryCredits: 2000,
-        secondRefineryCoreArmor: 4,
+        secondRefineryCoreArmor: 3,
         secondRefineryCostMargin: 400,
         maxRefineries: 4,
         harvestersPerRefinery: 2,

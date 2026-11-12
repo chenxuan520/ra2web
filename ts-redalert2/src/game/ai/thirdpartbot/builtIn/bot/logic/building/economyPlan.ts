@@ -74,6 +74,10 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
             if (committed) playerCooldowns.set(player.name, currentTick);
             return BRUTAL_PARAMS.economy.defensePriority;
         }
+        if (factories > 0) {
+            if (committed) playerCooldowns.set(player.name, currentTick);
+            return 60;
+        }
         return 0;
     }
     if (rules.name === "TESLA" || rules.name === "ATESLA") {
