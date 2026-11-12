@@ -150,6 +150,28 @@ describe("brutal miner capacity and production table", () => {
         const response = fixture(3, 2); response.enemy(100, 70, ObjectType.Aircraft); response.run();
         expect(response.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTK", ObjectType.Vehicle, 1);
     });
+    test.each(["drone", "armor", "air", "capped"])("an optional drone cannot cancel a paid miner; the %s arbitration keeps emergency and cap behavior", response => {
+        const f = fixture(response === "capped" ? 12 : 2, 0); f.resources.splice(1); f.resources[0].ore = 500;
+        const options = f.options.get(QueueType.Vehicles)!;
+        if (response !== "armor") options.push({ name: "DRON", cost: 500, type: ObjectType.Vehicle });
+        if (response === "air") f.enemy(100, 70, ObjectType.Aircraft);
+        Object.assign(f.queues.get(QueueType.Vehicles)!, { status: QueueStatus.Active, items: [{ rules: options[0], quantity: 1 }] });
+        expect(desiredMiners(f.game, f.player)).toBe(2);
+        f.run();
+        if (response === "drone") expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+        else expect(f.actions.unqueueFromProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
+    });
+    test("protecting a paid miner does not start an unneeded one or change normal cancellation", () => {
+        const idle = fixture(2, 0); idle.resources.splice(1); idle.resources[0].ore = 500;
+        idle.options.get(QueueType.Vehicles)!.push({ name: "DRON", cost: 500, type: ObjectType.Vehicle });
+        idle.run(); expect(idle.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "DRON", ObjectType.Vehicle, 1);
+        const normal = fixture(2, 0); normal.context.difficulty = "normal";
+        const options = normal.options.get(QueueType.Vehicles)!;
+        options.push({ name: "DRON", cost: 500, type: ObjectType.Vehicle });
+        normal.requests.set("DRON", { priority: 100, specificLocation: null });
+        Object.assign(normal.queues.get(QueueType.Vehicles)!, { status: QueueStatus.Active, items: [{ rules: options[0], quantity: 1 }] });
+        normal.run(); expect(normal.actions.unqueueFromProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
+    });
     test("115 flak response still outranks the 110 income opening", () => {
         const f = fixture(1, 0); f.enemy(100, 70, ObjectType.Aircraft);
         f.run();

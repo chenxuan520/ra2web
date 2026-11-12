@@ -425,7 +425,9 @@ export class QueueController {
                 const newItemPriority = decision.priority;
                 // Only cancel if current item is explicitly obsolete/capped (0 priority) and new item is an emergency (>= 80),
                 // or if new item is genuinely more than 2x higher priority than the active request.
-                if (currentItemPriority === 0 ? newItemPriority >= 80 : newItemPriority > currentItemPriority * 2) {
+                if (!(difficulty === "brutal" && currentProduction.harvester && decision.unit.name === "DRON" &&
+                    game.getVisibleUnits(playerData.name, "self", rules => rules.harvester).length < 12) &&
+                    (currentItemPriority === 0 ? newItemPriority >= 80 : newItemPriority > currentItemPriority * 2)) {
                     logger(
                         `Dequeueing queue ${queueTypeToName(queueData.type)} unit ${currentProduction.name} because ${
                             decision.unit.name
