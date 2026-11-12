@@ -251,6 +251,16 @@ describe("T2 scout directions, recruitment and real handoff", () => {
         expect(f.orders).toContainEqual({ ids: [2], type: OrderType.AttackMove, xOrTarget: 20, y: 80 });
         expect((f.scout() as OpeningScoutingMission).getTotalUnitsReceived()).toBe(2);
     });
+    test("the existing north-home projection is explored first instead of expiring at the end of the opening queue", () => {
+        const f = fixture(); f.player.startLocation.set(20, 50);
+        f.objects.get(100)!.tile = tile(20, 50); f.objects.get(101)!.tile = tile(21, 50); f.ensure();
+        f.add(1, "DOG", 23, 50); f.add(2, "DOG", 24, 50); f.scout().addUnit(1); f.scout().addUnit(2);
+        f.map.getAllTilesResourceData = () => { throw Error("public scout goals cannot inspect hidden minerals"); };
+        f.missionStep(f.scout(), 32);
+        expect(f.orders).toContainEqual({ ids: [2], type: OrderType.AttackMove, xOrTarget: 20, y: 26 });
+        expect(f.queueReads()).toBe(0); expect(f.privateReads()).toBe(0);
+        expect((f.scout() as OpeningScoutingMission).getTotalUnitsReceived()).toBe(2);
+    });
     test("an empty old queue does not suppress the first public-start scout", () => {
         const f = fixture(); f.queue.length = 0; f.ensure();
         expect(f.scout()).toBeInstanceOf(OpeningScoutingMission);
