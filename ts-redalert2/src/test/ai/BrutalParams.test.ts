@@ -3,7 +3,7 @@ import { BRUTAL_PARAMS } from '../../game/ai/thirdpartbot/builtIn/bot/strategy/b
 
 // V0 has no later refinery-hold mechanism, so its three absent knobs are not invented.
 const keys = {
-    economy: `firstRefineryPriority barracksPriority secondRefineryIntruderRadius secondRefineryIntruderCount
+    economy: `ecoOnly firstRefineryPriority barracksPriority secondRefineryIntruderRadius secondRefineryIntruderCount
         secondRefineryIntruderCreditsBelow secondRefineryCredits secondRefineryCoreArmor secondRefineryCostMargin
         maxRefineries harvestersPerRefinery extraRefineryPriority russianRadarMinRefineries russianRadarMinArmor
         russianRadarMinCredits radarMinHarvesters radarMinArmor radarPriority techMinHarvesters techMinArmor techPriority
@@ -19,14 +19,14 @@ const keys = {
 };
 
 describe('central brutal strategy parameters', () => {
-    test('keys are exactly the thresholds present in the selected v0 champion', () => {
+    test('keys retain the champion thresholds and the numeric eco-only diagnostic switch', () => {
         expect(Object.keys(BRUTAL_PARAMS)).toEqual(['economy', 'assault']);
         for (const group of ['economy', 'assault'] as const)
             expect(Object.keys(BRUTAL_PARAMS[group]).sort()).toEqual(keys[group].trim().split(/\s+/).sort());
     });
-    test('all 65 values are finite and have at most two decimal places', () => {
+    test('all 66 values are finite and have at most two decimal places', () => {
         const values = Object.values(BRUTAL_PARAMS).flatMap(group => Object.values(group));
-        expect(values).toHaveLength(65);
+        expect(values).toHaveLength(66);
         expect(values.every(Number.isFinite)).toBe(true);
         expect(values.every(value => Number(value.toFixed(2)) === value)).toBe(true);
     });

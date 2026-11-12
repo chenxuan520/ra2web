@@ -6,7 +6,6 @@ import {
     QueueStatus,
     QueueType,
     TechnoRules,
-    UnitData,
     Vector2,
 } from "../../../game-api";
 import { GlobalThreat } from "../threat/threat";
@@ -15,6 +14,9 @@ import { SupabotContext } from "../common/context";
 import { UnitRequest } from "../mission/missionController";
 import { countCoreTanks, NATIONAL_SUPPORT_LIMITS, readStrategicSituation } from "../../strategy/nationalComposition";
 import { getBasicInfantryBudget, isSovietCountry } from "../../strategy/basicInfantryBudget";
+import { desiredMiners } from "./harvester";
+import { isEcoOnly, readPressure } from "../common/pressure";
+import { isCivilianEconomy } from "./economyPlan";
 
 export const QUEUES = [
     QueueType.Structures,
@@ -81,6 +83,11 @@ export class QueueController {
         // Economic units do not belong to combat missions. Keep a separate request
         // so losing miners cannot permanently starve an otherwise healthy base.
         const requests = new Map(unitTypeRequests);
+        const ecoOnly = isEcoOnly(context);
+        if (ecoOnly) {
+            const allowed = new Set(QUEUES.flatMap(queue => productionApi.getAvailableObjects(queue).filter(isCivilianEconomy).map(rules => rules.name)));
+            for (const name of requests.keys()) if (!allowed.has(name)) requests.delete(name);
+        }
         const cappedSupport = new Set<string>();
         if (context.difficulty === "brutal") {
             for (const name of ["E1", "E2"]) {
@@ -116,47 +123,41 @@ export class QueueController {
             if (!option.harvester) continue;
             const logic = BUILDING_NAME_TO_RULES.get(option.name);
             if (!logic) continue;
-            if (context.difficulty === "brutal" && game.getVisibleUnits(player.name, "self", rules => rules.harvester).length > 0 &&
+            if (context.difficulty === "brutal" && game.getVisibleUnits(player.name, "self", rules => rules.harvester).length >= 3 &&
                 !productionApi.getQueueData(QueueType.Vehicles).items.some(item => item.rules.name === option.name) &&
                 (productionApi.getQueueData(QueueType.Structures).items.some(item =>
                     item.rules.refinery && item.rules.freeUnit === option.name) ||
                  productionApi.getAvailableObjects(QueueType.Structures).some(rules =>
                     rules.refinery && rules.freeUnit === option.name && (requests.get(rules.name)?.priority ?? 0) > 0))) continue;
-            let priority = logic.getPriority(game, playerData, option, threatCache);
+            let priority = logic.getPriority(game, playerData, option, threatCache, context.difficulty);
             if (context.difficulty === "brutal") {
                 const miners = game.getVisibleUnits(player.name, "self", rules => rules.harvester).length;
-                const refineries = game.getVisibleUnits(player.name, "self", rules => rules.refinery).length;
-                const tick = game.getCurrentTick();
+                const desired = desiredMiners(game, playerData);
                 const situation = readStrategicSituation(game, playerData);
                 const core = countCoreTanks(situation);
-                const hasOreFields = !game.mapApi?.getAllTilesResourceData || (game.mapApi.getAllTilesResourceData()?.some(r =>
-                    (r.ore > 0 || r.gems > 0) && (!game.mapApi.isVisibleTile || game.mapApi.isVisibleTile(r.tile, playerData.name))
-                ) ?? true);
-                const intruders = game.getVisibleUnits(player.name, "enemy", option => option.isSelectableCombatant && !option.harvester)
-                    .map(id => game.getUnitData?.(id) ?? game.getGameObjectData?.(id)).filter((unit): unit is UnitData => !!unit &&
-                        (unit.tile.rx - playerData.startLocation.x) ** 2 + (unit.tile.ry - playerData.startLocation.y) ** 2 <= 22 ** 2);
-                const baseUnderSiege = intruders.length > 0;
+                const pressure = readPressure(context);
                 const minCoreBeforeMiner2 = isSovietCountry(playerData.country?.name) ? 2 : 1;
 
-                let minerPriority = 0;
+                priority = 0;
                 if (miners === 0) {
-                    minerPriority = 120;
-                } else if (miners < 2 && core >= minCoreBeforeMiner2) {
-                    minerPriority = 90;
-                } else if (miners === 2 && !baseUnderSiege && hasOreFields && (core >= 6 || (refineries >= 2 && core >= 4))) {
-                    minerPriority = 78;
-                } else if (miners === 3 && !baseUnderSiege && hasOreFields && (core >= 8 || (refineries >= 2 && core >= 6))) {
-                    minerPriority = 70;
-                }
-                if (minerPriority > 0) {
-                    priority = Math.max(priority, minerPriority);
+                    priority = 120;
+                } else if (miners === 1 && !pressure.pressured) {
+                    priority = 110;
+                } else if (miners === 1 && pressure.pressured && (ecoOnly || core >= minCoreBeforeMiner2)) {
+                    priority = 90;
+                } else if (miners === 2 && !pressure.pressured && miners < desired) {
+                    priority = 110;
+                } else if (miners === 2 && pressure.pressured && (ecoOnly || core >= 4) && miners < desired) {
+                    priority = 78;
+                } else if (miners >= 3 && miners < desired && !pressure.baseUnderSiege && (ecoOnly || core >= 2 * (miners - 2))) {
+                    priority = 78;
                 }
             }
             if (priority > (requests.get(option.name)?.priority ?? 0)) {
                 requests.set(option.name, { priority, specificLocation: null });
             }
         }
-        if (context.difficulty === "brutal") {
+        if (context.difficulty === "brutal" && !ecoOnly) {
             const situation = readStrategicSituation(game, playerData);
             if (isSovietCountry(playerData.country?.name)) {
                 const tick = game.getCurrentTick();
@@ -166,10 +167,10 @@ export class QueueController {
                     this.airResponseUntil = tick + 600;
                 } else if (tick >= this.airResponseUntil) this.airResponseTarget = 0;
                 const aa = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === "HTK");
-                if (aa && (situation.own.HTK ?? 0) < this.airResponseTarget && (requests.get(aa.name)?.priority ?? 0) < 100) {
+                if (aa && (situation.own.HTK ?? 0) < this.airResponseTarget && (requests.get(aa.name)?.priority ?? 0) < 115) {
                     // Visible air pressure needs actual counters before another
                     // miner is sent out. Retain the observation briefly across fog.
-                    requests.set(aa.name, { priority: 100, specificLocation: null });
+                    requests.set(aa.name, { priority: 115, specificLocation: null });
                 }
             }
             if (situation.harvesters >= 2 && situation.enemy.infantry >= 8 &&
@@ -203,7 +204,7 @@ export class QueueController {
             }
         }
         this.queueStates = QUEUES.map((queueType) => {
-            const options = productionApi.getAvailableObjects(queueType);
+            const options = productionApi.getAvailableObjects(queueType).filter(option => !ecoOnly || isCivilianEconomy(option));
             const items = QueueController.getPrioritiesForBuildingOptions(options, requests);
             const topItem = items.length > 0 ? items[items.length - 1] : undefined;
             return {

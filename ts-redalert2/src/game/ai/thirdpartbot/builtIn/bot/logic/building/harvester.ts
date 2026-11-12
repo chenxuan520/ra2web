@@ -1,11 +1,27 @@
 import { GameApi, PlayerData, TechnoRules } from "../../../game-api";
 import { GlobalThreat } from "../threat/threat";
 import { BasicGroundUnit } from "./basicGroundUnit";
+import { findVisiblePatches, isServed, OrePatch, PatchPoint } from "../common/orePatches";
 
 const IDEAL_HARVESTERS_PER_REFINERY = 2;
 
 // because refineries also scales based on harvesters, we need a cap
-const MAX_HARVESTERS_TOTAL = 10;
+const MAX_HARVESTERS_TOTAL = 12;
+
+export function patchCapacity(patch: Pick<OrePatch, "value">, chrono: boolean): number {
+    return patch.value >= 6000 ? (chrono ? 4 : 3) : patch.value >= 3000 ? 2 : 1;
+}
+
+export function desiredMiners(game: GameApi, playerData: PlayerData): number {
+    const refineries = game.getVisibleUnits(playerData.name, "self", rules => rules.refinery)
+        .map(id => game.getGameObjectData(id)?.tile).filter((tile): tile is PatchPoint => !!tile);
+    if (!refineries.length) return 0;
+    const chrono = game.getVisibleUnits(playerData.name, "self", rules => rules.name === "CMIN").length > 0 ||
+        ["Americans", "Alliance", "French", "Germans", "British"].includes(playerData.country?.name);
+    const capacity = findVisiblePatches(game, playerData.name).filter(patch => isServed(patch, refineries))
+        .reduce((sum, patch) => sum + patchCapacity(patch, chrono), 0);
+    return Math.min(MAX_HARVESTERS_TOTAL, Math.max(2, capacity));
+}
 
 export class Harvester extends BasicGroundUnit {
     constructor(
@@ -22,11 +38,12 @@ export class Harvester extends BasicGroundUnit {
         playerData: PlayerData,
         technoRules: TechnoRules,
         threatCache: GlobalThreat | null,
+        difficulty?: "normal" | "brutal",
     ): number {
         const refineries = game.getVisibleUnits(playerData.name, "self", (r) => r.refinery).length;
         const harvesters = game.getVisibleUnits(playerData.name, "self", (r) => r.harvester).length;
 
-        const desired = Math.min(MAX_HARVESTERS_TOTAL, refineries * IDEAL_HARVESTERS_PER_REFINERY);
+        const desired = difficulty === "brutal" ? desiredMiners(game, playerData) : Math.min(10, refineries * IDEAL_HARVESTERS_PER_REFINERY);
         if (refineries === 0 || harvesters >= desired) return 0;
 
         // Rebuild the income source before funding ordinary combat requests.
@@ -35,7 +52,7 @@ export class Harvester extends BasicGroundUnit {
         return this.basePriority * (1 + (desired - harvesters) / desired);
     }
 
-    getMaxCount(game: GameApi, playerData: PlayerData, technoRules: TechnoRules, threatCache: GlobalThreat | null): number | null {
-        return MAX_HARVESTERS_TOTAL;
+    getMaxCount(game: GameApi, playerData: PlayerData, technoRules: TechnoRules, threatCache: GlobalThreat | null, difficulty?: "normal" | "brutal"): number | null {
+        return difficulty === "brutal" ? MAX_HARVESTERS_TOTAL : 10;
     }
 }

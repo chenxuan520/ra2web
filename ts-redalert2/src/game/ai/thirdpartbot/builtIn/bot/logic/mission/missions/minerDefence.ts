@@ -2,6 +2,7 @@ import { estimatedCombatWeapons } from "../../common/observedUnit";
 import { ObjectType, OrderType, UnitData, Vector2 } from "../../../../game-api";
 import { SupabotContext } from "../../common/context";
 import { getInfantryCrushPoint } from "./squads/infantryCrushing";
+import { isEcoOnly } from "../../common/pressure";
 
 /** Briefly use one nearby armored miner to break an infantry rush, then resume income. */
 export class MinerDefence {
@@ -28,7 +29,7 @@ export class MinerDefence {
             this.active = undefined;
             this.nextDefenceAt = tick + 300;
         }
-        if (!this.active && tick >= this.nextDefenceAt && approaching.length >= 6 && !armorThreat) {
+        if (!isEcoOnly(context) && !this.active && tick >= this.nextDefenceAt && approaching.length >= 6 && !armorThreat) {
             miner = miners.filter(unit => unit.hitPoints >= unit.maxHitPoints * 0.8 &&
                 home.distanceTo(new Vector2(unit.tile.rx, unit.tile.ry)) <= 28).sort((a, b) => a.id - b.id)[0];
             if (miner) this.active = { id: miner.id, until: tick + 300, lastOrder: -Infinity };

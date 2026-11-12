@@ -30,6 +30,7 @@ export interface AiBuildingRules {
         playerData: PlayerData,
         technoRules: TechnoRules,
         threatCache: GlobalThreat | null,
+        difficulty?: "normal" | "brutal",
     ): number;
 
     getPlacementLocation(
@@ -44,6 +45,7 @@ export interface AiBuildingRules {
         playerData: PlayerData,
         technoRules: TechnoRules,
         threatCache: GlobalThreat | null,
+        difficulty?: "normal" | "brutal",
     ): number | null;
 }
 

@@ -1,0 +1,247 @@
+import { describe, expect, mock, test } from "bun:test";
+import { ApiEventType, ObjectType, QueueStatus, QueueType, Vector2 } from "../../game/ai/thirdpartbot/builtIn/game-api";
+import { Harvester, desiredMiners, patchCapacity } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/harvester";
+import { QueueController, QUEUES } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/queueController";
+import { getEconomyBuildingPriority } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/economyPlan";
+import { isPressured, observePressureEvent, readPressure, setPressureWatchPost } from "../../game/ai/thirdpartbot/builtIn/bot/logic/common/pressure";
+import { BRUTAL_PARAMS } from "../../game/ai/thirdpartbot/builtIn/bot/strategy/brutalParams";
+import { DefaultStrategy } from "../../game/ai/thirdpartbot/builtIn/bot/strategy/defaultStrategy";
+import { MissionController } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missionController";
+
+function fixture(miners = 3, core = 2, country = "Russians") {
+    let tick = 100;
+    let nextId = 1;
+    const player: any = { name: "bot", startLocation: new Vector2(), country: { name: country },
+        credits: 5000, power: { total: 200, drain: 0 }, isAi: true };
+    const units: any[] = [], enemies: any[] = [];
+    const minerName = country === "Russians" ? "HARV" : "CMIN";
+    function own(name: string, rx = 0, ry = 0, extra = {}) {
+        const rules = { name, type: ["HARV", "CMIN", "HTNK", "MTNK"].includes(name) ? ObjectType.Vehicle : ObjectType.Building,
+            harvester: ["HARV", "CMIN"].includes(name), refinery: ["GAREFN", "NAREFN"].includes(name),
+            weaponsFactory: ["GAWEAP", "NAWEAP"].includes(name), ...extra };
+        const unit = { id: nextId++, owner: player.name, name, type: rules.type, rules,
+            tile: { rx, ry }, foundation: { width: 1, height: 1 }, hitPoints: 1000, maxHitPoints: 1000, isIdle: true };
+        units.push(unit);
+        return unit;
+    }
+    own("NACNST", 0, 0, { constructionYard: true, baseNormal: true });
+    own("NAREFN", 5); own("NAREFN", 25); own("NAWEAP");
+    for (let i = 0; i < miners; i++) own(minerName, 5);
+    for (let i = 0; i < core; i++) own(country === "Russians" ? "HTNK" : "MTNK");
+    const resources = [5, 25].map(rx => ({ tile: { rx, ry: 0 }, ore: 800, gems: 0, spawnsOre: false }));
+    const options = new Map(QUEUES.map(queue => [queue, [] as any[]]));
+    options.set(QueueType.Vehicles, [
+        { name: minerName, harvester: true, cost: 1400, type: ObjectType.Vehicle },
+        { name: country === "Russians" ? "HTNK" : "MTNK", cost: 900, type: ObjectType.Vehicle },
+        { name: "HTK", cost: 500, type: ObjectType.Vehicle },
+    ]);
+    const queues = new Map(QUEUES.map(type => [type, { type, status: QueueStatus.Idle, items: [] as any[], size: 0 }]));
+    const actions = { queueForProduction: mock(() => {}), unqueueFromProduction: mock(() => {}),
+        pauseProduction: mock(() => {}), resumeProduction: mock(() => {}), toggleRepairWrench: mock(() => {}),
+        orderUnits: mock(() => {}), sellBuilding: mock(() => {}) };
+    const production: any = { getAvailableObjects: (queue?: QueueType) => queue === undefined ? [...options.values()].flat() : options.get(queue)!,
+        getQueueData: (queue: QueueType) => queues.get(queue)! };
+    const game: any = {
+        getCurrentTick: () => tick, getPlayerData: () => player,
+        getVisibleUnits: (_name: string, relation: string, predicate = (_rules: any) => true) =>
+            (relation === "self" ? units : enemies).filter(unit => predicate(unit.rules)).map(unit => unit.id),
+        getUnitData: (id: number) => [...units, ...enemies].find(unit => unit.id === id),
+        getGameObjectData: (id: number) => game.getUnitData(id),
+        getGeneralRules: () => ({ baseUnit: ["AMCV", "SMCV"] }),
+        mapApi: { getAllTilesResourceData: () => resources, getResourceCreditValues: () => ({ ore: 10, gems: 20 }),
+            isVisibleTile: () => true, getStartingLocations: () => [player.startLocation, new Vector2(200, 0)],
+            getTileResourceData: () => ({ ore: 0, gems: 0 }), findPath: (_speed: any, _start: any, end: any) => [end] },
+    };
+    const context: any = { game, player: { name: player.name, production, actions }, difficulty: "brutal",
+        matchAwareness: { getThreatCache: () => null, getNextExpansionCandidates: () => [] } };
+    const controller = new QueueController(), requests = new Map<string, any>();
+    function enemy(id: number, rx: number, type = ObjectType.Vehicle, extra = {}) {
+        const unit = { id, owner: "enemy", type, tile: { rx, ry: 0 }, rules: {
+            name: type === ObjectType.Infantry ? "E1" : "MTNK", type, isSelectableCombatant: true, ...extra } };
+        enemies.push(unit);
+        return unit;
+    }
+    return { game, player, context, units, enemies, resources, queues, options, actions, requests, own, enemy,
+        at(value: number) { tick = value; },
+        run() { controller.onAiUpdate(context, null, requests, () => {}); },
+        priority() { this.run(); return Number(controller.getGlobalDebugText(game, production).match(new RegExp(`${minerName}\\(([^)]+)\\)`))?.[1] ?? 0); },
+    };
+}
+
+function onlyEconomy(run: () => void) {
+    const previous = BRUTAL_PARAMS.economy.ecoOnly;
+    BRUTAL_PARAMS.economy.ecoOnly = 1;
+    try { run(); } finally { BRUTAL_PARAMS.economy.ecoOnly = previous; }
+}
+
+describe("brutal miner capacity and production table", () => {
+    test.each([[2999, 1], [3000, 2], [5999, 2], [6000, 3]])("value %i has ordinary capacity %i", (value, expected) => {
+        expect(patchCapacity({ value } as any, false)).toBe(expected);
+    });
+    test("chrono miners get four only in the richest band", () => {
+        expect(patchCapacity({ value: 6000 } as any, true)).toBe(4);
+        expect(patchCapacity({ value: 5999 } as any, true)).toBe(2);
+    });
+    test("sums only visible served patches, floors a refinery at two and caps at twelve", () => {
+        const f = fixture();
+        expect(desiredMiners(f.game, f.player)).toBe(6);
+        f.resources.push({ tile: { rx: 100, ry: 0 }, ore: 800, gems: 0, spawnsOre: false });
+        f.game.mapApi.isVisibleTile = (tile: any) => tile.rx !== 100;
+        expect(desiredMiners(f.game, f.player)).toBe(6);
+        for (const rx of [45, 65, 85]) {
+            f.own("NAREFN", rx); f.resources.push({ tile: { rx, ry: 0 }, ore: 800, gems: 0, spawnsOre: false });
+        }
+        f.at(190);
+        expect(desiredMiners(f.game, f.player)).toBe(12);
+        f.resources.length = 0; f.at(280);
+        expect(desiredMiners(f.game, f.player)).toBe(2);
+        f.units.splice(0, f.units.length);
+        expect(desiredMiners(f.game, f.player)).toBe(0);
+    });
+    test("normal priority and ten-miner cap do not inspect patches", () => {
+        const f = fixture(3);
+        f.game.mapApi.getAllTilesResourceData = () => { throw new Error("normal must not read patches"); };
+        const logic = new Harvester(15, 4, 2);
+        expect(logic.getPriority(f.game, f.player, {} as any, null, "normal")).toBe(18.75);
+        expect(logic.getMaxCount(f.game, f.player, {} as any, null, "normal")).toBe(10);
+        expect(logic.getMaxCount(f.game, f.player, {} as any, null, "brutal")).toBe(12);
+    });
+    test.each([[0, 0, 120], [1, 0, 110], [2, 0, 110], [3, 1, 0], [3, 2, 78], [4, 3, 0], [4, 4, 78], [6, 20, 0]])(
+        "without pressure miners=%i core=%i gives priority %i", (miners, core, expected) => {
+            expect(fixture(miners, core).priority()).toBe(expected);
+        });
+    test.each([[1, 1, 0], [1, 2, 90], [2, 3, 0], [2, 4, 78], [3, 2, 78]])(
+        "early pressure miners=%i core=%i gives priority %i", (miners, core, expected) => {
+            const f = fixture(miners, core); f.enemy(100, 40); f.enemy(101, 40);
+            expect(f.priority()).toBe(expected);
+        });
+    test("direct base combat blocks later miners but not the specified pressured second/third miner rows", () => {
+        const f = fixture(3, 20); f.enemy(100, 22);
+        expect(f.priority()).toBe(0);
+        const third = fixture(2, 4); third.enemy(100, 22);
+        expect(third.priority()).toBe(78);
+        const allied = fixture(1, 1, "Americans"); allied.enemy(100, 22);
+        expect(allied.priority()).toBe(90);
+    });
+    test.each([1, 2, 3])("a requested/active supplied refinery suppresses factory miners only from three (miners=%i)", miners => {
+        for (const active of [false, true]) {
+            const f = fixture(miners, 4);
+            const refinery = { name: "NAREFN", refinery: true, freeUnit: "HARV", cost: 2000, type: ObjectType.Building };
+            f.options.set(QueueType.Structures, [refinery]); f.requests.set("NAREFN", { priority: 50, specificLocation: null });
+            if (active) Object.assign(f.queues.get(QueueType.Structures)!, { status: QueueStatus.Active, items: [{ rules: refinery, quantity: 1 }] });
+            expect(f.priority()).toBe(miners < 3 ? 110 : 0);
+        }
+    });
+    test("115 flak response still outranks the 110 income opening", () => {
+        const f = fixture(1, 0); f.enemy(100, 70, ObjectType.Aircraft);
+        f.run();
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTK", ObjectType.Vehicle, 1);
+    });
+});
+
+describe("visible pressure and own event history", () => {
+    test("base threat is current, excludes miners, and includes distance twenty-two", () => {
+        const f = fixture();
+        const enemy = f.enemy(100, 22, ObjectType.Vehicle, { harvester: true });
+        expect(isPressured(f.context)).toBe(false);
+        enemy.rules.harvester = false; f.at(102);
+        expect(readPressure(f.context).baseUnderSiege).toBe(true);
+        enemy.tile.rx = 46; f.at(104);
+        expect(isPressured(f.context)).toBe(false);
+    });
+    test.each([ObjectType.Vehicle, ObjectType.Infantry])("early %i signal lasts 2700 ticks and retains real mean position", type => {
+        const f = fixture();
+        const count = type === ObjectType.Vehicle ? 2 : 4;
+        for (let i = 0; i < count; i++) f.enemy(100 + i, 40 + i, type);
+        expect(readPressure(f.context)).toMatchObject({ pressured: true, earlyPressure: true,
+            earlyPressureUntil: 2800, earlyPressurePosition: { rx: 40 + (count - 1) / 2, ry: 0 } });
+        f.enemies.length = 0; f.at(2799);
+        expect(isPressured(f.context)).toBe(true);
+        f.at(2800);
+        expect(readPressure(f.context).earlyPressure).toBe(false);
+        expect(isPressured(f.context)).toBe(false);
+    });
+    test("dogs, engineers, hidden enemies and signals first seen at 5400 cannot trigger early pressure", () => {
+        const f = fixture();
+        for (let i = 0; i < 4; i++) f.enemy(100 + i, 40, ObjectType.Infantry, { name: i < 2 ? "DOG" : "ENGINEER", engineer: i >= 2 });
+        expect(isPressured(f.context)).toBe(false);
+        f.enemies.length = 0; f.at(5400); f.enemy(200, 40); f.enemy(201, 40);
+        expect(readPressure(f.context).earlyPressure).toBe(false);
+    });
+    test.each(["NAREFN", "HARV"])("a real own %s destroy records loss for 900 ticks, not a disappearance", name => {
+        const f = fixture();
+        const unit = f.units.find(unit => unit.name === name)!;
+        readPressure(f.context);
+        observePressureEvent(f.game, f.player.name, { type: ApiEventType.ObjectDestroy, target: unit.id });
+        expect(readPressure(f.context)).toMatchObject({ pressured: true, lastEconomicLossTick: 100 });
+        f.at(999); expect(isPressured(f.context)).toBe(true);
+        f.at(1000); expect(isPressured(f.context)).toBe(false);
+    });
+    test("voluntary sales, packing and invisible enemy destroys are not economic losses", () => {
+        const f = fixture(); readPressure(f.context);
+        const refinery = f.units.find(unit => unit.name === "NAREFN")!;
+        observePressureEvent(f.game, f.player.name, { type: ApiEventType.ObjectUnspawn, target: refinery.id });
+        f.units.splice(f.units.indexOf(refinery), 1);
+        observePressureEvent(f.game, f.player.name, { type: ApiEventType.ObjectDestroy, target: 999 });
+        f.at(102); expect(isPressured(f.context)).toBe(false);
+    });
+    test("P1 is a public optional trigger supplied by the later watch-post task", () => {
+        const f = fixture();
+        f.enemy(100, 80); f.enemy(101, 80);
+        expect(isPressured(f.context)).toBe(false);
+        setPressureWatchPost(f.game, f.player.name, { rx: 80, ry: 0 }); f.at(102);
+        expect(readPressure(f.context).earlyPressure).toBe(true);
+    });
+    test("enemy miner peak and passive history expire by simulation tick, with independent games", () => {
+        const f = fixture();
+        for (let i = 0; i < 4; i++) f.enemy(100 + i, 80, ObjectType.Vehicle, { harvester: true });
+        expect(readPressure(f.context).enemyMinersSeen).toBe(4);
+        f.enemies.length = 0; f.at(2799); expect(readPressure(f.context).enemyMinersSeen).toBe(4);
+        f.at(2800); expect(readPressure(f.context).enemyMinersSeen).toBe(0);
+        f.at(5400); expect(readPressure(f.context).passiveEnemy).toBe(true);
+        f.enemy(200, 60); f.at(5402); expect(readPressure(f.context).passiveEnemy).toBe(false);
+        f.enemies.length = 0; f.at(8102); expect(readPressure(f.context).passiveEnemy).toBe(true);
+        expect(isPressured(fixture().context)).toBe(false);
+        f.at(0); expect(readPressure(f.context).enemyMinersSeen).toBe(0);
+    });
+});
+
+describe("factory income ratio and real eco-only mode", () => {
+    test.each([[4, 0], [5, 35], [6, 35]])("second factory with %i miners gives %i", (miners, expected) => {
+        const f = fixture(miners, 5);
+        expect(getEconomyBuildingPriority(f.game, f.player, { name: "NAWEAP" } as any, false, f.context)).toBe(expected);
+    });
+    test("pressure permits a cash-funded four-miner second factory at exactly 3000", () => {
+        const f = fixture(4, 5); f.enemy(100, 22); f.player.credits = 2999;
+        expect(getEconomyBuildingPriority(f.game, f.player, { name: "NAWEAP" } as any, false, f.context)).toBe(0);
+        f.player.credits = 3000; f.at(102);
+        expect(getEconomyBuildingPriority(f.game, f.player, { name: "NAWEAP" } as any, false, f.context)).toBe(35);
+    });
+    test("the third factory requires six miners and still caps at three factories", () => {
+        for (const miners of [5, 6]) {
+            const f = fixture(miners, 10); f.own("NAWEAP");
+            expect(getEconomyBuildingPriority(f.game, f.player, { name: "NAWEAP" } as any, false, f.context)).toBe(miners === 6 ? 35 : 0);
+            f.own("NAWEAP"); f.at(102);
+            expect(getEconomyBuildingPriority(f.game, f.player, { name: "NAWEAP" } as any, false, f.context)).toBe(0);
+        }
+    });
+    test("ecoOnly removes actual military requests and missions without fabricating core tanks", () => onlyEconomy(() => {
+        const f = fixture(3, 0);
+        f.options.set(QueueType.Armory, [{ name: "NALASR", type: ObjectType.Building, cost: 500 }]);
+        f.options.set(QueueType.Structures, [{ name: "NATECH", type: ObjectType.Building, cost: 2000 },
+            { name: "NARADR", type: ObjectType.Building, cost: 1000 }]);
+        for (const name of ["HTNK", "HTK", "NALASR", "NATECH", "NARADR"]) f.requests.set(name, { priority: 150, specificLocation: null });
+        expect(f.priority()).toBe(78);
+        expect(f.actions.queueForProduction.mock.calls.every(call => call[1] === "HARV")).toBe(true);
+        f.enemy(100, 22); f.at(102); expect(isPressured(f.context)).toBe(false);
+        expect(readPressure(f.context).baseUnderSiege).toBe(true); // real observation, not forged away
+        expect(f.units.some(unit => unit.name === "HTNK")).toBe(false);
+        const missions = new MissionController(() => {});
+        new DefaultStrategy().onAiUpdate(f.context, missions, () => {});
+        expect(missions.getMissions()).toEqual([]);
+        expect(getEconomyBuildingPriority(f.game, f.player, { name: "NARADR" } as any, true, f.context)).toBe(0);
+        expect(getEconomyBuildingPriority(f.game, f.player, { name: "NALASR" } as any, true, f.context)).toBe(0);
+        f.context.difficulty = "normal";
+        expect(isPressured(f.context)).toBe(true);
+    }));
+});

@@ -21,6 +21,7 @@ import { DebugLogger } from "../logic/common/utils";
 import { Compositions, getValidCompositions, SideComposition } from "./compositionUtils";
 import { readStrategicSituation, selectNationalComposition } from "./nationalComposition";
 import { getOpeningAirBudget } from "./openingAirBudget";
+import { isEcoOnly } from "../logic/common/pressure";
 
 // These could be loaded from ai.ini
 export const DEFAULT_COMPOSITIONS: Compositions = {
@@ -117,6 +118,11 @@ export class DefaultStrategy implements Strategy {
     private radiationTransport = new RadiationTransportFactory();
 
     onAiUpdate(context: SupabotContext, missionController: MissionController, logger: DebugLogger) {
+        if (isEcoOnly(context)) {
+            this.minerDefence.onAiUpdate(context);
+            this.expansionFactory.maybeCreateMissions(context, missionController, logger);
+            return this;
+        }
         this.paraDropSupport.onAiUpdate(context);
         this.minerDefence.onAiUpdate(context);
         ensureBaseReserve(context, missionController, logger);

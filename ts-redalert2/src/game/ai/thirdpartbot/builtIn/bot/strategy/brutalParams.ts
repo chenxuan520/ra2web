@@ -1,5 +1,6 @@
 export const BRUTAL_PARAMS = {
     economy: {
+        ecoOnly: 0,
         firstRefineryPriority: 50,
         barracksPriority: 55,
         secondRefineryIntruderRadius: 25,
@@ -38,10 +39,10 @@ export const BRUTAL_PARAMS = {
         firstFactoryPrioritySoviet: 60,
         firstFactoryPriorityAllied: 30,
         secondFactoryMinRefineries: 2,
-        secondFactoryMinHarvesters: 3,
+        secondFactoryMinHarvesters: 5,
         secondFactoryMinCredits: 800,
         secondFactoryMinArmor: 5,
-        secondFactoryHarvesterOverride: 4,
+        secondFactoryHarvesterOverride: 6,
         extraFactoryPriority: 35,
         maxFactories: 3,
     },

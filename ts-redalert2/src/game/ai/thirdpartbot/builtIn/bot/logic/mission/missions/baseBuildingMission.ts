@@ -38,7 +38,7 @@ export class BaseBuildingMission extends Mission {
         const optionWithPriority = options.map((option) => {
             return {
                 option,
-                priority: this.getPriorityForBuildingOption(option, game, playerData, threatCache, context.difficulty, committedNames.has(option.name)),
+                priority: this.getPriorityForBuildingOption(option, game, playerData, threatCache, context.difficulty, committedNames.has(option.name), context),
             };
         });
 
@@ -93,9 +93,10 @@ export class BaseBuildingMission extends Mission {
         threatCache: GlobalThreat | null,
         difficulty?: "normal" | "brutal",
         committed = false,
+        context?: MissionContext,
     ) {
         if (difficulty === "brutal") {
-            const economyPriority = getEconomyBuildingPriority(game, playerStatus, option, committed);
+            const economyPriority = getEconomyBuildingPriority(game, playerStatus, option, committed, context);
             if (economyPriority !== undefined) return economyPriority;
             const priority = getStrategicBuildingPriority(game, playerStatus, option, threatCache, committed);
             if (priority !== undefined) return priority;

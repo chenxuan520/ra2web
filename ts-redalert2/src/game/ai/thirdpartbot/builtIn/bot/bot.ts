@@ -9,6 +9,7 @@ import { SupabotContext } from "./logic/common/context";
 import { Strategy } from "./strategy/strategy";
 import { DefaultStrategy } from "./strategy/defaultStrategy";
 import { BaseBuildingMission } from "./logic/mission/missions/baseBuildingMission";
+import { observePressureEvent, readPressure } from "./logic/common/pressure";
 
 const DEBUG_STATE_UPDATE_INTERVAL_SECONDS = 6;
 
@@ -123,6 +124,7 @@ export class BuiltInBot extends Bot {
                 matchAwareness: this.matchAwareness,
                 difficulty: this.difficulty,
             };
+            if (this.difficulty === "brutal") readPressure(fullContext);
 
             // hacky resign condition
             const armyUnits = game.getVisibleUnits(this.name, "self", (r) => r.isSelectableCombatant);
@@ -253,6 +255,7 @@ export class BuiltInBot extends Bot {
     }
 
     override onGameEvent(ev: ApiEvent) {
+        if (this.difficulty === "brutal") observePressureEvent(this.gameApi, this.name, ev);
         switch (ev.type) {
             case ApiEventType.ObjectDestroy: {
                 // Add to the stalemate detection.

@@ -2,11 +2,19 @@ import { GameApi, ObjectType, PlayerData, TechnoRules, UnitData } from "../../..
 import { readStrategicSituation } from "../../strategy/nationalComposition";
 import { getOpeningAirBudget } from "../../strategy/openingAirBudget";
 import { BRUTAL_PARAMS } from "../../strategy/brutalParams";
+import { SupabotContext } from "../common/context";
+import { isPressured } from "../common/pressure";
 
 const lastDefenseBuiltTick = new WeakMap<GameApi, Map<string, number>>();
 
+export function isCivilianEconomy(rules: TechnoRules): boolean {
+    return rules.harvester || rules.refinery || rules.weaponsFactory || rules.constructionYard ||
+        ["GAPOWR", "NAPOWR", "NANRCT", "GAPILE", "NAHAND", "GAWEAP", "NAWEAP"].includes(rules.name);
+}
+
 /** Fund income before duplicating production capacity that the miners cannot supply. */
-export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, rules: TechnoRules, committed: boolean): number | undefined {
+export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, rules: TechnoRules, committed: boolean, context?: SupabotContext): number | undefined {
+    if (BRUTAL_PARAMS.economy.ecoOnly === 1 && !isCivilianEconomy(rules)) return 0;
     const s = readStrategicSituation(game, player);
     const refineries = (s.own.GAREFN ?? 0) + (s.own.NAREFN ?? 0);
     const factories = (s.own.GAWEAP ?? 0) + (s.own.NAWEAP ?? 0);
@@ -98,9 +106,11 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
         }
         if (factories === 1) {
             const hasIncomeForDual = (refineries >= BRUTAL_PARAMS.economy.secondFactoryMinRefineries && s.harvesters >= BRUTAL_PARAMS.economy.secondFactoryMinHarvesters && (s.credits >= BRUTAL_PARAMS.economy.secondFactoryMinCredits || armor >= BRUTAL_PARAMS.economy.secondFactoryMinArmor)) || s.harvesters >= BRUTAL_PARAMS.economy.secondFactoryHarvesterOverride;
-            return (committed || hasIncomeForDual) ? BRUTAL_PARAMS.economy.extraFactoryPriority : 0;
+            const pressuredExpansion = s.harvesters >= 4 && s.credits >= 3000 &&
+                isPressured(context ?? { game, player: { name: player.name }, difficulty: "brutal" });
+            return (committed || hasIncomeForDual || pressuredExpansion) ? BRUTAL_PARAMS.economy.extraFactoryPriority : 0;
         }
-        return factories < BRUTAL_PARAMS.economy.maxFactories && s.harvesters >= 4 + (factories - 1) * 2 ? BRUTAL_PARAMS.economy.extraFactoryPriority : 0;
+        return factories < BRUTAL_PARAMS.economy.maxFactories && s.harvesters >= 4 + factories ? BRUTAL_PARAMS.economy.extraFactoryPriority : 0;
     }
     return undefined;
 }

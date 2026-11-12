@@ -4,10 +4,10 @@ import { ObjectType, Vector2 } from "../../game/ai/thirdpartbot/builtIn/game-api
 
 function scenario(names: string[], credits = 5000, distance = 120, country = "Arabs") {
     const owned = names.map(name => ({ name, harvester: ["HARV", "CMIN"].includes(name) }));
-    const game: any = { getCurrentTick: () => 6000,
+    const game: any = { getCurrentTick: () => 6000, getPlayerData: () => player,
         mapApi: { getStartingLocations: () => [{ distanceTo: () => distance }] },
         getVisibleUnits: (_: string, relation: string, filter: any) => relation === "self" ? owned.filter(filter).map((_, i) => i) : [] };
-    const player: any = { name: "bot", country: { name: country }, credits };
+    const player: any = { name: "bot", country: { name: country }, credits, startLocation: new Vector2() };
     return (name: string, extra = {}, committed = false) => getEconomyBuildingPriority(game, player, { name, ...extra } as any, committed);
 }
 
@@ -50,7 +50,7 @@ test("Soviet tech and duplicate factories require miners and an existing armor c
     expect(established("NARADR")).toBeGreaterThan(0);
     expect(established("NATECH")).toBeGreaterThan(0);
     expect(established("NAWEAP")).toBe(0);
-    const rich = scenario(["NAREFN", "NAWEAP", "HARV", "HARV", "HARV", "HARV", "HTNK", "HTNK"]);
+    const rich = scenario(["NAREFN", "NAWEAP", "HARV", "HARV", "HARV", "HARV", "HARV", "HARV", "HTNK", "HTNK"]);
     expect(rich("NAWEAP")).toBeGreaterThan(0);
 });
 

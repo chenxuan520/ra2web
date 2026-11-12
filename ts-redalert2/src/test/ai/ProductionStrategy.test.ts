@@ -1,6 +1,6 @@
 import { describe, expect, mock, test } from "bun:test";
 import { QueueController, QUEUES } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/queueController";
-import { QueueStatus, QueueType, ObjectType, MovementZone } from "../../game/ai/thirdpartbot/builtIn/game-api";
+import { QueueStatus, QueueType, ObjectType, MovementZone, Vector2 } from "../../game/ai/thirdpartbot/builtIn/game-api";
 import { DEFAULT_COMPOSITIONS } from "../../game/ai/thirdpartbot/builtIn/bot/strategy/defaultStrategy";
 import { selectAdaptiveComposition } from "../../game/ai/thirdpartbot/builtIn/bot/strategy/adaptiveComposition";
 import { GlobalThreat } from "../../game/ai/thirdpartbot/builtIn/bot/logic/threat/threat";
@@ -27,9 +27,14 @@ function productionScenario(credits = 100, difficulty?: "normal" | "brutal") {
             production: { getAvailableObjects: (type: number) => available.get(type) ?? [], getQueueData: (type: number) => queues.get(type)! },
         },
         game: {
-            getPlayerData: () => ({ name: "bot", credits, country: { name: country } }), getCurrentTick: () => tick,
-            getVisibleUnits: (_name: string, relation: string, predicate: (rules: any) => boolean) =>
-                (relation === "enemy" ? hostiles : owned).filter(predicate).map((_, i) => i),
+            getPlayerData: () => ({ name: "bot", credits, country: { name: country }, startLocation: new Vector2() }), getCurrentTick: () => tick,
+            getVisibleUnits: (_name: string, relation: string, predicate = (_rules: any) => true) =>
+                (relation === "enemy" ? hostiles : owned).flatMap((rules, i) => predicate(rules) ? [i + (relation === "enemy" ? 1000 : 0)] : []),
+            getUnitData: (id: number) => ({ id, rules: id >= 1000 ? hostiles[id - 1000] : owned[id],
+                tile: { rx: id >= 1000 ? 60 : 5, ry: 0 }, hitPoints: 1000, maxHitPoints: 1000 }),
+            getGameObjectData: (id: number) => ({ id, rules: id >= 1000 ? hostiles[id - 1000] : owned[id], tile: { rx: id >= 1000 ? 60 : 5, ry: 0 } }),
+            mapApi: { getAllTilesResourceData: () => [{ tile: { rx: 5, ry: 0 }, ore: 800, gems: 0 }],
+                isVisibleTile: () => true, getResourceCreditValues: () => ({ ore: 10, gems: 20 }) },
         },
     };
     function request(type: number, name: string, priority: number, cost: number, status = QueueStatus.Idle) {
@@ -141,9 +146,9 @@ describe("AI production economy", () => {
         expect(s.requests.has("CMIN")).toBe(false);
     });
 
-    test("a planned refinery's supplied miner leaves the idle vehicle queue available for armor", () => {
+    test("a planned refinery's supplied miner leaves armor available once three miners exist", () => {
         const s = productionScenario(3000, "brutal");
-        s.owned.push({ name: "NAREFN", refinery: true }, { name: "HARV", harvester: true }, { name: "HTNK" }, { name: "HTNK" });
+        s.owned.push({ name: "NAREFN", refinery: true }, ...Array.from({ length: 3 }, () => ({ name: "HARV", harvester: true })), { name: "HTNK" }, { name: "HTNK" });
         Object.assign(s.request(QueueType.Structures, "NAREFN", 50, 2000), { refinery: true, freeUnit: "HARV" });
         s.request(QueueType.Vehicles, "HTNK", 75, 900);
         s.available.get(QueueType.Vehicles)!.push({ name: "HARV", cost: 1400, type: ObjectType.Vehicle, harvester: true });
@@ -152,10 +157,10 @@ describe("AI production economy", () => {
         expect(s.actions.queueForProduction).not.toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
     });
 
-    test("the allied first tank is followed by armor while the second refinery supplies its miner", () => {
+    test("allied armor can continue with three miners while a refinery supplies another miner", () => {
         const s = productionScenario(3000, "brutal");
         s.country("Americans");
-        s.owned.push({ name: "GAREFN", refinery: true }, { name: "CMIN", harvester: true }, { name: "MTNK" });
+        s.owned.push({ name: "GAREFN", refinery: true }, ...Array.from({ length: 3 }, () => ({ name: "CMIN", harvester: true })), { name: "MTNK" });
         Object.assign(s.request(QueueType.Structures, "GAREFN", 50, 2000), { refinery: true, freeUnit: "CMIN" });
         s.request(QueueType.Vehicles, "MTNK", 75, 700);
         s.available.get(QueueType.Vehicles)!.push({ name: "CMIN", cost: 1400, type: ObjectType.Vehicle, harvester: true });
@@ -163,9 +168,9 @@ describe("AI production economy", () => {
         expect(s.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "MTNK", ObjectType.Vehicle, 1);
     });
 
-    test("an active refinery with a supplied miner avoids buying the same economic unit twice", () => {
+    test("an active refinery with a supplied miner avoids a duplicate once three miners exist", () => {
         const s = productionScenario(3000, "brutal");
-        s.owned.push({ name: "NAREFN", refinery: true }, { name: "HARV", harvester: true }, { name: "HTNK" }, { name: "HTNK" });
+        s.owned.push({ name: "NAREFN", refinery: true }, ...Array.from({ length: 3 }, () => ({ name: "HARV", harvester: true })), { name: "HTNK" }, { name: "HTNK" });
         Object.assign(s.request(QueueType.Structures, "NAREFN", 50, 2000, QueueStatus.Active), { refinery: true, freeUnit: "HARV" });
         Object.assign(s.queues.get(QueueType.Structures)!.items[0].rules, { refinery: true, freeUnit: "HARV" });
         s.request(QueueType.Vehicles, "HTNK", 75, 900);
