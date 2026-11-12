@@ -17,6 +17,7 @@ import { getDistanceBetweenTileAndPoint } from "../../map/map";
 import { PrioritisedScoutTarget } from "../../common/scout";
 import { MissionContext, SupabotContext } from "../../common/context";
 import { getKnownEnemyDirections } from "../../common/knownEnemyDirections";
+import { DogOrders, WatchPostMissions, getPublicEnemyStart, livingMissionDogs, preferredDog, selectWatchPost } from "./watchPostMission";
 
 const SCOUT_MOVE_COOLDOWN_TICKS = 30;
 
@@ -173,10 +174,106 @@ export class ScoutingMission extends Mission {
     }
 }
 
+/** Brutal's two paid scouts share a lifetime budget; normal's mission above is unchanged. */
+export class OpeningScoutingMission extends Mission {
+    private initialScoutIds: number[] = [];
+    private priority = 85;
+    private firstTargetComplete = false;
+    private queueComplete = false;
+    private queueTarget: PrioritisedScoutTarget | null = null;
+    private queueTargetRefreshedAt = 0;
+    private queueMinDistance = Infinity;
+    private orders = new DogOrders(SCOUT_MOVE_COOLDOWN_TICKS);
+
+    constructor(logger: DebugLogger, private handoff: (context: MissionContext, mission: Mission) => void) {
+        super("globalScout", logger);
+    }
+
+    override addUnit(id: number) {
+        if (this.getUnitIds().includes(id)) return;
+        super.addUnit(id);
+        if (!this.initialScoutIds.includes(id) && this.initialScoutIds.length < 2) this.initialScoutIds.push(id);
+    }
+
+    getTotalUnitsReceived() { return this.initialScoutIds.length; }
+    getPriority() { return this.priority; }
+    getGlobalDebugText() { return "two opening scouts"; }
+    isUnitsLocked() { return true; }
+
+    private finish(context: MissionContext) {
+        this.handoff(context, this);
+        return disbandMission();
+    }
+
+    _onAiUpdate(context: MissionContext): MissionAction {
+        if (context.difficulty !== "brutal") return noop();
+        const { game, player, matchAwareness } = context, tick = game.getCurrentTick();
+        this.priority = game.getVisibleUnits(player.name, "self", rules => rules.weaponsFactory).length ? 50 : 85;
+        const scouts = livingMissionDogs(context, this);
+        const excess = scouts.filter(scout => !this.initialScoutIds.includes(scout.id)).map(scout => scout.id);
+        if (excess.length) return releaseUnits(excess);
+        if (tick >= 3600 || (matchAwareness.getSectorCache().getOverallVisibility() || 0) > 0.9) return this.finish(context);
+
+        const enemyStart = getPublicEnemyStart(game, game.getPlayerData(player.name));
+        const first = scouts.find(scout => scout.id === this.initialScoutIds[0]);
+        const second = scouts.find(scout => scout.id === this.initialScoutIds[1]);
+        if (!enemyStart || this.initialScoutIds.length > 0 && !first) this.firstTargetComplete = true;
+        if (first && enemyStart && !this.firstTargetComplete) {
+            const tile = game.mapApi.getTile(enemyStart.x, enemyStart.y);
+            if (tile && game.mapApi.isVisibleTile(tile, player.name)) this.firstTargetComplete = true;
+            else this.orders.move(context, first, { rx: enemyStart.x, ry: enemyStart.y });
+        }
+        if (first && this.firstTargetComplete) {
+            // The completed first scout waits safely at the public midpoint,
+            // still locked here until the actual two-slot ownership handoff.
+            const post = selectWatchPost(context, 1);
+            if (post) this.orders.move(context, first, post); else this.orders.stop(context, first);
+        }
+
+        if (second && !this.queueComplete) {
+            if (this.queueTarget) {
+                const tile = game.mapApi.getTile(this.queueTarget.target.x, this.queueTarget.target.y);
+                const currentDistance = getDistanceBetweenTileAndPoint(second.tile, this.queueTarget.target);
+                if (currentDistance < this.queueMinDistance) {
+                    this.queueMinDistance = currentDistance;
+                    this.queueTargetRefreshedAt = tick;
+                }
+                if (!tile || game.mapApi.isVisibleTile(tile, player.name) ||
+                    !this.queueTarget.permanent && tick > this.queueTargetRefreshedAt + MAX_TICKS_PER_TARGET) this.queueTarget = null;
+            }
+            if (!this.queueTarget) {
+                let next = matchAwareness.getScoutingManager().getNewScoutTarget();
+                // The first dog reserves its public start; do not send both dogs
+                // to that same existing queue entry before other sectors.
+                while (next) {
+                    const tile = game.mapApi.getTile(next.target.x, next.target.y);
+                    if (tile && !game.mapApi.isVisibleTile(tile, player.name) &&
+                        !(enemyStart && next.target.x === enemyStart.x && next.target.y === enemyStart.y)) break;
+                    next = matchAwareness.getScoutingManager().getNewScoutTarget();
+                }
+                this.queueTarget = next ?? null;
+                this.queueTargetRefreshedAt = tick;
+                this.queueMinDistance = Infinity;
+                if (!next) this.queueComplete = true;
+            }
+            if (this.queueTarget) this.orders.move(context, second,
+                { rx: this.queueTarget.target.x, ry: this.queueTarget.target.y }, OrderType.AttackMove);
+        }
+        if (this.initialScoutIds.length >= 2 && !second) this.queueComplete = true;
+        if (this.initialScoutIds.length >= 2 && this.firstTargetComplete && this.queueComplete) return this.finish(context);
+        if (this.initialScoutIds.length < 2) {
+            const name = preferredDog(context);
+            return name ? requestUnits({ [name]: this.priority }) : noop();
+        }
+        return noop();
+    }
+}
+
 const SCOUT_COOLDOWN_TICKS = 300;
 
 export class ScoutingMissionFactory {
     private initialMissionsCreated = false;
+    private dogMissions?: WatchPostMissions;
     constructor(private lastScoutAt: number = -SCOUT_COOLDOWN_TICKS) {}
 
     getName(): string {
@@ -185,6 +282,18 @@ export class ScoutingMissionFactory {
 
     maybeCreateMissions(context: SupabotContext, missionController: MissionController, logger: DebugLogger): void {
         const { game, matchAwareness } = context;
+        if (context.difficulty === "brutal") {
+            this.dogMissions ??= new WatchPostMissions(missionController, logger);
+            this.dogMissions.ensure(context);
+            if (!this.initialMissionsCreated) {
+                const scout = new OpeningScoutingMission(logger, (missionContext, mission) => this.dogMissions!.handoff(missionContext, mission));
+                if (missionController.addMission(scout)) {
+                    this.initialMissionsCreated = true;
+                    this.dogMissions.setOpeningReady(() => scout.getTotalUnitsReceived() >= 2);
+                }
+            }
+            return;
+        }
         if (this.initialMissionsCreated) {
             return;
         }
@@ -194,16 +303,11 @@ export class ScoutingMissionFactory {
         if (!matchAwareness.getScoutingManager().hasScoutTargets()) {
             return;
         }
-        const scoutPriority = context.difficulty === "brutal" ? 85 : 50;
-        const created0 = !!missionController.addMission(new ScoutingMission("globalScout", scoutPriority, logger));
-        let created1 = false;
-        if (context.difficulty === "brutal") {
-            created1 = !!missionController.addMission(new ScoutingMission("globalScout_1", scoutPriority, logger));
-        }
-        if (created0 || created1) {
+        const created0 = !!missionController.addMission(new ScoutingMission("globalScout", 50, logger));
+        if (created0) {
             this.initialMissionsCreated = true;
         }
-        if (!created0 && !created1) {
+        if (!created0) {
             this.lastScoutAt = game.getCurrentTick();
         }
     }
