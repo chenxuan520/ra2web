@@ -155,6 +155,11 @@ describe("parasite repair visible evidence and Dock eligibility", () => {
         f.wound(); expect(f.orders).toEqual([]);
     });
 
+    test("explicitly non-parasiteable vehicles such as DRON never get a false repair intent", () => {
+        const f = fixture(); f.miner.name = f.miner.rules.name = "DRON"; f.miner.rules.parasiteable = false;
+        f.wound();
+        expect(f.orders).toEqual([]); expect(f.repair.isRepairing(f.miner.id)).toBe(false);
+    });
     test("NADEPT is supported with the same actual Dock command", () => {
         const f = fixture(); f.depot.name = f.depot.rules.name = "NADEPT";
         f.wound(); expect(f.orders).toEqual([[[1], OrderType.Dock, 2]]);

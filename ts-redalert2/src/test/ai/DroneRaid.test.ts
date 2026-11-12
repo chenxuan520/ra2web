@@ -187,6 +187,13 @@ describe("two-tank early miner detachment without changing the three-tank rule",
         f.launch(reason === "deadline" ? 9000 : 100);
         expect(f.raids().length).toBe(reason === "ongoing" ? 1 : 0); expect(f.main.getUnitIds()).toHaveLength(5);
     });
+    test("captured former members cannot count toward the three own cores retained at home", () => {
+        const f = earlyFixture(), captured = f.main.getUnitIds().slice(-2);
+        for (const id of captured) { const tank = f.objects.get(id)!; tank.owner = "enemy"; tank.tile.rx = 100; }
+        f.launch();
+        expect(f.raids()).toHaveLength(0);
+        expect(f.main.getUnits(f.game).filter(unit => unit.owner === "bot")).toHaveLength(3);
+    });
     test("one guard is allowed, and the closest visible isolated miner fixes the objective", () => {
         const f = earlyFixture(), nearer = f.add("HARV", "enemy", 60, 30);
         f.add("HTNK", "enemy", 60, 31);

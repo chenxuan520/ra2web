@@ -91,7 +91,8 @@ export class HarassmentMissionFactory {
     private tryEarlyRaid(context: SupabotContext, controller: MissionController, logger: DebugLogger, mainForces: MainForce[]): boolean {
         const tick = context.game.getCurrentTick();
         if (tick >= 9000 || tick - this.lastEarlyLaunch < 1800 || isPressured(context)) return false;
-        const main = mainForces.filter(force => force.isActive()).map(force => ({ force, units: force.getUnits(context.game).filter(isLivingUnit) }));
+        const main = mainForces.filter(force => force.isActive()).map(force => ({ force, units: force.getUnits(context.game)
+            .filter(unit => unit.owner === context.player.name && isLivingUnit(unit)) }));
         const cores = main.flatMap(entry => entry.units).filter(unit => ["MTNK", "HTNK", "MGTK", "APOC", "SREF"].includes(unit.name));
         if (cores.length < 3) return false;
         const center = new Vector2(cores.reduce((sum, unit) => sum + unit.tile.rx, 0) / cores.length,

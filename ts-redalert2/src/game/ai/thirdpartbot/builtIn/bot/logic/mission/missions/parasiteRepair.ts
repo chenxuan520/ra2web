@@ -36,7 +36,7 @@ export class ParasiteRepair {
         this.nextCheck = tick + CHECK_INTERVAL;
         const enemies = game.getVisibleUnits(player.name, "enemy").map(id => game.getUnitData(id))
             .filter((unit): unit is UnitData => !!unit);
-        const vehicles = game.getVisibleUnits(player.name, "self", rules => rules.type === ObjectType.Vehicle)
+        const vehicles = game.getVisibleUnits(player.name, "self", rules => rules.type === ObjectType.Vehicle && rules.parasiteable !== false)
             .map(id => game.getUnitData(id)).filter((unit): unit is UnitData => !!unit && unit.owner === player.name &&
                 (unit.type as any) === ObjectType.Vehicle && unit.zone === ZoneType.Ground && !unit.isWarpedOut &&
                 Number.isFinite(unit.hitPoints) && Number.isFinite(unit.maxHitPoints) && unit.hitPoints > 0 && unit.maxHitPoints > 0)
