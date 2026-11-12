@@ -21,6 +21,7 @@ import { isMinerRefineryProduction, observeRefineryEconomy, recordRefineryOrder,
 import { isCrawlProduction, observeBaseCrawl, planBaseCrawl, recordBaseCrawlOrder } from "./baseCrawl";
 import { isDefenseProduction, planDefense, recordDefenseOrder } from "./defensePlan";
 import { getDronePriority } from "./droneProduction";
+import { findVisiblePatches, isServed, PatchPoint } from "../common/orePatches";
 
 export const QUEUES = [
     QueueType.Structures,
@@ -234,6 +235,17 @@ export class QueueController {
                 requests.set(openingTank, { ...requests.get(openingTank)!, priority: 75 });
             }
         }
+        const refineryQueue = productionApi.getQueueData(QueueType.Structures), pendingRefinery = refineryQueue.items[0]?.rules;
+        let restoringIncome = false;
+        if (context.difficulty === "brutal" && pendingRefinery?.refinery &&
+            (refineryQueue.status === QueueStatus.Active || refineryQueue.status === QueueStatus.OnHold) &&
+            playerData.credits < pendingRefinery.cost && !readPressure(context).pressured) {
+            const sites = game.getVisibleUnits(player.name, "self", rules => rules.refinery)
+                .map(id => game.getGameObjectData(id)?.tile).filter((tile): tile is PatchPoint => !!tile);
+            const patches = findVisiblePatches(game, player.name), situation = readStrategicSituation(game, playerData);
+            restoringIncome = sites.length === 1 && patches.length > 0 && !patches.some(patch => isServed(patch, sites)) &&
+                situation.enemy.aircraft === 0 && situation.enemy.infantry < 8;
+        }
         this.queueStates = QUEUES.map((queueType) => {
             const options = productionApi.getAvailableObjects(queueType).filter(option => !ecoOnly || isCivilianEconomy(option));
             const items = QueueController.getPrioritiesForBuildingOptions(options, requests);
@@ -256,6 +268,14 @@ export class QueueController {
             if (context.difficulty === "brutal" && isCrawlProduction(game, player.name, decision.queue) && readPressure(context).pressured) {
                 if (productionApi.getQueueData(decision.queue).status === QueueStatus.Active) actionsApi.pauseProduction(decision.queue);
                 return;
+            }
+            if (restoringIncome && decision.queue === QueueType.Vehicles && decision.topItem &&
+                ["HTNK", "MTNK"].includes(decision.topItem.unit.name) && decision.topItem.priority <= 85) {
+                const queue = productionApi.getQueueData(QueueType.Vehicles), current = queue.items[0]?.rules.name;
+                if (!current || current === decision.topItem.unit.name) {
+                    if (queue.status === QueueStatus.Active) actionsApi.pauseProduction(QueueType.Vehicles);
+                    return;
+                }
             }
             const buildingLocation = decision.topItem && requests.get(decision.topItem.unit.name)?.specificLocation;
             this.updateBuildQueue(

@@ -52,6 +52,21 @@ function fixture(miners = 2, refineries = 1) {
         subsidy() { return planMinerRefinery(context, player, rules, planRefinery(game, player, rules)); } };
 }
 
+function recoveryFundingFixture(status = QueueStatus.Idle) {
+    const f = fixture(2); f.player.credits = 859;
+    f.units.find(unit => unit.name === "NAREFN")!.tile.rx = -20;
+    Object.assign(f.queues.get(QueueType.Structures)!, { status: QueueStatus.Active, items: [{ rules: f.rules, quantity: 1 }] });
+    const tank = { name: "HTNK", type: ObjectType.Vehicle, cost: 900 };
+    const miner = { name: "HARV", type: ObjectType.Vehicle, cost: 1400, harvester: true };
+    const aa = { name: "HTK", type: ObjectType.Vehicle, cost: 500 };
+    const available = f.context.player.production.getAvailableObjects;
+    f.context.player.production.getAvailableObjects = (type: QueueType) => type === QueueType.Vehicles ? [tank, miner, aa] : available(type);
+    Object.assign(f.queues.get(QueueType.Vehicles)!, { status, items: status === QueueStatus.Idle ? [] : [{ rules: tank, quantity: 1 }] });
+    const requests = new Map<string, any>([["NAREFN", { priority: 50, specificLocation: new Vector2(4, 0) }], ["HTNK", { priority: 85, specificLocation: null }]]);
+    const controller = new QueueController();
+    return { ...f, requests, run: () => controller.onAiUpdate(f.context, null, requests, () => {}) };
+}
+
 function subsidyFixture() {
     const f = fixture(2);
     f.resources.splice(1); // no reachable unserved field
@@ -128,6 +143,33 @@ describe("brutal refinery investment", () => {
             ["HTNK", { priority: 85, specificLocation: null }],
         ]), () => {});
         expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Structures, "NAREFN", ObjectType.Building, 1);
+    });
+    test("an unfunded unserved sole-refinery recovery defers new ordinary tanks and pauses only their paid queue", () => {
+        const idle = recoveryFundingFixture(); idle.run();
+        expect(idle.actions.queueForProduction).not.toHaveBeenCalledWith(QueueType.Vehicles, "HTNK", ObjectType.Vehicle, 1);
+        const active = recoveryFundingFixture(QueueStatus.Active); active.run();
+        expect(active.actions.pauseProduction).toHaveBeenCalledWith(QueueType.Vehicles);
+        expect(active.actions.unqueueFromProduction).not.toHaveBeenCalled();
+        active.queues.get(QueueType.Vehicles)!.status = QueueStatus.OnHold; active.at(102); active.run();
+        expect(active.actions.resumeProduction).not.toHaveBeenCalledWith(QueueType.Vehicles);
+        active.queues.get(QueueType.Structures)!.items = []; active.queues.get(QueueType.Structures)!.status = QueueStatus.Idle;
+        active.own("NAREFN", 4); active.requests.delete("NAREFN"); active.at(104); active.run();
+        expect(active.actions.resumeProduction).toHaveBeenCalledWith(QueueType.Vehicles);
+    });
+    test.each(["served", "pressure", "air", "cash", "no-field", "normal"])("recovery funding preserves the existing %s production choice", condition => {
+        const f = recoveryFundingFixture();
+        if (condition === "served") f.units.find(unit => unit.name === "NAREFN")!.tile.rx = 5;
+        if (condition === "pressure") f.enemies.push({ id: 999, tile: { rx: 22, ry: 0 }, rules: { type: ObjectType.Vehicle, isSelectableCombatant: true } });
+        if (condition === "air") f.enemies.push({ id: 999, tile: { rx: 70, ry: 0 }, rules: { type: ObjectType.Aircraft, isSelectableCombatant: true } });
+        if (condition === "cash") f.player.credits = f.rules.cost;
+        if (condition === "no-field") f.resources.length = 0;
+        if (condition === "normal") {
+            f.context.difficulty = "normal";
+            f.game.mapApi.getAllTilesResourceData = () => { throw Error("normal funding must not inspect fields"); };
+        }
+        f.run();
+        const expected = condition === "air" ? "HTK" : condition === "served" ? "HARV" : "HTNK";
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, expected, ObjectType.Vehicle, 1);
     });
     test("the mission uses a subsidy landing site instead of E3's unreachable fallback", () => {
         const f = subsidyFixture();
