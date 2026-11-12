@@ -68,7 +68,7 @@ function fixture(miners = 3, core = 4, country = "Russians") {
 
 describe("paid drone production and public own lifecycle", () => {
     test.each([
-        { built: 0, miners: 1, core: 0, enemy: false, priority: 112 },
+        { built: 0, miners: 1, core: 0, enemy: false, priority: 100 },
         { built: 1, miners: 2, core: 0, enemy: false, priority: 0 },
         { built: 1, miners: 3, core: 0, enemy: false, priority: 105 },
         { built: 2, miners: 3, core: 3, enemy: true, priority: 0 },
@@ -128,9 +128,11 @@ describe("paid drone production and public own lifecycle", () => {
         f.at(1899); expect(getDronePriority(f.context)).toBe(60);
         f.at(1900); expect(getDronePriority(f.context)).toBe(0);
     });
-    test("the real request table keeps AA115 above drone112 above income110", () => {
+    test("the adjusted request table funds income110 before drone100, while AA115 remains first", () => {
         const f = fixture(1, 0); f.produce();
-        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "DRON", ObjectType.Vehicle, 1);
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
+        const funded = fixture(3, 0); funded.produce();
+        expect(funded.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "DRON", ObjectType.Vehicle, 1);
         const aa = fixture(1, 0); aa.add("ORCA", "enemy", 100, 0, ObjectType.Aircraft); aa.produce();
         expect(aa.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTK", ObjectType.Vehicle, 1);
     });

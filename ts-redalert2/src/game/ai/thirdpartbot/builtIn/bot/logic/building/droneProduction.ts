@@ -47,7 +47,7 @@ export function getDronePriority(context: SupabotContext): number {
     }
     if (pressure.pressured || tick >= 9000 || state.built >= 4 || state.aliveIds.size >= 2) return 0;
     const s = readStrategicSituation(game, data), core = countCoreTanks(s);
-    if (state.built === 0 && (s.own.NAWEAP ?? 0) + (s.own.GAWEAP ?? 0) > 0 && s.harvesters >= 1) return 112;
+    if (state.built === 0 && (s.own.NAWEAP ?? 0) + (s.own.GAWEAP ?? 0) > 0 && s.harvesters >= 1) return 100;
     if (state.built === 1 && s.harvesters >= 3) return 105;
     if ((state.built === 2 || state.built === 3) && core >= 4 && tick - pressure.lastEnemyMinerSeenTick < 1800) return 60;
     return 0;
