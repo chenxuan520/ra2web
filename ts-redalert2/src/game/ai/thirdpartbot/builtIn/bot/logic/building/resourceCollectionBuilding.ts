@@ -1,11 +1,41 @@
-import { Box2, GameApi, GameMath, PlayerData, TechnoRules, Tile, Vector2 } from "../../../game-api";
+import { Box2, GameApi, GameMath, ObjectType, PlayerData, TechnoRules, Tile, Vector2 } from "../../../game-api";
 import { GlobalThreat } from "../threat/threat";
 import { BasicBuilding } from "./basicBuilding";
 import { getDefaultPlacementLocation } from "./buildingRules";
 import { getCachedTechnoRules } from "../common/rulesCache";
+import { findVisiblePatches, OrePatch, PatchPoint, ScoredPatch, patchDistance, scorePatch } from "../common/orePatches";
+import { minBy } from "../common/utils";
 
 const NO_REFINERY_DISTANCE = 10;
 const REFINERY_HARD_LIMIT = 6;
+
+export interface RefineryPlan {
+    patch: OrePatch | undefined;
+    location: PatchPoint | undefined;
+    reachable: boolean;
+    unreachable: (ScoredPatch & { location: PatchPoint | undefined; distance: number | undefined })[];
+}
+
+/** Scored visible fields only; the first-refinery legacy fallback remains in getPlacementLocation. */
+export function planRefinery(game: GameApi, playerData: PlayerData, technoRules: TechnoRules): RefineryPlan {
+    const scored = findVisiblePatches(game, playerData.name)
+        .map(patch => scorePatch(game, playerData, patch)).filter((patch): patch is ScoredPatch => !!patch)
+        .sort((a, b) => b.score - a.score || a.g - b.g || (a.patch.id < b.patch.id ? -1 : a.patch.id > b.patch.id ? 1 : 0));
+    const buildings = game.getVisibleUnits(playerData.name, "self", rules => rules.type === ObjectType.Building && !rules.wall)
+        .map(id => game.getGameObjectData(id)?.tile).filter((tile): tile is Tile => !!tile);
+    const unreachable: RefineryPlan["unreachable"] = [];
+    for (const entry of scored) {
+        const building = minBy(buildings, tile => patchDistance(tile, entry.patch));
+        const target = building && minBy(entry.patch.tiles, tile => Math.hypot(tile.rx - building.rx, tile.ry - building.ry));
+        const location = target ? getDefaultPlacementLocation(game, playerData, new Vector2(target.rx, target.ry), technoRules, false, 2)
+            ?? getDefaultPlacementLocation(game, playerData, new Vector2(target.rx, target.ry), technoRules, false, 1)
+            ?? getDefaultPlacementLocation(game, playerData, new Vector2(target.rx, target.ry), technoRules, false, 0) : undefined;
+        const distance = location ? patchDistance(location, entry.patch) : undefined;
+        if (distance !== undefined && distance <= 9) return { patch: entry.patch, location, reachable: true, unreachable };
+        unreachable.push({ ...entry, location, distance });
+    }
+    return { patch: scored[0]?.patch, location: undefined, reachable: false, unreachable };
+}
 
 export class ResourceCollectionBuilding extends BasicBuilding {
     constructor(basePriority: number, maxNeeded: number, onlyBuildWhenFloatingCreditsAmount?: number) {
@@ -16,7 +46,13 @@ export class ResourceCollectionBuilding extends BasicBuilding {
         game: GameApi,
         playerData: PlayerData,
         technoRules: TechnoRules,
+        difficulty?: "normal" | "brutal",
     ): { rx: number; ry: number } | undefined {
+        if (difficulty === "brutal") {
+            const plan = planRefinery(game, playerData, technoRules);
+            if (plan.reachable) return plan.location;
+            if (game.getVisibleUnits(playerData.name, "self", rules => rules.refinery).length > 0) return undefined;
+        }
         // Prefer spawning close to ore.
         const conyardVectors = game
             .getVisibleUnits(playerData.name, "self", (r) => r.constructionYard)

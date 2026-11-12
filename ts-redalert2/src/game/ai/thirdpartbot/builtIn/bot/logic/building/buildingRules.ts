@@ -36,6 +36,7 @@ export interface AiBuildingRules {
         game: GameApi,
         playerData: PlayerData,
         technoRules: TechnoRules,
+        difficulty?: "normal" | "brutal",
     ): { rx: number; ry: number } | undefined;
 
     getMaxCount(
