@@ -221,7 +221,7 @@ export class OpeningScoutingMission extends Mission {
         if (first && enemyStart && !this.firstTargetComplete) {
             const tile = game.mapApi.getTile(enemyStart.x, enemyStart.y);
             if (tile && game.mapApi.isVisibleTile(tile, player.name)) this.firstTargetComplete = true;
-            else this.orders.move(context, first, { rx: enemyStart.x, ry: enemyStart.y });
+            else this.orders.move(context, first, { rx: enemyStart.x, ry: enemyStart.y }, OrderType.AttackMove);
         }
         if (first && this.firstTargetComplete) {
             // The completed first scout waits safely at the public midpoint,

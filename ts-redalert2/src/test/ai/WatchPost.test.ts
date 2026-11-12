@@ -155,7 +155,7 @@ describe("T2 opening scout budget", () => {
         const f = fixture(); f.ensure();
         f.add(1, "DOG", 23); f.add(2, "DOG", 24); f.scout().addUnit(1); f.scout().addUnit(2);
         f.missionStep(f.scout(), 32); f.missionStep(f.scout(), 64);
-        expect(f.orders).toContainEqual({ ids: [1], type: OrderType.Move, xOrTarget: 140, y: 20 });
+        expect(f.orders).toContainEqual({ ids: [1], type: OrderType.AttackMove, xOrTarget: 140, y: 20 });
         expect(f.orders).toContainEqual({ ids: [2], type: OrderType.AttackMove, xOrTarget: 20, y: 80 });
         expect(f.privateReads()).toBe(0);
     });
@@ -214,7 +214,7 @@ describe("T2 scout directions, recruitment and real handoff", () => {
             f.ensure(); f.add(1, "DOG", 23); f.scout().addUnit(1); f.missionStep(f.scout(), 32);
         }
         expect(a.orders).toEqual(b.orders);
-        expect(a.orders[0]).toEqual({ ids: [1], type: OrderType.Move, xOrTarget: 20, y: 100 });
+        expect(a.orders[0]).toEqual({ ids: [1], type: OrderType.AttackMove, xOrTarget: 20, y: 100 });
         expect(a.watch(1).getPosition()).toEqual({ rx: 20, ry: 60 });
         expect(a.watch(1).getPosition()).toEqual(b.watch(1).getPosition());
         expect(a.privateReads() + b.privateReads()).toBe(0);
