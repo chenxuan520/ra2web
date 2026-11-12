@@ -152,8 +152,8 @@ describe("visible-signal defense plans", () => {
     test("D5 rejects cash 1499 and pressure, accepts 1500, and shares D1's refinery slot", () => {
         const f = fixture(); f.own("NAREFN", 25); f.player.credits = 1499; expect(f.plan()).toBeUndefined();
         f.player.credits = 1500; f.at(2); expect(f.plan()).toMatchObject({ signal: "D5", priority: 42 });
-        f.enemy("HTNK", 22); f.at(4); expect(f.plan()).toBeUndefined();
-        f.enemies.length = 0; f.at(6); f.build(); f.at(458); f.enemy("DRON");
+        f.enemy("HTNK", 22); f.at(4); expect(f.plan()?.signal).not.toBe("D5");
+        f.enemies.length = 0; f.at(2704); f.build(); f.at(3156); f.enemy("DRON");
         expect(f.plan()?.refineryId).toBe(f.refinery.id); // Only the unprotected home refinery needs D1.
     });
     test("six basic towers cap all signals; classified crawl towers do not use this cap", () => {

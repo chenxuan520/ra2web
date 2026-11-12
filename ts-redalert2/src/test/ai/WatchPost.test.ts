@@ -586,10 +586,10 @@ describe("T2 watch-post behavior and replacement budget", () => {
 });
 
 describe("T2 P1 integrates the real E7 pressure module", () => {
-    test("two visible vehicles exactly twelve from P1 trigger outside the base's forty-five range, for 2700 ticks", () => {
+    test("one visible vehicle exactly twelve from P1 triggers the adjusted threshold outside base range for 2700 ticks", () => {
         const f = fixture(); f.ensure();
-        f.add(200, "MTNK", 92, 20, "enemy"); f.add(201, "MTNK", 92, 20, "enemy");
-        f.visibleEnemies.add(200); f.visibleEnemies.add(201); f.at(100);
+        f.add(200, "MTNK", 92, 20, "enemy");
+        f.visibleEnemies.add(200); f.at(100);
         expect(readPressure(f.context)).toMatchObject({ pressured: true, baseUnderSiege: false, earlyPressure: true,
             earlyPressureUntil: 2800, earlyPressurePosition: { rx: 92, ry: 20 } });
         f.visibleEnemies.clear(); f.at(2799); expect(isPressured(f.context)).toBe(true);
@@ -604,9 +604,9 @@ describe("T2 P1 integrates the real E7 pressure module", () => {
         expect(readPressure(f.context).earlyPressure).toBe(true); // 47 from home, 12 from the legal P1
     });
 
-    test.each(["one", "thirteen", "hidden", "late"] as const)("%s does not trigger early P1 pressure", condition => {
+    test.each(["zero", "thirteen", "hidden", "late"] as const)("%s does not trigger early P1 pressure", condition => {
         const f = fixture(); f.ensure();
-        for (let i = 0; i < (condition === "one" ? 1 : 2); i++) {
+        for (let i = 0; i < (condition === "zero" ? 0 : 2); i++) {
             f.add(200 + i, "MTNK", condition === "thirteen" ? 93 : 92, 20, "enemy");
             if (condition !== "hidden") f.visibleEnemies.add(200 + i);
         }
@@ -615,11 +615,11 @@ describe("T2 P1 integrates the real E7 pressure module", () => {
         expect(isPressured(f.context)).toBe(false);
     });
 
-    test("the existing four-infantry threshold and dog/engineer exclusions are unchanged", () => {
+    test("the authorized three-infantry threshold retains dog and engineer exclusions", () => {
         const f = fixture(); f.ensure();
         for (let i = 0; i < 4; i++) { f.add(200 + i, i % 2 ? "SENGINEER" : "DOG", 92, 20, "enemy"); f.visibleEnemies.add(200 + i); }
         f.at(100); expect(isPressured(f.context)).toBe(false);
-        for (const id of [200, 201, 202, 203]) { const unit = f.objects.get(id)!; unit.name = "E2"; unit.rules.name = "E2"; unit.rules.engineer = false; }
+        for (const id of [200, 201, 202]) { const unit = f.objects.get(id)!; unit.name = "E2"; unit.rules.name = "E2"; unit.rules.engineer = false; }
         f.at(102); expect(readPressure(f.context).earlyPressure).toBe(true);
     });
 

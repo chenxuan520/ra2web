@@ -91,8 +91,8 @@ export function readPressure(context: PressureContext): PressureState {
         if (tick < 5400) {
             const approaching = combatants.filter(unit => (unit.rules.type === ObjectType.Vehicle || unit.rules.type === ObjectType.Infantry) && !unit.rules.engineer && !["DOG", "ADOG", "ENGINEER", "SENGINEER"].includes(unit.rules.name) &&
                 (homeDistance(unit.tile) <= 45 || state.watchPost && Math.hypot(unit.tile.rx - state.watchPost.rx, unit.tile.ry - state.watchPost.ry) <= 12));
-            if (approaching.filter(unit => unit.rules.type === ObjectType.Vehicle).length >= 2 ||
-                approaching.filter(unit => unit.rules.type === ObjectType.Infantry).length >= 4) {
+            if (approaching.filter(unit => unit.rules.type === ObjectType.Vehicle).length >= 1 ||
+                approaching.filter(unit => unit.rules.type === ObjectType.Infantry).length >= 3) {
                 state.earlyPressureUntil = tick + 2700;
                 state.earlyPressurePosition = { rx: approaching.reduce((sum, unit) => sum + unit.tile.rx, 0) / approaching.length,
                     ry: approaching.reduce((sum, unit) => sum + unit.tile.ry, 0) / approaching.length };

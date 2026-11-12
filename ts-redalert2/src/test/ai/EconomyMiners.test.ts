@@ -181,17 +181,17 @@ describe("brutal miner capacity and production table", () => {
 
 describe("visible pressure and own event history", () => {
     test("base threat is current, excludes miners, and includes distance twenty-two", () => {
-        const f = fixture();
+        const f = fixture(); f.at(5400);
         const enemy = f.enemy(100, 22, ObjectType.Vehicle, { harvester: true });
         expect(isPressured(f.context)).toBe(false);
-        enemy.rules.harvester = false; f.at(102);
+        enemy.rules.harvester = false; f.at(5402);
         expect(readPressure(f.context).baseUnderSiege).toBe(true);
-        enemy.tile.rx = 46; f.at(104);
+        enemy.tile.rx = 46; f.at(5404);
         expect(isPressured(f.context)).toBe(false);
     });
     test.each([ObjectType.Vehicle, ObjectType.Infantry])("early %i signal lasts 2700 ticks and retains real mean position", type => {
         const f = fixture();
-        const count = type === ObjectType.Vehicle ? 2 : 4;
+        const count = type === ObjectType.Vehicle ? 1 : 3;
         for (let i = 0; i < count; i++) f.enemy(100 + i, 40 + i, type);
         expect(readPressure(f.context)).toMatchObject({ pressured: true, earlyPressure: true,
             earlyPressureUntil: 2800, earlyPressurePosition: { rx: 40 + (count - 1) / 2, ry: 0 } });
@@ -200,6 +200,11 @@ describe("visible pressure and own event history", () => {
         f.at(2800);
         expect(readPressure(f.context).earlyPressure).toBe(false);
         expect(isPressured(f.context)).toBe(false);
+    });
+    test.each([ObjectType.Vehicle, ObjectType.Infantry])("below the adjusted early %i threshold does not trigger pressure", type => {
+        const f = fixture(), count = type === ObjectType.Vehicle ? 0 : 2;
+        for (let i = 0; i < count; i++) f.enemy(100 + i, 40 + i, type);
+        expect(readPressure(f.context).earlyPressure).toBe(false);
     });
     test("dogs, engineers, hidden enemies and signals first seen at 5400 cannot trigger early pressure", () => {
         const f = fixture();
