@@ -133,9 +133,9 @@ test("independent games at the same tick retain independent defence cooldowns", 
 test("reactive defence still respects its cooldown within a match", () => {
     const current = defensiveScenario("defence-current", 1000);
     expect(current.priority(true)).toBe(70);
-    current.at(1500);
+    current.at(1449);
     expect(current.priority()).toBe(0);
-    current.at(2800);
+    current.at(1450);
     expect(current.priority()).toBe(70);
 });
 

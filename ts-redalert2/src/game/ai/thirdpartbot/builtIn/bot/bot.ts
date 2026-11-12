@@ -9,7 +9,9 @@ import { SupabotContext } from "./logic/common/context";
 import { Strategy } from "./strategy/strategy";
 import { DefaultStrategy } from "./strategy/defaultStrategy";
 import { BaseBuildingMission } from "./logic/mission/missions/baseBuildingMission";
-import { observePressureEvent } from "./logic/common/pressure";
+import { isEcoOnly, observePressureEvent } from "./logic/common/pressure";
+import { observeDefense, observeDefenseEvent } from "./logic/building/defensePlan";
+import { ParasiteRepair } from "./logic/mission/missions/parasiteRepair";
 import { isMcvRelocating } from "./logic/mission/missions/expansionMission";
 
 const DEBUG_STATE_UPDATE_INTERVAL_SECONDS = 6;
@@ -22,6 +24,7 @@ const NATURAL_TICK_RATE = 15;
 export class BuiltInBot extends Bot {
     private tickRatio?: number;
     private queueController: QueueController;
+    private parasiteRepair = new ParasiteRepair();
     private tickOfLastAttackOrder: number = 0;
     private lastDeployAttemptTick: number = -9999;
     private deployAttemptCount: number = 0;
@@ -124,6 +127,7 @@ export class BuiltInBot extends Bot {
                 ...this.context,
                 matchAwareness: this.matchAwareness,
                 difficulty: this.difficulty,
+                parasiteRepair: this.difficulty === "brutal" ? this.parasiteRepair : undefined,
             };
 
             // hacky resign condition
@@ -144,6 +148,10 @@ export class BuiltInBot extends Bot {
                 return;
             }
 
+            if (this.difficulty === "brutal" && !isEcoOnly(fullContext)) {
+                this.parasiteRepair.onAiUpdate(fullContext);
+                observeDefense(fullContext);
+            }
             // Use a single cadence; nesting modulo gates can slow down faster profiles.
             this.missionController.onAiUpdate(fullContext);
             this.strategy = this.strategy.onAiUpdate(fullContext, this.missionController, (message, sayInGame) =>
@@ -175,7 +183,8 @@ export class BuiltInBot extends Bot {
             this.name,
             "self",
             (r) => !!r.deploysInto && game.getGeneralRules().baseUnit.includes(r.name),
-        ).filter((id) => !this.missionController?.getMissions().some((mission) => mission.getUnitIds().includes(id)));
+        ).filter((id) => !this.missionController?.getMissions().some((mission) => mission.getUnitIds().includes(id)) &&
+            (this.difficulty !== "brutal" || !this.parasiteRepair.isRepairing(id)));
 
         if (mcvUnits.length === 0) {
             return;
@@ -256,7 +265,10 @@ export class BuiltInBot extends Bot {
     }
 
     override onGameEvent(ev: ApiEvent) {
-        if (this.difficulty === "brutal") observePressureEvent(this.gameApi, this.name, ev);
+        if (this.difficulty === "brutal") {
+            observePressureEvent(this.gameApi, this.name, ev);
+            observeDefenseEvent(this.gameApi, this.name, ev);
+        }
         switch (ev.type) {
             case ApiEventType.ObjectDestroy: {
                 // Add to the stalemate detection.

@@ -132,6 +132,7 @@ export class RadiationTransportMission extends Mission<string> {
     }
 
     private submit(context: MissionContext, unit: UnitData, action: BatchableAction) {
+        if (context.parasiteRepair?.isRepairing(unit.id)) return;
         const tick = context.game.getCurrentTick(), previous = this.orders.get(unit.id);
         if (!previous || !previous.action.isSameAs(action) || (unit.isIdle && tick >= previous.tick + 90)) {
             context.actionBatcher.push(action);

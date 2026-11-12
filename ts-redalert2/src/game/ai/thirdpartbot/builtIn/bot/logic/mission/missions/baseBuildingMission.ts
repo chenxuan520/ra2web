@@ -14,9 +14,12 @@ import { getCompactFirstFactoryPlacement } from "../../building/firstFactoryPlac
 import { getEconomyBuildingPriority } from "../../building/economyPlan";
 import { getCommittedRefineryLocation, noteMinerRefineryRequest, planMinerRefinery } from "../../building/refineryEconomy";
 import { planRefinery, RefineryPlan } from "../../building/resourceCollectionBuilding";
+import { getDefenseState } from "../../building/defensePlan";
 
 // Legacy mission encompassing the old "build queue" logic.
 export class BaseBuildingMission extends Mission {
+    private defenseState?: ReturnType<typeof getDefenseState>;
+
     constructor(
         private queueType: QueueType,
         logger: DebugLogger,
@@ -25,6 +28,7 @@ export class BaseBuildingMission extends Mission {
     }
 
     _onAiUpdate(context: MissionContext): MissionAction {
+        if (context.difficulty === "brutal") this.defenseState = getDefenseState(context.game, context.player.name);
         const options = context.player.production.getAvailableObjects(this.queueType);
         const playerData = context.game.getPlayerData(context.player.name);
         if (options.length === 0) {
@@ -84,6 +88,14 @@ export class BaseBuildingMission extends Mission {
 
     getGlobalDebugText(): string | undefined {
         return undefined;
+    }
+
+    /** Read-only state consumed by the benchmark's existing mission sampler. */
+    getState() {
+        if (!this.defenseState) return undefined;
+        return { defenseTriggers: [...this.defenseState.triggered],
+            defenseStarted: this.defenseState.started.map(entry => ({ ...entry })),
+            defensePlaced: this.defenseState.placed.map(entry => ({ ...entry })) };
     }
 
     getPriority(): number {

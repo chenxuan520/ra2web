@@ -25,8 +25,9 @@ export class RetreatMission extends Mission {
         }
         if (this.getUnitIds().length > 0) {
             // Only send the order once we have managed to claim some units.
-            actionsApi.orderUnits(
-                this.getUnitIds(),
+            const orderable = this.getUnitIds().filter(id => context.difficulty !== "brutal" || !context.parasiteRepair?.isRepairing(id));
+            if (orderable.length > 0) actionsApi.orderUnits(
+                orderable,
                 OrderType.AttackMove,
                 this.retreatToPoint.x,
                 this.retreatToPoint.y,

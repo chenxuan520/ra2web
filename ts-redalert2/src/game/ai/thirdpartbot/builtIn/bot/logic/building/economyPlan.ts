@@ -7,6 +7,7 @@ import { getEconomyPressureLimits, isPressured, readPressure } from "../common/p
 import { planRefinery } from "./buildingRules";
 import { planMinerRefinery } from "./refineryEconomy";
 import type { RefineryPlan } from "./resourceCollectionBuilding";
+import { canRequestDefense, hasSeenEnemyDrone } from "./defensePlan";
 
 const lastDefenseBuiltTick = new WeakMap<GameApi, Map<string, number>>();
 
@@ -66,11 +67,15 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
     }
     if (rules.name === "NATECH" && !count && s.harvesters >= BRUTAL_PARAMS.economy.techMinHarvesters && armor >= BRUTAL_PARAMS.economy.techMinArmor) return BRUTAL_PARAMS.economy.techPriority;
     if (rules.name === "GATECH" && !count && s.harvesters >= BRUTAL_PARAMS.economy.techMinHarvesters && armor >= BRUTAL_PARAMS.economy.techMinArmor) return BRUTAL_PARAMS.economy.techPriority;
-    if (rules.name === "GADEPT" || rules.name === "NADEPT") return s.credits >= BRUTAL_PARAMS.economy.depotMinCredits && armor >= BRUTAL_PARAMS.economy.depotMinArmor ? 1 : 0;
+    if (rules.name === "GADEPT" || rules.name === "NADEPT") {
+        if (hasSeenEnemyDrone(game, player.name)) return !count && (committed || s.credits >= 1500) ? 65 : 0;
+        return s.credits >= BRUTAL_PARAMS.economy.depotMinCredits && armor >= BRUTAL_PARAMS.economy.depotMinArmor ? 1 : 0;
+    }
     if (["GAAIRC", "AMRADR", "NARADR"].includes(rules.name) &&
         (!factories || s.harvesters < 2 || (s.harvesters < BRUTAL_PARAMS.economy.radarMinHarvesters && armor < BRUTAL_PARAMS.economy.radarMinArmor))) return 0;
+    if (rules.name === "NASAM" || rules.name === "NAFLAK") return 0; // D4 is requested only by the visible-signal defense planner.
     if (rules.name === "GAPILL" || rules.name === "NALASR") {
-        if (count >= BRUTAL_PARAMS.economy.defenseMaxCount || s.credits < BRUTAL_PARAMS.economy.defenseMinCredits) return 0;
+        if (!canRequestDefense(game, player, rules.name, committed) || s.credits < BRUTAL_PARAMS.economy.defenseMinCredits) return 0;
         const currentTick = game.getCurrentTick();
         let playerCooldowns = lastDefenseBuiltTick.get(game);
         if (!playerCooldowns) {

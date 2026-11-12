@@ -30,7 +30,7 @@ function fixture(miners = 2, refineries = 1) {
     const legal = new Set(candidates.map(tile => tile.id));
     const queues = new Map(QUEUES.map(type => [type,
         { type, status: QueueStatus.Idle, items: [] as any[], size: 0 }]));
-    const actions = { sellBuilding: mock(() => {}), queueForProduction: mock(() => {}), unqueueFromProduction: mock(() => {}),
+    const actions = { sellBuilding: mock((_id: number) => {}), queueForProduction: mock(() => {}), unqueueFromProduction: mock(() => {}),
         pauseProduction: mock(() => {}), resumeProduction: mock(() => {}), toggleRepairWrench: mock(() => {}), placeBuilding: mock(() => {}) };
     const game: any = { getCurrentTick: () => tick, getPlayerData: () => player,
         getVisibleUnits: (_name: string, relation: string, predicate = (_rules: any) => true) =>

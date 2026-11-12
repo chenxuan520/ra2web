@@ -91,6 +91,7 @@ export class ExpansionMission extends Mission {
         // use the highest-hp MCV
         const selectedMcvUnit = maxBy(mcvs, (mcv) => mcv.hitPoints)!;
         this.selectedMcvId = selectedMcvUnit?.id ?? null;
+        if (context.difficulty === "brutal" && context.parasiteRepair?.isRepairing(selectedMcvUnit.id)) return noop();
 
         if (this.destination) {
             return this.moveMcvToDestination(
@@ -302,6 +303,7 @@ export class PackConyardMission extends Mission {
             // maybe it died, or unpacked already
             return disbandMission();
         }
+        if (context.difficulty === "brutal" && context.parasiteRepair?.isRepairing(this.conyardId)) return noop();
         actionsApi.orderUnits([this.conyardId], OrderType.Move, conyardOrMcv.tile.rx, conyardOrMcv.tile.ry);
         return noop();
     }

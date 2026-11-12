@@ -214,6 +214,7 @@ export class AttackMission extends Mission<AttackFailReason> {
     private handleRetreatingState(context: MissionContext) {
         const { game, actionBatcher, matchAwareness } = context;
         this.getUnits(game).forEach((unitId) => {
+            if (context.difficulty === "brutal" && context.parasiteRepair?.isRepairing(unitId.id)) return;
             actionBatcher.push(manageMoveMicro(unitId, matchAwareness.getMainRallyPoint()));
         });
         // Note: probably should just disband rather than have a retreating state

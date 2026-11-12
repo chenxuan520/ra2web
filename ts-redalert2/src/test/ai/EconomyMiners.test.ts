@@ -36,7 +36,7 @@ function fixture(miners = 3, core = 2, country = "Russians") {
         { name: "HTK", cost: 500, type: ObjectType.Vehicle },
     ]);
     const queues = new Map(QUEUES.map(type => [type, { type, status: QueueStatus.Idle, items: [] as any[], size: 0 }]));
-    const actions = { queueForProduction: mock(() => {}), unqueueFromProduction: mock(() => {}),
+    const actions = { queueForProduction: mock((_queue: QueueType, _name: string, _type: ObjectType, _quantity: number) => {}), unqueueFromProduction: mock(() => {}),
         pauseProduction: mock(() => {}), resumeProduction: mock(() => {}), toggleRepairWrench: mock(() => {}),
         orderUnits: mock(() => {}), sellBuilding: mock(() => {}) };
     const production: any = { getAvailableObjects: (queue?: QueueType) => queue === undefined ? [...options.values()].flat() : options.get(queue)!,
@@ -57,7 +57,7 @@ function fixture(miners = 3, core = 2, country = "Russians") {
     const controller = new QueueController(), requests = new Map<string, any>();
     function enemy(id: number, rx: number, type = ObjectType.Vehicle, extra = {}) {
         const unit = { id, owner: "enemy", type, tile: { rx, ry: 0 }, rules: {
-            name: type === ObjectType.Infantry ? "E1" : "MTNK", type, isSelectableCombatant: true, ...extra } };
+            name: type === ObjectType.Infantry ? "E1" : "MTNK", type, isSelectableCombatant: true, harvester: false, ...extra } };
         enemies.push(unit);
         return unit;
     }

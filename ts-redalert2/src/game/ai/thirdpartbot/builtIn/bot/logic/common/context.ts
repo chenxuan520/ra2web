@@ -5,6 +5,7 @@ import { ActionBatcher } from "../mission/actionBatcher";
 export interface SupabotContext extends BotContext {
     readonly matchAwareness: MatchAwareness;
     readonly difficulty?: 'normal' | 'brutal';
+    readonly parasiteRepair?: { isRepairing(id: number): boolean };
 }
 
 export interface MissionContext extends SupabotContext {

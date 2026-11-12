@@ -19,6 +19,7 @@ import { getEconomyPressureLimits, isEcoOnly, readPressure } from "../common/pre
 import { isCivilianEconomy } from "./economyPlan";
 import { isMinerRefineryProduction, observeRefineryEconomy, recordRefineryOrder, sellDuplicateRefinery } from "./refineryEconomy";
 import { isCrawlProduction, observeBaseCrawl, planBaseCrawl, recordBaseCrawlOrder } from "./baseCrawl";
+import { isDefenseProduction, planDefense, recordDefenseOrder } from "./defensePlan";
 
 export const QUEUES = [
     QueueType.Structures,
@@ -123,6 +124,11 @@ export class QueueController {
                     cappedSupport.add(name);
                 }
             }
+        }
+        const basicDefense = isSovietCountry(playerData.country?.name) ? "NALASR" : "GAPILL";
+        const defense = planDefense(context, requests.get(basicDefense));
+        if (defense && defense.priority >= (requests.get(defense.rules.name)?.priority ?? 0)) {
+            requests.set(defense.rules.name, { priority: defense.priority, specificLocation: new Vector2(defense.location.rx, defense.location.ry) });
         }
         const crawl = planBaseCrawl(context);
         if (crawl && crawl.priority > (requests.get(crawl.rules.name)?.priority ?? 0)) {
@@ -329,12 +335,14 @@ export class QueueController {
                 if (difficulty === "brutal") this.economicPlacementFailures.delete(decision.unit.name);
                 if (difficulty === "brutal") recordRefineryOrder(game, playerData.name, decision.unit.name, unitTypeRequests.get(decision.unit.name)?.specificLocation);
                 if (difficulty === "brutal") recordBaseCrawlOrder(game, playerData.name, decision.unit.name, unitTypeRequests.get(decision.unit.name)?.specificLocation);
+                if (difficulty === "brutal") recordDefenseOrder(game, playerData.name, decision.unit.name, unitTypeRequests.get(decision.unit.name)?.specificLocation);
             }
         } else if (queueData.status == QueueStatus.Ready && queueData.items.length > 0) {
             if (isBuildingQueue(queueType)) {
                 const readyUnit = queueData.items[0].rules;
                 const specificEconomyLocation = difficulty === "brutal" &&
-                    (isMinerRefineryProduction(game, playerData.name, readyUnit.name) || isCrawlProduction(game, playerData.name, queueType));
+                    (isMinerRefineryProduction(game, playerData.name, readyUnit.name) || isCrawlProduction(game, playerData.name, queueType) ||
+                        queueType === QueueType.Armory && isDefenseProduction(game, playerData.name));
                 // Other idle queues retain their historical clear behavior, but must not erase this marked build's failures.
                 const failureCounts = specificEconomyLocation ? this.economicPlacementFailures : this.placementFailures;
                 const failures = failureCounts.get(readyUnit.name) ?? 0;

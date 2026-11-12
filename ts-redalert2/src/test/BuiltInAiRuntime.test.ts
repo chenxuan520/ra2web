@@ -112,13 +112,16 @@ describe('AI simulation cadence', () => {
                     getCurrentTick: () => tick,
                     getPlayerData: () => ({ country: { side: 0 }, startLocation: new Vector2(0, 0) }),
                     getVisibleUnits: () => [1],
+                    getUnitData: () => undefined, getGameObjectData: () => undefined,
                     mapApi: {
+                        getAllTilesResourceData: () => [], getResourceCreditValues: () => ({ ore: 25, gems: 50 }),
                         getRealMapSize: () => ({ width: 2, height: 2 }),
                         getTilesInRect: () => [], getStartingLocations: () => [], getTile: () => undefined,
                     },
                 };
                 const bot = new BuiltInBot('Computer', Countries.USA, [], false, strategy, difficulty);
                 bot.setGameApi(game);
+                bot.setProductionApi({ getQueueData: () => ({ items: [] }) });
                 bot.onGameStart(game);
                 (bot as any).matchAwareness = { getThreatCache: () => null, onAiUpdate() {} };
                 (bot as any).missionController = { onAiUpdate() {}, getRequestedUnitTypes: () => new Map() };

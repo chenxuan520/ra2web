@@ -60,6 +60,7 @@ export class HarassmentMission extends Mission<string> {
                 return disbandMission(this.returnReason);
             }
             for (const unit of units) {
+                if (context.parasiteRepair?.isRepairing(unit.id)) continue;
                 const lastOrder = this.lastReturnOrder.get(unit.id);
                 if (!isFiringBurst(unit) && (lastOrder === undefined || (unit.isIdle && tick >= lastOrder + 90))) {
                     context.actionBatcher.push(BatchableAction.toPoint(unit.id, OrderType.Move, this.home));

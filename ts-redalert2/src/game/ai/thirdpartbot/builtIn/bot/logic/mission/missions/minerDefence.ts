@@ -27,7 +27,7 @@ export class MinerDefence {
         const armorThreat = enemies.some(unit => (unit.type as any) !== ObjectType.Infantry && !unit.rules.harvester &&
             !!estimatedCombatWeapons(unit, game)[0] && home.distanceTo(new Vector2(unit.tile.rx, unit.tile.ry)) <= 24);
         const miners = game.getVisibleUnits(player.name, "self", rules => rules.harvester && rules.crusher)
-            .map(id => game.getUnitData(id)).filter((unit): unit is UnitData => !!unit && unit.canMove && !unit.isWarpedOut);
+            .map(id => game.getUnitData(id)).filter((unit): unit is UnitData => !!unit && unit.canMove && !unit.isWarpedOut && !context.parasiteRepair?.isRepairing(unit.id));
         let miner = this.active ? miners.find(unit => unit.id === this.active!.id) : undefined;
         if (this.active && !miner) {
             this.active = undefined;
@@ -79,7 +79,7 @@ export class MinerDefence {
         // Harvester safety: if an endangered harvester (< 50% HP) is under direct hostile threat, dock at nearest safe refinery
         if (tick % 30 === 0) {
             const allMiners = game.getVisibleUnits(player.name, "self", rules => rules.harvester)
-                .map(id => game.getUnitData(id)).filter((unit): unit is UnitData => !!unit && unit.canMove && !unit.isWarpedOut);
+                .map(id => game.getUnitData(id)).filter((unit): unit is UnitData => !!unit && unit.canMove && !unit.isWarpedOut && !context.parasiteRepair?.isRepairing(unit.id));
             for (const m of allMiners) {
                 if (m.hitPoints < m.maxHitPoints * 0.5) {
                     const nearbyHostiles = enemies.filter(e => e.rules.isSelectableCombatant && !e.rules.harvester &&

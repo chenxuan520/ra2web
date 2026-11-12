@@ -50,7 +50,7 @@ describe("brutal building placement fallback", () => {
         const mission = new BaseBuildingMission(QueueType.Structures, () => {});
         (mission as any).getPriorityForBuildingOption = (option: any) => option.name === "AMRADR" ? 18 : newPriority;
         (mission as any).getBestLocationForStructure = () => ({ rx: 1, ry: 1 });
-        const context = { difficulty: "brutal", game: { getPlayerData: () => ({}) },
+        const context = { difficulty: "brutal", game: { getCurrentTick: () => 0, getPlayerData: () => ({}) },
             matchAwareness: { getThreatCache: () => null }, player: { name: "bot", production: {
                 getAvailableObjects: () => [{ name: "GAREFN" }, { name: "AMRADR" }],
                 getQueueData: () => ({ items: [{ rules: { name: "AMRADR" } }] }),

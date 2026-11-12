@@ -131,7 +131,7 @@ export class CombatSquad implements Squad {
                     maxDistance > requiredGatherRadius
                 ) {
                     units.forEach((unit) => {
-                        if (brutal && isFiringBurst(unit)) return;
+                        if (brutal && (context.parasiteRepair?.isRepairing(unit.id) || isFiringBurst(unit))) return;
                         if (brutal) {
                             const deployment = this.desolatorTactics.decide(context, unit, [], units, centerOfMass);
                             if (deployment.handled) {
@@ -175,6 +175,7 @@ export class CombatSquad implements Squad {
                 const committedDamage = new Map<number, number>();
                 const unitDataCache = new Map<number, UnitData | undefined>(nearbyHostiles.map(unit => [unit.id, unit]));
                 for (const unit of brutal ? [...units].sort((a, b) => a.id - b.id) : units) {
+                    if (brutal && context.parasiteRepair?.isRepairing(unit.id)) continue;
                     // AttackMove may have acquired a target autonomously. The API does
                     // not expose it, so preserve the live firing sequence before retargeting.
                     // Each unit scans its own flank; a distant short-range leader must not blind artillery or AA.
