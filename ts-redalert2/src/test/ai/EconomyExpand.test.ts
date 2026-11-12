@@ -1,7 +1,7 @@
 import { describe, expect, mock, test } from "bun:test";
 import { BuildStatus } from "../../game/gameobject/Building";
 import { ObjectType, OrderType, QueueStatus, QueueType, SpeedType, Vector2 } from "../../game/ai/thirdpartbot/builtIn/game-api";
-import { planRefinery } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/buildingRules";
+import { getAdjacencyTiles, planRefinery } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/buildingRules";
 import { QueueController, QUEUES } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/queueController";
 import { getBaseCrawlState, isCrawlBlocked, isCrawlDefense, observeBaseCrawl, planBaseCrawl, recordBaseCrawlOrder }
     from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/baseCrawl";
@@ -10,6 +10,7 @@ import { ExpansionMission, ExpansionMissionFactory, PackConyardMission, isMcvRel
 import { MissionController } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missionController";
 import { BuiltInBot } from "../../game/ai/thirdpartbot/builtIn/bot/bot";
 import { BRUTAL_PARAMS } from "../../game/ai/thirdpartbot/builtIn/bot/strategy/brutalParams";
+import { patchDistance } from "../../game/ai/thirdpartbot/builtIn/bot/logic/common/orePatches";
 
 function fixture(targetX = 45) {
     let tick = 100, nextId = 1;
@@ -131,12 +132,18 @@ describe("legal visible base crawl", () => {
         expect(getBaseCrawlState(f.game, f.player.name).targets.get(plan.patch.id)?.builtIds.size).toBe(1);
     });
     test("zero legal progress blocks terrain for 2700 ticks, then retries without counting a building", () => {
-        const f = fixture(); f.candidates[0] = { id: "5_0", rx: 5, ry: 0 };
+        const f = fixture(15); f.own("NAPOWR", 5).tile.ry = 3;
+        const location = { id: "7_6", rx: 7, ry: 6 }; f.candidates[0] = location;
+        const entry = planRefinery(f.game, f.player, f.refinery).unreachable[0];
+        expect(f.game.canPlaceBuilding(f.player.name, f.power.name, location)).toBe(true);
+        expect(getAdjacencyTiles(f.game, f.player, f.power, false, 0)
+            .some(tile => tile.rx === location.rx && tile.ry === location.ry)).toBe(true);
+        expect(patchDistance(location, entry.patch)).toBe(entry.g);
         expect(f.run()).toBeUndefined();
-        const patch = planRefinery(f.game, f.player, f.refinery).unreachable[0].patch;
+        const patch = entry.patch;
         expect(isCrawlBlocked(f.game, f.player.name, patch)).toBe(true);
         f.at(2799); expect(f.run()).toBeUndefined();
-        f.candidates[0] = { id: "8_0", rx: 8, ry: 0 }; f.at(2800);
+        f.candidates[0] = { id: "6_1", rx: 6, ry: 1 }; f.at(2800);
         expect(f.run()).toBeDefined();
     });
     test("a strictly positive legal short step is not mistaken for terrain blocking", () => {
