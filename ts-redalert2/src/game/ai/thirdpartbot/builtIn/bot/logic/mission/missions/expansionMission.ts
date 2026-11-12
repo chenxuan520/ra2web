@@ -72,6 +72,7 @@ export class ExpansionMission extends Mission {
     public _onAiUpdate(context: MissionContext): MissionAction {
         const { game, matchAwareness, actionBatcher } = context;
         const actionsApi = context.player.actions;
+        if (context.difficulty === "brutal" && isMcvRelocating(game, context.player.name) && isPressured(context)) return noop();
         const playerData = context.game.getPlayerData(context.player.name);
         const mcvs = this.getUnitsOfTypes(game, ...mcvTypes);
         if (mcvs.length === 0) {
@@ -295,6 +296,7 @@ export class PackConyardMission extends Mission {
     public _onAiUpdate(context: MissionContext): MissionAction {
         const { game } = context;
         const actionsApi = context.player.actions;
+        if (context.difficulty === "brutal" && isMcvRelocating(game, context.player.name) && isPressured(context)) return noop();
         const conyardOrMcv = game.getGameObjectData(this.conyardId);
         if (!conyardOrMcv) {
             // maybe it died, or unpacked already
@@ -415,6 +417,18 @@ export class ExpansionMissionFactory {
             .filter(isTechnoRulesObject)
             .filter((obj) => obj.rules.refinery);
         if (refineryNearconyard.length > 0) {
+            if (economyCandidate) {
+                const mcvRules = game.rulesApi.vehicleRules.get(selectedConyard.rules.undeploysInto);
+                const tile = game.mapApi.getTile(economyCandidate.x, economyCandidate.y);
+                if (mcvRules?.speedType === undefined || !tile) return;
+                try {
+                    const path = game.mapApi.findPath(mcvRules.speedType, toPathNode(selectedConyard.tile, false), toPathNode(tile, false),
+                        { bestEffort: false, maxExpandedNodes: 1500 });
+                    if (path.length < 2 || !path.some(node => node.tile.rx === tile.rx && node.tile.ry === tile.ry)) return;
+                } catch (_err) {
+                    return;
+                }
+            }
             missionController.addMission(
                 new PackConyardMission("pack-up-" + selectedConyard.id, selectedConyard.id, logger),
             );

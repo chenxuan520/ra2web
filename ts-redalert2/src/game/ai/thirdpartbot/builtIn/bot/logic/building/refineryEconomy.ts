@@ -139,8 +139,8 @@ export function sellDuplicateRefinery(context: SupabotContext): void {
         .map(id => game.getUnitData(id)).filter((unit): unit is UnitData => !!unit);
     if (refineries.length < 2) return;
     const patches = findVisiblePatches(game, player.name);
-    const servedCount = patches.filter(patch => isServed(patch, refineries.map(unit => unit.tile))).length;
-    if (refineries.length - 1 < Math.max(1, servedCount)) return;
+    const served = patches.filter(patch => isServed(patch, refineries.map(unit => unit.tile)));
+    if (refineries.length - 1 < Math.max(1, served.length)) return;
     const miners = game.getVisibleUnits(player.name, "self", rules => rules.harvester)
         .map(id => game.getUnitData(id)).filter((unit): unit is UnitData => !!unit);
     for (const patch of patches) {
@@ -154,6 +154,8 @@ export function sellDuplicateRefinery(context: SupabotContext): void {
         const readyAt = state.refineries.get(newest.id)?.readyTick;
         if (readyAt === undefined || tick - readyAt <= 150 || Number(oldest.buildStatus) !== BuildStatus.Ready || oldest.isWarpedOut || oldest.rules.unsellable ||
             miners.some(miner => Math.hypot(miner.tile.rx - oldest.tile.rx, miner.tile.ry - oldest.tile.ry) <= 3)) continue;
+        const remaining = refineries.filter(refinery => refinery.id !== oldest.id).map(refinery => refinery.tile);
+        if (served.some(field => !isServed(field, remaining))) continue;
         player.actions.sellBuilding(oldest.id);
         state.pendingSale = { id: oldest.id, tick };
         return;

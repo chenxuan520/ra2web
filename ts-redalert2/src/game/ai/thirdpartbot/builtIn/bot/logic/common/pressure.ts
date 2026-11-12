@@ -62,7 +62,8 @@ export function observePressureEvent(game: GameApi, playerName: string, event: A
     const state = stateFor(game, playerName);
     const id = Number(event.target);
     if (event.type === ApiEventType.ObjectSpawn) {
-        if (game.getVisibleUnits(playerName, "self", economicRules).includes(id)) state.economicIds.add(id);
+        const object = game.getGameObjectData(id);
+        if (object?.owner === playerName && economicRules(object.rules)) state.economicIds.add(id);
     } else if (event.type === ApiEventType.ObjectDestroy || event.type === ApiEventType.ObjectOwnerChange) {
         if (state.economicIds.has(id) && (event.type === ApiEventType.ObjectDestroy || event.newOwnerName !== playerName)) {
             state.lastEconomicLossTick = game.getCurrentTick();

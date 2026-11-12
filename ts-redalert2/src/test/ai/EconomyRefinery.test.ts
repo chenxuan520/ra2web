@@ -95,6 +95,16 @@ describe("brutal refinery investment", () => {
         f.at(5404); expect(f.priority()).toBe(0);
         f.enemies.length = 0; f.at(8104); expect(f.priority()).toBe(40);
     });
+    test("one refinery request reuses its E3 plan for priority and placement", () => {
+        const f = fixture(3);
+        f.game.canPlaceBuilding = mock(f.game.canPlaceBuilding);
+        f.game.getBuildingPlacementData = mock(f.game.getBuildingPlacementData);
+        expect(new BaseBuildingMission(QueueType.Structures, () => {})._onAiUpdate(f.context)).toMatchObject({
+            type: "buildStructureAtLocation", rulesName: "NAREFN", rx: 24, ry: 0,
+        });
+        expect(f.game.canPlaceBuilding).toHaveBeenCalledTimes(1);
+        expect(f.game.getBuildingPlacementData).toHaveBeenCalledTimes(2);
+    });
     test("the mission uses a subsidy landing site instead of E3's unreachable fallback", () => {
         const f = subsidyFixture();
         expect(f.priority()).toBe(40);
@@ -241,6 +251,18 @@ describe("same-field old refinery sales", () => {
         f.resources.push({ tile: { rx: 15, ry: 0 }, ore: 800, gems: 0, spawnsOre: false });
         observeRefineryEconomy(f.context); f.at(570); sellDuplicateRefinery(f.context);
         expect(f.actions.sellBuilding).not.toHaveBeenCalled();
+    });
+    test("selling a nearest-field duplicate cannot remove another served field's sole coverage", () => {
+        const f = fixture(0, 1), old = f.units.find(unit => unit.name === "NAREFN")!;
+        old.tile.rx = 9;
+        f.resources.splice(0, f.resources.length, ...[5, 17, 45].map(rx => ({ tile: { rx, ry: 0 }, ore: 800, gems: 0, spawnsOre: false })));
+        f.own("NAREFN", 45); f.own("NAREFN", 46); observeRefineryEconomy(f.context);
+        f.at(200); f.own("NAREFN", 4); observeRefineryEconomy(f.context);
+        f.at(570); sellDuplicateRefinery(f.context);
+        expect(f.actions.sellBuilding).not.toHaveBeenCalledWith(old.id);
+        const soldId = f.actions.sellBuilding.mock.calls[0]?.[0];
+        const remaining = f.units.filter(unit => unit.name === "NAREFN" && unit.id !== soldId);
+        expect(f.resources.every(resource => remaining.some(refinery => Math.abs(refinery.tile.rx - resource.tile.rx) <= 9))).toBe(true);
     });
     test("actual build-down starts the 300-tick sale cooldown", () => {
         const f = subsidyFixture(); observeRefineryEconomy(f.context);

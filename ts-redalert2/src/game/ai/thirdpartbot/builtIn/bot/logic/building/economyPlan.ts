@@ -6,6 +6,7 @@ import { SupabotContext } from "../common/context";
 import { getEconomyPressureLimits, isPressured, readPressure } from "../common/pressure";
 import { planRefinery } from "./buildingRules";
 import { planMinerRefinery } from "./refineryEconomy";
+import type { RefineryPlan } from "./resourceCollectionBuilding";
 
 const lastDefenseBuiltTick = new WeakMap<GameApi, Map<string, number>>();
 
@@ -15,7 +16,7 @@ export function isCivilianEconomy(rules: TechnoRules): boolean {
 }
 
 /** Fund income before duplicating production capacity that the miners cannot supply. */
-export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, rules: TechnoRules, committed: boolean, context?: SupabotContext): number | undefined {
+export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, rules: TechnoRules, committed: boolean, context?: SupabotContext, refineryPlan?: RefineryPlan): number | undefined {
     if (BRUTAL_PARAMS.economy.ecoOnly === 1 && !isCivilianEconomy(rules)) return 0;
     const s = readStrategicSituation(game, player);
     const refineries = (s.own.GAREFN ?? 0) + (s.own.NAREFN ?? 0);
@@ -23,7 +24,7 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
     const count = s.own[rules.name] ?? 0;
     if (rules.refinery) {
         if (!refineries) return BRUTAL_PARAMS.economy.firstRefineryPriority;
-        const plan = planRefinery(game, player, rules);
+        const plan = refineryPlan ?? planRefinery(game, player, rules);
         const pressure = readPressure(context ?? { game, player: { name: player.name }, difficulty: "brutal" });
         const minerRefinery = () => context && planMinerRefinery(context, player, rules, plan)
             ? BRUTAL_PARAMS.economy.extraRefineryPriority : 0;

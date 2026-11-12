@@ -195,6 +195,17 @@ describe("visible pressure and own event history", () => {
         observePressureEvent(f.game, f.player.name, { type: ApiEventType.ObjectDestroy, target: 999 });
         f.at(102); expect(isPressured(f.context)).toBe(false);
     });
+    test("unrelated global spawns never scan the own inventory; an own economic spawn still records loss", () => {
+        const f = fixture();
+        f.game.getVisibleUnits = mock(f.game.getVisibleUnits);
+        for (let i = 0; i < 1000; i++) observePressureEvent(f.game, f.player.name, { type: ApiEventType.ObjectSpawn, target: 99999 + i });
+        expect(f.game.getVisibleUnits).not.toHaveBeenCalled();
+        const refinery = f.own("NAREFN", 50);
+        observePressureEvent(f.game, f.player.name, { type: ApiEventType.ObjectSpawn, target: refinery.id });
+        expect(f.game.getVisibleUnits).not.toHaveBeenCalled();
+        observePressureEvent(f.game, f.player.name, { type: ApiEventType.ObjectDestroy, target: refinery.id });
+        expect(readPressure(f.context).lastEconomicLossTick).toBe(100);
+    });
     test("P1 is a public optional trigger supplied by the later watch-post task", () => {
         const f = fixture();
         f.enemy(100, 80); f.enemy(101, 80);

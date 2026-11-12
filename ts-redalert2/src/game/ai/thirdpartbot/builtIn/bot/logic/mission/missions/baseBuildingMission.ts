@@ -13,7 +13,7 @@ import { getGrandCannonPlacement, getStrategicBuildingPriority } from "../../bui
 import { getCompactFirstFactoryPlacement } from "../../building/firstFactoryPlacement";
 import { getEconomyBuildingPriority } from "../../building/economyPlan";
 import { getCommittedRefineryLocation, noteMinerRefineryRequest, planMinerRefinery } from "../../building/refineryEconomy";
-import { planRefinery } from "../../building/resourceCollectionBuilding";
+import { planRefinery, RefineryPlan } from "../../building/resourceCollectionBuilding";
 
 // Legacy mission encompassing the old "build queue" logic.
 export class BaseBuildingMission extends Mission {
@@ -38,9 +38,11 @@ export class BaseBuildingMission extends Mission {
             : new Set<string>();
 
         const optionWithPriority = options.map((option) => {
+            const refineryPlan = context.difficulty === "brutal" && option.refinery ? planRefinery(game, playerData, option) : undefined;
             return {
                 option,
-                priority: this.getPriorityForBuildingOption(option, game, playerData, threatCache, context.difficulty, committedNames.has(option.name), context),
+                refineryPlan,
+                priority: this.getPriorityForBuildingOption(option, game, playerData, threatCache, context.difficulty, committedNames.has(option.name), context, refineryPlan),
             };
         });
 
@@ -57,7 +59,7 @@ export class BaseBuildingMission extends Mission {
                 candidates.unshift(candidates.splice(committedIndex, 1)[0]);
             }
             for (const candidate of candidates) {
-                const location = this.getBestLocationForStructure(game, playerData, candidate.option, context.difficulty, context);
+                const location = this.getBestLocationForStructure(game, playerData, candidate.option, context.difficulty, context, candidate.refineryPlan);
                 if (location) {
                     return buildStructureAtLocation(candidate.option.name, candidate.priority, location.rx, location.ry);
                 }
@@ -96,9 +98,10 @@ export class BaseBuildingMission extends Mission {
         difficulty?: "normal" | "brutal",
         committed = false,
         context?: MissionContext,
+        refineryPlan?: RefineryPlan,
     ) {
         if (difficulty === "brutal") {
-            const economyPriority = getEconomyBuildingPriority(game, playerStatus, option, committed, context);
+            const economyPriority = getEconomyBuildingPriority(game, playerStatus, option, committed, context, refineryPlan);
             if (economyPriority !== undefined) return economyPriority;
             const priority = getStrategicBuildingPriority(game, playerStatus, option, threatCache, committed);
             if (priority !== undefined) return priority;
@@ -120,15 +123,21 @@ export class BaseBuildingMission extends Mission {
         objectReady: TechnoRules,
         difficulty?: "normal" | "brutal",
         context?: MissionContext,
+        refineryPlan?: RefineryPlan,
     ): { rx: number; ry: number } | undefined {
         if (difficulty === "brutal" && objectReady.refinery && context) {
             const committed = getCommittedRefineryLocation(context, objectReady.name);
             if (committed) return committed;
-            const minerRefinery = planMinerRefinery(context, playerData, objectReady, planRefinery(game, playerData, objectReady));
+            const plan = refineryPlan ?? planRefinery(game, playerData, objectReady);
+            const minerRefinery = planMinerRefinery(context, playerData, objectReady, plan);
             if (minerRefinery) {
                 noteMinerRefineryRequest(game, playerData.name, objectReady.name, minerRefinery);
                 return minerRefinery.location;
             }
+            if (plan.reachable) return plan.location;
+            if (game.getVisibleUnits(playerData.name, "self", rules => rules.refinery).length > 0) return undefined;
+            // The first-refinery fallback below is the historical nearest-visible-ore placement.
+            difficulty = "normal";
         }
         if (difficulty === "brutal" && objectReady.name === "GTGCAN") {
             return getGrandCannonPlacement(game, playerData, objectReady);

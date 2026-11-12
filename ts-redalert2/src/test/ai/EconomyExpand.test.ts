@@ -1,11 +1,11 @@
 import { describe, expect, mock, test } from "bun:test";
 import { BuildStatus } from "../../game/gameobject/Building";
-import { ObjectType, OrderType, QueueStatus, QueueType, Vector2 } from "../../game/ai/thirdpartbot/builtIn/game-api";
+import { ObjectType, OrderType, QueueStatus, QueueType, SpeedType, Vector2 } from "../../game/ai/thirdpartbot/builtIn/game-api";
 import { planRefinery } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/buildingRules";
 import { QueueController, QUEUES } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/queueController";
 import { getBaseCrawlState, isCrawlBlocked, isCrawlDefense, observeBaseCrawl, planBaseCrawl, recordBaseCrawlOrder }
     from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/baseCrawl";
-import { ExpansionMission, ExpansionMissionFactory, isMcvRelocating, planMcvExpansion }
+import { ExpansionMission, ExpansionMissionFactory, PackConyardMission, isMcvRelocating, planMcvExpansion }
     from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/expansionMission";
 import { MissionController } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missionController";
 import { BuiltInBot } from "../../game/ai/thirdpartbot/builtIn/bot/bot";
@@ -20,17 +20,18 @@ function fixture(targetX = 45) {
         const vehicle = ["HARV", "HTNK", "SMCV"].includes(name);
         const unit = { id: nextId++, name, owner: player.name, type: vehicle ? ObjectType.Vehicle : ObjectType.Building,
             tile: { rx, ry: 0 }, foundation: { width: 1, height: 1 }, buildStatus: status, hitPoints: 1000, maxHitPoints: 1000,
-            rules: { name, type: vehicle ? ObjectType.Vehicle : ObjectType.Building, baseNormal: !vehicle,
+            rules: { name, type: vehicle ? ObjectType.Vehicle : ObjectType.Building, baseNormal: !vehicle && !["NALASR", "GAPILL"].includes(name),
                 harvester: name === "HARV", refinery: name === "NAREFN", weaponsFactory: name === "NAWEAP",
-                constructionYard: name === "NACNST", deploysInto: name === "SMCV" ? "NACNST" : undefined }, isIdle: true };
+                constructionYard: name === "NACNST", undeploysInto: name === "NACNST" ? "SMCV" : undefined,
+                deploysInto: name === "SMCV" ? "NACNST" : undefined, speedType: vehicle ? SpeedType.Track : undefined }, isIdle: true };
         units.push(unit); return unit;
     }
     own("NACNST"); own("NAWEAP"); own("NAREFN", 5);
     for (let i = 0; i < 3; i++) own("HARV", 10);
     const resources = [{ tile: { rx: 5, ry: 0 }, ore: 8000, gems: 0 }, { tile: { rx: targetX, ry: 0 }, ore: 12000, gems: 0 }];
     const refinery: any = { name: "NAREFN", refinery: true, freeUnit: "HARV", cost: 2000, type: ObjectType.Building, adjacent: 4 };
-    const power: any = { name: "NAPOWR", cost: 800, type: ObjectType.Building, adjacent: 4 };
-    const defense: any = { name: "NALASR", cost: 500, type: ObjectType.Building, adjacent: 4 };
+    const power: any = { name: "NAPOWR", cost: 800, type: ObjectType.Building, adjacent: 4, baseNormal: true };
+    const defense: any = { name: "NALASR", cost: 500, type: ObjectType.Building, adjacent: 4, baseNormal: false };
     const candidates = [{ id: "8_0", rx: 8, ry: 0 }];
     const expansions = [new Vector2(targetX, 0)];
     const queues = new Map(QUEUES.map(type => [type, { type, status: QueueStatus.Idle, items: [] as any[] }]));
@@ -38,6 +39,7 @@ function fixture(targetX = 45) {
         queueForProduction: mock(() => {}), unqueueFromProduction: mock(() => {}), placeBuilding: mock(() => {}), toggleRepairWrench: mock(() => {}) };
     const game: any = { getCurrentTick: () => tick, getPlayerData: () => player,
         getGeneralRules: () => ({ baseUnit: ["AMCV", "SMCV"] }),
+        rulesApi: { vehicleRules: new Map([["SMCV", { name: "SMCV", speedType: SpeedType.Track }]]) },
         getVisibleUnits: (_name: string, relation: string, predicate = (_rules: any) => true) =>
             (relation === "self" ? units : enemies).filter(unit => predicate(unit.rules)).map(unit => unit.id),
         getUnitData: (id: number) => [...units, ...enemies].find(unit => unit.id === id), getGameObjectData: (id: number) => game.getUnitData(id),
@@ -46,6 +48,8 @@ function fixture(targetX = 45) {
         canPlaceBuilding: (_name: string, _rule: string, tile: any) => !units.some(unit => unit.rules.type === ObjectType.Building && unit.tile.rx === tile.rx && unit.tile.ry === tile.ry),
         mapApi: { getAllTilesResourceData: () => resources, isVisibleTile: () => true, getResourceCreditValues: () => ({ ore: 1, gems: 2 }),
             getStartingLocations: () => [player.startLocation, new Vector2(200, 0)],
+            getTile: (rx: number, ry: number) => ({ id: `${rx}_${ry}`, rx, ry }),
+            findPath: mock((_speed: any, start: any, end: any) => [end, start]),
             getTilesInRect: (rect: any) => candidates.filter(tile => tile.rx >= rect.x && tile.rx < rect.x + rect.width && tile.ry >= rect.y && tile.ry < rect.y + rect.height) },
     };
     const context: any = { difficulty: "brutal", game, player: { name: player.name, actions, production: {
@@ -59,6 +63,7 @@ function fixture(targetX = 45) {
         queue.status = QueueStatus.Active; queue.items = [{ rules: plan.rules, quantity: 1 }];
         tick += 2; observeBaseCrawl(context);
         const unit = own(plan.rules.name, plan.location.rx, BuildStatus.BuildUp);
+        unit.rules.baseNormal = plan.rules.baseNormal;
         queue.items = []; queue.status = QueueStatus.Idle;
         tick += 2; observeBaseCrawl(context);
         unit.buildStatus = BuildStatus.Ready; tick += 2; observeBaseCrawl(context);
@@ -95,14 +100,14 @@ describe("legal visible base crawl", () => {
         f.at(5402); expect(f.run()).toBeUndefined();
         f.enemies.length = 0; f.at(8102); expect(f.run()).toBeDefined();
     });
-    test("g forty is eligible; 149 power picks a power plant, 150 picks a paid basic tower", () => {
+    test("g forty is eligible; real non-adjacency towers fall back to paid power even with margin 150", () => {
         const f = fixture(); f.player.credits = 800;
         expect(planRefinery(f.game, f.player, f.refinery).unreachable[0].g).toBe(40);
         f.player.power.total = 149; expect(f.run()).toMatchObject({ rules: { name: "NAPOWR", cost: 800 }, priority: 45, location: { rx: 8, ry: 0 } });
-        f.player.power.total = 150; expect(f.run()).toMatchObject({ rules: { name: "NALASR", cost: 500 }, priority: 45 });
+        f.player.power.total = 150; expect(f.run()).toMatchObject({ rules: { name: "NAPOWR", cost: 800 }, priority: 45 });
     });
-    test("two actual line towers make the next crawl building a power plant, with public ID classification", () => {
-        const f = fixture();
+    test("an explicitly adjacency-enabled tower rule retains the two-tower limit and actual ID classification", () => {
+        const f = fixture(); f.defense.baseNormal = true;
         const first = f.build(), second = f.build();
         expect(first.name).toBe("NALASR"); expect(second.name).toBe("NALASR");
         expect(isCrawlDefense(f.game, f.player.name, first.id)).toBe(true);
@@ -111,7 +116,8 @@ describe("legal visible base crawl", () => {
         expect(f.run()?.rules.name).toBe("NAPOWR");
     });
     test("a request and active queue cannot consume the five-building cap before real placed Ready IDs", () => {
-        const f = fixture(), plan = f.run()!;
+        const f = fixture(); f.defense.baseNormal = true;
+        const plan = f.run()!;
         expect(getBaseCrawlState(f.game, f.player.name).targets.get(plan.patch.id)?.builtIds.size ?? 0).toBe(0);
         recordBaseCrawlOrder(f.game, f.player.name, plan.rules.name, new Vector2(plan.location.rx, plan.location.ry));
         const queue = f.queues.get(plan.queue)!;
@@ -157,18 +163,30 @@ describe("legal visible base crawl", () => {
     test("the real queue integration pauses/resumes a paid crawl and never substitutes a non-progress site", () => {
         const f = fixture(), controller = new QueueController();
         controller.onAiUpdate(f.context, null, new Map(), () => {});
-        expect(f.context.player.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Armory, "NALASR", ObjectType.Building, 1);
-        const queue = f.queues.get(QueueType.Armory)!;
-        queue.status = QueueStatus.Active; queue.items = [{ rules: f.defense, quantity: 1 }];
+        expect(f.context.player.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Structures, "NAPOWR", ObjectType.Building, 1);
+        const queue = f.queues.get(QueueType.Structures)!;
+        queue.status = QueueStatus.Active; queue.items = [{ rules: f.power, quantity: 1 }];
         f.enemies.push({ id: 999, tile: { rx: 22, ry: 0 }, rules: { isSelectableCombatant: true } }); f.at(102);
         controller.onAiUpdate(f.context, null, new Map(), () => {});
-        expect(f.context.player.actions.pauseProduction).toHaveBeenCalledWith(QueueType.Armory);
+        expect(f.context.player.actions.pauseProduction).toHaveBeenCalledWith(QueueType.Structures);
         queue.status = QueueStatus.OnHold; f.enemies.length = 0; f.at(104);
         controller.onAiUpdate(f.context, null, new Map(), () => {});
-        expect(f.context.player.actions.resumeProduction).toHaveBeenCalledWith(QueueType.Armory);
+        expect(f.context.player.actions.resumeProduction).toHaveBeenCalledWith(QueueType.Structures);
         queue.status = QueueStatus.Ready; f.game.canPlaceBuilding = (_name: string, _rule: string, tile: any) => tile.rx !== 8; f.at(106);
         controller.onAiUpdate(f.context, null, new Map(), () => {});
         expect(f.context.player.actions.placeBuilding).not.toHaveBeenCalled();
+    });
+    test("native non-adjacency towers neither count as progress nor replace an advancing power plant", () => {
+        const f = fixture(); f.defense.baseNormal = false;
+        const tower = f.own("NALASR", 9); tower.rules.baseNormal = false;
+        expect(planRefinery(f.game, f.player, f.refinery).unreachable[0].g).toBe(36);
+        expect(f.run()).toMatchObject({ rules: { name: "NAPOWR" }, location: { rx: 8, ry: 0 } });
+        const plant = f.build();
+        expect(plant.name).toBe("NAPOWR");
+        expect(f.run()).toMatchObject({ rules: { name: "NAPOWR" }, location: { rx: 11, ry: 0 } });
+        expect(isCrawlBlocked(f.game, f.player.name, planRefinery(f.game, f.player, f.refinery).unreachable[0].patch)).toBe(false);
+        const far = fixture(46), falseAnchor = far.own("NALASR", 40); falseAnchor.rules.baseNormal = false;
+        expect(far.run()).toBeUndefined();
     });
     test("ecoOnly crawls with power instead of violating its no-defense-production rule", () => {
         const f = fixture(), previous = BRUTAL_PARAMS.economy.ecoOnly;
@@ -234,6 +252,35 @@ describe("existing MCV economy expansion", () => {
         f.units.splice(f.units.indexOf(mcv), 1); f.own("NACNST", 70); f.at(9004);
         factory.maybeCreateMissions(f.context, missions, () => {});
         expect(isMcvRelocating(f.game, f.player.name)).toBe(false);
+    });
+    test.each(["empty", "partial"])("an economic pack requires a full path, rejecting a %s route", reason => {
+        const f = mcvFixture(), missions = new MissionController(() => {});
+        f.game.mapApi.findPath = mock((_speed: any, start: any) => reason === "empty" ? [] : [start]);
+        new ExpansionMissionFactory().maybeCreateMissions(f.context, missions, () => {});
+        expect(missions.getMissions()).toEqual([]);
+        expect(isMcvRelocating(f.game, f.player.name)).toBe(false);
+        expect(f.game.mapApi.findPath).toHaveBeenCalledTimes(1);
+        expect(f.game.mapApi.findPath.mock.calls[0][3]).toMatchObject({ bestEffort: false });
+    });
+    test("existing economic pack and move missions pause on live pressure, without changing normal pack behavior", () => {
+        const f = mcvFixture(), missions = new MissionController(() => {}), factory = new ExpansionMissionFactory();
+        factory.maybeCreateMissions(f.context, missions, () => {});
+        const pack = missions.getMissions()[0];
+        f.enemies.push({ id: 999, tile: { rx: 22, ry: 0 }, rules: { isSelectableCombatant: true } }); f.at(9002);
+        expect(pack._onAiUpdate(f.context)).toMatchObject({ type: "noop" });
+        expect(f.context.player.actions.orderUnits).not.toHaveBeenCalled();
+        f.enemies.length = 0; f.units.splice(f.units.findIndex(unit => unit.name === "NACNST"), 1);
+        const mcv = f.own("SMCV", 5); f.at(9004); factory.maybeCreateMissions(f.context, missions, () => {});
+        const expand = missions.getMissions().find(mission => mission.getUniqueName() === `expansion-mcv-${mcv.id}`)!;
+        expand.addUnit(mcv.id);
+        f.enemies.push({ id: 999, tile: { rx: 22, ry: 0 }, rules: { isSelectableCombatant: true } }); f.at(9006);
+        expect(expand._onAiUpdate(f.context)).toMatchObject({ type: "noop" });
+        expect(f.context.player.actions.orderUnits).not.toHaveBeenCalled();
+        f.enemies.length = 0; f.at(9008); expand._onAiUpdate(f.context);
+        expect(f.context.player.actions.orderUnits).toHaveBeenCalledWith([mcv.id], OrderType.Move, 70, 0);
+        f.context.player.actions.orderUnits.mockClear();
+        f.context.difficulty = "normal"; new PackConyardMission("normal-pack", mcv.id, () => {})._onAiUpdate(f.context);
+        expect(f.context.player.actions.orderUnits).toHaveBeenCalledWith([mcv.id], OrderType.Move, 5, 0);
     });
     test("a lost selected MCV cannot trigger production of another MCV in brutal", () => {
         const f = mcvFixture();

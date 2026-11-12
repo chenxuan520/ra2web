@@ -76,7 +76,10 @@ export function planBaseCrawl(context: SupabotContext): CrawlPlan | undefined {
     const plan = planRefinery(game, data, refinery);
     if (plan.reachable) return undefined;
     const tick = game.getCurrentTick();
-    const entry = plan.unreachable.find(entry => {
+    // E3 scores all buildings; crawler progress must use actual construction-adjacency anchors.
+    const anchors = game.getVisibleUnits(player.name, "self", rules => rules.type === ObjectType.Building && rules.baseNormal && !rules.wall)
+        .map(id => game.getGameObjectData(id)?.tile).filter((tile): tile is PatchPoint => !!tile);
+    const entry = plan.unreachable.map(entry => ({ ...entry, g: Math.min(...anchors.map(tile => patchDistance(tile, entry.patch))) })).find(entry => {
         if (entry.g > 40 || isCrawlBlocked(game, player.name, entry.patch)) return false;
         const target = targetFor(state, entry.patch.id);
         if (target.builtIds.size >= 5) { target.blockedUntil = tick + 5400; return false; }
@@ -86,10 +89,13 @@ export function planBaseCrawl(context: SupabotContext): CrawlPlan | undefined {
     const target = targetFor(state, entry.patch.id);
     const powerMargin = data.power.total - data.power.drain;
     const soviet = isSovietCountry(data.country?.name);
-    const usePower = powerMargin < 150 || target.defenseIds.size >= 2 || isEcoOnly(context);
+    const defenseName = soviet ? "NALASR" : "GAPILL";
+    const defense = player.production.getAvailableObjects(QueueType.Armory).find(rules => rules.name === defenseName);
+    // Native basic towers have BaseNormal=false: a paid tower cannot extend the line.
+    const usePower = powerMargin < 150 || target.defenseIds.size >= 2 || isEcoOnly(context) || !defense?.baseNormal;
     const queue = usePower ? QueueType.Structures : QueueType.Armory;
     if (player.production.getQueueData(queue).items.length) return undefined;
-    const name = usePower ? (soviet ? "NAPOWR" : "GAPOWR") : (soviet ? "NALASR" : "GAPILL");
+    const name = usePower ? (soviet ? "NAPOWR" : "GAPOWR") : defenseName;
     const rules = player.production.getAvailableObjects(queue).find(rules => rules.name === name);
     if (!rules) return undefined;
     const location = getAdjacencyTiles(game, data, rules, false, 0)
