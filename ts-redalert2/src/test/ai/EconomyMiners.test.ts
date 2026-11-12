@@ -138,7 +138,7 @@ describe("brutal miner capacity and production table", () => {
             for (let i = 0; i < 4; i++) f.enemy(100 + i, 80, ObjectType.Vehicle, { harvester: true });
             expect(f.priority()).toBe(expected);
             f.enemy(200, 40); f.enemy(201, 40); f.at(102);
-            expect(getEconomyPressureLimits(f.context, miners)).toMatchObject({ minerCoreFactor: 2, crawlMiners: 3, extraRefineryCredits: 1000 });
+            expect(getEconomyPressureLimits(f.context, miners)).toMatchObject({ minerCoreFactor: 2, crawlMiners: 2, extraRefineryCredits: 1000 });
             expect(f.priority()).toBe(0);
         }
     });

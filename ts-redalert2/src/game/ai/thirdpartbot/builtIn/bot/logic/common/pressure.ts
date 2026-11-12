@@ -123,7 +123,7 @@ export function getEconomyPressureLimits(context: PressureContext, miners: numbe
     const state = readPressure(context);
     return {
         minerCoreFactor: !state.pressured && miners <= state.enemyMinersSeen ? 1 : 2,
-        crawlMiners: state.passiveEnemy ? 2 : 3,
+        crawlMiners: 2,
         extraRefineryCredits: state.passiveEnemy ? 600 : 1000,
     };
 }

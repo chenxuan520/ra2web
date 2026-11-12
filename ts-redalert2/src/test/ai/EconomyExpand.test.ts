@@ -85,20 +85,19 @@ describe("legal visible base crawl", () => {
             }
             if (reason === "no-target") f.resources.splice(1);
             if (reason === "factory") f.units.splice(f.units.findIndex(unit => unit.name === "NAWEAP"), 1);
-            if (reason === "miners") f.units.splice(f.units.findIndex(unit => unit.name === "HARV"), 1);
+            if (reason === "miners") f.units.splice(f.units.findIndex(unit => unit.name === "HARV"), 2);
             if (reason === "pressure") f.enemies.push({ id: 999, tile: { rx: 22, ry: 0 }, rules: { isSelectableCombatant: true } });
             if (reason === "queue") f.queues.get(QueueType.Structures)!.items.push({ rules: f.power, quantity: 1 });
             if (reason === "credits") f.player.credits = 799;
             if (reason === "normal") f.context.difficulty = "normal";
             expect(f.run()).toBeUndefined();
         });
-    test("E7 permits two-miner crawling only after the full quiet-home window", () => {
+    test("the authorized two-miner crawl adjustment starts earlier but never bypasses real pressure", () => {
         const f = fixture(); f.units.splice(f.units.findIndex(unit => unit.name === "HARV"), 1);
-        f.at(5399); expect(f.run()).toBeUndefined();
-        f.at(5400); expect(f.run()).toBeDefined();
-        f.enemies.push({ id: 999, tile: { rx: 60, ry: 0 }, rules: { isSelectableCombatant: true } });
-        f.at(5402); expect(f.run()).toBeUndefined();
-        f.enemies.length = 0; f.at(8102); expect(f.run()).toBeDefined();
+        f.at(3000); expect(f.run()).toBeDefined();
+        f.enemies.push({ id: 999, tile: { rx: 22, ry: 0 }, rules: { isSelectableCombatant: true } });
+        f.at(3002); expect(f.run()).toBeUndefined();
+        f.enemies.length = 0; f.at(3004); expect(f.run()).toBeDefined();
     });
     test("g forty is eligible; real non-adjacency towers fall back to paid power even with margin 150", () => {
         const f = fixture(); f.player.credits = 800;
