@@ -188,6 +188,18 @@
       "target": "c3",
       "winsVsTarget": 12,
       "note": "admitted round 5"
+    },
+    {
+      "id": "x-idle-01",
+      "tag": "league/x-idle-01",
+      "tree": "e69f8afb24112bfc326d728cbdf72b9d7b5ae340",
+      "profile": "brutal",
+      "role": "sparring",
+      "active": false,
+      "style": "idle",
+      "target": "c3",
+      "winsVsTarget": 0,
+      "note": "经济试跑专用假人，不参加联赛"
     }
   ]
 }

@@ -16,6 +16,7 @@
 | v5 | history | 是 | 1515 | 408 | 54.7% | 14756 |
 | v0 | history | 否 | 1508 | 144 | 58.3% | 15084 |
 | x-airguard-01 | sparring | 是 | — | 0 | — | — |
+| x-idle-01 | sparring | 否 | — | 0 | — | — |
 | x-harass-01 | sparring | 是 | 1499 | 144 | 38.9% | 17472 |
 | x-engineer-01 | sparring | 是 | 1476 | 120 | 35.0% | 16264.5 |
 | c0 | history | 否 | 1463 | 72 | 56.9% | 14964 |
@@ -57,3 +58,4 @@
 | x-crawl-01 | crawl | c2 | 8 | 是 | c3 | 8 |
 | x-mixed-01 | mixed | c2 | 10 | 是 | c3 | 7 |
 | x-airguard-01 | airguard | — | — | 是 | c3 | 6 |
+| x-idle-01 | idle | — | — | 否 | c3 | 0 |

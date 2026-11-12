@@ -26,6 +26,7 @@ import { loadBaselineBot } from './ai-baseline';
 import { observeBuildingMissions } from './ai-building-probe';
 import { observeSpecialtyCombat, readForceComposition } from './ai-specialty-telemetry';
 import { AiMobilityProbe } from './ai-mobility-probe';
+import { createEcoTelemetry } from './ai-eco-telemetry';
 
 const projectRoot = fileURLToPath(new URL('../', import.meta.url));
 const repositoryRoot = resolve(projectRoot, '..');
@@ -41,6 +42,7 @@ const { values: args } = parseArgs({ options: {
     'baseline-profile': { type: 'string', default: 'normal' },
     'no-swap': { type: 'boolean', default: false },
     'no-specialty-telemetry': { type: 'boolean', default: false },
+    'no-eco-telemetry': { type: 'boolean', default: false },
     'unit-details': { type: 'boolean', default: false },
     credits: { type: 'string', default: '10000' },
     units: { type: 'string', default: '0' },
@@ -62,6 +64,7 @@ if (args.help) {
   --baseline-profile normal   Use same refs/profiles for self-play sanity checks
   --no-swap                   Disable paired swaps of spawn position and player update order
   --no-specialty-telemetry    Disable specialty observers for state-equivalence checks
+  --no-eco-telemetry          Disable read-only economic sampling for state-equivalence checks
   --unit-details             Include sampled unit positions and engine task names for diagnosis
   --credits 10000 --units 0   Identical starting resources and units for both players
   --out PATH                  Incremental JSON report; errors are recorded, never counted as wins
@@ -345,12 +348,16 @@ for (const mapName of args.map!.split(',')) {
             // Capture AI diagnostic messages without enabling gameplay debug mode.
             for (const player of players) AppLogger.get(player.name).setLevel(AppLogger.DEBUG);
             const buildingObservers = players.map(player => observeBuildingMissions(bots.get(player.name), () => game.currentTick));
+            const ecoTelemetry = args['no-eco-telemetry'] ? undefined : createEcoTelemetry(game, players, match.startingLocations);
+            if (ecoTelemetry) match.ecoMap = ecoTelemetry.ecoMap;
             const sample = () => {
+                const ecoSample = ecoTelemetry?.sample();
                 const playerSamples = players.map((player: any, side: number) => ({
                     ...recordPlayer(player, bots.get(player.name), economy[side]), buildingPlanning: buildingObservers[side](),
                     ...(!args['no-specialty-telemetry'] ? { forceComposition: readForceComposition(player) } : {}),
+                    ...(ecoSample ? { eco: ecoSample.players[side] } : {}),
                 }));
-                samples.push({ tick: game.currentTick, players: playerSamples });
+                samples.push({ tick: game.currentTick, players: playerSamples, ...(ecoSample ? { eco: ecoSample.eco } : {}) });
                 writeProgress(`  tick=${game.currentTick} ${playerSamples.map((player: any, side: number) => `${side === 0 ? 'candidate' : 'baseline'} credits=${player.credits} miners=${player.harvesters} army=${player.army} buildings=${player.buildings}`).join(' | ')}`);
             };
             sample();
