@@ -176,6 +176,18 @@
       "winsVsTarget": 6,
       "replaces": "x-air-01",
       "note": "x-air-01仅坐标校验的安全替换；原空军策略和资源成本不变；第5轮正式种子技术验证6胜17负1超时、0错误，原始记录保留在外部；非找茬入池、非G1-G6晋级"
+    },
+    {
+      "id": "x-rearm-01",
+      "tag": "league/x-rearm-01",
+      "tree": "294d2855bdfcbce998c9396ef46124c44d1224e2",
+      "profile": "brutal",
+      "role": "exploiter",
+      "active": true,
+      "style": "rearm",
+      "target": "c3",
+      "winsVsTarget": 12,
+      "note": "admitted round 5"
     }
   ]
 }
