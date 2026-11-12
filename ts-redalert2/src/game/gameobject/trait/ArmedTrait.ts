@@ -140,6 +140,7 @@ export class ArmedTrait implements NotifyTick, NotifyDestroy {
     public computeGuardScanRange(weapon?: Weapon): number {
         const maxWeaponRange = this.guardWeaponRangeOverride ??
             [this.primaryWeapon, this.secondaryWeapon]
+                .filter(isNotNullOrUndefined)
                 .filter(w => w === weapon || (w?.rules as any).neverUse)
                 .reduce((max, w) => Math.max(max, w!.range), 0);
         const guardRange = Math.max(maxWeaponRange, this.gameObject.rules.guardRange);
