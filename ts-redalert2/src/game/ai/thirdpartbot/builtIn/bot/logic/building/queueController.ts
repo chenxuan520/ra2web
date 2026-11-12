@@ -18,6 +18,7 @@ import { desiredMiners } from "./harvester";
 import { isEcoOnly, readPressure } from "../common/pressure";
 import { isCivilianEconomy } from "./economyPlan";
 import { isMinerRefineryProduction, observeRefineryEconomy, recordRefineryOrder, sellDuplicateRefinery } from "./refineryEconomy";
+import { isCrawlProduction, observeBaseCrawl, planBaseCrawl, recordBaseCrawlOrder } from "./baseCrawl";
 
 export const QUEUES = [
     QueueType.Structures,
@@ -82,6 +83,7 @@ export class QueueController {
         const { production: productionApi, actions: actionsApi } = player;
         const playerData = game.getPlayerData(player.name);
         observeRefineryEconomy(context);
+        observeBaseCrawl(context);
         // Economic units do not belong to combat missions. Keep a separate request
         // so losing miners cannot permanently starve an otherwise healthy base.
         const requests = new Map(unitTypeRequests);
@@ -120,6 +122,10 @@ export class QueueController {
                     cappedSupport.add(name);
                 }
             }
+        }
+        const crawl = planBaseCrawl(context);
+        if (crawl && crawl.priority > (requests.get(crawl.rules.name)?.priority ?? 0)) {
+            requests.set(crawl.rules.name, { priority: crawl.priority, specificLocation: new Vector2(crawl.location.rx, crawl.location.ry) });
         }
         for (const option of productionApi.getAvailableObjects(QueueType.Vehicles)) {
             if (!option.harvester) continue;
@@ -224,6 +230,10 @@ export class QueueController {
             .reduce((pV, cV) => pV + cV, 0);
 
         this.queueStates.forEach((decision) => {
+            if (context.difficulty === "brutal" && isCrawlProduction(game, player.name, decision.queue) && readPressure(context).pressured) {
+                if (productionApi.getQueueData(decision.queue).status === QueueStatus.Active) actionsApi.pauseProduction(decision.queue);
+                return;
+            }
             this.updateBuildQueue(
                 game,
                 productionApi,
@@ -315,6 +325,7 @@ export class QueueController {
                 logger(`Decision (${queueTypeToName(queueType)}): ${decision.unit.name}`);
                 actionsApi.queueForProduction(queueType, decision.unit.name, decision.unit.type, 1);
                 if (difficulty === "brutal") recordRefineryOrder(game, playerData.name, decision.unit.name, unitTypeRequests.get(decision.unit.name)?.specificLocation);
+                if (difficulty === "brutal") recordBaseCrawlOrder(game, playerData.name, decision.unit.name, unitTypeRequests.get(decision.unit.name)?.specificLocation);
             }
         } else if (queueData.status == QueueStatus.Ready && queueData.items.length > 0) {
             if (isBuildingQueue(queueType)) {
@@ -339,7 +350,7 @@ export class QueueController {
                     game.canPlaceBuilding(playerData.name, readyUnit.name, { rx: placeX, ry: placeY });
 
                 if ((!canPlace || failures >= PLACEMENT_FAILURE_RETRY_THRESHOLD) &&
-                    !(difficulty === "brutal" && isMinerRefineryProduction(game, playerData.name, readyUnit.name))) {
+                    !(difficulty === "brutal" && (isMinerRefineryProduction(game, playerData.name, readyUnit.name) || isCrawlProduction(game, playerData.name, queueType)))) {
                     // After threshold, find an alternative placement location
                     const conYards = game.getVisibleUnits(playerData.name, "self", (r: TechnoRules) => r.constructionYard);
                     const conYardData = conYards.length > 0 ? game.getUnitData(conYards[0]) : undefined;

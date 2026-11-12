@@ -30,6 +30,10 @@ import { ActionBatcher } from "../actionBatcher";
 import { getCachedTechnoRules } from "../../common/rulesCache";
 import { canBuildOnTile } from "../../common/tileUtils";
 import { MissionContext, SupabotContext } from "../../common/context";
+import { findVisiblePatches, OrePatch, patchDistance, PatchPoint, ScoredPatch, scorePatch } from "../../common/orePatches";
+import { isPressured } from "../../common/pressure";
+import { isCrawlBlocked } from "../../building/baseCrawl";
+import { countCoreTanks, readStrategicSituation } from "../../../strategy/nationalComposition";
 
 const ORDER_COOLDOWN_TICKS = 60;
 
@@ -79,6 +83,7 @@ export class ExpansionMission extends Mission {
             if (this.selectedMcvId && !!game.getUnitData(this.selectedMcvId)) {
                 return requestSpecificUnits([this.selectedMcvId], this.priority);
             }
+            if (context.difficulty === "brutal") return disbandMission();
             return requestUnitsWithSamePriority(mcvTypes, this.priority);
         }
 
@@ -311,6 +316,32 @@ export class PackConyardMission extends Mission {
 const CONYARD_PACK_COOLDOWN = 15 * 60 * 6; // 6 mins
 const DO_NOT_EXPAND_BEFORE_TICKS = 15 * 60 * 6; // 6 minutes
 
+const mcvRelocations = new WeakMap<GameApi, Map<string, Vector2>>();
+
+/** Pending economic relocation, not evidence that a base has actually been packed or deployed. */
+export function isMcvRelocating(game: GameApi, playerName: string): boolean {
+    return mcvRelocations.get(game)?.has(playerName) ?? false;
+}
+
+export function planMcvExpansion(context: SupabotContext, home: PatchPoint): { patch: OrePatch; candidate: Vector2 } | undefined {
+    const { game, player } = context;
+    if (context.difficulty !== "brutal" || game.getCurrentTick() < 9000 || isPressured(context) ||
+        player.production.getQueueData(QueueType.Structures).items.length > 0) return undefined;
+    const data = game.getPlayerData(player.name), patches = findVisiblePatches(game, player.name);
+    if (patches.filter(patch => patchDistance(home, patch) <= 30).reduce((sum, patch) => sum + patch.value, 0) >= 6000 ||
+        countCoreTanks(readStrategicSituation(game, data)) < 6) return undefined;
+    const targets = patches.filter(patch => patch.value >= 12000).map(patch => scorePatch(game, data, patch))
+        .filter((entry): entry is ScoredPatch => !!entry && (entry.g > 40 || isCrawlBlocked(game, player.name, entry.patch)))
+        .sort((a, b) => b.score - a.score || a.g - b.g || (a.patch.id < b.patch.id ? -1 : a.patch.id > b.patch.id ? 1 : 0));
+    for (const entry of targets) {
+        const candidate = [...context.matchAwareness.getNextExpansionCandidates()]
+            .filter(candidate => patchDistance({ rx: candidate.x, ry: candidate.y }, entry.patch) <= 12)
+            .sort((a, b) => patchDistance({ rx: a.x, ry: a.y }, entry.patch) - patchDistance({ rx: b.x, ry: b.y }, entry.patch) || a.x - b.x || a.y - b.y)[0];
+        if (candidate) return { patch: entry.patch, candidate };
+    }
+    return undefined;
+}
+
 export class ExpansionMissionFactory {
     constructor(private lastConyardPackAt = Number.MIN_VALUE) {}
     getName(): string {
@@ -322,6 +353,13 @@ export class ExpansionMissionFactory {
         const playerData = game.getPlayerData(player.name);
         const mcvs = game.getVisibleUnits(player.name, "self", (r) => game.getGeneralRules().baseUnit.includes(r.name));
         const expandToCandidates = matchAwareness.getNextExpansionCandidates();
+        const relocation = mcvRelocations.get(game)?.get(player.name);
+        if (context.difficulty === "brutal" && relocation && mcvs.length === 0 &&
+            game.getVisibleUnits(player.name, "self", rules => rules.constructionYard).some(id => {
+                const yard = game.getGameObjectData(id);
+                return yard && Math.hypot(yard.tile.rx - relocation.x, yard.tile.ry - relocation.y) <= CONYARD_SCAN_DISTANCE;
+            })) mcvRelocations.get(game)!.delete(player.name);
+        const mcvCandidates = context.difficulty === "brutal" ? (relocation && !isPressured(context) ? [relocation] : []) : expandToCandidates;
 
         // This is used for deploying the initial MCV.
         if (game.getCurrentTick() < DO_NOT_EXPAND_BEFORE_TICKS) {
@@ -330,10 +368,10 @@ export class ExpansionMissionFactory {
                     new ExpansionMission("initial-deploy-mcv-" + mcv, 100, mcv, [playerData.startLocation], logger),
                 );
             });
-        } else if (expandToCandidates.length > 0) {
+        } else if (mcvCandidates.length > 0) {
             mcvs.forEach((mcv) => {
                 missionController.addMission(
-                    new ExpansionMission("expansion-mcv-" + mcv, 100, mcv, expandToCandidates, logger),
+                    new ExpansionMission("expansion-mcv-" + mcv, 100, mcv, mcvCandidates, logger),
                 );
             });
         }
@@ -359,12 +397,12 @@ export class ExpansionMissionFactory {
         if (conYards.length === 0 || warFactories.length === 0 || refineries.length === 0 || !isSafeToExpand) {
             return;
         }
-        if (context.difficulty === "brutal" && conYards.length === 1) {
+        let economyCandidate: Vector2 | undefined;
+        if (context.difficulty === "brutal") {
             const yard = game.getGameObjectData(conYards[0]);
-            const nearbyOre = yard && game.mapApi.getAllTilesResourceData().some(resource =>
-                (resource.ore > 0 || resource.gems > 0 || resource.spawnsOre) && game.mapApi.isVisibleTile(resource.tile, player.name) &&
-                Math.hypot(resource.tile.rx - yard.tile.rx, resource.tile.ry - yard.tile.ry) <= 25);
-            if (nearbyOre || context.player.production.getQueueData(QueueType.Structures).items.length) return;
+            const plan = yard && planMcvExpansion(context, yard.tile);
+            if (!plan) return;
+            economyCandidate = plan.candidate;
         }
         const selectedConyard = game.getGameObjectData(conYards[0])!;
         const ownRefineries = new Set(refineries);
@@ -380,6 +418,11 @@ export class ExpansionMissionFactory {
             missionController.addMission(
                 new PackConyardMission("pack-up-" + selectedConyard.id, selectedConyard.id, logger),
             );
+            if (economyCandidate) {
+                let players = mcvRelocations.get(game);
+                if (!players) { players = new Map(); mcvRelocations.set(game, players); }
+                players.set(player.name, economyCandidate);
+            }
             logger("Time to pack the conyard and expand", false);
             this.lastConyardPackAt = game.getCurrentTick();
         } else {

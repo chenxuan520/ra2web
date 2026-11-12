@@ -10,6 +10,7 @@ import { Strategy } from "./strategy/strategy";
 import { DefaultStrategy } from "./strategy/defaultStrategy";
 import { BaseBuildingMission } from "./logic/mission/missions/baseBuildingMission";
 import { observePressureEvent, readPressure } from "./logic/common/pressure";
+import { isMcvRelocating } from "./logic/mission/missions/expansionMission";
 
 const DEBUG_STATE_UPDATE_INTERVAL_SECONDS = 6;
 
@@ -160,6 +161,7 @@ export class BuiltInBot extends Bot {
     }
 
     private tryInitialMcvDeploy(game: GameApi): void {
+        if (this.difficulty === "brutal" && isMcvRelocating(game, this.name)) return;
         const hasConyard = game.getVisibleUnits(this.name, "self", (r) => r.constructionYard).length > 0;
         if (hasConyard) {
             this.deployAttemptCount = 0;
