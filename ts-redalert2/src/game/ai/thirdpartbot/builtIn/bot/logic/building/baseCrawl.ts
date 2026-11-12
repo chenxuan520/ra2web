@@ -2,7 +2,7 @@ import { BuildStatus } from "@/game/gameobject/Building";
 import { GameApi, ObjectType, QueueStatus, QueueType, TechnoRules, Vector2 } from "../../../game-api";
 import { SupabotContext } from "../common/context";
 import { OrePatch, patchDistance, PatchPoint } from "../common/orePatches";
-import { isEcoOnly, isPressured } from "../common/pressure";
+import { getEconomyPressureLimits, isEcoOnly, isPressured } from "../common/pressure";
 import { isSovietCountry } from "../../strategy/basicInfantryBudget";
 import { getAdjacencyTiles, planRefinery } from "./buildingRules";
 
@@ -67,8 +67,9 @@ export function planBaseCrawl(context: SupabotContext): CrawlPlan | undefined {
         return player.production.getQueueData(state.active.queue).items[0]?.rules.name === state.active.rules.name ? state.active : undefined;
     }
     const data = game.getPlayerData(player.name);
+    const miners = game.getVisibleUnits(player.name, "self", rules => rules.harvester).length;
     if (game.getVisibleUnits(player.name, "self", rules => rules.weaponsFactory).length === 0 ||
-        game.getVisibleUnits(player.name, "self", rules => rules.harvester).length < 3 ||
+        miners < getEconomyPressureLimits(context, miners).crawlMiners ||
         player.production.getQueueData(QueueType.Structures).items.length > 0 || data.credits < 800) return undefined;
     const refinery = player.production.getAvailableObjects(QueueType.Structures).find(rules => rules.refinery);
     if (!refinery) return undefined;

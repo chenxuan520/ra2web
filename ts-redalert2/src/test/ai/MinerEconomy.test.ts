@@ -12,7 +12,7 @@ function fixture() {
     };
     const refineries: any[] = [{ id: 10, owner: "bot", tile: { rx: 0, ry: -12, z: 0 }, rules: { refinery: true } }];
     const enemies: any[] = [];
-    const resources: any[] = [{ tile: { rx: 4, ry: 0, z: 0 }, ore: 0, gems: 10 }];
+    const resources: any[] = [{ tile: { rx: 4, ry: 0, z: 0 }, ore: 0, gems: 200 }];
     const hidden = new Set<string>();
     const blocked = new Set<string>();
     const key = (tile: any) => `${tile.rx},${tile.ry}`;
@@ -25,6 +25,7 @@ function fixture() {
         getUnitData: (id: number) => [miner, ...refineries, ...enemies].find(unit => unit.id === id),
         mapApi: {
             getAllTilesResourceData: () => resources,
+            getResourceCreditValues: () => ({ ore: 25, gems: 50 }),
             isVisibleTile: (tile: any) => !hidden.has(key(tile)),
             getTileResourceData: (tile: any) => resources.find(resource => key(resource.tile) === key(tile)) ?? { ore: 0, gems: 0 },
             getTile: (rx: number, ry: number) => ({ rx, ry, z: 0 }),
@@ -101,13 +102,13 @@ describe("independent miner economy", () => {
         }
     });
 
-    test("gem orders are bounded to one per miner per 90 ticks", () => {
+    test("gem orders are bounded to one per miner per 300 ticks", () => {
         const f = fixture();
         f.run();
         f.at(90); f.run();
         f.at(120); f.run();
         expect(f.actions.orderUnits).toHaveBeenCalledTimes(1);
-        f.at(150); f.run();
+        f.at(360); f.run();
         expect(f.actions.orderUnits).toHaveBeenCalledTimes(2);
     });
 

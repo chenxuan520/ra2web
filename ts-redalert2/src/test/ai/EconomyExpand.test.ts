@@ -87,6 +87,14 @@ describe("legal visible base crawl", () => {
             if (reason === "normal") f.context.difficulty = "normal";
             expect(f.run()).toBeUndefined();
         });
+    test("E7 permits two-miner crawling only after the full quiet-home window", () => {
+        const f = fixture(); f.units.splice(f.units.findIndex(unit => unit.name === "HARV"), 1);
+        f.at(5399); expect(f.run()).toBeUndefined();
+        f.at(5400); expect(f.run()).toBeDefined();
+        f.enemies.push({ id: 999, tile: { rx: 60, ry: 0 }, rules: { isSelectableCombatant: true } });
+        f.at(5402); expect(f.run()).toBeUndefined();
+        f.enemies.length = 0; f.at(8102); expect(f.run()).toBeDefined();
+    });
     test("g forty is eligible; 149 power picks a power plant, 150 picks a paid basic tower", () => {
         const f = fixture(); f.player.credits = 800;
         expect(planRefinery(f.game, f.player, f.refinery).unreachable[0].g).toBe(40);

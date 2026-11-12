@@ -3,7 +3,7 @@ import { readStrategicSituation } from "../../strategy/nationalComposition";
 import { getOpeningAirBudget } from "../../strategy/openingAirBudget";
 import { BRUTAL_PARAMS } from "../../strategy/brutalParams";
 import { SupabotContext } from "../common/context";
-import { isPressured, readPressure } from "../common/pressure";
+import { getEconomyPressureLimits, isPressured, readPressure } from "../common/pressure";
 import { planRefinery } from "./buildingRules";
 import { planMinerRefinery } from "./refineryEconomy";
 
@@ -46,7 +46,8 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
                 (!factories && (s.own.JUMPJET ?? 0) >= 2 && getOpeningAirBudget(game, player) === 2)) ? BRUTAL_PARAMS.economy.firstRefineryPriority : 0;
         }
         if (refineries >= BRUTAL_PARAMS.economy.maxRefineries) return 0;
-        return committed || plan.reachable && s.credits >= 1000 && !pressure.baseUnderSiege
+        const creditFloor = getEconomyPressureLimits(context ?? { game, player: { name: player.name }, difficulty: "brutal" }, s.harvesters).extraRefineryCredits;
+        return committed || plan.reachable && s.credits >= creditFloor && !pressure.baseUnderSiege
             ? BRUTAL_PARAMS.economy.extraRefineryPriority : minerRefinery();
     }
     if (rules.name === "GAPILE" || rules.name === "NAHAND") return count ? 0 : BRUTAL_PARAMS.economy.barracksPriority;

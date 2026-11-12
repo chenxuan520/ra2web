@@ -96,7 +96,7 @@ export function isMinerRefineryProduction(game: GameApi, playerName: string, nam
 
 export function getCommittedRefineryLocation(context: SupabotContext, name: string): PatchPoint | undefined {
     const state = stateFor(context.game, context.player.name);
-    return context.player.production.getQueueData(QueueType.Structures).items[0]?.rules.name === name && state.active?.name === name
+    return context.player.production.getQueueData(QueueType.Structures).items[0]?.rules.name === name && state.active?.name === name && state.active.minerRefinery
         ? state.active.location : undefined;
 }
 
@@ -137,6 +137,7 @@ export function sellDuplicateRefinery(context: SupabotContext): void {
     if (tick % 30 || state.pendingSale || tick - state.lastSaleStart < 300) return;
     const refineries = game.getVisibleUnits(player.name, "self", rules => rules.refinery)
         .map(id => game.getUnitData(id)).filter((unit): unit is UnitData => !!unit);
+    if (refineries.length < 2) return;
     const patches = findVisiblePatches(game, player.name);
     const servedCount = patches.filter(patch => isServed(patch, refineries.map(unit => unit.tile))).length;
     if (refineries.length - 1 < Math.max(1, servedCount)) return;

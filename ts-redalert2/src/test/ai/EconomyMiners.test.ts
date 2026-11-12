@@ -3,7 +3,7 @@ import { ApiEventType, ObjectType, QueueStatus, QueueType, Vector2 } from "../..
 import { Harvester, desiredMiners, patchCapacity } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/harvester";
 import { QueueController, QUEUES } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/queueController";
 import { getEconomyBuildingPriority } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/economyPlan";
-import { isPressured, observePressureEvent, readPressure, setPressureWatchPost } from "../../game/ai/thirdpartbot/builtIn/bot/logic/common/pressure";
+import { getEconomyPressureLimits, isPressured, observePressureEvent, readPressure, setPressureWatchPost } from "../../game/ai/thirdpartbot/builtIn/bot/logic/common/pressure";
 import { BRUTAL_PARAMS } from "../../game/ai/thirdpartbot/builtIn/bot/strategy/brutalParams";
 import { DefaultStrategy } from "../../game/ai/thirdpartbot/builtIn/bot/strategy/defaultStrategy";
 import { MissionController } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missionController";
@@ -130,6 +130,16 @@ describe("brutal miner capacity and production table", () => {
             f.options.set(QueueType.Structures, [refinery]); f.requests.set("NAREFN", { priority: 50, specificLocation: null });
             if (active) Object.assign(f.queues.get(QueueType.Structures)!, { status: QueueStatus.Active, items: [{ rules: refinery, quantity: 1 }] });
             expect(f.priority()).toBe(miners < 3 ? 110 : 0);
+        }
+    });
+    test("E7's real visible-miner peak relaxes only the sixth row while the player is not ahead", () => {
+        for (const [miners, core, expected] of [[4, 2, 78], [5, 3, 0]]) {
+            const f = fixture(miners, core);
+            for (let i = 0; i < 4; i++) f.enemy(100 + i, 80, ObjectType.Vehicle, { harvester: true });
+            expect(f.priority()).toBe(expected);
+            f.enemy(200, 40); f.enemy(201, 40); f.at(102);
+            expect(getEconomyPressureLimits(f.context, miners)).toMatchObject({ minerCoreFactor: 2, crawlMiners: 3, extraRefineryCredits: 1000 });
+            expect(f.priority()).toBe(0);
         }
     });
     test("115 flak response still outranks the 110 income opening", () => {

@@ -87,6 +87,14 @@ describe("brutal refinery investment", () => {
         f.enemies.length = 0; f.legal.clear(); f.at(106); expect(f.priority()).toBe(0);
         const capped = fixture(2, 6); expect(capped.priority()).toBe(0);
     });
+    test("E7's quiet enemy window lowers only the extra-refinery cash floor to 600", () => {
+        const f = fixture(2, 2); f.at(5400); f.player.credits = 599;
+        expect(f.priority()).toBe(0);
+        f.player.credits = 600; f.at(5402); expect(f.priority()).toBe(40);
+        f.enemies.push({ id: 999, tile: { rx: 60, ry: 0 }, rules: { isSelectableCombatant: true } });
+        f.at(5404); expect(f.priority()).toBe(0);
+        f.enemies.length = 0; f.at(8104); expect(f.priority()).toBe(40);
+    });
     test("the mission uses a subsidy landing site instead of E3's unreachable fallback", () => {
         const f = subsidyFixture();
         expect(f.priority()).toBe(40);
@@ -169,8 +177,25 @@ describe("paid subsidy refinery conditions and real lifecycle", () => {
         f.at(102); observeRefineryEconomy(f.context);
         f.queues.get(QueueType.Structures)!.status = QueueStatus.Ready;
         f.legal.clear(); f.legal.add("24_0"); f.at(104);
-        new QueueController().onAiUpdate(f.context, null, new Map([[f.rules.name, { priority: 40, specificLocation: new Vector2(4, 0) }]]), () => {});
+        const controller = new QueueController(), requests = new Map([[f.rules.name, { priority: 40, specificLocation: new Vector2(4, 0) }]]);
+        for (let i = 0; i < 10; i++) {
+            f.at(104 + i * 2); controller.onAiUpdate(f.context, null, requests, () => {});
+        }
+        expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+        f.at(124); controller.onAiUpdate(f.context, null, requests, () => {});
+        expect(f.actions.unqueueFromProduction).toHaveBeenCalledWith(QueueType.Structures, "NAREFN", ObjectType.Building, 1);
         expect(f.actions.placeBuilding).not.toHaveBeenCalled();
+    });
+    test("an unmarked first refinery must keep E3's visible-patch replanning while production is active", () => {
+        const f = fixture(0, 0);
+        const initial = planRefinery(f.game, f.player, f.rules);
+        expect(initial.location).toMatchObject({ rx: 4, ry: 0 });
+        recordRefineryOrder(f.game, f.player.name, f.rules.name, new Vector2(initial.location!.rx, initial.location!.ry));
+        Object.assign(f.queues.get(QueueType.Structures)!, { status: QueueStatus.Active, items: [{ rules: f.rules, quantity: 1 }] });
+        f.at(102); observeRefineryEconomy(f.context);
+        f.resources[0].ore = 0; f.resources[1].ore = 0; f.resources[1].gems = 400;
+        f.at(190);
+        expect(new BaseBuildingMission(QueueType.Structures, () => {})._onAiUpdate(f.context)).toMatchObject({ rx: 24, ry: 0 });
     });
     test("a non-refinery queue start cannot consume the subsidy cooldown", () => {
         const f = subsidyFixture(), plan = f.subsidy()!;
@@ -182,6 +207,13 @@ describe("paid subsidy refinery conditions and real lifecycle", () => {
 });
 
 describe("same-field old refinery sales", () => {
+    test("zero or one refinery needs no resource query and cannot be sold", () => {
+        for (const count of [0, 1]) {
+            const f = fixture(2, count); f.game.mapApi = undefined; f.at(150);
+            expect(() => sellDuplicateRefinery(f.context)).not.toThrow();
+            expect(f.actions.sellBuilding).not.toHaveBeenCalled();
+        }
+    });
     test("sells the oldest same-field refinery only after the newest has really become ready for over 150 ticks", () => {
         const f = subsidyFixture(); observeRefineryEconomy(f.context);
         const old = f.units.find(unit => unit.name === "NAREFN")!;

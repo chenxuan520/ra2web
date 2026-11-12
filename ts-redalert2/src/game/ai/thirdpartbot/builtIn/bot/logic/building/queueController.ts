@@ -15,7 +15,7 @@ import { UnitRequest } from "../mission/missionController";
 import { countCoreTanks, NATIONAL_SUPPORT_LIMITS, readStrategicSituation } from "../../strategy/nationalComposition";
 import { getBasicInfantryBudget, isSovietCountry } from "../../strategy/basicInfantryBudget";
 import { desiredMiners } from "./harvester";
-import { isEcoOnly, readPressure } from "../common/pressure";
+import { getEconomyPressureLimits, isEcoOnly, readPressure } from "../common/pressure";
 import { isCivilianEconomy } from "./economyPlan";
 import { isMinerRefineryProduction, observeRefineryEconomy, recordRefineryOrder, sellDuplicateRefinery } from "./refineryEconomy";
 import { isCrawlProduction, observeBaseCrawl, planBaseCrawl, recordBaseCrawlOrder } from "./baseCrawl";
@@ -70,6 +70,7 @@ export class QueueController {
     private airResponseUntil = -Infinity;
     private airResponseTarget = 0;
     private placementFailures: Map<string, number> = new Map();
+    private economicPlacementFailures: Map<string, number> = new Map();
 
     constructor() {}
 
@@ -145,6 +146,7 @@ export class QueueController {
                 const core = countCoreTanks(situation);
                 const pressure = readPressure(context);
                 const minCoreBeforeMiner2 = isSovietCountry(playerData.country?.name) ? 2 : 1;
+                const coreFactor = getEconomyPressureLimits(context, miners).minerCoreFactor;
 
                 priority = 0;
                 if (miners === 0) {
@@ -157,7 +159,7 @@ export class QueueController {
                     priority = 110;
                 } else if (miners === 2 && pressure.pressured && (ecoOnly || core >= 4) && miners < desired) {
                     priority = 78;
-                } else if (miners >= 3 && miners < desired && !pressure.baseUnderSiege && (ecoOnly || core >= 2 * (miners - 2))) {
+                } else if (miners >= 3 && miners < desired && !pressure.baseUnderSiege && (ecoOnly || core >= coreFactor * (miners - 2))) {
                     priority = 78;
                 }
             }
@@ -324,20 +326,25 @@ export class QueueController {
             if (decision !== undefined && (canAffordBuilding || !(totalCostAcrossQueues > myCredits && decision.priority < minimumPriority))) {
                 logger(`Decision (${queueTypeToName(queueType)}): ${decision.unit.name}`);
                 actionsApi.queueForProduction(queueType, decision.unit.name, decision.unit.type, 1);
+                if (difficulty === "brutal") this.economicPlacementFailures.delete(decision.unit.name);
                 if (difficulty === "brutal") recordRefineryOrder(game, playerData.name, decision.unit.name, unitTypeRequests.get(decision.unit.name)?.specificLocation);
                 if (difficulty === "brutal") recordBaseCrawlOrder(game, playerData.name, decision.unit.name, unitTypeRequests.get(decision.unit.name)?.specificLocation);
             }
         } else if (queueData.status == QueueStatus.Ready && queueData.items.length > 0) {
             if (isBuildingQueue(queueType)) {
                 const readyUnit = queueData.items[0].rules;
-                const failures = this.placementFailures.get(readyUnit.name) ?? 0;
-                this.placementFailures.set(readyUnit.name, failures + 1);
+                const specificEconomyLocation = difficulty === "brutal" &&
+                    (isMinerRefineryProduction(game, playerData.name, readyUnit.name) || isCrawlProduction(game, playerData.name, queueType));
+                // Other idle queues retain their historical clear behavior, but must not erase this marked build's failures.
+                const failureCounts = specificEconomyLocation ? this.economicPlacementFailures : this.placementFailures;
+                const failures = failureCounts.get(readyUnit.name) ?? 0;
+                failureCounts.set(readyUnit.name, failures + 1);
 
                 // If too many failures, cancel the building to unblock the queue
                 if (failures >= PLACEMENT_FAILURE_CANCEL_THRESHOLD) {
                     logger(`Cancelling ready ${readyUnit.name} after ${failures} placement failures`);
                     actionsApi.unqueueFromProduction(queueType, readyUnit.name, readyUnit.type, 1);
-                    this.placementFailures.delete(readyUnit.name);
+                    failureCounts.delete(readyUnit.name);
                     return;
                 }
 
@@ -349,8 +356,7 @@ export class QueueController {
                 let canPlace = placeX !== undefined && placeY !== undefined &&
                     game.canPlaceBuilding(playerData.name, readyUnit.name, { rx: placeX, ry: placeY });
 
-                if ((!canPlace || failures >= PLACEMENT_FAILURE_RETRY_THRESHOLD) &&
-                    !(difficulty === "brutal" && (isMinerRefineryProduction(game, playerData.name, readyUnit.name) || isCrawlProduction(game, playerData.name, queueType)))) {
+                if ((!canPlace || failures >= PLACEMENT_FAILURE_RETRY_THRESHOLD) && !specificEconomyLocation) {
                     // After threshold, find an alternative placement location
                     const conYards = game.getVisibleUnits(playerData.name, "self", (r: TechnoRules) => r.constructionYard);
                     const conYardData = conYards.length > 0 ? game.getUnitData(conYards[0]) : undefined;

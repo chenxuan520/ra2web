@@ -113,3 +113,13 @@ export function readPressure(context: PressureContext): PressureState {
 export function isPressured(context: PressureContext): boolean {
     return readPressure(context).pressured;
 }
+
+/** E7 relaxations use only the rolling visible-miner peak and the real quiet-home window. */
+export function getEconomyPressureLimits(context: PressureContext, miners: number) {
+    const state = readPressure(context);
+    return {
+        minerCoreFactor: !state.pressured && miners <= state.enemyMinersSeen ? 1 : 2,
+        crawlMiners: state.passiveEnemy ? 2 : 3,
+        extraRefineryCredits: state.passiveEnemy ? 600 : 1000,
+    };
+}
