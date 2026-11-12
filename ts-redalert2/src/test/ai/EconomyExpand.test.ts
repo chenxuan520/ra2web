@@ -130,14 +130,20 @@ describe("legal visible base crawl", () => {
         unit.buildStatus = BuildStatus.Ready; f.at(106); observeBaseCrawl(f.context);
         expect(getBaseCrawlState(f.game, f.player.name).targets.get(plan.patch.id)?.builtIds.size).toBe(1);
     });
-    test("one-tile progress blocks terrain for 2700 ticks, then retries without counting a building", () => {
-        const f = fixture(); f.candidates[0] = { id: "6_0", rx: 6, ry: 0 };
+    test("zero legal progress blocks terrain for 2700 ticks, then retries without counting a building", () => {
+        const f = fixture(); f.candidates[0] = { id: "5_0", rx: 5, ry: 0 };
         expect(f.run()).toBeUndefined();
         const patch = planRefinery(f.game, f.player, f.refinery).unreachable[0].patch;
         expect(isCrawlBlocked(f.game, f.player.name, patch)).toBe(true);
         f.at(2799); expect(f.run()).toBeUndefined();
         f.candidates[0] = { id: "8_0", rx: 8, ry: 0 }; f.at(2800);
         expect(f.run()).toBeDefined();
+    });
+    test("a strictly positive legal short step is not mistaken for terrain blocking", () => {
+        const f = fixture(); f.candidates[0] = { id: "6_0", rx: 6, ry: 0 };
+        expect(f.run()).toMatchObject({ location: { rx: 6, ry: 0 }, rules: { name: "NAPOWR" } });
+        const patch = planRefinery(f.game, f.player, f.refinery).unreachable[0].patch;
+        expect(isCrawlBlocked(f.game, f.player.name, patch)).toBe(false);
     });
     test("five actual buildings with no reachable refinery block the target for 5400 ticks", () => {
         const f = fixture();

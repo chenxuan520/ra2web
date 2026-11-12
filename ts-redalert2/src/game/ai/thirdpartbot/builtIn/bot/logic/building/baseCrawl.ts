@@ -101,7 +101,7 @@ export function planBaseCrawl(context: SupabotContext): CrawlPlan | undefined {
     const location = getAdjacencyTiles(game, data, rules, false, 0)
         .filter(tile => game.canPlaceBuilding(player.name, name, tile))
         .sort((a, b) => patchDistance(a, entry.patch) - patchDistance(b, entry.patch) || a.rx - b.rx || a.ry - b.ry)[0];
-    if (!location || patchDistance(location, entry.patch) > entry.g - 2) {
+    if (!location || patchDistance(location, entry.patch) >= entry.g) {
         target.blockedUntil = tick + 2700;
         return undefined;
     }
