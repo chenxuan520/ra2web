@@ -12,6 +12,8 @@ import { queueTypeToName } from "../../building/queueController";
 import { getGrandCannonPlacement, getStrategicBuildingPriority } from "../../building/strategicBuildings";
 import { getCompactFirstFactoryPlacement } from "../../building/firstFactoryPlacement";
 import { getEconomyBuildingPriority } from "../../building/economyPlan";
+import { getCommittedRefineryLocation, noteMinerRefineryRequest, planMinerRefinery } from "../../building/refineryEconomy";
+import { planRefinery } from "../../building/resourceCollectionBuilding";
 
 // Legacy mission encompassing the old "build queue" logic.
 export class BaseBuildingMission extends Mission {
@@ -55,7 +57,7 @@ export class BaseBuildingMission extends Mission {
                 candidates.unshift(candidates.splice(committedIndex, 1)[0]);
             }
             for (const candidate of candidates) {
-                const location = this.getBestLocationForStructure(game, playerData, candidate.option, context.difficulty);
+                const location = this.getBestLocationForStructure(game, playerData, candidate.option, context.difficulty, context);
                 if (location) {
                     return buildStructureAtLocation(candidate.option.name, candidate.priority, location.rx, location.ry);
                 }
@@ -117,7 +119,17 @@ export class BaseBuildingMission extends Mission {
         playerData: PlayerData,
         objectReady: TechnoRules,
         difficulty?: "normal" | "brutal",
+        context?: MissionContext,
     ): { rx: number; ry: number } | undefined {
+        if (difficulty === "brutal" && objectReady.refinery && context) {
+            const committed = getCommittedRefineryLocation(context, objectReady.name);
+            if (committed) return committed;
+            const minerRefinery = planMinerRefinery(context, playerData, objectReady, planRefinery(game, playerData, objectReady));
+            if (minerRefinery) {
+                noteMinerRefineryRequest(game, playerData.name, objectReady.name, minerRefinery);
+                return minerRefinery.location;
+            }
+        }
         if (difficulty === "brutal" && objectReady.name === "GTGCAN") {
             return getGrandCannonPlacement(game, playerData, objectReady);
         }

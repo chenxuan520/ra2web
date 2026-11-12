@@ -2,13 +2,24 @@ import { expect, test } from "bun:test";
 import { getEconomyBuildingPriority } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/economyPlan";
 import { ObjectType, Vector2 } from "../../game/ai/thirdpartbot/builtIn/game-api";
 
-function scenario(names: string[], credits = 5000, distance = 120, country = "Arabs") {
-    const owned = names.map(name => ({ name, harvester: ["HARV", "CMIN"].includes(name) }));
-    const game: any = { getCurrentTick: () => 6000, getPlayerData: () => player,
-        mapApi: { getStartingLocations: () => [{ distanceTo: () => distance }] },
-        getVisibleUnits: (_: string, relation: string, filter: any) => relation === "self" ? owned.filter(filter).map((_, i) => i) : [] };
+function scenario(names: string[], credits = 5000, distance = 120, country = "Arabs", pressured = false) {
     const player: any = { name: "bot", country: { name: country }, credits, startLocation: new Vector2() };
-    return (name: string, extra = {}, committed = false) => getEconomyBuildingPriority(game, player, { name, ...extra } as any, committed);
+    const owned = names.map((name, i) => ({ id: i + 1, tile: { rx: name.endsWith("REFN") ? 5 : 0, ry: 0 }, foundation: { width: 1, height: 1 }, rules: {
+        name, harvester: ["HARV", "CMIN"].includes(name), refinery: name.endsWith("REFN"), weaponsFactory: name.endsWith("WEAP"),
+        type: ["HARV", "CMIN", "HTNK", "MTNK", "JUMPJET"].includes(name) ? ObjectType.Vehicle : ObjectType.Building, baseNormal: true,
+    } }));
+    const enemy = { id: 999, tile: { rx: 22, ry: 0 }, rules: { name: "MTNK", isSelectableCombatant: true, type: ObjectType.Vehicle } };
+    const game: any = { getCurrentTick: () => 6000, getPlayerData: () => player,
+        getVisibleUnits: (_: string, relation: string, filter: any) => (relation === "self" ? owned : pressured ? [enemy] : []).filter(unit => filter(unit.rules)).map(unit => unit.id),
+        getUnitData: (id: number) => id === 999 ? enemy : owned.find(unit => unit.id === id),
+        getGameObjectData: (id: number) => game.getUnitData(id), getBuildingPlacementData: () => ({ foundation: { width: 1, height: 1 } }),
+        canPlaceBuilding: () => true,
+        mapApi: { getStartingLocations: () => [player.startLocation, new Vector2(distance, 0)],
+            getAllTilesResourceData: () => [{ tile: { rx: 25, ry: 0 }, ore: 800, gems: 0 }],
+            isVisibleTile: () => true, getResourceCreditValues: () => ({ ore: 10, gems: 20 }),
+            getTilesInRect: () => [{ id: "24_0", rx: 24, ry: 0 }] },
+    };
+    return (name: string, extra = {}, committed = false) => getEconomyBuildingPriority(game, player, { name, cost: 2000, adjacent: 100, ...extra } as any, committed);
 }
 
 test.each(["Americans", "Alliance", "French", "Germans", "British"])("%s funds a first factory before a new radar at nearby possible starts", country => {
@@ -54,16 +65,16 @@ test("Soviet tech and duplicate factories require miners and an existing armor c
     expect(rich("NAWEAP")).toBeGreaterThan(0);
 });
 
-test("two opening rocketeers fund a second refinery before another military factory investment", () => {
-    const one = scenario(["GAREFN", "CMIN", "GAAIRC", "JUMPJET"]);
+test("under pressure the existing two-rocketeer refinery exception is retained", () => {
+    const one = scenario(["GAREFN", "CMIN", "GAAIRC", "JUMPJET"], 5000, 120, "Arabs", true);
     expect(one("GAREFN", { refinery: true })).toBe(0);
-    const covered = scenario(["GAREFN", "CMIN", "GAAIRC", "JUMPJET", "JUMPJET"]);
+    const covered = scenario(["GAREFN", "CMIN", "GAAIRC", "JUMPJET", "JUMPJET"], 5000, 120, "Arabs", true);
     expect(covered("GAREFN", { refinery: true })).toBeGreaterThan(covered("GAWEAP")!);
 });
 
 test("two miners and four tanks can fund a second refinery incrementally when cash is drained", () => {
     for (const credits of [62, 500, 999]) {
-        const established = scenario(["NAREFN", "NAWEAP", "HARV", "HARV", "HTNK", "HTNK", "HTNK", "HTNK"], credits);
+        const established = scenario(["NAREFN", "NAWEAP", "HARV", "HARV", "HTNK", "HTNK", "HTNK", "HTNK"], credits, 120, "Arabs", true);
         expect(established("NAREFN", { refinery: true })).toBeGreaterThan(0);
     }
 });
@@ -81,10 +92,10 @@ test.each([
     ["NAREFN", "NAWEAP", "HARV", "HTNK"],
     ["GAREFN", "GAWEAP", "CMIN", "MTNK"],
 ])("a funded %s opening uses the second refinery's supplied miner after the first tank", (refinery, factory, miner, tank) => {
-    const opening = scenario([refinery, factory, miner, tank], 3000);
+    const opening = scenario([refinery, factory, miner, tank], 3000, 120, "Arabs", true);
     expect(opening(refinery, { refinery: true, cost: 2000, freeUnit: miner })).toBeGreaterThan(0);
-    expect(scenario([refinery, factory, miner, tank], 2399)(refinery, { refinery: true, cost: 2000, freeUnit: miner })).toBe(0);
-    expect(scenario([refinery, factory, miner], 3000)(refinery, { refinery: true, cost: 2000, freeUnit: miner })).toBe(0);
+    expect(scenario([refinery, factory, miner, tank], 2399, 120, "Arabs", true)(refinery, { refinery: true, cost: 2000, freeUnit: miner })).toBe(0);
+    expect(scenario([refinery, factory, miner], 3000, 120, "Arabs", true)(refinery, { refinery: true, cost: 2000, freeUnit: miner })).toBe(0);
     expect(opening(refinery, { refinery: true, cost: 2000, freeUnit: "DOG" })).toBe(0);
 });
 

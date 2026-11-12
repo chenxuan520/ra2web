@@ -17,6 +17,7 @@ import { getBasicInfantryBudget, isSovietCountry } from "../../strategy/basicInf
 import { desiredMiners } from "./harvester";
 import { isEcoOnly, readPressure } from "../common/pressure";
 import { isCivilianEconomy } from "./economyPlan";
+import { isMinerRefineryProduction, observeRefineryEconomy, recordRefineryOrder, sellDuplicateRefinery } from "./refineryEconomy";
 
 export const QUEUES = [
     QueueType.Structures,
@@ -80,6 +81,7 @@ export class QueueController {
         const { game, player } = context;
         const { production: productionApi, actions: actionsApi } = player;
         const playerData = game.getPlayerData(player.name);
+        observeRefineryEconomy(context);
         // Economic units do not belong to combat missions. Keep a separate request
         // so losing miners cannot permanently starve an otherwise healthy base.
         const requests = new Map(unitTypeRequests);
@@ -235,6 +237,7 @@ export class QueueController {
                 totalCostAcrossQueues,
                 logger,
                 cappedSupport,
+                context.difficulty,
             );
         });
 
@@ -251,6 +254,8 @@ export class QueueController {
             });
             this.lastRepairCheckAt = game.getCurrentTick();
         }
+
+        sellDuplicateRefinery(context);
 
         // Emergency salvage: if we have 0 harvesters or 0 refineries and cannot afford replacement (< 800 credits),
         // sell non-essential auxiliary structures (tech lab, radar, or static defense) to recover cash.
@@ -286,6 +291,7 @@ export class QueueController {
         totalCostAcrossQueues: number,
         logger: (message: string) => void,
         cappedSupport: ReadonlySet<string>,
+        difficulty?: "normal" | "brutal",
     ): void {
         const myCredits = playerData.credits;
         // With five or six queues, every queue can fall below 25%. Always
@@ -308,6 +314,7 @@ export class QueueController {
             if (decision !== undefined && (canAffordBuilding || !(totalCostAcrossQueues > myCredits && decision.priority < minimumPriority))) {
                 logger(`Decision (${queueTypeToName(queueType)}): ${decision.unit.name}`);
                 actionsApi.queueForProduction(queueType, decision.unit.name, decision.unit.type, 1);
+                if (difficulty === "brutal") recordRefineryOrder(game, playerData.name, decision.unit.name, unitTypeRequests.get(decision.unit.name)?.specificLocation);
             }
         } else if (queueData.status == QueueStatus.Ready && queueData.items.length > 0) {
             if (isBuildingQueue(queueType)) {
@@ -331,7 +338,8 @@ export class QueueController {
                 let canPlace = placeX !== undefined && placeY !== undefined &&
                     game.canPlaceBuilding(playerData.name, readyUnit.name, { rx: placeX, ry: placeY });
 
-                if (!canPlace || failures >= PLACEMENT_FAILURE_RETRY_THRESHOLD) {
+                if ((!canPlace || failures >= PLACEMENT_FAILURE_RETRY_THRESHOLD) &&
+                    !(difficulty === "brutal" && isMinerRefineryProduction(game, playerData.name, readyUnit.name))) {
                     // After threshold, find an alternative placement location
                     const conYards = game.getVisibleUnits(playerData.name, "self", (r: TechnoRules) => r.constructionYard);
                     const conYardData = conYards.length > 0 ? game.getUnitData(conYards[0]) : undefined;

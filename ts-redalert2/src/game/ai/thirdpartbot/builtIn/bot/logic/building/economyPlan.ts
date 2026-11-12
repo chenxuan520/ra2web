@@ -3,7 +3,9 @@ import { readStrategicSituation } from "../../strategy/nationalComposition";
 import { getOpeningAirBudget } from "../../strategy/openingAirBudget";
 import { BRUTAL_PARAMS } from "../../strategy/brutalParams";
 import { SupabotContext } from "../common/context";
-import { isPressured } from "../common/pressure";
+import { isPressured, readPressure } from "../common/pressure";
+import { planRefinery } from "./buildingRules";
+import { planMinerRefinery } from "./refineryEconomy";
 
 const lastDefenseBuiltTick = new WeakMap<GameApi, Map<string, number>>();
 
@@ -21,7 +23,15 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
     const count = s.own[rules.name] ?? 0;
     if (rules.refinery) {
         if (!refineries) return BRUTAL_PARAMS.economy.firstRefineryPriority;
+        const plan = planRefinery(game, player, rules);
+        const pressure = readPressure(context ?? { game, player: { name: player.name }, difficulty: "brutal" });
+        const minerRefinery = () => context && planMinerRefinery(context, player, rules, plan)
+            ? BRUTAL_PARAMS.economy.extraRefineryPriority : 0;
         if (refineries === 1) {
+            if (!pressure.pressured) {
+                return committed || factories > 0 && plan.reachable && (s.harvesters >= 3 || s.credits >= 1500)
+                    ? BRUTAL_PARAMS.economy.firstRefineryPriority : minerRefinery();
+            }
             if (!committed) {
                 const intruders = game.getVisibleUnits(player.name, "enemy", option => option.isSelectableCombatant)
                     .map(id => game.getUnitData(id)).filter(unit => unit &&
@@ -35,7 +45,9 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
             return (committed || (factories > 0 && canExpand) ||
                 (!factories && (s.own.JUMPJET ?? 0) >= 2 && getOpeningAirBudget(game, player) === 2)) ? BRUTAL_PARAMS.economy.firstRefineryPriority : 0;
         }
-        return refineries < BRUTAL_PARAMS.economy.maxRefineries && s.harvesters >= refineries * BRUTAL_PARAMS.economy.harvestersPerRefinery ? BRUTAL_PARAMS.economy.extraRefineryPriority : 0;
+        if (refineries >= BRUTAL_PARAMS.economy.maxRefineries) return 0;
+        return committed || plan.reachable && s.credits >= 1000 && !pressure.baseUnderSiege
+            ? BRUTAL_PARAMS.economy.extraRefineryPriority : minerRefinery();
     }
     if (rules.name === "GAPILE" || rules.name === "NAHAND") return count ? 0 : BRUTAL_PARAMS.economy.barracksPriority;
     if ((rules.name === "GAAIRC" || rules.name === "AMRADR") && refineries && !count && !factories) {

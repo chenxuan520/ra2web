@@ -24,6 +24,8 @@ import { uniqBy } from "../common/utils";
 import { AntiAirStaticDefence } from "./antiAirStaticDefence";
 import { computeAdjacentRect, getAdjacentTiles } from "../common/tileUtils";
 
+export { planRefinery } from "./resourceCollectionBuilding";
+
 export interface AiBuildingRules {
     getPriority(
         game: GameApi,
