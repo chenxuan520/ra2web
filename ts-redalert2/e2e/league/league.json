@@ -67,7 +67,8 @@
       "tree": "9b5d93f27bbaf0e347dc05dfacea196e9bc5f355",
       "profile": "brutal",
       "role": "sparring",
-      "active": true,
+      "active": false,
+      "blockedReason": "第5轮实测非法坐标命令；旧tag及旧证据保留，由独立坐标安全版x-airguard-01替代参赛",
       "style": "air",
       "target": "c3",
       "winsVsTarget": 8,
@@ -162,6 +163,19 @@
       "active": true,
       "attempts": 2,
       "note": "round 3; G1-G5 passed"
+    },
+    {
+      "id": "x-airguard-01",
+      "tag": "league/x-airguard-01",
+      "tree": "86e87588fb1769748bba72f9338c7af705eec557",
+      "profile": "brutal",
+      "role": "sparring",
+      "active": true,
+      "style": "airguard",
+      "target": "c3",
+      "winsVsTarget": 6,
+      "replaces": "x-air-01",
+      "note": "x-air-01仅坐标校验的安全替换；原空军策略和资源成本不变；第5轮正式种子技术验证6胜17负1超时、0错误，原始记录保留在外部；非找茬入池、非G1-G6晋级"
     }
   ]
 }
