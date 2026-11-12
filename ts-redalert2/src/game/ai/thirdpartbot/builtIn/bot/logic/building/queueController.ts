@@ -227,6 +227,12 @@ export class QueueController {
                     }
                 }
             }
+            const openingTank = isSovietCountry(playerData.country?.name) ? "HTNK" : "MTNK";
+            if (situation.harvesters >= 3 && situation.enemy.infantry < 8 && !readPressure(context).pressured &&
+                requests.get(openingTank)?.priority === 85 && productionApi.getAvailableObjects(QueueType.Vehicles)
+                    .some(option => option.harvester && requests.get(option.name)?.priority === 78)) {
+                requests.set(openingTank, { ...requests.get(openingTank)!, priority: 75 });
+            }
         }
         this.queueStates = QUEUES.map((queueType) => {
             const options = productionApi.getAvailableObjects(queueType).filter(option => !ecoOnly || isCivilianEconomy(option));
@@ -265,6 +271,9 @@ export class QueueController {
                 logger,
                 cappedSupport,
                 context.difficulty,
+                !!crawl && decision.queue === crawl.queue && decision.topItem?.unit.name === crawl.rules.name &&
+                    requests.get(crawl.rules.name)?.specificLocation?.x === crawl.location.rx &&
+                    requests.get(crawl.rules.name)?.specificLocation?.y === crawl.location.ry,
             );
         });
 
@@ -319,6 +328,7 @@ export class QueueController {
         logger: (message: string) => void,
         cappedSupport: ReadonlySet<string>,
         difficulty?: "normal" | "brutal",
+        requestedCrawl = false,
     ): void {
         const myCredits = playerData.credits;
         // With five or six queues, every queue can fall below 25%. Always
@@ -338,7 +348,7 @@ export class QueueController {
             this.placementFailures.clear();
             // Start building the decided item.
             const canAffordBuilding = isBuildingQueue(queueType) && decision !== undefined && decision.priority >= 18 && myCredits >= decision.unit.cost + 400;
-            if (decision !== undefined && (canAffordBuilding || !(totalCostAcrossQueues > myCredits && decision.priority < minimumPriority))) {
+            if (decision !== undefined && (requestedCrawl && myCredits >= decision.unit.cost || canAffordBuilding || !(totalCostAcrossQueues > myCredits && decision.priority < minimumPriority))) {
                 logger(`Decision (${queueTypeToName(queueType)}): ${decision.unit.name}`);
                 actionsApi.queueForProduction(queueType, decision.unit.name, decision.unit.type, 1);
                 if (difficulty === "brutal") this.economicPlacementFailures.delete(decision.unit.name);
@@ -421,7 +431,7 @@ export class QueueController {
             } else {
                 // Not changing our mind, but maybe other queues are more important for now.
                 // Do not pause if we can easily afford this unit, or if it is an active military response
-                const isVitalBuilding = isBuildingQueue(queueType) && currentProduction && (currentProduction.refinery || currentProduction.weaponsFactory);
+                const isVitalBuilding = isBuildingQueue(queueType) && currentProduction && (currentProduction.refinery || currentProduction.weaponsFactory || requestedCrawl);
                 if (!isVitalBuilding && totalCostAcrossQueues > myCredits && myCredits < (isBuildingQueue(queueType) ? 200 : decision.unit.cost) && decision.priority < minimumPriority) {
                     logger(
                         `Pausing queue ${queueTypeToName(queueData.type)} because weight is low (${
@@ -442,7 +452,7 @@ export class QueueController {
             }
             // Consider resuming queue if priority is high relative to other queues or if we can afford this item.
             const affordable = isBuildingQueue(queueData.type) ? myCredits >= 200 : (decision && myCredits >= decision.unit.cost);
-            if (totalWeightAcrossQueues === 0 || myCredits >= totalCostAcrossQueues ||
+            if (requestedCrawl || totalWeightAcrossQueues === 0 || myCredits >= totalCostAcrossQueues ||
                 (decision && affordable && decision.priority >= 15)) {
                 logger(`Resuming queue ${queueTypeToName(queueData.type)} because credits are high or item is affordable`);
                 actionsApi.resumeProduction(queueData.type);

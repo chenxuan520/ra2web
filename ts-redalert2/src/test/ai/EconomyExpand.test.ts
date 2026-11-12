@@ -160,6 +160,33 @@ describe("legal visible base crawl", () => {
         expect(f.run()).toBeUndefined();
         f.enemies.length = 0; f.at(106); expect(f.run()?.location).toEqual(plan.location);
     });
+    test("a legal unpressured crawl starts at its real cost without the unrelated four-hundred cash margin", () => {
+        for (const marked of [true, false]) {
+            const f = fixture(); f.power.cost = 600; f.player.credits = 997;
+            if (!marked) f.resources.splice(1);
+            const available = f.context.player.production.getAvailableObjects;
+            f.context.player.production.getAvailableObjects = (queue: QueueType) => queue === QueueType.Vehicles
+                ? [{ name: "HTNK", cost: 900, type: ObjectType.Vehicle }] : available(queue);
+            const requests = new Map<string, any>([["HTNK", { priority: 85, specificLocation: null }]]);
+            if (!marked) requests.set("NAPOWR", { priority: 45, specificLocation: new Vector2(8, 0) });
+            new QueueController().onAiUpdate(f.context, null, requests, () => {});
+            if (marked) expect(f.context.player.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Structures, "NAPOWR", ObjectType.Building, 1);
+            else expect(f.context.player.actions.queueForProduction.mock.calls.some((call: any[]) => call[0] === QueueType.Structures)).toBe(false);
+        }
+    });
+    test("a paid unpressured crawl keeps its investment while normal queue funding remains unchanged", () => {
+        const f = fixture(), plan = f.run()!;
+        recordBaseCrawlOrder(f.game, f.player.name, plan.rules.name, new Vector2(plan.location.rx, plan.location.ry));
+        const queue = f.queues.get(QueueType.Structures)!; queue.status = QueueStatus.Active; queue.items = [{ rules: f.power, quantity: 1 }];
+        const available = f.context.player.production.getAvailableObjects;
+        f.context.player.production.getAvailableObjects = (type: QueueType) => type === QueueType.Vehicles ? [{ name: "HTNK", cost: 900, type: ObjectType.Vehicle }] : available(type);
+        f.player.credits = 100; f.at(102);
+        const controller = new QueueController(), requests = new Map([["HTNK", { priority: 85, specificLocation: null }]]);
+        controller.onAiUpdate(f.context, null, requests, () => {});
+        expect(f.context.player.actions.pauseProduction).not.toHaveBeenCalledWith(QueueType.Structures);
+        queue.status = QueueStatus.OnHold; f.at(104); controller.onAiUpdate(f.context, null, requests, () => {});
+        expect(f.context.player.actions.resumeProduction).toHaveBeenCalledWith(QueueType.Structures);
+    });
     test("the real queue integration pauses/resumes a paid crawl and never substitutes a non-progress site", () => {
         const f = fixture(), controller = new QueueController();
         controller.onAiUpdate(f.context, null, new Map(), () => {});

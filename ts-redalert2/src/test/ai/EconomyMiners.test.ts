@@ -142,6 +142,14 @@ describe("brutal miner capacity and production table", () => {
             expect(f.priority()).toBe(0);
         }
     });
+    test("an approved unpressured miner78 wins actual arbitration over the regular tank85, not only the debug priority", () => {
+        const f = fixture(3, 2); f.run();
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
+        const pressure = fixture(3, 2); pressure.enemy(100, 40); pressure.enemy(101, 40); pressure.run();
+        expect(pressure.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTNK", ObjectType.Vehicle, 1);
+        const response = fixture(3, 2); response.enemy(100, 70, ObjectType.Aircraft); response.run();
+        expect(response.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTK", ObjectType.Vehicle, 1);
+    });
     test("115 flak response still outranks the 110 income opening", () => {
         const f = fixture(1, 0); f.enemy(100, 70, ObjectType.Aircraft);
         f.run();
