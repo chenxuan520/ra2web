@@ -31,7 +31,7 @@ function fixture(difficulty: "normal" | "brutal" = "brutal", dogName = "DOG", hi
         power: { total: 200, drain: 0, isLowPower: false } };
     const starts = [player.startLocation as Vector2, new Vector2(140, 20)];
     const objects = new Map<number, TestUnit>(), visibleEnemies = new Set<number>();
-    const explored = new Set<string>(["20_20", "21_20"]), blocked = new Set<string>();
+    const explored = new Set<string>(["20_20", "21_20", "37_3", "44_20", "37_37", "20_44", "3_37", "3_3"]), blocked = new Set<string>();
     const orders: RecordedOrder[] = [], debug = new Map<number, string | undefined>(), passabilityReads: string[] = [], logs: string[] = [];
     const placementTiles = [tile(24, 20)];
     const queue = [new PrioritisedScoutTarget(800, new Vector2(20, 80))];
@@ -240,6 +240,17 @@ describe("T2 scout directions, recruitment and real handoff", () => {
         expect(f.queueReads()).toBe(2);
     });
 
+    test("the second scout reveals opaque home-economy sectors before the distant queue, without reading hidden resources", () => {
+        const f = fixture(); f.explored.delete("37_3"); f.ensure();
+        f.add(1, "DOG", 23); f.add(2, "DOG", 24); f.scout().addUnit(1); f.scout().addUnit(2);
+        f.map.getAllTilesResourceData = () => { throw Error("scout cannot inspect hidden resources"); };
+        f.missionStep(f.scout(), 32);
+        expect(f.orders).toContainEqual({ ids: [2], type: OrderType.AttackMove, xOrTarget: 37, y: 3 });
+        expect(f.queueReads()).toBe(0);
+        f.explored.add("37_3"); f.missionStep(f.scout(), 64);
+        expect(f.orders).toContainEqual({ ids: [2], type: OrderType.AttackMove, xOrTarget: 20, y: 80 });
+        expect((f.scout() as OpeningScoutingMission).getTotalUnitsReceived()).toBe(2);
+    });
     test("an empty old queue does not suppress the first public-start scout", () => {
         const f = fixture(); f.queue.length = 0; f.ensure();
         expect(f.scout()).toBeInstanceOf(OpeningScoutingMission);

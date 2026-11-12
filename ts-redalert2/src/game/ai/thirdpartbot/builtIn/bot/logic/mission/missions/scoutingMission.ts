@@ -181,6 +181,7 @@ export class OpeningScoutingMission extends Mission {
     private firstTargetComplete = false;
     private queueComplete = false;
     private queueTarget: PrioritisedScoutTarget | null = null;
+    private homeTargets?: PrioritisedScoutTarget[];
     private queueTargetRefreshedAt = 0;
     private queueMinDistance = Infinity;
     private orders = new DogOrders(SCOUT_MOVE_COOLDOWN_TICKS);
@@ -242,14 +243,19 @@ export class OpeningScoutingMission extends Mission {
                     !this.queueTarget.permanent && tick > this.queueTargetRefreshedAt + MAX_TICKS_PER_TARGET) this.queueTarget = null;
             }
             if (!this.queueTarget) {
-                let next = matchAwareness.getScoutingManager().getNewScoutTarget();
+                // Discover the home economy before spending the second scout on distant sectors.
+                // These are public-start projections, never hidden resource coordinates.
+                const home = game.getPlayerData(player.name).startLocation;
+                this.homeTargets ??= [[17, -17], [24, 0], [17, 17], [0, 24], [-17, 17], [-24, 0], [-17, -17], [0, -24]]
+                    .map(([dx, dy]) => new PrioritisedScoutTarget(1000, new Vector2(home.x + dx, home.y + dy)));
+                let next = this.homeTargets.shift() ?? matchAwareness.getScoutingManager().getNewScoutTarget();
                 // The first dog reserves its public start; do not send both dogs
                 // to that same existing queue entry before other sectors.
                 while (next) {
                     const tile = game.mapApi.getTile(next.target.x, next.target.y);
                     if (tile && !game.mapApi.isVisibleTile(tile, player.name) &&
                         !(enemyStart && next.target.x === enemyStart.x && next.target.y === enemyStart.y)) break;
-                    next = matchAwareness.getScoutingManager().getNewScoutTarget();
+                    next = this.homeTargets.shift() ?? matchAwareness.getScoutingManager().getNewScoutTarget();
                 }
                 this.queueTarget = next ?? null;
                 this.queueTargetRefreshedAt = tick;
