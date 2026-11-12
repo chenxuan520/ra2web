@@ -79,12 +79,12 @@ test("two miners and four tanks can fund a second refinery incrementally when ca
     }
 });
 
-test("a cash-starved one-miner or incomplete tank opening does not add a second refinery", () => {
+test("under pressure a cash-starved one-miner or incomplete tank opening does not add a second refinery", () => {
     for (const names of [
         ["NAREFN", "NAWEAP", "HARV", "HTNK", "HTNK", "HTNK", "HTNK"],
         ["NAREFN", "NAWEAP", "HARV", "HARV", "HTNK", "HTNK"],
     ]) {
-        expect(scenario(names, 62)("NAREFN", { refinery: true })).toBe(0);
+        expect(scenario(names, 62, 120, "Arabs", true)("NAREFN", { refinery: true })).toBe(0);
     }
 });
 

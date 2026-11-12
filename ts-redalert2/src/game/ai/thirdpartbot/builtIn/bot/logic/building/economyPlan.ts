@@ -8,6 +8,7 @@ import { planRefinery } from "./buildingRules";
 import { planMinerRefinery } from "./refineryEconomy";
 import type { RefineryPlan } from "./resourceCollectionBuilding";
 import { canRequestDefense, hasSeenEnemyDrone } from "./defensePlan";
+import { findVisiblePatches, isServed, PatchPoint } from "../common/orePatches";
 
 const lastDefenseBuiltTick = new WeakMap<GameApi, Map<string, number>>();
 
@@ -31,6 +32,13 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
             ? BRUTAL_PARAMS.economy.extraRefineryPriority : 0;
         if (refineries === 1) {
             if (!pressure.pressured) {
+                if (!committed && factories > 0 && plan.reachable) {
+                    const sites = game.getVisibleUnits(player.name, "self", option => option.refinery)
+                        .map(id => game.getGameObjectData(id)?.tile).filter((tile): tile is PatchPoint => !!tile);
+                    if (sites.length === 1 && !findVisiblePatches(game, player.name).some(patch => isServed(patch, sites))) {
+                        return BRUTAL_PARAMS.economy.firstRefineryPriority;
+                    }
+                }
                 return committed || factories > 0 && plan.reachable && (s.harvesters >= 3 || s.credits >= 1500)
                     ? BRUTAL_PARAMS.economy.firstRefineryPriority : minerRefinery();
             }

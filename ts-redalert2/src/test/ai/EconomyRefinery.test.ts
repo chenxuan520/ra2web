@@ -70,6 +70,17 @@ describe("brutal refinery investment", () => {
         expect(f.priority(true)).toBe(50);
         const blocked = fixture(3); blocked.legal.clear(); expect(blocked.priority()).toBe(0);
     });
+    test("an unserved sole refinery can repair income at a reachable known field without the miner-cap cash deadlock", () => {
+        for (const served of [false, true]) {
+            const f = fixture(2); f.player.credits = 859;
+            if (!served) f.units.find(unit => unit.name === "NAREFN")!.tile.rx = -20;
+            expect(f.priority()).toBe(served ? 0 : 50);
+        }
+        const f = fixture(2); f.player.credits = 859; f.units.find(unit => unit.name === "NAREFN")!.tile.rx = -20;
+        f.legal.clear(); expect(f.priority()).toBe(0);
+        f.legal.add("4_0"); f.enemies.push({ id: 999, tile: { rx: 22, ry: 0 }, rules: { isSelectableCombatant: true } });
+        f.at(102); expect(f.priority()).toBe(0);
+    });
     test("pressure keeps the old core/cash/intruder conditions", () => {
         const f = fixture(2);
         f.enemies.push({ id: 999, tile: { rx: 22, ry: 0 }, rules: { isSelectableCombatant: true, type: ObjectType.Vehicle } });
