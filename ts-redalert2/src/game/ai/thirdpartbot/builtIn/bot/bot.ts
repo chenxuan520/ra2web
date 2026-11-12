@@ -12,6 +12,8 @@ import { BaseBuildingMission } from "./logic/mission/missions/baseBuildingMissio
 import { isEcoOnly, observePressureEvent } from "./logic/common/pressure";
 import { observeDefense, observeDefenseEvent } from "./logic/building/defensePlan";
 import { ParasiteRepair } from "./logic/mission/missions/parasiteRepair";
+import { observeDroneProductionEvent } from "./logic/building/droneProduction";
+import { DroneRaidMission } from "./logic/mission/missions/droneRaidMission";
 import { isMcvRelocating } from "./logic/mission/missions/expansionMission";
 
 const DEBUG_STATE_UPDATE_INTERVAL_SECONDS = 6;
@@ -268,6 +270,12 @@ export class BuiltInBot extends Bot {
         if (this.difficulty === "brutal") {
             observePressureEvent(this.gameApi, this.name, ev);
             observeDefenseEvent(this.gameApi, this.name, ev);
+            observeDroneProductionEvent(this.gameApi, this.name, ev);
+            if (ev.type === ApiEventType.ObjectDestroy || ev.type === ApiEventType.ObjectOwnerChange) {
+                for (const mission of this.missionController?.getMissions() ?? []) {
+                    if (mission instanceof DroneRaidMission) mission.onGameEvent(ev);
+                }
+            }
         }
         switch (ev.type) {
             case ApiEventType.ObjectDestroy: {

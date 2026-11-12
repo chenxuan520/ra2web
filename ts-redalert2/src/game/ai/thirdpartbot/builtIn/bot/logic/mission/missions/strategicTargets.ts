@@ -75,6 +75,24 @@ export function raidUnderPressure(raiders: UnitData[], enemies: UnitData[], game
     return nearbyFighters > raiders.length;
 }
 
+const CORE_RAID_TANKS = new Set(["MTNK", "HTNK", "MGTK", "APOC", "SREF"]);
+
+export function isCoreRaidTank(unit: UnitData): boolean {
+    return CORE_RAID_TANKS.has(unit.name) && isLivingUnit(unit) && unit.hitPoints >= unit.maxHitPoints * 0.7 && unit.zone !== ZoneType.Air;
+}
+
+/** An early detachment keeps this one visible, isolated miner as its mission objective. */
+export function selectEarlyRaidTarget(context: SupabotContext, main: Vector2): UnitData | undefined {
+    const enemies = visibleEnemies(context);
+    const armedBuildings = enemies.filter(enemy => (enemy.type as any) === ObjectType.Building &&
+        (enemy.rules.primary || enemy.rules.secondary || estimatedCombatWeapons(enemy, context.game).some(Boolean)));
+    return enemies.filter(miner => miner.rules.harvester && miner.zone !== ZoneType.Air &&
+        !armedBuildings.some(building => new Vector2(building.tile.rx, building.tile.ry).distanceTo(new Vector2(miner.tile.rx, miner.tile.ry)) <= 15) &&
+        enemies.filter(enemy => CORE_RAID_TANKS.has(enemy.name) &&
+            new Vector2(enemy.tile.rx, enemy.tile.ry).distanceTo(new Vector2(miner.tile.rx, miner.tile.ry)) <= 10).length <= 1)
+        .sort((a, b) => main.distanceToSquared(new Vector2(a.tile.rx, a.tile.ry)) - main.distanceToSquared(new Vector2(b.tile.rx, b.tile.ry)) || a.id - b.id)[0];
+}
+
 export function selectRaidTarget(context: SupabotContext, raiders: UnitData[], mainTargets: Vector2[]): UnitData | undefined {
     if (!raiders.length) return undefined;
     const enemies = visibleEnemies(context);

@@ -244,6 +244,7 @@ export const BUILDING_NAME_TO_RULES = new Map<string, AiBuildingRules>([
     ["FLAKT", new BasicGroundUnit(2, 2, 0.1, 0.3)], // Flak Trooper
     ["YURI", new BasicGroundUnit(1, 1, 1, 0)], // Yuri
     ["DOG", new BasicGroundUnit(1, 1, 0, 0)], // Soviet Attack Dog
+    ["DRON", new BasicGroundUnit(0, 0)], // Only the explicit brutal opening rule requests these.
     ["HTNK", new BasicGroundUnit(10, 3, 3, 0)], // Rhino Tank
     ["APOC", new BasicGroundUnit(6, 1, 5, 0)], // Apocalypse Tank
     ["HTK", new BasicGroundUnit(5, 2, 0.33, 1.5)], // Flak Track

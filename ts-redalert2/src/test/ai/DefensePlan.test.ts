@@ -184,6 +184,29 @@ describe("visible-signal defense plans", () => {
         const quiet = fixture(); expect(getEconomyBuildingPriority(quiet.game, quiet.player, quiet.depot, false, quiet.context)).toBe(0);
         expect(hasSeenEnemyDrone(quiet.game, quiet.player.name)).toBe(false);
     });
+    test("a new D0 request cannot change the paid site of an active D5 build", () => {
+        const f = fixture(); f.own("NAREFN", 25);
+        const plan = f.plan()!; expect(plan).toMatchObject({ signal: "D5", location: { rx: 28, ry: 0 } });
+        recordDefenseOrder(f.game, f.player.name, plan.rules.name, new Vector2(28, 0));
+        const queue = f.queues.get(QueueType.Armory)!; queue.status = QueueStatus.Active; queue.items = [{ rules: f.basic, quantity: 1 }];
+        f.at(2); f.observe(); queue.status = QueueStatus.Ready; f.at(4);
+        new QueueController().onAiUpdate(f.context, null, new Map([["NALASR", { priority: 70, specificLocation: new Vector2(-4, 0) }]]), () => {});
+        expect(f.actions.placeBuilding).toHaveBeenCalledWith("NALASR", 28, 0);
+        f.own("NALASR", 28); queue.items = []; queue.status = QueueStatus.Idle; f.at(6); f.observe();
+        expect(getDefenseState(f.game, f.player.name).placed).toMatchObject([{ signal: "D5" }]);
+    });
+    test("D2 retains actual damage and loss positions when ordinary mining changes a patch's lexical ID", () => {
+        for (const loss of [false, true]) {
+            const f = fixture(); f.resources.push({ tile: { rx: 11, ry: 0 }, ore: 8000, gems: 0 }); f.observe();
+            f.at(30); f.miners[0].hitPoints = 950; f.observe();
+            f.resources[0].ore = 0; f.at(180); f.miners[0].tile.rx = 11;
+            if (loss) {
+                observeDefenseEvent(f.game, f.player.name, { type: ApiEventType.ObjectDestroy, target: f.miners[0].id });
+                f.units.splice(f.units.indexOf(f.miners[0]), 1);
+            } else f.miners[0].hitPoints = 900;
+            expect(f.plan()).toMatchObject({ signal: "D2" });
+        }
+    });
     test("existing mission sampling reports triggers and real starts/placement separately, without mutating old samples", () => {
         const f = fixture(), mission = new BaseBuildingMission(QueueType.Armory, () => {}); mission._onAiUpdate(f.context);
         const before = mission.getState()!; f.enemy("DRON"); f.plan();

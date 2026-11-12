@@ -131,7 +131,7 @@ export class CombatSquad implements Squad {
                     maxDistance > requiredGatherRadius
                 ) {
                     units.forEach((unit) => {
-                        if (brutal && (context.parasiteRepair?.isRepairing(unit.id) || isFiringBurst(unit))) return;
+                        if (brutal && isFiringBurst(unit)) return;
                         if (brutal) {
                             const deployment = this.desolatorTactics.decide(context, unit, [], units, centerOfMass);
                             if (deployment.handled) {

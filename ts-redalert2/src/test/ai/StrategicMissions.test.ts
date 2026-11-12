@@ -15,7 +15,7 @@ class MainForce extends Mission {
 }
 
 function fixture(mainCount = 6, freeCount = 3, difficulty: 'brutal' | 'normal' = 'brutal') {
-    let tick = 0;
+    let tick = 9000; // Exercise the historical three-tank rule outside T1's new early window.
     const weapon = { maxRange: 5, rules: { damage: 65, rof: 60 },
         warheadRules: { verses: new Map([[0, 1]]) }, projectileRules: { isAntiGround: true, isAntiAir: false } };
     const tankRules = { name: 'MTNK', type: ObjectType.Vehicle, armor: 0, isSelectableCombatant: true, movementZone: MovementZone.Normal };
@@ -60,8 +60,8 @@ function fixture(mainCount = 6, freeCount = 3, difficulty: 'brutal' | 'normal' =
     const factory = new HarassmentMissionFactory();
     return {
         context, controller, main, target, orders, objects, unit, weapon,
-        launch(nextTick = 0, forces: MainForce[] = [main]) { tick = nextTick; factory.maybeCreateMissions(context, controller, () => {}, forces); },
-        step(nextTick: number) { tick = nextTick; controller.onAiUpdate(context); },
+        launch(nextTick = 0, forces: MainForce[] = [main]) { tick = 9000 + nextTick; factory.maybeCreateMissions(context, controller, () => {}, forces); },
+        step(nextTick: number) { tick = 9000 + nextTick; controller.onAiUpdate(context); },
         raids: () => controller.getMissions().filter((mission): mission is HarassmentMission => mission instanceof HarassmentMission),
     };
 }

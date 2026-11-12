@@ -22,6 +22,7 @@ import { Compositions, getValidCompositions, SideComposition } from "./compositi
 import { readStrategicSituation, selectNationalComposition } from "./nationalComposition";
 import { getOpeningAirBudget } from "./openingAirBudget";
 import { isEcoOnly, readPressure } from "../logic/common/pressure";
+import { DroneRaidMissionFactory } from "../logic/mission/missions/droneRaidMission";
 
 // These could be loaded from ai.ini
 export const DEFAULT_COMPOSITIONS: Compositions = {
@@ -116,6 +117,7 @@ export class DefaultStrategy implements Strategy {
     private dogEscort?: DogEscortMission;
     private fieldHarassment = new HarassmentMissionFactory();
     private radiationTransport = new RadiationTransportFactory();
+    private droneRaidFactory = new DroneRaidMissionFactory();
 
     onAiUpdate(context: SupabotContext, missionController: MissionController, logger: DebugLogger) {
         if (context.difficulty === "brutal") readPressure(context);
@@ -124,6 +126,7 @@ export class DefaultStrategy implements Strategy {
             this.expansionFactory.maybeCreateMissions(context, missionController, logger);
             return this;
         }
+        this.droneRaidFactory.maybeCreateMissions(context, missionController, logger);
         this.paraDropSupport.onAiUpdate(context);
         this.minerDefence.onAiUpdate(context);
         ensureBaseReserve(context, missionController, logger);

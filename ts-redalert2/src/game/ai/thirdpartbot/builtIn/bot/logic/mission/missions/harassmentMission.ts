@@ -5,8 +5,9 @@ import { BatchableAction } from "../actionBatcher";
 import { Mission, MissionAction, disbandMission, noop, requestSpecificUnits } from "../mission";
 import { MissionController } from "../missionController";
 import { CombatSquad } from "./squads/combatSquad";
+import { isPressured } from "../../common/pressure";
 import { isFiringBurst } from "./squads/tacticalTargeting";
-import { findBaseThreat, isLivingUnit, isRaidTank, RAID_SIZE, RAID_TARGET_SEPARATION, raidTargetIsSafe, raidUnderPressure, selectRaidTarget, visibleEnemies } from "./strategicTargets";
+import { findBaseThreat, isLivingUnit, isCoreRaidTank, isRaidTank, RAID_SIZE, RAID_TARGET_SEPARATION, raidTargetIsSafe, raidUnderPressure, selectEarlyRaidTarget, selectRaidTarget, visibleEnemies } from "./strategicTargets";
 
 type MainForce = Mission<any> & { getAttackArea(): Vector2 };
 const CHECK_INTERVAL = 30;
@@ -23,7 +24,7 @@ export class HarassmentMission extends Mission<string> {
 
     constructor(name: string, private claimedIds: number[], private targetId: number,
         private home: Vector2, target: Vector2, private createdAt: number, logger: DebugLogger,
-        private getMainTargets: () => Vector2[] = () => []) {
+        private getMainTargets: () => Vector2[] = () => [], private raidSize = RAID_SIZE) {
         super(name, logger);
         this.squad = new CombatSquad(home, target, 8);
     }
@@ -32,7 +33,7 @@ export class HarassmentMission extends Mission<string> {
         const tick = context.game.getCurrentTick();
         const units = this.getUnits(context.game).filter(isLivingUnit);
         if (this.stage === "claiming") {
-            if (units.length >= RAID_SIZE) this.stage = "raiding";
+            if (units.length >= this.raidSize) this.stage = "raiding";
             else if (tick - this.createdAt >= 120) this.beginReturn("claim-timeout");
             else return requestSpecificUnits(this.claimedIds, 80);
         }
@@ -44,7 +45,7 @@ export class HarassmentMission extends Mission<string> {
             const target = enemies.find(enemy => enemy.id === this.targetId);
             if (findBaseThreat(context)) this.beginReturn("base-under-attack");
             else if (tick - this.createdAt >= RAID_LIFETIME) this.beginReturn("raid-timeout");
-            else if (units.filter(isRaidTank).length < 2) this.beginReturn("insufficient-force");
+            else if (units.filter(this.raidSize === 2 ? isCoreRaidTank : isRaidTank).length < 2) this.beginReturn("insufficient-force");
             else if (raidUnderPressure(units, enemies, context.game)) this.beginReturn("local-force-disadvantage");
             else if (!target) this.beginReturn("target-no-longer-visible");
             else if (this.getMainTargets().some(point => point.distanceTo(new Vector2(target.tile.rx, target.tile.ry)) < RAID_TARGET_SEPARATION)) {
@@ -85,6 +86,41 @@ export class HarassmentMission extends Mission<string> {
 export class HarassmentMissionFactory {
     private lastCheck = -Infinity;
     private lastLaunch = -Infinity;
+    private lastEarlyLaunch = -Infinity;
+
+    private tryEarlyRaid(context: SupabotContext, controller: MissionController, logger: DebugLogger, mainForces: MainForce[]): boolean {
+        const tick = context.game.getCurrentTick();
+        if (tick >= 9000 || tick - this.lastEarlyLaunch < 1800 || isPressured(context)) return false;
+        const main = mainForces.filter(force => force.isActive()).map(force => ({ force, units: force.getUnits(context.game).filter(isLivingUnit) }));
+        const cores = main.flatMap(entry => entry.units).filter(unit => ["MTNK", "HTNK", "MGTK", "APOC", "SREF"].includes(unit.name));
+        if (cores.length < 3) return false;
+        const center = new Vector2(cores.reduce((sum, unit) => sum + unit.tile.rx, 0) / cores.length,
+            cores.reduce((sum, unit) => sum + unit.tile.ry, 0) / cores.length);
+        const target = selectEarlyRaidTarget(context, center);
+        if (!target) return false;
+        const assigned = new Set(controller.getMissions().flatMap(mission => mission.getUnitIds()));
+        let raiders = context.game.getVisibleUnits(context.player.name, "self").map(id => context.game.getUnitData(id))
+            .filter((unit): unit is UnitData => isLivingUnit(unit) && !assigned.has(unit.id) && isCoreRaidTank(unit) && !context.parasiteRepair?.isRepairing(unit.id))
+            .sort((a, b) => a.id - b.id).slice(0, 2);
+        let remaining = cores.length;
+        const donations = new Map<MainForce, UnitData[]>();
+        for (const donor of main) {
+            const tanks = donor.units.filter(unit => isCoreRaidTank(unit) && !context.parasiteRepair?.isRepairing(unit.id)).sort((a, b) => a.id - b.id);
+            const count = Math.min(2 - raiders.length, remaining - 3, tanks.length);
+            if (count <= 0) continue;
+            const selected = tanks.slice(-count); donations.set(donor.force, selected);
+            raiders = [...raiders, ...selected]; remaining -= count;
+        }
+        if (raiders.length < 2 || remaining < 3) return false;
+        const mission = new HarassmentMission(`harassment_early_${tick}`, raiders.map(unit => unit.id), target.id,
+            context.matchAwareness.getMainRallyPoint(), new Vector2(target.tile.rx, target.tile.ry), tick, logger,
+            () => mainForces.filter(force => force.isActive()).map(force => force.getAttackArea()), 2);
+        if (!controller.addMission(mission)) return false;
+        for (const [donor, units] of donations) for (const unit of units) donor.removeUnit(unit.id);
+        this.lastEarlyLaunch = tick; this.lastLaunch = tick;
+        logger(`Harassment ${mission.getUniqueName()} detached 2 existing tanks toward ${target.id}`);
+        return true;
+    }
 
     maybeCreateMissions(context: SupabotContext, controller: MissionController, logger: DebugLogger, mainForces: MainForce[]) {
         const tick = context.game.getCurrentTick();
@@ -99,7 +135,7 @@ export class HarassmentMissionFactory {
         });
         let mainCombatants = main.reduce((sum, entry) => sum + entry.combatants.length, 0);
         let mainTanks = main.reduce((sum, entry) => sum + entry.tanks.length, 0);
-        if (mainCombatants < 6 || mainTanks < 3) return;
+        if (mainCombatants < 6 || mainTanks < 3) { this.tryEarlyRaid(context, controller, logger, mainForces); return; }
         const assigned = new Set(controller.getMissions().flatMap(mission => mission.getUnitIds()));
         const owned = context.game.getVisibleUnits(context.player.name, "self")
             .map(id => context.game.getUnitData(id)).filter((unit): unit is UnitData => isLivingUnit(unit));
@@ -119,10 +155,10 @@ export class HarassmentMissionFactory {
                 mainTanks -= count;
                 if (raiders.length === RAID_SIZE) break;
             }
-            if (raiders.length < RAID_SIZE) return;
+            if (raiders.length < RAID_SIZE) { this.tryEarlyRaid(context, controller, logger, mainForces); return; }
         }
         const target = selectRaidTarget(context, raiders, main.map(({ force }) => force.getAttackArea()));
-        if (!target) return;
+        if (!target) { this.tryEarlyRaid(context, controller, logger, mainForces); return; }
         const mission = new HarassmentMission(`harassment_${tick}`, raiders.map(unit => unit.id), target.id,
             context.matchAwareness.getMainRallyPoint(), new Vector2(target.tile.rx, target.tile.ry), tick, logger,
             () => mainForces.filter(force => force.isActive()).map(force => force.getAttackArea()));

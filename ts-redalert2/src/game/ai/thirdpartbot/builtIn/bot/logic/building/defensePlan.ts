@@ -30,8 +30,8 @@ interface DefenseState {
     nextHpCheck: number;
     seenEnemyDrone: boolean;
     seenAirForce: boolean;
-    hp: Map<number, { hitPoints: number; patch?: string; miner: boolean }>;
-    harassment: Map<string, { damageTicks: number[]; lossTick: number }>;
+    hp: Map<number, { hitPoints: number; point: PatchPoint; miner: boolean }>;
+    harassment: { point: PatchPoint; tick: number; minerLoss: boolean }[];
     lastStartTick: number;
     d3Ids: Set<number>;
     refineryIds: Map<number, number>;
@@ -53,7 +53,7 @@ function stateFor(game: GameApi, playerName: string): DefenseState {
     if (!players) { players = new Map(); states.set(game, players); }
     let state = players.get(playerName);
     if (!state || game.getCurrentTick() < state.tick) {
-        state = { tick: -Infinity, nextHpCheck: 0, seenEnemyDrone: false, seenAirForce: false, hp: new Map(), harassment: new Map(),
+        state = { tick: -Infinity, nextHpCheck: 0, seenEnemyDrone: false, seenAirForce: false, hp: new Map(), harassment: [],
             lastStartTick: -Infinity, d3Ids: new Set(), refineryIds: new Map(), triggered: new Set(), started: [], placed: [] };
         players.set(playerName, state);
     }
@@ -79,15 +79,12 @@ export function observeDefenseEvent(game: GameApi, playerName: string, event: Ap
     if (event.type === ApiEventType.ObjectSpawn) {
         const unit = game.getGameObjectData(id);
         if (unit?.owner === playerName && unit.rules.harvester && Number.isFinite(unit.hitPoints)) {
-            const patch = findVisiblePatches(game, playerName).filter(patch => patchDistance(unit.tile, patch) <= 12)
-                .sort((a, b) => patchDistance(unit.tile, a) - patchDistance(unit.tile, b) || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0))[0];
-            state.hp.set(id, { hitPoints: unit.hitPoints!, patch: patch?.id, miner: true });
+            state.hp.set(id, { hitPoints: unit.hitPoints!, point: { rx: unit.tile.rx, ry: unit.tile.ry }, miner: true });
         }
         return;
     }
-    if ((event.type === ApiEventType.ObjectDestroy || event.type === ApiEventType.ObjectOwnerChange && event.newOwnerName !== playerName) && previous?.miner && previous.patch) {
-        const history = state.harassment.get(previous.patch) ?? { damageTicks: [], lossTick: -Infinity };
-        history.lossTick = game.getCurrentTick(); state.harassment.set(previous.patch, history);
+    if ((event.type === ApiEventType.ObjectDestroy || event.type === ApiEventType.ObjectOwnerChange && event.newOwnerName !== playerName) && previous?.miner) {
+        state.harassment.push({ point: { ...previous.point }, tick: game.getCurrentTick(), minerLoss: true });
     }
     if (event.type === ApiEventType.ObjectDestroy || event.type === ApiEventType.ObjectUnspawn || event.type === ApiEventType.ObjectOwnerChange && event.newOwnerName !== playerName) state.hp.delete(id);
 }
@@ -101,25 +98,18 @@ export function observeDefense(context: SupabotContext): void {
         .map(id => game.getGameObjectData(id)).filter(unit => !!unit);
     state.seenEnemyDrone ||= enemies.some(unit => unit!.rules.name === "DRON");
     state.seenAirForce ||= enemies.some(unit => ["GAAIRC", "AMRADR", "ZEP"].includes(unit!.rules.name));
+    state.harassment = state.harassment.filter(event => tick - event.tick < 1800);
     if (tick >= state.nextHpCheck) {
         state.nextHpCheck = tick + 30;
-        const patches = findVisiblePatches(game, player.name);
         const units = game.getVisibleUnits(player.name, "self", rules => rules.harvester || rules.refinery)
             .map(id => game.getUnitData(id)).filter((unit): unit is UnitData => !!unit);
         const owned = new Set(units.map(unit => unit.id));
         for (const id of state.hp.keys()) if (!owned.has(id)) state.hp.delete(id);
         for (const unit of units) {
             if (!Number.isFinite(unit.hitPoints)) continue;
-            const patch = patches.filter(patch => patchDistance(unit.tile, patch) <= 12)
-                .sort((a, b) => patchDistance(unit.tile, a) - patchDistance(unit.tile, b) || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0))[0];
-            const previous = state.hp.get(unit.id);
-            if (patch && previous && unit.hitPoints < previous.hitPoints) {
-                const history = state.harassment.get(patch.id) ?? { damageTicks: [], lossTick: -Infinity };
-                history.damageTicks = history.damageTicks.filter(at => tick - at < 1800);
-                if (tick - (history.damageTicks.at(-1) ?? -Infinity) >= 150) history.damageTicks.push(tick);
-                state.harassment.set(patch.id, history);
-            }
-            state.hp.set(unit.id, { hitPoints: unit.hitPoints, patch: patch?.id, miner: !!unit.rules.harvester });
+            const previous = state.hp.get(unit.id), point = { rx: unit.tile.rx, ry: unit.tile.ry };
+            if (previous && unit.hitPoints < previous.hitPoints) state.harassment.push({ point, tick, minerLoss: false });
+            state.hp.set(unit.id, { hitPoints: unit.hitPoints, point, miner: !!unit.rules.harvester });
         }
     }
     const queue = player.production.getQueueData(QueueType.Armory);
@@ -161,7 +151,8 @@ export function planDefense(context: SupabotContext, emergency?: { priority: num
     observeDefense(context);
     const data = game.getPlayerData(player.name);
     if (state.active && player.production.getQueueData(QueueType.Armory).items[0]?.rules.name === state.active.rules.name) return state.active;
-    if (player.production.getQueueData(QueueType.Armory).items.length || data.credits < 600) return undefined;
+    if (player.production.getQueueData(QueueType.Armory).items.length || data.credits < 600 ||
+        game.getCurrentTick() - state.lastStartTick < BRUTAL_PARAMS.economy.defenseCooldownTicks) return undefined;
     const soviet = isSovietCountry(data.country?.name), basicName = soviet ? "NALASR" : "GAPILL", airName = soviet ? "NAFLAK" : "NASAM";
     const towers = game.getVisibleUnits(player.name, "self", rules => BASIC.has(rules.name))
         .filter(id => !isCrawlDefense(game, player.name, id)).map(id => game.getUnitData(id)).filter((unit): unit is UnitData => !!unit);
@@ -193,9 +184,26 @@ export function planDefense(context: SupabotContext, emergency?: { priority: num
         return request("D0", basicName, { rx: emergency.specificLocation.x, ry: emergency.specificLocation.y }, emergency.priority, undefined, true);
     }
     if (state.seenEnemyDrone) for (const field of fields) { const plan = fieldRequest("D1", field, 75); if (plan) return plan; }
+    // Mining can change a component's lexical ID. Associate remembered own event positions, not old IDs.
+    const harassment = new Map<string, typeof state.harassment>();
+    for (const event of state.harassment) {
+        if (game.getCurrentTick() - event.tick >= 1800) continue;
+        let nearest: OrePatch | undefined, nearestDistance = 12;
+        for (const patch of patches) {
+            const current = patchDistance(event.point, patch);
+            if (current <= nearestDistance && (!nearest || current < nearestDistance || patch.id < nearest.id)) {
+                nearest = patch; nearestDistance = current;
+            }
+        }
+        if (nearest) {
+            const events = harassment.get(nearest.id) ?? [];
+            events.push(event); harassment.set(nearest.id, events);
+        }
+    }
     for (const field of fields) {
-        const history = field.patch && state.harassment.get(field.patch.id), tick = game.getCurrentTick();
-        if (history && (tick - history.lossTick < 1800 || history.damageTicks.filter(at => tick - at < 1800).length >= 2)) {
+        const events = field.patch && harassment.get(field.patch.id);
+        if (events && (events.some(event => event.minerLoss) ||
+            events.length >= 2 && Math.max(...events.map(event => event.tick)) - Math.min(...events.map(event => event.tick)) >= 150)) {
             const plan = fieldRequest("D2", field, 72); if (plan) return plan;
         }
     }

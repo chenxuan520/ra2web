@@ -251,7 +251,7 @@ export class FieldArmyMission extends Mission {
         // caps ordinary infantry; this low request cannot borrow the locked reserve.
         const assigned = new Set(this.controller.getMissions().flatMap(mission => mission.getUnitIds()));
         const free = game.getVisibleUnits(player.name, "self", rules => rules.isSelectableCombatant && !rules.harvester &&
-            !["DESO", "DOG", "ADOG"].includes(rules.name) &&
+            !["DESO", "DOG", "ADOG", "DRON"].includes(rules.name) &&
             (rules.name !== "E1" || (s.own.E1 ?? 0) > 5) &&
             (rules.name !== "E2" || (!mobileRoles && (s.own.E2 ?? 0) > conscripts.reserve)))
             .filter(id => !assigned.has(id));

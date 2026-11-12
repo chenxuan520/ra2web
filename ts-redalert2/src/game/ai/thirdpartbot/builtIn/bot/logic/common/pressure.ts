@@ -16,6 +16,7 @@ export interface PressureState {
     earlyPressurePosition: PatchPoint | undefined;
     lastEconomicLossTick: number;
     enemyMinersSeen: number;
+    lastEnemyMinerSeenTick: number;
     passiveEnemy: boolean;
 }
 
@@ -26,6 +27,7 @@ interface StoredPressure {
     earlyPressurePosition?: PatchPoint;
     lastEconomicLossTick: number;
     lastHomeCombatTick: number;
+    lastEnemyMinerSeenTick: number;
     minerPeaks: { tick: number; count: number }[];
     economicIds: Set<number>;
     watchPost?: PatchPoint;
@@ -40,7 +42,7 @@ function stateFor(game: GameApi, playerName: string): StoredPressure {
     let state = players.get(playerName);
     if (!state || game.getCurrentTick() < state.tick) {
         state = { tick: -Infinity, baseUnderSiege: false, earlyPressureUntil: -Infinity,
-            lastEconomicLossTick: -Infinity, lastHomeCombatTick: -Infinity, minerPeaks: [], economicIds: new Set() };
+            lastEconomicLossTick: -Infinity, lastHomeCombatTick: -Infinity, lastEnemyMinerSeenTick: -Infinity, minerPeaks: [], economicIds: new Set() };
         players.set(playerName, state);
     }
     return state;
@@ -97,6 +99,7 @@ export function readPressure(context: PressureContext): PressureState {
             }
         }
         const count = game.getVisibleUnits(player.name, "enemy", rules => rules.harvester).length;
+        if (count > 0) state.lastEnemyMinerSeenTick = tick;
         // Monotonic peak queue: later equal/higher sightings supersede older ones.
         while (state.minerPeaks.length && tick - state.minerPeaks[0].tick >= 2700) state.minerPeaks.shift();
         while (state.minerPeaks.length && state.minerPeaks[state.minerPeaks.length - 1].count <= count) state.minerPeaks.pop();
@@ -107,7 +110,7 @@ export function readPressure(context: PressureContext): PressureState {
     const pressured = !isEcoOnly(context) && (state.baseUnderSiege || earlyPressure || tick - state.lastEconomicLossTick < 900);
     return { pressured, baseUnderSiege: state.baseUnderSiege, earlyPressure, earlyPressureUntil: state.earlyPressureUntil,
         earlyPressurePosition: state.earlyPressurePosition, lastEconomicLossTick: state.lastEconomicLossTick,
-        enemyMinersSeen: state.minerPeaks[0]?.count ?? 0,
+        enemyMinersSeen: state.minerPeaks[0]?.count ?? 0, lastEnemyMinerSeenTick: state.lastEnemyMinerSeenTick,
         passiveEnemy: tick >= 5400 && !pressured && tick - state.lastHomeCombatTick >= 2700 };
 }
 

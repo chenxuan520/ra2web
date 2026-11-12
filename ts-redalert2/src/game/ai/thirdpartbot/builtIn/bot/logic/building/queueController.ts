@@ -20,6 +20,7 @@ import { isCivilianEconomy } from "./economyPlan";
 import { isMinerRefineryProduction, observeRefineryEconomy, recordRefineryOrder, sellDuplicateRefinery } from "./refineryEconomy";
 import { isCrawlProduction, observeBaseCrawl, planBaseCrawl, recordBaseCrawlOrder } from "./baseCrawl";
 import { isDefenseProduction, planDefense, recordDefenseOrder } from "./defensePlan";
+import { getDronePriority } from "./droneProduction";
 
 export const QUEUES = [
     QueueType.Structures,
@@ -127,7 +128,9 @@ export class QueueController {
         }
         const basicDefense = isSovietCountry(playerData.country?.name) ? "NALASR" : "GAPILL";
         const defense = planDefense(context, requests.get(basicDefense));
-        if (defense && defense.priority >= (requests.get(defense.rules.name)?.priority ?? 0)) {
+        const activeDefense = defense && isDefenseProduction(game, player.name) &&
+            productionApi.getQueueData(QueueType.Armory).items[0]?.rules.name === defense.rules.name;
+        if (defense && (activeDefense || defense.priority >= (requests.get(defense.rules.name)?.priority ?? 0))) {
             requests.set(defense.rules.name, { priority: defense.priority, specificLocation: new Vector2(defense.location.rx, defense.location.ry) });
         }
         const crawl = planBaseCrawl(context);
@@ -187,6 +190,12 @@ export class QueueController {
                     // Visible air pressure needs actual counters before another
                     // miner is sent out. Retain the observation briefly across fog.
                     requests.set(aa.name, { priority: 115, specificLocation: null });
+                }
+                const drone = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === "DRON");
+                if (drone) {
+                    const priority = getDronePriority(context);
+                    if (priority > 0) requests.set(drone.name, { priority, specificLocation: null });
+                    else requests.delete(drone.name);
                 }
             }
             if (situation.harvesters >= 2 && situation.enemy.infantry >= 8 &&
