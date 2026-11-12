@@ -1,7 +1,11 @@
 import { describe, expect, test } from 'bun:test';
+import { mkdtemp, writeFile, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { findPatches, patchDistance, nearestPatch, measureEconomy, summarizeEconomy,
     ECO_TICKS, type ResourceTile, type EcoMap, type EcoMatch, type EcoGame } from '../../../e2e/league/ecoCore';
 import { ecoJobs, ecoBenchmarkCommand, reportEcoGames } from '../../../e2e/league/ecoTrial';
+import { judgeEconomy, validateEcoReport, ecoGateMarkdown, type EcoReport } from '../../../e2e/league/ecoGate';
 import { createEcoTelemetry } from '../../../e2e/ai-eco-telemetry';
 import { MAPS } from '../../../e2e/league/schedule';
 import { TiberiumType } from '../../engine/type/TiberiumType';
@@ -272,5 +276,204 @@ describe('read-only economic observer', () => {
             refineries: [{ x: 6, y: 0, patch: '0_0' }], servedPatches: 2 });
         players[0].getOwnedObjects = () => undefined as any;
         expect(() => shared.sample()).toThrow('owned objects');
+    });
+});
+
+// Hand-written economic metrics only; these fixtures are not measured AI scores.
+function gateReport(mined7200 = 13000, mined9000 = 14000, miners7200 = 5): EcoReport {
+    const rows = games();
+    for (const row of rows) {
+        row.metrics!.mined[7200] = mined7200; row.metrics!.mined[9000] = mined9000;
+        row.metrics!.miners[7200] = miners7200; row.metrics!.servedPatches[9000] = 2;
+    }
+    return { schema: 1, member: 'fixture', tree: 'a'.repeat(40), games: rows, ...summarizeEconomy(rows) };
+}
+function editGateReport(report: EcoReport, edit: (rows: EcoGame[]) => void): EcoReport {
+    edit(report.games);
+    return { ...report, ...summarizeEconomy(report.games) };
+}
+function earlyGateMap(report: EcoReport): EcoReport {
+    return editGateReport(report, rows => {
+        for (const row of rows.slice(0, 4)) {
+            row.ticks = 5400; row.result = 'a-win'; row.reason = 'engine-victory-conditions';
+            row.metrics = measureEconomy(match(5400));
+        }
+    });
+}
+
+describe('economic gates (synthetic fixtures)', () => {
+    test('K1 rejects 1.29 at 7200, accepts exactly 1.30 and 1.40, and rejects 1.39 at 9000', () => {
+        const baseline = gateReport(10000, 10000);
+        expect(judgeEconomy(gateReport(12900), baseline).gates.K1).toBe(false);
+        const passing = judgeEconomy(gateReport(), baseline);
+        expect(passing.valid).toBe(true); expect(passing.pass).toBe(true);
+        expect(passing.gates).toEqual({ K1: true, K2: true, K3: true, K4: true, K5: true });
+        expect(judgeEconomy(gateReport(13000, 13900), baseline).gates.K1).toBe(false);
+    });
+    test('K1 compares unrounded original values, not displayed ratios', () => {
+        const baseline = gateReport(10000, 10000);
+        expect(judgeEconomy(gateReport(12999.99), baseline).gates.K1).toBe(false);
+        expect(judgeEconomy(gateReport(13000, 13999.99), baseline).gates.K1).toBe(false);
+    });
+    test('K2 rejects one regressing map even when the whole-pool K1 still passes; equality passes', () => {
+        const baseline = gateReport(10000, 10000);
+        const candidate = editGateReport(gateReport(13000, 16000), rows => {
+            rows.slice(0, 4).forEach(row => row.metrics!.mined[9000] = 9999);
+        });
+        const result = judgeEconomy(candidate, baseline);
+        expect(result.valid).toBe(true); expect(result.gates.K1).toBe(true); expect(result.gates.K2).toBe(false);
+        expect(result.table[0].gates.K2).toBe(false);
+        candidate.games.slice(0, 4).forEach(row => row.metrics!.mined[9000] = 10000);
+        expect(judgeEconomy(editGateReport(candidate, () => {}), baseline).gates.K2).toBe(true);
+    });
+    test('K3 rejects a synthetic 4.9 mean and accepts 5.0 exactly', () => {
+        const baseline = gateReport(10000, 10000);
+        const below = judgeEconomy(gateReport(13000, 14000, 4.9), baseline);
+        expect(below.valid).toBe(true); expect(below.candidate!.miners[7200]).toBeCloseTo(4.9);
+        expect(below.gates.K3).toBe(false);
+        expect(judgeEconomy(gateReport(), baseline).gates.K3).toBe(true);
+    });
+    test('K4 needs three non-null gem arrivals, includes 4500 and excludes 4501', () => {
+        const baseline = gateReport(10000, 10000), candidate = editGateReport(gateReport(), rows => {
+            [4500, 4500, 4501, null].forEach((tick, index) => rows[index].metrics!.firstGemMinerTick = tick);
+        });
+        let result = judgeEconomy(candidate, baseline);
+        expect(result.valid).toBe(true); expect(result.gates.K4).toBe(false);
+        expect(result.table[0]).toMatchObject({ homeGemGames: 4, earlyGemGames: 2, participates: { K4: true } });
+        candidate.games[2].metrics!.firstGemMinerTick = 4500;
+        result = judgeEconomy(editGateReport(candidate, () => {}), baseline);
+        expect(result.gates.K4).toBe(true); expect(result.table[0].earlyGemGames).toBe(3);
+    });
+    test('K4 null arrivals are missing, never tick zero', () => {
+        const candidate = editGateReport(gateReport(), rows => rows.slice(0, 4).forEach(row => row.metrics!.firstGemMinerTick = null));
+        const result = judgeEconomy(candidate, gateReport(10000, 10000));
+        expect(result.valid).toBe(true); expect(result.gates.K4).toBe(false);
+        expect(result.table[0].earlyGemGames).toBe(0);
+    });
+    test.each([1, 4])('K4 skips a map with %s games without a home gem patch', absent => {
+        const candidate = editGateReport(gateReport(), rows => {
+            rows.slice(0, 4).forEach(row => row.metrics!.firstGemMinerTick = null);
+            rows.slice(0, absent).forEach(row => {
+                row.ecoMap!.patches[0].isGem = false; row.ecoMap!.patches[0].gemValue = 0;
+                row.metrics!.homeGemPatch = false; row.metrics!.gemShare = null;
+            });
+        });
+        const result = judgeEconomy(candidate, gateReport(10000, 10000));
+        expect(result.valid).toBe(true); expect(result.gates.K4).toBe(true);
+        expect(result.table[0].participates.K4).toBe(false);
+    });
+    test('K5 rejects four-game mean 1.75 and accepts exactly 2.0', () => {
+        const baseline = gateReport(10000, 10000), candidate = editGateReport(gateReport(), rows => rows[0].metrics!.servedPatches[9000] = 1);
+        const result = judgeEconomy(candidate, baseline);
+        expect(result.valid).toBe(true); expect(result.gates.K5).toBe(false);
+        expect(result.table[0].candidate.servedPatches[9000]).toBe(1.75);
+        expect(result.table[0].minimumHomePatches).toBe(2);
+        expect(judgeEconomy(gateReport(), baseline).gates.K5).toBe(true);
+    });
+    test('K5 uses the minimum own-side patch count across all four swaps, not an average or physical slot', () => {
+        const candidate = editGateReport(gateReport(), rows => {
+            rows.slice(0, 4).forEach(row => row.metrics!.servedPatches[9000] = 1);
+            rows[1].ecoMap!.patches[1].nearestStart = 1;
+        });
+        const result = judgeEconomy(candidate, gateReport(10000, 10000));
+        expect(result.valid).toBe(true); expect(result.gates.K5).toBe(true);
+        expect(result.table[0]).toMatchObject({ minimumHomePatches: 1, participates: { K5: false }, gates: { K5: true } });
+        expect(candidate.games[1].swapped).toBe(true); expect(candidate.games[1].player).toBe(0);
+    });
+    test('a legal 28-survivor candidate with one wholly missing future map cannot satisfy K2 or participating K5', () => {
+        const candidate = earlyGateMap(gateReport()), baseline = gateReport(10000, 10000);
+        const result = judgeEconomy(candidate, baseline);
+        expect(result.valid).toBe(true); expect(result.pass).toBe(false);
+        expect(result.gates.K2).toBe(false); expect(result.gates.K5).toBe(false);
+        expect(result.table[0].candidate.mined[9000]).toBeNull(); expect(result.table[0].ratios.mined9000).toBeNull();
+        expect(candidate.observations.mined[9000]).toBe(28);
+    });
+    test('a legal baseline missing a whole future map stays missing, not a zero target', () => {
+        const result = judgeEconomy(gateReport(), earlyGateMap(gateReport(10000, 10000)));
+        expect(result.valid).toBe(true); expect(result.gates.K2).toBe(false);
+        expect(result.table[0].baseline.mined[9000]).toBeNull(); expect(result.table[0].ratios.mined9000).toBeNull();
+    });
+    test('zero baseline values follow the written inequalities while undefined ratios stay null', () => {
+        const result = judgeEconomy(gateReport(0, 0), gateReport(0, 0));
+        expect(result.valid).toBe(true); expect(result.gates.K1).toBe(true); expect(result.gates.K2).toBe(true);
+        expect(result.table[0].ratios.mined7200).toBeNull(); expect(result.table[0].ratios.mined9000).toBeNull();
+    });
+    test('gemShare above one is preserved because ore regrowth reduces the net-mining denominator', () => {
+        const candidate = editGateReport(gateReport(), rows => rows[0].metrics!.gemShare = 1.5);
+        const result = judgeEconomy(candidate, gateReport(10000, 10000));
+        expect(result.valid).toBe(true); expect(candidate.games[0].metrics!.gemShare).toBe(1.5);
+        expect(result.candidate!.gemShare).toBe(candidate.mean.gemShare);
+    });
+    test('28 survivors are valid but 27 are invalid even with a forged true validity flag', () => {
+        const candidate = earlyGateMap(gateReport());
+        expect(validateEcoReport(candidate)).toBe(candidate);
+        candidate.games[4].ticks = 5400; candidate.games[4].result = 'a-win'; candidate.games[4].reason = 'engine-victory-conditions';
+        candidate.games[4].metrics = measureEconomy(match(5400));
+        Object.assign(candidate, summarizeEconomy(candidate.games), { valid: true });
+        expect(judgeEconomy(candidate, gateReport(10000, 10000)).valid).toBe(false);
+    });
+    test.each(['candidate', 'baseline'] as const)('%s invalidity is not a lost economic qualification', side => {
+        const candidate = gateReport(), baseline = gateReport(10000, 10000);
+        (side === 'candidate' ? candidate : baseline).valid = false;
+        const result = judgeEconomy(candidate, baseline);
+        expect(result.valid).toBe(false); expect(result.pass).toBe(false); expect(result.reason).toBeTruthy();
+    });
+    test.each(['map-set', 'duplicate-map', 'missing-game', 'duplicate-swap', 'wrong-seed', 'error', 'failure', 'false-complete',
+        'schema', 'tree', 'missing-metrics', 'missing-tick', 'string-number', 'nan', 'infinity', 'observed-null', 'forged-mean',
+        'forged-map-mean', 'forged-observations', 'forged-map-observations', 'invalid-patch', 'invalid-player', 'forged-survived', 'string-gem-tick']) (
+        '%s datasets are invalid without coercion or trusting summary claims', issue => {
+            const candidate: any = gateReport();
+            if (issue === 'map-set') candidate.byMap[0].map = 'other-map';
+            if (issue === 'duplicate-map') candidate.byMap[1].map = candidate.byMap[0].map;
+            if (issue === 'missing-game') candidate.games.pop();
+            if (issue === 'duplicate-swap') candidate.games[0].swapped = true;
+            if (issue === 'wrong-seed') candidate.games[0].seed = 7000;
+            if (issue === 'error') { candidate.games[0].result = 'error'; candidate.games[0].error = 'runtime'; }
+            if (issue === 'failure') candidate.failures.worker = 'failed';
+            if (issue === 'false-complete') candidate.complete = false;
+            if (issue === 'schema') candidate.schema = 2;
+            if (issue === 'tree') candidate.tree = 'not-a-tree';
+            if (issue === 'missing-metrics') candidate.games[0].metrics = null;
+            if (issue === 'missing-tick') delete candidate.games[0].metrics.mined[9000];
+            if (issue === 'string-number') candidate.games[0].metrics.mined[9000] = '14000';
+            if (issue === 'nan') candidate.games[0].metrics.mined[9000] = NaN;
+            if (issue === 'infinity') candidate.games[0].metrics.mined[9000] = Infinity;
+            if (issue === 'observed-null') candidate.games[0].metrics.mined[9000] = null;
+            if (issue === 'forged-mean') candidate.mean.mined[9000]++;
+            if (issue === 'forged-map-mean') candidate.byMap[0].mean.mined[9000]++;
+            if (issue === 'forged-observations') candidate.observations.mined[9000]--;
+            if (issue === 'forged-map-observations') candidate.byMap[0].observations.mined[9000]--;
+            if (issue === 'invalid-patch') candidate.games[0].ecoMap.patches[0].nearestStart = 2;
+            if (issue === 'invalid-player') candidate.games[0].player = 1;
+            if (issue === 'forged-survived') candidate.games[0].metrics.survived = false;
+            if (issue === 'string-gem-tick') candidate.games[0].metrics.firstGemMinerTick = '4500';
+            const result = judgeEconomy(candidate, gateReport(10000, 10000));
+            expect(result.valid).toBe(false); expect(result.pass).toBe(false);
+            expect(() => validateEcoReport(candidate)).toThrow();
+        });
+    test('standalone CLI distinguishes synthetic pass, failed gates and invalid files with exit 0/1/2', async () => {
+        const directory = await mkdtemp(join(tmpdir(), 'league-eco-gate-fixture-'));
+        try {
+            const candidatePath = join(directory, 'candidate.json'), baselinePath = join(directory, 'baseline.json');
+            await writeFile(baselinePath, JSON.stringify(gateReport(10000, 10000)));
+            for (const [report, expectedCode] of [[gateReport(), 0], [gateReport(12900), 1], [{ ...gateReport(), valid: false }, 2]] as const) {
+                await writeFile(candidatePath, JSON.stringify(report));
+                const child = Bun.spawn([process.execPath, 'e2e/league/ecoGate.ts', '--candidate', candidatePath, '--baseline', baselinePath],
+                    { cwd: join(import.meta.dir, '../../..'), stdout: 'pipe', stderr: 'pipe' });
+                const [code, stdout] = await Promise.all([child.exited, new Response(child.stdout).text(), new Response(child.stderr).text()]);
+                expect(code).toBe(expectedCode);
+                expect(stdout).toContain(expectedCode === 2 ? '无效原因' : `K1: ${expectedCode === 0 ? 'PASS' : 'FAIL'}`);
+            }
+        } finally { await rm(directory, { recursive: true, force: true }); }
+    });
+    test('the comparison includes original means, ratios, participation and all gate results without mutating input', () => {
+        const candidate = gateReport(), baseline = gateReport(10000, 10000), before = JSON.stringify([candidate, baseline]);
+        const result = judgeEconomy(candidate, baseline), markdown = ecoGateMarkdown(result);
+        expect(result.table).toHaveLength(8); expect(result.table[0].ratios).toEqual({ mined7200: 1.3, mined9000: 1.4 });
+        expect(markdown).toContain('10000.00 → 13000.00 (1.30×)');
+        expect(markdown).toContain('10000.00 → 14000.00 (1.40×)');
+        expect(markdown).toContain('全部');
+        for (const gate of ['K1', 'K2', 'K3', 'K4', 'K5']) expect(markdown).toContain(`${gate}: PASS`);
+        expect(JSON.stringify([candidate, baseline])).toBe(before);
     });
 });

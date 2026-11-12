@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { mkdir, rename, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { parseArgs } from 'node:util';
@@ -5,6 +6,7 @@ import { loadLeague, validateLeague, LEAGUE_PATH, REPO_ROOT, type League } from 
 import { mapsForRound, pairingJobs, roundRobinJobs, compareGames, type LeagueGame } from './schedule';
 import { parseGames, validateSchedule, statsFor, median, gameKey, type Stats } from './records';
 import { computeRatings } from './rating';
+import { judgeEconomy, validateEcoReport, type EcoReport, type EcoGateDecision, type EcoRetestFiles } from './ecoGate';
 
 export type Mode = 'round0' | 'exploiter' | 'champion';
 export interface OpponentScore { opponent: string; candidate: Stats; baseline: Stats | null; difference: number | null }
@@ -26,6 +28,7 @@ export interface Decision {
     candidate?: Stats;
     baseline?: Stats;
     direct?: Stats;
+    eco?: EcoGateDecision;
 }
 function invalid(mode: Mode, error: unknown): Decision {
     return { mode, valid: false, pass: false, round: -1, gates: { G1: false }, table: [], reason: error instanceof Error ? error.message : String(error) };
@@ -57,7 +60,13 @@ export function judgeExploiter(league: League, id: string, target: string, games
             gates: { G1: true, winsAtLeastTwelveAndMajority: admitted }, table: [{ opponent: target, candidate, baseline: null, difference: null }], candidate };
     } catch (error) { return invalid('exploiter', error); }
 }
-function repairRetest(fixes: string, id: string, champion: string, candidateGames: readonly LeagueGame[], baselineGames: readonly LeagueGame[], common: readonly string[]): RepairRetest {
+function repairRetest(fixes: string, id: string, champion: string, candidateGames: readonly LeagueGame[], baselineGames: readonly LeagueGame[], common: readonly string[], eco?: EcoRetestFiles): RepairRetest {
+    if (fixes === 'eco') {
+        const directory = resolve(REPO_ROOT, 'docs/ai-league');
+        const baseline = eco?.baseline ?? validateEcoReport(JSON.parse(readFileSync(resolve(directory, 'eco-baseline.json'), 'utf8')));
+        const candidate = eco?.candidate ?? validateEcoReport(JSON.parse(readFileSync(resolve(directory, `eco-${id}.json`), 'utf8')));
+        return { fixes, before: baseline.mean.mined[9000]!, after: candidate.mean.mined[9000]! };
+    }
     if (fixes.startsWith('member:')) {
         const opponent = fixes.slice(7);
         return { fixes, before: statsFor(baselineGames, opponent, [champion]).wins, after: statsFor(candidateGames, opponent, [id]).wins };
@@ -75,29 +84,41 @@ export function championGates(candidate: Stats, baseline: Stats, direct: Stats, 
         G5: candidateMedian !== null && baselineMedian !== null && candidateMedian * 10 <= baselineMedian * 11 && candidate.timeouts <= baseline.timeouts + 2,
         G6: repair.fixes.startsWith('member:') ? repair.after <= 8 && repair.after <= repair.before - 3 : repair.after <= repair.before - 4 };
 }
-export function judgeChampion(league: League, id: string, champion: string, candidateGames: readonly LeagueGame[], baselineGames: readonly LeagueGame[], attempt: number, fixes?: string): Decision {
+export function judgeChampion(league: League, id: string, champion: string, candidateGames: readonly LeagueGame[], baselineGames: readonly LeagueGame[], attempt: number, fixes?: string, ecoCandidate?: unknown, ecoBaseline?: unknown): Decision {
     try {
         const round = candidateGames[0]?.round;
         if (!Number.isInteger(round) || round < 1 || id !== `c${round}` || champion !== league.champion ||
             league.members.some(member => member.id === id) || !Number.isInteger(attempt) || attempt < 1 || attempt > 2)
             throw new Error('Invalid current champion, candidate round/id or attempt (must be 1-2)');
-        if (!fixes || !/^(member:(x-[a-z]+-[0-9]{2})|map:[a-z0-9]+)$/.test(fixes)) throw new Error('Missing or invalid --fixes declaration');
+        if (!fixes || !/^(member:(x-[a-z]+-[0-9]{2})|map:[a-z0-9]+|eco)$/.test(fixes)) throw new Error('Missing or invalid --fixes declaration');
         if (fixes.startsWith('member:')) {
             const target = league.members.find(member => member.id === fixes.slice(7));
             if (!target?.active || (target.role !== 'exploiter' && target.role !== 'sparring')) throw new Error('--fixes member must be an active exploiter or sparring');
-        } else if (!mapsForRound(round).includes(fixes.slice(4))) throw new Error('--fixes map is not used this round');
+        } else if (fixes !== 'eco' && !mapsForRound(round).includes(fixes.slice(4))) throw new Error('--fixes map is not used this round');
         const active = league.members.filter(member => member.active).map(member => member.id), common = active.filter(member => member !== champion);
         if (!common.length) throw new Error('Champion qualification needs common opponents');
         validateSchedule(candidateGames, active.flatMap(opponent => pairingJobs(id, opponent, round, 'qualify')), league, round, [id]);
         validateSchedule(baselineGames, common.flatMap(opponent => pairingJobs(champion, opponent, round, 'qualify')), league, round);
+        let eco: EcoGateDecision | undefined;
+        if (fixes === 'eco') {
+            if (ecoCandidate === undefined || ecoBaseline === undefined) throw new Error('--fixes eco requires --eco-candidate and --eco-baseline');
+            eco = judgeEconomy(ecoCandidate, ecoBaseline);
+            if (!eco.valid) throw new Error(eco.reason);
+            if ((ecoCandidate as EcoReport).tree !== candidateGames.find(game => game.a === id)?.aTree) throw new Error('Candidate economic tree differs from candidate-games aTree');
+            const measuredBaseline = ecoBaseline as EcoReport;
+            if (measuredBaseline.member !== champion || measuredBaseline.tree !== league.members.find(member => member.id === champion)?.tree)
+                throw new Error('Economic baseline must identify the frozen champion member/tree');
+        }
         const table = common.map(opponent => {
             const candidate = statsFor(candidateGames, id, [opponent]), baseline = statsFor(baselineGames, champion, [opponent]);
             return { opponent, candidate, baseline, difference: candidate.wins - baseline.wins };
         });
         const candidate = statsFor(candidateGames, id, common), baseline = statsFor(baselineGames, champion, common), direct = statsFor(candidateGames, id, [champion]);
-        const repair = repairRetest(fixes, id, champion, candidateGames, baselineGames, common), gates = championGates(candidate, baseline, direct, table, repair);
+        const repair = repairRetest(fixes, id, champion, candidateGames, baselineGames, common,
+            eco ? { candidate: ecoCandidate as EcoReport, baseline: ecoBaseline as EcoReport } : undefined), gates = championGates(candidate, baseline, direct, table, repair);
+        if (eco) gates.G6 = eco.pass;
         return { mode: 'champion', valid: true, pass: Object.values(gates).every(Boolean), round, id, target: champion, attempt, fixes, repair,
-            gates, table: [...table, { opponent: champion, candidate: direct, baseline: null, difference: null }], candidate, baseline, direct };
+            gates, table: [...table, { opponent: champion, candidate: direct, baseline: null, difference: null }], candidate, baseline, direct, ...(eco ? { eco } : {}) };
     } catch (error) { return invalid('champion', error); }
 }
 
@@ -183,7 +204,7 @@ function appendUnique(existing: readonly LeagueGame[], incoming: readonly League
     return result;
 }
 const rate = (stats: Stats) => stats.total ? `${(100 * stats.wins / stats.total).toFixed(1)}%` : '—';
-export function leaderboardMarkdown(league: League, games: readonly LeagueGame[]): string {
+export function leaderboardMarkdown(league: League, games: readonly LeagueGame[], eco?: Record<string, EcoRetestFiles>): string {
     const ratings = computeRatings(games), lines = ['# 冷酷 AI 联赛', '', `当前主力：\`${league.champion ?? '未选定'}\`；最近晋级轮次：${league.round}。超时在验收中计零分，Bradley–Terry 展示评分按半分。`, '',
         '## 排行榜', '', '| 编号 | 角色 | 活跃 | Elo | 总局数 | 胜率 | 获胜 tick 中位数 |', '| --- | --- | --- | ---: | ---: | ---: | ---: |'];
     for (const member of [...league.members].sort((a, b) => (ratings[b.id] ?? 1500) - (ratings[a.id] ?? 1500) || league.members.indexOf(a) - league.members.indexOf(b))) {
@@ -201,7 +222,7 @@ export function leaderboardMarkdown(league: League, games: readonly LeagueGame[]
             const previous = history[index - 1], candidateRows = rows.filter(game => game.a === id);
             const common = [...new Set(candidateRows.map(game => game.b))].filter(opponent => opponent !== previous);
             const member = league.members.find(member => member.id === id), baselineRows = rows.filter(game => game.a === previous);
-            const repair = member?.fixes ? repairRetest(member.fixes, id, previous, candidateRows, baselineRows, common) : null;
+            const repair = member?.fixes ? repairRetest(member.fixes, id, previous, candidateRows, baselineRows, common, eco?.[id]) : null;
             lines.push(`| ${round} | ${id} | ${rate(statsFor(candidateRows, id, common))} | ${rate(statsFor(baselineRows, previous, common))} | ${member?.attempts ?? '—'} | ${member?.fixes ?? '—'} | ${repair ? `${repair.before} → ${repair.after}` : '—'} |`);
         }
     }
@@ -224,13 +245,14 @@ export function leaderboardMarkdown(league: League, games: readonly LeagueGame[]
 async function atomicText(path: string, text: string) {
     const temporary = `${path}.${process.pid}.tmp`; await writeFile(temporary, text); await rename(temporary, path);
 }
-async function publish(league: League, decision: Decision, usedGames: readonly LeagueGame[], candidateGames: readonly LeagueGame[]) {
+async function publish(league: League, decision: Decision, usedGames: readonly LeagueGame[], candidateGames: readonly LeagueGame[], eco?: EcoRetestFiles & { candidateText: string }) {
     const directory = resolve(REPO_ROOT, 'docs/ai-league'), resultsPath = resolve(directory, 'results.jsonl');
     const file = Bun.file(resultsPath), existing = await file.exists() ? parseGames(await file.text()) : [];
     const all = appendUnique(existing, usedGames), next = applyDecision(league, decision, candidateGames, all);
     // New member tags must already point at the qualified immutable code tree. They need not point at a later documentation amendment.
     await validateLeague(next);
-    const markdown = leaderboardMarkdown(next, all); await mkdir(directory, { recursive: true });
+    const markdown = leaderboardMarkdown(next, all, eco ? { [decision.id!]: eco } : undefined); await mkdir(directory, { recursive: true });
+    if (eco) await atomicText(resolve(directory, `eco-${decision.id}.json`), eco.candidateText);
     await atomicText(resultsPath, all.map(game => JSON.stringify(game)).join('\n') + '\n');
     await atomicText(resolve(directory, 'README.md'), markdown);
     await atomicText(LEAGUE_PATH, JSON.stringify(next, null, 2) + '\n');
@@ -242,7 +264,7 @@ function printDecision(decision: Decision) {
         baselineWinRate: decision.baseline ? rate(decision.baseline) : undefined,
         candidateWinningTickMedian: decision.candidate ? median(decision.candidate.winTicks) : undefined,
         baselineWinningTickMedian: decision.baseline ? median(decision.baseline.winTicks) : undefined,
-        fixes: decision.fixes, repair: decision.repair }, null, 2));
+        fixes: decision.fixes, repair: decision.repair, ecoGates: decision.eco?.gates }, null, 2));
     if (decision.repair) console.log(`repair\t${decision.repair.fixes}\t${decision.repair.before} → ${decision.repair.after}`);
     if (decision.table.length) {
         console.log('opponent\tcandidate W/L/timeout\tchampion W/L/timeout\tdelta');
@@ -252,7 +274,7 @@ function printDecision(decision: Decision) {
 export async function main() {
     const { values } = parseArgs({ options: { mode: { type: 'string' }, games: { type: 'string' }, id: { type: 'string' }, target: { type: 'string' },
         candidate: { type: 'string' }, champion: { type: 'string' }, 'candidate-games': { type: 'string' }, 'baseline-games': { type: 'string' },
-        attempt: { type: 'string' }, fixes: { type: 'string' }, write: { type: 'boolean' } } });
+        attempt: { type: 'string' }, fixes: { type: 'string' }, write: { type: 'boolean' }, 'eco-candidate': { type: 'string' }, 'eco-baseline': { type: 'string' } } });
     const league = await loadLeague();
     if (values.mode === 'readme') {
         const directory = resolve(REPO_ROOT, 'docs/ai-league'), games = parseGames(await Bun.file(resolve(directory, 'results.jsonl')).text());
@@ -260,6 +282,7 @@ export async function main() {
         process.exitCode = 0; return;
     }
     let decision: Decision, used: LeagueGame[], candidateGames: LeagueGame[];
+    let eco: (EcoRetestFiles & { candidateText: string }) | undefined;
     if (values.mode === 'round0' || values.mode === 'exploiter') {
         if (!values.games) throw new Error('--games is required');
         used = candidateGames = parseGames(await Bun.file(values.games).text());
@@ -271,13 +294,18 @@ export async function main() {
     } else if (values.mode === 'champion') {
         if (!values.candidate || !values.champion || !values['candidate-games'] || !values['baseline-games'] || !values.attempt || !values.fixes)
             throw new Error('Champion mode requires --candidate, --champion, --candidate-games, --baseline-games, --attempt and --fixes');
+        if (values.fixes === 'eco') {
+            if (!values['eco-candidate'] || !values['eco-baseline']) throw new Error('--fixes eco requires --eco-candidate and --eco-baseline');
+            const candidateText = await Bun.file(values['eco-candidate']).text();
+            eco = { candidate: JSON.parse(candidateText), baseline: await Bun.file(values['eco-baseline']).json(), candidateText };
+        }
         candidateGames = parseGames(await Bun.file(values['candidate-games']).text());
         const baselineGames = parseGames(await Bun.file(values['baseline-games']).text());
         used = [...candidateGames, ...baselineGames];
-        decision = judgeChampion(league, values.candidate, values.champion, candidateGames, baselineGames, Number(values.attempt), values.fixes);
+        decision = judgeChampion(league, values.candidate, values.champion, candidateGames, baselineGames, Number(values.attempt), values.fixes, eco?.candidate, eco?.baseline);
     } else throw new Error('--mode must be round0, exploiter, champion or readme');
     printDecision(decision);
-    if (values.write && decision.pass) await publish(league, decision, used, candidateGames);
+    if (values.write && decision.pass) await publish(league, decision, used, candidateGames, eco);
     process.exitCode = !decision.valid ? 2 : decision.pass ? 0 : 1;
 }
 if (import.meta.main) {

@@ -1,8 +1,14 @@
 import { describe, expect, test } from 'bun:test';
+import { chmod, copyFile, mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { judgeRound0, judgeExploiter, judgeChampion, championGates, trimHistory, trimExploiters, trimSparring, trimPool, applyDecision, leaderboardMarkdown } from '../../../e2e/league/judge';
 import { pairingJobs, type LeagueGame } from '../../../e2e/league/schedule';
 import { parseGames, type Stats } from '../../../e2e/league/records';
 import type { League, Member } from '../../../e2e/league/registry';
+import { summarizeEconomy, type EcoGame } from '../../../e2e/league/ecoCore';
+import { ecoJobs } from '../../../e2e/league/ecoTrial';
+import type { EcoReport } from '../../../e2e/league/ecoGate';
 
 function member(id: string, role: Member['role'] = 'history'): Member {
     return { id, tag: `league/${id}`, tree: ({ orig: 'a', r4: 'b', v0: 'c', m0: 'd' }[id] ?? 'e').repeat(40),
@@ -299,5 +305,127 @@ describe('round zero decisions and write policies', () => {
         expect(next.champion).toBe('c1'); expect(next.round).toBe(1); expect(next.members.find(member => member.id === 'c1')!.attempts).toBe(2);
         expect(next.members.find(member => member.id === 'x-rush-01')!.winsVsTarget).toBe(9);
         expect(next.members.find(member => member.id === 'x-rush-01')!.target).toBe('c1'); expect(f.pool.champion).toBe('m0');
+    });
+});
+
+// Explicit metric fixtures, not real economic trial results.
+function judgeEcoReport(id: string, mined7200: number, mined9000: number): EcoReport {
+    const games: EcoGame[] = ecoJobs().flatMap(job => [false, true].map(swapped => ({ jobId: job.id, map: job.map, seed: job.seed,
+        country: job.country, swapped, player: 0, result: 'timeout', reason: 'tick-limit', ticks: 9000, error: null,
+        ecoMap: { values: { ore: 10, gems: 20 }, patches: [
+            { id: '0_0', cx: 0, cy: 0, tiles: 1, value: 20000, gemValue: 20000, isGem: true, regrows: false, nearestStart: 0, distToStart: [10, 50] },
+            { id: '20_0', cx: 20, cy: 0, tiles: 1, value: 20000, gemValue: 0, isGem: false, regrows: true, nearestStart: 0, distToStart: [20, 60] },
+        ] }, metrics: { mined: { 3600: 3000, 5400: 6000, 7200: mined7200, 9000: mined9000 },
+            miners: { 3600: 3, 5400: 4, 7200: 5, 9000: 5 }, refineries: { 3600: 1, 5400: 1, 7200: 2, 9000: 2 },
+            factories: { 3600: 1, 5400: 1, 7200: 1, 9000: 1 }, servedPatches: { 3600: 1, 5400: 1, 7200: 2, 9000: 2 },
+            gemShare: 0.5, homeGemPatch: true, firstGemMinerTick: 4500, maxMinersOnPatch: 3, survived: true },
+    })));
+    return { schema: 1, member: id, tree: member(id).tree, games, ...summarizeEconomy(games) };
+}
+
+describe('eco champion qualification (synthetic fixtures)', () => {
+    test.each(['both', 'candidate', 'baseline'])('missing %s eco data is invalid, not a G6 loss', missing => {
+        const f = qualification(), candidate = judgeEcoReport('c1', 13000, 14000), baseline = judgeEcoReport('m0', 10000, 10000);
+        const result = judgeChampion(f.pool, 'c1', 'm0', f.candidate, f.baseline, 1, 'eco',
+            missing === 'both' || missing === 'candidate' ? undefined : candidate,
+            missing === 'both' || missing === 'baseline' ? undefined : baseline);
+        expect(result.valid).toBe(false); expect(result.pass).toBe(false);
+        expect(result.reason).toContain('--eco-candidate and --eco-baseline');
+    });
+    test.each(['both', 'candidate', 'baseline'])('CLI missing %s eco file parameters exits 2 before reading match files', async missing => {
+        const args = ['e2e/league/judge.ts', '--mode', 'champion', '--candidate', 'c6', '--champion', 'c3', '--attempt', '1', '--fixes', 'eco',
+            '--candidate-games', 'unused-fixture-candidate.jsonl', '--baseline-games', 'unused-fixture-baseline.jsonl'];
+        if (missing === 'candidate') args.push('--eco-baseline', 'unused-fixture-baseline-eco.json');
+        if (missing === 'baseline') args.push('--eco-candidate', 'unused-fixture-candidate-eco.json');
+        const child = Bun.spawn([process.execPath, ...args], { cwd: `${import.meta.dir}/../../..`, stdout: 'pipe', stderr: 'pipe' });
+        const [code, stderr] = await Promise.all([child.exited, new Response(child.stderr).text(), new Response(child.stdout).text()]);
+        expect(code).toBe(2); expect(stderr).toContain('--eco-candidate and --eco-baseline');
+    });
+    test('candidate economy tree must equal the validated candidate-games aTree', () => {
+        const f = qualification(), candidate = judgeEcoReport('c1', 13000, 14000), baseline = judgeEcoReport('m0', 10000, 10000);
+        candidate.tree = 'f'.repeat(40);
+        const result = judgeChampion(f.pool, 'c1', 'm0', f.candidate, f.baseline, 1, 'eco', candidate, baseline);
+        expect(result.valid).toBe(false); expect(result.pass).toBe(false); expect(result.reason).toContain('tree');
+    });
+    test.each(['member', 'tree'])('economic baseline must still identify the frozen champion %s', issue => {
+        const f = qualification(), candidate = judgeEcoReport('c1', 13000, 14000), baseline = judgeEcoReport('m0', 10000, 10000);
+        if (issue === 'member') baseline.member = 'c0'; else baseline.tree = 'f'.repeat(40);
+        const result = judgeChampion(f.pool, 'c1', 'm0', f.candidate, f.baseline, 1, 'eco', candidate, baseline);
+        expect(result.valid).toBe(false); expect(result.pass).toBe(false); expect(result.reason).toContain('baseline');
+    });
+    test('K1-K5 all true makes G6 true while G1-G5 retain their existing values', () => {
+        const f = qualification(), candidate = judgeEcoReport('c1', 13000, 14000), baseline = judgeEcoReport('m0', 10000, 10000);
+        const result = judgeChampion(f.pool, 'c1', 'm0', f.candidate, f.baseline, 1, 'eco', candidate, baseline);
+        expect(result.valid).toBe(true); expect(result.pass).toBe(true);
+        expect(result.gates).toEqual({ G1: true, G2: true, G3: true, G4: true, G5: true, G6: true });
+        expect(result.eco!.gates).toEqual({ K1: true, K2: true, K3: true, K4: true, K5: true });
+        expect(result.repair).toEqual({ fixes: 'eco', before: 10000, after: 14000 });
+    });
+    test('a valid failed economic gate is a G6 failure, while invalid economic data stays invalid', () => {
+        const f = qualification(), candidate = judgeEcoReport('c1', 12900, 14000), baseline = judgeEcoReport('m0', 10000, 10000);
+        let result = judgeChampion(f.pool, 'c1', 'm0', f.candidate, f.baseline, 1, 'eco', candidate, baseline);
+        expect(result.valid).toBe(true); expect(result.pass).toBe(false); expect(result.gates.G6).toBe(false);
+        expect(['G1', 'G2', 'G3', 'G4', 'G5'].every(gate => result.gates[gate])).toBe(true);
+        candidate.valid = false;
+        result = judgeChampion(f.pool, 'c1', 'm0', f.candidate, f.baseline, 1, 'eco', candidate, baseline);
+        expect(result.valid).toBe(false); expect(result.pass).toBe(false);
+    });
+    test('eco promotion renders a synchronous README from verified data before any eco-c1 file exists', () => {
+        const f = qualification(), candidate = judgeEcoReport('c1', 13000, 14000), baseline = judgeEcoReport('m0', 10000, 10000);
+        const decision = judgeChampion(f.pool, 'c1', 'm0', f.candidate, f.baseline, 1, 'eco', candidate, baseline);
+        const all = [...f.history, ...f.candidate, ...f.baseline], next = applyDecision(f.pool, decision, f.candidate, all);
+        expect(next.members.find(member => member.id === 'c1')).toMatchObject({ fixes: 'eco', attempts: 1 });
+        const markdown = leaderboardMarkdown(next, all, { c1: { candidate, baseline } });
+        expect(typeof markdown).toBe('string'); expect(markdown).toContain('| eco | 10000 → 14000 |');
+    });
+    test('fixture-only --write archives exact validated bytes and --mode readme rebuilds synchronously without real tags', async () => {
+        const root = await mkdtemp(join(tmpdir(), 'league-eco-publish-fixture-'));
+        try {
+            const project = join(root, 'ts-redalert2'), tools = join(project, 'e2e/league'), docs = join(root, 'docs/ai-league'), bin = join(root, 'bin');
+            await Promise.all([mkdir(tools, { recursive: true }), mkdir(docs, { recursive: true }), mkdir(bin)]);
+            for (const file of ['judge.ts', 'registry.ts', 'schedule.ts', 'records.ts', 'rating.ts', 'ecoGate.ts', 'ecoCore.ts'])
+                await copyFile(join(import.meta.dir, '../../../e2e/league', file), join(tools, file));
+            const f = qualification(), candidate = judgeEcoReport('c1', 13000, 14000), baseline = judgeEcoReport('m0', 10000, 10000);
+            const candidatePath = join(root, 'candidate-eco.json'), baselinePath = join(docs, 'eco-baseline.json');
+            const candidateGamesPath = join(root, 'candidate-games.jsonl'), baselineGamesPath = join(root, 'baseline-games.jsonl');
+            const registryText = JSON.stringify(f.pool), historyText = f.history.map(game => JSON.stringify(game)).join('\n') + '\n';
+            await Promise.all([writeFile(join(tools, 'league.json'), registryText), writeFile(join(docs, 'results.jsonl'), historyText),
+                writeFile(baselinePath, JSON.stringify(baseline)), writeFile(candidateGamesPath, f.candidate.map(game => JSON.stringify(game)).join('\n')),
+                writeFile(baselineGamesPath, f.baseline.map(game => JSON.stringify(game)).join('\n'))]);
+            const trees = Object.fromEntries([...f.pool.members, member('c1')].map(member => [member.id, member.tree]));
+            // Inject only fixture git-query responses; this never creates a repository, commit or tag.
+            const fakeGit = join(bin, 'git');
+            await writeFile(fakeGit, `#!/usr/bin/env bun\nconst args = process.argv.slice(2), ref = args.at(-1), trees = ${JSON.stringify(trees)};\nif (args[0] === 'cat-file' && args[1] === '-e') process.exit(0);\nif (args[0] !== 'rev-parse') throw new Error('Unexpected fixture git query');\nif (ref.endsWith('^{commit}')) console.log('b'.repeat(40));\nelse { const id = /^league\\/([^:]+):/.exec(ref)?.[1]; if (!trees[id]) throw new Error('Unknown fixture tree'); console.log(trees[id]); }\n`);
+            await chmod(fakeGit, 0o755);
+            const run = async (args: string[]) => {
+                const child = Bun.spawn([process.execPath, join(tools, 'judge.ts'), ...args], { cwd: project,
+                    env: { ...process.env, PATH: `${bin}:${process.env.PATH}` }, stdout: 'pipe', stderr: 'pipe' });
+                const [code, stdout, stderr] = await Promise.all([child.exited, new Response(child.stdout).text(), new Response(child.stderr).text()]);
+                return { code, stdout, stderr };
+            };
+            const args = ['--mode', 'champion', '--candidate', 'c1', '--champion', 'm0', '--attempt', '1', '--fixes', 'eco', '--write',
+                '--candidate-games', candidateGamesPath, '--baseline-games', baselineGamesPath, '--eco-candidate', candidatePath, '--eco-baseline', baselinePath];
+            await writeFile(candidatePath, JSON.stringify({ ...candidate, tree: 'f'.repeat(40) }));
+            const invalid = await run(args);
+            expect(invalid.code).toBe(2); expect(invalid.stdout).toContain('tree');
+            expect(await readFile(join(tools, 'league.json'), 'utf8')).toBe(registryText);
+            expect(await readFile(join(docs, 'results.jsonl'), 'utf8')).toBe(historyText);
+            expect(await Bun.file(join(docs, 'eco-c1.json')).exists()).toBe(false);
+            const candidateText = JSON.stringify(candidate, null, 4) + '\n\n';
+            await writeFile(candidatePath, candidateText);
+            const written = await run(args);
+            expect(written.stderr).toBe(''); expect(written.code).toBe(0);
+            expect(await readFile(join(docs, 'eco-c1.json'), 'utf8')).toBe(candidateText);
+            const markdown = await readFile(join(docs, 'README.md'), 'utf8');
+            expect(markdown).toContain('| eco | 10000 → 14000 |');
+            const rebuilt = await run(['--mode', 'readme']);
+            expect(rebuilt.stderr).toBe(''); expect(rebuilt.code).toBe(0);
+            expect(await readFile(join(docs, 'README.md'), 'utf8')).toBe(markdown);
+        } finally { await rm(root, { recursive: true, force: true }); }
+    });
+    test('legacy map qualification ignores appended eco inputs and keeps its original semantics', () => {
+        const f = qualification();
+        const original = judgeChampion(f.pool, 'c1', 'm0', f.candidate, f.baseline, 1, 'map:tn01t2');
+        expect(judgeChampion(f.pool, 'c1', 'm0', f.candidate, f.baseline, 1, 'map:tn01t2', { invalid: true }, null)).toEqual(original);
     });
 });

@@ -68,7 +68,7 @@ export async function validateLeague(value: unknown, query: GitQuery = gitQuery)
         }
         if (entry.attempts !== undefined) check(Number.isInteger(entry.attempts) && (entry.attempts as number) >= 1 && (entry.attempts as number) <= 3,
             `invalid attempts for ${entry.id}`);
-        if (entry.fixes !== undefined) check(typeof entry.fixes === 'string' && /^(member:(x-[a-z]+-[0-9]{2})|map:[a-z0-9]+)$/.test(entry.fixes),
+        if (entry.fixes !== undefined) check(typeof entry.fixes === 'string' && /^(member:(x-[a-z]+-[0-9]{2})|map:[a-z0-9]+|eco)$/.test(entry.fixes),
             `invalid fixes for ${entry.id}`);
     }
     const members = value.members as Member[], active = members.filter(member => member.active);

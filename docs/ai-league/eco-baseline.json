@@ -1,0 +1,5732 @@
+{
+  "schema": 1,
+  "member": "c3",
+  "tree": "5bd750e6673226789bbe4644083127b11e25baf1",
+  "ref": "league/c3",
+  "commit": "4f7cc0c3a920578eb58988499709c7d8048683a8",
+  "opponent": {
+    "id": "x-idle-01",
+    "ref": "league/x-idle-01",
+    "commit": "567c0243454544e0012f042385e84b318497a8e1",
+    "tree": "e69f8afb24112bfc326d728cbdf72b9d7b5ae340"
+  },
+  "engineCommit": "87340d61849b0aa3f55cd5f99df1cc7b492144ae",
+  "bunVersion": "1.3.14",
+  "sources": {
+    "ai-benchmark.ts": "f77dd40f2d296b29df1fee3da5822dfe16d337bc3f50133b43bf3ff59edd7d2f",
+    "ai-eco-telemetry.ts": "438634edd0991df3982039cd00edf340436094ae1565e4ecb711bf561a5f5948",
+    "league/ecoCore.ts": "73fe2716ad7fd497be40e1e546876d9699042be61ff01125a08b7d6b21ef06ff",
+    "league/ecoTrial.ts": "c01c8b42fdaabd8548ec6b40688396a05f587aa7258611cb821e32287cba0ad7"
+  },
+  "resources": {
+    "mp08t2": {
+      "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+      "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66",
+      "mapSha256": "7a93f7909ed5c8e4e91c665841335ecbfd504425d66ee084e0e991c7aecdc14c",
+      "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+    },
+    "tn01t2": {
+      "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+      "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66",
+      "mapSha256": "95a836a2b42728d2c7d5c606902619b98afe428cb54eaf8b489e2d83819213e3",
+      "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+    },
+    "mp11t2": {
+      "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+      "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66",
+      "mapSha256": "b84570fd81afddc88ecfd19b9a93b46c0b7007c56b94aebd2ad434db6dd19476",
+      "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+    },
+    "tn04t2": {
+      "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+      "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66",
+      "mapSha256": "bd6804a6336c415eca0c31a7a203df1c7bf2dc19353385c66f41a2381c248c33",
+      "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+    },
+    "mp06t2": {
+      "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+      "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66",
+      "mapSha256": "bc4ca3e7f2c16080f9826d97df212b12813d96558630a01bf7d5a197bb09142d",
+      "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+    },
+    "mp29u2": {
+      "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+      "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66",
+      "mapSha256": "0bc3e5c059547f8d8a8ae8d0c48cb02a9c5f2ecf626944dd2dfa5f02267be5cb",
+      "terrainSha256": "e25899a843243807ce78050c5b9e6a6bb721e69a112c161c270355ab59de55b5"
+    },
+    "mp31s2": {
+      "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+      "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66",
+      "mapSha256": "e018dc82aa16ba6fe5356653f198813bcb896246a2a7558352a3be12d20be9a6",
+      "terrainSha256": "e0b189588495b62a3882eec1c9d4ec4018712f2d2745e1757c9ea6003d2858cf"
+    },
+    "mp02t2": {
+      "iniSha256": "8af9a3349b72b1946a5c02794605030ab2bbe50a487f1185f39c08766c4a1c76",
+      "customIniSha256": "79626e434f8650fb8a47141ff63382636cf29114b0b2779316aff4ffed39da66",
+      "mapSha256": "9ffad3f52a777452a4803b58011d5bc13f6468069092cb4889139a3b1fd85c9f",
+      "terrainSha256": "68a1c51c4e21ba76556d7aa460fd9fe034858f7b916769aa8166b40b9ce9c1d4"
+    }
+  },
+  "settings": {
+    "maxTicks": 9000,
+    "sampleTicks": 900,
+    "credits": 10000,
+    "unitCount": 0
+  },
+  "games": [
+    {
+      "jobId": "mp08t2__Americans",
+      "map": "mp08t2",
+      "seed": 7001,
+      "country": "Americans",
+      "swapped": false,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "23_36",
+            "cx": 30,
+            "cy": 37,
+            "tiles": 89,
+            "value": 18325,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              7,
+              63.0317380372777
+            ]
+          },
+          {
+            "id": "37_29",
+            "cx": 40,
+            "cy": 29,
+            "tiles": 23,
+            "value": 9250,
+            "gemValue": 9250,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              21.95449840010015,
+              69.40461079784254
+            ]
+          },
+          {
+            "id": "39_69",
+            "cx": 43,
+            "cy": 72,
+            "tiles": 44,
+            "value": 9850,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              22.20360331117452,
+              37.36308338453881
+            ]
+          },
+          {
+            "id": "71_95",
+            "cx": 75,
+            "cy": 97,
+            "tiles": 28,
+            "value": 11450,
+            "gemValue": 11450,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              62.93647591023825,
+              9.433981132056603
+            ]
+          },
+          {
+            "id": "73_48",
+            "cx": 76,
+            "cy": 51,
+            "tiles": 44,
+            "value": 10025,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              46,
+              32.14031735997639
+            ]
+          },
+          {
+            "id": "86_85",
+            "cx": 91,
+            "cy": 83,
+            "tiles": 76,
+            "value": 16075,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              66.2117814289874,
+              4.123105625617661
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 450,
+          "5400": 1600,
+          "7200": 3625,
+          "9000": 5700
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 2,
+          "7200": 2,
+          "9000": 2
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "gemShare": 0,
+        "homeGemPatch": true,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 2,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "mp08t2__Americans",
+      "map": "mp08t2",
+      "seed": 7001,
+      "country": "Americans",
+      "swapped": true,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "23_36",
+            "cx": 30,
+            "cy": 37,
+            "tiles": 89,
+            "value": 18325,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              63.0317380372777,
+              7
+            ]
+          },
+          {
+            "id": "37_29",
+            "cx": 40,
+            "cy": 29,
+            "tiles": 23,
+            "value": 9250,
+            "gemValue": 9250,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              69.40461079784254,
+              21.95449840010015
+            ]
+          },
+          {
+            "id": "39_69",
+            "cx": 43,
+            "cy": 72,
+            "tiles": 44,
+            "value": 9850,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              37.36308338453881,
+              22.20360331117452
+            ]
+          },
+          {
+            "id": "71_95",
+            "cx": 75,
+            "cy": 97,
+            "tiles": 28,
+            "value": 11450,
+            "gemValue": 11450,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              9.433981132056603,
+              62.93647591023825
+            ]
+          },
+          {
+            "id": "73_48",
+            "cx": 76,
+            "cy": 51,
+            "tiles": 44,
+            "value": 10025,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              32.14031735997639,
+              46
+            ]
+          },
+          {
+            "id": "86_85",
+            "cx": 91,
+            "cy": 83,
+            "tiles": 76,
+            "value": 16075,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              4.123105625617661,
+              66.2117814289874
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 450,
+          "5400": 2325,
+          "7200": 4625,
+          "9000": 7250
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 2,
+          "7200": 2,
+          "9000": 3
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 2
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "gemShare": 0.5310344827586206,
+        "homeGemPatch": true,
+        "firstGemMinerTick": 5400,
+        "maxMinersOnPatch": 2,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "mp08t2__Russians",
+      "map": "mp08t2",
+      "seed": 7001,
+      "country": "Russians",
+      "swapped": false,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "23_36",
+            "cx": 30,
+            "cy": 37,
+            "tiles": 89,
+            "value": 18325,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              7,
+              63.0317380372777
+            ]
+          },
+          {
+            "id": "37_29",
+            "cx": 40,
+            "cy": 29,
+            "tiles": 23,
+            "value": 9250,
+            "gemValue": 9250,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              21.95449840010015,
+              69.40461079784254
+            ]
+          },
+          {
+            "id": "39_69",
+            "cx": 43,
+            "cy": 72,
+            "tiles": 44,
+            "value": 9850,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              22.20360331117452,
+              37.36308338453881
+            ]
+          },
+          {
+            "id": "71_95",
+            "cx": 75,
+            "cy": 97,
+            "tiles": 28,
+            "value": 11450,
+            "gemValue": 11450,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              62.93647591023825,
+              9.433981132056603
+            ]
+          },
+          {
+            "id": "73_48",
+            "cx": 76,
+            "cy": 51,
+            "tiles": 44,
+            "value": 10025,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              46,
+              32.14031735997639
+            ]
+          },
+          {
+            "id": "86_85",
+            "cx": 91,
+            "cy": 83,
+            "tiles": 76,
+            "value": 16075,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              66.2117814289874,
+              4.123105625617661
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 450,
+          "5400": 1375,
+          "7200": 2125,
+          "9000": 4200
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 2
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 2
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "gemShare": 0,
+        "homeGemPatch": true,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 2,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "mp08t2__Russians",
+      "map": "mp08t2",
+      "seed": 7001,
+      "country": "Russians",
+      "swapped": true,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "23_36",
+            "cx": 30,
+            "cy": 37,
+            "tiles": 89,
+            "value": 18325,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              63.0317380372777,
+              7
+            ]
+          },
+          {
+            "id": "37_29",
+            "cx": 40,
+            "cy": 29,
+            "tiles": 23,
+            "value": 9250,
+            "gemValue": 9250,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              69.40461079784254,
+              21.95449840010015
+            ]
+          },
+          {
+            "id": "39_69",
+            "cx": 43,
+            "cy": 72,
+            "tiles": 44,
+            "value": 9850,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              37.36308338453881,
+              22.20360331117452
+            ]
+          },
+          {
+            "id": "71_95",
+            "cx": 75,
+            "cy": 97,
+            "tiles": 28,
+            "value": 11450,
+            "gemValue": 11450,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              9.433981132056603,
+              62.93647591023825
+            ]
+          },
+          {
+            "id": "73_48",
+            "cx": 76,
+            "cy": 51,
+            "tiles": 44,
+            "value": 10025,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              32.14031735997639,
+              46
+            ]
+          },
+          {
+            "id": "86_85",
+            "cx": 91,
+            "cy": 83,
+            "tiles": 76,
+            "value": 16075,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              4.123105625617661,
+              66.2117814289874
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 525,
+          "5400": 1725,
+          "7200": 2975,
+          "9000": 5575
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 2,
+          "9000": 3
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 2,
+          "9000": 2
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "gemShare": 0,
+        "homeGemPatch": true,
+        "firstGemMinerTick": 9000,
+        "maxMinersOnPatch": 2,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "tn01t2__Americans",
+      "map": "tn01t2",
+      "seed": 7002,
+      "country": "Americans",
+      "swapped": false,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "33_94",
+            "cx": 37,
+            "cy": 95,
+            "tiles": 55,
+            "value": 13550,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              17.26267650163207,
+              68.26419266350405
+            ]
+          },
+          {
+            "id": "44_110",
+            "cx": 46,
+            "cy": 112,
+            "tiles": 16,
+            "value": 6600,
+            "gemValue": 6600,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              15.556349186104045,
+              73.53910524340094
+            ]
+          },
+          {
+            "id": "58_119",
+            "cx": 62,
+            "cy": 120,
+            "tiles": 55,
+            "value": 13550,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              17.26267650163207,
+              68.26419266350405
+            ]
+          },
+          {
+            "id": "65_67",
+            "cx": 68,
+            "cy": 68,
+            "tiles": 24,
+            "value": 11200,
+            "gemValue": 11200,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              30.364452901377952,
+              30.364452901377952
+            ]
+          },
+          {
+            "id": "67_87",
+            "cx": 70,
+            "cy": 87,
+            "tiles": 27,
+            "value": 5350,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              14.142135623730951,
+              38.18376618407357
+            ]
+          },
+          {
+            "id": "84_70",
+            "cx": 87,
+            "cy": 70,
+            "tiles": 27,
+            "value": 5350,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              38.18376618407357,
+              14.142135623730951
+            ]
+          },
+          {
+            "id": "86_88",
+            "cx": 89,
+            "cy": 89,
+            "tiles": 24,
+            "value": 11200,
+            "gemValue": 11200,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              29.732137494637012,
+              29.732137494637012
+            ]
+          },
+          {
+            "id": "91_36",
+            "cx": 95,
+            "cy": 37,
+            "tiles": 55,
+            "value": 13550,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              68.26419266350405,
+              17.26267650163207
+            ]
+          },
+          {
+            "id": "110_44",
+            "cx": 112,
+            "cy": 46,
+            "tiles": 16,
+            "value": 6600,
+            "gemValue": 6600,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              73.53910524340094,
+              15.556349186104045
+            ]
+          },
+          {
+            "id": "116_61",
+            "cx": 120,
+            "cy": 62,
+            "tiles": 55,
+            "value": 13550,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              68.26419266350405,
+              17.26267650163207
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 0,
+          "5400": 0,
+          "7200": 1250,
+          "9000": 2250
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 2,
+          "7200": 2,
+          "9000": 2
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 0,
+          "5400": 0,
+          "7200": 0,
+          "9000": 0
+        },
+        "gemShare": 0,
+        "homeGemPatch": true,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 2,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "tn01t2__Americans",
+      "map": "tn01t2",
+      "seed": 7002,
+      "country": "Americans",
+      "swapped": true,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "33_94",
+            "cx": 37,
+            "cy": 95,
+            "tiles": 55,
+            "value": 13550,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              68.26419266350405,
+              17.26267650163207
+            ]
+          },
+          {
+            "id": "44_110",
+            "cx": 46,
+            "cy": 112,
+            "tiles": 16,
+            "value": 6600,
+            "gemValue": 6600,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              73.53910524340094,
+              15.556349186104045
+            ]
+          },
+          {
+            "id": "58_119",
+            "cx": 62,
+            "cy": 120,
+            "tiles": 55,
+            "value": 13550,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              68.26419266350405,
+              17.26267650163207
+            ]
+          },
+          {
+            "id": "65_67",
+            "cx": 68,
+            "cy": 68,
+            "tiles": 24,
+            "value": 11200,
+            "gemValue": 11200,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              30.364452901377952,
+              30.364452901377952
+            ]
+          },
+          {
+            "id": "67_87",
+            "cx": 70,
+            "cy": 87,
+            "tiles": 27,
+            "value": 5350,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              38.18376618407357,
+              14.142135623730951
+            ]
+          },
+          {
+            "id": "84_70",
+            "cx": 87,
+            "cy": 70,
+            "tiles": 27,
+            "value": 5350,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              14.142135623730951,
+              38.18376618407357
+            ]
+          },
+          {
+            "id": "86_88",
+            "cx": 89,
+            "cy": 89,
+            "tiles": 24,
+            "value": 11200,
+            "gemValue": 11200,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              29.732137494637012,
+              29.732137494637012
+            ]
+          },
+          {
+            "id": "91_36",
+            "cx": 95,
+            "cy": 37,
+            "tiles": 55,
+            "value": 13550,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              17.26267650163207,
+              68.26419266350405
+            ]
+          },
+          {
+            "id": "110_44",
+            "cx": 112,
+            "cy": 46,
+            "tiles": 16,
+            "value": 6600,
+            "gemValue": 6600,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              15.556349186104045,
+              73.53910524340094
+            ]
+          },
+          {
+            "id": "116_61",
+            "cx": 120,
+            "cy": 62,
+            "tiles": 55,
+            "value": 13550,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              17.26267650163207,
+              68.26419266350405
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 0,
+          "5400": 100,
+          "7200": 1000,
+          "9000": 2250
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 2,
+          "7200": 2,
+          "9000": 2
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "gemShare": 0,
+        "homeGemPatch": true,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 1,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "tn01t2__Russians",
+      "map": "tn01t2",
+      "seed": 7002,
+      "country": "Russians",
+      "swapped": false,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "33_94",
+            "cx": 37,
+            "cy": 95,
+            "tiles": 55,
+            "value": 13550,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              17.26267650163207,
+              68.26419266350405
+            ]
+          },
+          {
+            "id": "44_110",
+            "cx": 46,
+            "cy": 112,
+            "tiles": 16,
+            "value": 6600,
+            "gemValue": 6600,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              15.556349186104045,
+              73.53910524340094
+            ]
+          },
+          {
+            "id": "58_119",
+            "cx": 62,
+            "cy": 120,
+            "tiles": 55,
+            "value": 13550,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              17.26267650163207,
+              68.26419266350405
+            ]
+          },
+          {
+            "id": "65_67",
+            "cx": 68,
+            "cy": 68,
+            "tiles": 24,
+            "value": 11200,
+            "gemValue": 11200,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              30.364452901377952,
+              30.364452901377952
+            ]
+          },
+          {
+            "id": "67_87",
+            "cx": 70,
+            "cy": 87,
+            "tiles": 27,
+            "value": 5350,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              14.142135623730951,
+              38.18376618407357
+            ]
+          },
+          {
+            "id": "84_70",
+            "cx": 87,
+            "cy": 70,
+            "tiles": 27,
+            "value": 5350,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              38.18376618407357,
+              14.142135623730951
+            ]
+          },
+          {
+            "id": "86_88",
+            "cx": 89,
+            "cy": 89,
+            "tiles": 24,
+            "value": 11200,
+            "gemValue": 11200,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              29.732137494637012,
+              29.732137494637012
+            ]
+          },
+          {
+            "id": "91_36",
+            "cx": 95,
+            "cy": 37,
+            "tiles": 55,
+            "value": 13550,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              68.26419266350405,
+              17.26267650163207
+            ]
+          },
+          {
+            "id": "110_44",
+            "cx": 112,
+            "cy": 46,
+            "tiles": 16,
+            "value": 6600,
+            "gemValue": 6600,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              73.53910524340094,
+              15.556349186104045
+            ]
+          },
+          {
+            "id": "116_61",
+            "cx": 120,
+            "cy": 62,
+            "tiles": 55,
+            "value": 13550,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              68.26419266350405,
+              17.26267650163207
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 0,
+          "5400": 0,
+          "7200": 1100,
+          "9000": 2350
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 2,
+          "7200": 2,
+          "9000": 2
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 0,
+          "5400": 0,
+          "7200": 0,
+          "9000": 0
+        },
+        "gemShare": 0,
+        "homeGemPatch": true,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 2,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "tn01t2__Russians",
+      "map": "tn01t2",
+      "seed": 7002,
+      "country": "Russians",
+      "swapped": true,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "33_94",
+            "cx": 37,
+            "cy": 95,
+            "tiles": 55,
+            "value": 13550,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              68.26419266350405,
+              17.26267650163207
+            ]
+          },
+          {
+            "id": "44_110",
+            "cx": 46,
+            "cy": 112,
+            "tiles": 16,
+            "value": 6600,
+            "gemValue": 6600,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              73.53910524340094,
+              15.556349186104045
+            ]
+          },
+          {
+            "id": "58_119",
+            "cx": 62,
+            "cy": 120,
+            "tiles": 55,
+            "value": 13550,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              68.26419266350405,
+              17.26267650163207
+            ]
+          },
+          {
+            "id": "65_67",
+            "cx": 68,
+            "cy": 68,
+            "tiles": 24,
+            "value": 11200,
+            "gemValue": 11200,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              30.364452901377952,
+              30.364452901377952
+            ]
+          },
+          {
+            "id": "67_87",
+            "cx": 70,
+            "cy": 87,
+            "tiles": 27,
+            "value": 5350,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              38.18376618407357,
+              14.142135623730951
+            ]
+          },
+          {
+            "id": "84_70",
+            "cx": 87,
+            "cy": 70,
+            "tiles": 27,
+            "value": 5350,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              14.142135623730951,
+              38.18376618407357
+            ]
+          },
+          {
+            "id": "86_88",
+            "cx": 89,
+            "cy": 89,
+            "tiles": 24,
+            "value": 11200,
+            "gemValue": 11200,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              29.732137494637012,
+              29.732137494637012
+            ]
+          },
+          {
+            "id": "91_36",
+            "cx": 95,
+            "cy": 37,
+            "tiles": 55,
+            "value": 13550,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              17.26267650163207,
+              68.26419266350405
+            ]
+          },
+          {
+            "id": "110_44",
+            "cx": 112,
+            "cy": 46,
+            "tiles": 16,
+            "value": 6600,
+            "gemValue": 6600,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              15.556349186104045,
+              73.53910524340094
+            ]
+          },
+          {
+            "id": "116_61",
+            "cx": 120,
+            "cy": 62,
+            "tiles": 55,
+            "value": 13550,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              17.26267650163207,
+              68.26419266350405
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 0,
+          "5400": 0,
+          "7200": 900,
+          "9000": 2075
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 2,
+          "7200": 2,
+          "9000": 2
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "gemShare": 0,
+        "homeGemPatch": true,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 1,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "mp11t2__Americans",
+      "map": "mp11t2",
+      "seed": 7003,
+      "country": "Americans",
+      "swapped": false,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "30_126",
+            "cx": 37,
+            "cy": 129,
+            "tiles": 106,
+            "value": 21125,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              13.601470508735444,
+              127.31457104353767
+            ]
+          },
+          {
+            "id": "60_89",
+            "cx": 63,
+            "cy": 91,
+            "tiles": 39,
+            "value": 6275,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              52.952809179494906,
+              87.65842800324451
+            ]
+          },
+          {
+            "id": "75_74",
+            "cx": 79,
+            "cy": 74,
+            "tiles": 36,
+            "value": 12500,
+            "gemValue": 12500,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              74.33034373659252,
+              65.45991139621256
+            ]
+          },
+          {
+            "id": "90_55",
+            "cx": 96,
+            "cy": 56,
+            "tiles": 66,
+            "value": 13625,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              95.70788891204319,
+              42.579337712087536
+            ]
+          },
+          {
+            "id": "93_132",
+            "cx": 98,
+            "cy": 132,
+            "tiles": 67,
+            "value": 15300,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              42.720018726587654,
+              90.82400563727631
+            ]
+          },
+          {
+            "id": "127_108",
+            "cx": 131,
+            "cy": 108,
+            "tiles": 41,
+            "value": 14450,
+            "gemValue": 14450,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              83.18653737234169,
+              56.88585061331157
+            ]
+          },
+          {
+            "id": "131_29",
+            "cx": 135,
+            "cy": 33,
+            "tiles": 68,
+            "value": 14475,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              135.20724832641184,
+              12.083045973594572
+            ]
+          },
+          {
+            "id": "156_59",
+            "cx": 162,
+            "cy": 66,
+            "tiles": 89,
+            "value": 18475,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              131.60547101089682,
+              17.029386365926403
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 25,
+          "5400": 725,
+          "7200": 1100,
+          "9000": 2850
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 2,
+          "9000": 2
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "factories": {
+          "3600": 0,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "gemShare": 0,
+        "homeGemPatch": false,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 2,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "mp11t2__Americans",
+      "map": "mp11t2",
+      "seed": 7003,
+      "country": "Americans",
+      "swapped": true,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "30_126",
+            "cx": 37,
+            "cy": 129,
+            "tiles": 106,
+            "value": 21125,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              127.31457104353767,
+              13.601470508735444
+            ]
+          },
+          {
+            "id": "60_89",
+            "cx": 63,
+            "cy": 91,
+            "tiles": 39,
+            "value": 6275,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              87.65842800324451,
+              52.952809179494906
+            ]
+          },
+          {
+            "id": "75_74",
+            "cx": 79,
+            "cy": 74,
+            "tiles": 36,
+            "value": 12500,
+            "gemValue": 12500,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              65.45991139621256,
+              74.33034373659252
+            ]
+          },
+          {
+            "id": "90_55",
+            "cx": 96,
+            "cy": 56,
+            "tiles": 66,
+            "value": 13625,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              42.579337712087536,
+              95.70788891204319
+            ]
+          },
+          {
+            "id": "93_132",
+            "cx": 98,
+            "cy": 132,
+            "tiles": 67,
+            "value": 15300,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              90.82400563727631,
+              42.720018726587654
+            ]
+          },
+          {
+            "id": "127_108",
+            "cx": 131,
+            "cy": 108,
+            "tiles": 41,
+            "value": 14450,
+            "gemValue": 14450,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              56.88585061331157,
+              83.18653737234169
+            ]
+          },
+          {
+            "id": "131_29",
+            "cx": 135,
+            "cy": 33,
+            "tiles": 68,
+            "value": 14475,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              12.083045973594572,
+              135.20724832641184
+            ]
+          },
+          {
+            "id": "156_59",
+            "cx": 162,
+            "cy": 66,
+            "tiles": 89,
+            "value": 18475,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              17.029386365926403,
+              131.60547101089682
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 300,
+          "5400": 1125,
+          "7200": 2025,
+          "9000": 3750
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 2,
+          "9000": 2
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "factories": {
+          "3600": 0,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "gemShare": 0,
+        "homeGemPatch": false,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 1,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "mp11t2__Russians",
+      "map": "mp11t2",
+      "seed": 7003,
+      "country": "Russians",
+      "swapped": false,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "30_126",
+            "cx": 37,
+            "cy": 129,
+            "tiles": 106,
+            "value": 21125,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              13.601470508735444,
+              127.31457104353767
+            ]
+          },
+          {
+            "id": "60_89",
+            "cx": 63,
+            "cy": 91,
+            "tiles": 39,
+            "value": 6275,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              52.952809179494906,
+              87.65842800324451
+            ]
+          },
+          {
+            "id": "75_74",
+            "cx": 79,
+            "cy": 74,
+            "tiles": 36,
+            "value": 12500,
+            "gemValue": 12500,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              74.33034373659252,
+              65.45991139621256
+            ]
+          },
+          {
+            "id": "90_55",
+            "cx": 96,
+            "cy": 56,
+            "tiles": 66,
+            "value": 13625,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              95.70788891204319,
+              42.579337712087536
+            ]
+          },
+          {
+            "id": "93_132",
+            "cx": 98,
+            "cy": 132,
+            "tiles": 67,
+            "value": 15300,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              42.720018726587654,
+              90.82400563727631
+            ]
+          },
+          {
+            "id": "127_108",
+            "cx": 131,
+            "cy": 108,
+            "tiles": 41,
+            "value": 14450,
+            "gemValue": 14450,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              83.18653737234169,
+              56.88585061331157
+            ]
+          },
+          {
+            "id": "131_29",
+            "cx": 135,
+            "cy": 33,
+            "tiles": 68,
+            "value": 14475,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              135.20724832641184,
+              12.083045973594572
+            ]
+          },
+          {
+            "id": "156_59",
+            "cx": 162,
+            "cy": 66,
+            "tiles": 89,
+            "value": 18475,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              131.60547101089682,
+              17.029386365926403
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 450,
+          "5400": 1100,
+          "7200": 2425,
+          "9000": 4125
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 2,
+          "7200": 2,
+          "9000": 2
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "gemShare": 0,
+        "homeGemPatch": false,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 2,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "mp11t2__Russians",
+      "map": "mp11t2",
+      "seed": 7003,
+      "country": "Russians",
+      "swapped": true,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "30_126",
+            "cx": 37,
+            "cy": 129,
+            "tiles": 106,
+            "value": 21125,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              127.31457104353767,
+              13.601470508735444
+            ]
+          },
+          {
+            "id": "60_89",
+            "cx": 63,
+            "cy": 91,
+            "tiles": 39,
+            "value": 6275,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              87.65842800324451,
+              52.952809179494906
+            ]
+          },
+          {
+            "id": "75_74",
+            "cx": 79,
+            "cy": 74,
+            "tiles": 36,
+            "value": 12500,
+            "gemValue": 12500,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              65.45991139621256,
+              74.33034373659252
+            ]
+          },
+          {
+            "id": "90_55",
+            "cx": 96,
+            "cy": 56,
+            "tiles": 66,
+            "value": 13625,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              42.579337712087536,
+              95.70788891204319
+            ]
+          },
+          {
+            "id": "93_132",
+            "cx": 98,
+            "cy": 132,
+            "tiles": 67,
+            "value": 15300,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              90.82400563727631,
+              42.720018726587654
+            ]
+          },
+          {
+            "id": "127_108",
+            "cx": 131,
+            "cy": 108,
+            "tiles": 41,
+            "value": 14450,
+            "gemValue": 14450,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              56.88585061331157,
+              83.18653737234169
+            ]
+          },
+          {
+            "id": "131_29",
+            "cx": 135,
+            "cy": 33,
+            "tiles": 68,
+            "value": 14475,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              12.083045973594572,
+              135.20724832641184
+            ]
+          },
+          {
+            "id": "156_59",
+            "cx": 162,
+            "cy": 66,
+            "tiles": 89,
+            "value": 18475,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              17.029386365926403,
+              131.60547101089682
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 350,
+          "5400": 1125,
+          "7200": 1450,
+          "9000": 3475
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 2
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 2
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "gemShare": 0,
+        "homeGemPatch": false,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 2,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "tn04t2__Americans",
+      "map": "tn04t2",
+      "seed": 7004,
+      "country": "Americans",
+      "swapped": false,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "66_104",
+            "cx": 70,
+            "cy": 108,
+            "tiles": 48,
+            "value": 20900,
+            "gemValue": 20900,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              20.615528128088304,
+              51.07837115648854
+            ]
+          },
+          {
+            "id": "72_56",
+            "cx": 78,
+            "cy": 58,
+            "tiles": 70,
+            "value": 17100,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              63.28506932918696,
+              10
+            ]
+          },
+          {
+            "id": "88_164",
+            "cx": 91,
+            "cy": 165,
+            "tiles": 20,
+            "value": 8350,
+            "gemValue": 8350,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              39.01281840626232,
+              105.01904589168576
+            ]
+          },
+          {
+            "id": "91_18",
+            "cx": 93,
+            "cy": 20,
+            "tiles": 20,
+            "value": 9000,
+            "gemValue": 9000,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              102.04410811016969,
+              36
+            ]
+          },
+          {
+            "id": "98_124",
+            "cx": 103,
+            "cy": 127,
+            "tiles": 70,
+            "value": 17100,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              9,
+              66.18912297349165
+            ]
+          },
+          {
+            "id": "105_76",
+            "cx": 109,
+            "cy": 80,
+            "tiles": 48,
+            "value": 20900,
+            "gemValue": 20900,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              44.384682042344295,
+              21.633307652783937
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 25,
+          "5400": 0,
+          "7200": 1425,
+          "9000": 3275
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 2,
+          "7200": 2,
+          "9000": 2
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "gemShare": 0,
+        "homeGemPatch": true,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 2,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "tn04t2__Americans",
+      "map": "tn04t2",
+      "seed": 7004,
+      "country": "Americans",
+      "swapped": true,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "66_104",
+            "cx": 70,
+            "cy": 108,
+            "tiles": 48,
+            "value": 20900,
+            "gemValue": 20900,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              51.07837115648854,
+              20.615528128088304
+            ]
+          },
+          {
+            "id": "72_56",
+            "cx": 78,
+            "cy": 58,
+            "tiles": 70,
+            "value": 17100,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              10,
+              63.28506932918696
+            ]
+          },
+          {
+            "id": "88_164",
+            "cx": 91,
+            "cy": 165,
+            "tiles": 20,
+            "value": 8350,
+            "gemValue": 8350,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              105.01904589168576,
+              39.01281840626232
+            ]
+          },
+          {
+            "id": "91_18",
+            "cx": 93,
+            "cy": 20,
+            "tiles": 20,
+            "value": 9000,
+            "gemValue": 9000,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              36,
+              102.04410811016969
+            ]
+          },
+          {
+            "id": "98_124",
+            "cx": 103,
+            "cy": 127,
+            "tiles": 70,
+            "value": 17100,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              66.18912297349165,
+              9
+            ]
+          },
+          {
+            "id": "105_76",
+            "cx": 109,
+            "cy": 80,
+            "tiles": 48,
+            "value": 20900,
+            "gemValue": 20900,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              21.633307652783937,
+              44.384682042344295
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 25,
+          "5400": 0,
+          "7200": 1475,
+          "9000": 3025
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 2,
+          "7200": 2,
+          "9000": 2
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "gemShare": 0,
+        "homeGemPatch": true,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 2,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "tn04t2__Russians",
+      "map": "tn04t2",
+      "seed": 7004,
+      "country": "Russians",
+      "swapped": false,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "66_104",
+            "cx": 70,
+            "cy": 108,
+            "tiles": 48,
+            "value": 20900,
+            "gemValue": 20900,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              20.615528128088304,
+              51.07837115648854
+            ]
+          },
+          {
+            "id": "72_56",
+            "cx": 78,
+            "cy": 58,
+            "tiles": 70,
+            "value": 17100,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              63.28506932918696,
+              10
+            ]
+          },
+          {
+            "id": "88_164",
+            "cx": 91,
+            "cy": 165,
+            "tiles": 20,
+            "value": 8350,
+            "gemValue": 8350,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              39.01281840626232,
+              105.01904589168576
+            ]
+          },
+          {
+            "id": "91_18",
+            "cx": 93,
+            "cy": 20,
+            "tiles": 20,
+            "value": 9000,
+            "gemValue": 9000,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              102.04410811016969,
+              36
+            ]
+          },
+          {
+            "id": "98_124",
+            "cx": 103,
+            "cy": 127,
+            "tiles": 70,
+            "value": 17100,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              9,
+              66.18912297349165
+            ]
+          },
+          {
+            "id": "105_76",
+            "cx": 109,
+            "cy": 80,
+            "tiles": 48,
+            "value": 20900,
+            "gemValue": 20900,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              44.384682042344295,
+              21.633307652783937
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 25,
+          "5400": 0,
+          "7200": 1275,
+          "9000": 2900
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 2,
+          "7200": 2,
+          "9000": 2
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 0,
+          "5400": 0,
+          "7200": 0,
+          "9000": 0
+        },
+        "gemShare": 0,
+        "homeGemPatch": true,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 2,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "tn04t2__Russians",
+      "map": "tn04t2",
+      "seed": 7004,
+      "country": "Russians",
+      "swapped": true,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "66_104",
+            "cx": 70,
+            "cy": 108,
+            "tiles": 48,
+            "value": 20900,
+            "gemValue": 20900,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              51.07837115648854,
+              20.615528128088304
+            ]
+          },
+          {
+            "id": "72_56",
+            "cx": 78,
+            "cy": 58,
+            "tiles": 70,
+            "value": 17100,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              10,
+              63.28506932918696
+            ]
+          },
+          {
+            "id": "88_164",
+            "cx": 91,
+            "cy": 165,
+            "tiles": 20,
+            "value": 8350,
+            "gemValue": 8350,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              105.01904589168576,
+              39.01281840626232
+            ]
+          },
+          {
+            "id": "91_18",
+            "cx": 93,
+            "cy": 20,
+            "tiles": 20,
+            "value": 9000,
+            "gemValue": 9000,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              36,
+              102.04410811016969
+            ]
+          },
+          {
+            "id": "98_124",
+            "cx": 103,
+            "cy": 127,
+            "tiles": 70,
+            "value": 17100,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              66.18912297349165,
+              9
+            ]
+          },
+          {
+            "id": "105_76",
+            "cx": 109,
+            "cy": 80,
+            "tiles": 48,
+            "value": 20900,
+            "gemValue": 20900,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              21.633307652783937,
+              44.384682042344295
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 0,
+          "5400": 0,
+          "7200": 50,
+          "9000": 1550
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 2
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 2
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "gemShare": 0,
+        "homeGemPatch": true,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 2,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "mp06t2__Americans",
+      "map": "mp06t2",
+      "seed": 7005,
+      "country": "Americans",
+      "swapped": false,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "35_43",
+            "cx": 40,
+            "cy": 40,
+            "tiles": 56,
+            "value": 12625,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              28,
+              26.019223662515376
+            ]
+          },
+          {
+            "id": "43_88",
+            "cx": 48,
+            "cy": 91,
+            "tiles": 63,
+            "value": 15200,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              13.892443989449804,
+              54.589376255824725
+            ]
+          },
+          {
+            "id": "56_15",
+            "cx": 60,
+            "cy": 20,
+            "tiles": 82,
+            "value": 20425,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              51.884487084291386,
+              12.806248474865697
+            ]
+          },
+          {
+            "id": "64_73",
+            "cx": 69,
+            "cy": 70,
+            "tiles": 53,
+            "value": 12375,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              26,
+              29.068883707497267
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 0,
+          "5400": 1025,
+          "7200": 2825,
+          "9000": 4550
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 2,
+          "7200": 2,
+          "9000": 2
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 0,
+          "5400": 0,
+          "7200": 0,
+          "9000": 0
+        },
+        "gemShare": null,
+        "homeGemPatch": false,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 2,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "mp06t2__Americans",
+      "map": "mp06t2",
+      "seed": 7005,
+      "country": "Americans",
+      "swapped": true,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "35_43",
+            "cx": 40,
+            "cy": 40,
+            "tiles": 56,
+            "value": 12625,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              26.019223662515376,
+              28
+            ]
+          },
+          {
+            "id": "43_88",
+            "cx": 48,
+            "cy": 91,
+            "tiles": 63,
+            "value": 15200,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              54.589376255824725,
+              13.892443989449804
+            ]
+          },
+          {
+            "id": "56_15",
+            "cx": 60,
+            "cy": 20,
+            "tiles": 82,
+            "value": 20425,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              12.806248474865697,
+              51.884487084291386
+            ]
+          },
+          {
+            "id": "64_73",
+            "cx": 69,
+            "cy": 70,
+            "tiles": 53,
+            "value": 12375,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              29.068883707497267,
+              26
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 425,
+          "5400": 1775,
+          "7200": 3625,
+          "9000": 5350
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 2,
+          "7200": 2,
+          "9000": 2
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "gemShare": null,
+        "homeGemPatch": false,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 2,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "mp06t2__Russians",
+      "map": "mp06t2",
+      "seed": 7005,
+      "country": "Russians",
+      "swapped": false,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "35_43",
+            "cx": 40,
+            "cy": 40,
+            "tiles": 56,
+            "value": 12625,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              28,
+              26.019223662515376
+            ]
+          },
+          {
+            "id": "43_88",
+            "cx": 48,
+            "cy": 91,
+            "tiles": 63,
+            "value": 15200,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              13.892443989449804,
+              54.589376255824725
+            ]
+          },
+          {
+            "id": "56_15",
+            "cx": 60,
+            "cy": 20,
+            "tiles": 82,
+            "value": 20425,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              51.884487084291386,
+              12.806248474865697
+            ]
+          },
+          {
+            "id": "64_73",
+            "cx": 69,
+            "cy": 70,
+            "tiles": 53,
+            "value": 12375,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              26,
+              29.068883707497267
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 425,
+          "5400": 1350,
+          "7200": 3425,
+          "9000": 5275
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 2,
+          "7200": 2,
+          "9000": 2
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 0,
+          "5400": 0,
+          "7200": 0,
+          "9000": 0
+        },
+        "gemShare": null,
+        "homeGemPatch": false,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 2,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "mp06t2__Russians",
+      "map": "mp06t2",
+      "seed": 7005,
+      "country": "Russians",
+      "swapped": true,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "35_43",
+            "cx": 40,
+            "cy": 40,
+            "tiles": 56,
+            "value": 12625,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              26.019223662515376,
+              28
+            ]
+          },
+          {
+            "id": "43_88",
+            "cx": 48,
+            "cy": 91,
+            "tiles": 63,
+            "value": 15200,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              54.589376255824725,
+              13.892443989449804
+            ]
+          },
+          {
+            "id": "56_15",
+            "cx": 60,
+            "cy": 20,
+            "tiles": 82,
+            "value": 20425,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              12.806248474865697,
+              51.884487084291386
+            ]
+          },
+          {
+            "id": "64_73",
+            "cx": 69,
+            "cy": 70,
+            "tiles": 53,
+            "value": 12375,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              29.068883707497267,
+              26
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 425,
+          "5400": 1375,
+          "7200": 2350,
+          "9000": 4375
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 2
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 2
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "gemShare": null,
+        "homeGemPatch": false,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 2,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "mp29u2__Americans",
+      "map": "mp29u2",
+      "seed": 7006,
+      "country": "Americans",
+      "swapped": false,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "17_60",
+            "cx": 20,
+            "cy": 62,
+            "tiles": 41,
+            "value": 9800,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              43.86342439892262,
+              58.05170109479997
+            ]
+          },
+          {
+            "id": "40_80",
+            "cx": 44,
+            "cy": 82,
+            "tiles": 54,
+            "value": 13100,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              12.36931687685298,
+              62.297672508690084
+            ]
+          },
+          {
+            "id": "56_62",
+            "cx": 58,
+            "cy": 64,
+            "tiles": 26,
+            "value": 11650,
+            "gemValue": 11650,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              30.265491900843113,
+              41.773197148410844
+            ]
+          },
+          {
+            "id": "60_32",
+            "cx": 64,
+            "cy": 34,
+            "tiles": 44,
+            "value": 10525,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              60.207972893961475,
+              11
+            ]
+          },
+          {
+            "id": "67_62",
+            "cx": 69,
+            "cy": 65,
+            "tiles": 28,
+            "value": 12350,
+            "gemValue": 12350,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              34,
+              42.04759208325728
+            ]
+          },
+          {
+            "id": "99_50",
+            "cx": 103,
+            "cy": 53,
+            "tiles": 63,
+            "value": 15700,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              63.89053137985315,
+              44.82186966202994
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 275,
+          "5400": 1375,
+          "7200": 4350,
+          "9000": 7575
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 2,
+          "7200": 3,
+          "9000": 4
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 2,
+          "7200": 2,
+          "9000": 2
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 2
+        },
+        "servedPatches": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "gemShare": 0,
+        "homeGemPatch": true,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 4,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "mp29u2__Americans",
+      "map": "mp29u2",
+      "seed": 7006,
+      "country": "Americans",
+      "swapped": true,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "17_60",
+            "cx": 20,
+            "cy": 62,
+            "tiles": 41,
+            "value": 9800,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              58.05170109479997,
+              43.86342439892262
+            ]
+          },
+          {
+            "id": "40_80",
+            "cx": 44,
+            "cy": 82,
+            "tiles": 54,
+            "value": 13100,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              62.297672508690084,
+              12.36931687685298
+            ]
+          },
+          {
+            "id": "56_62",
+            "cx": 58,
+            "cy": 64,
+            "tiles": 26,
+            "value": 11650,
+            "gemValue": 11650,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              41.773197148410844,
+              30.265491900843113
+            ]
+          },
+          {
+            "id": "60_32",
+            "cx": 64,
+            "cy": 34,
+            "tiles": 44,
+            "value": 10525,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              11,
+              60.207972893961475
+            ]
+          },
+          {
+            "id": "67_62",
+            "cx": 69,
+            "cy": 65,
+            "tiles": 28,
+            "value": 12350,
+            "gemValue": 12350,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              42.04759208325728,
+              34
+            ]
+          },
+          {
+            "id": "99_50",
+            "cx": 103,
+            "cy": 53,
+            "tiles": 63,
+            "value": 15700,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              44.82186966202994,
+              63.89053137985315
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 325,
+          "5400": 1125,
+          "7200": 3975,
+          "9000": 7250
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 2,
+          "7200": 3,
+          "9000": 4
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 2,
+          "7200": 2,
+          "9000": 2
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 2
+        },
+        "servedPatches": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "gemShare": 0,
+        "homeGemPatch": false,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 4,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "mp29u2__Russians",
+      "map": "mp29u2",
+      "seed": 7006,
+      "country": "Russians",
+      "swapped": false,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "17_60",
+            "cx": 20,
+            "cy": 62,
+            "tiles": 41,
+            "value": 9800,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              43.86342439892262,
+              58.05170109479997
+            ]
+          },
+          {
+            "id": "40_80",
+            "cx": 44,
+            "cy": 82,
+            "tiles": 54,
+            "value": 13100,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              12.36931687685298,
+              62.297672508690084
+            ]
+          },
+          {
+            "id": "56_62",
+            "cx": 58,
+            "cy": 64,
+            "tiles": 26,
+            "value": 11650,
+            "gemValue": 11650,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              30.265491900843113,
+              41.773197148410844
+            ]
+          },
+          {
+            "id": "60_32",
+            "cx": 64,
+            "cy": 34,
+            "tiles": 44,
+            "value": 10525,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              60.207972893961475,
+              11
+            ]
+          },
+          {
+            "id": "67_62",
+            "cx": 69,
+            "cy": 65,
+            "tiles": 28,
+            "value": 12350,
+            "gemValue": 12350,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              34,
+              42.04759208325728
+            ]
+          },
+          {
+            "id": "99_50",
+            "cx": 103,
+            "cy": 53,
+            "tiles": 63,
+            "value": 15700,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              63.89053137985315,
+              44.82186966202994
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 250,
+          "5400": 1150,
+          "7200": 4300,
+          "9000": 7875
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 2,
+          "7200": 3,
+          "9000": 3
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 2,
+          "7200": 2,
+          "9000": 2
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "gemShare": 0,
+        "homeGemPatch": true,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 3,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "mp29u2__Russians",
+      "map": "mp29u2",
+      "seed": 7006,
+      "country": "Russians",
+      "swapped": true,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "17_60",
+            "cx": 20,
+            "cy": 62,
+            "tiles": 41,
+            "value": 9800,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              58.05170109479997,
+              43.86342439892262
+            ]
+          },
+          {
+            "id": "40_80",
+            "cx": 44,
+            "cy": 82,
+            "tiles": 54,
+            "value": 13100,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              62.297672508690084,
+              12.36931687685298
+            ]
+          },
+          {
+            "id": "56_62",
+            "cx": 58,
+            "cy": 64,
+            "tiles": 26,
+            "value": 11650,
+            "gemValue": 11650,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              41.773197148410844,
+              30.265491900843113
+            ]
+          },
+          {
+            "id": "60_32",
+            "cx": 64,
+            "cy": 34,
+            "tiles": 44,
+            "value": 10525,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              11,
+              60.207972893961475
+            ]
+          },
+          {
+            "id": "67_62",
+            "cx": 69,
+            "cy": 65,
+            "tiles": 28,
+            "value": 12350,
+            "gemValue": 12350,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              42.04759208325728,
+              34
+            ]
+          },
+          {
+            "id": "99_50",
+            "cx": 103,
+            "cy": 53,
+            "tiles": 63,
+            "value": 15700,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              44.82186966202994,
+              63.89053137985315
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 300,
+          "5400": 1175,
+          "7200": 3750,
+          "9000": 6600
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 2,
+          "7200": 3,
+          "9000": 3
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 2,
+          "7200": 2,
+          "9000": 2
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 2
+        },
+        "servedPatches": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "gemShare": 0,
+        "homeGemPatch": false,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 3,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "mp31s2__Americans",
+      "map": "mp31s2",
+      "seed": 7007,
+      "country": "Americans",
+      "swapped": false,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "35_84",
+            "cx": 36,
+            "cy": 88,
+            "tiles": 16,
+            "value": 5100,
+            "gemValue": 5100,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              35.84689665786984,
+              60.166435825965294
+            ]
+          },
+          {
+            "id": "48_112",
+            "cx": 51,
+            "cy": 111,
+            "tiles": 15,
+            "value": 5050,
+            "gemValue": 5050,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              56.08029957123981,
+              41.048751503547585
+            ]
+          },
+          {
+            "id": "57_82",
+            "cx": 65,
+            "cy": 83,
+            "tiles": 112,
+            "value": 28275,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              27.294688127912362,
+              33.97057550292606
+            ]
+          },
+          {
+            "id": "106_89",
+            "cx": 111,
+            "cy": 93,
+            "tiles": 110,
+            "value": 28275,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              63.245553203367585,
+              18.439088914585774
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 525,
+          "5400": 950,
+          "7200": 2025,
+          "9000": 3575
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 2,
+          "7200": 2,
+          "9000": 3
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 2
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 0,
+          "5400": 0,
+          "7200": 0,
+          "9000": 1
+        },
+        "gemShare": 0,
+        "homeGemPatch": true,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 3,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "mp31s2__Americans",
+      "map": "mp31s2",
+      "seed": 7007,
+      "country": "Americans",
+      "swapped": true,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "35_84",
+            "cx": 36,
+            "cy": 88,
+            "tiles": 16,
+            "value": 5100,
+            "gemValue": 5100,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              60.166435825965294,
+              35.84689665786984
+            ]
+          },
+          {
+            "id": "48_112",
+            "cx": 51,
+            "cy": 111,
+            "tiles": 15,
+            "value": 5050,
+            "gemValue": 5050,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              41.048751503547585,
+              56.08029957123981
+            ]
+          },
+          {
+            "id": "57_82",
+            "cx": 65,
+            "cy": 83,
+            "tiles": 112,
+            "value": 28275,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              33.97057550292606,
+              27.294688127912362
+            ]
+          },
+          {
+            "id": "106_89",
+            "cx": 111,
+            "cy": 93,
+            "tiles": 110,
+            "value": 28275,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              18.439088914585774,
+              63.245553203367585
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 975,
+          "5400": 1825,
+          "7200": 3775,
+          "9000": 5400
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 2,
+          "7200": 2,
+          "9000": 2
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 0,
+          "5400": 0,
+          "7200": 0,
+          "9000": 0
+        },
+        "gemShare": 0,
+        "homeGemPatch": false,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 2,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "mp31s2__Russians",
+      "map": "mp31s2",
+      "seed": 7007,
+      "country": "Russians",
+      "swapped": false,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "35_84",
+            "cx": 36,
+            "cy": 88,
+            "tiles": 16,
+            "value": 5100,
+            "gemValue": 5100,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              35.84689665786984,
+              60.166435825965294
+            ]
+          },
+          {
+            "id": "48_112",
+            "cx": 51,
+            "cy": 111,
+            "tiles": 15,
+            "value": 5050,
+            "gemValue": 5050,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              56.08029957123981,
+              41.048751503547585
+            ]
+          },
+          {
+            "id": "57_82",
+            "cx": 65,
+            "cy": 83,
+            "tiles": 112,
+            "value": 28275,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              27.294688127912362,
+              33.97057550292606
+            ]
+          },
+          {
+            "id": "106_89",
+            "cx": 111,
+            "cy": 93,
+            "tiles": 110,
+            "value": 28275,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              63.245553203367585,
+              18.439088914585774
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 975,
+          "5400": 1150,
+          "7200": 3150,
+          "9000": 6500
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 3,
+          "9000": 3
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 2,
+          "9000": 2
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 0,
+          "5400": 0,
+          "7200": 1,
+          "9000": 1
+        },
+        "gemShare": 0,
+        "homeGemPatch": true,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 3,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "mp31s2__Russians",
+      "map": "mp31s2",
+      "seed": 7007,
+      "country": "Russians",
+      "swapped": true,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "35_84",
+            "cx": 36,
+            "cy": 88,
+            "tiles": 16,
+            "value": 5100,
+            "gemValue": 5100,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              60.166435825965294,
+              35.84689665786984
+            ]
+          },
+          {
+            "id": "48_112",
+            "cx": 51,
+            "cy": 111,
+            "tiles": 15,
+            "value": 5050,
+            "gemValue": 5050,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              41.048751503547585,
+              56.08029957123981
+            ]
+          },
+          {
+            "id": "57_82",
+            "cx": 65,
+            "cy": 83,
+            "tiles": 112,
+            "value": 28275,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              33.97057550292606,
+              27.294688127912362
+            ]
+          },
+          {
+            "id": "106_89",
+            "cx": 111,
+            "cy": 93,
+            "tiles": 110,
+            "value": 28275,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              18.439088914585774,
+              63.245553203367585
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 1075,
+          "5400": 1850,
+          "7200": 3925,
+          "9000": 6400
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 2,
+          "9000": 3
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 2,
+          "9000": 2
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "gemShare": 0,
+        "homeGemPatch": false,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 3,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "mp02t2__Americans",
+      "map": "mp02t2",
+      "seed": 7008,
+      "country": "Americans",
+      "swapped": false,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "65_97",
+            "cx": 68,
+            "cy": 98,
+            "tiles": 30,
+            "value": 10750,
+            "gemValue": 10750,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              66.09841147864296,
+              17
+            ]
+          },
+          {
+            "id": "72_70",
+            "cx": 76,
+            "cy": 74,
+            "tiles": 47,
+            "value": 9000,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              55.036351623268054,
+              39.20459156782532
+            ]
+          },
+          {
+            "id": "83_126",
+            "cx": 89,
+            "cy": 127,
+            "tiles": 65,
+            "value": 12600,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              62.93647591023825,
+              13.601470508735444
+            ]
+          },
+          {
+            "id": "86_62",
+            "cx": 91,
+            "cy": 60,
+            "tiles": 42,
+            "value": 6800,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              42.95346318982906,
+              57.28001396647874
+            ]
+          },
+          {
+            "id": "111_133",
+            "cx": 116,
+            "cy": 134,
+            "tiles": 43,
+            "value": 8250,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              51.92301994298868,
+              42.720018726587654
+            ]
+          },
+          {
+            "id": "112_72",
+            "cx": 118,
+            "cy": 71,
+            "tiles": 70,
+            "value": 15075,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              12.36931687685298,
+              60.876925020897694
+            ]
+          },
+          {
+            "id": "123_102",
+            "cx": 128,
+            "cy": 105,
+            "tiles": 40,
+            "value": 7275,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              21.18962010041709,
+              54.405882034941776
+            ]
+          },
+          {
+            "id": "128_90",
+            "cx": 132,
+            "cy": 92,
+            "tiles": 29,
+            "value": 9250,
+            "gemValue": 9250,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              9.486832980505138,
+              62.24146527838174
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 400,
+          "5400": 1875,
+          "7200": 5750,
+          "9000": 8200
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 3,
+          "7200": 3,
+          "9000": 3
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 2,
+          "7200": 2,
+          "9000": 2
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 2
+        },
+        "servedPatches": {
+          "3600": 2,
+          "5400": 2,
+          "7200": 2,
+          "9000": 2
+        },
+        "gemShare": 1.1280487804878048,
+        "homeGemPatch": true,
+        "firstGemMinerTick": 2700,
+        "maxMinersOnPatch": 2,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "mp02t2__Americans",
+      "map": "mp02t2",
+      "seed": 7008,
+      "country": "Americans",
+      "swapped": true,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "65_97",
+            "cx": 68,
+            "cy": 98,
+            "tiles": 30,
+            "value": 10750,
+            "gemValue": 10750,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              17,
+              66.09841147864296
+            ]
+          },
+          {
+            "id": "72_70",
+            "cx": 76,
+            "cy": 74,
+            "tiles": 47,
+            "value": 9000,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              39.20459156782532,
+              55.036351623268054
+            ]
+          },
+          {
+            "id": "83_126",
+            "cx": 89,
+            "cy": 127,
+            "tiles": 65,
+            "value": 12600,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              13.601470508735444,
+              62.93647591023825
+            ]
+          },
+          {
+            "id": "86_62",
+            "cx": 91,
+            "cy": 60,
+            "tiles": 42,
+            "value": 6800,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              57.28001396647874,
+              42.95346318982906
+            ]
+          },
+          {
+            "id": "111_133",
+            "cx": 116,
+            "cy": 134,
+            "tiles": 43,
+            "value": 8250,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              42.720018726587654,
+              51.92301994298868
+            ]
+          },
+          {
+            "id": "112_72",
+            "cx": 118,
+            "cy": 71,
+            "tiles": 70,
+            "value": 15075,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              60.876925020897694,
+              12.36931687685298
+            ]
+          },
+          {
+            "id": "123_102",
+            "cx": 128,
+            "cy": 105,
+            "tiles": 40,
+            "value": 7275,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              54.405882034941776,
+              21.18962010041709
+            ]
+          },
+          {
+            "id": "128_90",
+            "cx": 132,
+            "cy": 92,
+            "tiles": 29,
+            "value": 9250,
+            "gemValue": 9250,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              62.24146527838174,
+              9.486832980505138
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 250,
+          "5400": 1300,
+          "7200": 4775,
+          "9000": 7900
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 2,
+          "7200": 3,
+          "9000": 3
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 2,
+          "9000": 2
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 2
+        },
+        "servedPatches": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "gemShare": 1.360759493670886,
+        "homeGemPatch": true,
+        "firstGemMinerTick": 2700,
+        "maxMinersOnPatch": 2,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "mp02t2__Russians",
+      "map": "mp02t2",
+      "seed": 7008,
+      "country": "Russians",
+      "swapped": false,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "65_97",
+            "cx": 68,
+            "cy": 98,
+            "tiles": 30,
+            "value": 10750,
+            "gemValue": 10750,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              66.09841147864296,
+              17
+            ]
+          },
+          {
+            "id": "72_70",
+            "cx": 76,
+            "cy": 74,
+            "tiles": 47,
+            "value": 9000,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              55.036351623268054,
+              39.20459156782532
+            ]
+          },
+          {
+            "id": "83_126",
+            "cx": 89,
+            "cy": 127,
+            "tiles": 65,
+            "value": 12600,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              62.93647591023825,
+              13.601470508735444
+            ]
+          },
+          {
+            "id": "86_62",
+            "cx": 91,
+            "cy": 60,
+            "tiles": 42,
+            "value": 6800,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              42.95346318982906,
+              57.28001396647874
+            ]
+          },
+          {
+            "id": "111_133",
+            "cx": 116,
+            "cy": 134,
+            "tiles": 43,
+            "value": 8250,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              51.92301994298868,
+              42.720018726587654
+            ]
+          },
+          {
+            "id": "112_72",
+            "cx": 118,
+            "cy": 71,
+            "tiles": 70,
+            "value": 15075,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              12.36931687685298,
+              60.876925020897694
+            ]
+          },
+          {
+            "id": "123_102",
+            "cx": 128,
+            "cy": 105,
+            "tiles": 40,
+            "value": 7275,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              21.18962010041709,
+              54.405882034941776
+            ]
+          },
+          {
+            "id": "128_90",
+            "cx": 132,
+            "cy": 92,
+            "tiles": 29,
+            "value": 9250,
+            "gemValue": 9250,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              9.486832980505138,
+              62.24146527838174
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 650,
+          "5400": 1750,
+          "7200": 3825,
+          "9000": 6650
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 2,
+          "9000": 3
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 2,
+          "9000": 2
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 2,
+          "5400": 2,
+          "7200": 2,
+          "9000": 2
+        },
+        "gemShare": 1.2406015037593985,
+        "homeGemPatch": true,
+        "firstGemMinerTick": 2700,
+        "maxMinersOnPatch": 2,
+        "survived": true
+      },
+      "error": null
+    },
+    {
+      "jobId": "mp02t2__Russians",
+      "map": "mp02t2",
+      "seed": 7008,
+      "country": "Russians",
+      "swapped": true,
+      "player": 0,
+      "result": "timeout",
+      "reason": "tick-limit",
+      "ticks": 9000,
+      "ecoMap": {
+        "values": {
+          "ore": 25,
+          "gems": 50
+        },
+        "patches": [
+          {
+            "id": "65_97",
+            "cx": 68,
+            "cy": 98,
+            "tiles": 30,
+            "value": 10750,
+            "gemValue": 10750,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 0,
+            "distToStart": [
+              17,
+              66.09841147864296
+            ]
+          },
+          {
+            "id": "72_70",
+            "cx": 76,
+            "cy": 74,
+            "tiles": 47,
+            "value": 9000,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              39.20459156782532,
+              55.036351623268054
+            ]
+          },
+          {
+            "id": "83_126",
+            "cx": 89,
+            "cy": 127,
+            "tiles": 65,
+            "value": 12600,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              13.601470508735444,
+              62.93647591023825
+            ]
+          },
+          {
+            "id": "86_62",
+            "cx": 91,
+            "cy": 60,
+            "tiles": 42,
+            "value": 6800,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              57.28001396647874,
+              42.95346318982906
+            ]
+          },
+          {
+            "id": "111_133",
+            "cx": 116,
+            "cy": 134,
+            "tiles": 43,
+            "value": 8250,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 0,
+            "distToStart": [
+              42.720018726587654,
+              51.92301994298868
+            ]
+          },
+          {
+            "id": "112_72",
+            "cx": 118,
+            "cy": 71,
+            "tiles": 70,
+            "value": 15075,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              60.876925020897694,
+              12.36931687685298
+            ]
+          },
+          {
+            "id": "123_102",
+            "cx": 128,
+            "cy": 105,
+            "tiles": 40,
+            "value": 7275,
+            "gemValue": 0,
+            "isGem": false,
+            "regrows": true,
+            "nearestStart": 1,
+            "distToStart": [
+              54.405882034941776,
+              21.18962010041709
+            ]
+          },
+          {
+            "id": "128_90",
+            "cx": 132,
+            "cy": 92,
+            "tiles": 29,
+            "value": 9250,
+            "gemValue": 9250,
+            "isGem": true,
+            "regrows": false,
+            "nearestStart": 1,
+            "distToStart": [
+              62.24146527838174,
+              9.486832980505138
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "mined": {
+          "3600": 600,
+          "5400": 1650,
+          "7200": 3150,
+          "9000": 5650
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 2,
+          "9000": 3
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 2,
+          "9000": 2
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "gemShare": 1.7699115044247788,
+        "homeGemPatch": true,
+        "firstGemMinerTick": 2700,
+        "maxMinersOnPatch": 3,
+        "survived": true
+      },
+      "error": null
+    }
+  ],
+  "valid": true,
+  "complete": true,
+  "expectedGames": 32,
+  "completedGames": 32,
+  "errors": 0,
+  "survived": 32,
+  "failures": {},
+  "issues": [],
+  "byMap": [
+    {
+      "map": "mp08t2",
+      "games": 4,
+      "mean": {
+        "mined": {
+          "3600": 468.75,
+          "5400": 1756.25,
+          "7200": 3337.5,
+          "9000": 5681.25
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 1.5,
+          "7200": 1.75,
+          "9000": 2.5
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1.25,
+          "9000": 1.75
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "gemShare": 0.13275862068965516,
+        "homeGemPatch": 1,
+        "firstGemMinerTick": 7200,
+        "maxMinersOnPatch": 2,
+        "survived": 1
+      },
+      "observations": {
+        "mined": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "miners": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "refineries": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "factories": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "servedPatches": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "gemShare": 4,
+        "homeGemPatch": 4,
+        "firstGemMinerTick": 2,
+        "maxMinersOnPatch": 4,
+        "survived": 4
+      }
+    },
+    {
+      "map": "tn01t2",
+      "games": 4,
+      "mean": {
+        "mined": {
+          "3600": 0,
+          "5400": 25,
+          "7200": 1062.5,
+          "9000": 2231.25
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 2,
+          "7200": 2,
+          "9000": 2
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 0.5,
+          "5400": 0.5,
+          "7200": 0.5,
+          "9000": 0.5
+        },
+        "gemShare": 0,
+        "homeGemPatch": 1,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 1.5,
+        "survived": 1
+      },
+      "observations": {
+        "mined": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "miners": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "refineries": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "factories": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "servedPatches": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "gemShare": 4,
+        "homeGemPatch": 4,
+        "firstGemMinerTick": 0,
+        "maxMinersOnPatch": 4,
+        "survived": 4
+      }
+    },
+    {
+      "map": "mp11t2",
+      "games": 4,
+      "mean": {
+        "mined": {
+          "3600": 281.25,
+          "5400": 1018.75,
+          "7200": 1750,
+          "9000": 3550
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 1.25,
+          "7200": 1.75,
+          "9000": 2
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1.25
+        },
+        "factories": {
+          "3600": 0.5,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "gemShare": 0,
+        "homeGemPatch": 0,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 1.75,
+        "survived": 1
+      },
+      "observations": {
+        "mined": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "miners": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "refineries": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "factories": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "servedPatches": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "gemShare": 4,
+        "homeGemPatch": 4,
+        "firstGemMinerTick": 0,
+        "maxMinersOnPatch": 4,
+        "survived": 4
+      }
+    },
+    {
+      "map": "tn04t2",
+      "games": 4,
+      "mean": {
+        "mined": {
+          "3600": 18.75,
+          "5400": 0,
+          "7200": 1056.25,
+          "9000": 2687.5
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 1.75,
+          "7200": 1.75,
+          "9000": 2
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1.25
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 0.75,
+          "5400": 0.75,
+          "7200": 0.75,
+          "9000": 0.75
+        },
+        "gemShare": 0,
+        "homeGemPatch": 1,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 2,
+        "survived": 1
+      },
+      "observations": {
+        "mined": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "miners": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "refineries": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "factories": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "servedPatches": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "gemShare": 4,
+        "homeGemPatch": 4,
+        "firstGemMinerTick": 0,
+        "maxMinersOnPatch": 4,
+        "survived": 4
+      }
+    },
+    {
+      "map": "mp06t2",
+      "games": 4,
+      "mean": {
+        "mined": {
+          "3600": 318.75,
+          "5400": 1381.25,
+          "7200": 3056.25,
+          "9000": 4887.5
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 1.75,
+          "7200": 1.75,
+          "9000": 2
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1.25
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 0.5,
+          "5400": 0.5,
+          "7200": 0.5,
+          "9000": 0.5
+        },
+        "gemShare": null,
+        "homeGemPatch": 0,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 2,
+        "survived": 1
+      },
+      "observations": {
+        "mined": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "miners": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "refineries": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "factories": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "servedPatches": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "gemShare": 0,
+        "homeGemPatch": 4,
+        "firstGemMinerTick": 0,
+        "maxMinersOnPatch": 4,
+        "survived": 4
+      }
+    },
+    {
+      "map": "mp29u2",
+      "games": 4,
+      "mean": {
+        "mined": {
+          "3600": 287.5,
+          "5400": 1206.25,
+          "7200": 4093.75,
+          "9000": 7325
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 2,
+          "7200": 3,
+          "9000": 3.5
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 2,
+          "7200": 2,
+          "9000": 2
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1.75
+        },
+        "servedPatches": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "gemShare": 0,
+        "homeGemPatch": 0.5,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 3.5,
+        "survived": 1
+      },
+      "observations": {
+        "mined": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "miners": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "refineries": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "factories": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "servedPatches": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "gemShare": 4,
+        "homeGemPatch": 4,
+        "firstGemMinerTick": 0,
+        "maxMinersOnPatch": 4,
+        "survived": 4
+      }
+    },
+    {
+      "map": "mp31s2",
+      "games": 4,
+      "mean": {
+        "mined": {
+          "3600": 887.5,
+          "5400": 1443.75,
+          "7200": 3218.75,
+          "9000": 5468.75
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 1.5,
+          "7200": 2.25,
+          "9000": 2.75
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1.5,
+          "9000": 1.75
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1
+        },
+        "servedPatches": {
+          "3600": 0.25,
+          "5400": 0.25,
+          "7200": 0.5,
+          "9000": 0.75
+        },
+        "gemShare": 0,
+        "homeGemPatch": 0.5,
+        "firstGemMinerTick": null,
+        "maxMinersOnPatch": 2.75,
+        "survived": 1
+      },
+      "observations": {
+        "mined": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "miners": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "refineries": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "factories": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "servedPatches": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "gemShare": 4,
+        "homeGemPatch": 4,
+        "firstGemMinerTick": 0,
+        "maxMinersOnPatch": 4,
+        "survived": 4
+      }
+    },
+    {
+      "map": "mp02t2",
+      "games": 4,
+      "mean": {
+        "mined": {
+          "3600": 475,
+          "5400": 1643.75,
+          "7200": 4375,
+          "9000": 7100
+        },
+        "miners": {
+          "3600": 1,
+          "5400": 1.75,
+          "7200": 2.5,
+          "9000": 3
+        },
+        "refineries": {
+          "3600": 1,
+          "5400": 1.25,
+          "7200": 2,
+          "9000": 2
+        },
+        "factories": {
+          "3600": 1,
+          "5400": 1,
+          "7200": 1,
+          "9000": 1.5
+        },
+        "servedPatches": {
+          "3600": 1.5,
+          "5400": 1.5,
+          "7200": 1.5,
+          "9000": 1.5
+        },
+        "gemShare": 1.374830320585717,
+        "homeGemPatch": 1,
+        "firstGemMinerTick": 2700,
+        "maxMinersOnPatch": 2.25,
+        "survived": 1
+      },
+      "observations": {
+        "mined": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "miners": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "refineries": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "factories": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "servedPatches": {
+          "3600": 4,
+          "5400": 4,
+          "7200": 4,
+          "9000": 4
+        },
+        "gemShare": 4,
+        "homeGemPatch": 4,
+        "firstGemMinerTick": 4,
+        "maxMinersOnPatch": 4,
+        "survived": 4
+      }
+    }
+  ],
+  "mean": {
+    "mined": {
+      "3600": 342.1875,
+      "5400": 1059.375,
+      "7200": 2743.75,
+      "9000": 4866.40625
+    },
+    "miners": {
+      "3600": 1,
+      "5400": 1.6875,
+      "7200": 2.09375,
+      "9000": 2.46875
+    },
+    "refineries": {
+      "3600": 1,
+      "5400": 1.15625,
+      "7200": 1.34375,
+      "9000": 1.53125
+    },
+    "factories": {
+      "3600": 0.9375,
+      "5400": 1,
+      "7200": 1,
+      "9000": 1.15625
+    },
+    "servedPatches": {
+      "3600": 0.8125,
+      "5400": 0.8125,
+      "7200": 0.84375,
+      "9000": 0.875
+    },
+    "gemShare": 0.2153698487536246,
+    "homeGemPatch": 0.625,
+    "firstGemMinerTick": 4200,
+    "maxMinersOnPatch": 2.21875,
+    "survived": 1
+  },
+  "observations": {
+    "mined": {
+      "3600": 32,
+      "5400": 32,
+      "7200": 32,
+      "9000": 32
+    },
+    "miners": {
+      "3600": 32,
+      "5400": 32,
+      "7200": 32,
+      "9000": 32
+    },
+    "refineries": {
+      "3600": 32,
+      "5400": 32,
+      "7200": 32,
+      "9000": 32
+    },
+    "factories": {
+      "3600": 32,
+      "5400": 32,
+      "7200": 32,
+      "9000": 32
+    },
+    "servedPatches": {
+      "3600": 32,
+      "5400": 32,
+      "7200": 32,
+      "9000": 32
+    },
+    "gemShare": 28,
+    "homeGemPatch": 32,
+    "firstGemMinerTick": 6,
+    "maxMinersOnPatch": 32,
+    "survived": 32
+  },
+  "wallSeconds": 70.724330668
+}

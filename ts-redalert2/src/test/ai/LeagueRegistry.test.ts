@@ -119,6 +119,16 @@ describe('league registry', () => {
         const league: any = fixture(); league.members[3].fixes = fixes;
         await expect(valid(league)).rejects.toThrow('fixes');
     });
+    test('eco repair is accepted without changing historical attempt limits', async () => {
+        const league = fixture(); league.members[3].fixes = 'eco'; league.members[3].attempts = 3;
+        expect(await valid(league)).toEqual(league);
+    });
+    test('eco does not accept a suffix or change existing repair formats', async () => {
+        for (const fixes of ['eco:mp11t2', 'eco ', 'Eco']) {
+            const league = fixture(); league.members[3].fixes = fixes;
+            await expect(valid(league)).rejects.toThrow('fixes');
+        }
+    });
     test('empty members and null input are rejected', async () => {
         await expect(validateLeague(null, () => '')).rejects.toThrow();
         const league = fixture(); league.members = []; await expect(valid(league)).rejects.toThrow();
