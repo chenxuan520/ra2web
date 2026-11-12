@@ -5,6 +5,7 @@ import { Countries } from './bot/logic/common/utils';
 import { ObjectType } from '@/engine/type/ObjectType';
 import { QueueType, QueueStatus } from '@/game/player/production/ProductionQueue';
 import { OrderType } from '@/game/order/OrderType';
+import { ApiEventType } from '@/game/api/EventsApi';
 
 /**
  * BuiltInBotAdapter — wraps the real BuiltInBot.
@@ -20,6 +21,8 @@ export class BuiltInBotAdapter extends Bot {
     private lastStructureProgressTick: number = 0;
     private lastStructureState: string = '';
     private initializationFailed: boolean = false;
+    private idleDefenseIds = new Set<number>();
+    private static readonly IDLE_DEFENSE_LIMIT = 8;
 
     private static readonly ALLIED_COUNTRIES = [
         'Americans', 'British', 'French', 'Germans', 'Koreans', 'Alliance',
@@ -28,7 +31,7 @@ export class BuiltInBotAdapter extends Bot {
     private static readonly FAIL_SAFE_BUILD_ORDER_ALLIED = ['GAPOWR', 'GAREFN', 'GAPILE', 'GAWEAP'];
     private static readonly FAIL_SAFE_BUILD_ORDER_SOVIET = ['NAPOWR', 'NAREFN', 'NAHAND', 'NAWEAP'];
 
-    constructor(name: string, country: string, difficulty: 'normal' | 'brutal' = 'normal') {
+    constructor(name: string, country: string, private readonly difficulty: 'normal' | 'brutal' = 'normal') {
         super(name, country);
         this.innerBot = new BuiltInBot(name, country as Countries, [], true, undefined, difficulty);
     }
@@ -63,6 +66,7 @@ export class BuiltInBotAdapter extends Bot {
         this.initializationFailed = false;
         this.lastStructureProgressTick = event.getCurrentTick();
         this.lastStructureState = '';
+        if (this.difficulty === 'brutal') { this.idleDefenseIds.clear(); return; }
         console.log(`[BuiltInBotAdapter] onGameStart called for "${this.name}" country="${this.country}"`);
         try {
             this.innerBot.onGameStart(event);
@@ -75,6 +79,7 @@ export class BuiltInBotAdapter extends Bot {
     }
 
     override onGameTick(event: any): void {
+        if (this.difficulty === 'brutal') { this.runIdleTick(event); return; }
         try {
             this.innerBot.onGameTick(event);
         } catch (e) {
@@ -89,11 +94,52 @@ export class BuiltInBotAdapter extends Bot {
     }
 
     override onGameEvent(event: any): void {
+        if (this.difficulty === 'brutal') {
+            // ObjectSpawn is synchronous after real world insertion, not a placement command or a Ready item.
+            if (event.type === ApiEventType.ObjectSpawn && this.gameApi.getVisibleUnits(this.name, 'self',
+                (r: any) => r.type === ObjectType.Building && (r.name === 'GAPILL' || r.name === 'NALASR')).includes(event.target))
+                this.idleDefenseIds.add(event.target);
+            return;
+        }
         try {
             this.innerBot.onGameEvent(event);
         } catch (e) {
             this.logger?.error?.('BuiltInBot event error:', e);
         }
+    }
+
+    /** Paid production only. The normal strategy and its fallback never run for the brutal idle fixture. */
+    private runIdleTick(gameApi: any): void {
+        if (!this.productionApi || !this.actionsApi || gameApi.getCurrentTick() % 15 !== 0) return;
+        const conYards = gameApi.getVisibleUnits(this.name, 'self', (r: any) => r.constructionYard);
+        if (!conYards.length) {
+            // Reuse only the existing MCV deployment/repositioning path, which returns before production.
+            this.runFailSafeTick(gameApi, true);
+            return;
+        }
+        const buildings = gameApi.getVisibleUnits(this.name, 'self', (r: any) => r.type === ObjectType.Building)
+            .map((id: number) => ({ id, name: gameApi.getGameObjectData(id)?.name }));
+        for (const building of buildings) if (building.name === 'GAPILL' || building.name === 'NALASR') this.idleDefenseIds.add(building.id);
+        const queues = [QueueType.Structures, QueueType.Armory].map(type => this.productionApi.getQueueData(type));
+        for (const queue of queues) {
+            if (queue.status === QueueStatus.Ready && queue.items.length) {
+                this.tryPlaceBuildingNearConyard(gameApi, queue.items[0].rules.name);
+                return;
+            }
+        }
+        if (queues.some(queue => queue.items.length)) return;
+        const allied = this.isAlliedCountry(this.country);
+        const powerName = allied ? 'GAPOWR' : 'NAPOWR', barracksName = allied ? 'GAPILE' : 'NAHAND';
+        const defenseName = allied ? 'GAPILL' : 'NALASR';
+        let next = !buildings.some((building: { name: string }) => building.name === barracksName) ? barracksName
+            : this.idleDefenseIds.size < BuiltInBotAdapter.IDLE_DEFENSE_LIMIT ? defenseName : undefined;
+        const power = gameApi.getPlayerData(this.name).power;
+        const neededPower = next ? Math.max(0, -gameApi.rulesApi.getBuilding(next).power) : 0;
+        if (!buildings.some((building: { name: string }) => building.name === powerName) || power.total < power.drain + neededPower) next = powerName;
+        if (!next) return;
+        const rules = this.productionApi.getAvailableObjects().find((rules: any) => rules.name === next);
+        if (rules && gameApi.getPlayerData(this.name).credits >= rules.cost)
+            this.actionsApi.queueForProduction(this.productionApi.getQueueTypeForObject(rules), ObjectType.Building, next, 1);
     }
 
     private runFailSafeTick(gameApi: any, botFailed = false): void {
