@@ -183,6 +183,7 @@ export class OpeningScoutingMission extends Mission {
     private firstTargetComplete = false;
     private queueTarget: PrioritisedScoutTarget | null = null;
     private expandedHomeScouting = false;
+    private nearHomeTargets?: PrioritisedScoutTarget[];
     private queueTargetRefreshedAt = 0;
     private queueMinDistance = Infinity;
     private orders = new DogOrders(SCOUT_MOVE_COOLDOWN_TICKS);
@@ -215,7 +216,7 @@ export class OpeningScoutingMission extends Mission {
         const excess = scouts.filter(scout => !this.initialScoutIds.includes(scout.id)).map(scout => scout.id);
         if (excess.length) return releaseUnits(excess);
         let extendHomeScout = false;
-        if (tick < 5400 && (tick >= 3600 || !this.expandedHomeScouting) && !isPressured(context) &&
+        if (tick >= 3600 && tick < 5400 && !isPressured(context) &&
             scouts.some(scout => scout.id === this.initialScoutIds[1]) &&
             game.getVisibleUnits(player.name, "self", rules => rules.weaponsFactory).length > 0 &&
             game.getVisibleUnits(player.name, "self", rules => rules.refinery).length > 0) {
@@ -262,14 +263,16 @@ export class OpeningScoutingMission extends Mission {
                     !this.queueTarget.permanent && tick > this.queueTargetRefreshedAt + MAX_TICKS_PER_TARGET) this.queueTarget = null;
             }
             if (!this.queueTarget) {
-                const scouting = matchAwareness.getScoutingManager();
-                let next = scouting.hasScoutTargets() ? scouting.getNewScoutTarget() : undefined;
+                const scouting = matchAwareness.getScoutingManager(), home = game.getPlayerData(player.name).startLocation;
+                this.nearHomeTargets ??= [[0, -24], [17, -17], [24, 0], [17, 17], [0, 24], [-17, 17], [-24, 0], [-17, -17]]
+                    .map(([dx, dy]) => new PrioritisedScoutTarget(1000, new Vector2(home.x + dx, home.y + dy)));
+                let next = this.nearHomeTargets.shift() ?? (scouting.hasScoutTargets() ? scouting.getNewScoutTarget() : undefined);
                 // Preserve the original public sector priorities and the first dog's reserved enemy start.
                 while (next) {
                     const tile = game.mapApi.getTile(next.target.x, next.target.y);
                     if (tile && !game.mapApi.isVisibleTile(tile, player.name) &&
                         !(enemyStart && next.target.x === enemyStart.x && next.target.y === enemyStart.y)) break;
-                    next = scouting.hasScoutTargets() ? scouting.getNewScoutTarget() : undefined;
+                    next = this.nearHomeTargets.shift() ?? (scouting.hasScoutTargets() ? scouting.getNewScoutTarget() : undefined);
                 }
                 this.queueTarget = next ?? null;
                 this.queueTargetRefreshedAt = tick;

@@ -243,13 +243,23 @@ describe("T2 scout directions, recruitment and real handoff", () => {
     });
 
     test("the second scout consumes original public sector priorities before any extra home sweep", () => {
-        const f = fixture(); f.queue.unshift(new PrioritisedScoutTarget(880, new Vector2(37, 3))); f.explored.delete("37_3"); f.ensure();
+        const f = fixture(); f.queue.unshift(new PrioritisedScoutTarget(880, new Vector2(28, 36))); f.ensure();
         f.add(1, "DOG", 23); f.add(2, "DOG", 24); f.scout().addUnit(1); f.scout().addUnit(2);
         f.map.getAllTilesResourceData = () => { throw Error("original public sector orders must not inspect hidden resources"); };
         f.missionStep(f.scout(), 32);
-        expect(f.orders).toContainEqual({ ids: [2], type: OrderType.AttackMove, xOrTarget: 37, y: 3 });
+        expect(f.orders).toContainEqual({ ids: [2], type: OrderType.AttackMove, xOrTarget: 28, y: 36 });
         expect(f.queueReads()).toBe(1); expect(f.extraRadii).toEqual([]);
         expect(f.privateReads()).toBe(0);
+    });
+    test("the finite public near24 opening is retained ahead of adaptive sectors", () => {
+        const f = fixture(); f.player.startLocation.set(20, 50);
+        f.objects.get(100)!.tile = tile(20, 50); f.objects.get(101)!.tile = tile(21, 50); f.ensure();
+        f.add(1, "DOG", 23, 50); f.add(2, "DOG", 24, 50); f.scout().addUnit(1); f.scout().addUnit(2);
+        f.map.getAllTilesResourceData = () => { throw Error("public near goals cannot inspect hidden minerals"); };
+        f.missionStep(f.scout(), 32);
+        expect(f.orders).toContainEqual({ ids: [2], type: OrderType.AttackMove, xOrTarget: 20, y: 26 });
+        expect(f.queueReads()).toBe(0); expect(f.privateReads()).toBe(0);
+        expect((f.scout() as OpeningScoutingMission).getTotalUnitsReceived()).toBe(2);
     });
     test("an empty early queue keeps the original two receipts until more sector goals or the real deadline", () => {
         const f = fixture(); f.queue.length = 0; f.explored.add("140_20"); f.ensure();
@@ -262,11 +272,13 @@ describe("T2 scout directions, recruitment and real handoff", () => {
         expect(f.missionStep(f.scout(), 3600).type).toBe("disband");
         expect((f.scout() as OpeningScoutingMission).getTotalUnitsReceived()).toBe(2);
     });
-    test("a quiet established one-field opening adds one public forty-radius sector sweep, not a fixed ring", () => {
+    test("the extra forty-radius sweep waits until3600 so it cannot overtake the funded near opening", () => {
         const f = fixture(); f.add(102, "GAWEAP", 22); f.add(103, "GAREFN", 30);
         f.resources.push({ tile: tile(30, 20), ore: 800, gems: 0, spawnsOre: false }); f.explored.add("30_20");
         f.ensure(); f.add(1, "DOG", 23); f.add(2, "DOG", 24); f.scout().addUnit(1); f.scout().addUnit(2);
         f.missionStep(f.scout(), 32); f.missionStep(f.scout(), 64);
+        expect(f.extraRadii).toEqual([]);
+        f.missionStep(f.scout(), 3600); f.missionStep(f.scout(), 3602);
         expect(f.extraRadii).toEqual([40]); expect(f.privateReads()).toBe(0);
         expect(f.scout().getUnitIds()).toEqual([1, 2]);
     });
