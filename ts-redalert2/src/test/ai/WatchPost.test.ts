@@ -251,7 +251,7 @@ describe("T2 scout directions, recruitment and real handoff", () => {
         f.missionStep(f.scout(), 32);
         expect(f.orders).toContainEqual({ ids: [2], type: OrderType.AttackMove, xOrTarget: 37, y: 3 });
         expect(f.queueReads()).toBe(0);
-        f.explored.add("37_3"); f.missionStep(f.scout(), 64);
+        f.explored.add("37_3"); f.objects.get(2)!.tile = tile(37, 4); f.missionStep(f.scout(), 64);
         expect(f.orders).toContainEqual({ ids: [2], type: OrderType.AttackMove, xOrTarget: 20, y: 80 });
         expect((f.scout() as OpeningScoutingMission).getTotalUnitsReceived()).toBe(2);
     });
@@ -293,6 +293,17 @@ describe("T2 scout directions, recruitment and real handoff", () => {
         f.missionStep(f.scout(), 32);
         expect(f.orders).toContainEqual({ ids: [2], type: OrderType.AttackMove, xOrTarget: 60, y: 20 });
         expect(f.queueReads()).toBe(0); expect(f.privateReads()).toBe(0);
+    });
+    test("a near home goal also requires arrival rather than stopping at the edge of its revealed center", () => {
+        const f = fixture(); f.explored.delete("20_44"); f.ensure();
+        f.add(1, "DOG", 23); f.add(2, "DOG", 24); f.scout().addUnit(1); f.scout().addUnit(2);
+        f.map.getAllTilesResourceData = () => { throw Error("near public goals cannot inspect hidden resources"); };
+        f.missionStep(f.scout(), 32); f.explored.add("20_44"); f.missionStep(f.scout(), 64);
+        expect(f.queueReads()).toBe(0);
+        expect(f.orders.filter(order => order.ids.includes(2)).at(-1)).toMatchObject({ xOrTarget: 20, y: 44 });
+        f.objects.get(2)!.tile = tile(20, 43); f.missionStep(f.scout(), 96);
+        expect(f.orders.filter(order => order.ids.includes(2)).at(-1)).toMatchObject({ xOrTarget: 20, y: 80 });
+        expect(f.privateReads()).toBe(0);
     });
     test("an outer home goal is not completed merely because another unit reveals its tile", () => {
         const f = fixture(); f.explored.delete("60_20"); f.ensure();
