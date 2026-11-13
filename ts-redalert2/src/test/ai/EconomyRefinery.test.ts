@@ -327,6 +327,17 @@ describe("brutal refinery investment", () => {
         expect(f.nativeQueues.get(QueueType.Vehicles)!.getFirst()!.creditsSpent).toBe(54);
         expect(f.nativeQueues.get(QueueType.Structures)!.getFirst()!.creditsSpent).toBe(0);
     });
+    test("a settled late-game army does not gain new opening-only precedence over native refinery funding", () => {
+        const f = nativeFundingFixture(85, true);
+        for (let i = 0; i < 4; i++) f.own("HTNK", 0);
+        for (let i = 0; i < 5; i++) f.enemies.push({ id: 900 + i, tile: { rx: 80, ry: 0 },
+            rules: { name: "MTNK", type: ObjectType.Vehicle, isSelectableCombatant: true } });
+        for (let i = 0; i < 9; i++) f.enemies.push({ id: 950 + i, tile: { rx: 80, ry: 0 },
+            rules: { name: "E1", type: ObjectType.Infantry, isSelectableCombatant: true } });
+        for (let i = 0; i < 54; i++) f.spend(9990 + i * 2);
+        expect(f.nativeQueues.get(QueueType.Structures)!.getFirst()!.creditsSpent).toBe(54);
+        expect(f.nativeQueues.get(QueueType.Vehicles)!.getFirst()!.creditsSpent).toBe(0);
+    });
     test.each(["quiet", "warning"])("ordinary 85-priority tanks do not take over native refinery funding during %s", condition => {
         const f = nativeFundingFixture(85, true);
         if (condition === "warning") {

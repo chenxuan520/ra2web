@@ -315,6 +315,22 @@ describe("brutal miner capacity and production table", () => {
         if (condition === "normal") { f.context.difficulty = "normal"; f.requests.set("HARV", { priority: 110, specificLocation: null }); }
         f.run(); expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
     });
+    test.each(["Russians", "Americans"])("%s does not extend the opening armor counter into established late-game income", country => {
+        const f = fixture(4, 4, country); f.at(9990);
+        for (let i = 0; i < 5; i++) f.enemy(100 + i, 80);
+        for (let i = 0; i < 9; i++) f.enemy(200 + i, 80, ObjectType.Infantry);
+        f.run();
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, country === "Russians" ? "HARV" : "CMIN", ObjectType.Vehicle, 1);
+    });
+    test.each([8998, 9000])("only the new armor clause observes the existing opening boundary at tick%i", tick => {
+        const f = fixture(2, 0); f.at(tick); f.enemy(100, 80); f.run();
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, tick < 9000 ? "HTNK" : "HARV", ObjectType.Vehicle, 1);
+    });
+    test("the historical infantry counter still responds after the opening armor window closes", () => {
+        const f = fixture(2, 0); f.at(9990);
+        for (let i = 0; i < 13; i++) f.enemy(100 + i, 80, ObjectType.Infantry);
+        f.run(); expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTNK", ObjectType.Vehicle, 1);
+    });
     test("visible-armor precedence retains the existing higher-priority air response", () => {
         const f = fixture(2, 0); f.at(5400); f.enemy(100, 80); f.enemy(101, 80, ObjectType.Aircraft);
         f.run(); expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTK", ObjectType.Vehicle, 1);
