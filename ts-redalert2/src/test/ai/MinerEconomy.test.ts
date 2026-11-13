@@ -102,8 +102,8 @@ describe("independent miner economy", () => {
         }
     });
 
-    test("gem orders are bounded to one per miner per 300 ticks", () => {
-        const f = fixture();
+    test("rich-field gem orders are bounded to one per miner per 300 ticks", () => {
+        const f = fixture(); f.resources[0].gems = 300;
         f.run();
         f.at(90); f.run();
         f.at(120); f.run();

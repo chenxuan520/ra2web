@@ -3,7 +3,7 @@ import { ObjectType, OrderType, UnitData, Vector2 } from "../../../../game-api";
 import { SupabotContext } from "../../common/context";
 import { getInfantryCrushPoint } from "./squads/infantryCrushing";
 import { isEcoOnly } from "../../common/pressure";
-import { findVisiblePatches, isServed, patchDistance, PatchPoint } from "../../common/orePatches";
+import { findVisiblePatches, isServed, OrePatch, patchDistance, PatchPoint } from "../../common/orePatches";
 import { patchCapacity } from "../../building/harvester";
 
 /** Briefly use one nearby armored miner to break an infantry rush, then resume income. */
@@ -13,6 +13,7 @@ export class MinerDefence {
     private lastGemOrder = new Map<number, number>();
     private lastBalanceOrder = new Map<number, number>();
     private dispatchTargets = new Map<number, { tile: PatchPoint; tick: number }>();
+    private smallGemForays: { tiles: Set<string>; minerId: number; returned: boolean }[] = [];
 
     onAiUpdate(context: SupabotContext) {
         if (context.difficulty !== "brutal") return;
@@ -107,6 +108,10 @@ export class MinerDefence {
             const patches = findVisiblePatches(game, player.name);
             const tileKey = (tile: PatchPoint) => `${tile.rx}_${tile.ry}`;
             const patchByTile = new Map(patches.flatMap(patch => patch.tiles.map(tile => [tileKey(tile), patch] as const)));
+            const refinerySites = refineries.map(ref => ref.tile);
+            this.smallGemForays = this.smallGemForays.filter(foray => !patches.some(patch => isServed(patch, refinerySites) &&
+                patch.tiles.some(tile => foray.tiles.has(tileKey(tile)))));
+            const forayFor = (patch: OrePatch) => this.smallGemForays.find(foray => patch.tiles.some(tile => foray.tiles.has(tileKey(tile))));
             const inventory = game.getVisibleUnits(player.name, "self", rules => rules.harvester)
                 .map(id => game.getUnitData(id)).filter((unit): unit is UnitData => !!unit);
             const chrono = inventory.some(miner => miner.name === "CMIN");
@@ -160,12 +165,33 @@ export class MinerDefence {
                     const mPos = new Vector2(m.tile.rx, m.tile.ry);
                     if (!canDispatch(m)) continue;
 
+                    const foray = this.smallGemForays.find(foray => foray.minerId === m.id && !foray.returned);
+                    if (foray && m.harvestedOre === 0 && m.harvestedGems === 0) {
+                        // One attempt at low-value unserved gems; restore safe ore income instead of exhausting the field on long returns.
+                        const ore = game.mapApi.getAllTilesResourceData().filter(resource => {
+                            if (!game.mapApi.isVisibleTile(resource.tile, player.name) || resource.ore <= 0) return false;
+                            const patch = patchByTile.get(tileKey(resource.tile));
+                            return patch && (isServed(patch, refinerySites) || patchDistance({ rx: home.x, ry: home.y }, patch) <= 40) &&
+                                !enemyCombatants.some(enemy => Math.hypot(enemy.tile.rx - resource.tile.rx, enemy.tile.ry - resource.tile.ry) <= 14);
+                        }).sort((a, b) => mPos.distanceToSquared(new Vector2(a.tile.rx, a.tile.ry)) -
+                            mPos.distanceToSquared(new Vector2(b.tile.rx, b.tile.ry)) || a.tile.rx - b.tile.rx || a.tile.ry - b.tile.ry)
+                            .find(resource => game.mapApi.findPath(m.rules.speedType, { tile: m.tile, onBridge: !!m.onBridge },
+                                { tile: resource.tile, onBridge: false }, { bestEffort: false, maxExpandedNodes: 256 })
+                                .some(node => node.tile.rx === resource.tile.rx && node.tile.ry === resource.tile.ry));
+                        if (ore) {
+                            player.actions.orderUnits([m.id], OrderType.Gather, ore.tile.rx, ore.tile.ry);
+                            reserveDispatch(m, ore.tile); foray.returned = true;
+                            continue;
+                        }
+                    }
                     const targetGem = [...gemResources].sort((a, b) =>
                         mPos.distanceToSquared(new Vector2(a.tile.rx, a.tile.ry)) - mPos.distanceToSquared(new Vector2(b.tile.rx, b.tile.ry)) ||
                         a.tile.rx - b.tile.rx || a.tile.ry - b.tile.ry
                     ).find(resource => {
                         const patch = patchByTile.get(tileKey(resource.tile))!;
-                        const capacity = isServed(patch, refineries.map(ref => ref.tile)) ? patchCapacity(patch, chrono) : 1;
+                        const served = isServed(patch, refineries.map(ref => ref.tile));
+                        if (!served && patch.value < 6000 && forayFor(patch)) return false;
+                        const capacity = served ? patchCapacity(patch, chrono) : 1;
                         return counts.get(patch.id)! - Number(assignments.get(m.id)?.id === patch.id) < capacity && game.mapApi.findPath(m.rules.speedType,
                             { tile: m.tile, onBridge: !!m.onBridge }, { tile: resource.tile, onBridge: false },
                             { bestEffort: false, maxExpandedNodes: 256 }).some(node =>
@@ -176,6 +202,10 @@ export class MinerDefence {
                         player.actions.orderUnits([m.id], OrderType.Gather, targetGem.tile.rx, targetGem.tile.ry);
                         this.lastGemOrder.set(m.id, tick);
                         reserveDispatch(m, targetGem.tile);
+                        const patch = patchByTile.get(tileKey(targetGem.tile))!;
+                        if (!isServed(patch, refinerySites) && patch.value < 6000 && !forayFor(patch)) {
+                            this.smallGemForays.push({ tiles: new Set(patch.tiles.map(tileKey)), minerId: m.id, returned: false });
+                        }
                     }
                 }
             }

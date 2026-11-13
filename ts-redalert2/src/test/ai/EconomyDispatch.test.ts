@@ -85,6 +85,34 @@ describe("unload-aware gem dispatch", () => {
         expect(f.actions.orderUnits).toHaveBeenCalledTimes(1);
         expect(f.actions.orderUnits).toHaveBeenCalledWith([f.miners[0].id], OrderType.Gather, 20, 0);
     });
+    test("a small unserved gem field gets one foray and the empty returning miner resumes safe ore until service", () => {
+        const f = fixture(); f.resources[1].gems = 2000; f.miners[0].isIdle = true; f.miner(4, true);
+        f.run();
+        expect(f.actions.orderUnits).toHaveBeenCalledTimes(1);
+        f.at(330); f.run();
+        expect(f.actions.orderUnits).toHaveBeenCalledTimes(2);
+        expect(f.actions.orderUnits.mock.calls[1]).toEqual([[f.miners[0].id], OrderType.Gather, -8, 0]);
+        f.at(360); f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(2);
+        f.refinery(18); f.miners[0].tile.rx = -8; f.at(390); f.run();
+        expect(f.actions.orderUnits).toHaveBeenCalledWith([f.miners[1].id], OrderType.Gather, 20, 0);
+    });
+    test("a small-field forager with cargo is not redirected before its real unload", () => {
+        const f = fixture(); f.resources[1].gems = 2000; f.miners[0].isIdle = true; f.run();
+        f.miners[0].harvestedGems = 50; f.at(330); f.run();
+        expect(f.actions.orderUnits).toHaveBeenCalledTimes(1);
+        f.miners[0].harvestedGems = 0; f.at(360); f.run();
+        expect(f.actions.orderUnits).toHaveBeenCalledWith([f.miners[0].id], OrderType.Gather, -8, 0);
+    });
+    test("a failed path does not consume the small-field foray, and distinct fields keep separate budgets", () => {
+        const f = fixture(); f.resources[1].gems = 2000; f.miners[0].isIdle = true; f.blocked.add("20_0");
+        f.run(); expect(f.actions.orderUnits).not.toHaveBeenCalled();
+        f.blocked.clear(); f.at(60); f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(1);
+        const distinct = fixture(); distinct.resources[1].gems = 2000; distinct.miners[0].isIdle = true; distinct.miner(4, true);
+        distinct.resources.push({ tile: { rx: 40, ry: 0 }, ore: 0, gems: 2000 });
+        distinct.run();
+        expect(distinct.actions.orderUnits).toHaveBeenCalledWith([distinct.miners[0].id], OrderType.Gather, 20, 0);
+        expect(distinct.actions.orderUnits).toHaveBeenCalledWith([distinct.miners[1].id], OrderType.Gather, 40, 0);
+    });
     test("each miner's gem orders retain the full 300-tick cooldown", () => {
         const f = fixture(); f.miners[0].isIdle = true;
         f.run(); f.at(300); f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(1);
