@@ -31,8 +31,9 @@ function fixture(difficulty: "normal" | "brutal" = "brutal", dogName = "DOG", hi
         power: { total: 200, drain: 0, isLowPower: false } };
     const starts = [player.startLocation as Vector2, new Vector2(140, 20)];
     const objects = new Map<number, TestUnit>(), visibleEnemies = new Set<number>();
-    const explored = new Set<string>(["20_20", "21_20", "37_3", "44_20", "37_37", "20_44", "3_37", "3_3", "60_20", "48_48", "20_60"]), blocked = new Set<string>();
-    for (const [x, y] of [[60, 20], [48, 48], [20, 60]]) {
+    const explored = new Set<string>(["20_20", "21_20", "37_3", "44_20", "37_37", "20_44", "3_37", "3_3", "60_20", "48_48", "20_60",
+        "57_5", "57_35", "35_57", "5_57"]), blocked = new Set<string>();
+    for (const [x, y] of [[60, 20], [48, 48], [20, 60], [57, 5], [57, 35], [35, 57], [5, 57]]) {
         for (const [dx, dy] of [[6, 0], [-6, 0], [0, 6], [0, -6], [6, 6], [6, -6], [-6, 6], [-6, -6]]) explored.add(`${x + dx}_${y + dy}`);
     }
     const orders: RecordedOrder[] = [], debug = new Map<number, string | undefined>(), passabilityReads: string[] = [], logs: string[] = [];
@@ -274,6 +275,15 @@ describe("T2 scout directions, recruitment and real handoff", () => {
         expect((f.scout() as OpeningScoutingMission).getTotalUnitsReceived()).toBe(2);
         expect(f.missionStep(f.scout(), 3600).type).toBe("disband");
         expect(f.watch(1).getUnitIds()).toEqual([1]); expect(f.watch(2).getUnitIds()).toEqual([2]);
+    });
+    test("the public outer ring covers the angular gap between cardinal and diagonal projections", () => {
+        const f = fixture(); f.explored.delete("57_5"); f.ensure();
+        f.add(1, "DOG", 23); f.add(2, "DOG", 24); f.scout().addUnit(1); f.scout().addUnit(2);
+        f.map.getAllTilesResourceData = () => { throw Error("outer headings cannot inspect hidden ore"); };
+        f.missionStep(f.scout(), 32);
+        expect(f.orders).toContainEqual({ ids: [2], type: OrderType.AttackMove, xOrTarget: 57, y: 5 });
+        expect(f.queueReads()).toBe(0); expect(f.privateReads()).toBe(0);
+        expect((f.scout() as OpeningScoutingMission).getTotalUnitsReceived()).toBe(2);
     });
     test("an explored outer projection center cannot hide its still-opaque mining fringe", () => {
         const f = fixture(); f.explored.delete("66_20"); f.ensure();

@@ -265,7 +265,8 @@ export class OpeningScoutingMission extends Mission {
                 // These are public-start projections, never hidden resource coordinates.
                 const home = game.getPlayerData(player.name).startLocation;
                 this.homeTargets ??= [[0, -24], [17, -17], [24, 0], [17, 17], [0, 24], [-17, 17], [-24, 0], [-17, -17],
-                    [0, -40], [28, -28], [40, 0], [28, 28], [0, 40], [-28, 28], [-40, 0], [-28, -28]]
+                    [0, -40], [15, -37], [28, -28], [37, -15], [40, 0], [37, 15], [28, 28], [15, 37],
+                    [0, 40], [-15, 37], [-28, 28], [-37, 15], [-40, 0], [-37, -15], [-28, -28], [-15, -37]]
                     .map(([dx, dy]) => new PrioritisedScoutTarget(1000, new Vector2(home.x + dx, home.y + dy)));
                 let next = this.homeTargets.shift() ?? matchAwareness.getScoutingManager().getNewScoutTarget();
                 // The first dog reserves its public start; do not send both dogs
