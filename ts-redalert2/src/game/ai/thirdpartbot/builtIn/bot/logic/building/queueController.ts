@@ -454,9 +454,14 @@ export class QueueController {
                 const newItemPriority = decision.priority;
                 // Only cancel if current item is explicitly obsolete/capped (0 priority) and new item is an emergency (>= 80),
                 // or if new item is genuinely more than 2x higher priority than the active request.
-                if (!(difficulty === "brutal" && currentProduction.harvester && decision.unit.name === "DRON" &&
-                    game.getVisibleUnits(playerData.name, "self", rules => rules.harvester).length < 12) &&
-                    (currentItemPriority === 0 ? newItemPriority >= 80 : newItemPriority > currentItemPriority * 2)) {
+                const miners = difficulty === "brutal" && currentProduction.harvester
+                    ? game.getVisibleUnits(playerData.name, "self", rules => rules.harvester).length : 0;
+                const keepPaidMiner = difficulty === "brutal" && currentProduction.harvester && miners < 12 &&
+                    (decision.unit.name === "DRON" || ["HTNK", "MTNK"].includes(decision.unit.name) && newItemPriority < 100 &&
+                        miners < desiredMiners(game, playerData) &&
+                        !readPressure({ game, player: { name: playerData.name }, difficulty }).baseUnderSiege &&
+                        readStrategicSituation(game, playerData).enemy.infantry < 8);
+                if (!keepPaidMiner && (currentItemPriority === 0 ? newItemPriority >= 80 : newItemPriority > currentItemPriority * 2)) {
                     logger(
                         `Dequeueing queue ${queueTypeToName(queueData.type)} unit ${currentProduction.name} because ${
                             decision.unit.name

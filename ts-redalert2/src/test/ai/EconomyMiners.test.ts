@@ -161,6 +161,22 @@ describe("brutal miner capacity and production table", () => {
         if (response === "drone") expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
         else expect(f.actions.unqueueFromProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
     });
+    test.each(["Russians", "Americans"])("%s keeps a needed paid miner during advance warning, not a real emergency", country => {
+        for (const response of ["warning", "siege", "air", "infantry", "capped"]) {
+            const f = fixture(response === "capped" ? 12 : 1, 0, country); f.resources.splice(1);
+            f.enemy(100, response === "siege" ? 22 : 40);
+            if (response === "air") {
+                f.enemy(200, 70, ObjectType.Aircraft); f.requests.set("HTK", { priority: 115, specificLocation: null });
+            }
+            if (response === "infantry") for (let i = 0; i < 8; i++) f.enemy(200 + i, 40, ObjectType.Infantry);
+            const miner = f.options.get(QueueType.Vehicles)![0];
+            Object.assign(f.queues.get(QueueType.Vehicles)!, { status: QueueStatus.Active, items: [{ rules: miner, quantity: 1 }] });
+            expect(desiredMiners(f.game, f.player)).toBe(country === "Russians" ? 3 : 4);
+            f.run();
+            if (response === "warning") expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+            else expect(f.actions.unqueueFromProduction).toHaveBeenCalledWith(QueueType.Vehicles, miner.name, ObjectType.Vehicle, 1);
+        }
+    });
     test("protecting a paid miner does not start an unneeded one or change normal cancellation", () => {
         const idle = fixture(2, 0); idle.resources.splice(1); idle.resources[0].ore = 500;
         idle.options.get(QueueType.Vehicles)!.push({ name: "DRON", cost: 500, type: ObjectType.Vehicle });
