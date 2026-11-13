@@ -153,7 +153,7 @@ export function planDefense(context: SupabotContext, emergency?: { priority: num
     const data = game.getPlayerData(player.name);
     if (state.active && player.production.getQueueData(QueueType.Armory).items[0]?.rules.name === state.active.rules.name) {
         const build = state.active;
-        if (build.signal !== "D0" && player.production.getQueueData(QueueType.Armory).status === QueueStatus.Ready &&
+        if (player.production.getQueueData(QueueType.Armory).status === QueueStatus.Ready &&
             !game.canPlaceBuilding(player.name, build.rules.name, build.location)) {
             // Recover the paid signal's original area, not an unrelated new emergency or home fallback.
             const location = getAdjacencyTiles(game, data, build.rules, false, 0)

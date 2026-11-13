@@ -261,6 +261,37 @@ describe("brutal miner capacity and production table", () => {
         expect(f.priority()).toBe(78);
         expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, country === "Russians" ? "HTNK" : "MTNK", ObjectType.Vehicle, 1);
     });
+    test.each(["Russians", "Americans"])("%s selects its triggered infantry counter ahead of competing income110 or first-drone100, independent of available order", country => {
+        for (const miners of [2, 5]) for (const reverse of [false, true]) {
+            const f = fixture(miners, 0, country); f.at(5400);
+            for (let i = 0; i < 13; i++) f.enemy(100 + i, 80, ObjectType.Infantry);
+            if (country === "Russians") f.options.get(QueueType.Vehicles)!.push({ name: "DRON", type: ObjectType.Vehicle, cost: 500 });
+            if (reverse) f.options.get(QueueType.Vehicles)!.reverse();
+            expect(readPressure(f.context).pressured).toBe(false);
+            f.run();
+            expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, country === "Russians" ? "HTNK" : "MTNK", ObjectType.Vehicle, 1);
+            expect(f.actions.queueForProduction).not.toHaveBeenCalledWith(QueueType.Vehicles, country === "Russians" ? "HARV" : "CMIN", ObjectType.Vehicle, 1);
+            expect(f.actions.queueForProduction).not.toHaveBeenCalledWith(QueueType.Vehicles, "DRON", ObjectType.Vehicle, 1);
+        }
+    });
+    test.each(["miner", "drone"])("the actual infantry counter can defer an already paid competing %s instead of waiting for base siege", kind => {
+        const f = fixture(2, 0); f.at(5400);
+        for (let i = 0; i < 13; i++) f.enemy(100 + i, 80, ObjectType.Infantry);
+        const current = kind === "miner" ? f.options.get(QueueType.Vehicles)![0] : { name: "DRON", type: ObjectType.Vehicle, cost: 500 };
+        if (kind === "drone") f.options.get(QueueType.Vehicles)!.push(current);
+        Object.assign(f.queues.get(QueueType.Vehicles)!, { status: QueueStatus.Active, items: [{ rules: current, quantity: 1 }] });
+        f.run();
+        expect(f.actions.unqueueFromProduction).toHaveBeenCalledWith(QueueType.Vehicles, current.name, ObjectType.Vehicle, 1);
+        Object.assign(f.queues.get(QueueType.Vehicles)!, { status: QueueStatus.Idle, items: [] }); f.at(5402); f.run();
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTNK", ObjectType.Vehicle, 1);
+    });
+    test.each(["below-threshold", "counter-filled", "second-miner", "normal"])("counter precedence preserves the existing %s income policy", condition => {
+        const f = fixture(condition === "second-miner" ? 1 : 2, condition === "counter-filled" ? 3 : 0); f.at(5400);
+        for (let i = 0; i < (condition === "below-threshold" ? 7 : 13); i++) f.enemy(100 + i, 80, ObjectType.Infantry);
+        if (condition === "normal") { f.context.difficulty = "normal"; f.requests.set("HARV", { priority: 110, specificLocation: null }); }
+        f.run();
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
+    });
     test("an approved unpressured miner78 wins actual arbitration over the regular tank85, not only the debug priority", () => {
         const f = fixture(3, 2); f.run();
         expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);

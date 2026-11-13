@@ -212,7 +212,16 @@ export class QueueController {
             if (situation.harvesters >= 2 && situation.enemy.infantry >= 8 &&
                 (situation.own.MTNK ?? 0) + (situation.own.HTNK ?? 0) < Math.min(6, Math.max(2, Math.ceil(situation.enemy.infantry / 6)))) {
                 const tank = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === "MTNK" || option.name === "HTNK");
-                if (tank) requests.set(tank.name, { priority: 100, specificLocation: null });
+                if (tank) {
+                    requests.set(tank.name, { priority: 100, specificLocation: null });
+                    if (requests.get("DRON")?.priority === 100) requests.delete("DRON");
+                    for (const option of productionApi.getAvailableObjects(QueueType.Vehicles)) {
+                        if (option.harvester && requests.get(option.name)?.priority === 110) requests.delete(option.name);
+                    }
+                    if (productionApi.getQueueData(QueueType.Infantry).status === QueueStatus.Idle) {
+                        requests.delete("ENGINEER"); requests.delete("SENGINEER");
+                    }
+                }
             }
             if (situation.harvesters >= 1) {
                 const core = countCoreTanks(situation);

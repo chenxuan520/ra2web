@@ -1,0 +1,59 @@
+import { describe, expect, test } from "bun:test";
+import { ObjectType, SideType, Vector2 } from "../../game/ai/thirdpartbot/builtIn/game-api";
+import { EngineerMission, EngineerMissionFactory } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/engineerMission";
+import { MissionController } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missionController";
+
+function fixture(miners = 1, core = 0, difficulty = "brutal") {
+    let tick = 301, ownReads = 0;
+    const objects: any[] = [], visible = new Set<number>();
+    const player = { name: "bot", startLocation: new Vector2(), country: { name: "Russians", side: SideType.Nod } };
+    const add = (id: number, name: string, owner = "bot", extra = {}) => {
+        const unit = { id, name, owner, tile: { rx: id, ry: 0 }, rules: { name,
+            type: ["HARV", "HTNK"].includes(name) ? ObjectType.Vehicle : ObjectType.Building,
+            harvester: name === "HARV", ...extra } };
+        objects.push(unit); visible.add(id); return unit;
+    };
+    for (let i = 0; i < miners; i++) add(i + 1, "HARV");
+    for (let i = 0; i < core; i++) add(i + 100, "HTNK");
+    for (let i = 0; i < 3; i++) add(i + 1000, "CAOILD", "neutral", { capturable: true, produceCashAmount: 20 });
+    const game: any = { getCurrentTick: () => tick,
+        getPlayerData(name: string) { if (name !== player.name) throw Error("private player read"); return player; },
+        getVisibleUnits(name: string, relation: string, predicate = (_rules: any) => true) {
+            if (name !== player.name) throw Error("foreign shroud read");
+            if (relation === "self") ownReads++;
+            return objects.filter(unit => visible.has(unit.id) && (relation === "self" ? unit.owner === name : unit.owner === "neutral") && predicate(unit.rules)).map(unit => unit.id);
+        },
+        getGameObjectData(id: number) { if (!visible.has(id)) throw Error("hidden object read"); return objects.find(unit => unit.id === id); },
+    };
+    const context: any = { difficulty, game, player: { name: player.name } };
+    const controller = new MissionController(() => {}), factory = new EngineerMissionFactory();
+    return { game, context, controller, objects, visible, add,
+        at(value: number) { tick = value; }, run() { factory.maybeCreateMissions(context, controller, () => {}); }, ownReads: () => ownReads };
+}
+
+describe("opening neutral-capture budget", () => {
+    test.each([[0, 0], [1, 0], [2, 0], [1, 1]])("miners%i/core%i preserves the first capture but not three simultaneous priority100 commitments", (miners, core) => {
+        const f = fixture(miners, core); f.run();
+        const missions = f.controller.getMissions() as EngineerMission[];
+        expect(missions).toHaveLength(1); expect(missions[0].targetId).toBe(1000); expect(missions[0].getPriority()).toBe(100);
+        f.at(602); f.run(); expect(f.controller.getMissions()).toHaveLength(1);
+    });
+    test("an actually captured cash outpost does not reopen the early commitment after its engineer is consumed", () => {
+        const f = fixture(); f.add(500, "CAOILD", "bot", { capturable: true, produceCashAmount: 20 });
+        f.run(); expect(f.controller.getMissions()).toEqual([]);
+    });
+    test("two real miners and one real core tank release the original additional capture missions", () => {
+        const f = fixture(); f.run(); f.add(2, "HARV"); f.add(100, "HTNK"); f.at(602); f.run();
+        expect(f.controller.getMissions()).toHaveLength(3);
+        expect(f.controller.getMissions().every(mission => mission.getPriority() === 100)).toBe(true);
+    });
+    test("a normal bot retains all original capture missions without new own-inventory checks", () => {
+        const f = fixture(1, 0, "normal"); f.run();
+        expect(f.controller.getMissions()).toHaveLength(3); expect(f.ownReads()).toBe(0);
+    });
+    test("a hidden tech building cannot create a capture commitment", () => {
+        const f = fixture(); f.visible.delete(1000);
+        Object.defineProperty(f.objects.find(unit => unit.id === 1000), "rules", { get() { throw Error("hidden tech rules"); } });
+        f.run(); expect((f.controller.getMissions()[0] as EngineerMission).targetId).toBe(1001);
+    });
+});
