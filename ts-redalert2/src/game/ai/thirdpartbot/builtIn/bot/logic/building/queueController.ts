@@ -155,10 +155,8 @@ export class QueueController {
                 game.getVisibleUnits(player.name, "self", rules => rules.harvester).length >= 3 &&
                 game.getVisibleUnits(player.name, "self", rules => rules.harvester).length >= minerTarget - 1 &&
                 !productionApi.getQueueData(QueueType.Vehicles).items.some(item => item.rules.name === option.name) &&
-                (productionApi.getQueueData(QueueType.Structures).items.some(item =>
-                    item.rules.refinery && item.rules.freeUnit === option.name) ||
-                 productionApi.getAvailableObjects(QueueType.Structures).some(rules =>
-                    rules.refinery && rules.freeUnit === option.name && (requests.get(rules.name)?.priority ?? 0) > 0))) continue;
+                productionApi.getQueueData(QueueType.Structures).items.some(item =>
+                    item.rules.refinery && item.rules.freeUnit === option.name)) continue;
             let priority = logic.getPriority(game, playerData, option, threatCache, context.difficulty);
             if (context.difficulty === "brutal") {
                 const miners = game.getVisibleUnits(player.name, "self", rules => rules.harvester).length;

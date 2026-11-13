@@ -146,18 +146,18 @@ describe("AI production economy", () => {
         expect(s.requests.has("CMIN")).toBe(false);
     });
 
-    test("a planned refinery's supplied miner leaves armor available once three miners exist", () => {
+    test("a requested-only refinery does not suppress the next needed paid miner", () => {
         const s = productionScenario(3000, "brutal");
         s.owned.push({ name: "NAREFN", refinery: true }, ...Array.from({ length: 3 }, () => ({ name: "HARV", harvester: true })), { name: "HTNK" }, { name: "HTNK" });
         Object.assign(s.request(QueueType.Structures, "NAREFN", 50, 2000), { refinery: true, freeUnit: "HARV" });
         s.request(QueueType.Vehicles, "HTNK", 75, 900);
         s.available.get(QueueType.Vehicles)!.push({ name: "HARV", cost: 1400, type: ObjectType.Vehicle, harvester: true });
         s.run();
-        expect(s.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTNK", ObjectType.Vehicle, 1);
-        expect(s.actions.queueForProduction).not.toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
+        expect(s.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
+        expect(s.actions.queueForProduction).not.toHaveBeenCalledWith(QueueType.Vehicles, "HTNK", ObjectType.Vehicle, 1);
     });
 
-    test("allied armor can continue with four miners while a refinery supplies the fifth miner", () => {
+    test("allied factory income does not wait for the fifth miner from an unstarted refinery", () => {
         const s = productionScenario(3000, "brutal");
         s.country("Americans");
         s.owned.push({ name: "GAREFN", refinery: true }, ...Array.from({ length: 4 }, () => ({ name: "CMIN", harvester: true })), { name: "MTNK" }, { name: "MTNK" });
@@ -165,7 +165,7 @@ describe("AI production economy", () => {
         s.request(QueueType.Vehicles, "MTNK", 75, 700);
         s.available.get(QueueType.Vehicles)!.push({ name: "CMIN", cost: 1400, type: ObjectType.Vehicle, harvester: true });
         s.run();
-        expect(s.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "MTNK", ObjectType.Vehicle, 1);
+        expect(s.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "CMIN", ObjectType.Vehicle, 1);
     });
 
     test("an active refinery with a supplied miner avoids a duplicate once three miners exist", () => {
