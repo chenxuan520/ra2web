@@ -70,7 +70,10 @@ describe("paid drone production and public own lifecycle", () => {
     test.each([
         { built: 0, miners: 1, core: 0, enemy: false, priority: 100 },
         { built: 1, miners: 2, core: 0, enemy: false, priority: 0 },
-        { built: 1, miners: 3, core: 0, enemy: false, priority: 105 },
+        { built: 1, miners: 3, core: 0, enemy: false, priority: 0 },
+        { built: 1, miners: 3, core: 3, enemy: true, priority: 0 },
+        { built: 1, miners: 3, core: 4, enemy: false, priority: 0 },
+        { built: 1, miners: 3, core: 4, enemy: true, priority: 60 },
         { built: 2, miners: 3, core: 3, enemy: true, priority: 0 },
         { built: 2, miners: 3, core: 4, enemy: false, priority: 0 },
         { built: 2, miners: 3, core: 4, enemy: true, priority: 60 },
@@ -122,8 +125,8 @@ describe("paid drone production and public own lifecycle", () => {
         f.hidden.add(drone.id); observeDroneProductionEvent(f.game, f.player.name, { type: ApiEventType.ObjectSpawn, target: drone.id });
         expect(getDroneProductionState(f.game, f.player.name).built).toBe(0);
     });
-    test("enemy-miner evidence expires at 1800 simulation ticks", () => {
-        const f = fixture(); f.destroy(f.spawnDrone().id); f.destroy(f.spawnDrone().id);
+    test.each([1, 2])("enemy-miner evidence for produced count%i expires at 1800 simulation ticks", built => {
+        const f = fixture(); for (let i = 0; i < built; i++) f.destroy(f.spawnDrone().id);
         const miner = f.add("HARV", "enemy", 80); expect(getDronePriority(f.context)).toBe(60); f.objects.delete(miner.id);
         f.at(1899); expect(getDronePriority(f.context)).toBe(60);
         f.at(1900); expect(getDronePriority(f.context)).toBe(0);
