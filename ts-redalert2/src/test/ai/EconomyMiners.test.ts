@@ -133,6 +133,35 @@ describe("brutal miner capacity and production table", () => {
             expect(f.priority()).toBe(miners < 3 ? 110 : miners < 7 ? 78 : 0);
         }
     });
+    test.each([
+        [3, 0, "new", 110], [4, 0, "new", 110], [5, 3, "new", 78], [6, 4, "new", 78], [7, 6, "new", 0],
+        [3, 2, "duplicate", 0], [4, 0, "cancelled", 0], [4, 0, "hidden", 0], [3, 0, "pressure", 0],
+    ] as const)("paid refinery capacity miners=%i core=%i %s gives factory priority%i with only one supplied-miner reservation", (miners, core, condition, expected) => {
+        const f = fixture(miners, core);
+        f.units.splice(f.units.findIndex(unit => unit.name === "NAREFN" && unit.tile.rx === 25), 1);
+        f.resources[1].tile.rx = 45;
+        const refinery = { name: "NAREFN", refinery: true, freeUnit: "HARV", cost: 2000, type: ObjectType.Building, adjacent: 100 };
+        f.options.set(QueueType.Structures, [refinery]);
+        f.requests.set(refinery.name, { priority: 50, specificLocation: new Vector2(condition === "duplicate" ? 5 : 44, 0) });
+        f.game.getBuildingPlacementData = () => ({ foundation: { width: 1, height: 1 } });
+        f.game.canPlaceBuilding = () => true;
+        f.game.mapApi.getTilesInRect = () => [{ id: "44_0", rx: 44, ry: 0 }];
+        f.run();
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Structures, refinery.name, ObjectType.Building, 1);
+        Object.assign(f.queues.get(QueueType.Structures)!, { status: QueueStatus.Active, items: [{ rules: refinery, quantity: 1 }] });
+        Object.assign(f.queues.get(QueueType.Vehicles)!, { status: QueueStatus.Active, items: [{ rules: f.options.get(QueueType.Vehicles)![1], quantity: 1 }] });
+        if (condition === "cancelled") { f.queues.get(QueueType.Structures)!.items = []; f.requests.delete(refinery.name); }
+        if (condition === "hidden") {
+            f.game.mapApi.isVisibleTile = (tile: any) => tile.rx !== 45;
+            Object.defineProperty(f.resources[1], "ore", { get() { throw Error("unseen future income cannot be counted"); } });
+        }
+        if (condition === "pressure") f.enemy(100, 22);
+        f.at(2700);
+        expect(desiredMiners(f.game, f.player)).toBe(4);
+        expect(f.priority()).toBe(expected);
+        if (expected === 110) expect(f.actions.unqueueFromProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTNK", ObjectType.Vehicle, 1);
+        else expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+    });
     test("the authorized one-core factor applies even ahead of the visible miner peak or under pressure", () => {
         for (const [miners, core, expected] of [[4, 2, 78], [5, 3, 78], [5, 2, 0]]) {
             const f = fixture(miners, core);

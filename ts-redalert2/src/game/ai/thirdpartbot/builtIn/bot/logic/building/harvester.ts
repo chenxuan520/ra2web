@@ -12,10 +12,11 @@ export function patchCapacity(patch: Pick<OrePatch, "value">, chrono: boolean): 
     return patch.value >= 6000 ? (chrono ? 5 : 4) : patch.value >= 3000 ? 2 : 1;
 }
 
-export function desiredMiners(game: GameApi, playerData: PlayerData): number {
+export function desiredMiners(game: GameApi, playerData: PlayerData, futureRefinery?: PatchPoint): number {
     const refineries = game.getVisibleUnits(playerData.name, "self", rules => rules.refinery)
         .map(id => game.getGameObjectData(id)?.tile).filter((tile): tile is PatchPoint => !!tile);
     if (!refineries.length) return 0;
+    if (futureRefinery) refineries.push(futureRefinery);
     const chrono = game.getVisibleUnits(playerData.name, "self", rules => rules.name === "CMIN").length > 0 ||
         ["Americans", "Alliance", "French", "Germans", "British"].includes(playerData.country?.name);
     const capacity = findVisiblePatches(game, playerData.name).filter(patch => isServed(patch, refineries))

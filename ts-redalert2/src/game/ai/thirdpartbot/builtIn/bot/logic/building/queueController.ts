@@ -139,12 +139,21 @@ export class QueueController {
         if (crawl && crawl.priority > (requests.get(crawl.rules.name)?.priority ?? 0)) {
             requests.set(crawl.rules.name, { priority: crawl.priority, specificLocation: new Vector2(crawl.location.rx, crawl.location.ry) });
         }
+        const currentMinerTarget = context.difficulty === "brutal" ? desiredMiners(game, playerData) : 0;
+        const queuedRefinery = productionApi.getQueueData(QueueType.Structures).items[0]?.rules;
+        const futureRefinery = context.difficulty === "brutal" && queuedRefinery?.refinery &&
+            ["HARV", "CMIN"].includes(queuedRefinery.freeUnit) && this.refineryLocation?.name === queuedRefinery.name
+            ? { rx: this.refineryLocation.location.x, ry: this.refineryLocation.location.y } : undefined;
+        const futureMinerTarget = futureRefinery ? desiredMiners(game, playerData, futureRefinery) : 0;
+        // A real paid expansion reserves its one supplied miner, not the rest of its visible field's capacity.
+        const minerTarget = Math.max(currentMinerTarget, futureMinerTarget - 1);
         for (const option of productionApi.getAvailableObjects(QueueType.Vehicles)) {
             if (!option.harvester) continue;
             const logic = BUILDING_NAME_TO_RULES.get(option.name);
             if (!logic) continue;
-            if (context.difficulty === "brutal" && game.getVisibleUnits(player.name, "self", rules => rules.harvester).length >= 3 &&
-                game.getVisibleUnits(player.name, "self", rules => rules.harvester).length >= desiredMiners(game, playerData) - 1 &&
+            if (context.difficulty === "brutal" && futureMinerTarget <= currentMinerTarget &&
+                game.getVisibleUnits(player.name, "self", rules => rules.harvester).length >= 3 &&
+                game.getVisibleUnits(player.name, "self", rules => rules.harvester).length >= minerTarget - 1 &&
                 !productionApi.getQueueData(QueueType.Vehicles).items.some(item => item.rules.name === option.name) &&
                 (productionApi.getQueueData(QueueType.Structures).items.some(item =>
                     item.rules.refinery && item.rules.freeUnit === option.name) ||
@@ -153,7 +162,7 @@ export class QueueController {
             let priority = logic.getPriority(game, playerData, option, threatCache, context.difficulty);
             if (context.difficulty === "brutal") {
                 const miners = game.getVisibleUnits(player.name, "self", rules => rules.harvester).length;
-                const desired = desiredMiners(game, playerData);
+                const desired = minerTarget;
                 const situation = readStrategicSituation(game, playerData);
                 const core = countCoreTanks(situation);
                 const pressure = readPressure(context);
@@ -301,6 +310,7 @@ export class QueueController {
                 context.difficulty === "brutal" && decision.queue === QueueType.Structures && !!decision.topItem?.unit.refinery &&
                     !!buildingLocation && !readPressure(context).pressured && game.canPlaceBuilding(player.name, decision.topItem.unit.name,
                         { rx: buildingLocation.x, ry: buildingLocation.y }),
+                minerTarget,
             );
         });
 
@@ -357,6 +367,7 @@ export class QueueController {
         difficulty?: "normal" | "brutal",
         requestedCrawl = false,
         requestedRefinery = false,
+        minerTarget = 0,
     ): void {
         const myCredits = playerData.credits;
         // With five or six queues, every queue can fall below 25%. Always
@@ -377,7 +388,7 @@ export class QueueController {
             decision?.unit.harvester && decision.priority === 110 && ["HTNK", "MTNK", "DRON"].includes(currentItem.rules.name) &&
             (unitTypeRequests.get(currentItem.rules.name)?.priority ?? 0) < 100 &&
             readPressure({ game, player: { name: playerData.name }, difficulty }).homeQuiet &&
-            game.getVisibleUnits(playerData.name, "self", rules => rules.harvester).length < Math.min(5, desiredMiners(game, playerData))) {
+            game.getVisibleUnits(playerData.name, "self", rules => rules.harvester).length < Math.min(5, minerTarget)) {
             logger(`Replacing ordinary ${currentItem.rules.name} with needed early income in queue ${queueTypeToName(queueType)}`);
             actionsApi.unqueueFromProduction(queueType, currentItem.rules.name, currentItem.rules.type, currentItem.quantity);
             return;
@@ -469,7 +480,7 @@ export class QueueController {
                     ? game.getVisibleUnits(playerData.name, "self", rules => rules.harvester).length : 0;
                 const keepPaidMiner = difficulty === "brutal" && currentProduction.harvester && miners < 12 &&
                     (decision.unit.name === "DRON" || ["HTNK", "MTNK"].includes(decision.unit.name) && newItemPriority < 100 &&
-                        miners < desiredMiners(game, playerData) &&
+                        miners < minerTarget &&
                         !readPressure({ game, player: { name: playerData.name }, difficulty }).baseUnderSiege &&
                         readStrategicSituation(game, playerData).enemy.infantry < 8);
                 if (!keepPaidMiner && (currentItemPriority === 0 ? newItemPriority >= 80 : newItemPriority > currentItemPriority * 2)) {
