@@ -1,5 +1,6 @@
 import { GameApi, ObjectType, PlayerData, SpeedType, TechnoRules, Tile, ZoneType } from "../../../game-api";
 import { getAdjacencyTiles } from "./buildingRules";
+import { findVisiblePatches, patchDistance, ScoredPatch, scorePatch } from "../common/orePatches";
 
 /** FactoryTrait drives vehicles along the foundation's middle row toward +rx. */
 export function hasClearWarFactoryExit(game: GameApi, player: PlayerData, origin: Tile, width: number, height: number): boolean {
@@ -38,4 +39,29 @@ export function getCompactFirstFactoryPlacement(game: GameApi, player: PlayerDat
             ((b.rx - conyard.rx) ** 2 + (b.ry - conyard.ry) ** 2) || a.rx - b.rx || a.ry - b.ry);
     return candidates.find(tile => game.canPlaceBuilding(player.name, rules.name, tile) &&
         hasClearWarFactoryExit(game, player, tile, foundation.width, foundation.height));
+}
+
+/** Place the required first factory as an adjacency step toward a known unserved field. */
+export function getEconomicFirstFactoryPlacement(game: GameApi, player: PlayerData, rules: TechnoRules): Tile | undefined {
+    if (!["GAWEAP", "NAWEAP"].includes(rules.name) || game.getVisibleUnits(player.name, "self",
+        owned => owned.name === "GAWEAP" || owned.name === "NAWEAP").length > 0) return undefined;
+    const anchors = game.getVisibleUnits(player.name, "self", owned => owned.type === ObjectType.Building && owned.baseNormal && !owned.wall)
+        .map(id => game.getGameObjectData(id)?.tile).filter((tile): tile is Tile => !!tile);
+    const foundation = (game.getBuildingPlacementData(rules.name) as any)?.foundation;
+    if (!anchors.length || !foundation?.width || !foundation?.height) return undefined;
+    const fields = findVisiblePatches(game, player.name).map(patch => scorePatch(game, player, patch))
+        .filter((entry): entry is ScoredPatch => !!entry)
+        .sort((a, b) => b.score - a.score || a.g - b.g || (a.patch.id < b.patch.id ? -1 : a.patch.id > b.patch.id ? 1 : 0));
+    for (const entry of fields) {
+        const g = Math.min(...anchors.map(tile => patchDistance(tile, entry.patch)));
+        if (g > 40) continue;
+        for (const spacing of [2, 1, 0]) {
+            const candidates = getAdjacencyTiles(game, player, rules, false, spacing)
+                .sort((a, b) => patchDistance(a, entry.patch) - patchDistance(b, entry.patch) || a.rx - b.rx || a.ry - b.ry);
+            const location = candidates.find(tile => patchDistance(tile, entry.patch) < g &&
+                game.canPlaceBuilding(player.name, rules.name, tile) && hasClearWarFactoryExit(game, player, tile, foundation.width, foundation.height));
+            if (location) return location;
+        }
+    }
+    return undefined;
 }

@@ -10,11 +10,12 @@ import {
 } from "../../building/buildingRules";
 import { queueTypeToName } from "../../building/queueController";
 import { getGrandCannonPlacement, getStrategicBuildingPriority } from "../../building/strategicBuildings";
-import { getCompactFirstFactoryPlacement } from "../../building/firstFactoryPlacement";
+import { getCompactFirstFactoryPlacement, getEconomicFirstFactoryPlacement } from "../../building/firstFactoryPlacement";
 import { getEconomyBuildingPriority } from "../../building/economyPlan";
 import { getCommittedRefineryLocation, noteMinerRefineryRequest, planMinerRefinery } from "../../building/refineryEconomy";
 import { planRefinery, RefineryPlan } from "../../building/resourceCollectionBuilding";
 import { getDefenseState } from "../../building/defensePlan";
+import { isPressured } from "../../common/pressure";
 
 // Legacy mission encompassing the old "build queue" logic.
 export class BaseBuildingMission extends Mission {
@@ -150,6 +151,10 @@ export class BaseBuildingMission extends Mission {
             if (game.getVisibleUnits(playerData.name, "self", rules => rules.refinery).length > 0) return undefined;
             // The first-refinery fallback below is the historical nearest-visible-ore placement.
             difficulty = "normal";
+        }
+        if (difficulty === "brutal" && context && ["GAWEAP", "NAWEAP"].includes(objectReady.name) && !isPressured(context)) {
+            const location = getEconomicFirstFactoryPlacement(game, playerData, objectReady);
+            if (location) return location;
         }
         if (difficulty === "brutal" && objectReady.name === "GTGCAN") {
             return getGrandCannonPlacement(game, playerData, objectReady);
