@@ -165,7 +165,8 @@ export class MinerDefence {
                         a.tile.rx - b.tile.rx || a.tile.ry - b.tile.ry
                     ).find(resource => {
                         const patch = patchByTile.get(tileKey(resource.tile))!;
-                        return counts.get(patch.id)! < patchCapacity(patch, chrono) && game.mapApi.findPath(m.rules.speedType,
+                        const capacity = isServed(patch, refineries.map(ref => ref.tile)) ? patchCapacity(patch, chrono) : 1;
+                        return counts.get(patch.id)! - Number(assignments.get(m.id)?.id === patch.id) < capacity && game.mapApi.findPath(m.rules.speedType,
                             { tile: m.tile, onBridge: !!m.onBridge }, { tile: resource.tile, onBridge: false },
                             { bestEffort: false, maxExpandedNodes: 256 }).some(node =>
                                 node.tile.rx === resource.tile.rx && node.tile.ry === resource.tile.ry);

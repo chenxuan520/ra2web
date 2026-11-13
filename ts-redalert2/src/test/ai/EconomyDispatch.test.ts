@@ -69,9 +69,21 @@ describe("unload-aware gem dispatch", () => {
         f.run(); expect(f.actions.orderUnits).not.toHaveBeenCalled();
     });
     test("three transit reservations prevent a fourth miner being dispatched before arrivals", () => {
-        const f = fixture(); f.miners[0].isIdle = true; for (let i = 0; i < 3; i++) f.miner(4, true);
+        const f = fixture(); f.refinery(18); f.miners[0].isIdle = true; for (let i = 0; i < 3; i++) f.miner(4, true);
         f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(3);
         f.at(60); f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(3);
+    });
+    test("an unserved gem field takes one paid scout miner, then fills normal capacity after a refinery serves it", () => {
+        const f = fixture(); f.miners[0].isIdle = true; f.miner(4, true); f.miner(4, true);
+        f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(1);
+        f.at(60); f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(1);
+        f.refinery(18); f.at(90); f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(3);
+    });
+    test("a miner already counted beside an unserved gem field reuses its own slot without admitting another", () => {
+        const f = fixture(); f.miners[0].tile.rx = 19; f.miners[0].isIdle = true; f.miner(4, true);
+        f.run();
+        expect(f.actions.orderUnits).toHaveBeenCalledTimes(1);
+        expect(f.actions.orderUnits).toHaveBeenCalledWith([f.miners[0].id], OrderType.Gather, 20, 0);
     });
     test("each miner's gem orders retain the full 300-tick cooldown", () => {
         const f = fixture(); f.miners[0].isIdle = true;
