@@ -157,10 +157,10 @@ describe("AI production economy", () => {
         expect(s.actions.queueForProduction).not.toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
     });
 
-    test("allied armor can continue with three miners while a refinery supplies another miner", () => {
+    test("allied armor can continue with four miners while a refinery supplies the fifth miner", () => {
         const s = productionScenario(3000, "brutal");
         s.country("Americans");
-        s.owned.push({ name: "GAREFN", refinery: true }, ...Array.from({ length: 3 }, () => ({ name: "CMIN", harvester: true })), { name: "MTNK" });
+        s.owned.push({ name: "GAREFN", refinery: true }, ...Array.from({ length: 4 }, () => ({ name: "CMIN", harvester: true })), { name: "MTNK" }, { name: "MTNK" });
         Object.assign(s.request(QueueType.Structures, "GAREFN", 50, 2000), { refinery: true, freeUnit: "CMIN" });
         s.request(QueueType.Vehicles, "MTNK", 75, 700);
         s.available.get(QueueType.Vehicles)!.push({ name: "CMIN", cost: 1400, type: ObjectType.Vehicle, harvester: true });

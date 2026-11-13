@@ -75,19 +75,19 @@ function onlyEconomy(run: () => void) {
 }
 
 describe("brutal miner capacity and production table", () => {
-    test.each([[2999, 1], [3000, 2], [5999, 2], [6000, 3]])("value %i has ordinary capacity %i", (value, expected) => {
+    test.each([[2999, 1], [3000, 2], [5999, 2], [6000, 4]])("value %i has ordinary capacity %i", (value, expected) => {
         expect(patchCapacity({ value } as any, false)).toBe(expected);
     });
-    test("chrono miners get four only in the richest band", () => {
-        expect(patchCapacity({ value: 6000 } as any, true)).toBe(4);
+    test("chrono miners get five only in the richest band", () => {
+        expect(patchCapacity({ value: 6000 } as any, true)).toBe(5);
         expect(patchCapacity({ value: 5999 } as any, true)).toBe(2);
     });
     test("sums only visible served patches, floors a refinery at two and caps at twelve", () => {
         const f = fixture();
-        expect(desiredMiners(f.game, f.player)).toBe(6);
+        expect(desiredMiners(f.game, f.player)).toBe(8);
         f.resources.push({ tile: { rx: 100, ry: 0 }, ore: 800, gems: 0, spawnsOre: false });
         f.game.mapApi.isVisibleTile = (tile: any) => tile.rx !== 100;
-        expect(desiredMiners(f.game, f.player)).toBe(6);
+        expect(desiredMiners(f.game, f.player)).toBe(8);
         for (const rx of [45, 65, 85]) {
             f.own("NAREFN", rx); f.resources.push({ tile: { rx, ry: 0 }, ore: 800, gems: 0, spawnsOre: false });
         }
@@ -106,7 +106,7 @@ describe("brutal miner capacity and production table", () => {
         expect(logic.getMaxCount(f.game, f.player, {} as any, null, "normal")).toBe(10);
         expect(logic.getMaxCount(f.game, f.player, {} as any, null, "brutal")).toBe(12);
     });
-    test.each([[0, 0, 120], [1, 0, 110], [2, 0, 110], [3, 0, 0], [3, 1, 78], [3, 2, 78], [4, 1, 0], [4, 2, 78], [4, 3, 78], [4, 4, 78], [5, 2, 0], [5, 3, 78], [6, 20, 0]])(
+    test.each([[0, 0, 120], [1, 0, 110], [2, 0, 110], [3, 0, 0], [3, 1, 78], [3, 2, 78], [4, 1, 0], [4, 2, 78], [4, 3, 78], [4, 4, 78], [5, 2, 0], [5, 3, 78], [6, 3, 0], [6, 4, 78], [8, 20, 0]])(
         "without pressure miners=%i core=%i gives priority %i", (miners, core, expected) => {
             expect(fixture(miners, core).priority()).toBe(expected);
         });
@@ -123,13 +123,13 @@ describe("brutal miner capacity and production table", () => {
         const allied = fixture(1, 1, "Americans"); allied.enemy(100, 22);
         expect(allied.priority()).toBe(90);
     });
-    test.each([1, 2, 3, 5])("a requested/active supplied refinery reserves only its one future miner (miners=%i)", miners => {
+    test.each([1, 2, 3, 5, 7])("a requested/active supplied refinery reserves only its one future miner (miners=%i)", miners => {
         for (const active of [false, true]) {
-            const f = fixture(miners, 4);
+            const f = fixture(miners, 6);
             const refinery = { name: "NAREFN", refinery: true, freeUnit: "HARV", cost: 2000, type: ObjectType.Building };
             f.options.set(QueueType.Structures, [refinery]); f.requests.set("NAREFN", { priority: 50, specificLocation: null });
             if (active) Object.assign(f.queues.get(QueueType.Structures)!, { status: QueueStatus.Active, items: [{ rules: refinery, quantity: 1 }] });
-            expect(f.priority()).toBe(miners < 3 ? 110 : miners === 3 ? 78 : 0);
+            expect(f.priority()).toBe(miners < 3 ? 110 : miners < 7 ? 78 : 0);
         }
     });
     test("the authorized one-core factor applies even ahead of the visible miner peak or under pressure", () => {
@@ -141,6 +141,14 @@ describe("brutal miner capacity and production table", () => {
             expect(getEconomyPressureLimits(f.context, miners)).toMatchObject({ minerCoreFactor: 1, crawlMiners: 2, extraRefineryCredits: 1000 });
             expect(f.priority()).toBe(expected);
         }
+    });
+    test.each(["Russians", "Americans"])("%s expands the first five miners only in the real quiet-home window", country => {
+        const f = fixture(4, 0, country); f.at(5399); expect(f.priority()).toBe(0);
+        f.at(5400); expect(f.priority()).toBe(110);
+        expect(getEconomyPressureLimits(f.context, 4).minerCoreFactor).toBe(0);
+        f.enemy(100, 60); f.at(5402); expect(f.priority()).toBe(0);
+        f.enemies.length = 0; f.at(8102); expect(f.priority()).toBe(110);
+        f.resources.length = 0; f.at(8192); expect(f.priority()).toBe(0);
     });
     test("an approved unpressured miner78 wins actual arbitration over the regular tank85, not only the debug priority", () => {
         const f = fixture(3, 2); f.run();
@@ -171,7 +179,7 @@ describe("brutal miner capacity and production table", () => {
             if (response === "infantry") for (let i = 0; i < 8; i++) f.enemy(200 + i, 40, ObjectType.Infantry);
             const miner = f.options.get(QueueType.Vehicles)![0];
             Object.assign(f.queues.get(QueueType.Vehicles)!, { status: QueueStatus.Active, items: [{ rules: miner, quantity: 1 }] });
-            expect(desiredMiners(f.game, f.player)).toBe(country === "Russians" ? 3 : 4);
+            expect(desiredMiners(f.game, f.player)).toBe(country === "Russians" ? 4 : 5);
             f.run();
             if (response === "warning") expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
             else expect(f.actions.unqueueFromProduction).toHaveBeenCalledWith(QueueType.Vehicles, miner.name, ObjectType.Vehicle, 1);

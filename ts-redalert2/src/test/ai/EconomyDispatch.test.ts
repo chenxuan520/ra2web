@@ -42,7 +42,7 @@ function balanceFixture() {
     const f = fixture(); f.at(150); f.miners.length = 0; f.refineries.length = 0;
     f.resources.splice(0, f.resources.length, { tile: { rx: 8, ry: 0 }, ore: 8000, gems: 0 }, { tile: { rx: 30, ry: 0 }, ore: 8000, gems: 0 });
     f.refinery(5); f.refinery(25);
-    f.miner(6); for (let i = 0; i < 3; i++) f.miner(8, true); f.miner(28);
+    f.miner(6); for (let i = 0; i < 4; i++) f.miner(8, true); f.miner(28);
     return f;
 }
 
@@ -64,14 +64,14 @@ describe("unload-aware gem dispatch", () => {
             f.run(); expect(f.actions.orderUnits).not.toHaveBeenCalled();
         }
     });
-    test("a capacity-three gem field with three miners cannot receive another", () => {
-        const f = fixture(); for (let i = 0; i < 3; i++) f.miner(20, true);
+    test("a serviced capacity-four gem field with four miners cannot receive another", () => {
+        const f = fixture(); f.refinery(18); for (let i = 0; i < 4; i++) f.miner(20, true);
         f.run(); expect(f.actions.orderUnits).not.toHaveBeenCalled();
     });
-    test("three transit reservations prevent a fourth miner being dispatched before arrivals", () => {
-        const f = fixture(); f.refinery(18); f.miners[0].isIdle = true; for (let i = 0; i < 3; i++) f.miner(4, true);
-        f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(3);
-        f.at(60); f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(3);
+    test("four transit reservations prevent a fifth miner being dispatched before arrivals", () => {
+        const f = fixture(); f.refinery(18); f.miners[0].isIdle = true; for (let i = 0; i < 4; i++) f.miner(4, true);
+        f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(4);
+        f.at(60); f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(4);
     });
     test("an unserved gem field takes one paid scout miner, then fills normal capacity after a refinery serves it", () => {
         const f = fixture(); f.miners[0].isIdle = true; f.miner(4, true); f.miner(4, true);
@@ -114,7 +114,7 @@ describe("unload-aware gem dispatch", () => {
 });
 
 describe("served-field one-miner balancing", () => {
-    test("four miners on capacity three versus one on capacity three moves exactly one at tick 150", () => {
+    test("five miners on capacity four versus one on capacity four moves exactly one at tick 150", () => {
         const f = balanceFixture();
         f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(1);
         expect(f.actions.orderUnits).toHaveBeenCalledWith([f.miners[0].id], OrderType.Gather, 30, 0);
@@ -130,7 +130,7 @@ describe("served-field one-miner balancing", () => {
         for (const reason of ["not-overfull", "not-underfull", "unreachable"]) {
             const f = balanceFixture();
             if (reason === "not-overfull") f.miners.splice(1, 1);
-            if (reason === "not-underfull") { f.miner(30, true); f.miner(30, true); }
+            if (reason === "not-underfull") { f.miner(30, true); f.miner(30, true); f.miner(30, true); }
             if (reason === "unreachable") f.blocked.add("30_0");
             f.run(); expect(f.actions.orderUnits).not.toHaveBeenCalled();
         }

@@ -172,7 +172,7 @@ export class QueueController {
                 } else if (miners === 2 && pressure.pressured && (ecoOnly || core >= 4) && miners < desired) {
                     priority = 78;
                 } else if (miners >= 3 && miners < desired && !pressure.baseUnderSiege && (ecoOnly || core >= coreFactor * (miners - 2))) {
-                    priority = 78;
+                    priority = pressure.passiveEnemy && miners < 5 ? 110 : 78;
                 }
             }
             if (priority > (requests.get(option.name)?.priority ?? 0)) {

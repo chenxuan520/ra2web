@@ -234,7 +234,7 @@ describe("paid subsidy refinery conditions and real lifecycle", () => {
             if (condition === "reachable") {
                 f.resources.push({ tile: { rx: 25, ry: 0 }, ore: 800, gems: 0, spawnsOre: false }); f.legal.add("24_0");
             }
-            if (condition === "full") f.own("HARV", 10);
+            if (condition === "full") { f.own("HARV", 10); f.own("HARV", 10); }
             if (condition === "pressure") f.enemies.push({ id: 999, tile: { rx: 22, ry: 0 }, rules: { isSelectableCombatant: true } });
             if (condition === "building-busy") f.queues.get(QueueType.Structures)!.items.push({ rules: { name: "NAPOWR" }, quantity: 1 });
             if (condition === "vehicle-idle") f.queues.get(QueueType.Vehicles)!.items.length = 0;

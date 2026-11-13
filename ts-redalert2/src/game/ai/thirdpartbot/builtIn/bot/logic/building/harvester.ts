@@ -9,7 +9,7 @@ const IDEAL_HARVESTERS_PER_REFINERY = 2;
 const MAX_HARVESTERS_TOTAL = 12;
 
 export function patchCapacity(patch: Pick<OrePatch, "value">, chrono: boolean): number {
-    return patch.value >= 6000 ? (chrono ? 4 : 3) : patch.value >= 3000 ? 2 : 1;
+    return patch.value >= 6000 ? (chrono ? 5 : 4) : patch.value >= 3000 ? 2 : 1;
 }
 
 export function desiredMiners(game: GameApi, playerData: PlayerData): number {
