@@ -31,7 +31,7 @@ function fixture(difficulty: "normal" | "brutal" = "brutal", dogName = "DOG", hi
         power: { total: 200, drain: 0, isLowPower: false } };
     const starts = [player.startLocation as Vector2, new Vector2(140, 20)];
     const objects = new Map<number, TestUnit>(), visibleEnemies = new Set<number>();
-    const explored = new Set<string>(["20_20", "21_20", "37_3", "44_20", "37_37", "20_44", "3_37", "3_3"]), blocked = new Set<string>();
+    const explored = new Set<string>(["20_20", "21_20", "37_3", "44_20", "37_37", "20_44", "3_37", "3_3", "60_20", "48_48", "20_60"]), blocked = new Set<string>();
     const orders: RecordedOrder[] = [], debug = new Map<number, string | undefined>(), passabilityReads: string[] = [], logs: string[] = [];
     const placementTiles = [tile(24, 20)];
     const queue = [new PrioritisedScoutTarget(800, new Vector2(20, 80))];
@@ -261,6 +261,17 @@ describe("T2 scout directions, recruitment and real handoff", () => {
         expect(f.queueReads()).toBe(0); expect(f.privateReads()).toBe(0);
         expect((f.scout() as OpeningScoutingMission).getTotalUnitsReceived()).toBe(2);
     });
+    test("exhausting nearby home goals does not hand off before an opaque outer home sector is explored", () => {
+        const f = fixture(); f.queue.length = 0; f.explored.add("140_20"); f.explored.delete("60_20"); f.ensure();
+        f.add(1, "DOG", 23); f.add(2, "DOG", 24); f.scout().addUnit(1); f.scout().addUnit(2);
+        f.map.getAllTilesResourceData = () => { throw Error("outer public scout goals cannot inspect hidden resources"); };
+        expect(f.missionStep(f.scout(), 32).type).toBe("noop");
+        expect(f.orders).toContainEqual({ ids: [2], type: OrderType.AttackMove, xOrTarget: 60, y: 20 });
+        expect(f.queueReads()).toBe(0); expect(f.privateReads()).toBe(0);
+        expect((f.scout() as OpeningScoutingMission).getTotalUnitsReceived()).toBe(2);
+        expect(f.missionStep(f.scout(), 3600).type).toBe("disband");
+        expect(f.watch(1).getUnitIds()).toEqual([1]); expect(f.watch(2).getUnitIds()).toEqual([2]);
+    });
     test("an empty old queue does not suppress the first public-start scout", () => {
         const f = fixture(); f.queue.length = 0; f.ensure();
         expect(f.scout()).toBeInstanceOf(OpeningScoutingMission);
@@ -434,7 +445,7 @@ describe("T2 watch-post points and information boundary", () => {
         const f = fixture();
         const known = { tile: tile(20, 40), ore: 0, gems: 400, spawnsOre: false };
         const hidden = { tile: tile(20, 60), ore: 0, gems: 2000, spawnsOre: false };
-        f.resources.push(known, hidden); f.explored.add("20_40");
+        f.resources.push(known, hidden); f.explored.add("20_40"); f.explored.delete("20_60");
         for (const property of ["ore", "gems", "spawnsOre"]) Object.defineProperty(hidden, property, {
             get() { throw new Error("Hidden resource quantity read"); },
         });
