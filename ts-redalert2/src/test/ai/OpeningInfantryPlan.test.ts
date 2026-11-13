@@ -11,15 +11,16 @@ function fixture() {
     const foot: any = { name: 'E2', type: ObjectType.Infantry, strength: 100, isSelectableCombatant: true };
     const units = new Map<number, any>(Array.from({ length: 8 }, (_, i) => [i + 1, { id: i + 1, name: 'E2', owner: 'bot',
         type: ObjectType.Infantry, rules: foot, tile: { rx: 0, ry: 0 }, hitPoints: 100, maxHitPoints: 100, zone: ZoneType.Ground, isIdle: true, canMove: true }]));
+    const enemies = new Map<number, any>();
     units.set(100, { id: 100, name: 'HARV', owner: 'bot', tile: { rx: 0, ry: 0 }, rules: { name: 'HARV', harvester: true } });
     units.set(101, { id: 101, name: 'NAWEAP', owner: 'bot', tile: { rx: 0, ry: 0 }, rules: { name: 'NAWEAP', weaponsFactory: true } });
     const player: any = { name: 'bot', country: { name: 'Russians', side: 1 }, credits: 5000, startLocation: new Vector2() };
     const available = [foot, { name: 'HTNK' }, { name: 'HTK' }];
     const game: any = { getCurrentTick: () => tick, getPlayers: () => ['bot', 'enemy'], areAlliedPlayers: () => false, generateRandomInt: () => 0,
         getPlayerData: (name: string) => name === 'bot' ? player : { name, isCombatant: true },
-        getVisibleUnits: (_: string, relation: string, predicate = (_: any) => true) => relation === 'enemy' ? [] :
-            [...units.values()].filter(unit => predicate(unit.rules)).map(unit => unit.id),
-        getUnitData: (id: number) => units.get(id), getGameObjectData: (id: number) => units.get(id),
+        getVisibleUnits: (_: string, relation: string, predicate = (_: any) => true) =>
+            [...(relation === 'enemy' ? enemies : units).values()].filter(unit => predicate(unit.rules)).map(unit => unit.id),
+        getUnitData: (id: number) => units.get(id) ?? enemies.get(id), getGameObjectData: (id: number) => units.get(id) ?? enemies.get(id),
         rulesApi: { infantryRules: new Map([['E2', foot]]), vehicleRules: new Map(), aircraftRules: new Map(), buildingRules: new Map() },
         mapApi: { getTile: (rx: number, ry: number) => ({ rx, ry }), getStartingLocations: () => [new Vector2(), new Vector2(80, 0)],
             isVisibleTile: () => false, getRealMapSize: () => ({ width: 80, height: 80 }), isPassableTile: () => true } };
@@ -27,7 +28,7 @@ function fixture() {
     const context: any = { difficulty: 'brutal', game, player: { name: 'bot', production: { getAvailableObjects: () => available } },
         matchAwareness: { getMainRallyPoint: () => new Vector2(4, 0), getThreatCache: () => null, getHostilesNearPoint: () => [] } };
     const strategy = new DefaultStrategy();
-    return { units, game, context, controller, player, at(value: number) { tick = value; },
+    return { units, enemies, game, context, controller, player, at(value: number) { tick = value; },
         plan() { return (strategy as any).selectRandomAttackComposition(context, () => {}, controller); } };
 }
 
@@ -50,6 +51,28 @@ describe('bounded paid infantry support during armor assembly', () => {
         const actionBatcher = new ActionBatcher(), result: any = army.onAiUpdate({ ...f.context, actionBatcher });
         expect(result.type).not.toBe('releaseUnits'); expect(army.isAttacking()).toBe(true); expect(result.unitNameToPriority.E2).toBe(95);
         f.at(7000); expect(army.onAiUpdate({ ...f.context, actionBatcher }).type).toBe('releaseUnits');
+    });
+    test.each(['fortified', 'armor', 'air'])('the opening stops paid foot reinforcements when visible %s already prevents its infantry push', counter => {
+        const f = fixture(), plan = f.plan(), army = new FieldArmyMission(plan, f.controller, () => {});
+        f.controller.addMission(army);
+        const type = counter === 'fortified' ? ObjectType.Building : counter === 'armor' ? ObjectType.Vehicle : ObjectType.Aircraft;
+        const count = counter === 'fortified' ? 2 : counter === 'armor' ? 3 : 1;
+        const name = counter === 'fortified' ? 'GAPILL' : counter === 'armor' ? 'MTNK' : 'ORCA';
+        for (let i = 0; i < count; i++) f.enemies.set(1000 + i, { id: 1000 + i, name, owner: 'enemy', type,
+            rules: { name, type, primary: 'weapon', isSelectableCombatant: true }, tile: { rx: 80, ry: i },
+            hitPoints: 500, maxHitPoints: 500, zone: counter === 'air' ? ZoneType.Air : ZoneType.Ground });
+        f.at(3002);
+        const result: any = army.onAiUpdate({ ...f.context, actionBatcher: new ActionBatcher() });
+        expect(result.unitNameToPriority.E2).toBeUndefined();
+        expect(result.unitNameToPriority.HTNK).toBe(75);
+    });
+    test('one tower and two vehicles keep the original viable paid infantry opening', () => {
+        const f = fixture(), army = new FieldArmyMission(f.plan(), f.controller, () => {}); f.controller.addMission(army);
+        for (const [id, type, name] of [[1000, ObjectType.Building, 'GAPILL'], [1001, ObjectType.Vehicle, 'MTNK'], [1002, ObjectType.Vehicle, 'MTNK']] as const)
+            f.enemies.set(id, { id, name, owner: 'enemy', type, rules: { name, type, primary: 'weapon', isSelectableCombatant: true },
+                tile: { rx: 80, ry: 0 }, hitPoints: 500, maxHitPoints: 500, zone: ZoneType.Ground });
+        f.at(3002);
+        expect((army.onAiUpdate({ ...f.context, actionBatcher: new ActionBatcher() }) as any).unitNameToPriority.E2).toBe(95);
     });
     test('no income, normal difficulty and the fixed deadline do not opt into this plan', () => {
         const noIncome = fixture(); noIncome.units.delete(100); expect(noIncome.plan()?.minimumUnits).not.toBe(8);
