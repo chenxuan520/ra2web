@@ -480,7 +480,7 @@ export class QueueController {
                     (decision.unit.name === "DRON" || ["HTNK", "MTNK"].includes(decision.unit.name) && newItemPriority < 100 &&
                         miners < minerTarget &&
                         !readPressure({ game, player: { name: playerData.name }, difficulty }).baseUnderSiege &&
-                        readStrategicSituation(game, playerData).enemy.infantry < 8);
+                        (miners === 1 || readStrategicSituation(game, playerData).enemy.infantry < 8));
                 if (!keepPaidMiner && (currentItemPriority === 0 ? newItemPriority >= 80 : newItemPriority > currentItemPriority * 2)) {
                     logger(
                         `Dequeueing queue ${queueTypeToName(queueData.type)} unit ${currentProduction.name} because ${

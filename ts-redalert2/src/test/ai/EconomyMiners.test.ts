@@ -101,6 +101,42 @@ describe("brutal miner capacity and production table", () => {
         f.units.splice(0, f.units.length);
         expect(desiredMiners(f.game, f.player)).toBe(0);
     });
+    test("a genuinely worked known field can fund miners before its refinery is within nine, without claiming it is served", () => {
+        const f = fixture(1, 0); f.units.splice(f.units.findIndex(unit => unit.name === "NAREFN" && unit.tile.rx === 25), 1);
+        f.resources[1].tile.rx = 45;
+        Object.assign(f.units.find(unit => unit.rules.harvester)!, { tile: { rx: 45, ry: 0 }, harvestedOre: 1 });
+        expect(desiredMiners(f.game, f.player)).toBe(8);
+        f.units.find(unit => unit.rules.harvester)!.tile.rx = 5;
+        f.at(1899); expect(desiredMiners(f.game, f.player)).toBe(8);
+        f.at(1900); expect(desiredMiners(f.game, f.player)).toBe(4);
+    });
+    test.each(["unworked", "empty", "far", "danger", "enemy-half", "hidden", "rollback"])("a %s field cannot add an operating-route miner target", condition => {
+        const f = fixture(1, 0); f.units.splice(f.units.findIndex(unit => unit.name === "NAREFN" && unit.tile.rx === 25), 1);
+        const rx = condition === "far" ? 46 : 45; f.resources[1].tile.rx = rx;
+        Object.assign(f.units.find(unit => unit.rules.harvester)!, { tile: { rx: condition === "unworked" ? 5 : rx, ry: 0 },
+            harvestedOre: condition === "empty" ? 0 : 1 });
+        if (condition === "danger") f.enemy(100, rx);
+        if (condition === "enemy-half") f.game.mapApi.getStartingLocations = () => [f.player.startLocation, new Vector2(70, 0)];
+        if (condition === "hidden") {
+            f.game.mapApi.isVisibleTile = (tile: any) => tile.rx !== rx;
+            Object.defineProperty(f.resources[1], "ore", { get() { throw Error("historical work cannot expose hidden amounts"); } });
+        }
+        if (condition === "rollback") {
+            expect(desiredMiners(f.game, f.player)).toBe(8);
+            f.units.find(unit => unit.rules.harvester)!.tile.rx = 5; f.at(99);
+        }
+        expect(desiredMiners(f.game, f.player)).toBe(4);
+    });
+    test("work memory survives a depleted leading tile but never freezes its old mineral value", () => {
+        const f = fixture(1, 0); f.units.splice(f.units.findIndex(unit => unit.name === "NAREFN" && unit.tile.rx === 25), 1);
+        f.resources[1].tile.rx = 43; f.resources[1].ore = 400;
+        f.resources.push({ tile: { rx: 45, ry: 0 }, ore: 400, gems: 0, spawnsOre: false });
+        Object.assign(f.units.find(unit => unit.rules.harvester)!, { tile: { rx: 43, ry: 0 }, harvestedOre: 1 });
+        expect(desiredMiners(f.game, f.player)).toBe(8);
+        f.resources[1].ore = 0; f.units.find(unit => unit.rules.harvester)!.tile.rx = 5; f.at(190);
+        expect(desiredMiners(f.game, f.player)).toBe(6);
+        f.resources[2].ore = 0; f.at(280); expect(desiredMiners(f.game, f.player)).toBe(4);
+    });
     test("normal priority and ten-miner cap do not inspect patches", () => {
         const f = fixture(3);
         f.game.mapApi.getAllTilesResourceData = () => { throw new Error("normal must not read patches"); };
@@ -245,18 +281,19 @@ describe("brutal miner capacity and production table", () => {
         else expect(f.actions.unqueueFromProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
     });
     test.each(["Russians", "Americans"])("%s keeps a needed paid miner during advance warning, not a real emergency", country => {
-        for (const response of ["warning", "siege", "air", "infantry", "capped"]) {
+        for (const response of ["warning", "siege", "air", "infantry", "counter", "capped"]) {
             const f = fixture(response === "capped" ? 12 : 1, 0, country); f.resources.splice(1);
             f.enemy(100, response === "siege" ? 22 : 40);
             if (response === "air") {
                 f.enemy(200, 70, ObjectType.Aircraft); f.requests.set("HTK", { priority: 115, specificLocation: null });
             }
-            if (response === "infantry") for (let i = 0; i < 8; i++) f.enemy(200 + i, 40, ObjectType.Infantry);
+            if (response === "infantry") for (let i = 0; i < 13; i++) f.enemy(200 + i, 40, ObjectType.Infantry);
+            if (response === "counter") f.requests.set(country === "Russians" ? "HTNK" : "MTNK", { priority: 100, specificLocation: null });
             const miner = f.options.get(QueueType.Vehicles)![0];
             Object.assign(f.queues.get(QueueType.Vehicles)!, { status: QueueStatus.Active, items: [{ rules: miner, quantity: 1 }] });
             expect(desiredMiners(f.game, f.player)).toBe(country === "Russians" ? 4 : 5);
             f.run();
-            if (response === "warning") expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+            if (response === "warning" || response === "infantry") expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
             else expect(f.actions.unqueueFromProduction).toHaveBeenCalledWith(QueueType.Vehicles, miner.name, ObjectType.Vehicle, 1);
         }
     });

@@ -85,6 +85,28 @@ describe("brutal refinery investment", () => {
         expect(f.priority(true)).toBe(50);
         const blocked = fixture(3); blocked.legal.clear(); expect(blocked.priority()).toBe(0);
     });
+    test("two miners can incrementally fund a reachable rich second field only in the quiet window", () => {
+        const f = fixture(2); f.player.credits = 1; f.at(2700);
+        expect(f.priority()).toBe(50);
+        const plan: any = new BaseBuildingMission(QueueType.Structures, () => {})._onAiUpdate(f.context);
+        expect(plan).toMatchObject({ type: "buildStructureAtLocation", rulesName: "NAREFN", rx: 24, ry: 0, priority: 50 });
+        new QueueController().onAiUpdate(f.context, null, new Map([[f.rules.name, {
+            priority: plan.priority, specificLocation: new Vector2(plan.rx, plan.ry),
+        }]]), () => {});
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Structures, f.rules.name, ObjectType.Building, 1);
+    });
+    test.each(["before", "one-miner", "cash", "small-field", "contact", "pressure", "hidden"])("quiet two-miner investment still rejects %s", condition => {
+        const f = fixture(condition === "one-miner" ? 1 : 2); f.player.credits = condition === "cash" ? 0 : 1;
+        f.at(condition === "before" ? 2699 : 2700);
+        if (condition === "small-field") f.resources[1].ore = 599;
+        if (condition === "contact" || condition === "pressure") f.enemies.push({ id: 999, tile: { rx: condition === "contact" ? 60 : 22, ry: 0 },
+            rules: { name: "MTNK", type: ObjectType.Vehicle, isSelectableCombatant: true } });
+        if (condition === "hidden") {
+            f.resources.splice(2); f.game.mapApi.isVisibleTile = (tile: any) => tile.rx !== 25;
+            Object.defineProperty(f.resources[1], "ore", { get() { throw Error("quiet investment cannot inspect unseen income"); } });
+        }
+        expect(f.priority()).toBe(0);
+    });
     test("an unserved sole refinery can repair income at a reachable known field without the miner-cap cash deadlock", () => {
         for (const served of [false, true]) {
             const f = fixture(2); f.player.credits = 859;

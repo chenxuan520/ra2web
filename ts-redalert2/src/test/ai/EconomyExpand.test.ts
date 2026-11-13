@@ -261,12 +261,16 @@ describe("quiet existing-MCV relocation instead of long paid crawl", () => {
         const late = mcvFixture(); late.resources[1].ore = 11999;
         expect(planMcvExpansion(late.context, { rx: 0, ry: 0 })).toBeUndefined();
     });
+    test("a far rich ordinary field stays preferable to a poor gem detour after a partial crawl has lowered its anchor distance", () => {
+        const f = quietMcvFixture(); f.resources[1].ore = 6000; f.own("NAPOWR", 20);
+        expect(planMcvExpansion(f.context, { rx: 0, ry: 0 })).toMatchObject({ candidate: { x: 35, y: 0 } });
+    });
     test("a quiet rich field twenty-one from the nearest anchor need not wait for several paid crawl plants", () => {
         const f = quietMcvFixture(26); f.resources[1].ore = 6000;
         expect(planMcvExpansion(f.context, { rx: 0, ry: 0 })).toMatchObject({ candidate: { x: 26, y: 0 } });
     });
     test.each(["tick", "contact", "pressure", "one-miner", "queue", "near", "far", "small-ore", "gem-cost", "hidden", "normal"])("the early relocation rejects %s", reason => {
-        const f = quietMcvFixture(reason === "near" ? 25 : reason === "far" ? 46 : 35);
+        const f = quietMcvFixture(reason === "near" ? 20 : reason === "far" ? 46 : 35);
         if (reason === "tick") f.at(5399);
         if (reason === "contact" || reason === "pressure") f.enemies.push({ id: 999, tile: { rx: reason === "contact" ? 60 : 22, ry: 0 },
             rules: { name: "HTNK", type: ObjectType.Vehicle, isSelectableCombatant: true } });

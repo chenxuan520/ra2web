@@ -374,7 +374,7 @@ export function planMcvExpansion(context: SupabotContext, home: PatchPoint): { p
     const targets = patches.filter(patch => patch.value >= (quietRelocation ? 6000 : 12000) || quietRelocation && patch.isGem && patch.value >= refineryCost)
         .map(patch => scorePatch(game, data, patch))
         .filter((entry): entry is ScoredPatch => !!entry && (quietRelocation ? entry.g <= 40 && (entry.g > 20 ||
-            entry.patch.isGem && patchDistance(home, entry.patch) > 20 || isCrawlBlocked(game, player.name, entry.patch))
+            patchDistance(home, entry.patch) > 20 || isCrawlBlocked(game, player.name, entry.patch))
             : entry.g > 40 || isCrawlBlocked(game, player.name, entry.patch)))
         .sort((a, b) => b.score - a.score || a.g - b.g || (a.patch.id < b.patch.id ? -1 : a.patch.id > b.patch.id ? 1 : 0));
     for (const entry of targets) {

@@ -1,12 +1,14 @@
-import { GameApi, PlayerData, TechnoRules } from "../../../game-api";
+import { GameApi, PlayerData, TechnoRules, UnitData } from "../../../game-api";
 import { GlobalThreat } from "../threat/threat";
 import { BasicGroundUnit } from "./basicGroundUnit";
-import { findVisiblePatches, isServed, OrePatch, PatchPoint } from "../common/orePatches";
+import { findVisiblePatches, isServed, minersOn, OrePatch, patchDistance, PatchPoint, scorePatch } from "../common/orePatches";
 
 const IDEAL_HARVESTERS_PER_REFINERY = 2;
 
 // because refineries also scales based on harvesters, we need a cap
 const MAX_HARVESTERS_TOTAL = 12;
+const workedFieldTiles = new WeakMap<GameApi, Map<string, Map<string, number>>>();
+const WORKED_FIELD_WINDOW = 1800;
 
 export function patchCapacity(patch: Pick<OrePatch, "value">, chrono: boolean): number {
     return patch.value >= 12000 ? (chrono ? 6 : 5) : patch.value >= 6000 ? (chrono ? 5 : 4) : patch.value >= 3000 ? 2 : 1;
@@ -19,8 +21,23 @@ export function desiredMiners(game: GameApi, playerData: PlayerData, futureRefin
     if (futureRefinery) refineries.push(futureRefinery);
     const chrono = game.getVisibleUnits(playerData.name, "self", rules => rules.name === "CMIN").length > 0 ||
         ["Americans", "Alliance", "French", "Germans", "British"].includes(playerData.country?.name);
-    const capacity = findVisiblePatches(game, playerData.name).filter(patch => isServed(patch, refineries))
-        .reduce((sum, patch) => sum + patchCapacity(patch, chrono), 0);
+    const patches = findVisiblePatches(game, playerData.name), tick = game.getCurrentTick();
+    const loadedMiners = game.getVisibleUnits(playerData.name, "self", rules => rules.harvester)
+        .map(id => game.getUnitData(id)).filter((miner): miner is UnitData => !!miner &&
+            ((miner.harvestedOre ?? 0) > 0 || (miner.harvestedGems ?? 0) > 0)).map(miner => miner.tile);
+    let players = workedFieldTiles.get(game);
+    if (!players) { players = new Map(); workedFieldTiles.set(game, players); }
+    const worked = players.get(playerData.name) ?? new Map<string, number>();
+    players.set(playerData.name, worked);
+    const key = (tile: PatchPoint) => `${tile.rx}_${tile.ry}`;
+    for (const [tile, lastWork] of worked) if (tick < lastWork || tick - lastWork >= WORKED_FIELD_WINDOW) worked.delete(tile);
+    for (const patch of patches) if (minersOn(patch, loadedMiners, patches) > 0) {
+        for (const tile of patch.tiles) worked.set(key(tile), tick);
+    }
+    // A real haul route remains usable during unloading; this does not claim refinery service.
+    const capacity = patches.filter(patch => isServed(patch, refineries) ||
+        patch.tiles.some(tile => worked.has(key(tile))) && refineries.some(ref => patchDistance(ref, patch) <= 40) &&
+        !!scorePatch(game, playerData, patch)).reduce((sum, patch) => sum + patchCapacity(patch, chrono), 0);
     return Math.min(MAX_HARVESTERS_TOTAL, Math.max(2, capacity));
 }
 

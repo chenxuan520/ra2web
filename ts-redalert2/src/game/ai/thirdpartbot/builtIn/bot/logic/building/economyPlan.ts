@@ -39,7 +39,8 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
                         return BRUTAL_PARAMS.economy.firstRefineryPriority;
                     }
                 }
-                return committed || factories > 0 && plan.reachable && (s.harvesters >= 3 || s.credits >= 1500)
+                return committed || factories > 0 && plan.reachable && (s.harvesters >= 3 || s.credits >= 1500 ||
+                    pressure.homeQuiet && s.harvesters >= 2 && s.credits > 0 && (plan.patch?.value ?? 0) >= 6000)
                     ? BRUTAL_PARAMS.economy.firstRefineryPriority : minerRefinery();
             }
             if (!committed) {
