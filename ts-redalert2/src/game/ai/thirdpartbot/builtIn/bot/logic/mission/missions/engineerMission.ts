@@ -12,6 +12,7 @@ import { DebugLogger, toPathNode, toVector2 } from "../../common/utils";
 import { computeAdjacentRect, getAdjacentTiles } from "../../common/tileUtils";
 import { MissionContext, SupabotContext } from "../../common/context";
 import { UnitComposition } from "../../../strategy/strategy";
+import { readPressure } from "../../common/pressure";
 
 const CAPTURE_COOLDOWN_TICKS = 30;
 
@@ -153,7 +154,7 @@ export class EngineerMissionFactory {
         this.lastCheckAt = game.getCurrentTick();
         const limitedOpening = context.difficulty === "brutal" &&
             (game.getVisibleUnits(playerData.name, "self", rules => rules.harvester).length < 2 ||
-                game.getVisibleUnits(playerData.name, "self", rules => ["HTNK", "MTNK", "MGTK", "APOC", "SREF"].includes(rules.name)).length < 1);
+                game.getVisibleUnits(playerData.name, "self", rules => ["HTNK", "MTNK", "MGTK", "APOC", "SREF"].includes(rules.name)).length < 1 && !readPressure(context).homeQuiet);
         const ownedOutpost = limitedOpening && game.getVisibleUnits(playerData.name, "self", rules => rules.capturable && rules.produceCashAmount > 0).length > 0;
         const eligibleTechBuildings = game.getVisibleUnits(
             playerData.name,

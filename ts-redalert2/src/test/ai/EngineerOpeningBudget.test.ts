@@ -2,6 +2,7 @@ import { describe, expect, test } from "bun:test";
 import { ObjectType, SideType, Vector2 } from "../../game/ai/thirdpartbot/builtIn/game-api";
 import { EngineerMission, EngineerMissionFactory } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/engineerMission";
 import { MissionController } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missionController";
+import { readPressure } from "../../game/ai/thirdpartbot/builtIn/bot/logic/common/pressure";
 
 function fixture(miners = 1, core = 0, difficulty = "brutal") {
     let tick = 301, ownReads = 0;
@@ -21,10 +22,11 @@ function fixture(miners = 1, core = 0, difficulty = "brutal") {
         getVisibleUnits(name: string, relation: string, predicate = (_rules: any) => true) {
             if (name !== player.name) throw Error("foreign shroud read");
             if (relation === "self") ownReads++;
-            return objects.filter(unit => visible.has(unit.id) && (relation === "self" ? unit.owner === name : unit.owner === "neutral") && predicate(unit.rules)).map(unit => unit.id);
+            return objects.filter(unit => visible.has(unit.id) && (relation === "self" ? unit.owner === name : relation === "hostile" ? unit.owner === "neutral" : unit.owner === "enemy") && predicate(unit.rules)).map(unit => unit.id);
         },
         getGameObjectData(id: number) { if (!visible.has(id)) throw Error("hidden object read"); return objects.find(unit => unit.id === id); },
     };
+    game.getUnitData = (id: number) => game.getGameObjectData(id);
     const context: any = { difficulty, game, player: { name: player.name } };
     const controller = new MissionController(() => {}), factory = new EngineerMissionFactory();
     return { game, context, controller, objects, visible, add,
@@ -41,6 +43,17 @@ describe("opening neutral-capture budget", () => {
     test("an actually captured cash outpost does not reopen the early commitment after its engineer is consumed", () => {
         const f = fixture(); f.add(500, "CAOILD", "bot", { capturable: true, produceCashAmount: 20 });
         f.run(); expect(f.controller.getMissions()).toEqual([]);
+    });
+    test.each(["quiet", "before", "contact", "one-miner"])("two-miner quiet expansion respects the existing %s window rather than always waiting for armor", condition => {
+        const f = fixture(condition === "one-miner" ? 1 : 2, 0); f.at(condition === "before" ? 2699 : 2700);
+        if (condition === "contact") f.add(500, "MTNK", "enemy", { type: ObjectType.Vehicle, isSelectableCombatant: true }).tile.rx = 40;
+        expect(readPressure(f.context).homeQuiet).toBe(condition !== "before" && condition !== "contact");
+        f.run(); expect(f.controller.getMissions()).toHaveLength(condition === "quiet" ? 3 : 1);
+    });
+    test("an actual owned outpost no longer blocks additional captures once two miners have a real quiet home", () => {
+        const f = fixture(2, 0); f.objects.find(unit => unit.id === 1000).owner = "bot"; f.at(2700);
+        expect(readPressure(f.context).homeQuiet).toBe(true);
+        f.run(); expect(f.controller.getMissions()).toHaveLength(2);
     });
     test("two real miners and one real core tank release the original additional capture missions", () => {
         const f = fixture(); f.run(); f.add(2, "HARV"); f.add(100, "HTNK"); f.at(602); f.run();
