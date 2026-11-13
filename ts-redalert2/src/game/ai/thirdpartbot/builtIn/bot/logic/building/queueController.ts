@@ -276,6 +276,10 @@ export class QueueController {
             restoringIncome = sites.length === 1 && patches.length > 0 && !patches.some(patch => isServed(patch, sites)) &&
                 situation.enemy.aircraft === 0 && situation.enemy.infantry < 8;
         }
+        if (restoringIncome && productionApi.getQueueData(QueueType.Infantry).status === QueueStatus.Idle &&
+            game.getVisibleUnits(player.name, "self", rules => rules.capturable && rules.produceCashAmount > 0).length > 0) {
+            requests.delete("ENGINEER"); requests.delete("SENGINEER");
+        }
         this.queueStates = QUEUES.map((queueType) => {
             const options = productionApi.getAvailableObjects(queueType).filter(option => !ecoOnly || isCivilianEconomy(option));
             const items = QueueController.getPrioritiesForBuildingOptions(options, requests);

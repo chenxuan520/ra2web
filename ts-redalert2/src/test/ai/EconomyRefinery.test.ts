@@ -71,12 +71,14 @@ function recoveryFundingFixture(status = QueueStatus.Idle) {
 }
 
 /** Native debit/progress, not a mock that treats a production request as a delivered unit. */
-function nativeFundingFixture(priority: number, active: boolean) {
+function nativeFundingFixture(priority: number, active: boolean, engineerStatus?: QueueStatus) {
     const f = fixture(5); Object.assign(f.rules, { owner: [], buildTimeMultiplier: 1 });
     const vehicle: any = { name: priority === 115 ? "HTK" : "HTNK", type: ObjectType.Vehicle,
         cost: priority === 115 ? 500 : 900, owner: [], buildTimeMultiplier: 1 };
+    const engineer: any = engineerStatus === undefined ? undefined : { name: "SENGINEER", type: ObjectType.Infantry,
+        cost: 500, owner: [], buildTimeMultiplier: 1 };
     const queues = new Map(QUEUES.map(type => [type, new ProductionQueue(type, 1, 1)]));
-    const options = [f.rules, vehicle];
+    const options = [f.rules, vehicle, ...(engineer ? [engineer] : [])];
     const actions = { ...f.actions,
         queueForProduction: mock((type: QueueType, name: string) => {
             const rules = options.find(rules => rules.name === name)!;
@@ -87,22 +89,27 @@ function nativeFundingFixture(priority: number, active: boolean) {
     };
     f.context.player.actions = actions;
     f.context.player.production.getQueueData = (type: QueueType) => ({ type, status: queues.get(type)!.status, items: queues.get(type)!.getAll() });
-    f.context.player.production.getAvailableObjects = (type: QueueType) => type === QueueType.Vehicles ? [vehicle] : type === QueueType.Structures ? [f.rules] : [];
+    f.context.player.production.getAvailableObjects = (type: QueueType) => type === QueueType.Vehicles ? [vehicle] : type === QueueType.Structures ? [f.rules]
+        : type === QueueType.Infantry && engineer ? [engineer] : [];
     f.player.production = { buildSpeedModifier: 1, getAllQueues: () => [...queues.values()],
         getFactoryTypeForQueueType: (type: QueueType) => type, getFactoryCount: () => 1 };
     const rules = { general: { buildSpeed: 1, multipleFactory: 1, wallBuildSpeedCoefficient: 1 },
-        buildingRules: new Map([[f.rules.name, f.rules]]), infantryRules: new Map(), vehicleRules: new Map([[vehicle.name, vehicle]]), aircraftRules: new Map() };
+        buildingRules: new Map([[f.rules.name, f.rules]]), infantryRules: new Map(engineer ? [[engineer.name, engineer]] : []), vehicleRules: new Map([[vehicle.name, vehicle]]), aircraftRules: new Map() };
     const native: NotifyTick = new ProductionTrait(rules, { value: false });
     if (active) queues.get(QueueType.Structures)!.push(f.rules, 1, f.rules.cost);
+    if (engineer && engineerStatus !== QueueStatus.Idle) {
+        queues.get(QueueType.Infantry)!.push(engineer, 1, engineer.cost);
+        queues.get(QueueType.Infantry)!.status = engineerStatus!;
+    }
     const controller = new QueueController();
     const requests = (priority: number) => new Map([[f.rules.name, { priority: 50, specificLocation: new Vector2(24, 0) }],
-        [vehicle.name, { priority, specificLocation: null }]]);
-    return { ...f, actions, vehicle, nativeQueues: queues,
+        [vehicle.name, { priority, specificLocation: null }], ...(engineer ? [[engineer.name, { priority: 100, specificLocation: null }] as const] : [])]);
+    return { ...f, actions, vehicle, engineer, nativeQueues: queues,
         run(tick: number, responsePriority = priority) {
             f.at(tick); controller.onAiUpdate(f.context, null, requests(responsePriority), () => {});
         },
-        spend(tick: number) {
-            f.player.credits = 1;
+        spend(tick: number, credits = 1) {
+            f.player.credits = credits;
             f.at(tick); controller.onAiUpdate(f.context, null, requests(priority), () => {});
             native[NotifyTick.onTick]({ getCombatants: () => [f.player], events: { dispatch() {} } });
         },
@@ -367,6 +374,26 @@ describe("brutal refinery investment", () => {
         f.run(2700); f.run(2702, 85);
         expect(f.actions.pauseProduction).not.toHaveBeenCalledWith(QueueType.Structures);
         expect(f.actions.resumeProduction).not.toHaveBeenCalledWith(QueueType.Structures);
+    });
+    test("new capture spending yields the finite native cash stockpile to a real income-restoration refinery", () => {
+        const f = nativeFundingFixture(85, true, QueueStatus.Idle); f.units.find(unit => unit.name === "NAREFN")!.tile.rx = -20;
+        f.own("CAOILD", 80, { capturable: true, produceCashAmount: 20 }); f.player.credits = 200;
+        for (let i = 0; i < 216; i++) f.spend(5400 + i * 2, f.player.credits);
+        expect(f.nativeQueues.get(QueueType.Structures)!.getFirst()!.creditsSpent).toBe(200);
+        expect(f.nativeQueues.get(QueueType.Infantry)!.status).toBe(QueueStatus.Idle);
+        expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+        f.own("NAREFN", 4); f.run(6000);
+        expect(f.nativeQueues.get(QueueType.Infantry)!.status).toBe(QueueStatus.Active);
+    });
+    test.each(["first-capture", "paid", "normal"])("income restoration preserves the existing %s engineer commitment", condition => {
+        const f = nativeFundingFixture(85, true, condition === "paid" ? QueueStatus.Active : QueueStatus.Idle);
+        f.units.find(unit => unit.name === "NAREFN")!.tile.rx = -20;
+        if (condition !== "first-capture") f.own("CAOILD", 80, { capturable: true, produceCashAmount: 20 });
+        if (condition === "normal") f.context.difficulty = "normal";
+        f.player.credits = 200;
+        for (let i = 0; i < 108; i++) f.spend(5400 + i * 2, f.player.credits);
+        expect(f.nativeQueues.get(QueueType.Infantry)!.getFirst()!.creditsSpent).toBeGreaterThan(0);
+        expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
     });
     test("an unfunded unserved sole-refinery recovery defers new ordinary tanks and pauses only their paid queue", () => {
         const idle = recoveryFundingFixture(); idle.run();
