@@ -256,9 +256,14 @@ export class OpeningScoutingMission extends Mission {
                 // The first dog reserves its public start; do not send both dogs
                 // to that same existing queue entry before other sectors.
                 while (next) {
-                    const tile = game.mapApi.getTile(next.target.x, next.target.y);
-                    if (tile && !game.mapApi.isVisibleTile(tile, player.name) &&
-                        !(enemyStart && next.target.x === enemyStart.x && next.target.y === enemyStart.y)) break;
+                    const goal = next.target, tile = game.mapApi.getTile(goal.x, goal.y);
+                    const outer = next.priority === 1000 && Math.max(Math.abs(goal.x - home.x), Math.abs(goal.y - home.y)) > 24;
+                    const explored = !!tile && game.mapApi.isVisibleTile(tile, player.name) && (!outer ||
+                        [[6, 0], [-6, 0], [0, 6], [0, -6], [6, 6], [6, -6], [-6, 6], [-6, -6]].every(([dx, dy]) => {
+                            const fringe = game.mapApi.getTile(goal.x + dx, goal.y + dy);
+                            return !fringe || game.mapApi.isVisibleTile(fringe, player.name);
+                        }));
+                    if (tile && !explored && !(enemyStart && goal.x === enemyStart.x && goal.y === enemyStart.y)) break;
                     next = this.homeTargets.shift() ?? matchAwareness.getScoutingManager().getNewScoutTarget();
                 }
                 this.queueTarget = next ?? null;

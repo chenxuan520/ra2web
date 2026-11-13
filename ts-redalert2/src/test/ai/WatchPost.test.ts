@@ -32,6 +32,9 @@ function fixture(difficulty: "normal" | "brutal" = "brutal", dogName = "DOG", hi
     const starts = [player.startLocation as Vector2, new Vector2(140, 20)];
     const objects = new Map<number, TestUnit>(), visibleEnemies = new Set<number>();
     const explored = new Set<string>(["20_20", "21_20", "37_3", "44_20", "37_37", "20_44", "3_37", "3_3", "60_20", "48_48", "20_60"]), blocked = new Set<string>();
+    for (const [x, y] of [[60, 20], [48, 48], [20, 60]]) {
+        for (const [dx, dy] of [[6, 0], [-6, 0], [0, 6], [0, -6], [6, 6], [6, -6], [-6, 6], [-6, -6]]) explored.add(`${x + dx}_${y + dy}`);
+    }
     const orders: RecordedOrder[] = [], debug = new Map<number, string | undefined>(), passabilityReads: string[] = [], logs: string[] = [];
     const placementTiles = [tile(24, 20)];
     const queue = [new PrioritisedScoutTarget(800, new Vector2(20, 80))];
@@ -271,6 +274,15 @@ describe("T2 scout directions, recruitment and real handoff", () => {
         expect((f.scout() as OpeningScoutingMission).getTotalUnitsReceived()).toBe(2);
         expect(f.missionStep(f.scout(), 3600).type).toBe("disband");
         expect(f.watch(1).getUnitIds()).toEqual([1]); expect(f.watch(2).getUnitIds()).toEqual([2]);
+    });
+    test("an explored outer projection center cannot hide its still-opaque mining fringe", () => {
+        const f = fixture(); f.explored.delete("66_20"); f.ensure();
+        f.add(1, "DOG", 23); f.add(2, "DOG", 24); f.scout().addUnit(1); f.scout().addUnit(2);
+        f.map.getAllTilesResourceData = () => { throw Error("scout fringes cannot inspect hidden ore"); };
+        expect(f.game.mapApi.isVisibleTile(tile(60, 20) as any, f.player.name)).toBe(true);
+        f.missionStep(f.scout(), 32);
+        expect(f.orders).toContainEqual({ ids: [2], type: OrderType.AttackMove, xOrTarget: 60, y: 20 });
+        expect(f.queueReads()).toBe(0); expect(f.privateReads()).toBe(0);
     });
     test("an outer home goal is not completed merely because another unit reveals its tile", () => {
         const f = fixture(); f.explored.delete("60_20"); f.ensure();
