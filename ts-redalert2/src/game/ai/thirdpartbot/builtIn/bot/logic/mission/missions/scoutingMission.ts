@@ -1,4 +1,4 @@
-import { ActionsApi, BotContext, GameApi, ObjectType, OrderType, PlayerData, Vector2 } from "../../../../game-api";
+import { ActionsApi, BotContext, GameApi, ObjectType, OrderType, PlayerData, SpeedType, Vector2 } from "../../../../game-api";
 import { MatchAwareness } from "../../awareness";
 import {
     Mission,
@@ -184,6 +184,7 @@ export class OpeningScoutingMission extends Mission {
     private queueComplete = false;
     private queueTarget: PrioritisedScoutTarget | null = null;
     private homeTargets?: PrioritisedScoutTarget[];
+    private homeTargetInProgress?: PrioritisedScoutTarget;
     private queueTargetRefreshedAt = 0;
     private queueMinDistance = Infinity;
     private orders = new DogOrders(SCOUT_MOVE_COOLDOWN_TICKS);
@@ -255,8 +256,12 @@ export class OpeningScoutingMission extends Mission {
                     this.queueTargetRefreshedAt = tick;
                 }
                 const homeGoal = this.queueTarget.priority === 1000;
-                if (!tile || game.mapApi.isVisibleTile(tile, player.name) && (!homeGoal || currentDistance <= 1) ||
-                    !this.queueTarget.permanent && tick > this.queueTargetRefreshedAt + MAX_TICKS_PER_TARGET) this.queueTarget = null;
+                const timedOut = !this.queueTarget.permanent && tick > this.queueTargetRefreshedAt + MAX_TICKS_PER_TARGET;
+                if (!tile || game.mapApi.isVisibleTile(tile, player.name) && (!homeGoal || currentDistance <= 1 ||
+                    !game.mapApi.isPassableTile(tile, SpeedType.Foot, game.mapApi.hasBridgeOnTile(tile), true)) || timedOut) {
+                    if (timedOut) this.homeTargetInProgress = undefined;
+                    this.queueTarget = null;
+                }
             }
             if (!this.queueTarget) {
                 // Discover the home economy before spending the second scout on distant sectors.
@@ -266,18 +271,26 @@ export class OpeningScoutingMission extends Mission {
                     [0, -40], [15, -37], [28, -28], [37, -15], [40, 0], [37, 15], [28, 28], [15, 37],
                     [0, 40], [-15, 37], [-28, 28], [-37, 15], [-40, 0], [-37, -15], [-28, -28], [-15, -37]]
                     .map(([dx, dy]) => new PrioritisedScoutTarget(1000, new Vector2(home.x + dx, home.y + dy)));
-                let next = this.homeTargets.shift() ?? matchAwareness.getScoutingManager().getNewScoutTarget();
+                let next = this.homeTargetInProgress ?? this.homeTargets.shift() ?? matchAwareness.getScoutingManager().getNewScoutTarget();
                 // The first dog reserves its public start; do not send both dogs
                 // to that same existing queue entry before other sectors.
                 while (next) {
                     const goal = next.target, tile = game.mapApi.getTile(goal.x, goal.y);
-                    const outer = next.priority === 1000 && Math.max(Math.abs(goal.x - home.x), Math.abs(goal.y - home.y)) > 24;
-                    const explored = !!tile && game.mapApi.isVisibleTile(tile, player.name) && (!outer ||
-                        [[6, 0], [-6, 0], [0, 6], [0, -6], [6, 6], [6, -6], [-6, 6], [-6, -6]].every(([dx, dy]) => {
-                            const fringe = game.mapApi.getTile(goal.x + dx, goal.y + dy);
-                            return !fringe || game.mapApi.isVisibleTile(fringe, player.name);
-                        }));
-                    if (tile && !explored && !(enemyStart && goal.x === enemyStart.x && goal.y === enemyStart.y)) break;
+                    const seen = !!tile && game.mapApi.isVisibleTile(tile, player.name);
+                    const fringe = seen && next.priority === 1000 ?
+                        [[6, 0], [-6, 0], [0, 6], [0, -6], [6, 6], [6, -6], [-6, 6], [-6, -6]]
+                            .map(([dx, dy]) => game.mapApi.getTile(goal.x + dx, goal.y + dy))
+                            .find(point => point && !game.mapApi.isVisibleTile(point, player.name) &&
+                                !(enemyStart && point.rx === enemyStart.x && point.ry === enemyStart.y)) : undefined;
+                    if (tile && (!seen || fringe) && !(enemyStart && goal.x === enemyStart.x && goal.y === enemyStart.y)) {
+                        if (next.priority === 1000) {
+                            // Keep the original goal until its public fringes, including higher ground, are actually explored.
+                            this.homeTargetInProgress = next;
+                            if (fringe) next = new PrioritisedScoutTarget(1000, new Vector2(fringe.rx, fringe.ry));
+                        }
+                        break;
+                    }
+                    this.homeTargetInProgress = undefined;
                     next = this.homeTargets.shift() ?? matchAwareness.getScoutingManager().getNewScoutTarget();
                 }
                 this.queueTarget = next ?? null;

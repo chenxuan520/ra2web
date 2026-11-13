@@ -33,7 +33,8 @@ function fixture(difficulty: "normal" | "brutal" = "brutal", dogName = "DOG", hi
     const objects = new Map<number, TestUnit>(), visibleEnemies = new Set<number>();
     const explored = new Set<string>(["20_20", "21_20", "37_3", "44_20", "37_37", "20_44", "3_37", "3_3", "60_20", "48_48", "20_60",
         "57_5", "57_35", "35_57", "5_57"]), blocked = new Set<string>();
-    for (const [x, y] of [[60, 20], [48, 48], [20, 60], [57, 5], [57, 35], [35, 57], [5, 57]]) {
+    for (const [x, y] of [[37, 3], [44, 20], [37, 37], [20, 44], [3, 37], [3, 3],
+        [60, 20], [48, 48], [20, 60], [57, 5], [57, 35], [35, 57], [5, 57]]) {
         for (const [dx, dy] of [[6, 0], [-6, 0], [0, 6], [0, -6], [6, 6], [6, -6], [-6, 6], [-6, -6]]) explored.add(`${x + dx}_${y + dy}`);
     }
     const orders: RecordedOrder[] = [], debug = new Map<number, string | undefined>(), passabilityReads: string[] = [], logs: string[] = [];
@@ -291,8 +292,26 @@ describe("T2 scout directions, recruitment and real handoff", () => {
         f.map.getAllTilesResourceData = () => { throw Error("scout fringes cannot inspect hidden ore"); };
         expect(f.game.mapApi.isVisibleTile(tile(60, 20) as any, f.player.name)).toBe(true);
         f.missionStep(f.scout(), 32);
-        expect(f.orders).toContainEqual({ ids: [2], type: OrderType.AttackMove, xOrTarget: 60, y: 20 });
+        expect(f.orders).toContainEqual({ ids: [2], type: OrderType.AttackMove, xOrTarget: 66, y: 20 });
         expect(f.queueReads()).toBe(0); expect(f.privateReads()).toBe(0);
+    });
+    test("a near explored center sends the scout to its still-opaque public fringe before the legacy queue", () => {
+        const f = fixture(); f.explored.delete("26_44"); f.ensure();
+        f.add(1, "DOG", 23); f.add(2, "DOG", 24); f.scout().addUnit(1); f.scout().addUnit(2);
+        f.map.getAllTilesResourceData = () => { throw Error("public fringe probes cannot inspect hidden resources"); };
+        f.missionStep(f.scout(), 32);
+        expect(f.orders).toContainEqual({ ids: [2], type: OrderType.AttackMove, xOrTarget: 26, y: 44 });
+        f.explored.add("26_44"); f.objects.get(2)!.tile = tile(26, 43); f.missionStep(f.scout(), 64);
+        expect(f.orders.filter(order => order.ids.includes(2)).at(-1)).toMatchObject({ xOrTarget: 20, y: 80 });
+        expect(f.privateReads()).toBe(0);
+    });
+    test("a newly explored impassable home goal is not retried for the full no-progress timeout", () => {
+        const f = fixture(); f.explored.delete("20_44"); f.ensure();
+        f.add(1, "DOG", 23); f.add(2, "DOG", 24); f.scout().addUnit(1); f.scout().addUnit(2);
+        f.missionStep(f.scout(), 32);
+        f.explored.add("20_44"); f.blocked.add("20_44"); f.missionStep(f.scout(), 64);
+        expect(f.orders.filter(order => order.ids.includes(2)).at(-1)).toMatchObject({ xOrTarget: 20, y: 80 });
+        expect(f.passabilityReads).toContain("20_44"); expect(f.privateReads()).toBe(0);
     });
     test("a near home goal also requires arrival rather than stopping at the edge of its revealed center", () => {
         const f = fixture(); f.explored.delete("20_44"); f.ensure();
