@@ -76,11 +76,13 @@ function onlyEconomy(run: () => void) {
 }
 
 describe("brutal miner capacity and production table", () => {
-    test.each([[2999, 1], [3000, 2], [5999, 2], [6000, 4]])("value %i has ordinary capacity %i", (value, expected) => {
+    test.each([[2999, 1], [3000, 2], [5999, 2], [6000, 4], [11999, 4], [12000, 5]])("value %i has ordinary capacity %i", (value, expected) => {
         expect(patchCapacity({ value } as any, false)).toBe(expected);
     });
-    test("chrono miners get five only in the richest band", () => {
+    test("chrono miners get one extra slot in each rich band", () => {
         expect(patchCapacity({ value: 6000 } as any, true)).toBe(5);
+        expect(patchCapacity({ value: 11999 } as any, true)).toBe(5);
+        expect(patchCapacity({ value: 12000 } as any, true)).toBe(6);
         expect(patchCapacity({ value: 5999 } as any, true)).toBe(2);
     });
     test("sums only visible served patches, floors a refinery at two and caps at twelve", () => {
@@ -124,13 +126,13 @@ describe("brutal miner capacity and production table", () => {
         const allied = fixture(1, 1, "Americans"); allied.enemy(100, 22);
         expect(allied.priority()).toBe(90);
     });
-    test.each([1, 2, 3, 5, 7])("a requested/active supplied refinery reserves only its one future miner (miners=%i)", miners => {
+    test.each([1, 2, 3, 5, 7])("only an actually active supplied refinery reserves its future miner (miners=%i)", miners => {
         for (const active of [false, true]) {
             const f = fixture(miners, 6);
             const refinery = { name: "NAREFN", refinery: true, freeUnit: "HARV", cost: 2000, type: ObjectType.Building };
             f.options.set(QueueType.Structures, [refinery]); f.requests.set("NAREFN", { priority: 50, specificLocation: null });
             if (active) Object.assign(f.queues.get(QueueType.Structures)!, { status: QueueStatus.Active, items: [{ rules: refinery, quantity: 1 }] });
-            expect(f.priority()).toBe(miners < 3 ? 110 : miners < 7 ? 78 : 0);
+            expect(f.priority()).toBe(miners < 3 ? 110 : active && miners >= 7 ? 0 : 78);
         }
     });
     test.each([
