@@ -17,6 +17,7 @@ export interface PressureState {
     lastEconomicLossTick: number;
     enemyMinersSeen: number;
     lastEnemyMinerSeenTick: number;
+    homeQuiet: boolean;
     passiveEnemy: boolean;
 }
 
@@ -108,10 +109,11 @@ export function readPressure(context: PressureContext): PressureState {
     }
     const earlyPressure = tick < state.earlyPressureUntil;
     const pressured = !isEcoOnly(context) && (state.baseUnderSiege || earlyPressure || tick - state.lastEconomicLossTick < 900);
+    const homeQuiet = tick >= 2700 && !pressured && tick - state.lastHomeCombatTick >= 2700;
     return { pressured, baseUnderSiege: state.baseUnderSiege, earlyPressure, earlyPressureUntil: state.earlyPressureUntil,
         earlyPressurePosition: state.earlyPressurePosition, lastEconomicLossTick: state.lastEconomicLossTick,
         enemyMinersSeen: state.minerPeaks[0]?.count ?? 0, lastEnemyMinerSeenTick: state.lastEnemyMinerSeenTick,
-        passiveEnemy: tick >= 5400 && !pressured && tick - state.lastHomeCombatTick >= 2700 };
+        homeQuiet, passiveEnemy: tick >= 5400 && homeQuiet };
 }
 
 export function isPressured(context: PressureContext): boolean {
@@ -122,7 +124,7 @@ export function isPressured(context: PressureContext): boolean {
 export function getEconomyPressureLimits(context: PressureContext, miners: number) {
     const state = readPressure(context);
     return {
-        minerCoreFactor: state.passiveEnemy ? 0 : 1,
+        minerCoreFactor: state.passiveEnemy || state.homeQuiet && miners < 5 ? 0 : 1,
         crawlMiners: 2,
         extraRefineryCredits: state.passiveEnemy ? 600 : 1000,
     };

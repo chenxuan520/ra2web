@@ -172,7 +172,7 @@ export class QueueController {
                 } else if (miners === 2 && pressure.pressured && (ecoOnly || core >= 4) && miners < desired) {
                     priority = 78;
                 } else if (miners >= 3 && miners < desired && !pressure.baseUnderSiege && (ecoOnly || core >= coreFactor * (miners - 2))) {
-                    priority = pressure.passiveEnemy && miners < 5 ? 110 : 78;
+                    priority = pressure.homeQuiet && miners < 5 && situation.enemy.infantry < 8 ? 110 : 78;
                 }
             }
             if (priority > (requests.get(option.name)?.priority ?? 0)) {
@@ -213,7 +213,7 @@ export class QueueController {
                 if (tank) {
                     const hasDualRefinery = (situation.own.NAREFN ?? 0) + (situation.own.GAREFN ?? 0) >= 2;
                     if ((core < 1 && situation.harvesters >= 1) || (core < 4 && (situation.harvesters >= 2 || hasDualRefinery))) {
-                        requests.set(tank.name, { priority: 85, specificLocation: null });
+                        if ((requests.get(tank.name)?.priority ?? 0) < 85) requests.set(tank.name, { priority: 85, specificLocation: null });
                     } else if (core < 8 && (requests.get(tank.name)?.priority ?? 0) < 75) {
                         requests.set(tank.name, { priority: 75, specificLocation: null });
                     } else if (core < 16 && (requests.get(tank.name)?.priority ?? 0) < 60) {
@@ -369,6 +369,16 @@ export class QueueController {
         if (currentItem && cappedSupport.has(currentItem.rules.name)) {
             // Concurrent waves and decaying mission requests must not exceed
             // the global specialist cap once another factory delivers a unit.
+            actionsApi.unqueueFromProduction(queueType, currentItem.rules.name, currentItem.rules.type, currentItem.quantity);
+            return;
+        }
+        if (difficulty === "brutal" && queueType === QueueType.Vehicles && currentItem &&
+            (queueData.status === QueueStatus.Active || queueData.status === QueueStatus.OnHold) &&
+            decision?.unit.harvester && decision.priority === 110 && ["HTNK", "MTNK", "DRON"].includes(currentItem.rules.name) &&
+            (unitTypeRequests.get(currentItem.rules.name)?.priority ?? 0) < 100 &&
+            readPressure({ game, player: { name: playerData.name }, difficulty }).homeQuiet &&
+            game.getVisibleUnits(playerData.name, "self", rules => rules.harvester).length < Math.min(5, desiredMiners(game, playerData))) {
+            logger(`Replacing ordinary ${currentItem.rules.name} with needed early income in queue ${queueTypeToName(queueType)}`);
             actionsApi.unqueueFromProduction(queueType, currentItem.rules.name, currentItem.rules.type, currentItem.quantity);
             return;
         }

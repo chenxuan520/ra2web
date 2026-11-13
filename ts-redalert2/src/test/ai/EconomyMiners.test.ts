@@ -2,6 +2,7 @@ import { describe, expect, mock, test } from "bun:test";
 import { ApiEventType, ObjectType, QueueStatus, QueueType, Vector2 } from "../../game/ai/thirdpartbot/builtIn/game-api";
 import { Harvester, desiredMiners, patchCapacity } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/harvester";
 import { QueueController, QUEUES } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/queueController";
+import { observeDroneProductionEvent } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/droneProduction";
 import { getEconomyBuildingPriority } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/economyPlan";
 import { getEconomyPressureLimits, isPressured, observePressureEvent, readPressure, setPressureWatchPost } from "../../game/ai/thirdpartbot/builtIn/bot/logic/common/pressure";
 import { BRUTAL_PARAMS } from "../../game/ai/thirdpartbot/builtIn/bot/strategy/brutalParams";
@@ -143,12 +144,55 @@ describe("brutal miner capacity and production table", () => {
         }
     });
     test.each(["Russians", "Americans"])("%s expands the first five miners only in the real quiet-home window", country => {
-        const f = fixture(4, 0, country); f.at(5399); expect(f.priority()).toBe(0);
-        f.at(5400); expect(f.priority()).toBe(110);
+        const f = fixture(4, 0, country); f.at(2699); expect(f.priority()).toBe(0);
+        f.at(2700); expect(f.priority()).toBe(110);
         expect(getEconomyPressureLimits(f.context, 4).minerCoreFactor).toBe(0);
-        f.enemy(100, 60); f.at(5402); expect(f.priority()).toBe(0);
-        f.enemies.length = 0; f.at(8102); expect(f.priority()).toBe(110);
-        f.resources.length = 0; f.at(8192); expect(f.priority()).toBe(0);
+        expect(readPressure(f.context)).toMatchObject({ homeQuiet: true, passiveEnemy: false });
+        expect(getEconomyPressureLimits(f.context, 5).minerCoreFactor).toBe(1);
+        expect(getEconomyPressureLimits(f.context, 4).extraRefineryCredits).toBe(1000);
+        f.enemy(100, 60); f.at(2702); expect(f.priority()).toBe(0);
+        f.enemies.length = 0; f.at(5402); expect(f.priority()).toBe(110);
+        f.resources.length = 0; f.at(5492); expect(f.priority()).toBe(0);
+    });
+    test.each([QueueStatus.Active, QueueStatus.OnHold])("needed early income can replace ordinary paid armor or a later drone in queue status%i", status => {
+        for (const country of ["Russians", "Americans"]) for (const kind of ["armor", "drone"]) {
+            const f = fixture(3, kind === "drone" ? 4 : 2, country); f.at(2700);
+            const options = f.options.get(QueueType.Vehicles)!;
+            let current = options[1];
+            if (kind === "drone") {
+                current = { name: "DRON", cost: 500, type: ObjectType.Vehicle };
+                options.push(current);
+                const firstDrone = f.own("DRON", 0, 0, { type: ObjectType.Vehicle });
+                observeDroneProductionEvent(f.game, f.player.name, { type: ApiEventType.ObjectSpawn, target: firstDrone.id });
+                f.enemy(100, 80, ObjectType.Vehicle, { harvester: true });
+                if (country === "Americans") f.requests.set("DRON", { priority: 60, specificLocation: null });
+            }
+            Object.assign(f.queues.get(QueueType.Vehicles)!, { status, items: [{ rules: current, quantity: 1 }] });
+            expect(f.priority()).toBe(110);
+            expect(f.actions.unqueueFromProduction).toHaveBeenCalledWith(QueueType.Vehicles, current.name, ObjectType.Vehicle, 1);
+            expect(f.actions.resumeProduction).not.toHaveBeenCalled();
+        }
+    });
+    test.each([QueueStatus.Active, QueueStatus.OnHold])("early income does not replace protected production in queue status%i", status => {
+        for (const condition of ["counter", "first-drone", "air", "contact", "before", "full", "normal"]) {
+            const f = fixture(condition === "full" ? 5 : 3, 2); f.at(condition === "before" ? 2699 : 2700);
+            const options = f.options.get(QueueType.Vehicles)!;
+            let current = options[1];
+            if (condition === "counter") f.requests.set(current.name, { priority: 100, specificLocation: null });
+            if (condition === "first-drone") { current = { name: "DRON", cost: 500, type: ObjectType.Vehicle }; options.push(current); }
+            if (condition === "air") { current = options[2]; f.requests.set("HTK", { priority: 115, specificLocation: null }); f.enemy(100, 80, ObjectType.Aircraft); }
+            if (condition === "contact") f.enemy(100, 60);
+            if (condition === "normal") { f.context.difficulty = "normal"; f.requests.set(current.name, { priority: 85, specificLocation: null }); }
+            Object.assign(f.queues.get(QueueType.Vehicles)!, { status, items: [{ rules: current, quantity: 1 }] });
+            const priority = f.priority(); expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+            if (condition === "counter") expect(priority).toBe(110);
+        }
+    });
+    test.each(["Russians", "Americans"])("%s preserves the actual 100-priority infantry counter instead of overwriting it with ordinary armor85", country => {
+        const f = fixture(3, 0, country); f.at(2700);
+        for (let i = 0; i < 8; i++) f.enemy(100 + i, 80, ObjectType.Infantry);
+        expect(f.priority()).toBe(78);
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, country === "Russians" ? "HTNK" : "MTNK", ObjectType.Vehicle, 1);
     });
     test("an approved unpressured miner78 wins actual arbitration over the regular tank85, not only the debug priority", () => {
         const f = fixture(3, 2); f.run();
