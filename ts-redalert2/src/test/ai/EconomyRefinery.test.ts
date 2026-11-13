@@ -216,9 +216,28 @@ describe("brutal refinery investment", () => {
         f.queues.get(QueueType.Structures)!.status = QueueStatus.OnHold;
         f.at(2702); controller.onAiUpdate(f.context, null, requests, () => {});
         expect(f.actions.resumeProduction).not.toHaveBeenCalledWith(QueueType.Structures);
-        f.own("HARV", 10); f.player.credits = 200;
-        f.at(2704); controller.onAiUpdate(f.context, null, requests, () => {});
+        f.own("HARV", 10); f.player.credits = 100;
+        f.at(2704); controller.onAiUpdate(f.context, null, new Map(), () => {});
         expect(f.actions.resumeProduction).toHaveBeenCalledWith(QueueType.Structures);
+    });
+    test.each(["pre-held", "cancelled"])("income funding does not resume an unrelated %s refinery", condition => {
+        const f = fixture(2); f.at(2700); f.player.credits = 100; f.resources[0].ore = 1200;
+        const miner = { name: "HARV", type: ObjectType.Vehicle, cost: 1400, harvester: true };
+        const available = f.context.player.production.getAvailableObjects;
+        f.context.player.production.getAvailableObjects = (queue: QueueType) => queue === QueueType.Vehicles ? [miner] : available(queue);
+        Object.assign(f.queues.get(QueueType.Vehicles)!, { status: QueueStatus.Active, items: [{ rules: miner, quantity: 1 }] });
+        Object.assign(f.queues.get(QueueType.Structures)!, { status: condition === "cancelled" ? QueueStatus.Active : QueueStatus.OnHold,
+            items: [{ rules: f.rules, quantity: 1 }] });
+        const controller = new QueueController();
+        controller.onAiUpdate(f.context, null, new Map([[f.rules.name, { priority: 50, specificLocation: new Vector2(24, 0) }]]), () => {});
+        if (condition === "cancelled") {
+            Object.assign(f.queues.get(QueueType.Structures)!, { status: QueueStatus.Idle, items: [] });
+            f.at(2702); controller.onAiUpdate(f.context, null, new Map(), () => {});
+            Object.assign(f.queues.get(QueueType.Structures)!, { status: QueueStatus.OnHold, items: [{ rules: f.rules, quantity: 1 }] });
+        }
+        f.own("HARV", 10); f.at(2704);
+        controller.onAiUpdate(f.context, null, new Map(), () => {});
+        expect(f.actions.resumeProduction).not.toHaveBeenCalledWith(QueueType.Structures);
     });
     test.each(["first", "multiple", "unsupplied", "unserved", "poor", "pressure", "contact", "low-power", "funded", "normal"])("funded-miner priority preserves the existing %s building investment", condition => {
         const f = fixture(2, condition === "first" ? 0 : condition === "multiple" ? 2 : 1); f.at(2700); f.player.credits = condition === "funded" ? 1400 : 100;

@@ -75,6 +75,7 @@ export class QueueController {
     private placementFailures: Map<string, number> = new Map();
     private economicPlacementFailures: Map<string, number> = new Map();
     private refineryLocation?: { name: string; location: Vector2 };
+    private incomeHeldRefinery?: string;
 
     constructor() {}
 
@@ -290,8 +291,16 @@ export class QueueController {
         this.queueStates.forEach((decision) => {
             if (fundPaidEarlyMiner && decision.queue === QueueType.Structures) {
                 // Native funding visits structures first; priorities alone cannot fund this paid miner first.
-                if (refineryQueue.status === QueueStatus.Active) actionsApi.pauseProduction(QueueType.Structures);
+                if (refineryQueue.status === QueueStatus.Active) {
+                    actionsApi.pauseProduction(QueueType.Structures);
+                    this.incomeHeldRefinery = pendingRefinery?.name;
+                }
                 return;
+            }
+            if (decision.queue === QueueType.Structures && this.incomeHeldRefinery) {
+                const resumeIncomeHold = this.incomeHeldRefinery === pendingRefinery?.name && refineryQueue.status === QueueStatus.OnHold;
+                this.incomeHeldRefinery = undefined;
+                if (resumeIncomeHold) { actionsApi.resumeProduction(QueueType.Structures); return; }
             }
             if (context.difficulty === "brutal" && isCrawlProduction(game, player.name, decision.queue) && readPressure(context).pressured) {
                 if (productionApi.getQueueData(decision.queue).status === QueueStatus.Active) actionsApi.pauseProduction(decision.queue);
