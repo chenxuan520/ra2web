@@ -201,6 +201,43 @@ describe("brutal refinery investment", () => {
         f.at(104); controller.onAiUpdate(f.context, null, new Map(), () => {});
         expect(f.actions.placeBuilding).toHaveBeenCalledWith("NAREFN", 0, 4);
     });
+    test("a quiet paid expansion cannot consume the funds of an already active early miner at a usable rich refinery", () => {
+        const f = fixture(3); f.at(2700); f.player.credits = 100; f.resources[0].ore = 1200;
+        Object.assign(f.queues.get(QueueType.Structures)!, { status: QueueStatus.Active, items: [{ rules: f.rules, quantity: 1 }] });
+        const miner = { name: "HARV", type: ObjectType.Vehicle, cost: 1400, harvester: true };
+        const available = f.context.player.production.getAvailableObjects;
+        f.context.player.production.getAvailableObjects = (queue: QueueType) => queue === QueueType.Vehicles ? [miner] : available(queue);
+        Object.assign(f.queues.get(QueueType.Vehicles)!, { status: QueueStatus.Active, items: [{ rules: miner, quantity: 1 }] });
+        const controller = new QueueController(), requests = new Map([[f.rules.name, { priority: 50, specificLocation: new Vector2(24, 0) }]]);
+        controller.onAiUpdate(f.context, null, requests, () => {});
+        expect(f.actions.pauseProduction).toHaveBeenCalledWith(QueueType.Structures);
+        expect(f.actions.pauseProduction).not.toHaveBeenCalledWith(QueueType.Vehicles);
+        expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+        f.queues.get(QueueType.Structures)!.status = QueueStatus.OnHold;
+        f.at(2702); controller.onAiUpdate(f.context, null, requests, () => {});
+        expect(f.actions.resumeProduction).not.toHaveBeenCalledWith(QueueType.Structures);
+        f.own("HARV", 10); f.own("HARV", 10); f.player.credits = 200;
+        f.at(2704); controller.onAiUpdate(f.context, null, requests, () => {});
+        expect(f.actions.resumeProduction).toHaveBeenCalledWith(QueueType.Structures);
+    });
+    test.each(["first", "multiple", "unserved", "poor", "pressure", "contact", "low-power", "funded", "normal"])("funded-miner priority preserves the existing %s building investment", condition => {
+        const f = fixture(3, condition === "first" ? 0 : condition === "multiple" ? 2 : 1); f.at(2700); f.player.credits = condition === "funded" ? 1400 : 100;
+        f.resources[0].ore = condition === "poor" ? 599 : 1200;
+        if (condition === "unserved") f.units.find(unit => unit.name === "NAREFN")!.tile.rx = -20;
+        if (condition === "pressure" || condition === "contact") f.enemies.push({ id: 999, tile: { rx: condition === "pressure" ? 22 : 60, ry: 0 },
+            rules: { name: "MTNK", type: ObjectType.Vehicle, isSelectableCombatant: true } });
+        if (condition === "low-power") f.player.power.isLowPower = true;
+        if (condition === "normal") f.context.difficulty = "normal";
+        const miner = { name: "HARV", type: ObjectType.Vehicle, cost: 1400, harvester: true };
+        const available = f.context.player.production.getAvailableObjects;
+        f.context.player.production.getAvailableObjects = (queue: QueueType) => queue === QueueType.Vehicles ? [miner] : available(queue);
+        Object.assign(f.queues.get(QueueType.Structures)!, { status: QueueStatus.Active, items: [{ rules: f.rules, quantity: 1 }] });
+        Object.assign(f.queues.get(QueueType.Vehicles)!, { status: QueueStatus.Active, items: [{ rules: miner, quantity: 1 }] });
+        new QueueController().onAiUpdate(f.context, null, new Map([[f.rules.name, {
+            priority: 50, specificLocation: new Vector2(24, 0),
+        }]]), () => {});
+        expect(f.actions.pauseProduction).not.toHaveBeenCalledWith(QueueType.Structures);
+    });
     test("an unfunded unserved sole-refinery recovery defers new ordinary tanks and pauses only their paid queue", () => {
         const idle = recoveryFundingFixture(); idle.run();
         expect(idle.actions.queueForProduction).not.toHaveBeenCalledWith(QueueType.Vehicles, "HTNK", ObjectType.Vehicle, 1);

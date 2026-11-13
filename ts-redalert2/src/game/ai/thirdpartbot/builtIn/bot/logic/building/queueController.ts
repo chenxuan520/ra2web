@@ -267,6 +267,18 @@ export class QueueController {
                 topItem: topItem && topItem.priority > 0 ? topItem : undefined,
             };
         });
+        const paidMinerQueue = productionApi.getQueueData(QueueType.Vehicles), paidMiner = paidMinerQueue.items[0]?.rules;
+        let fundPaidEarlyMiner = false;
+        if (context.difficulty === "brutal" && pendingRefinery?.refinery && paidMiner?.harvester &&
+            [QueueStatus.Active, QueueStatus.OnHold].includes(refineryQueue.status) &&
+            [QueueStatus.Active, QueueStatus.OnHold].includes(paidMinerQueue.status) &&
+            playerData.credits < paidMiner.cost && !playerData.power?.isLowPower && readPressure(context).homeQuiet &&
+            game.getVisibleUnits(player.name, "self", rules => rules.harvester).length < Math.min(5, minerTarget) &&
+            this.queueStates.find(state => state.queue === QueueType.Vehicles)?.topItem?.unit.harvester) {
+            const sites = game.getVisibleUnits(player.name, "self", rules => rules.refinery)
+                .map(id => game.getGameObjectData(id)?.tile).filter((tile): tile is PatchPoint => !!tile);
+            fundPaidEarlyMiner = sites.length === 1 && findVisiblePatches(game, player.name).some(patch => patch.value >= 6000 && isServed(patch, sites));
+        }
         const totalWeightAcrossQueues = this.queueStates
             .map((decision) => decision.topItem?.priority ?? 0)
             .reduce((pV, cV) => pV + cV, 0);
@@ -275,6 +287,11 @@ export class QueueController {
             .reduce((pV, cV) => pV + cV, 0);
 
         this.queueStates.forEach((decision) => {
+            if (fundPaidEarlyMiner && decision.queue === QueueType.Structures) {
+                // Native funding visits structures first; priorities alone cannot fund this paid miner first.
+                if (refineryQueue.status === QueueStatus.Active) actionsApi.pauseProduction(QueueType.Structures);
+                return;
+            }
             if (context.difficulty === "brutal" && isCrawlProduction(game, player.name, decision.queue) && readPressure(context).pressured) {
                 if (productionApi.getQueueData(decision.queue).status === QueueStatus.Active) actionsApi.pauseProduction(decision.queue);
                 return;
