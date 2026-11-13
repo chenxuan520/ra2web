@@ -74,6 +74,7 @@ export class QueueController {
     private airResponseTarget = 0;
     private placementFailures: Map<string, number> = new Map();
     private economicPlacementFailures: Map<string, number> = new Map();
+    private refineryLocation?: { name: string; location: Vector2 };
 
     constructor() {}
 
@@ -236,6 +237,7 @@ export class QueueController {
             }
         }
         const refineryQueue = productionApi.getQueueData(QueueType.Structures), pendingRefinery = refineryQueue.items[0]?.rules;
+        if (this.refineryLocation && this.refineryLocation.name !== pendingRefinery?.name) this.refineryLocation = undefined;
         let restoringIncome = false;
         if (context.difficulty === "brutal" && pendingRefinery?.refinery &&
             (refineryQueue.status === QueueStatus.Active || refineryQueue.status === QueueStatus.OnHold) &&
@@ -376,6 +378,11 @@ export class QueueController {
             if (decision !== undefined && (requestedCrawl && myCredits >= decision.unit.cost || requestedRefinery && myCredits > 0 || canAffordBuilding || !(totalCostAcrossQueues > myCredits && decision.priority < minimumPriority))) {
                 logger(`Decision (${queueTypeToName(queueType)}): ${decision.unit.name}`);
                 actionsApi.queueForProduction(queueType, decision.unit.name, decision.unit.type, 1);
+                if (difficulty === "brutal" && queueType === QueueType.Structures && decision.unit.refinery &&
+                    game.getVisibleUnits(playerData.name, "self", rules => rules.refinery).length > 0) {
+                    const location = unitTypeRequests.get(decision.unit.name)?.specificLocation;
+                    if (location) this.refineryLocation = { name: decision.unit.name, location: new Vector2(location.x, location.y) };
+                }
                 if (difficulty === "brutal") this.economicPlacementFailures.delete(decision.unit.name);
                 if (difficulty === "brutal") recordRefineryOrder(game, playerData.name, decision.unit.name, unitTypeRequests.get(decision.unit.name)?.specificLocation);
                 if (difficulty === "brutal") recordBaseCrawlOrder(game, playerData.name, decision.unit.name, unitTypeRequests.get(decision.unit.name)?.specificLocation);
@@ -383,9 +390,11 @@ export class QueueController {
             }
         } else if (queueData.status == QueueStatus.Ready && queueData.items.length > 0) {
             if (isBuildingQueue(queueType)) {
-                const readyUnit = queueData.items[0].rules;
+                const readyUnit = queueData.items[0].rules, committedRefinery = this.refineryLocation;
+                const heldLocation = difficulty === "brutal" && readyUnit.refinery && committedRefinery?.name === readyUnit.name
+                    ? committedRefinery.location : undefined;
                 const specificEconomyLocation = difficulty === "brutal" &&
-                    (isMinerRefineryProduction(game, playerData.name, readyUnit.name) || isCrawlProduction(game, playerData.name, queueType) ||
+                    (!!heldLocation || isMinerRefineryProduction(game, playerData.name, readyUnit.name) || isCrawlProduction(game, playerData.name, queueType) ||
                         queueType === QueueType.Armory && isDefenseProduction(game, playerData.name));
                 // Other idle queues retain their historical clear behavior, but must not erase this marked build's failures.
                 const failureCounts = specificEconomyLocation ? this.economicPlacementFailures : this.placementFailures;
@@ -401,8 +410,8 @@ export class QueueController {
                 }
 
                 const currentRequest = unitTypeRequests.get(readyUnit.name);
-                let placeX = currentRequest?.specificLocation?.x;
-                let placeY = currentRequest?.specificLocation?.y;
+                let placeX = currentRequest?.specificLocation?.x ?? heldLocation?.x;
+                let placeY = currentRequest?.specificLocation?.y ?? heldLocation?.y;
 
                 // Check if the suggested location is valid
                 let canPlace = placeX !== undefined && placeY !== undefined &&

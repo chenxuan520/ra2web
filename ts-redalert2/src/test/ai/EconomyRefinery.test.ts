@@ -144,6 +144,41 @@ describe("brutal refinery investment", () => {
         ]), () => {});
         expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Structures, "NAREFN", ObjectType.Building, 1);
     });
+    test.each(["expansion", "first", "normal"])("a paid %s refinery keeps the appropriate placement when its request expires", kind => {
+        const f = fixture(3, kind === "first" ? 0 : 1); f.rules.soylent = 300;
+        f.candidates.push({ id: "0_4", rx: 0, ry: 4 }); f.legal.add("0_4"); f.legal.delete("4_0");
+        expect(f.game.canPlaceBuilding(f.player.name, f.rules.name, { rx: 24, ry: 0 })).toBe(true);
+        expect(f.game.canPlaceBuilding(f.player.name, f.rules.name, { rx: 0, ry: 4 })).toBe(true);
+        if (kind === "normal") f.context.difficulty = "normal";
+        const controller = new QueueController(), requests = new Map([["NAREFN", { priority: 50, specificLocation: new Vector2(24, 0) }]]);
+        controller.onAiUpdate(f.context, null, requests, () => {});
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Structures, "NAREFN", ObjectType.Building, 1);
+        Object.assign(f.queues.get(QueueType.Structures)!, { status: QueueStatus.Ready, items: [{ rules: f.rules, quantity: 1 }] });
+        f.resources.length = 0; f.at(190);
+        controller.onAiUpdate(f.context, null, new Map(), () => {});
+        expect(f.actions.placeBuilding).toHaveBeenCalledWith("NAREFN", kind === "expansion" ? 24 : 0, kind === "expansion" ? 0 : 4);
+    });
+    test("a blocked paid ordinary expansion cannot be relocated into an already served home field", () => {
+        const f = fixture(3); f.rules.soylent = 300;
+        f.candidates.push({ id: "0_4", rx: 0, ry: 4 }); f.legal.add("0_4"); f.legal.delete("4_0");
+        const controller = new QueueController();
+        controller.onAiUpdate(f.context, null, new Map([["NAREFN", { priority: 50, specificLocation: new Vector2(24, 0) }]]), () => {});
+        Object.assign(f.queues.get(QueueType.Structures)!, { status: QueueStatus.Ready, items: [{ rules: f.rules, quantity: 1 }] });
+        f.legal.delete("24_0"); f.at(190);
+        controller.onAiUpdate(f.context, null, new Map(), () => {});
+        expect(f.actions.placeBuilding).not.toHaveBeenCalled();
+        expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+    });
+    test("a completed or cancelled expansion cannot leak its saved site into a later unmarked refinery", () => {
+        const f = fixture(3); f.rules.soylent = 300;
+        f.candidates.push({ id: "0_4", rx: 0, ry: 4 }); f.legal.add("0_4"); f.legal.delete("4_0");
+        const controller = new QueueController();
+        controller.onAiUpdate(f.context, null, new Map([["NAREFN", { priority: 50, specificLocation: new Vector2(24, 0) }]]), () => {});
+        f.at(102); controller.onAiUpdate(f.context, null, new Map(), () => {});
+        Object.assign(f.queues.get(QueueType.Structures)!, { status: QueueStatus.Ready, items: [{ rules: f.rules, quantity: 1 }] });
+        f.at(104); controller.onAiUpdate(f.context, null, new Map(), () => {});
+        expect(f.actions.placeBuilding).toHaveBeenCalledWith("NAREFN", 0, 4);
+    });
     test("an unfunded unserved sole-refinery recovery defers new ordinary tanks and pauses only their paid queue", () => {
         const idle = recoveryFundingFixture(); idle.run();
         expect(idle.actions.queueForProduction).not.toHaveBeenCalledWith(QueueType.Vehicles, "HTNK", ObjectType.Vehicle, 1);
