@@ -31,7 +31,7 @@ import { getCachedTechnoRules } from "../../common/rulesCache";
 import { canBuildOnTile } from "../../common/tileUtils";
 import { MissionContext, SupabotContext } from "../../common/context";
 import { findVisiblePatches, OrePatch, patchDistance, PatchPoint, ScoredPatch, scorePatch } from "../../common/orePatches";
-import { isPressured } from "../../common/pressure";
+import { isPressured, readPressure } from "../../common/pressure";
 import { isCrawlBlocked } from "../../building/baseCrawl";
 import { countCoreTanks, readStrategicSituation } from "../../../strategy/nationalComposition";
 
@@ -329,13 +329,19 @@ export function isMcvRelocating(game: GameApi, playerName: string): boolean {
 
 export function planMcvExpansion(context: SupabotContext, home: PatchPoint): { patch: OrePatch; candidate: Vector2 } | undefined {
     const { game, player } = context;
-    if (context.difficulty !== "brutal" || game.getCurrentTick() < 9000 || isPressured(context) ||
+    const quietRelocation = context.difficulty === "brutal" && game.getCurrentTick() >= DO_NOT_EXPAND_BEFORE_TICKS &&
+        game.getCurrentTick() < 9000 && readPressure(context).homeQuiet;
+    if (context.difficulty !== "brutal" || game.getCurrentTick() < 9000 && !quietRelocation || isPressured(context) ||
         player.production.getQueueData(QueueType.Structures).items.length > 0) return undefined;
     const data = game.getPlayerData(player.name), patches = findVisiblePatches(game, player.name);
-    if (patches.filter(patch => patchDistance(home, patch) <= 30).reduce((sum, patch) => sum + patch.value, 0) >= 6000 ||
-        countCoreTanks(readStrategicSituation(game, data)) < 6) return undefined;
-    const targets = patches.filter(patch => patch.value >= 12000).map(patch => scorePatch(game, data, patch))
-        .filter((entry): entry is ScoredPatch => !!entry && (entry.g > 40 || isCrawlBlocked(game, player.name, entry.patch)))
+    if (!quietRelocation && (patches.filter(patch => patchDistance(home, patch) <= 30).reduce((sum, patch) => sum + patch.value, 0) >= 6000 ||
+        countCoreTanks(readStrategicSituation(game, data)) < 6)) return undefined;
+    if (quietRelocation && readStrategicSituation(game, data).harvesters < 2) return undefined;
+    const refineryCost = quietRelocation ? player.production.getAvailableObjects(QueueType.Structures).find(rules => rules.refinery)?.cost ?? Infinity : Infinity;
+    const targets = patches.filter(patch => patch.value >= 12000 || quietRelocation && patch.isGem && patch.value >= refineryCost)
+        .map(patch => scorePatch(game, data, patch))
+        .filter((entry): entry is ScoredPatch => !!entry && (quietRelocation ? entry.g > 24 && entry.g <= 40
+            : entry.g > 40 || isCrawlBlocked(game, player.name, entry.patch)))
         .sort((a, b) => b.score - a.score || a.g - b.g || (a.patch.id < b.patch.id ? -1 : a.patch.id > b.patch.id ? 1 : 0));
     for (const entry of targets) {
         const candidate = [...context.matchAwareness.getNextExpansionCandidates()]

@@ -240,6 +240,61 @@ function mcvFixture() {
     return f;
 }
 
+function quietMcvFixture(targetX = 35) {
+    const f = fixture(targetX); f.at(5400);
+    f.units.splice(f.units.findIndex(unit => unit.name === "HARV"), 1);
+    return f;
+}
+
+describe("quiet existing-MCV relocation instead of long paid crawl", () => {
+    test.each(["ore", "gems"])("a quiet two-miner %s field can use the existing safe candidate before nine thousand without invented armor", kind => {
+        const f = quietMcvFixture();
+        if (kind === "gems") { f.resources[1].ore = 0; f.resources[1].gems = 1000; }
+        expect(planMcvExpansion(f.context, { rx: 0, ry: 0 })).toMatchObject({ candidate: { x: 35, y: 0 } });
+        expect(f.units.some(unit => unit.name === "HTNK")).toBe(false);
+    });
+    test.each(["tick", "contact", "pressure", "one-miner", "queue", "near", "far", "small-ore", "gem-cost", "hidden", "normal"])("the early relocation rejects %s", reason => {
+        const f = quietMcvFixture(reason === "near" ? 29 : reason === "far" ? 46 : 35);
+        if (reason === "tick") f.at(5399);
+        if (reason === "contact" || reason === "pressure") f.enemies.push({ id: 999, tile: { rx: reason === "contact" ? 60 : 22, ry: 0 },
+            rules: { name: "HTNK", type: ObjectType.Vehicle, isSelectableCombatant: true } });
+        if (reason === "one-miner") f.units.splice(f.units.findIndex(unit => unit.name === "HARV"), 1);
+        if (reason === "queue") f.queues.get(QueueType.Structures)!.items.push({ rules: f.power, quantity: 1 });
+        if (reason === "small-ore") f.resources[1].ore = 11999;
+        if (reason === "gem-cost") { f.resources[1].ore = 0; f.resources[1].gems = 1000; f.refinery.cost = 2500; }
+        if (reason === "hidden") {
+            f.game.mapApi.isVisibleTile = (tile: any) => tile.rx !== 35;
+            Object.defineProperty(f.resources[1], "ore", { get() { throw Error("an unseen field cannot justify relocation"); } });
+        }
+        if (reason === "normal") { f.context.difficulty = "normal"; f.game.mapApi.getAllTilesResourceData = () => { throw Error("normal relocation must not inspect patches"); }; }
+        expect(planMcvExpansion(f.context, { rx: 0, ry: 0 })).toBeUndefined();
+    });
+    test.each(["unsafe", "cooldown", "no-near-refinery", "empty-path", "partial-path"])("early relocation retains the original %s factory guard", reason => {
+        const f = quietMcvFixture(), missions = new MissionController(() => {});
+        if (reason === "unsafe") f.context.matchAwareness.getThreatCache = () => ({ totalAvailableAntiGroundFirepower: 0, totalOffensiveLandThreat: 100 });
+        if (reason === "no-near-refinery") f.units.find(unit => unit.name === "NAREFN")!.tile.rx = -15;
+        if (reason === "empty-path") f.game.mapApi.findPath = mock(() => []);
+        if (reason === "partial-path") f.game.mapApi.findPath = mock(() => [{ tile: { rx: 34, ry: 0 } }, { tile: { rx: 0, ry: 0 } }]);
+        expect(planMcvExpansion(f.context, { rx: 0, ry: 0 })).toBeDefined();
+        new ExpansionMissionFactory(reason === "cooldown" ? 5400 : undefined).maybeCreateMissions(f.context, missions, () => {});
+        expect(missions.getMissions()).toEqual([]);
+    });
+    test("early packing hands only the selected destination to the original MCV and never queues a second one", () => {
+        const f = quietMcvFixture(), missions = new MissionController(() => {}), factory = new ExpansionMissionFactory();
+        factory.maybeCreateMissions(f.context, missions, () => {});
+        expect(missions.getMissions().map(m => m.getUniqueName())).toEqual(["pack-up-1"]);
+        expect(isMcvRelocating(f.game, f.player.name)).toBe(true);
+        f.units.splice(f.units.findIndex(unit => unit.name === "NACNST"), 1);
+        const mcv = f.own("SMCV", 5); f.at(5402);
+        factory.maybeCreateMissions(f.context, missions, () => {});
+        const expansion: any = missions.getMissions().find(m => m.getUniqueName() === `expansion-mcv-${mcv.id}`)!;
+        expect(expansion.candidates).toEqual([new Vector2(35, 0)]);
+        expansion.addUnit(mcv.id); expansion._onAiUpdate(f.context);
+        expect(f.context.player.actions.orderUnits).toHaveBeenCalledWith([mcv.id], OrderType.Move, 35, 0);
+        expect(f.context.player.actions.queueForProduction).not.toHaveBeenCalled();
+    });
+});
+
 describe("existing MCV economy expansion", () => {
     test.each(["tick", "pressure", "queue", "home", "target-value", "served", "core", "candidate", "near"])(
         "does not pack when %s fails", reason => {
