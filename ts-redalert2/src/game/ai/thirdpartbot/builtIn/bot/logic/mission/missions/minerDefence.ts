@@ -12,6 +12,7 @@ export class MinerDefence {
     private nextDefenceAt = 0;
     private lastGemOrder = new Map<number, number>();
     private lastBalanceOrder = new Map<number, number>();
+    private safetyDocks = new Map<number, { refineryId: number; cargo?: number }>();
     private dispatchTargets = new Map<number, { tile: PatchPoint; tick: number }>();
     private smallGemForays: { tiles: Set<string>; minerId: number; returned: boolean }[] = [];
 
@@ -81,7 +82,15 @@ export class MinerDefence {
         if (tick % 30 === 0) {
             const allMiners = game.getVisibleUnits(player.name, "self", rules => rules.harvester)
                 .map(id => game.getUnitData(id)).filter((unit): unit is UnitData => !!unit && unit.canMove && !unit.isWarpedOut && !context.parasiteRepair?.isRepairing(unit.id));
+            const ownedMinerIds = new Set(allMiners.map(miner => miner.id));
+            for (const id of this.safetyDocks.keys()) if (!ownedMinerIds.has(id)) this.safetyDocks.delete(id);
             for (const m of allMiners) {
+                const cargo = m.harvestedOre !== undefined && m.harvestedGems !== undefined ? m.harvestedOre + m.harvestedGems : undefined;
+                const safetyDock = this.safetyDocks.get(m.id);
+                // Actual renewed collection ends the old return; a busy Dock alone does not.
+                if (safetyDock && (m.hitPoints >= m.maxHitPoints * 0.5 || cargo !== undefined && safetyDock.cargo !== undefined && cargo > safetyDock.cargo)) {
+                    this.safetyDocks.delete(m.id);
+                } else if (safetyDock) safetyDock.cargo = cargo;
                 if (m.hitPoints < m.maxHitPoints * 0.5) {
                     const nearbyHostiles = enemies.filter(e => e.rules.isSelectableCombatant && !e.rules.harvester &&
                         new Vector2(e.tile.rx, e.tile.ry).distanceTo(new Vector2(m.tile.rx, m.tile.ry)) <= 10);
@@ -92,9 +101,10 @@ export class MinerDefence {
                                 (enemy.tile.rx - unit.tile.rx) ** 2 + (enemy.tile.ry - unit.tile.ry) ** 2 <= 10 ** 2))
                             .sort((a, b) => (a.tile.rx - m.tile.rx) ** 2 + (a.tile.ry - m.tile.ry) ** 2 -
                                 ((b.tile.rx - m.tile.rx) ** 2 + (b.tile.ry - m.tile.ry) ** 2) || a.id - b.id)[0];
-                        if (refinery) {
+                        if (refinery && !(m.isIdle === false && this.safetyDocks.get(m.id)?.refineryId === refinery.id)) {
                             this.dispatchTargets.delete(m.id);
                             player.actions.orderUnits([m.id], OrderType.Dock, refinery.id);
+                            this.safetyDocks.set(m.id, { refineryId: refinery.id, cargo });
                         }
                     }
                 }

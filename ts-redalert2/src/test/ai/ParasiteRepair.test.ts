@@ -1,7 +1,12 @@
 import { describe, expect, test } from "bun:test";
 import { BuildStatus } from "../../game/gameobject/Building";
-import { ObjectType, OrderType, ZoneType } from "../../game/ai/thirdpartbot/builtIn/game-api";
+import { ObjectType, OrderType, Vector2, ZoneType } from "../../game/ai/thirdpartbot/builtIn/game-api";
 import { ParasiteRepair } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/parasiteRepair";
+import { MinerDefence } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/minerDefence";
+import { DockOrder } from "../../game/order/DockOrder";
+import { ReturnOreTask } from "../../game/gameobject/task/harvester/ReturnOreTask";
+import { GatherOreTask } from "../../game/gameobject/task/harvester/GatherOreTask";
+import { HarvesterStatus } from "../../game/gameobject/trait/HarvesterTrait";
 
 const forbidden = () => { throw new Error("Hidden or out-of-scope read"); };
 
@@ -53,6 +58,71 @@ function fixture() {
         wound() { tick = 0; repair.onAiUpdate(context); tick = 30; miner.hitPoints = 950; repair.onAiUpdate(context);
             tick = 60; miner.hitPoints = 900; repair.onAiUpdate(context); } };
 }
+
+function repairedMinerFixture() {
+    const f = fixture(); f.miner.rules.harvester = true; f.miner.harvestedOre = 5; f.miner.harvestedGems = 0;
+    const refinery = f.add(3, "GAREFN", "bot", 5, 0, ObjectType.Building); refinery.rules.refinery = true; refinery.rules.unitRepair = false;
+    f.context.parasiteRepair = f.repair;
+    const api = f.context.game;
+    api.getPlayerData = (name: string) => { expect(name).toBe("bot"); return { name, startLocation: new Vector2(), country: { name: "Americans" } }; };
+    const ore = { tile: { rx: 5, ry: 0 }, ore: 200, gems: 0, spawnsOre: false };
+    api.mapApi = { isVisibleTile: () => true, getAllTilesResourceData: () => [ore], getResourceCreditValues: () => ({ ore: 10, gems: 20 }),
+        getStartingLocations: () => [new Vector2(), new Vector2(100, 0)],
+        getTileResourceData: (tile: any) => tile.rx === 5 && tile.ry === 0 ? ore : { ore: 0, gems: 0 } };
+    const miners = new MinerDefence();
+    return { ...f, refinery, defend: () => miners.onAiUpdate(f.context) };
+}
+
+describe("repaired harvester income handoff", () => {
+    test("one repaired ordinary-ore miner keeps its repair-origin handoff through busy egress and resumes income once", () => {
+        const f = repairedMinerFixture(); f.wound(); f.hidden.add(f.drone.id);
+        f.miner.tile = { rx: 15, ry: 0 }; f.step(90, 1000); f.defend();
+        expect(f.repair.isRepairing(1)).toBe(true); expect(f.orders).toHaveLength(1);
+        f.miner.isIdle = true; f.step(120); f.defend();
+        expect(f.orders).toEqual([[[1], OrderType.Dock, 2], [[1], OrderType.Dock, 3]]);
+        expect(f.repair.isRepairing(1)).toBe(true);
+        f.step(150); f.defend();
+        expect(f.repair.isRepairing(1)).toBe(false); expect(f.orders).toHaveLength(2);
+        f.miner.isIdle = true; f.step(180); f.defend();
+        expect(f.orders).toHaveLength(2);
+    });
+    test("an ordinary idle healthy miner without a repair origin never acquires a new watchdog order", () => {
+        const f = repairedMinerFixture(); f.hidden.add(f.drone.id); f.step(0); f.defend(); f.step(30); f.defend();
+        expect(f.orders).toEqual([]); expect(f.repair.isRepairing(1)).toBe(false);
+    });
+    test.each(["hidden", "stolen", "unready", "warped"])("a %s refinery cannot consume the repaired miner's pending income handoff", reason => {
+        const f = repairedMinerFixture(); f.wound(); f.hidden.add(f.drone.id);
+        if (reason === "hidden") f.hidden.add(f.refinery.id);
+        if (reason === "stolen") { f.refinery.owner = "enemy"; f.hidden.add(f.refinery.id); }
+        if (reason === "unready") f.refinery.buildStatus = BuildStatus.BuildUp;
+        if (reason === "warped") f.refinery.isWarpedOut = true;
+        f.step(90, 1000); f.miner.isIdle = true; f.step(120);
+        expect(f.orders).toHaveLength(1); expect(f.repair.isRepairing(1)).toBe(true);
+        const ready = f.add(4, "GAREFN", "bot", 6, 0, ObjectType.Building); ready.rules.refinery = true; ready.rules.unitRepair = false;
+        f.step(150); expect(f.orders.at(-1)).toEqual([[1], OrderType.Dock, 4]);
+    });
+    test("an observed busy income handoff releases repair intent even if new ordinary damage arrives", () => {
+        const f = repairedMinerFixture(); f.wound(); f.hidden.add(f.drone.id);
+        f.step(90, 1000); f.miner.isIdle = true; f.step(120);
+        f.step(150, 950); expect(f.repair.isRepairing(1)).toBe(false); expect(f.orders).toHaveLength(2);
+    });
+    test("native refinery Dock creates ReturnOre, unloads real cargo, and schedules Gather without an AI Gather override", () => {
+        const owner = { credits: 0, buildings: [] };
+        const refinery = { rules: { refinery: true }, owner, isSpawned: true, warpedOutTrait: { isActive: () => false } };
+        const game: any = { map: { tileOccupation: {} }, areFriendly: () => true,
+            rules: { getTiberium: () => ({ value: 10 }), general: { purifierBonus: 0 }, ai: { tiberiumNearScan: 4, tiberiumFarScan: 16 } } };
+        const added: any[] = [], unit: any = { isVehicle: () => true,
+            harvesterTrait: { ore: 5, gems: 0, status: HarvesterStatus.Unloading },
+            unitOrderTrait: { getTasks: () => [task], addTask: (next: any) => added.push(next) } };
+        const dock = new DockOrder(game); dock.set(unit, { obj: refinery });
+        const task = dock.process()[0];
+        expect(task).toBeInstanceOf(ReturnOreTask);
+        // Isolated native unload-phase fixture; no private task state is used by the AI.
+        (task as any).target = refinery;
+        expect(task.onTick(unit)).toBe(true); expect(owner.credits).toBe(50);
+        expect(unit.harvesterTrait.ore).toBe(0); expect(added).toHaveLength(1); expect(added[0]).toBeInstanceOf(GatherOreTask);
+    });
+});
 
 describe("parasite repair observed HP window", () => {
     test("two real sixty-tick damage losses still trigger with intervening CMIN self-healing", () => {

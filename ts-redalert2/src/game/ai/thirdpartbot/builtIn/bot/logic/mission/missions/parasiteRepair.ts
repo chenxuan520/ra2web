@@ -9,6 +9,7 @@ interface VehicleObservation {
     hitPoints: number;
     lossTicks: number[];
     depotId?: number;
+    incomeHandoffSent?: boolean;
 }
 
 const distanceSquared = (a: UnitData, b: UnitData) => (a.tile.rx - b.tile.rx) ** 2 + (a.tile.ry - b.tile.ry) ** 2;
@@ -23,7 +24,7 @@ export class ParasiteRepair {
     private seenEnemyDrone = false;
     private vehicles = new Map<number, VehicleObservation>();
 
-    /** Repair intent, including travel/queueing; not a claim to private engine dock or parasite state. */
+    /** Repair intent through egress and income handoff; not private engine dock or parasite state. */
     isRepairing(id: number): boolean { return this.vehicles.get(id)?.depotId !== undefined; }
 
     onAiUpdate(context: SupabotContext): void {
@@ -56,8 +57,24 @@ export class ParasiteRepair {
             history.lossTicks = history.lossTicks.filter(loss => tick - loss <= DAMAGE_WINDOW);
             history.hitPoints = vehicle.hitPoints;
             this.vehicles.set(vehicle.id, history);
+            if (history.incomeHandoffSent && vehicle.isIdle === false) {
+                history.depotId = undefined;
+                history.incomeHandoffSent = undefined;
+            }
             if (vehicle.hitPoints >= vehicle.maxHitPoints) {
                 history.lossTicks = [];
+                if (history.depotId !== undefined && vehicle.rules.harvester) {
+                    if (history.incomeHandoffSent || !vehicle.isIdle || !vehicle.canMove) continue;
+                    const refinery = game.getVisibleUnits(player.name, "self", rules => rules.type === ObjectType.Building && rules.refinery)
+                        .map(id => game.getUnitData(id)).filter((unit): unit is UnitData => !!unit && unit.owner === player.name &&
+                            (unit.buildStatus as any) === BuildStatus.Ready && !unit.isWarpedOut && matchesDockRules(vehicle, unit))
+                        .sort((a, b) => distanceSquared(vehicle, a) - distanceSquared(vehicle, b) || a.id - b.id)[0];
+                    if (refinery) {
+                        player.actions.orderUnits([vehicle.id], OrderType.Dock, refinery.id);
+                        history.incomeHandoffSent = true;
+                    }
+                    continue;
+                }
                 history.depotId = undefined;
                 continue;
             }

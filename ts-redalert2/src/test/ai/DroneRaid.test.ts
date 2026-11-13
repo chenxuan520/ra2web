@@ -5,7 +5,7 @@ import { getDronePriority, getDroneProductionState, observeDroneProductionEvent 
 import { QueueController, QUEUES } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/queueController";
 import { DroneRaidMission, DroneRaidMissionFactory } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/droneRaidMission";
 import { HarassmentMission, HarassmentMissionFactory } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/harassmentMission";
-import { selectEarlyRaidTarget } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/strategicTargets";
+import { RAID_TARGET_SEPARATION, selectEarlyRaidTarget } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/strategicTargets";
 import { Mission, grabCombatants, noop } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/mission";
 import { MissionController } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missionController";
 import { BRUTAL_PARAMS } from "../../game/ai/thirdpartbot/builtIn/bot/strategy/brutalParams";
@@ -202,6 +202,19 @@ describe("two-tank early miner detachment without changing the three-tank rule",
         f.add("HTNK", "enemy", 60, 31);
         expect(selectEarlyRaidTarget(f.context, new Vector2(40, 0))?.id).toBe(nearer.id);
         f.launch(); expect((f.raids()[0] as any).targetId).toBe(nearer.id);
+    });
+    test("an early miner raid does not donate tanks into its own existing main-force convergence condition", () => {
+        const f = earlyFixture(); f.miner.tile = { rx: 70, ry: 0 };
+        f.launch();
+        expect(f.raids()).toHaveLength(0);
+        expect(f.main.getUnitIds()).toHaveLength(5);
+        expect(f.actions.orderUnits).not.toHaveBeenCalled();
+        expect(f.controller.getRequestedUnitTypes().size).toBe(0);
+    });
+    test.each([RAID_TARGET_SEPARATION - 1, RAID_TARGET_SEPARATION])("early detachment uses the unchanged main-target separation boundary: %i", gap => {
+        const f = earlyFixture(); f.miner.tile = { rx: 70 + gap, ry: 0 }; f.launch();
+        expect(f.raids()).toHaveLength(gap === RAID_TARGET_SEPARATION ? 1 : 0);
+        expect(f.main.getUnitIds()).toHaveLength(gap === RAID_TARGET_SEPARATION ? 3 : 5);
     });
     test.each([1799, 1800])("a second early raid observes cooldown %i", delta => {
         const f = earlyFixture(); f.launch(); f.controller.onAiUpdate(f.context);

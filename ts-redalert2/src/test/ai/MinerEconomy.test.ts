@@ -120,6 +120,33 @@ describe("independent miner economy", () => {
         expect(f.actions.orderUnits).toHaveBeenCalledWith([7], OrderType.Dock, 10);
     });
 
+    test("a busy safety return keeps its first Dock instead of replacing the same native return every thirty ticks", () => {
+        const f = fixture(); f.miner.hitPoints = 400; f.miner.isIdle = false; f.enemies.push(hostile(20, 3));
+        f.run(); f.at(90); f.run(); f.at(120); f.run();
+        expect(f.actions.orderUnits).toHaveBeenCalledTimes(1);
+        expect(f.actions.orderUnits).toHaveBeenCalledWith([7], OrderType.Dock, 10);
+    });
+    test("an actually idle failed safety return may retry without changing the existing cadence", () => {
+        const f = fixture(); f.miner.hitPoints = 400; f.miner.isIdle = false; f.enemies.push(hostile(20, 3));
+        f.run(); f.at(90); f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(1);
+        f.miner.isIdle = true; f.at(120); f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(2);
+    });
+    test("a newly unsafe destination permits a busy miner to select the current other safe refinery", () => {
+        const f = fixture(); f.miner.hitPoints = 400; f.miner.isIdle = false; f.enemies.push(hostile(20, 3)); f.run();
+        f.refineries.push({ id: 11, owner: "bot", tile: { rx: 0, ry: -30 }, rules: { refinery: true } });
+        f.enemies.push(hostile(21, 0, -11)); f.at(90); f.run();
+        expect(f.actions.orderUnits).toHaveBeenLastCalledWith([7], OrderType.Dock, 11);
+    });
+    test("actual renewed cargo collection ends a safety-return episode so another attack can retreat again", () => {
+        const f = fixture(); Object.assign(f.miner, { hitPoints: 400, isIdle: false, harvestedOre: 0, harvestedGems: 0 });
+        f.enemies.push(hostile(20, 3)); f.run(); f.at(90); f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(1);
+        f.miner.harvestedOre = 1; f.at(120); f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(2);
+    });
+    test("a temporarily ineligible own miner does not retain a stale safety-return suppression", () => {
+        const f = fixture(); f.miner.hitPoints = 400; f.miner.isIdle = false; f.enemies.push(hostile(20, 3)); f.run();
+        f.miner.isWarpedOut = true; f.at(90); f.run();
+        f.miner.isWarpedOut = false; f.at(120); f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(2);
+    });
     test("the retreat refinery is the closest safe one to the miner, not the spawn point", () => {
         const f = fixture();
         f.miner.tile.rx = 15;

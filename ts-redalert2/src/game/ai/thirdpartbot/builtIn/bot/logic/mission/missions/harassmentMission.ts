@@ -98,7 +98,7 @@ export class HarassmentMissionFactory {
         const center = new Vector2(cores.reduce((sum, unit) => sum + unit.tile.rx, 0) / cores.length,
             cores.reduce((sum, unit) => sum + unit.tile.ry, 0) / cores.length);
         const target = selectEarlyRaidTarget(context, center);
-        if (!target) return false;
+        if (!target || main.some(entry => entry.force.getAttackArea().distanceTo(new Vector2(target.tile.rx, target.tile.ry)) < RAID_TARGET_SEPARATION)) return false;
         const assigned = new Set(controller.getMissions().flatMap(mission => mission.getUnitIds()));
         let raiders = context.game.getVisibleUnits(context.player.name, "self").map(id => context.game.getUnitData(id))
             .filter((unit): unit is UnitData => isLivingUnit(unit) && !assigned.has(unit.id) && isCoreRaidTank(unit) && !context.parasiteRepair?.isRepairing(unit.id))

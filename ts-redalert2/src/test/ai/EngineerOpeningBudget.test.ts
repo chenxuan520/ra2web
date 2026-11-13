@@ -2,7 +2,6 @@ import { describe, expect, mock, test } from "bun:test";
 import { ObjectType, OrderType, SideType, Vector2 } from "../../game/ai/thirdpartbot/builtIn/game-api";
 import { EngineerMission, EngineerMissionFactory } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/engineerMission";
 import { MissionController } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missionController";
-import { readPressure } from "../../game/ai/thirdpartbot/builtIn/bot/logic/common/pressure";
 
 function fixture(miners = 1, core = 0, difficulty = "brutal") {
     let tick = 301, ownReads = 0;
@@ -68,32 +67,17 @@ describe("capture orders preserve existing movement", () => {
     });
 });
 
-describe("opening neutral-capture budget", () => {
-    test.each([[0, 0], [1, 0], [2, 0], [1, 1]])("miners%i/core%i preserves the first capture but not three simultaneous priority100 commitments", (miners, core) => {
+describe("historical visible cash-outpost admission", () => {
+    test.each([[0, 0], [1, 0], [2, 0], [1, 1]])("miners%i/core%i retains one priority100 mission per seen cash outpost without a new inventory gate", (miners, core) => {
         const f = fixture(miners, core); f.run();
         const missions = f.controller.getMissions() as EngineerMission[];
-        expect(missions).toHaveLength(1); expect(missions[0].targetId).toBe(1000); expect(missions[0].getPriority()).toBe(100);
-        f.at(602); f.run(); expect(f.controller.getMissions()).toHaveLength(1);
+        expect(missions).toHaveLength(3); expect(missions.map(mission => mission.targetId)).toEqual([1000, 1001, 1002]);
+        expect(missions.every(mission => mission.getPriority() === 100)).toBe(true); expect(f.ownReads()).toBe(0);
+        f.at(602); f.run(); expect(f.controller.getMissions()).toHaveLength(3);
     });
-    test("an actually captured cash outpost does not reopen the early commitment after its engineer is consumed", () => {
-        const f = fixture(); f.add(500, "CAOILD", "bot", { capturable: true, produceCashAmount: 20 });
-        f.run(); expect(f.controller.getMissions()).toEqual([]);
-    });
-    test.each(["quiet", "before", "contact", "one-miner"])("two-miner quiet expansion respects the existing %s window rather than always waiting for armor", condition => {
-        const f = fixture(condition === "one-miner" ? 1 : 2, 0); f.at(condition === "before" ? 2699 : 2700);
-        if (condition === "contact") f.add(500, "MTNK", "enemy", { type: ObjectType.Vehicle, isSelectableCombatant: true }).tile.rx = 40;
-        expect(readPressure(f.context).homeQuiet).toBe(condition !== "before" && condition !== "contact");
-        f.run(); expect(f.controller.getMissions()).toHaveLength(condition === "quiet" ? 3 : 1);
-    });
-    test("an actual owned outpost no longer blocks additional captures once two miners have a real quiet home", () => {
-        const f = fixture(2, 0); f.objects.find(unit => unit.id === 1000).owner = "bot"; f.at(2700);
-        expect(readPressure(f.context).homeQuiet).toBe(true);
-        f.run(); expect(f.controller.getMissions()).toHaveLength(2);
-    });
-    test("two real miners and one real core tank release the original additional capture missions", () => {
-        const f = fixture(); f.run(); f.add(2, "HARV"); f.add(100, "HTNK"); f.at(602); f.run();
-        expect(f.controller.getMissions()).toHaveLength(3);
-        expect(f.controller.getMissions().every(mission => mission.getPriority() === 100)).toBe(true);
+    test("an already owned cash outpost is excluded without blocking the other seen neutral outposts", () => {
+        const f = fixture(); f.objects.find(unit => unit.id === 1000).owner = "bot";
+        f.run(); expect(f.controller.getMissions().map(mission => (mission as EngineerMission).targetId)).toEqual([1001, 1002]);
     });
     test("a normal bot retains all original capture missions without new own-inventory checks", () => {
         const f = fixture(1, 0, "normal"); f.run();
