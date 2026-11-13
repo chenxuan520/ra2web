@@ -122,7 +122,7 @@ export function isPressured(context: PressureContext): boolean {
 export function getEconomyPressureLimits(context: PressureContext, miners: number) {
     const state = readPressure(context);
     return {
-        minerCoreFactor: !state.pressured && miners <= state.enemyMinersSeen ? 1 : 2,
+        minerCoreFactor: 1,
         crawlMiners: 2,
         extraRefineryCredits: state.passiveEnemy ? 600 : 1000,
     };

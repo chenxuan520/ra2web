@@ -106,11 +106,11 @@ describe("brutal miner capacity and production table", () => {
         expect(logic.getMaxCount(f.game, f.player, {} as any, null, "normal")).toBe(10);
         expect(logic.getMaxCount(f.game, f.player, {} as any, null, "brutal")).toBe(12);
     });
-    test.each([[0, 0, 120], [1, 0, 110], [2, 0, 110], [3, 1, 0], [3, 2, 78], [4, 3, 0], [4, 4, 78], [6, 20, 0]])(
+    test.each([[0, 0, 120], [1, 0, 110], [2, 0, 110], [3, 0, 0], [3, 1, 78], [3, 2, 78], [4, 1, 0], [4, 2, 78], [4, 3, 78], [4, 4, 78], [5, 2, 0], [5, 3, 78], [6, 20, 0]])(
         "without pressure miners=%i core=%i gives priority %i", (miners, core, expected) => {
             expect(fixture(miners, core).priority()).toBe(expected);
         });
-    test.each([[1, 1, 0], [1, 2, 90], [2, 3, 0], [2, 4, 78], [3, 2, 78]])(
+    test.each([[1, 1, 0], [1, 2, 90], [2, 3, 0], [2, 4, 78], [3, 0, 0], [3, 1, 78], [3, 2, 78]])(
         "early pressure miners=%i core=%i gives priority %i", (miners, core, expected) => {
             const f = fixture(miners, core); f.enemy(100, 40); f.enemy(101, 40);
             expect(f.priority()).toBe(expected);
@@ -132,14 +132,14 @@ describe("brutal miner capacity and production table", () => {
             expect(f.priority()).toBe(miners < 3 ? 110 : 0);
         }
     });
-    test("E7's real visible-miner peak relaxes only the sixth row while the player is not ahead", () => {
-        for (const [miners, core, expected] of [[4, 2, 78], [5, 3, 0]]) {
+    test("the authorized one-core factor applies even ahead of the visible miner peak or under pressure", () => {
+        for (const [miners, core, expected] of [[4, 2, 78], [5, 3, 78], [5, 2, 0]]) {
             const f = fixture(miners, core);
             for (let i = 0; i < 4; i++) f.enemy(100 + i, 80, ObjectType.Vehicle, { harvester: true });
             expect(f.priority()).toBe(expected);
             f.enemy(200, 40); f.enemy(201, 40); f.at(102);
-            expect(getEconomyPressureLimits(f.context, miners)).toMatchObject({ minerCoreFactor: 2, crawlMiners: 2, extraRefineryCredits: 1000 });
-            expect(f.priority()).toBe(0);
+            expect(getEconomyPressureLimits(f.context, miners)).toMatchObject({ minerCoreFactor: 1, crawlMiners: 2, extraRefineryCredits: 1000 });
+            expect(f.priority()).toBe(expected);
         }
     });
     test("an approved unpressured miner78 wins actual arbitration over the regular tank85, not only the debug priority", () => {
