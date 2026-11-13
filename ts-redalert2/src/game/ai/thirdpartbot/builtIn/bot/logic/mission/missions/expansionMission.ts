@@ -177,6 +177,7 @@ export class ExpansionMission extends Mission {
                         height: CONYARD_DEPLOY_SCAN_DISTANCE * 2,
                     },
                     mcv.rules.deploysInto,
+                    isMcvRelocating(gameApi, playerData.name),
                 );
                 const bestLocation = minBy(deployableLocations, (d) => toVector2(mcv.tile).distanceToSquared(d));
                 if (bestLocation) {
@@ -209,6 +210,7 @@ export class ExpansionMission extends Mission {
                         height: CONYARD_DEPLOY_SCAN_DISTANCE * 2,
                     },
                     mcv.rules.deploysInto,
+                    isMcvRelocating(gameApi, playerData.name),
                 );
                 const bestLocation = minBy(deployableLocations, (d) => toVector2(mcv.tile).distanceToSquared(d));
 
@@ -241,8 +243,8 @@ export class ExpansionMission extends Mission {
     }
 }
 
-function findDeployableLocations(playerName: string, gameApi: GameApi, rectangle: Rectangle, rules: string) {
-    const tiles = gameApi.map.getTilesInRect(rectangle);
+function findDeployableLocations(playerName: string, gameApi: GameApi, rectangle: Rectangle, rules: string, visibleOnly = false) {
+    const tiles = gameApi.map.getTilesInRect(rectangle).filter(tile => !visibleOnly || gameApi.mapApi.isVisibleTile(tile, playerName));
     const { foundation, foundationCenter } = gameApi.getBuildingPlacementData(rules);
 
     if (foundation.width !== foundation.height) {
@@ -267,7 +269,8 @@ function findDeployableLocations(playerName: string, gameApi: GameApi, rectangle
                 continue;
             }
             const right = x < rectangle.width - 1 ? grid[x + 1][y] : 0;
-            const bottom = y < rectangle.height - 1 ? grid[y][y + 1] : 0;
+            // Preserve legacy deployment; visible economic scans must stay in the current column.
+            const bottom = y < rectangle.height - 1 ? grid[visibleOnly ? x : y][y + 1] : 0;
             grid[x][y] = Math.min(right + 1, bottom + 1);
         }
     }
@@ -278,6 +281,11 @@ function findDeployableLocations(playerName: string, gameApi: GameApi, rectangle
         const gridX = tile.rx - rectangle.x;
         const gridY = tile.ry - rectangle.y;
         if (grid[gridX][gridY] >= foundation.width && grid[gridX][gridY] >= foundation.height) {
+            if (visibleOnly) {
+                const footprint = gameApi.mapApi.getTilesInRect({ x: tile.rx, y: tile.ry, width: foundation.width, height: foundation.height });
+                if (footprint.length !== foundation.width * foundation.height || footprint.some(point =>
+                    !gameApi.mapApi.isVisibleTile(point, playerName) || point.z !== tile.z || !canBuildOnTile(point, gameApi))) continue;
+            }
             locations.push(toVector2(tile).add(foundationCenter));
         }
     }
@@ -340,11 +348,18 @@ export function planMcvExpansion(context: SupabotContext, home: PatchPoint): { p
     const refineryCost = quietRelocation ? player.production.getAvailableObjects(QueueType.Structures).find(rules => rules.refinery)?.cost ?? Infinity : Infinity;
     const targets = patches.filter(patch => patch.value >= 12000 || quietRelocation && patch.isGem && patch.value >= refineryCost)
         .map(patch => scorePatch(game, data, patch))
-        .filter((entry): entry is ScoredPatch => !!entry && (quietRelocation ? entry.g > 24 && entry.g <= 40
+        .filter((entry): entry is ScoredPatch => !!entry && (quietRelocation ? entry.g <= 40 && (entry.g > 24 || isCrawlBlocked(game, player.name, entry.patch))
             : entry.g > 40 || isCrawlBlocked(game, player.name, entry.patch)))
         .sort((a, b) => b.score - a.score || a.g - b.g || (a.patch.id < b.patch.id ? -1 : a.patch.id > b.patch.id ? 1 : 0));
     for (const entry of targets) {
-        const candidate = [...context.matchAwareness.getNextExpansionCandidates()]
+        const candidates = [...context.matchAwareness.getNextExpansionCandidates()];
+        if (quietRelocation && !candidates.some(candidate => patchDistance({ rx: candidate.x, ry: candidate.y }, entry.patch) <= 12)) {
+            const yard = game.getVisibleUnits(player.name, "self", rules => rules.constructionYard)
+                .map(id => game.getGameObjectData(id)).find((yard): yard is GameObjectData => !!yard);
+            if (yard) candidates.push(...findDeployableLocations(player.name, game, { x: entry.patch.center.rx - 12,
+                y: entry.patch.center.ry - 12, width: 24, height: 24 }, yard.rules.name, true));
+        }
+        const candidate = candidates
             .filter(candidate => patchDistance({ rx: candidate.x, ry: candidate.y }, entry.patch) <= 12)
             .sort((a, b) => patchDistance({ rx: a.x, ry: a.y }, entry.patch) - patchDistance({ rx: b.x, ry: b.y }, entry.patch) || a.x - b.x || a.y - b.y)[0];
         if (candidate) return { patch: entry.patch, candidate };
@@ -387,7 +402,14 @@ export class ExpansionMissionFactory {
         }
 
         const threatCache = matchAwareness.getThreatCache();
-        if (!expandToCandidates[0] || !threatCache) {
+        const earlyYard = context.difficulty === "brutal" && !expandToCandidates[0] && threatCache &&
+            threatCache.totalAvailableAntiGroundFirepower > threatCache.totalOffensiveLandThreat &&
+            game.getCurrentTick() >= DO_NOT_EXPAND_BEFORE_TICKS && game.getCurrentTick() < 9000 &&
+            game.getCurrentTick() >= this.lastConyardPackAt + CONYARD_PACK_COOLDOWN
+            ? game.getVisibleUnits(player.name, "self", rules => rules.constructionYard)
+                .map(id => game.getGameObjectData(id)).find((yard): yard is GameObjectData => !!yard) : undefined;
+        const earlyPlan = earlyYard && planMcvExpansion(context, earlyYard.tile);
+        if ((!expandToCandidates[0] && !earlyPlan) || !threatCache) {
             return;
         }
 
@@ -410,7 +432,7 @@ export class ExpansionMissionFactory {
         let economyCandidate: Vector2 | undefined;
         if (context.difficulty === "brutal") {
             const yard = game.getGameObjectData(conYards[0]);
-            const plan = yard && planMcvExpansion(context, yard.tile);
+            const plan = earlyPlan ?? (yard && planMcvExpansion(context, yard.tile));
             if (!plan) return;
             economyCandidate = plan.candidate;
         }

@@ -1,6 +1,6 @@
 import { describe, expect, mock, test } from "bun:test";
 import { BuildStatus } from "../../game/gameobject/Building";
-import { ObjectType, OrderType, QueueStatus, QueueType, SpeedType, Vector2 } from "../../game/ai/thirdpartbot/builtIn/game-api";
+import { LandType, ObjectType, OrderType, QueueStatus, QueueType, SpeedType, TerrainType, Vector2 } from "../../game/ai/thirdpartbot/builtIn/game-api";
 import { getAdjacencyTiles, planRefinery } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/buildingRules";
 import { QueueController, QUEUES } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/queueController";
 import { getBaseCrawlState, isCrawlBlocked, isCrawlDefense, observeBaseCrawl, planBaseCrawl, recordBaseCrawlOrder }
@@ -292,6 +292,54 @@ describe("quiet existing-MCV relocation instead of long paid crawl", () => {
         expansion.addUnit(mcv.id); expansion._onAiUpdate(f.context);
         expect(f.context.player.actions.orderUnits).toHaveBeenCalledWith([mcv.id], OrderType.Move, 35, 0);
         expect(f.context.player.actions.queueForProduction).not.toHaveBeenCalled();
+    });
+});
+
+function localMcvFixture() {
+    const f = quietMcvFixture(); f.expansions.length = 0;
+    const hidden = new Set<string>(), blocked = new Set<string>();
+    const key = (tile: any) => `${tile.rx}_${tile.ry}`;
+    const tiles = Array.from({ length: 25 }, (_, i) => ({ id: `${30 + i % 5}_${Math.floor(i / 5)}`,
+        rx: 30 + i % 5, ry: Math.floor(i / 5), z: 0, rampType: 0, terrainType: TerrainType.Clear, landType: LandType.Clear }));
+    f.game.getBuildingPlacementData = () => ({ foundation: { width: 3, height: 3 }, foundationCenter: new Vector2(1, 1) });
+    f.game.mapApi.getTilesInRect = (rect: any) => tiles.filter(tile => tile.rx >= rect.x && tile.rx < rect.x + rect.width &&
+        tile.ry >= rect.y && tile.ry < rect.y + rect.height);
+    f.game.mapApi.isVisibleTile = (tile: any) => !hidden.has(key(tile));
+    f.game.mapApi.isPassableTile = (tile: any) => !blocked.has(key(tile));
+    f.game.map = f.game.mapApi;
+    return { ...f, tiles, hidden, blocked };
+}
+
+describe("early MCV visible footprint fallback", () => {
+    test("a real visible three-by-three footprint works without the old nine-clear-space/four-thousand sector candidate", () => {
+        const f = localMcvFixture(), missions = new MissionController(() => {});
+        expect(planMcvExpansion(f.context, { rx: 0, ry: 0 })?.candidate).toEqual(new Vector2(33, 1));
+        new ExpansionMissionFactory().maybeCreateMissions(f.context, missions, () => {});
+        expect(missions.getMissions().map(mission => mission.getUniqueName())).toEqual(["pack-up-1"]);
+        expect(f.context.player.actions.queueForProduction).not.toHaveBeenCalled();
+    });
+    test.each(["hidden", "too-small", "blocked", "center-hole", "ore", "height", "no-yard"])("the local fallback rejects %s rather than packing toward an invalid footprint", reason => {
+        const f = localMcvFixture(), missions = new MissionController(() => {});
+        if (reason === "hidden") for (const tile of f.tiles) {
+            f.hidden.add(tile.id);
+            Object.defineProperty(tile, "terrainType", { get() { throw Error("unseen deployment terrain cannot be read"); } });
+        }
+        if (reason === "too-small") f.tiles.splice(0, 23);
+        if (reason === "blocked") f.tiles.forEach(tile => f.blocked.add(tile.id));
+        if (reason === "center-hole") f.blocked.add("32_2");
+        if (reason === "ore") f.tiles.forEach(tile => tile.landType = LandType.Tiberium);
+        if (reason === "height") f.tiles.forEach(tile => tile.z = (tile.rx + tile.ry) % 2 * 2);
+        if (reason === "no-yard") f.units.splice(f.units.findIndex(unit => unit.name === "NACNST"), 1);
+        expect(planMcvExpansion(f.context, { rx: 0, ry: 0 })).toBeUndefined();
+        new ExpansionMissionFactory().maybeCreateMissions(f.context, missions, () => {});
+        expect(missions.getMissions()).toEqual([]);
+    });
+    test("an existing suitable candidate stays preferred and the late rule does not gain the new fallback", () => {
+        const f = localMcvFixture(); f.expansions.push(new Vector2(35, 0));
+        f.game.mapApi.getTilesInRect = () => { throw Error("a valid existing candidate needs no local scan"); };
+        expect(planMcvExpansion(f.context, { rx: 0, ry: 0 })?.candidate).toEqual(new Vector2(35, 0));
+        const late = mcvFixture(); late.expansions.length = 0;
+        expect(planMcvExpansion(late.context, { rx: 0, ry: 0 })).toBeUndefined();
     });
 });
 
