@@ -31,12 +31,8 @@ function fixture(difficulty: "normal" | "brutal" = "brutal", dogName = "DOG", hi
         power: { total: 200, drain: 0, isLowPower: false } };
     const starts = [player.startLocation as Vector2, new Vector2(140, 20)];
     const objects = new Map<number, TestUnit>(), visibleEnemies = new Set<number>();
-    const explored = new Set<string>(["20_20", "21_20", "37_3", "44_20", "37_37", "20_44", "3_37", "3_3", "60_20", "48_48", "20_60",
-        "57_5", "57_35", "35_57", "5_57"]), blocked = new Set<string>();
-    for (const [x, y] of [[37, 3], [44, 20], [37, 37], [20, 44], [3, 37], [3, 3],
-        [60, 20], [48, 48], [20, 60], [57, 5], [57, 35], [35, 57], [5, 57]]) {
-        for (const [dx, dy] of [[6, 0], [-6, 0], [0, 6], [0, -6], [6, 6], [6, -6], [-6, 6], [-6, -6]]) explored.add(`${x + dx}_${y + dy}`);
-    }
+    const explored = new Set<string>(["20_20", "21_20", "37_3", "44_20", "37_37", "20_44", "3_37", "3_3"]), blocked = new Set<string>();
+    const extraRadii: number[] = [];
     const orders: RecordedOrder[] = [], debug = new Map<number, string | undefined>(), passabilityReads: string[] = [], logs: string[] = [];
     const placementTiles = [tile(24, 20)];
     const queue = [new PrioritisedScoutTarget(800, new Vector2(20, 80))];
@@ -116,7 +112,8 @@ function fixture(difficulty: "normal" | "brutal" = "brutal", dogName = "DOG", hi
     const awareness = {
         getSectorCache: () => ({ getOverallVisibility: () => overallVisibility }),
         getScoutingManager: () => ({ hasScoutTargets: () => queue.length > 0,
-            getNewScoutTarget() { queueReads++; return queue.shift(); } }),
+            getNewScoutTarget() { queueReads++; return queue.shift(); },
+            addRadiusToScout(_game: GameApi, _home: Vector2, _sectors: unknown, radius: number) { extraRadii.push(radius); } }),
     } as unknown as MatchAwareness;
     const context: SupabotContext = { game, player: { name: player.name, production, actions }, difficulty,
         matchAwareness: awareness };
@@ -129,7 +126,7 @@ function fixture(difficulty: "normal" | "brutal" = "brutal", dogName = "DOG", hi
         return action;
     }
     return { player, starts, objects, explored, visibleEnemies, blocked, resources, available, orders, debug, logs, placementTiles,
-        passabilityReads, context, game, map, queue, controller, factory, add, missionStep,
+        passabilityReads, extraRadii, context, game, map, queue, controller, factory, add, missionStep,
         at(value: number) { tick = value; },
         revealAll(value = true) { allTerrainVisible = value; },
         visibility(value: number) { overallVisibility = value; },
@@ -245,100 +242,38 @@ describe("T2 scout directions, recruitment and real handoff", () => {
         expect(f.queueReads()).toBe(2);
     });
 
-    test("the second scout reveals opaque home-economy sectors before the distant queue, without reading hidden resources", () => {
-        const f = fixture(); f.explored.delete("37_3"); f.ensure();
+    test("the second scout consumes original public sector priorities before any extra home sweep", () => {
+        const f = fixture(); f.queue.unshift(new PrioritisedScoutTarget(880, new Vector2(37, 3))); f.explored.delete("37_3"); f.ensure();
         f.add(1, "DOG", 23); f.add(2, "DOG", 24); f.scout().addUnit(1); f.scout().addUnit(2);
-        f.map.getAllTilesResourceData = () => { throw Error("scout cannot inspect hidden resources"); };
+        f.map.getAllTilesResourceData = () => { throw Error("original public sector orders must not inspect hidden resources"); };
         f.missionStep(f.scout(), 32);
         expect(f.orders).toContainEqual({ ids: [2], type: OrderType.AttackMove, xOrTarget: 37, y: 3 });
-        expect(f.queueReads()).toBe(0);
-        f.explored.add("37_3"); f.objects.get(2)!.tile = tile(37, 4); f.missionStep(f.scout(), 64);
-        expect(f.orders).toContainEqual({ ids: [2], type: OrderType.AttackMove, xOrTarget: 20, y: 80 });
-        expect((f.scout() as OpeningScoutingMission).getTotalUnitsReceived()).toBe(2);
+        expect(f.queueReads()).toBe(1); expect(f.extraRadii).toEqual([]);
+        expect(f.privateReads()).toBe(0);
     });
-    test("the existing north-home projection is explored first instead of expiring at the end of the opening queue", () => {
-        const f = fixture(); f.player.startLocation.set(20, 50);
-        f.objects.get(100)!.tile = tile(20, 50); f.objects.get(101)!.tile = tile(21, 50); f.ensure();
-        f.add(1, "DOG", 23, 50); f.add(2, "DOG", 24, 50); f.scout().addUnit(1); f.scout().addUnit(2);
-        f.map.getAllTilesResourceData = () => { throw Error("public scout goals cannot inspect hidden minerals"); };
-        f.missionStep(f.scout(), 32);
-        expect(f.orders).toContainEqual({ ids: [2], type: OrderType.AttackMove, xOrTarget: 20, y: 26 });
-        expect(f.queueReads()).toBe(0); expect(f.privateReads()).toBe(0);
-        expect((f.scout() as OpeningScoutingMission).getTotalUnitsReceived()).toBe(2);
-    });
-    test("exhausting nearby home goals does not hand off before an opaque outer home sector is explored", () => {
-        const f = fixture(); f.queue.length = 0; f.explored.add("140_20"); f.explored.delete("60_20"); f.ensure();
+    test("an empty early queue keeps the original two receipts until more sector goals or the real deadline", () => {
+        const f = fixture(); f.queue.length = 0; f.explored.add("140_20"); f.ensure();
         f.add(1, "DOG", 23); f.add(2, "DOG", 24); f.scout().addUnit(1); f.scout().addUnit(2);
-        f.map.getAllTilesResourceData = () => { throw Error("outer public scout goals cannot inspect hidden resources"); };
         expect(f.missionStep(f.scout(), 32).type).toBe("noop");
-        expect(f.orders).toContainEqual({ ids: [2], type: OrderType.AttackMove, xOrTarget: 60, y: 20 });
-        expect(f.queueReads()).toBe(0); expect(f.privateReads()).toBe(0);
-        expect((f.scout() as OpeningScoutingMission).getTotalUnitsReceived()).toBe(2);
+        expect(f.scout().getUnitIds()).toEqual([1, 2]);
+        f.queue.push(new PrioritisedScoutTarget(800, new Vector2(20, 80)));
+        f.missionStep(f.scout(), 64);
+        expect(f.orders).toContainEqual({ ids: [2], type: OrderType.AttackMove, xOrTarget: 20, y: 80 });
         expect(f.missionStep(f.scout(), 3600).type).toBe("disband");
-        expect(f.watch(1).getUnitIds()).toEqual([1]); expect(f.watch(2).getUnitIds()).toEqual([2]);
-    });
-    test("the public outer ring covers the angular gap between cardinal and diagonal projections", () => {
-        const f = fixture(); f.explored.delete("57_5"); f.ensure();
-        f.add(1, "DOG", 23); f.add(2, "DOG", 24); f.scout().addUnit(1); f.scout().addUnit(2);
-        f.map.getAllTilesResourceData = () => { throw Error("outer headings cannot inspect hidden ore"); };
-        f.missionStep(f.scout(), 32);
-        expect(f.orders).toContainEqual({ ids: [2], type: OrderType.AttackMove, xOrTarget: 57, y: 5 });
-        expect(f.queueReads()).toBe(0); expect(f.privateReads()).toBe(0);
         expect((f.scout() as OpeningScoutingMission).getTotalUnitsReceived()).toBe(2);
     });
-    test("an explored outer projection center cannot hide its still-opaque mining fringe", () => {
-        const f = fixture(); f.explored.delete("66_20"); f.ensure();
-        f.add(1, "DOG", 23); f.add(2, "DOG", 24); f.scout().addUnit(1); f.scout().addUnit(2);
-        f.map.getAllTilesResourceData = () => { throw Error("scout fringes cannot inspect hidden ore"); };
-        expect(f.game.mapApi.isVisibleTile(tile(60, 20) as any, f.player.name)).toBe(true);
-        f.missionStep(f.scout(), 32);
-        expect(f.orders).toContainEqual({ ids: [2], type: OrderType.AttackMove, xOrTarget: 66, y: 20 });
-        expect(f.queueReads()).toBe(0); expect(f.privateReads()).toBe(0);
-    });
-    test("a near explored center sends the scout to its still-opaque public fringe before the legacy queue", () => {
-        const f = fixture(); f.explored.delete("26_44"); f.ensure();
-        f.add(1, "DOG", 23); f.add(2, "DOG", 24); f.scout().addUnit(1); f.scout().addUnit(2);
-        f.map.getAllTilesResourceData = () => { throw Error("public fringe probes cannot inspect hidden resources"); };
-        f.missionStep(f.scout(), 32);
-        expect(f.orders).toContainEqual({ ids: [2], type: OrderType.AttackMove, xOrTarget: 26, y: 44 });
-        f.explored.add("26_44"); f.objects.get(2)!.tile = tile(26, 43); f.missionStep(f.scout(), 64);
-        expect(f.orders.filter(order => order.ids.includes(2)).at(-1)).toMatchObject({ xOrTarget: 20, y: 80 });
-        expect(f.privateReads()).toBe(0);
-    });
-    test("a newly explored impassable home goal is not retried for the full no-progress timeout", () => {
-        const f = fixture(); f.explored.delete("20_44"); f.ensure();
-        f.add(1, "DOG", 23); f.add(2, "DOG", 24); f.scout().addUnit(1); f.scout().addUnit(2);
-        f.missionStep(f.scout(), 32);
-        f.explored.add("20_44"); f.blocked.add("20_44"); f.missionStep(f.scout(), 64);
-        expect(f.orders.filter(order => order.ids.includes(2)).at(-1)).toMatchObject({ xOrTarget: 20, y: 80 });
-        expect(f.passabilityReads).toContain("20_44"); expect(f.privateReads()).toBe(0);
-    });
-    test("a near home goal also requires arrival rather than stopping at the edge of its revealed center", () => {
-        const f = fixture(); f.explored.delete("20_44"); f.ensure();
-        f.add(1, "DOG", 23); f.add(2, "DOG", 24); f.scout().addUnit(1); f.scout().addUnit(2);
-        f.map.getAllTilesResourceData = () => { throw Error("near public goals cannot inspect hidden resources"); };
-        f.missionStep(f.scout(), 32); f.explored.add("20_44"); f.missionStep(f.scout(), 64);
-        expect(f.queueReads()).toBe(0);
-        expect(f.orders.filter(order => order.ids.includes(2)).at(-1)).toMatchObject({ xOrTarget: 20, y: 44 });
-        f.objects.get(2)!.tile = tile(20, 43); f.missionStep(f.scout(), 96);
-        expect(f.orders.filter(order => order.ids.includes(2)).at(-1)).toMatchObject({ xOrTarget: 20, y: 80 });
-        expect(f.privateReads()).toBe(0);
-    });
-    test("an outer home goal is not completed merely because another unit reveals its tile", () => {
-        const f = fixture(); f.explored.delete("60_20"); f.ensure();
-        f.add(1, "DOG", 23); f.add(2, "DOG", 24); f.scout().addUnit(1); f.scout().addUnit(2);
-        f.map.getAllTilesResourceData = () => { throw Error("public outer goals cannot inspect hidden resources"); };
-        f.missionStep(f.scout(), 32); f.explored.add("60_20"); f.missionStep(f.scout(), 64);
-        expect(f.queueReads()).toBe(0);
-        expect(f.orders.filter(order => order.ids.includes(2)).at(-1)).toMatchObject({ xOrTarget: 60, y: 20 });
-        f.objects.get(2)!.tile = tile(59, 20); f.missionStep(f.scout(), 96);
-        expect(f.orders.filter(order => order.ids.includes(2)).at(-1)).toMatchObject({ xOrTarget: 20, y: 80 });
-        expect(f.privateReads()).toBe(0);
+    test("a quiet established one-field opening adds one public forty-radius sector sweep, not a fixed ring", () => {
+        const f = fixture(); f.add(102, "GAWEAP", 22); f.add(103, "GAREFN", 30);
+        f.resources.push({ tile: tile(30, 20), ore: 800, gems: 0, spawnsOre: false }); f.explored.add("30_20");
+        f.ensure(); f.add(1, "DOG", 23); f.add(2, "DOG", 24); f.scout().addUnit(1); f.scout().addUnit(2);
+        f.missionStep(f.scout(), 32); f.missionStep(f.scout(), 64);
+        expect(f.extraRadii).toEqual([40]); expect(f.privateReads()).toBe(0);
+        expect(f.scout().getUnitIds()).toEqual([1, 2]);
     });
     test.each(["quiet", "pressure", "second-field", "deadline"])("home-economy scouting extension respects %s", condition => {
         const f = fixture(); f.add(102, "GAWEAP", 22); f.add(103, "GAREFN", 30);
         f.resources.push({ tile: tile(30, 20), ore: 800, gems: 0, spawnsOre: false }); f.explored.add("30_20");
-        if (condition === "second-field") f.resources.push({ tile: tile(60, 20), ore: 800, gems: 0, spawnsOre: false });
+        if (condition === "second-field") { f.resources.push({ tile: tile(60, 20), ore: 800, gems: 0, spawnsOre: false }); f.explored.add("60_20"); }
         if (condition === "pressure") { f.add(200, "MTNK", 40, 20, "enemy"); f.visibleEnemies.add(200); }
         f.ensure(); f.add(1, "DOG", 23); f.add(2, "DOG", 24); f.scout().addUnit(1); f.scout().addUnit(2);
         const action = f.missionStep(f.scout(), condition === "deadline" ? 5400 : 3600);
@@ -418,14 +353,15 @@ describe("T2 scout directions, recruitment and real handoff", () => {
         expect(f.logs.filter(message => message.includes("multiple missions"))).toEqual([]);
     });
 
-    test("finishing the public target alone is not a false ownership transfer; finishing the queue is", () => {
+    test("finishing the public target or an early queue is not a false ownership transfer before the deadline", () => {
         const f = fixture(); f.ensure();
         f.add(1, "DOG", 70); f.add(2, "DOG", 24); f.scout().addUnit(1); f.scout().addUnit(2);
         f.explored.add("140_20");
         expect(f.missionStep(f.scout(), 32).type).toBe("noop");
         expect(f.scout().getUnitIds()).toEqual([1, 2]); expect(f.watch(1).getUnitIds()).toEqual([]);
         f.explored.add("20_80");
-        expect(f.missionStep(f.scout(), 64).type).toBe("disband");
+        expect(f.missionStep(f.scout(), 64).type).toBe("noop");
+        expect(f.missionStep(f.scout(), 3600).type).toBe("disband");
         expect(f.scout().getUnitIds()).toEqual([]); expect(f.watch(1).getUnitIds()).toEqual([1]);
         expect(f.watch(2).getUnitIds()).toEqual([2]);
     });

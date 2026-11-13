@@ -1,4 +1,4 @@
-import { ActionsApi, BotContext, GameApi, ObjectType, OrderType, PlayerData, SpeedType, Vector2 } from "../../../../game-api";
+import { ActionsApi, BotContext, GameApi, ObjectType, OrderType, PlayerData, Vector2 } from "../../../../game-api";
 import { MatchAwareness } from "../../awareness";
 import {
     Mission,
@@ -181,10 +181,8 @@ export class OpeningScoutingMission extends Mission {
     private initialScoutIds: number[] = [];
     private priority = 85;
     private firstTargetComplete = false;
-    private queueComplete = false;
     private queueTarget: PrioritisedScoutTarget | null = null;
-    private homeTargets?: PrioritisedScoutTarget[];
-    private homeTargetInProgress?: PrioritisedScoutTarget;
+    private expandedHomeScouting = false;
     private queueTargetRefreshedAt = 0;
     private queueMinDistance = Infinity;
     private orders = new DogOrders(SCOUT_MOVE_COOLDOWN_TICKS);
@@ -217,7 +215,8 @@ export class OpeningScoutingMission extends Mission {
         const excess = scouts.filter(scout => !this.initialScoutIds.includes(scout.id)).map(scout => scout.id);
         if (excess.length) return releaseUnits(excess);
         let extendHomeScout = false;
-        if (tick >= 3600 && tick < 5400 && !isPressured(context) &&
+        if (tick < 5400 && (tick >= 3600 || !this.expandedHomeScouting) && !isPressured(context) &&
+            scouts.some(scout => scout.id === this.initialScoutIds[1]) &&
             game.getVisibleUnits(player.name, "self", rules => rules.weaponsFactory).length > 0 &&
             game.getVisibleUnits(player.name, "self", rules => rules.refinery).length > 0) {
             const home = game.getPlayerData(player.name).startLocation;
@@ -228,6 +227,10 @@ export class OpeningScoutingMission extends Mission {
                 patchDistance({ rx: home.x, ry: home.y }, patch) <= Math.min(...otherStarts.map(start => patchDistance({ rx: start.x, ry: start.y }, patch))) &&
                 anchors.some(anchor => anchor && patchDistance(anchor, patch) <= 40));
             extendHomeScout = fields.length < 2;
+            if (extendHomeScout && !this.expandedHomeScouting) {
+                matchAwareness.getScoutingManager().addRadiusToScout(game, home, matchAwareness.getSectorCache(), 40, 900);
+                this.expandedHomeScouting = true;
+            }
         }
         if (tick >= 3600 && !extendHomeScout || (matchAwareness.getSectorCache().getOverallVisibility() || 0) > 0.9) return this.finish(context);
 
@@ -247,7 +250,7 @@ export class OpeningScoutingMission extends Mission {
             if (post) this.orders.move(context, first, post); else this.orders.stop(context, first);
         }
 
-        if (second && !this.queueComplete) {
+        if (second) {
             if (this.queueTarget) {
                 const tile = game.mapApi.getTile(this.queueTarget.target.x, this.queueTarget.target.y);
                 const currentDistance = getDistanceBetweenTileAndPoint(second.tile, this.queueTarget.target);
@@ -255,54 +258,27 @@ export class OpeningScoutingMission extends Mission {
                     this.queueMinDistance = currentDistance;
                     this.queueTargetRefreshedAt = tick;
                 }
-                const homeGoal = this.queueTarget.priority === 1000;
-                const timedOut = !this.queueTarget.permanent && tick > this.queueTargetRefreshedAt + MAX_TICKS_PER_TARGET;
-                if (!tile || game.mapApi.isVisibleTile(tile, player.name) && (!homeGoal || currentDistance <= 1 ||
-                    !game.mapApi.isPassableTile(tile, SpeedType.Foot, game.mapApi.hasBridgeOnTile(tile), true)) || timedOut) {
-                    if (timedOut) this.homeTargetInProgress = undefined;
-                    this.queueTarget = null;
-                }
+                if (!tile || game.mapApi.isVisibleTile(tile, player.name) ||
+                    !this.queueTarget.permanent && tick > this.queueTargetRefreshedAt + MAX_TICKS_PER_TARGET) this.queueTarget = null;
             }
             if (!this.queueTarget) {
-                // Discover the home economy before spending the second scout on distant sectors.
-                // These are public-start projections, never hidden resource coordinates.
-                const home = game.getPlayerData(player.name).startLocation;
-                this.homeTargets ??= [[0, -24], [17, -17], [24, 0], [17, 17], [0, 24], [-17, 17], [-24, 0], [-17, -17],
-                    [0, -40], [15, -37], [28, -28], [37, -15], [40, 0], [37, 15], [28, 28], [15, 37],
-                    [0, 40], [-15, 37], [-28, 28], [-37, 15], [-40, 0], [-37, -15], [-28, -28], [-15, -37]]
-                    .map(([dx, dy]) => new PrioritisedScoutTarget(1000, new Vector2(home.x + dx, home.y + dy)));
-                let next = this.homeTargetInProgress ?? this.homeTargets.shift() ?? matchAwareness.getScoutingManager().getNewScoutTarget();
-                // The first dog reserves its public start; do not send both dogs
-                // to that same existing queue entry before other sectors.
+                const scouting = matchAwareness.getScoutingManager();
+                let next = scouting.hasScoutTargets() ? scouting.getNewScoutTarget() : undefined;
+                // Preserve the original public sector priorities and the first dog's reserved enemy start.
                 while (next) {
-                    const goal = next.target, tile = game.mapApi.getTile(goal.x, goal.y);
-                    const seen = !!tile && game.mapApi.isVisibleTile(tile, player.name);
-                    const fringe = seen && next.priority === 1000 ?
-                        [[6, 0], [-6, 0], [0, 6], [0, -6], [6, 6], [6, -6], [-6, 6], [-6, -6]]
-                            .map(([dx, dy]) => game.mapApi.getTile(goal.x + dx, goal.y + dy))
-                            .find(point => point && !game.mapApi.isVisibleTile(point, player.name) &&
-                                !(enemyStart && point.rx === enemyStart.x && point.ry === enemyStart.y)) : undefined;
-                    if (tile && (!seen || fringe) && !(enemyStart && goal.x === enemyStart.x && goal.y === enemyStart.y)) {
-                        if (next.priority === 1000) {
-                            // Keep the original goal until its public fringes, including higher ground, are actually explored.
-                            this.homeTargetInProgress = next;
-                            if (fringe) next = new PrioritisedScoutTarget(1000, new Vector2(fringe.rx, fringe.ry));
-                        }
-                        break;
-                    }
-                    this.homeTargetInProgress = undefined;
-                    next = this.homeTargets.shift() ?? matchAwareness.getScoutingManager().getNewScoutTarget();
+                    const tile = game.mapApi.getTile(next.target.x, next.target.y);
+                    if (tile && !game.mapApi.isVisibleTile(tile, player.name) &&
+                        !(enemyStart && next.target.x === enemyStart.x && next.target.y === enemyStart.y)) break;
+                    next = scouting.hasScoutTargets() ? scouting.getNewScoutTarget() : undefined;
                 }
                 this.queueTarget = next ?? null;
                 this.queueTargetRefreshedAt = tick;
                 this.queueMinDistance = Infinity;
-                if (!next) this.queueComplete = true;
             }
             if (this.queueTarget) this.orders.move(context, second,
                 { rx: this.queueTarget.target.x, ry: this.queueTarget.target.y }, OrderType.AttackMove);
         }
-        if (this.initialScoutIds.length >= 2 && !second) this.queueComplete = true;
-        if (this.initialScoutIds.length >= 2 && this.firstTargetComplete && this.queueComplete) return this.finish(context);
+        if (this.initialScoutIds.length >= 2 && scouts.length === 0) return this.finish(context);
         if (this.initialScoutIds.length < 2) {
             const name = preferredDog(context);
             return name ? requestUnits({ [name]: this.priority }) : noop();
