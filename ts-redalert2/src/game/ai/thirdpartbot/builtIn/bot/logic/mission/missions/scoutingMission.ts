@@ -1,4 +1,4 @@
-import { ActionsApi, BotContext, GameApi, OrderType, PlayerData, Vector2 } from "../../../../game-api";
+import { ActionsApi, BotContext, GameApi, ObjectType, OrderType, PlayerData, Vector2 } from "../../../../game-api";
 import { MatchAwareness } from "../../awareness";
 import {
     Mission,
@@ -18,6 +18,8 @@ import { PrioritisedScoutTarget } from "../../common/scout";
 import { MissionContext, SupabotContext } from "../../common/context";
 import { getKnownEnemyDirections } from "../../common/knownEnemyDirections";
 import { DogOrders, WatchPostMissions, getPublicEnemyStart, livingMissionDogs, preferredDog, selectWatchPost } from "./watchPostMission";
+import { findVisiblePatches, patchDistance } from "../../common/orePatches";
+import { isPressured } from "../../common/pressure";
 
 const SCOUT_MOVE_COOLDOWN_TICKS = 30;
 
@@ -213,7 +215,20 @@ export class OpeningScoutingMission extends Mission {
         const scouts = livingMissionDogs(context, this);
         const excess = scouts.filter(scout => !this.initialScoutIds.includes(scout.id)).map(scout => scout.id);
         if (excess.length) return releaseUnits(excess);
-        if (tick >= 3600 || (matchAwareness.getSectorCache().getOverallVisibility() || 0) > 0.9) return this.finish(context);
+        let extendHomeScout = false;
+        if (tick >= 3600 && tick < 5400 && !isPressured(context) &&
+            game.getVisibleUnits(player.name, "self", rules => rules.weaponsFactory).length > 0 &&
+            game.getVisibleUnits(player.name, "self", rules => rules.refinery).length > 0) {
+            const home = game.getPlayerData(player.name).startLocation;
+            const otherStarts = game.mapApi.getStartingLocations().filter(start => start.x !== home.x || start.y !== home.y);
+            const anchors = game.getVisibleUnits(player.name, "self", rules => rules.type === ObjectType.Building && rules.baseNormal && !rules.wall)
+                .map(id => game.getGameObjectData(id)?.tile);
+            const fields = findVisiblePatches(game, player.name).filter(patch =>
+                patchDistance({ rx: home.x, ry: home.y }, patch) <= Math.min(...otherStarts.map(start => patchDistance({ rx: start.x, ry: start.y }, patch))) &&
+                anchors.some(anchor => anchor && patchDistance(anchor, patch) <= 40));
+            extendHomeScout = fields.length < 2;
+        }
+        if (tick >= 3600 && !extendHomeScout || (matchAwareness.getSectorCache().getOverallVisibility() || 0) > 0.9) return this.finish(context);
 
         const enemyStart = getPublicEnemyStart(game, game.getPlayerData(player.name));
         const first = scouts.find(scout => scout.id === this.initialScoutIds[0]);

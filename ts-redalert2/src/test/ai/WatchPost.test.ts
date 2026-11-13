@@ -295,6 +295,20 @@ describe("T2 scout directions, recruitment and real handoff", () => {
         expect(f.orders.filter(order => order.ids.includes(2)).at(-1)).toMatchObject({ xOrTarget: 20, y: 80 });
         expect(f.privateReads()).toBe(0);
     });
+    test.each(["quiet", "pressure", "second-field", "deadline"])("home-economy scouting extension respects %s", condition => {
+        const f = fixture(); f.add(102, "GAWEAP", 22); f.add(103, "GAREFN", 30);
+        f.resources.push({ tile: tile(30, 20), ore: 800, gems: 0, spawnsOre: false }); f.explored.add("30_20");
+        if (condition === "second-field") f.resources.push({ tile: tile(60, 20), ore: 800, gems: 0, spawnsOre: false });
+        if (condition === "pressure") { f.add(200, "MTNK", 40, 20, "enemy"); f.visibleEnemies.add(200); }
+        f.ensure(); f.add(1, "DOG", 23); f.add(2, "DOG", 24); f.scout().addUnit(1); f.scout().addUnit(2);
+        const action = f.missionStep(f.scout(), condition === "deadline" ? 5400 : 3600);
+        expect(action.type).toBe(condition === "quiet" ? "noop" : "disband");
+        if (condition === "quiet") {
+            expect(f.scout().getUnitIds()).toEqual([1, 2]);
+            expect(f.missionStep(f.scout(), 5400).type).toBe("disband");
+        }
+        expect(f.privateReads()).toBe(0);
+    });
     test("an empty old queue does not suppress the first public-start scout", () => {
         const f = fixture(); f.queue.length = 0; f.ensure();
         expect(f.scout()).toBeInstanceOf(OpeningScoutingMission);
