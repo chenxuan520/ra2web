@@ -144,6 +144,7 @@ export class QueueController {
             const logic = BUILDING_NAME_TO_RULES.get(option.name);
             if (!logic) continue;
             if (context.difficulty === "brutal" && game.getVisibleUnits(player.name, "self", rules => rules.harvester).length >= 3 &&
+                game.getVisibleUnits(player.name, "self", rules => rules.harvester).length >= desiredMiners(game, playerData) - 1 &&
                 !productionApi.getQueueData(QueueType.Vehicles).items.some(item => item.rules.name === option.name) &&
                 (productionApi.getQueueData(QueueType.Structures).items.some(item =>
                     item.rules.refinery && item.rules.freeUnit === option.name) ||

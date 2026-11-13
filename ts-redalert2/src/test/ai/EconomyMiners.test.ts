@@ -123,13 +123,13 @@ describe("brutal miner capacity and production table", () => {
         const allied = fixture(1, 1, "Americans"); allied.enemy(100, 22);
         expect(allied.priority()).toBe(90);
     });
-    test.each([1, 2, 3])("a requested/active supplied refinery suppresses factory miners only from three (miners=%i)", miners => {
+    test.each([1, 2, 3, 5])("a requested/active supplied refinery reserves only its one future miner (miners=%i)", miners => {
         for (const active of [false, true]) {
             const f = fixture(miners, 4);
             const refinery = { name: "NAREFN", refinery: true, freeUnit: "HARV", cost: 2000, type: ObjectType.Building };
             f.options.set(QueueType.Structures, [refinery]); f.requests.set("NAREFN", { priority: 50, specificLocation: null });
             if (active) Object.assign(f.queues.get(QueueType.Structures)!, { status: QueueStatus.Active, items: [{ rules: refinery, quantity: 1 }] });
-            expect(f.priority()).toBe(miners < 3 ? 110 : 0);
+            expect(f.priority()).toBe(miners < 3 ? 110 : miners === 3 ? 78 : 0);
         }
     });
     test("the authorized one-core factor applies even ahead of the visible miner peak or under pressure", () => {
