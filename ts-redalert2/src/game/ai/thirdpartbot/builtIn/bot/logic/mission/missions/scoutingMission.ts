@@ -17,7 +17,7 @@ import { getDistanceBetweenTileAndPoint } from "../../map/map";
 import { PrioritisedScoutTarget } from "../../common/scout";
 import { MissionContext, SupabotContext } from "../../common/context";
 import { getKnownEnemyDirections } from "../../common/knownEnemyDirections";
-import { DogOrders, WatchPostMissions, getPublicEnemyStart, livingMissionDogs, preferredDog, selectWatchPost } from "./watchPostMission";
+import { DogOrders, WatchPostMissions, getPublicEnemyStart, legalDogPoint, livingMissionDogs, preferredDog, selectWatchPost } from "./watchPostMission";
 import { findVisiblePatches, patchDistance } from "../../common/orePatches";
 import { isPressured } from "../../common/pressure";
 
@@ -184,6 +184,8 @@ export class OpeningScoutingMission extends Mission {
     private queueTarget: PrioritisedScoutTarget | null = null;
     private expandedHomeScouting = false;
     private nearHomeTargets?: PrioritisedScoutTarget[];
+    private lateHomeTargets?: PrioritisedScoutTarget[];
+    private lateHomeGoalActive = false;
     private queueTargetRefreshedAt = 0;
     private queueMinDistance = Infinity;
     private orders = new DogOrders(SCOUT_MOVE_COOLDOWN_TICKS);
@@ -230,6 +232,10 @@ export class OpeningScoutingMission extends Mission {
             extendHomeScout = fields.length < 2;
             if (extendHomeScout && !this.expandedHomeScouting) {
                 matchAwareness.getScoutingManager().addRadiusToScout(game, home, matchAwareness.getSectorCache(), 40, 900);
+                this.lateHomeTargets = [[0, -40], [15, -37], [28, -28], [37, -15], [40, 0], [37, 15], [28, 28], [15, 37],
+                    [0, 40], [-15, 37], [-28, 28], [-37, 15], [-40, 0], [-37, -15], [-28, -28], [-15, -37]]
+                    .map(([dx, dy]) => new PrioritisedScoutTarget(1000, new Vector2(home.x + dx, home.y + dy)));
+                this.queueTarget = null;
                 this.expandedHomeScouting = true;
             }
         }
@@ -252,6 +258,14 @@ export class OpeningScoutingMission extends Mission {
         }
 
         if (second) {
+            if (this.queueTarget && this.lateHomeGoalActive) {
+                const point = legalDogPoint(context, { rx: this.queueTarget.target.x, ry: this.queueTarget.target.y });
+                if (!point) this.queueTarget = null;
+                else if (point.rx !== this.queueTarget.target.x || point.ry !== this.queueTarget.target.y) {
+                    this.queueTarget = new PrioritisedScoutTarget(1000, new Vector2(point.rx, point.ry));
+                    this.queueMinDistance = Infinity;
+                }
+            }
             if (this.queueTarget) {
                 const tile = game.mapApi.getTile(this.queueTarget.target.x, this.queueTarget.target.y);
                 const currentDistance = getDistanceBetweenTileAndPoint(second.tile, this.queueTarget.target);
@@ -259,20 +273,38 @@ export class OpeningScoutingMission extends Mission {
                     this.queueMinDistance = currentDistance;
                     this.queueTargetRefreshedAt = tick;
                 }
-                if (!tile || game.mapApi.isVisibleTile(tile, player.name) ||
+                if (!tile || game.mapApi.isVisibleTile(tile, player.name) && (!this.lateHomeGoalActive || currentDistance <= 1) ||
                     !this.queueTarget.permanent && tick > this.queueTargetRefreshedAt + MAX_TICKS_PER_TARGET) this.queueTarget = null;
             }
             if (!this.queueTarget) {
                 const scouting = matchAwareness.getScoutingManager(), home = game.getPlayerData(player.name).startLocation;
                 this.nearHomeTargets ??= [[0, -24], [17, -17], [24, 0], [17, 17], [0, 24], [-17, 17], [-24, 0], [-17, -17]]
                     .map(([dx, dy]) => new PrioritisedScoutTarget(1000, new Vector2(home.x + dx, home.y + dy)));
-                let next = this.nearHomeTargets.shift() ?? (scouting.hasScoutTargets() ? scouting.getNewScoutTarget() : undefined);
-                // Preserve the original public sector priorities and the first dog's reserved enemy start.
+                const nextGoal = () => {
+                    const near = this.nearHomeTargets!.shift();
+                    if (near) { this.lateHomeGoalActive = false; return near; }
+                    const late = this.lateHomeTargets?.shift();
+                    this.lateHomeGoalActive = !!late;
+                    return late ?? (scouting.hasScoutTargets() ? scouting.getNewScoutTarget() : undefined);
+                };
+                let next = nextGoal();
+                // The finite outer follow-through cannot overtake the near24/old queue before3600.
                 while (next) {
-                    const tile = game.mapApi.getTile(next.target.x, next.target.y);
-                    if (tile && !game.mapApi.isVisibleTile(tile, player.name) &&
-                        !(enemyStart && next.target.x === enemyStart.x && next.target.y === enemyStart.y)) break;
-                    next = this.nearHomeTargets.shift() ?? (scouting.hasScoutTargets() ? scouting.getNewScoutTarget() : undefined);
+                    const goal = next.target, tile = game.mapApi.getTile(goal.x, goal.y);
+                    const explored = !!tile && game.mapApi.isVisibleTile(tile, player.name) && (!this.lateHomeGoalActive ||
+                        [[6, 0], [-6, 0], [0, 6], [0, -6], [6, 6], [6, -6], [-6, 6], [-6, -6]].every(([dx, dy]) => {
+                            const edge = game.mapApi.getTile(goal.x + dx, goal.y + dy);
+                            return !edge || game.mapApi.isVisibleTile(edge, player.name);
+                        }));
+                    if (tile && !explored && !(enemyStart && goal.x === enemyStart.x && goal.y === enemyStart.y)) {
+                        if (!this.lateHomeGoalActive) break;
+                        const point = legalDogPoint(context, { rx: goal.x, ry: goal.y });
+                        if (point && !(enemyStart && point.rx === enemyStart.x && point.ry === enemyStart.y)) {
+                            next = new PrioritisedScoutTarget(1000, new Vector2(point.rx, point.ry));
+                            break;
+                        }
+                    }
+                    next = nextGoal();
                 }
                 this.queueTarget = next ?? null;
                 this.queueTargetRefreshedAt = tick;

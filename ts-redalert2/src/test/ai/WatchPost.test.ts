@@ -282,6 +282,23 @@ describe("T2 scout directions, recruitment and real handoff", () => {
         expect(f.extraRadii).toEqual([40]); expect(f.privateReads()).toBe(0);
         expect(f.scout().getUnitIds()).toEqual([1, 2]);
     });
+    test.each(["opaque", "center-only", "blocked"])("missing home fields use late public outer goals only after3600 (%s)", condition => {
+        const f = fixture(); f.player.startLocation.set(20, 50);
+        f.objects.get(100)!.tile = tile(20, 50); f.objects.get(101)!.tile = tile(21, 50);
+        f.add(102, "GAWEAP", 22, 50); f.add(103, "GAREFN", 30, 50);
+        f.resources.push({ tile: tile(30, 50), ore: 800, gems: 0, spawnsOre: false }); f.explored.add("30_50");
+        for (const [dx, dy] of [[0, -24], [17, -17], [24, 0], [17, 17], [0, 24], [-17, 17], [-24, 0], [-17, -17]]) f.explored.add(`${20 + dx}_${50 + dy}`);
+        if (condition !== "opaque") f.explored.add("20_10");
+        if (condition === "blocked") { f.blocked.add("20_10"); f.explored.add("21_10"); }
+        f.ensure(); f.add(1, "DOG", 23, 50); f.add(2, "DOG", 24, 50); f.scout().addUnit(1); f.scout().addUnit(2);
+        f.missionStep(f.scout(), 32);
+        expect(f.orders).toContainEqual({ ids: [2], type: OrderType.AttackMove, xOrTarget: 20, y: 80 });
+        f.missionStep(f.scout(), 3600); f.missionStep(f.scout(), 3602);
+        expect(f.orders.filter(order => order.ids.includes(2)).at(-1)).toMatchObject({ xOrTarget: condition === "blocked" ? 21 : 20, y: 10 });
+        expect((f.scout() as OpeningScoutingMission).getTotalUnitsReceived()).toBe(2);
+        expect(f.privateReads()).toBe(0);
+        expect(f.missionStep(f.scout(), 5400).type).toBe("disband");
+    });
     test.each(["quiet", "pressure", "second-field", "deadline"])("home-economy scouting extension respects %s", condition => {
         const f = fixture(); f.add(102, "GAWEAP", 22); f.add(103, "GAREFN", 30);
         f.resources.push({ tile: tile(30, 20), ore: 800, gems: 0, spawnsOre: false }); f.explored.add("30_20");
