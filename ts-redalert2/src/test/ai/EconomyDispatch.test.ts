@@ -19,7 +19,7 @@ function fixture() {
         refineries.push(unit); return unit;
     }
     miner(); refinery();
-    const actions = { orderUnits: mock(() => {}) };
+    const actions = { orderUnits: mock((_ids: number[], _order: OrderType, _xOrTarget?: number, _y?: number) => {}) };
     const game: any = { getCurrentTick: () => tick, getPlayerData: () => ({ name: "bot", startLocation: new Vector2() }),
         getVisibleUnits: (_name: string, relation: string, predicate = (_rules: any) => true) =>
             (relation === "self" ? [...miners, ...refineries] : enemies).filter(unit => predicate(unit.rules)).map(unit => unit.id),
