@@ -5,11 +5,13 @@ import {
     GameApi,
     GameMath,
     GameObjectData,
+    LandType,
     ObjectType,
     OrderType,
     PlayerData,
     QueueType,
     Rectangle,
+    TechnoRules,
     Tile,
     UnitData,
     Vector2,
@@ -28,7 +30,7 @@ import { MissionController } from "../missionController";
 import { DebugLogger, isTechnoRulesObject, maxBy, minBy, toPathNode, toVector2 } from "../../common/utils";
 import { ActionBatcher } from "../actionBatcher";
 import { getCachedTechnoRules } from "../../common/rulesCache";
-import { canBuildOnTile } from "../../common/tileUtils";
+import { canBuildOnTile, computeAdjacentRect } from "../../common/tileUtils";
 import { MissionContext, SupabotContext } from "../../common/context";
 import { findVisiblePatches, OrePatch, patchDistance, PatchPoint, ScoredPatch, scorePatch } from "../../common/orePatches";
 import { isPressured, readPressure } from "../../common/pressure";
@@ -335,6 +337,28 @@ export function isMcvRelocating(game: GameApi, playerName: string): boolean {
     return mcvRelocations.get(game)?.has(playerName) ?? false;
 }
 
+/** A newly scanned yard plot must leave an observed empty plot for the refinery it is meant to serve. */
+function hasLocalRefinerySpace(game: GameApi, playerName: string, yard: GameObjectData, refinery: TechnoRules, patch: OrePatch, destination: Vector2): boolean {
+    const yardPlacement = game.getBuildingPlacementData(yard.rules.name), refineryPlacement = game.getBuildingPlacementData(refinery.name);
+    const origin = { rx: destination.x - yardPlacement.foundationCenter.x, ry: destination.y - yardPlacement.foundationCenter.y };
+    if (!game.canPlaceBuilding(playerName, yard.rules.name, origin)) return false;
+    const yardSize = yardPlacement.foundation, refinerySize = refineryPlacement.foundation;
+    const range = computeAdjacentRect(new Vector2(origin.rx, origin.ry), yardSize, refinery.adjacent, refinerySize);
+    for (const tile of game.mapApi.getTilesInRect(range)) {
+        if (!game.mapApi.isVisibleTile(tile, playerName)) continue;
+        if (patchDistance(tile, patch) > 9 || tile.rx + refinerySize.width <= origin.rx - refinery.adjacent ||
+            tile.ry + refinerySize.height <= origin.ry - refinery.adjacent || tile.rx >= origin.rx + yardSize.width + refinery.adjacent ||
+            tile.ry >= origin.ry + yardSize.height + refinery.adjacent) continue;
+        if (tile.rx < origin.rx + yardSize.width && tile.rx + refinerySize.width > origin.rx &&
+            tile.ry < origin.ry + yardSize.height && tile.ry + refinerySize.height > origin.ry) continue;
+        const footprint = game.mapApi.getTilesInRect({ x: tile.rx, y: tile.ry, width: refinerySize.width, height: refinerySize.height });
+        if (footprint.length === refinerySize.width * refinerySize.height && footprint.every(point =>
+            game.mapApi.isVisibleTile(point, playerName) && point.z === tile.z &&
+            [LandType.Clear, LandType.Road, LandType.Beach, LandType.Rough, LandType.Railroad].includes(point.landType) && canBuildOnTile(point, game))) return true;
+    }
+    return false;
+}
+
 export function planMcvExpansion(context: SupabotContext, home: PatchPoint): { patch: OrePatch; candidate: Vector2 } | undefined {
     const { game, player } = context;
     const quietRelocation = context.difficulty === "brutal" && game.getCurrentTick() >= DO_NOT_EXPAND_BEFORE_TICKS &&
@@ -345,10 +369,11 @@ export function planMcvExpansion(context: SupabotContext, home: PatchPoint): { p
     if (!quietRelocation && (patches.filter(patch => patchDistance(home, patch) <= 30).reduce((sum, patch) => sum + patch.value, 0) >= 6000 ||
         countCoreTanks(readStrategicSituation(game, data)) < 6)) return undefined;
     if (quietRelocation && readStrategicSituation(game, data).harvesters < 2) return undefined;
-    const refineryCost = quietRelocation ? player.production.getAvailableObjects(QueueType.Structures).find(rules => rules.refinery)?.cost ?? Infinity : Infinity;
+    const refinery = quietRelocation ? player.production.getAvailableObjects(QueueType.Structures).find(rules => rules.refinery) : undefined;
+    const refineryCost = refinery?.cost ?? Infinity;
     const targets = patches.filter(patch => patch.value >= (quietRelocation ? 6000 : 12000) || quietRelocation && patch.isGem && patch.value >= refineryCost)
         .map(patch => scorePatch(game, data, patch))
-        .filter((entry): entry is ScoredPatch => !!entry && (quietRelocation ? entry.g <= 40 && (entry.g > 24 ||
+        .filter((entry): entry is ScoredPatch => !!entry && (quietRelocation ? entry.g <= 40 && (entry.g > 20 ||
             entry.patch.isGem && patchDistance(home, entry.patch) > 20 || isCrawlBlocked(game, player.name, entry.patch))
             : entry.g > 40 || isCrawlBlocked(game, player.name, entry.patch)))
         .sort((a, b) => b.score - a.score || a.g - b.g || (a.patch.id < b.patch.id ? -1 : a.patch.id > b.patch.id ? 1 : 0));
@@ -357,8 +382,9 @@ export function planMcvExpansion(context: SupabotContext, home: PatchPoint): { p
         if (quietRelocation && !candidates.some(candidate => patchDistance({ rx: candidate.x, ry: candidate.y }, entry.patch) <= 12)) {
             const yard = game.getVisibleUnits(player.name, "self", rules => rules.constructionYard)
                 .map(id => game.getGameObjectData(id)).find((yard): yard is GameObjectData => !!yard);
-            if (yard) candidates.push(...findDeployableLocations(player.name, game, { x: entry.patch.center.rx - 12,
-                y: entry.patch.center.ry - 12, width: 24, height: 24 }, yard.rules.name, true));
+            if (yard && refinery) candidates.push(...findDeployableLocations(player.name, game, { x: entry.patch.center.rx - 12,
+                y: entry.patch.center.ry - 12, width: 24, height: 24 }, yard.rules.name, true)
+                .filter(candidate => hasLocalRefinerySpace(game, player.name, yard, refinery, entry.patch, candidate)));
         }
         const candidate = candidates
             .filter(candidate => patchDistance({ rx: candidate.x, ry: candidate.y }, entry.patch) <= 12)

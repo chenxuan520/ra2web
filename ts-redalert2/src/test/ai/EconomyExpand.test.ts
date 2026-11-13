@@ -261,8 +261,12 @@ describe("quiet existing-MCV relocation instead of long paid crawl", () => {
         const late = mcvFixture(); late.resources[1].ore = 11999;
         expect(planMcvExpansion(late.context, { rx: 0, ry: 0 })).toBeUndefined();
     });
+    test("a quiet rich field twenty-one from the nearest anchor need not wait for several paid crawl plants", () => {
+        const f = quietMcvFixture(26); f.resources[1].ore = 6000;
+        expect(planMcvExpansion(f.context, { rx: 0, ry: 0 })).toMatchObject({ candidate: { x: 26, y: 0 } });
+    });
     test.each(["tick", "contact", "pressure", "one-miner", "queue", "near", "far", "small-ore", "gem-cost", "hidden", "normal"])("the early relocation rejects %s", reason => {
-        const f = quietMcvFixture(reason === "near" ? 29 : reason === "far" ? 46 : 35);
+        const f = quietMcvFixture(reason === "near" ? 25 : reason === "far" ? 46 : 35);
         if (reason === "tick") f.at(5399);
         if (reason === "contact" || reason === "pressure") f.enemies.push({ id: 999, tile: { rx: reason === "contact" ? 60 : 22, ry: 0 },
             rules: { name: "HTNK", type: ObjectType.Vehicle, isSelectableCombatant: true } });
@@ -309,7 +313,7 @@ function localMcvFixture() {
     const key = (tile: any) => `${tile.rx}_${tile.ry}`;
     const tiles = Array.from({ length: 25 }, (_, i) => ({ id: `${30 + i % 5}_${Math.floor(i / 5)}`,
         rx: 30 + i % 5, ry: Math.floor(i / 5), z: 0, rampType: 0, terrainType: TerrainType.Clear, landType: LandType.Clear }));
-    f.game.getBuildingPlacementData = () => ({ foundation: { width: 3, height: 3 }, foundationCenter: new Vector2(1, 1) });
+    f.game.getBuildingPlacementData = (name: string) => ({ foundation: { width: 3, height: name === "NAREFN" ? 2 : 3 }, foundationCenter: new Vector2(1, 1) });
     f.game.mapApi.getTilesInRect = (rect: any) => tiles.filter(tile => tile.rx >= rect.x && tile.rx < rect.x + rect.width &&
         tile.ry >= rect.y && tile.ry < rect.y + rect.height);
     f.game.mapApi.isVisibleTile = (tile: any) => !hidden.has(key(tile));
@@ -325,6 +329,39 @@ describe("early MCV visible footprint fallback", () => {
         new ExpansionMissionFactory().maybeCreateMissions(f.context, missions, () => {});
         expect(missions.getMissions().map(mission => mission.getUniqueName())).toEqual(["pack-up-1"]);
         expect(f.context.player.actions.queueForProduction).not.toHaveBeenCalled();
+    });
+    test("a closer isolated yard footprint cannot beat a slightly farther site with room for the paid refinery", () => {
+        const f = localMcvFixture();
+        const area = (rx: number, width: number, height: number) => Array.from({ length: width * height }, (_, i) => ({
+            id: `${rx + i % width}_${Math.floor(i / width)}`, rx: rx + i % width, ry: Math.floor(i / width),
+            z: 0, rampType: 0, terrainType: TerrainType.Clear, landType: LandType.Clear,
+        }));
+        f.tiles.splice(0, f.tiles.length, ...area(25, 5, 5), ...area(32, 3, 3));
+        f.refinery.adjacent = 1;
+        const plan = planMcvExpansion(f.context, { rx: 0, ry: 0 });
+        expect(plan).toBeDefined(); expect(plan!.candidate.x).toBeLessThan(31);
+    });
+    test.each(["too-small", "hidden", "ore", "ramp", "rock", "native-yard"])("an empty yard plot alone is insufficient when the adjacent refinery space is %s", reason => {
+        const f = localMcvFixture(), missions = new MissionController(() => {});
+        const outsideYard = f.tiles.filter(tile => tile.rx > 32 || tile.ry > 2);
+        if (reason === "too-small") f.tiles.splice(0, f.tiles.length, ...f.tiles.filter(tile => !outsideYard.includes(tile)));
+        if (reason === "hidden") for (const tile of outsideYard) {
+            f.hidden.add(tile.id);
+            Object.defineProperty(tile, "terrainType", { get() { throw Error("hidden future refinery terrain cannot be inspected"); } });
+        }
+        if (reason === "ore") outsideYard.forEach(tile => tile.landType = LandType.Tiberium);
+        if (reason === "ramp") outsideYard.forEach(tile => tile.rampType = 1);
+        if (reason === "rock") {
+            outsideYard.forEach(tile => { tile.landType = LandType.Rock; tile.terrainType = TerrainType.Rock1; });
+            f.game.canPlaceBuilding = (_player: string, _rules: string, origin: any) => f.game.mapApi.getTilesInRect({
+                x: origin.rx, y: origin.ry, width: 3, height: 3,
+            }).every((tile: any) => tile.landType !== LandType.Rock);
+        }
+        if (reason === "native-yard") f.game.canPlaceBuilding = () => false;
+        expect(planMcvExpansion(f.context, { rx: 0, ry: 0 })).toBeUndefined();
+        new ExpansionMissionFactory().maybeCreateMissions(f.context, missions, () => {});
+        expect(missions.getMissions()).toEqual([]);
+        expect(f.context.player.actions.orderUnits).not.toHaveBeenCalled();
     });
     test.each(["hidden", "too-small", "blocked", "center-hole", "ore", "height", "no-yard"])("the local fallback rejects %s rather than packing toward an invalid footprint", reason => {
         const f = localMcvFixture(), missions = new MissionController(() => {});
