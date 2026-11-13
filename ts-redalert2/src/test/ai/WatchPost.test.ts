@@ -413,17 +413,31 @@ describe("T2 scout directions, recruitment and real handoff", () => {
         expect(f.missionStep(f.watch(2), 3602)).toEqual({ type: "request", unitNameToPriority: { DOG: 40 } });
     });
 
-    test("one survivor fills only one slot; scout survivors do not spend the shared replacement budget", () => {
+    test("the surviving field scout keeps P2; scout survivors do not spend the shared replacement budget", () => {
         const f = fixture(); f.ensure(); f.add(1, "DOG", 60); f.add(2, "DOG", 70);
         f.scout().addUnit(1); f.scout().addUnit(2); f.objects.delete(1);
         f.at(3600); f.controller.onAiUpdate(f.context);
-        expect(f.watch(1).getUnitIds()).toEqual([2]); expect(f.watch(2).getUnitIds()).toEqual([]);
+        expect(f.watch(1).getUnitIds()).toEqual([]); expect(f.watch(2).getUnitIds()).toEqual([2]);
         for (let i = 0; i < 4; i++) {
-            const post = f.watch(2), id = 10 + i;
+            const post = f.watch(1), id = 10 + i;
             expect(f.missionStep(post, 3602 + i * 2).type).toBe("request");
             f.add(id, "DOG", 45); post.addUnit(id); f.objects.delete(id); post.removeUnit(id);
         }
-        expect(f.missionStep(f.watch(2), 3610).type).toBe("noop");
+        expect(f.missionStep(f.watch(1), 3610).type).toBe("noop");
+    });
+    test.each([1, 2])("survivor %i retains its original public-start/field role after the other initial ID is removed", survivor => {
+        const f = fixture(); f.revealAll();
+        f.resources.push({ tile: tile(60, 30), ore: 800, gems: 0, spawnsOre: false }); f.ensure();
+        f.add(1, "DOG", 70); f.add(2, "DOG", 70); f.scout().addUnit(1); f.scout().addUnit(2);
+        f.objects.delete(3 - survivor); f.scout().removeUnit(3 - survivor);
+        expect(f.missionStep(f.scout(), 3600).type).toBe("disband");
+        expect(f.watch(survivor as 1 | 2).getUnitIds()).toEqual([survivor]);
+        expect(f.watch((3 - survivor) as 1 | 2).getUnitIds()).toEqual([]);
+        f.missionStep(f.watch(survivor as 1 | 2), 3602);
+        expect(f.orders.at(-1)).toEqual({ ids: [survivor], type: OrderType.Move,
+            xOrTarget: survivor === 1 ? 80 : 60, y: survivor === 1 ? 20 : 30 });
+        expect((f.scout() as OpeningScoutingMission).getTotalUnitsReceived()).toBe(2);
+        expect(f.privateReads()).toBe(0);
     });
 });
 

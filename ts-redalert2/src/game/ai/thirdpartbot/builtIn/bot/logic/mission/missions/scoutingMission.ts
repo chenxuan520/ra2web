@@ -190,7 +190,7 @@ export class OpeningScoutingMission extends Mission {
     private queueMinDistance = Infinity;
     private orders = new DogOrders(SCOUT_MOVE_COOLDOWN_TICKS);
 
-    constructor(logger: DebugLogger, private handoff: (context: MissionContext, mission: Mission) => void) {
+    constructor(logger: DebugLogger, private handoff: (context: MissionContext, mission: Mission, initialIds: readonly number[]) => void) {
         super("globalScout", logger);
     }
 
@@ -206,7 +206,7 @@ export class OpeningScoutingMission extends Mission {
     isUnitsLocked() { return true; }
 
     private finish(context: MissionContext) {
-        this.handoff(context, this);
+        this.handoff(context, this, this.initialScoutIds);
         return disbandMission();
     }
 
@@ -339,7 +339,7 @@ export class ScoutingMissionFactory {
             this.dogMissions ??= new WatchPostMissions(missionController, logger);
             this.dogMissions.ensure(context);
             if (!this.initialMissionsCreated) {
-                const scout = new OpeningScoutingMission(logger, (missionContext, mission) => this.dogMissions!.handoff(missionContext, mission));
+                const scout = new OpeningScoutingMission(logger, (missionContext, mission, initialIds) => this.dogMissions!.handoff(missionContext, mission, initialIds));
                 if (missionController.addMission(scout)) {
                     this.initialMissionsCreated = true;
                     this.dogMissions.setOpeningReady(() => scout.getTotalUnitsReceived() >= 2);

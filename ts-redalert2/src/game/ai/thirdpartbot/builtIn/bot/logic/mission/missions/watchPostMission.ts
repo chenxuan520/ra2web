@@ -268,12 +268,13 @@ export class WatchPostMissions {
         this.controller.addMission(this.home);
     }
 
-    handoff(context: SupabotContext, scout: Mission) {
+    handoff(context: SupabotContext, scout: Mission, initialIds: readonly number[]) {
         const elsewhere = new Set(this.controller.getMissions().filter(mission => mission !== scout).flatMap(mission => mission.getUnitIds()));
         const survivors = livingMissionDogs(context, scout).filter(dog => !elsewhere.has(dog.id)).slice(0, 2);
         this.posts.forEach(post => post.activate());
-        survivors.forEach((dog, index) => {
-            const post = this.posts[index];
+        survivors.forEach(dog => {
+            const post = this.posts[initialIds.indexOf(dog.id)];
+            if (!post) return;
             scout.removeUnit(dog.id);
             post.acceptScout(dog.id);
             context.player.actions.setUnitDebugText(dog.id, `${post.getUniqueName()}_${dog.id}`);
