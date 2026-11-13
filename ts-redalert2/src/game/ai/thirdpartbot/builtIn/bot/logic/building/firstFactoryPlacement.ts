@@ -51,7 +51,8 @@ export function getEconomicFirstFactoryPlacement(game: GameApi, player: PlayerDa
     if (!anchors.length || !foundation?.width || !foundation?.height) return undefined;
     const fields = findVisiblePatches(game, player.name).map(patch => scorePatch(game, player, patch))
         .filter((entry): entry is ScoredPatch => !!entry)
-        .sort((a, b) => b.score - a.score || a.g - b.g || (a.patch.id < b.patch.id ? -1 : a.patch.id > b.patch.id ? 1 : 0));
+        .map(entry => ({ ...entry, g: Math.min(...anchors.map(tile => patchDistance(tile, entry.patch))) }))
+        .sort((a, b) => a.g - b.g || b.score - a.score || (a.patch.id < b.patch.id ? -1 : a.patch.id > b.patch.id ? 1 : 0));
     for (const entry of fields) {
         const g = Math.min(...anchors.map(tile => patchDistance(tile, entry.patch)));
         if (g > 40) continue;

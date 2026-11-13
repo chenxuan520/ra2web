@@ -61,6 +61,13 @@ describe("first war factory placement fallback", () => {
         expect(f.run("normal")).toMatchObject({ rx: 3, ry: 10 });
         expect(f.run("brutal")).toMatchObject({ rx: 14, ry: 10 });
     });
+    test("the first factory reaches the nearer visible income field before chasing a richer distant one", () => {
+        const f = fixture(); f.factory.adjacent = 3;
+        f.candidates.push({ id: "near-income", rx: 3, ry: 10, z: 0 });
+        f.resources.push({ tile: { rx: 0, ry: 10 }, ore: 800, gems: 0, spawnsOre: false },
+            { tile: { rx: 30, ry: 10 }, ore: 8000, gems: 0, spawnsOre: false });
+        expect(f.run("brutal")).toMatchObject({ rx: 3, ry: 10 });
+    });
     test.each(["pressure", "hidden"])("a %s field cannot redirect the first factory away from its original legal site", condition => {
         const f = fixture(); f.factory.adjacent = 3;
         f.candidates.push({ id: "backward", rx: 3, ry: 10, z: 0 });
