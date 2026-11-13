@@ -3,6 +3,8 @@ import { ObjectType, OrderType, QueueStatus, QueueType, Vector2, ZoneType } from
 import { DefaultStrategy } from '../../game/ai/thirdpartbot/builtIn/bot/strategy/defaultStrategy';
 import { ActionBatcher } from '../../game/ai/thirdpartbot/builtIn/bot/logic/mission/actionBatcher';
 import { FieldArmyMission } from '../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/fieldArmyMission';
+import { BaseReserveMission } from '../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/baseReserveMission';
+import { InfantryHomeMission } from '../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/infantryHomeMission';
 import { MissionController } from '../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missionController';
 import { QueueController, QUEUES } from '../../game/ai/thirdpartbot/builtIn/bot/logic/building/queueController';
 
@@ -31,6 +33,51 @@ function fixture() {
     return { units, enemies, game, context, controller, player, at(value: number) { tick = value; },
         plan() { return (strategy as any).selectRandomAttackComposition(context, () => {}, controller); } };
 }
+
+function recruitFixture(reverse = false) {
+    const f = fixture();
+    for (let id = 4; id <= 8; id++) f.units.delete(id);
+    f.context.player.actions = { setUnitDebugText: mock(() => {}), orderUnits: mock(() => {}) };
+    const reserve = new BaseReserveMission(() => {}), home = new InfantryHomeMission(f.controller, () => {});
+    const army = new FieldArmyMission(f.plan(), f.controller, () => {});
+    reserve.addUnit(1); reserve.addUnit(2);
+    const missions = [reserve, home, army];
+    for (const mission of reverse ? missions.reverse() : missions) f.controller.addMission(mission);
+    return { ...f, reserve, home, army, update: () => f.controller.onAiUpdate(f.context) };
+}
+
+describe('fresh opening recruits use the real mission priority allocator', () => {
+    test.each([false, true])('an E2 recruit reaches FieldArmy95 rather than a prior specific-ID home20 claim, reverse=%s', reverse => {
+        const f = recruitFixture(reverse); f.update();
+        expect(f.army.getUnitIds()).toEqual([3]); expect(f.home.getUnitIds()).toEqual([]);
+        expect(f.reserve.getUnitIds()).toEqual([1, 2]); expect(f.reserve.isUnitsLocked()).toBe(true);
+    });
+    test('fresh deliveries form the existing eight-conscript strike without borrowing its locked reserve', () => {
+        const f = recruitFixture(), recruit = f.units.get(3)!; f.update();
+        for (let id = 4; id <= 10; id++) {
+            f.units.set(id, { ...recruit, id }); f.at(3000 + id * 2); f.update();
+        }
+        f.at(3022); f.update();
+        expect(f.army.getUnitIds()).toHaveLength(8); expect(f.army.isAttacking()).toBe(true);
+        expect(f.home.getUnitIds()).toEqual([]); expect(f.reserve.getUnitIds()).toEqual([1, 2]);
+    });
+    test.each(['countered', 'expired'])('a %s opening still leaves fresh conscripts eligible for their original home role', condition => {
+        const f = recruitFixture(); f.at(condition === 'expired' ? 7000 : 3002);
+        if (condition === 'countered') for (let id = 1000; id < 1003; id++) f.enemies.set(id, { id, name: 'MTNK', owner: 'enemy',
+            type: ObjectType.Vehicle, rules: { name: 'MTNK', type: ObjectType.Vehicle, isSelectableCombatant: true },
+            tile: { rx: 80, ry: 0 }, hitPoints: 500, maxHitPoints: 500, zone: ZoneType.Ground });
+        f.update(); expect(f.home.getUnitIds()).toEqual([3]); expect(f.army.getUnitIds()).toEqual([]);
+        expect(f.home.isUnitsLocked()).toBe(true); expect(f.reserve.getUnitIds()).toEqual([1, 2]);
+    });
+    test('the original home-to-reserve casualty replacement and locks remain unchanged after the opening', () => {
+        const f = recruitFixture(); f.at(7000); f.units.delete(2); f.reserve.removeUnit(2); f.home.addUnit(3);
+        f.units.set(102, { id: 102, name: 'HTNK', owner: 'bot', type: ObjectType.Vehicle,
+            rules: { name: 'HTNK', type: ObjectType.Vehicle, isSelectableCombatant: true },
+            tile: { rx: 0, ry: 0 }, hitPoints: 900, maxHitPoints: 900, zone: ZoneType.Ground, isIdle: true });
+        f.update(); expect(f.reserve.getUnitIds()).toEqual([1, 3]); expect(f.home.getUnitIds()).toEqual([]);
+        expect(f.reserve.isUnitsLocked()).toBe(true);
+    });
+});
 
 describe('bounded paid infantry support during armor assembly', () => {
     test('the explicit opening plan launches eight conscripts and requests bounded paid reinforcements', () => {

@@ -2,7 +2,7 @@ import { UnitData, Vector2 } from "../../../../game-api";
 import { MissionContext, SupabotContext } from "../../common/context";
 import { DebugLogger } from "../../common/utils";
 import { getBasicInfantryBudget, isSovietCountry } from "../../../strategy/basicInfantryBudget";
-import { Mission, noop, releaseUnits, requestSpecificUnits, requestUnits } from "../mission";
+import { Mission, noop, releaseUnits, requestUnits } from "../mission";
 import { MissionController } from "../missionController";
 import { CombatSquad } from "./squads/combatSquad";
 
@@ -72,7 +72,7 @@ export class InfantryHomeMission extends Mission {
         const assigned = new Set(this.controller.getMissions().flatMap(m => m.getUnitIds()));
         const conscripts = game.getVisibleUnits(player.name, "self", r => r.name === "E2");
         const free = conscripts.filter(id => !assigned.has(id));
-        if (free.length) return requestSpecificUnits(free, 20);
+        if (free.length) return requestUnits({ E2: 20 });
         const factories = game.getVisibleUnits(player.name, "self", rules => rules.weaponsFactory).length;
         const core = game.getVisibleUnits(player.name, "self", rules => ["HTNK", "MTNK", "MGTK", "APOC", "SREF"].includes(rules.name)).length;
         const underThreat = homeThreats.length > 0;
