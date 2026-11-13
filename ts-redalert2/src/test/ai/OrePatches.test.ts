@@ -208,6 +208,18 @@ describe("economic patch scores", () => {
         expect(scorePatch(f.game, f.player as any, p)).toBeUndefined();
     });
 
+    test("a shared visible field is not excluded by comparing different nearest tiles for the two public starts", () => {
+        const f = fixture(); f.player.startLocation = new Vector2(38, 73);
+        f.starts.splice(0, f.starts.length, f.player.startLocation, new Vector2(71, 37));
+        const p = patch(35, 43, 13375, 0, [point(35, 43), point(37, 43), point(39, 43), point(41, 43), point(43, 43), point(45, 43)]);
+        expect(patchDistance(point(38, 73), p)).toBeGreaterThan(patchDistance(point(71, 37), p));
+        expect(new Vector2(35, 43).distanceTo(f.player.startLocation)).toBeLessThan(new Vector2(35, 43).distanceTo(f.starts[1]));
+        expect(scorePatch(f.game, f.player as any, p)).toBeDefined();
+        expect(scorePatch(f.game, f.player as any, patch(70, 40))).toBeUndefined();
+        f.player.startLocation = f.starts[1];
+        expect(scorePatch(f.game, f.player as any, p)).toBeDefined();
+        expect(scorePatch(f.game, f.player as any, patch(35, 60))).toBeUndefined();
+    });
     test.each(["tank", "primary", "secondary"])("visible %s threats reject within inclusive center distance fourteen", kind => {
         const f = fixture();
         const rules = kind === "tank" ? { type: ObjectType.Vehicle, isSelectableCombatant: true }

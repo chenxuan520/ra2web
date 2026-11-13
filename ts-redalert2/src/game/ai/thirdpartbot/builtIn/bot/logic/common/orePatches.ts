@@ -99,10 +99,9 @@ export function scorePatch(game: GameApi, player: PlayerData, patch: OrePatch): 
     if (danger) return undefined;
     if (game.getCurrentTick() < 9000) {
         const ownStart = player.startLocation;
-        const enemyDistance = Math.min(...game.mapApi.getStartingLocations()
-            .filter(start => start.x !== ownStart.x || start.y !== ownStart.y)
-            .map(start => patchDistance({ rx: start.x, ry: start.y }, patch)));
-        if (patchDistance({ rx: ownStart.x, ry: ownStart.y }, patch) > enemyDistance) return undefined;
+        const otherStarts = game.mapApi.getStartingLocations().filter(start => start.x !== ownStart.x || start.y !== ownStart.y);
+        if (!patch.tiles.some(tile => otherStarts.every(start =>
+            Math.hypot(tile.rx - ownStart.x, tile.ry - ownStart.y) <= Math.hypot(tile.rx - start.x, tile.ry - start.y)))) return undefined;
     }
     const buildings = game.getVisibleUnits(player.name, "self", rules => rules.type === ObjectType.Building && !rules.wall)
         .map(id => game.getGameObjectData(id)?.tile).filter((tile): tile is Tile => !!tile);
