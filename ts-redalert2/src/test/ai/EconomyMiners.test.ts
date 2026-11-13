@@ -294,6 +294,31 @@ describe("brutal miner capacity and production table", () => {
         f.run();
         expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
     });
+    test.each(["Russians", "Americans"])("%s uses the existing counter tier for visible core armor before another miner or optional first drone", country => {
+        for (const miners of [2, 3]) for (const reverse of [false, true]) {
+            const f = fixture(miners, 0, country); f.at(5400); f.enemy(100, 80);
+            if (country === "Russians") f.options.get(QueueType.Vehicles)!.push({ name: "DRON", type: ObjectType.Vehicle, cost: 500 });
+            if (reverse) f.options.get(QueueType.Vehicles)!.reverse();
+            expect(readPressure(f.context).baseUnderSiege).toBe(false);
+            f.run();
+            expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, country === "Russians" ? "HTNK" : "MTNK", ObjectType.Vehicle, 1);
+            expect(f.actions.queueForProduction).not.toHaveBeenCalledWith(QueueType.Vehicles, country === "Russians" ? "HARV" : "CMIN", ObjectType.Vehicle, 1);
+            expect(f.actions.queueForProduction).not.toHaveBeenCalledWith(QueueType.Vehicles, "DRON", ObjectType.Vehicle, 1);
+        }
+    });
+    test.each(["no-core-armor", "harvester", "not-combatant", "sufficient-core", "zero-miner", "second-miner", "normal"])("visible-armor precedence preserves the original %s income policy", condition => {
+        const f = fixture(condition === "zero-miner" ? 0 : condition === "second-miner" ? 1 : 2, condition === "sufficient-core" ? 2 : 0); f.at(5400);
+        const enemy = f.enemy(100, 80);
+        if (condition === "no-core-armor") enemy.rules.name = "HTK";
+        if (condition === "harvester") enemy.rules.harvester = true;
+        if (condition === "not-combatant") enemy.rules.isSelectableCombatant = false;
+        if (condition === "normal") { f.context.difficulty = "normal"; f.requests.set("HARV", { priority: 110, specificLocation: null }); }
+        f.run(); expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
+    });
+    test("visible-armor precedence retains the existing higher-priority air response", () => {
+        const f = fixture(2, 0); f.at(5400); f.enemy(100, 80); f.enemy(101, 80, ObjectType.Aircraft);
+        f.run(); expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTK", ObjectType.Vehicle, 1);
+    });
     test("actual owned-refinery attack blocks the new miner78 override even outside the birth-point siege radius", () => {
         const f = fixture(3, 1); f.at(5400); f.enemy(100, 30);
         expect(readPressure(f.context).baseUnderSiege).toBe(false);

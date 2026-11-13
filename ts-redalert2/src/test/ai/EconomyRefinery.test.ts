@@ -320,9 +320,19 @@ describe("brutal refinery investment", () => {
             expect(f.nativeQueues.get(QueueType.Structures)!.status).toBe(QueueStatus.Active);
         }
     });
+    test("visible core armor deficit reaches the existing native counter-funding path without a birth-point siege", () => {
+        const f = nativeFundingFixture(85, true);
+        f.enemies.push({ id: 999, tile: { rx: 80, ry: 0 }, rules: { name: "MTNK", type: ObjectType.Vehicle, isSelectableCombatant: true } });
+        for (let i = 0; i < 54; i++) f.spend(5400 + i * 2);
+        expect(f.nativeQueues.get(QueueType.Vehicles)!.getFirst()!.creditsSpent).toBe(54);
+        expect(f.nativeQueues.get(QueueType.Structures)!.getFirst()!.creditsSpent).toBe(0);
+    });
     test.each(["quiet", "warning"])("ordinary 85-priority tanks do not take over native refinery funding during %s", condition => {
         const f = nativeFundingFixture(85, true);
-        if (condition === "warning") f.enemies.push({ id: 999, tile: { rx: 28, ry: 0 }, rules: { name: "MTNK", type: ObjectType.Vehicle, isSelectableCombatant: true } });
+        if (condition === "warning") {
+            f.own("HTNK", 0); f.own("HTNK", 0);
+            f.enemies.push({ id: 999, tile: { rx: 28, ry: 0 }, rules: { name: "MTNK", type: ObjectType.Vehicle, isSelectableCombatant: true } });
+        }
         for (let i = 0; i < 54; i++) f.spend(2700 + i * 2);
         expect(f.nativeQueues.get(QueueType.Structures)!.getFirst()!.creditsSpent).toBe(54);
         expect(f.nativeQueues.get(QueueType.Vehicles)!.getFirst()!.creditsSpent).toBe(0);

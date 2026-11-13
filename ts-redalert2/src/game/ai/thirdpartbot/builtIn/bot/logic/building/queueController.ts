@@ -219,8 +219,11 @@ export class QueueController {
                     else requests.delete(drone.name);
                 }
             }
-            if (situation.harvesters >= 2 && situation.enemy.infantry >= 8 &&
-                (situation.own.MTNK ?? 0) + (situation.own.HTNK ?? 0) < Math.min(6, Math.max(2, Math.ceil(situation.enemy.infantry / 6)))) {
+            const visibleCoreArmor = game.getVisibleUnits(player.name, "enemy", rules => rules.type === ObjectType.Vehicle &&
+                rules.isSelectableCombatant && !rules.harvester && ["MTNK", "HTNK", "MGTK", "APOC", "SREF"].includes(rules.name)).length;
+            if (situation.harvesters >= 2 && (situation.enemy.infantry >= 8 &&
+                (situation.own.MTNK ?? 0) + (situation.own.HTNK ?? 0) < Math.min(6, Math.max(2, Math.ceil(situation.enemy.infantry / 6))) ||
+                visibleCoreArmor > 0 && countCoreTanks(situation) < Math.min(6, Math.max(2, visibleCoreArmor)))) {
                 const tank = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === "MTNK" || option.name === "HTNK");
                 if (tank) {
                     requests.set(tank.name, { priority: 100, specificLocation: null });
