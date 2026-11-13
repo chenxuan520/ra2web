@@ -281,6 +281,16 @@ export class QueueController {
                 .map(id => game.getGameObjectData(id)?.tile).filter((tile): tile is PatchPoint => !!tile);
             fundPaidEarlyMiner = sites.length === 1 && findVisiblePatches(game, player.name).some(patch => patch.value >= 6000 && isServed(patch, sites));
         }
+        const priorityVehicle = this.queueStates.find(state => state.queue === QueueType.Vehicles)?.topItem;
+        let fundPriorityVehicle = false;
+        if (context.difficulty === "brutal" && priorityVehicle && !priorityVehicle.unit.harvester &&
+            (priorityVehicle.priority >= 100 || priorityVehicle.priority >= 85 && readPressure(context).baseUnderSiege) &&
+            playerData.credits < priorityVehicle.unit.cost && !playerData.power?.isLowPower &&
+            game.getVisibleUnits(player.name, "self", rules => rules.harvester).length > 0) {
+            const sites = game.getVisibleUnits(player.name, "self", rules => rules.refinery)
+                .map(id => game.getGameObjectData(id)?.tile).filter((tile): tile is PatchPoint => !!tile);
+            fundPriorityVehicle = sites.length > 0 && findVisiblePatches(game, player.name).some(patch => isServed(patch, sites));
+        }
         const totalWeightAcrossQueues = this.queueStates
             .map((decision) => decision.topItem?.priority ?? 0)
             .reduce((pV, cV) => pV + cV, 0);
@@ -289,7 +299,8 @@ export class QueueController {
             .reduce((pV, cV) => pV + cV, 0);
 
         this.queueStates.forEach((decision) => {
-            if (fundPaidEarlyMiner && decision.queue === QueueType.Structures) {
+            if (decision.queue === QueueType.Structures && (fundPaidEarlyMiner || fundPriorityVehicle && pendingRefinery?.refinery &&
+                [QueueStatus.Active, QueueStatus.OnHold].includes(refineryQueue.status))) {
                 // Native funding visits structures first; priorities alone cannot fund this paid miner first.
                 if (refineryQueue.status === QueueStatus.Active) {
                     actionsApi.pauseProduction(QueueType.Structures);
@@ -302,6 +313,7 @@ export class QueueController {
                 this.incomeHeldRefinery = undefined;
                 if (resumeIncomeHold) { actionsApi.resumeProduction(QueueType.Structures); return; }
             }
+            if (fundPriorityVehicle && decision.queue === QueueType.Structures && refineryQueue.status === QueueStatus.Idle && decision.topItem?.unit.refinery) return;
             if (context.difficulty === "brutal" && isCrawlProduction(game, player.name, decision.queue) && readPressure(context).pressured) {
                 if (productionApi.getQueueData(decision.queue).status === QueueStatus.Active) actionsApi.pauseProduction(decision.queue);
                 return;

@@ -1,5 +1,8 @@
 import { describe, expect, mock, test } from "bun:test";
 import { BuildStatus } from "../../game/gameobject/Building";
+import { ProductionQueue } from "../../game/player/production/ProductionQueue";
+import { ProductionTrait } from "../../game/trait/ProductionTrait";
+import { NotifyTick } from "../../game/trait/interface/NotifyTick";
 import { ObjectType, QueueStatus, QueueType, Vector2 } from "../../game/ai/thirdpartbot/builtIn/game-api";
 import { getEconomyBuildingPriority } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/economyPlan";
 import { BaseBuildingMission } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/baseBuildingMission";
@@ -65,6 +68,45 @@ function recoveryFundingFixture(status = QueueStatus.Idle) {
     const requests = new Map<string, any>([["NAREFN", { priority: 50, specificLocation: new Vector2(4, 0) }], ["HTNK", { priority: 85, specificLocation: null }]]);
     const controller = new QueueController();
     return { ...f, requests, run: () => controller.onAiUpdate(f.context, null, requests, () => {}) };
+}
+
+/** Native debit/progress, not a mock that treats a production request as a delivered unit. */
+function nativeFundingFixture(priority: number, active: boolean) {
+    const f = fixture(5); Object.assign(f.rules, { owner: [], buildTimeMultiplier: 1 });
+    const vehicle: any = { name: priority === 115 ? "HTK" : "HTNK", type: ObjectType.Vehicle,
+        cost: priority === 115 ? 500 : 900, owner: [], buildTimeMultiplier: 1 };
+    const queues = new Map(QUEUES.map(type => [type, new ProductionQueue(type, 1, 1)]));
+    const options = [f.rules, vehicle];
+    const actions = { ...f.actions,
+        queueForProduction: mock((type: QueueType, name: string) => {
+            const rules = options.find(rules => rules.name === name)!;
+            queues.get(type)!.push(rules, 1, rules.cost);
+        }),
+        pauseProduction: mock((type: QueueType) => { queues.get(type)!.status = QueueStatus.OnHold; }),
+        resumeProduction: mock((type: QueueType) => { queues.get(type)!.status = QueueStatus.Active; }),
+    };
+    f.context.player.actions = actions;
+    f.context.player.production.getQueueData = (type: QueueType) => ({ type, status: queues.get(type)!.status, items: queues.get(type)!.getAll() });
+    f.context.player.production.getAvailableObjects = (type: QueueType) => type === QueueType.Vehicles ? [vehicle] : type === QueueType.Structures ? [f.rules] : [];
+    f.player.production = { buildSpeedModifier: 1, getAllQueues: () => [...queues.values()],
+        getFactoryTypeForQueueType: (type: QueueType) => type, getFactoryCount: () => 1 };
+    const rules = { general: { buildSpeed: 1, multipleFactory: 1, wallBuildSpeedCoefficient: 1 },
+        buildingRules: new Map([[f.rules.name, f.rules]]), infantryRules: new Map(), vehicleRules: new Map([[vehicle.name, vehicle]]), aircraftRules: new Map() };
+    const native: NotifyTick = new ProductionTrait(rules, { value: false });
+    if (active) queues.get(QueueType.Structures)!.push(f.rules, 1, f.rules.cost);
+    const controller = new QueueController();
+    const requests = (priority: number) => new Map([[f.rules.name, { priority: 50, specificLocation: new Vector2(24, 0) }],
+        [vehicle.name, { priority, specificLocation: null }]]);
+    return { ...f, actions, vehicle, nativeQueues: queues,
+        run(tick: number, responsePriority = priority) {
+            f.at(tick); controller.onAiUpdate(f.context, null, requests(responsePriority), () => {});
+        },
+        spend(tick: number) {
+            f.player.credits = 1;
+            f.at(tick); controller.onAiUpdate(f.context, null, requests(priority), () => {});
+            native[NotifyTick.onTick]({ getCombatants: () => [f.player], events: { dispatch() {} } });
+        },
+    };
 }
 
 function subsidyFixture() {
@@ -257,6 +299,49 @@ describe("brutal refinery investment", () => {
             priority: 50, specificLocation: new Vector2(24, 0),
         }]]), () => {});
         expect(f.actions.pauseProduction).not.toHaveBeenCalledWith(QueueType.Structures);
+    });
+    test.each([85, 100, 115])("native funds reach the %i-priority vehicle before idle or active discretionary expansion", priority => {
+        for (const active of [false, true]) {
+            const f = nativeFundingFixture(priority, active);
+            if (priority === 85) f.enemies.push({ id: 999, tile: { rx: 22, ry: 0 }, rules: { name: "MTNK", type: ObjectType.Vehicle, isSelectableCombatant: true } });
+            for (let i = 0; i < 54; i++) f.spend(2700 + i * 2);
+            expect(f.nativeQueues.get(QueueType.Vehicles)!.getFirst()!.creditsSpent).toBe(54);
+            expect(f.nativeQueues.get(QueueType.Structures)!.getFirst()?.creditsSpent ?? 0).toBe(0);
+            expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+            f.enemies.length = 0; f.player.credits = 1;
+            f.run(priority === 85 && !active ? 5508 : 2810, 85);
+            expect(f.nativeQueues.get(QueueType.Structures)!.status).toBe(QueueStatus.Active);
+        }
+    });
+    test.each(["quiet", "warning"])("ordinary 85-priority tanks do not take over native refinery funding during %s", condition => {
+        const f = nativeFundingFixture(85, true);
+        if (condition === "warning") f.enemies.push({ id: 999, tile: { rx: 23, ry: 0 }, rules: { name: "MTNK", type: ObjectType.Vehicle, isSelectableCombatant: true } });
+        for (let i = 0; i < 54; i++) f.spend(2700 + i * 2);
+        expect(f.nativeQueues.get(QueueType.Structures)!.getFirst()!.creditsSpent).toBe(54);
+        expect(f.nativeQueues.get(QueueType.Vehicles)!.getFirst()!.creditsSpent).toBe(0);
+    });
+    test.each(["first", "unserved", "no-field", "no-miner", "funded", "low-power", "miner", "normal"])("vehicle funding preserves the existing %s refinery investment", condition => {
+        const f = nativeFundingFixture(115, true); f.player.credits = 1;
+        if (condition === "first") f.units.splice(f.units.findIndex(unit => unit.name === "NAREFN"), 1);
+        if (condition === "unserved") f.units.find(unit => unit.name === "NAREFN")!.tile.rx = -20;
+        if (condition === "no-field") f.resources.length = 0;
+        if (condition === "no-miner") f.units.splice(f.units.findIndex(unit => unit.name === "HARV"), 5);
+        if (condition === "funded") f.player.credits = f.vehicle.cost;
+        if (condition === "low-power") f.player.power.isLowPower = true;
+        if (condition === "miner") Object.assign(f.vehicle, { name: "HARV", cost: 1400, harvester: true });
+        if (condition === "normal") {
+            f.context.difficulty = "normal";
+            f.game.mapApi.getAllTilesResourceData = () => { throw Error("normal funding cannot gain a resource scan"); };
+        }
+        f.run(2700, condition === "miner" ? 120 : 115);
+        expect(f.actions.pauseProduction).not.toHaveBeenCalledWith(QueueType.Structures);
+    });
+    test("a previously held refinery is not claimed by the new vehicle-funding pause", () => {
+        const f = nativeFundingFixture(115, true); f.player.credits = 1;
+        f.nativeQueues.get(QueueType.Structures)!.status = QueueStatus.OnHold;
+        f.run(2700); f.run(2702, 85);
+        expect(f.actions.pauseProduction).not.toHaveBeenCalledWith(QueueType.Structures);
+        expect(f.actions.resumeProduction).not.toHaveBeenCalledWith(QueueType.Structures);
     });
     test("an unfunded unserved sole-refinery recovery defers new ordinary tanks and pauses only their paid queue", () => {
         const idle = recoveryFundingFixture(); idle.run();

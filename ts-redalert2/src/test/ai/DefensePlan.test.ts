@@ -195,6 +195,66 @@ describe("visible-signal defense plans", () => {
         f.own("NALASR", 28); queue.items = []; queue.status = QueueStatus.Idle; f.at(6); f.observe();
         expect(getDefenseState(f.game, f.player.name).placed).toMatchObject([{ signal: "D5" }]);
     });
+    test.each(["D1", "D3", "D4", "D5"])("a paid %s recovers an occupied Ready site inside its original area without repurchasing or changing assignment", signal => {
+        const f = fixture();
+        if (signal === "D1") f.enemy("DRON");
+        if (signal === "D3") f.enemy("HTNK", 40);
+        if (signal === "D4") { f.enemy("ORCA", 100, ObjectType.Aircraft); f.enemy("ORCA", 110, ObjectType.Aircraft); }
+        if (signal === "D5") f.own("NAREFN", 25);
+        const plan = f.plan()!; expect(plan.signal).toBe(signal);
+        const originalSite = { ...plan.location }, assignment = plan.refineryId;
+        recordDefenseOrder(f.game, f.player.name, plan.rules.name, new Vector2(plan.location.rx, plan.location.ry));
+        const queue = f.queues.get(QueueType.Armory)!; queue.status = QueueStatus.Active; queue.items = [{ rules: plan.rules, quantity: 1 }];
+        f.at(2); f.observe();
+        f.own("HTNK", originalSite.rx, originalSite.ry);
+        f.game.canPlaceBuilding = (_name: string, _rule: string, tile: any) => !f.units.some(unit => unit.tile.rx === tile.rx && unit.tile.ry === tile.ry);
+        queue.status = QueueStatus.Ready; f.at(4);
+        const controller = new QueueController(); controller.onAiUpdate(f.context, null, new Map(), () => {});
+        const placed = f.actions.placeBuilding.mock.calls[0] as unknown as [string, number, number];
+        expect(placed).toBeDefined(); expect({ rx: placed[1], ry: placed[2] }).not.toEqual(originalSite);
+        expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+        expect(f.actions.queueForProduction).not.toHaveBeenCalledWith(QueueType.Armory, plan.rules.name, ObjectType.Building, 1);
+        const active = getDefenseState(f.game, f.player.name).active!;
+        expect(active.signal).toBe(signal); expect(active.refineryId).toBe(assignment);
+        expect(getDefenseState(f.game, f.player.name).started).toHaveLength(1);
+        f.own(plan.rules.name, placed[1], placed[2]); queue.items = []; queue.status = QueueStatus.Idle; f.at(6); f.observe();
+        expect(getDefenseState(f.game, f.player.name).placed).toMatchObject([{ signal }]);
+        if (assignment !== undefined) expect(getDefenseState(f.game, f.player.name).refineryIds.has(assignment)).toBe(true);
+    });
+    test("recovery is measured from the original desired point, not a displaced paid location", () => {
+        const f = fixture(); f.enemy("HTNK", 40);
+        f.candidates.splice(0, f.candidates.length, { id: "13_0", rx: 13, ry: 0 }, { id: "15_0", rx: 15, ry: 0 });
+        const plan = f.plan()!; expect(plan.location).toEqual({ rx: 13, ry: 0 });
+        recordDefenseOrder(f.game, f.player.name, plan.rules.name, new Vector2(13, 0));
+        const queue = f.queues.get(QueueType.Armory)!; queue.status = QueueStatus.Active; queue.items = [{ rules: plan.rules, quantity: 1 }];
+        f.at(2); f.observe(); f.own("HTNK", 13);
+        f.game.canPlaceBuilding = (_name: string, _rule: string, tile: any) => !f.units.some(unit => unit.tile.rx === tile.rx && unit.tile.ry === tile.ry);
+        queue.status = QueueStatus.Ready; f.at(4);
+        new QueueController().onAiUpdate(f.context, null, new Map(), () => {});
+        expect(f.actions.placeBuilding).not.toHaveBeenCalled();
+        expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+    });
+    test.each(["D0", "hidden"])("paid defense recovery cannot redirect an original %s site into an unrelated or unknown alternative", condition => {
+        const f = fixture(); f.enemy("HTNK", 40);
+        f.candidates.splice(0, f.candidates.length, { id: "6_0", rx: 6, ry: 0 }, { id: "7_0", rx: 7, ry: 0 });
+        const plan = f.plan(condition === "D0" ? { priority: 70, specificLocation: new Vector2(6, 0) } : undefined)!;
+        recordDefenseOrder(f.game, f.player.name, plan.rules.name, new Vector2(6, 0));
+        const queue = f.queues.get(QueueType.Armory)!; queue.status = QueueStatus.Active; queue.items = [{ rules: plan.rules, quantity: 1 }];
+        f.at(2); f.observe(); f.own("HTNK", 6);
+        f.game.canPlaceBuilding = (_name: string, _rule: string, tile: any) => !f.units.some(unit => unit.tile.rx === tile.rx && unit.tile.ry === tile.ry);
+        if (condition === "hidden") {
+            f.game.mapApi.isVisibleTile = (tile: any) => tile.rx !== 7;
+            const canPlace = f.game.canPlaceBuilding;
+            f.game.canPlaceBuilding = (name: string, rule: string, tile: any) => {
+                if (tile.rx === 7) throw Error("unknown alternative cannot be inspected");
+                return canPlace(name, rule, tile);
+            };
+        }
+        queue.status = QueueStatus.Ready; f.at(4);
+        new QueueController().onAiUpdate(f.context, null, new Map(), () => {});
+        expect(f.actions.placeBuilding).not.toHaveBeenCalled();
+        expect(getDefenseState(f.game, f.player.name).active?.signal).toBe(condition === "D0" ? "D0" : "D3");
+    });
     test("D2 retains actual damage and loss positions when ordinary mining changes a patch's lexical ID", () => {
         for (const loss of [false, true]) {
             const f = fixture(); f.resources.push({ tile: { rx: 11, ry: 0 }, ore: 8000, gems: 0 }); f.observe();

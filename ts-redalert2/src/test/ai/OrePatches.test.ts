@@ -199,12 +199,49 @@ describe("economic patch scores", () => {
         expect(scorePatch(f.game, f.player as any, patch(60, 0))).toBeDefined();
     });
 
+    test("an actual owned base-adjacency outpost can serve a known field beyond the public-start midpoint", () => {
+        const f = fixture(); f.starts[1] = new Vector2(100, 0); f.at(4500);
+        f.buildings.push(object(2, 55, 0, { name: "CAOILD" }));
+        f.resources.splice(0, f.resources.length, resource(60, 0, 0, 400)); setCandidates(f, [point(59, 0)]);
+        expect(scorePatch(f.game, f.player as any, findVisiblePatches(f.game, f.player.name)[0])).toMatchObject({ g: 5 });
+        expect(planRefinery(f.game, f.player as any, f.rules as any)).toMatchObject({ reachable: true, location: point(59, 0), patch: { id: "60_0" } });
+        expect(f.placement("brutal")).toMatchObject(point(59, 0));
+    });
+    test.each([9, 10])("the owned-anchor exception uses the unchanged nine-tile distance, not an enlarged territory radius: %i", gap => {
+        const f = fixture(); f.starts[1] = new Vector2(100, 0); f.at(4500);
+        f.buildings.push(object(2, 60 - gap, 0, { name: "CAOILD" }));
+        expect(!!scorePatch(f.game, f.player as any, patch(60, 0))).toBe(gap === 9);
+    });
+    test.each(["foreign", "hidden-anchor", "tower", "wall", "vehicle", "pending", "danger"])("a %s presence cannot qualify an otherwise excluded opponent-half field", condition => {
+        const f = fixture(); f.starts[1] = new Vector2(100, 0); f.at(4500);
+        const anchor = object(2, 55, 0, { name: "CAOILD", baseNormal: condition !== "tower", wall: condition === "wall",
+            type: condition === "vehicle" ? ObjectType.Vehicle : ObjectType.Building });
+        if (condition === "foreign") f.enemies.push(anchor);
+        else if (condition !== "pending") f.buildings.push(anchor);
+        if (condition === "hidden-anchor") {
+            f.hiddenUnits.add(anchor.id);
+            Object.defineProperty(anchor, "tile", { get() { throw Error("hidden anchor cannot claim territory"); } });
+        }
+        if (condition === "pending") f.game.productionApi = new Proxy({}, { get() { throw Error("pending production is not a placed anchor"); } });
+        if (condition === "danger") f.enemies.push(object(10, 60, 0, { type: ObjectType.Vehicle, isSelectableCombatant: true }));
+        expect(scorePatch(f.game, f.player as any, patch(60, 0))).toBeUndefined();
+    });
+    test("an owned outpost cannot reveal hidden mineral quantities or turn a merely scored field into service", () => {
+        const f = fixture(); f.starts[1] = new Vector2(100, 0); f.at(4500);
+        f.buildings.push(object(2, 55, 0, { name: "CAOILD" }));
+        f.resources.splice(0, f.resources.length, resource(60, 0, 0, 400));
+        const known = findVisiblePatches(f.game, f.player.name)[0];
+        expect(isServed(known, [])).toBe(false);
+        f.hidden.set(f.player.name, new Set(["60_0"])); f.at(4590);
+        Object.defineProperty(f.resources[0], "gems", { get() { throw Error("owned adjacency does not reveal hidden mineral values"); } });
+        expect(planRefinery(f.game, f.player as any, f.rules as any).reachable).toBe(false);
+    });
     test("half comparison is to the closest patch tile rather than its center and uses the nearest public opposing start", () => {
         const f = fixture();
         f.starts.splice(0, 2, new Vector2(), new Vector2(20, 0), new Vector2(200, 0));
         const p = patch(0, 0, 8000, 0, Array.from({ length: 10 }, (_, i) => point(i * 2, 0)));
         expect(scorePatch(f.game, f.player as any, p)).toBeDefined();
-        f.player.startLocation = new Vector2(200, 0);
+        f.player.startLocation = new Vector2(200, 0); f.buildings[0].tile = point(200, 0);
         expect(scorePatch(f.game, f.player as any, p)).toBeUndefined();
     });
 

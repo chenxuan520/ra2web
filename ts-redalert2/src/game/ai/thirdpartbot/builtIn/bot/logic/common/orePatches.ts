@@ -100,8 +100,13 @@ export function scorePatch(game: GameApi, player: PlayerData, patch: OrePatch): 
     if (game.getCurrentTick() < 9000) {
         const ownStart = player.startLocation;
         const otherStarts = game.mapApi.getStartingLocations().filter(start => start.x !== ownStart.x || start.y !== ownStart.y);
+        // Actual owned build adjacency can supersede the opening public-start estimate.
         if (!patch.tiles.some(tile => otherStarts.every(start =>
-            Math.hypot(tile.rx - ownStart.x, tile.ry - ownStart.y) <= Math.hypot(tile.rx - start.x, tile.ry - start.y)))) return undefined;
+            Math.hypot(tile.rx - ownStart.x, tile.ry - ownStart.y) <= Math.hypot(tile.rx - start.x, tile.ry - start.y))) &&
+            !game.getVisibleUnits(player.name, "self", rules => rules.type === ObjectType.Building && rules.baseNormal && !rules.wall).some(id => {
+                const building = game.getGameObjectData(id);
+                return building && patchDistance(building.tile, patch) <= 9;
+            })) return undefined;
     }
     const buildings = game.getVisibleUnits(player.name, "self", rules => rules.type === ObjectType.Building && !rules.wall)
         .map(id => game.getGameObjectData(id)?.tile).filter((tile): tile is Tile => !!tile);

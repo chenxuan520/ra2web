@@ -20,6 +20,7 @@ const towards = (from: PatchPoint, to: PatchPoint, amount: number): PatchPoint =
 export interface DefensePlan {
     rules: TechnoRules;
     location: PatchPoint;
+    desired: PatchPoint;
     priority: number;
     signal: "D0" | "D1" | "D2" | "D3" | "D4" | "D5";
     refineryId?: number;
@@ -150,7 +151,19 @@ export function planDefense(context: SupabotContext, emergency?: { priority: num
     if (!options.length && !state.active) return undefined;
     observeDefense(context);
     const data = game.getPlayerData(player.name);
-    if (state.active && player.production.getQueueData(QueueType.Armory).items[0]?.rules.name === state.active.rules.name) return state.active;
+    if (state.active && player.production.getQueueData(QueueType.Armory).items[0]?.rules.name === state.active.rules.name) {
+        const build = state.active;
+        if (build.signal !== "D0" && player.production.getQueueData(QueueType.Armory).status === QueueStatus.Ready &&
+            !game.canPlaceBuilding(player.name, build.rules.name, build.location)) {
+            // Recover the paid signal's original area, not an unrelated new emergency or home fallback.
+            const location = getAdjacencyTiles(game, data, build.rules, false, 0)
+                .filter(tile => game.mapApi.isVisibleTile(tile, player.name) && distance(tile, build.desired) <= 8 &&
+                    game.canPlaceBuilding(player.name, build.rules.name, tile))
+                .sort((a, b) => distance(a, build.desired) - distance(b, build.desired) || a.rx - b.rx || a.ry - b.ry)[0];
+            if (location) build.location = { rx: location.rx, ry: location.ry };
+        }
+        return build;
+    }
     if (player.production.getQueueData(QueueType.Armory).items.length || data.credits < 600 ||
         game.getCurrentTick() - state.lastStartTick < BRUTAL_PARAMS.economy.defenseCooldownTicks) return undefined;
     const soviet = isSovietCountry(data.country?.name), basicName = soviet ? "NALASR" : "GAPILL", airName = soviet ? "NAFLAK" : "NASAM";
@@ -170,7 +183,7 @@ export function planDefense(context: SupabotContext, emergency?: { priority: num
             .filter(tile => game.canPlaceBuilding(player.name, name, tile))
             .sort((a, b) => distance(a, desired) - distance(b, desired) || a.rx - b.rx || a.ry - b.ry)[0];
         if (!location || distance(location, desired) > 8) return undefined;
-        const plan: DefensePlan = { rules, location: { rx: location.rx, ry: location.ry }, priority, signal, refineryId };
+        const plan: DefensePlan = { rules, location: { rx: location.rx, ry: location.ry }, desired: { rx: desired.rx, ry: desired.ry }, priority, signal, refineryId };
         state.proposal = plan; state.proposalTick = game.getCurrentTick(); state.triggered.add(signal);
         return plan;
     };
