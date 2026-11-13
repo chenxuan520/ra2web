@@ -270,10 +270,11 @@ export class QueueController {
         const paidMinerQueue = productionApi.getQueueData(QueueType.Vehicles), paidMiner = paidMinerQueue.items[0]?.rules;
         let fundPaidEarlyMiner = false;
         if (context.difficulty === "brutal" && pendingRefinery?.refinery && paidMiner?.harvester &&
+            ["HARV", "CMIN"].includes(pendingRefinery.freeUnit) &&
             [QueueStatus.Active, QueueStatus.OnHold].includes(refineryQueue.status) &&
             [QueueStatus.Active, QueueStatus.OnHold].includes(paidMinerQueue.status) &&
             playerData.credits < paidMiner.cost && !playerData.power?.isLowPower && readPressure(context).homeQuiet &&
-            game.getVisibleUnits(player.name, "self", rules => rules.harvester).length < Math.min(5, minerTarget) &&
+            game.getVisibleUnits(player.name, "self", rules => rules.harvester).length < Math.min(3, minerTarget) &&
             this.queueStates.find(state => state.queue === QueueType.Vehicles)?.topItem?.unit.harvester) {
             const sites = game.getVisibleUnits(player.name, "self", rules => rules.refinery)
                 .map(id => game.getGameObjectData(id)?.tile).filter((tile): tile is PatchPoint => !!tile);
