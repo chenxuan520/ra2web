@@ -239,7 +239,10 @@ export class OpeningScoutingMission extends Mission {
                     this.queueMinDistance = currentDistance;
                     this.queueTargetRefreshedAt = tick;
                 }
-                if (!tile || game.mapApi.isVisibleTile(tile, player.name) ||
+                const home = game.getPlayerData(player.name).startLocation;
+                const outerHomeGoal = this.queueTarget.priority === 1000 &&
+                    Math.max(Math.abs(this.queueTarget.target.x - home.x), Math.abs(this.queueTarget.target.y - home.y)) > 24;
+                if (!tile || game.mapApi.isVisibleTile(tile, player.name) && (!outerHomeGoal || currentDistance <= 1) ||
                     !this.queueTarget.permanent && tick > this.queueTargetRefreshedAt + MAX_TICKS_PER_TARGET) this.queueTarget = null;
             }
             if (!this.queueTarget) {

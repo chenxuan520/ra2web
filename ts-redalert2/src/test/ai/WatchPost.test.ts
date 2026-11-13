@@ -272,6 +272,17 @@ describe("T2 scout directions, recruitment and real handoff", () => {
         expect(f.missionStep(f.scout(), 3600).type).toBe("disband");
         expect(f.watch(1).getUnitIds()).toEqual([1]); expect(f.watch(2).getUnitIds()).toEqual([2]);
     });
+    test("an outer home goal is not completed merely because another unit reveals its tile", () => {
+        const f = fixture(); f.explored.delete("60_20"); f.ensure();
+        f.add(1, "DOG", 23); f.add(2, "DOG", 24); f.scout().addUnit(1); f.scout().addUnit(2);
+        f.map.getAllTilesResourceData = () => { throw Error("public outer goals cannot inspect hidden resources"); };
+        f.missionStep(f.scout(), 32); f.explored.add("60_20"); f.missionStep(f.scout(), 64);
+        expect(f.queueReads()).toBe(0);
+        expect(f.orders.filter(order => order.ids.includes(2)).at(-1)).toMatchObject({ xOrTarget: 60, y: 20 });
+        f.objects.get(2)!.tile = tile(59, 20); f.missionStep(f.scout(), 96);
+        expect(f.orders.filter(order => order.ids.includes(2)).at(-1)).toMatchObject({ xOrTarget: 20, y: 80 });
+        expect(f.privateReads()).toBe(0);
+    });
     test("an empty old queue does not suppress the first public-start scout", () => {
         const f = fixture(); f.queue.length = 0; f.ensure();
         expect(f.scout()).toBeInstanceOf(OpeningScoutingMission);
