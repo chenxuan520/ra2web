@@ -63,9 +63,9 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
     if (rules.name === "GAPILE" || rules.name === "NAHAND") return count ? 0 : BRUTAL_PARAMS.economy.barracksPriority;
     if ((rules.name === "GAAIRC" || rules.name === "AMRADR") && refineries && !count && !factories) {
         const allied = ["Americans", "Alliance", "French", "Germans", "British"].includes(s.country);
-        // Nearby public starts need a funded ground production chain first.
+        // Fund the ground production chain before new radar at any public start distance.
         // Keep an already started radar, including after losing a factory.
-        const groundFirst = allied && getOpeningAirBudget(game, player) > 2;
+        const groundFirst = allied;
         return committed || !groundFirst ? 45 : 0;
     }
     const armor = (s.own.MTNK ?? 0) + (s.own.HTNK ?? 0) + (s.own.MGTK ?? 0) + (s.own.APOC ?? 0) + (s.own.SREF ?? 0);

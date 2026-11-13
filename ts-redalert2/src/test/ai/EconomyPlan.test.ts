@@ -30,9 +30,11 @@ test.each(["Americans", "Alliance", "French", "Germans", "British"])("%s funds a
     expect(established("GAAIRC")).toBeUndefined(); // Existing later tech rules can now consider it.
 });
 
-test("distant allied starts retain the existing funded air opening", () => {
-    const distant = scenario(["GAREFN", "CMIN"], 5000, 120, "French");
-    expect(distant("GAAIRC")).toBeGreaterThan(distant("GAWEAP")!);
+test.each(["Americans", "Alliance", "French", "Germans", "British"])("%s funds ground production before an unstarted radar even at distant public starts", country => {
+    const distant = scenario(["GAREFN", "CMIN"], 5000, 120, country);
+    expect(distant("GAWEAP")).toBeGreaterThan(0);
+    expect(distant(country === "Americans" ? "AMRADR" : "GAAIRC")).toBe(0);
+    expect(distant(country === "Americans" ? "AMRADR" : "GAAIRC", {}, true)).toBeGreaterThan(0);
 });
 
 test("losing a factory does not cancel the radar investment already in progress", () => {
