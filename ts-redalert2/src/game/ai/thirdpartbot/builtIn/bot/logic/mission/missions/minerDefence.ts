@@ -136,10 +136,11 @@ export class MinerDefence {
             const canDispatch = (miner: UnitData) => {
                 if (!game.mapApi.isVisibleTile(miner.tile, player.name)) return false;
                 const resource = game.mapApi.getTileResourceData(miner.tile);
-                // Proximity alone also matches full miners about to dock; do not cancel their real unloading.
-                return !(resource && (resource.ore > 0 || resource.gems > 0)) &&
-                    (miner.isIdle || miner.harvestedOre === 0 && miner.harvestedGems === 0 &&
-                        refineries.some(ref => Math.hypot(ref.tile.rx - miner.tile.rx, ref.tile.ry - miner.tile.ry) <= 4));
+                // A real empty return can stand over ore beneath the refinery; full cargo and active gem mining stay untouched.
+                if (resource && resource.gems > 0) return false;
+                const emptyAtRefinery = miner.harvestedOre === 0 && miner.harvestedGems === 0 &&
+                    refineries.some(ref => Math.hypot(ref.tile.rx - miner.tile.rx, ref.tile.ry - miner.tile.ry) <= 4);
+                return emptyAtRefinery || !(resource && resource.ore > 0) && miner.isIdle;
             };
             const reserveDispatch = (miner: UnitData, tile: PatchPoint) => {
                 const target = patchByTile.get(tileKey(tile))!, current = assignments.get(miner.id);

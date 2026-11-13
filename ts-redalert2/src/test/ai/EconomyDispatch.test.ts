@@ -47,7 +47,7 @@ function balanceFixture() {
 }
 
 describe("unload-aware gem dispatch", () => {
-    test.each([[4, false, false, true], [5, false, false, false], [5, true, false, true], [4, false, true, false], [4, true, true, false]])(
+    test.each([[4, false, false, true], [5, false, false, false], [5, true, false, true], [4, false, true, true], [4, true, true, true], [5, false, true, false]])(
         "refinery distance=%i idle=%s underfoot-resource=%s dispatch=%s", (distance, idle, ore, dispatch) => {
             const f = fixture(); f.miners[0].tile.rx = distance; f.miners[0].isIdle = idle;
             if (ore) f.resources.push({ tile: { rx: distance, ry: 0 }, ore: 1, gems: 0 });
@@ -55,6 +55,10 @@ describe("unload-aware gem dispatch", () => {
             if (dispatch) expect(f.actions.orderUnits).toHaveBeenCalledWith([f.miners[0].id], OrderType.Gather, 20, 0);
             else expect(f.actions.orderUnits).not.toHaveBeenCalled();
         });
+    test("a miner on gems at a nearby refinery is not interrupted by the empty-cargo exception", () => {
+        const f = fixture(); f.miners[0].tile.rx = 20; f.refinery(18); f.run();
+        expect(f.actions.orderUnits).not.toHaveBeenCalled();
+    });
     test("a busy returning miner is not treated as unloaded while its real cargo is positive or unknown", () => {
         for (const cargo of ["ore", "gems", "unknown"]) {
             const f = fixture();
@@ -148,7 +152,9 @@ describe("served-field one-miner balancing", () => {
         expect(f.actions.orderUnits).toHaveBeenCalledWith([f.miners[0].id], OrderType.Gather, 30, 0);
     });
     test("the same eligible miner cannot be balanced again within 600 ticks", () => {
-        const f = balanceFixture(), miner = f.miners[0]; f.run();
+        const f = balanceFixture(), miner = f.miners[0];
+        for (const other of f.miners.slice(1, -1)) other.harvestedOre = 1;
+        f.run();
         miner.tile.rx = 28; f.at(300); f.run();
         miner.tile.rx = 6; f.at(600); f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(1);
         f.at(750); f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(2);
