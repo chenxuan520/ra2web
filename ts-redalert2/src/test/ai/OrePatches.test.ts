@@ -76,11 +76,50 @@ function patch(rx: number, ry: number, value = 8000, gemValue = 0, tiles = [poin
         value, gemValue, isGem: gemValue >= value * 0.5, regrows: false };
 }
 
+function depletedServedFieldFixture() {
+    const f = fixture();
+    f.resources.splice(0, f.resources.length, resource(14, 0, 2000), resource(15, 0, 2000), resource(16, 0, 2000), resource(40, 0, 0, 400));
+    f.buildings.push(object(2, 5, 0, { name: "GAREFN", refinery: true }), object(3, 17, 0, { name: "GAPOWR" }), object(4, 41, 0, { name: "CAOILD" }));
+    setCandidates(f, [point(15, 0), point(39, 0)]);
+    return f;
+}
+
 function setCandidates(f: ReturnType<typeof fixture>, tiles: { rx: number; ry: number }[]) {
     f.candidates.splice(0, f.candidates.length, ...tiles.map(tile => ({ ...tile, id: key(tile) })));
     f.legal.clear();
     tiles.forEach(tile => f.legal.add(key(tile)));
 }
+
+describe("ordinary refinery targets retain observed field identity", () => {
+    test("a receding previously serviced field does not outrank another genuinely new legal field", () => {
+        const f = depletedServedFieldFixture();
+        expect(planRefinery(f.game, f.player as any, f.rules as any).patch?.id).toBe("40_0");
+        f.resources[0].ore = 0; f.at(90);
+        const current = findVisiblePatches(f.game, f.player.name).find(patch => patch.id === "15_0")!;
+        expect(current.value).toBe(40000); expect(isServed(current, [point(5, 0)])).toBe(false);
+        expect(scorePatch(f.game, f.player as any, current)).toBeDefined();
+        expect(planRefinery(f.game, f.player as any, f.rules as any)).toMatchObject({ patch: { id: "40_0" }, location: point(39, 0), reachable: true });
+    });
+    test("observed field identity does not prevent ordinary fallback when no other legal field exists", () => {
+        const f = depletedServedFieldFixture(); planRefinery(f.game, f.player as any, f.rules as any);
+        f.resources[0].ore = 0; f.at(90); f.legal.delete("39_0");
+        expect(planRefinery(f.game, f.player as any, f.rules as any).patch?.id).toBe("15_0");
+    });
+    test.each(["ownership-loss", "rollback", "other-player"])("a %s cannot retain another live refinery's old field preference", condition => {
+        const f = depletedServedFieldFixture(); planRefinery(f.game, f.player as any, f.rules as any);
+        f.resources[0].ore = 0; f.at(90); planRefinery(f.game, f.player as any, f.rules as any);
+        if (condition === "ownership-loss") f.buildings.splice(f.buildings.findIndex(building => building.id === 2), 1);
+        if (condition === "rollback") f.at(0);
+        const player = condition === "other-player" ? { ...f.player, name: "bot2" } : f.player;
+        expect(planRefinery(f.game, player as any, f.rules as any).patch?.id).toBe("15_0");
+    });
+    test("historical field coordinates never expose hidden current resource amounts", () => {
+        const f = depletedServedFieldFixture(); planRefinery(f.game, f.player as any, f.rules as any);
+        f.resources[0].ore = 0; f.at(90); f.hidden.set("bot", new Set(["40_0"]));
+        Object.defineProperty(f.resources[3], "gems", { get() { throw Error("history is not permission to read hidden amounts"); } });
+        expect(planRefinery(f.game, f.player as any, f.rules as any).patch?.id).toBe("15_0");
+    });
+});
 
 describe("visible economic patches", () => {
     test.each([

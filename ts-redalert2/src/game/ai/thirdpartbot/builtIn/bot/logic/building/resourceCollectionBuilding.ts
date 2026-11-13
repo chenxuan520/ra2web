@@ -8,6 +8,8 @@ import { minBy } from "../common/utils";
 
 const NO_REFINERY_DISTANCE = 10;
 const REFINERY_HARD_LIMIT = 6;
+interface RefineryFieldHistory { tick: number; patches?: OrePatch[]; fields: Map<number, Set<string>> }
+const refineryFieldHistory = new WeakMap<GameApi, Map<string, RefineryFieldHistory>>();
 
 export interface RefineryPlan {
     patch: OrePatch | undefined;
@@ -18,9 +20,35 @@ export interface RefineryPlan {
 
 /** Scored visible fields only; the first-refinery legacy fallback remains in getPlacementLocation. */
 export function planRefinery(game: GameApi, playerData: PlayerData, technoRules: TechnoRules): RefineryPlan {
-    const scored = findVisiblePatches(game, playerData.name)
-        .map(patch => scorePatch(game, playerData, patch)).filter((patch): patch is ScoredPatch => !!patch)
-        .sort((a, b) => b.score - a.score || a.g - b.g || (a.patch.id < b.patch.id ? -1 : a.patch.id > b.patch.id ? 1 : 0));
+    const patches = findVisiblePatches(game, playerData.name), tick = game.getCurrentTick();
+    const refineries = game.getVisibleUnits(playerData.name, "self", rules => rules.refinery).flatMap(id => {
+        const refinery = game.getGameObjectData(id);
+        return refinery ? [refinery] : [];
+    });
+    let players = refineryFieldHistory.get(game);
+    if (!players) { players = new Map(); refineryFieldHistory.set(game, players); }
+    let history = players.get(playerData.name);
+    if (!history || tick < history.tick) {
+        history = { tick, fields: new Map() };
+        players.set(playerData.name, history);
+    }
+    const fieldHistory = history, tileKey = (tile: PatchPoint) => `${tile.rx}_${tile.ry}`;
+    if (fieldHistory.patches !== patches || fieldHistory.fields.size !== refineries.length || refineries.some(refinery => !fieldHistory.fields.has(refinery.id))) {
+        fieldHistory.fields = new Map(refineries.map(refinery => {
+            const tiles = fieldHistory.fields.get(refinery.id) ?? new Set<string>();
+            for (const patch of patches) if (patchDistance(refinery.tile, patch) <= 9) {
+                for (const tile of patch.tiles) tiles.add(tileKey(tile));
+            }
+            return [refinery.id, tiles];
+        }));
+        fieldHistory.patches = patches;
+    }
+    fieldHistory.tick = tick;
+    // Prioritize a new field when mining erases the edge of an already served known field; keep the original fallback.
+    const previouslyServiced = (patch: OrePatch) => [...fieldHistory.fields.values()].some(tiles => patch.tiles.some(tile => tiles.has(tileKey(tile))));
+    const scored = patches.map(patch => scorePatch(game, playerData, patch)).filter((patch): patch is ScoredPatch => !!patch)
+        .sort((a, b) => Number(previouslyServiced(a.patch)) - Number(previouslyServiced(b.patch)) ||
+            b.score - a.score || a.g - b.g || (a.patch.id < b.patch.id ? -1 : a.patch.id > b.patch.id ? 1 : 0));
     const buildings = game.getVisibleUnits(playerData.name, "self", rules => rules.type === ObjectType.Building && !rules.wall)
         .map(id => game.getGameObjectData(id)?.tile).filter((tile): tile is Tile => !!tile);
     const unreachable: RefineryPlan["unreachable"] = [];
