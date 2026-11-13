@@ -1,5 +1,5 @@
-import { describe, expect, test } from "bun:test";
-import { ObjectType, SideType, Vector2 } from "../../game/ai/thirdpartbot/builtIn/game-api";
+import { describe, expect, mock, test } from "bun:test";
+import { ObjectType, OrderType, SideType, Vector2 } from "../../game/ai/thirdpartbot/builtIn/game-api";
 import { EngineerMission, EngineerMissionFactory } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/engineerMission";
 import { MissionController } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missionController";
 import { readPressure } from "../../game/ai/thirdpartbot/builtIn/bot/logic/common/pressure";
@@ -32,6 +32,41 @@ function fixture(miners = 1, core = 0, difficulty = "brutal") {
     return { game, context, controller, objects, visible, add,
         at(value: number) { tick = value; }, run() { factory.maybeCreateMissions(context, controller, () => {}); }, ownReads: () => ownReads };
 }
+
+function captureFixture(difficulty = "brutal") {
+    const f = fixture(2, 1, difficulty);
+    const engineer: any = f.add(500, "SENGINEER", "bot", { type: ObjectType.Infantry, engineer: true });
+    engineer.isIdle = true;
+    const target = f.objects.find(unit => unit.id === 1000); target.foundation = { width: 2, height: 2 };
+    const orders = mock((_ids: number[], _type: OrderType, _target: number) => { engineer.isIdle = false; });
+    f.context.player.actions = { orderUnits: orders };
+    f.game.map = f.game.mapApi = { getReachabilityMap: () => ({ isReachable: () => true }),
+        getTilesInRect: () => [{ rx: 1000, ry: 1 }] };
+    const mission = new EngineerMission("capture-existing", 100, target.id, 1, () => {}); mission.addUnit(engineer.id);
+    return { ...f, engineer, target, orders, step(tick: number) { f.at(tick); return mission._onAiUpdate(f.context); } };
+}
+
+describe("capture orders preserve existing movement", () => {
+    test("a busy brutal engineer receives one Capture order, not a fresh task every thirty ticks", () => {
+        const f = captureFixture();
+        f.step(100); f.step(132); f.step(164);
+        expect(f.orders).toHaveBeenCalledTimes(1);
+        expect(f.orders).toHaveBeenCalledWith([500], OrderType.Capture, 1000);
+    });
+    test("an actually idle stalled engineer may retry after the existing cooldown", () => {
+        const f = captureFixture(); f.step(100); f.engineer.isIdle = true;
+        f.step(120); expect(f.orders).toHaveBeenCalledTimes(1);
+        f.step(132); expect(f.orders).toHaveBeenCalledTimes(2);
+    });
+    test("a completed target still disbands the mission instead of issuing another Capture", () => {
+        const f = captureFixture(); f.step(100); f.target.owner = "bot";
+        expect(f.step(132).type).toBe("disband"); expect(f.orders).toHaveBeenCalledTimes(1);
+    });
+    test("normal retains its existing periodic Capture behavior", () => {
+        const f = captureFixture("normal"); f.step(100); f.step(132);
+        expect(f.orders).toHaveBeenCalledTimes(2);
+    });
+});
 
 describe("opening neutral-capture budget", () => {
     test.each([[0, 0], [1, 0], [2, 0], [1, 1]])("miners%i/core%i preserves the first capture but not three simultaneous priority100 commitments", (miners, core) => {

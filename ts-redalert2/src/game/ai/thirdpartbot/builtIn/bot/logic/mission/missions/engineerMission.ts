@@ -88,6 +88,7 @@ export class EngineerMission extends Mission {
 
         if (
             this.state === EngineerMissionState.Capturing &&
+            (context.difficulty !== "brutal" || this.lastCaptureAttemptTick < 0 || engineers[0].isIdle) &&
             game.getCurrentTick() > this.lastCaptureAttemptTick + CAPTURE_COOLDOWN_TICKS
         ) {
             const engineer = engineers[0];

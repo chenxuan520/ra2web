@@ -151,7 +151,8 @@ describe("brutal miner capacity and production table", () => {
         });
     test.each([[1, 1, 0], [1, 2, 90], [2, 3, 0], [2, 4, 78], [3, 0, 0], [3, 1, 78], [3, 2, 78]])(
         "early pressure miners=%i core=%i gives priority %i", (miners, core, expected) => {
-            const f = fixture(miners, core); f.enemy(100, 40); f.enemy(101, 40);
+            const f = fixture(miners, core); f.units.find(unit => unit.name === "NAREFN" && unit.tile.rx === 25)!.tile.rx = 17;
+            f.enemy(100, 40); f.enemy(101, 40);
             expect(f.priority()).toBe(expected);
         });
     test("direct base combat blocks later miners but not the specified pressured second/third miner rows", () => {
@@ -205,6 +206,7 @@ describe("brutal miner capacity and production table", () => {
             const f = fixture(miners, core);
             for (let i = 0; i < 4; i++) f.enemy(100 + i, 80, ObjectType.Vehicle, { harvester: true });
             expect(f.priority()).toBe(expected);
+            f.units.find(unit => unit.name === "NAREFN" && unit.tile.rx === 25)!.tile.rx = 17;
             f.enemy(200, 40); f.enemy(201, 40); f.at(102);
             expect(getEconomyPressureLimits(f.context, miners)).toMatchObject({ minerCoreFactor: 1, crawlMiners: 2, extraRefineryCredits: 1000 });
             expect(f.priority()).toBe(expected);
@@ -292,6 +294,49 @@ describe("brutal miner capacity and production table", () => {
         f.run();
         expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
     });
+    test("actual owned-refinery attack blocks the new miner78 override even outside the birth-point siege radius", () => {
+        const f = fixture(3, 1); f.at(5400); f.enemy(100, 30);
+        expect(readPressure(f.context).baseUnderSiege).toBe(false);
+        f.run();
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTNK", ObjectType.Vehicle, 1);
+        expect(f.actions.queueForProduction).not.toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
+    });
+    test("a paid later miner does not remain protected while its real owned refinery is under attack", () => {
+        const f = fixture(3, 1); f.at(5400); f.enemy(100, 30);
+        const miner = f.options.get(QueueType.Vehicles)![0];
+        Object.assign(f.queues.get(QueueType.Vehicles)!, { status: QueueStatus.Active, items: [{ rules: miner, quantity: 1 }] });
+        f.run();
+        expect(f.actions.unqueueFromProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
+    });
+    test("a moved economic base cannot make real attack look quiet enough to cancel its funded armor for income", () => {
+        const f = fixture(3, 2); f.own("NAREFN", 95); f.resources.push({ tile: { rx: 95, ry: 0 }, ore: 800, gems: 0, spawnsOre: false });
+        f.at(2700); f.enemy(100, 100);
+        expect(readPressure(f.context)).toMatchObject({ homeQuiet: true, baseUnderSiege: false });
+        const tank = f.options.get(QueueType.Vehicles)![1];
+        Object.assign(f.queues.get(QueueType.Vehicles)!, { status: QueueStatus.Active, items: [{ rules: tank, quantity: 1 }] });
+        f.run();
+        expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+    });
+    test.each([22, 23])("owned-base protection keeps the existing twenty-two-tile attack boundary: %i", gap => {
+        const f = fixture(3, 2); f.own("NAREFN", 95);
+        f.resources.push({ tile: { rx: 95, ry: 0 }, ore: 800, gems: 0, spawnsOre: false });
+        f.at(2700); f.enemy(100, 95 + gap);
+        expect(readPressure(f.context).baseUnderSiege).toBe(false);
+        f.run();
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, gap === 22 ? "HTNK" : "HARV", ObjectType.Vehicle, 1);
+    });
+    test.each(["miner", "building", "hidden", "normal"])("a %s enemy observation cannot activate new owned-base economic protection", condition => {
+        const f = fixture(3, 1); f.at(5400);
+        const enemy = f.enemy(100, 30, condition === "building" ? ObjectType.Building : ObjectType.Vehicle,
+            { harvester: condition === "miner" });
+        if (condition === "hidden") {
+            const visible = f.game.getVisibleUnits;
+            f.game.getVisibleUnits = (name: string, relation: string, predicate: any) => relation === "enemy" ? [] : visible(name, relation, predicate);
+        }
+        if (condition === "normal") { f.context.difficulty = "normal"; f.requests.set("HARV", { priority: 110, specificLocation: null }); }
+        if (condition === "hidden" || condition === "normal") Object.defineProperty(enemy, "tile", { get() { throw Error("not an authorized enemy-coordinate read"); } });
+        f.run(); expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
+    });
     test("an approved unpressured miner78 wins actual arbitration over the regular tank85, not only the debug priority", () => {
         const f = fixture(3, 2); f.run();
         expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
@@ -314,6 +359,7 @@ describe("brutal miner capacity and production table", () => {
     test.each(["Russians", "Americans"])("%s keeps a needed paid miner during advance warning, not a real emergency", country => {
         for (const response of ["warning", "siege", "air", "infantry", "counter", "capped"]) {
             const f = fixture(response === "capped" ? 12 : 1, 0, country); f.resources.splice(1);
+            f.units.find(unit => unit.name === "NAREFN" && unit.tile.rx === 25)!.tile.rx = 17;
             f.enemy(100, response === "siege" ? 22 : 40);
             if (response === "air") {
                 f.enemy(200, 70, ObjectType.Aircraft); f.requests.set("HTK", { priority: 115, specificLocation: null });

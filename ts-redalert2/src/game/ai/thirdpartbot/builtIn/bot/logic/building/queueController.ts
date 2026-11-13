@@ -1,6 +1,7 @@
 import {
     ActionsApi,
     GameApi,
+    ObjectType,
     PlayerData,
     ProductionApi,
     QueueStatus,
@@ -88,6 +89,15 @@ export class QueueController {
         const { game, player } = context;
         const { production: productionApi, actions: actionsApi } = player;
         const playerData = game.getPlayerData(player.name);
+        // Protect the army's actual base area without redefining historical birth-point pressure.
+        const ownedAnchors = context.difficulty === "brutal" ? game.getVisibleUnits(player.name, "self", rules =>
+            rules.constructionYard || rules.refinery || rules.weaponsFactory)
+            .map(id => game.getGameObjectData(id)?.tile).filter((tile): tile is PatchPoint => !!tile) : [];
+        const ownedBaseUnderAttack = context.difficulty === "brutal" && game.getVisibleUnits(player.name, "enemy", rules =>
+            rules.isSelectableCombatant && !rules.harvester && rules.type !== ObjectType.Building).some(id => {
+            const enemy = game.getUnitData(id);
+            return enemy && ownedAnchors.some(base => Math.hypot(enemy.tile.rx - base.rx, enemy.tile.ry - base.ry) <= 22);
+        });
         observeRefineryEconomy(context);
         observeBaseCrawl(context);
         // Economic units do not belong to combat missions. Keep a separate request
@@ -179,7 +189,7 @@ export class QueueController {
                     priority = 110;
                 } else if (miners === 2 && pressure.pressured && (ecoOnly || core >= 4) && miners < desired) {
                     priority = 78;
-                } else if (miners >= 3 && miners < desired && !pressure.baseUnderSiege && (ecoOnly || core >= coreFactor * (miners - 2))) {
+                } else if (miners >= 3 && miners < desired && !pressure.baseUnderSiege && !ownedBaseUnderAttack && (ecoOnly || core >= coreFactor * (miners - 2))) {
                     priority = pressure.homeQuiet && miners < 5 && situation.enemy.infantry < 8 ? 110 : 78;
                 }
             }
@@ -248,7 +258,7 @@ export class QueueController {
                 }
             }
             const openingTank = isSovietCountry(playerData.country?.name) ? "HTNK" : "MTNK";
-            if (situation.harvesters >= 3 && situation.enemy.infantry < 8 && !readPressure(context).pressured &&
+            if (situation.harvesters >= 3 && situation.enemy.infantry < 8 && !readPressure(context).pressured && !ownedBaseUnderAttack &&
                 requests.get(openingTank)?.priority === 85 && productionApi.getAvailableObjects(QueueType.Vehicles)
                     .some(option => option.harvester && requests.get(option.name)?.priority === 78)) {
                 requests.set(openingTank, { ...requests.get(openingTank)!, priority: 75 });
@@ -259,7 +269,7 @@ export class QueueController {
         let restoringIncome = false;
         if (context.difficulty === "brutal" && pendingRefinery?.refinery &&
             (refineryQueue.status === QueueStatus.Active || refineryQueue.status === QueueStatus.OnHold) &&
-            playerData.credits < pendingRefinery.cost && !readPressure(context).pressured) {
+            playerData.credits < pendingRefinery.cost && !readPressure(context).pressured && !ownedBaseUnderAttack) {
             const sites = game.getVisibleUnits(player.name, "self", rules => rules.refinery)
                 .map(id => game.getGameObjectData(id)?.tile).filter((tile): tile is PatchPoint => !!tile);
             const patches = findVisiblePatches(game, player.name), situation = readStrategicSituation(game, playerData);
@@ -283,7 +293,7 @@ export class QueueController {
             ["HARV", "CMIN"].includes(pendingRefinery.freeUnit) &&
             [QueueStatus.Active, QueueStatus.OnHold].includes(refineryQueue.status) &&
             [QueueStatus.Active, QueueStatus.OnHold].includes(paidMinerQueue.status) &&
-            playerData.credits < paidMiner.cost && !playerData.power?.isLowPower && readPressure(context).homeQuiet &&
+            playerData.credits < paidMiner.cost && !playerData.power?.isLowPower && readPressure(context).homeQuiet && !ownedBaseUnderAttack &&
             game.getVisibleUnits(player.name, "self", rules => rules.harvester).length < Math.min(3, minerTarget) &&
             this.queueStates.find(state => state.queue === QueueType.Vehicles)?.topItem?.unit.harvester) {
             const sites = game.getVisibleUnits(player.name, "self", rules => rules.refinery)
@@ -293,7 +303,7 @@ export class QueueController {
         const priorityVehicle = this.queueStates.find(state => state.queue === QueueType.Vehicles)?.topItem;
         let fundPriorityVehicle = false;
         if (context.difficulty === "brutal" && priorityVehicle && !priorityVehicle.unit.harvester &&
-            (priorityVehicle.priority >= 100 || priorityVehicle.priority >= 85 && readPressure(context).baseUnderSiege) &&
+            (priorityVehicle.priority >= 100 || priorityVehicle.priority >= 85 && (readPressure(context).baseUnderSiege || ownedBaseUnderAttack)) &&
             playerData.credits < priorityVehicle.unit.cost && !playerData.power?.isLowPower &&
             game.getVisibleUnits(player.name, "self", rules => rules.harvester).length > 0) {
             const sites = game.getVisibleUnits(player.name, "self", rules => rules.refinery)
@@ -354,9 +364,11 @@ export class QueueController {
                     requests.get(crawl.rules.name)?.specificLocation?.x === crawl.location.rx &&
                     requests.get(crawl.rules.name)?.specificLocation?.y === crawl.location.ry,
                 context.difficulty === "brutal" && decision.queue === QueueType.Structures && !!decision.topItem?.unit.refinery &&
-                    !!buildingLocation && !readPressure(context).pressured && game.canPlaceBuilding(player.name, decision.topItem.unit.name,
-                        { rx: buildingLocation.x, ry: buildingLocation.y }),
+                    !!buildingLocation && !readPressure(context).pressured &&
+                    (!ownedBaseUnderAttack || game.getVisibleUnits(player.name, "self", rules => rules.refinery).length === 0) &&
+                    game.canPlaceBuilding(player.name, decision.topItem.unit.name, { rx: buildingLocation.x, ry: buildingLocation.y }),
                 minerTarget,
+                ownedBaseUnderAttack,
             );
         });
 
@@ -414,6 +426,7 @@ export class QueueController {
         requestedCrawl = false,
         requestedRefinery = false,
         minerTarget = 0,
+        ownedBaseUnderAttack = false,
     ): void {
         const myCredits = playerData.credits;
         // With five or six queues, every queue can fall below 25%. Always
@@ -433,7 +446,7 @@ export class QueueController {
             (queueData.status === QueueStatus.Active || queueData.status === QueueStatus.OnHold) &&
             decision?.unit.harvester && decision.priority === 110 && ["HTNK", "MTNK", "DRON"].includes(currentItem.rules.name) &&
             (unitTypeRequests.get(currentItem.rules.name)?.priority ?? 0) < 100 &&
-            readPressure({ game, player: { name: playerData.name }, difficulty }).homeQuiet &&
+            readPressure({ game, player: { name: playerData.name }, difficulty }).homeQuiet && !ownedBaseUnderAttack &&
             game.getVisibleUnits(playerData.name, "self", rules => rules.harvester).length < Math.min(5, minerTarget)) {
             logger(`Replacing ordinary ${currentItem.rules.name} with needed early income in queue ${queueTypeToName(queueType)}`);
             actionsApi.unqueueFromProduction(queueType, currentItem.rules.name, currentItem.rules.type, currentItem.quantity);
@@ -527,7 +540,7 @@ export class QueueController {
                 const keepPaidMiner = difficulty === "brutal" && currentProduction.harvester && miners < 12 &&
                     (decision.unit.name === "DRON" || ["HTNK", "MTNK"].includes(decision.unit.name) && newItemPriority < 100 &&
                         miners < minerTarget &&
-                        !readPressure({ game, player: { name: playerData.name }, difficulty }).baseUnderSiege &&
+                        !readPressure({ game, player: { name: playerData.name }, difficulty }).baseUnderSiege && !ownedBaseUnderAttack &&
                         (miners === 1 || readStrategicSituation(game, playerData).enemy.infantry < 8));
                 if (!keepPaidMiner && (currentItemPriority === 0 ? newItemPriority >= 80 : newItemPriority > currentItemPriority * 2)) {
                     logger(

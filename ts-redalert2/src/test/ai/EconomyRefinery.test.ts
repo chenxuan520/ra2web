@@ -315,7 +315,7 @@ describe("brutal refinery investment", () => {
     });
     test.each(["quiet", "warning"])("ordinary 85-priority tanks do not take over native refinery funding during %s", condition => {
         const f = nativeFundingFixture(85, true);
-        if (condition === "warning") f.enemies.push({ id: 999, tile: { rx: 23, ry: 0 }, rules: { name: "MTNK", type: ObjectType.Vehicle, isSelectableCombatant: true } });
+        if (condition === "warning") f.enemies.push({ id: 999, tile: { rx: 28, ry: 0 }, rules: { name: "MTNK", type: ObjectType.Vehicle, isSelectableCombatant: true } });
         for (let i = 0; i < 54; i++) f.spend(2700 + i * 2);
         expect(f.nativeQueues.get(QueueType.Structures)!.getFirst()!.creditsSpent).toBe(54);
         expect(f.nativeQueues.get(QueueType.Vehicles)!.getFirst()!.creditsSpent).toBe(0);
@@ -335,6 +335,31 @@ describe("brutal refinery investment", () => {
         }
         f.run(2700, condition === "miner" ? 120 : 115);
         expect(f.actions.pauseProduction).not.toHaveBeenCalledWith(QueueType.Structures);
+    });
+    test.each([false, true])("native armor85 funding is protected at an attacked refinery with discretionary expansion active=%s", active => {
+        const f = nativeFundingFixture(85, active); f.own("NAREFN", 25);
+        f.enemies.push({ id: 999, tile: { rx: 30, ry: 0 }, rules: { name: "MTNK", type: ObjectType.Vehicle, isSelectableCombatant: true } });
+        for (let i = 0; i < 54; i++) f.spend(5400 + i * 2);
+        expect(f.nativeQueues.get(QueueType.Vehicles)!.getFirst()!.creditsSpent).toBe(54);
+        expect(f.nativeQueues.get(QueueType.Structures)!.getFirst()?.creditsSpent ?? 0).toBe(0);
+    });
+    test("income recovery must not pause ordinary armor85 at a real attacked remote refinery", () => {
+        const f = recoveryFundingFixture(QueueStatus.Active);
+        f.units.find(unit => unit.name === "NAREFN")!.tile.rx = 95;
+        f.enemies.push({ id: 999, tile: { rx: 100, ry: 0 }, rules: { name: "MTNK", type: ObjectType.Vehicle, isSelectableCombatant: true } });
+        f.at(5400); f.run();
+        expect(f.actions.pauseProduction).not.toHaveBeenCalledWith(QueueType.Vehicles);
+    });
+    test("owned-base attack does not remove the low-cash first-refinery start", () => {
+        const f = fixture(0, 0); f.player.credits = 1; f.own("NAWEAP", 25); f.at(5400);
+        f.enemies.push({ id: 999, tile: { rx: 30, ry: 0 }, rules: { name: "MTNK", type: ObjectType.Vehicle, isSelectableCombatant: true } });
+        const available = f.context.player.production.getAvailableObjects;
+        f.context.player.production.getAvailableObjects = (type: QueueType) => type === QueueType.Vehicles
+            ? [{ name: "HTNK", type: ObjectType.Vehicle, cost: 900 }] : available(type);
+        new QueueController().onAiUpdate(f.context, null, new Map<string, any>([
+            ["NAREFN", { priority: 50, specificLocation: new Vector2(4, 0) }], ["HTNK", { priority: 100, specificLocation: null }],
+        ]), () => {});
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Structures, "NAREFN", ObjectType.Building, 1);
     });
     test("a previously held refinery is not claimed by the new vehicle-funding pause", () => {
         const f = nativeFundingFixture(115, true); f.player.credits = 1;

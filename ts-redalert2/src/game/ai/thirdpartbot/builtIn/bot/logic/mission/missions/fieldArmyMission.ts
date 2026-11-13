@@ -228,10 +228,8 @@ export class FieldArmyMission extends Mission {
         };
         const allied = available.has("MTNK");
         const conscripts = getBasicInfantryBudget("E2", context.difficulty);
-        // Fund the opening only while viable and within the existing short-assault distance.
-        if (openingInfantry && enemyArmor <= 2 && enemyAircraft === 0 && enemyDefences < 2 &&
-            game.mapApi.getStartingLocations().some(start => (start.x !== playerData.startLocation.x || start.y !== playerData.startLocation.y) &&
-                playerData.startLocation.distanceTo(start) <= 45))
+        // Do not keep funding an opening that its visible counters already prevent from pushing.
+        if (openingInfantry && enemyArmor <= 2 && enemyAircraft === 0 && enemyDefences < 2)
             want(this.plan!.composition.E2 ? "E2" : "E1", this.plan!.maximumUnits, 95);
         if (s.harvesters && !allied && !mobileRoles) want("E2", conscripts.total, 20);
         const tank = allied ? "MTNK" : "HTNK", aa = allied ? "FV" : "HTK";

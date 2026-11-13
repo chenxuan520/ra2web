@@ -22,7 +22,7 @@ function fixture() {
             [...(relation === 'enemy' ? enemies : units).values()].filter(unit => predicate(unit.rules)).map(unit => unit.id),
         getUnitData: (id: number) => units.get(id) ?? enemies.get(id), getGameObjectData: (id: number) => units.get(id) ?? enemies.get(id),
         rulesApi: { infantryRules: new Map([['E2', foot]]), vehicleRules: new Map(), aircraftRules: new Map(), buildingRules: new Map() },
-        mapApi: { getTile: (rx: number, ry: number) => ({ rx, ry }), getStartingLocations: () => [new Vector2(), new Vector2(40, 0)],
+        mapApi: { getTile: (rx: number, ry: number) => ({ rx, ry }), getStartingLocations: () => [new Vector2(), new Vector2(80, 0)],
             isVisibleTile: () => false, getRealMapSize: () => ({ width: 80, height: 80 }), isPassableTile: () => true } };
     const controller = new MissionController(() => {});
     const context: any = { difficulty: 'brutal', game, player: { name: 'bot', production: { getAvailableObjects: () => available } },
@@ -40,29 +40,9 @@ describe('bounded paid infantry support during armor assembly', () => {
         const actionBatcher = new ActionBatcher(), orders: any[][] = [];
         const result: any = army.onAiUpdate({ ...f.context, actionBatcher });
         actionBatcher.resolve({ orderUnits: (...args: any[]) => orders.push(args) } as any, f.game.mapApi);
-        expect(army.isAttacking()).toBe(true); expect(orders.some(order => order[1] === OrderType.AttackMove && order[2] === 40)).toBe(true);
+        expect(army.isAttacking()).toBe(true); expect(orders.some(order => order[1] === OrderType.AttackMove && order[2] === 80)).toBe(true);
         expect(result.unitNameToPriority.E2).toBe(95);
         f.at(7000); expect(army.onAiUpdate({ ...f.context, actionBatcher }).type).toBe('releaseUnits');
-    });
-    test.each([45, 46])('paid infantry continuation uses the existing short-assault distance boundary: %i', distance => {
-        const f = fixture(); f.game.mapApi.getStartingLocations = () => [f.player.startLocation, new Vector2(distance, 0)];
-        const army = new FieldArmyMission(f.plan(), f.controller, () => {}); f.controller.addMission(army);
-        for (let id = 1; id <= 8; id++) army.addUnit(id);
-        const result: any = army.onAiUpdate({ ...f.context, actionBatcher: new ActionBatcher() });
-        expect(result.unitNameToPriority.E2).toBe(distance === 45 ? 95 : undefined);
-        expect(result.unitNameToPriority.HTNK).toBe(75);
-    });
-    test('an already formed long-map infantry contingent still acts without more paid opening quota', () => {
-        const f = fixture(); f.game.mapApi.getStartingLocations = () => [f.player.startLocation, new Vector2(80, 0)];
-        const plan = f.plan(); expect(plan.minimumUnits).toBe(8);
-        const army = new FieldArmyMission(plan, f.controller, () => {}); f.controller.addMission(army);
-        for (let id = 1; id <= 8; id++) army.addUnit(id);
-        const batcher = new ActionBatcher(), orders: any[][] = [];
-        const result: any = army.onAiUpdate({ ...f.context, actionBatcher: batcher });
-        batcher.resolve({ orderUnits: (...args: any[]) => orders.push(args) } as any, f.game.mapApi);
-        expect(army.isAttacking()).toBe(true); expect(result.unitNameToPriority.E2).toBeUndefined();
-        expect(orders.some(order => order[1] === OrderType.AttackMove && order[2] === 80)).toBe(true);
-        expect(army.getUnitIds()).toHaveLength(8);
     });
     test('the paid continuation window keeps a formed infantry strike on the field after tick 4000', () => {
         const f = fixture(); f.at(6500); const plan = f.plan(); expect(plan.minimumUnits).toBe(8);
