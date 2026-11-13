@@ -346,9 +346,10 @@ export function planMcvExpansion(context: SupabotContext, home: PatchPoint): { p
         countCoreTanks(readStrategicSituation(game, data)) < 6)) return undefined;
     if (quietRelocation && readStrategicSituation(game, data).harvesters < 2) return undefined;
     const refineryCost = quietRelocation ? player.production.getAvailableObjects(QueueType.Structures).find(rules => rules.refinery)?.cost ?? Infinity : Infinity;
-    const targets = patches.filter(patch => patch.value >= 12000 || quietRelocation && patch.isGem && patch.value >= refineryCost)
+    const targets = patches.filter(patch => patch.value >= (quietRelocation ? 6000 : 12000) || quietRelocation && patch.isGem && patch.value >= refineryCost)
         .map(patch => scorePatch(game, data, patch))
-        .filter((entry): entry is ScoredPatch => !!entry && (quietRelocation ? entry.g <= 40 && (entry.g > 24 || isCrawlBlocked(game, player.name, entry.patch))
+        .filter((entry): entry is ScoredPatch => !!entry && (quietRelocation ? entry.g <= 40 && (entry.g > 24 ||
+            entry.patch.isGem && patchDistance(home, entry.patch) > 20 || isCrawlBlocked(game, player.name, entry.patch))
             : entry.g > 40 || isCrawlBlocked(game, player.name, entry.patch)))
         .sort((a, b) => b.score - a.score || a.g - b.g || (a.patch.id < b.patch.id ? -1 : a.patch.id > b.patch.id ? 1 : 0));
     for (const entry of targets) {

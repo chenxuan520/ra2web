@@ -253,6 +253,14 @@ describe("quiet existing-MCV relocation instead of long paid crawl", () => {
         expect(planMcvExpansion(f.context, { rx: 0, ry: 0 })).toMatchObject({ candidate: { x: 35, y: 0 } });
         expect(f.units.some(unit => unit.name === "HTNK")).toBe(false);
     });
+    test("quiet relocation uses the existing rich ore band and a far gem field without waiting for a failed plant", () => {
+        const ore = quietMcvFixture(); ore.resources[1].ore = 6000;
+        expect(planMcvExpansion(ore.context, { rx: 0, ry: 0 })).toBeDefined();
+        const gem = quietMcvFixture(); gem.resources[1].ore = 0; gem.resources[1].gems = 1000; gem.own("NAPOWR", 20);
+        expect(planMcvExpansion(gem.context, { rx: 0, ry: 0 })).toBeDefined();
+        const late = mcvFixture(); late.resources[1].ore = 11999;
+        expect(planMcvExpansion(late.context, { rx: 0, ry: 0 })).toBeUndefined();
+    });
     test.each(["tick", "contact", "pressure", "one-miner", "queue", "near", "far", "small-ore", "gem-cost", "hidden", "normal"])("the early relocation rejects %s", reason => {
         const f = quietMcvFixture(reason === "near" ? 29 : reason === "far" ? 46 : 35);
         if (reason === "tick") f.at(5399);
@@ -260,7 +268,7 @@ describe("quiet existing-MCV relocation instead of long paid crawl", () => {
             rules: { name: "HTNK", type: ObjectType.Vehicle, isSelectableCombatant: true } });
         if (reason === "one-miner") f.units.splice(f.units.findIndex(unit => unit.name === "HARV"), 1);
         if (reason === "queue") f.queues.get(QueueType.Structures)!.items.push({ rules: f.power, quantity: 1 });
-        if (reason === "small-ore") f.resources[1].ore = 11999;
+        if (reason === "small-ore") f.resources[1].ore = 5999;
         if (reason === "gem-cost") { f.resources[1].ore = 0; f.resources[1].gems = 1000; f.refinery.cost = 2500; }
         if (reason === "hidden") {
             f.game.mapApi.isVisibleTile = (tile: any) => tile.rx !== 35;
