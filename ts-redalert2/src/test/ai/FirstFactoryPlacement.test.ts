@@ -134,3 +134,42 @@ describe("first war factory placement fallback", () => {
         expect(hasClearWarFactoryExit(f.game as any, f.player as any, { rx: 14, ry: 10, z: 0 } as any, 5, 3)).toBe(true);
     });
 });
+
+describe("observed mobile opposition keeps the first factory near its actual yard", () => {
+    function scenario() {
+        const f = fixture(); f.factory.adjacent = 3;
+        f.candidates.push({ id: "forward-field", rx: 44, ry: 40, z: 0 });
+        f.resources.push({ tile: { rx: 55, ry: 40 }, ore: 800, gems: 0, spawnsOre: false });
+        const enemy: any = { id: 200, name: "DOG", owner: "enemy", tile: { rx: 100, ry: 100 },
+            rules: { name: "DOG", type: ObjectType.Infantry, isSelectableCombatant: true } };
+        f.objects.push(enemy); return { ...f, enemy };
+    }
+    test.each(["NAWEAP", "GAWEAP"])("%s uses a currently legal clear compact plot rather than a remote economic anchor", name => {
+        const f = scenario(); f.factory.name = name;
+        expect(getEconomicFirstFactoryPlacement(f.game as any, f.player as any, f.factory as any)).toMatchObject({ rx: 44, ry: 40 });
+        expect(getCompactFirstFactoryPlacement(f.game as any, f.player as any, f.factory as any)).toMatchObject({ rx: 14, ry: 10 });
+        expect(f.run("brutal")).toMatchObject({ rulesName: name, rx: 14, ry: 10 });
+    });
+    test.each(["no-enemy", "harvester", "building", "hidden"])("the original %s economic field placement remains", condition => {
+        const f = scenario();
+        if (condition === "no-enemy") f.objects.splice(f.objects.indexOf(f.enemy), 1);
+        if (condition === "harvester") f.enemy.rules.harvester = true;
+        if (condition === "building") f.enemy.rules.type = ObjectType.Building;
+        if (condition === "hidden") {
+            const visible = f.game.getVisibleUnits;
+            f.game.getVisibleUnits = (name: string, relation: string, predicate: any) => relation === "enemy" ? [] : visible(name, relation, predicate);
+            f.objects.splice(f.objects.indexOf(f.enemy), 1);
+            const getUnitData = f.game.getUnitData;
+            f.game.getUnitData = (id: number) => { if (id === f.enemy.id) throw Error("unseen opposing object"); return getUnitData(id); };
+            Object.defineProperty(f.enemy, "tile", { get() { throw Error("unseen opposing coordinate"); } });
+        }
+        expect(f.run("brutal")).toMatchObject({ rx: 44, ry: 40 });
+    });
+    test("a blocked compact exit does not become a fictitious safe plot", () => {
+        const f = scenario(); f.blocked.add("19,11");
+        expect(f.run("brutal")).toMatchObject({ rx: 44, ry: 40 });
+    });
+    test("normal retains its original placement flow", () => {
+        const f = scenario(); expect(f.run("normal")).toEqual({ type: "noop" });
+    });
+});

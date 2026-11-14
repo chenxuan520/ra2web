@@ -1,4 +1,4 @@
-import { GameApi, PlayerData, QueueType, TechnoRules } from "../../../../game-api";
+import { GameApi, ObjectType, PlayerData, QueueType, TechnoRules } from "../../../../game-api";
 import { MissionContext } from "../../common/context";
 import { DebugLogger, maxBy } from "../../common/utils";
 import { buildStructureAtLocation, Mission, MissionAction, noop } from "../mission";
@@ -153,6 +153,11 @@ export class BaseBuildingMission extends Mission {
             difficulty = "normal";
         }
         if (difficulty === "brutal" && context && ["GAWEAP", "NAWEAP"].includes(objectReady.name) && !isPressured(context)) {
+            if (game.getVisibleUnits(playerData.name, "enemy", rules => rules.isSelectableCombatant &&
+                !rules.harvester && rules.type !== ObjectType.Building).length > 0) {
+                const compact = getCompactFirstFactoryPlacement(game, playerData, objectReady);
+                if (compact) return compact;
+            }
             const location = getEconomicFirstFactoryPlacement(game, playerData, objectReady);
             if (location) return location;
         }
