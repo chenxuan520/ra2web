@@ -471,6 +471,19 @@ describe("brutal refinery investment", () => {
         expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Infantry, "E2", ObjectType.Infantry, 1);
         expect(f.nativeQueues.get(QueueType.Infantry)!.status).toBe(QueueStatus.Active);
     });
+    test("the observed first-core case receives native vehicle debits before a discretionary refinery, then hands funding back", () => {
+        const f = nativeFundingFixture(85, true);
+        const miners = f.units.filter(unit => unit.rules.harvester);
+        for (const miner of miners.slice(1)) f.units.splice(f.units.indexOf(miner), 1);
+        f.enemies.push({ id: 999, tile: { rx: 50, ry: 0 }, rules: { name: "DOG", type: ObjectType.Infantry, isSelectableCombatant: true } });
+        for (let i = 0; i < 54; i++) f.spend(3394 + i * 2);
+        expect(f.nativeQueues.get(QueueType.Vehicles)!.getFirst()!.creditsSpent).toBe(54);
+        expect(f.nativeQueues.get(QueueType.Structures)!.getFirst()!.creditsSpent).toBe(0);
+        expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+        // Owned delivery is a queue contract fixture, not a new league delivery.
+        f.own("HTNK", 0); f.enemies.length = 0; f.player.credits = 1; f.run(3504, 85);
+        expect(f.nativeQueues.get(QueueType.Structures)!.status).toBe(QueueStatus.Active);
+    });
     test.each([85, 100, 115])("native funds reach the %i-priority vehicle before idle or active discretionary expansion", priority => {
         for (const active of [false, true]) {
             const f = nativeFundingFixture(priority, active);

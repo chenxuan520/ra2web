@@ -227,11 +227,16 @@ export class QueueController {
                 const enemy = game.getUnitData(id);
                 return enemy && ownedAnchors.some(base => Math.hypot(enemy.tile.rx - base.rx, enemy.tile.ry - base.ry) <= 48);
             }).length;
+            const firstCoreQueue = productionApi.getQueueData(QueueType.Vehicles);
             if (situation.harvesters >= 2 && (situation.enemy.infantry >= 8 &&
                 (situation.own.MTNK ?? 0) + (situation.own.HTNK ?? 0) < Math.min(6, Math.max(2, Math.ceil(situation.enemy.infantry / 6))) ||
                 situation.tick < 9000 && visibleCoreArmor > 0 && countCoreTanks(situation) < Math.min(6, Math.max(BRUTAL_PARAMS.assault.formedArmor, visibleCoreArmor))) ||
                 situation.harvesters === 1 && situation.tick < 9000 && visibleCoreArmor > 0 && countCoreTanks(situation) < Math.min(6, visibleCoreArmor) &&
-                game.getVisibleUnits(player.name, "self", rules => rules.refinery).length > 0) {
+                game.getVisibleUnits(player.name, "self", rules => rules.refinery).length > 0 ||
+                situation.harvesters >= 1 && situation.harvesters <= 2 && situation.tick >= 2700 && situation.tick < 9000 && countCoreTanks(situation) === 0 &&
+                !readPressure(context).homeQuiet && requests.get("DRON")?.priority !== 112 &&
+                (firstCoreQueue.status === QueueStatus.Idle || ["HTNK", "MTNK"].includes(firstCoreQueue.items[0]?.rules.name)) &&
+                (situation.own.GAREFN ?? 0) + (situation.own.NAREFN ?? 0) > 0) {
                 const tank = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === "MTNK" || option.name === "HTNK");
                 if (tank) {
                     requests.set(tank.name, { priority: 100, specificLocation: null });

@@ -75,6 +75,55 @@ function onlyEconomy(run: () => void) {
     try { run(); } finally { BRUTAL_PARAMS.economy.ecoOnly = previous; }
 }
 
+describe("first core funding before new miners after observed home combat", () => {
+    function scenario(country = "Russians", miners = 1) {
+        const f = fixture(miners, 0, country); f.at(3394);
+        f.units.splice(f.units.findIndex(unit => unit.name === "NAREFN" && unit.tile.rx === 25), 1);
+        f.enemy(100, 50, ObjectType.Infantry, { name: "DOG" });
+        const controller = new QueueController();
+        return { ...f, controller, run: () => controller.onAiUpdate(f.context, null, f.requests, () => {}) };
+    }
+    test.each([["Russians", 1], ["Americans", 1], ["Russians", 2], ["Americans", 2]] as const)("%s with%i miners funds its first core before another new miner without redefining pressure", (country, miners) => {
+        const f = scenario(country, miners); expect(readPressure(f.context)).toMatchObject({ pressured: false, homeQuiet: false });
+        f.run(); const name = country === "Russians" ? "HTNK" : "MTNK";
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, name, ObjectType.Vehicle, 1);
+    });
+    test.each([QueueStatus.Active, QueueStatus.OnHold])("an already paid miner remains intact in status%i", status => {
+        const f = scenario(), miner = f.options.get(QueueType.Vehicles)![0];
+        Object.assign(f.queues.get(QueueType.Vehicles)!, { status, items: [{ rules: miner, quantity: 1 }] });
+        f.run(); expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+        expect(f.actions.queueForProduction).not.toHaveBeenCalledWith(QueueType.Vehicles, "HTNK", ObjectType.Vehicle, 1);
+    });
+    test.each([QueueStatus.Active, QueueStatus.OnHold])("the admitted first core retains funding until its delivery in status%i", status => {
+        const f = scenario(), tank = f.options.get(QueueType.Vehicles)![1];
+        Object.assign(f.queues.get(QueueType.Vehicles)!, { status, items: [{ rules: tank, quantity: 1 }] });
+        f.run();
+        expect(f.controller.getGlobalDebugText(f.game, f.context.player.production)).toContain("HTNK(100)");
+        expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+        f.own("HTNK"); Object.assign(f.queues.get(QueueType.Vehicles)!, { status: QueueStatus.Idle, items: [] }); f.at(3396); f.run();
+        expect(f.actions.queueForProduction).toHaveBeenLastCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
+    });
+    test("first drone112 and actual anti-air115 remain ahead of the first core100", () => {
+        const f = scenario(); f.options.get(QueueType.Vehicles)!.push({ name: "DRON", cost: 500, type: ObjectType.Vehicle });
+        f.run(); expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "DRON", ObjectType.Vehicle, 1);
+        f.enemy(101, 80, ObjectType.Aircraft); f.at(3396); f.run();
+        expect(f.actions.queueForProduction).toHaveBeenLastCalledWith(QueueType.Vehicles, "HTK", ObjectType.Vehicle, 1);
+    });
+    test.each(["quiet", "distant", "core-delivered", "late", "normal", "no-tank-option"])("the original %s miner behavior is preserved", condition => {
+        const f = scenario();
+        if (condition === "quiet") f.enemies.length = 0;
+        if (condition === "distant") f.enemies[0].tile.rx = 61;
+        if (condition === "core-delivered") f.own("HTNK");
+        if (condition === "late") f.at(9000);
+        if (condition === "normal") { f.context.difficulty = "normal"; f.requests.set("HARV", { priority: 110, specificLocation: null }); }
+        if (condition === "no-tank-option") f.options.get(QueueType.Vehicles)!.splice(1, 1);
+        f.run(); expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
+    });
+    test("ecoOnly retains its original unpressured miner order", () => onlyEconomy(() => {
+        const f = scenario(); f.run(); expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
+    }));
+});
+
 describe("brutal miner capacity and production table", () => {
     test.each([[2999, 1], [3000, 2], [5999, 2], [6000, 4], [11999, 4], [12000, 5]])("value %i has ordinary capacity %i", (value, expected) => {
         expect(patchCapacity({ value } as any, false)).toBe(expected);
