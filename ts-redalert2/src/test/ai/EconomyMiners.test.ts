@@ -357,6 +357,66 @@ describe("brutal miner capacity and production table", () => {
         f.run();
         expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
     });
+    test.each(["Russians", "Americans"])("%s admits the existing infantry counter on one pressured income after the first drone, then restores mining at its original target", country => {
+        const f = fixture(1, 0, country), controller = new QueueController(); f.at(3394);
+        f.units.splice(f.units.findIndex(unit => unit.name === "NAREFN" && unit.tile.rx === 25), 1);
+        if (country === "Russians") {
+            f.options.get(QueueType.Vehicles)!.push({ name: "DRON", type: ObjectType.Vehicle, cost: 500 });
+            const drone = f.own("DRON", 0, 0, { type: ObjectType.Vehicle });
+            observeDroneProductionEvent(f.game, f.player.name, { type: ApiEventType.ObjectSpawn, target: drone.id });
+        }
+        for (let i = 0; i < 16; i++) f.enemy(100 + i, 40, ObjectType.Infantry);
+        expect(readPressure(f.context)).toMatchObject({ pressured: true, baseUnderSiege: false });
+        controller.onAiUpdate(f.context, null, f.requests, () => {});
+        const tank = country === "Russians" ? "HTNK" : "MTNK";
+        expect(controller.getGlobalDebugText(f.game, f.context.player.production)).toContain(`${tank}(100)`);
+        for (let i = 0; i < 3; i++) f.own(tank);
+        f.at(3396); controller.onAiUpdate(f.context, null, f.requests, () => {});
+        expect(controller.getGlobalDebugText(f.game, f.context.player.production)).not.toContain(`${tank}(100)`);
+        expect(f.actions.queueForProduction).toHaveBeenLastCalledWith(QueueType.Vehicles, country === "Russians" ? "HARV" : "CMIN", ObjectType.Vehicle, 1);
+    });
+    test.each([QueueStatus.Active, QueueStatus.OnHold])("single-income infantry warning preserves the still-requested first drone112 in status%i", status => {
+        const f = fixture(1, 0), controller = new QueueController(); f.at(3122);
+        f.units.splice(f.units.findIndex(unit => unit.name === "NAREFN" && unit.tile.rx === 25), 1);
+        const drone = { name: "DRON", type: ObjectType.Vehicle, cost: 500 };
+        f.options.get(QueueType.Vehicles)!.push(drone);
+        for (let i = 0; i < 16; i++) f.enemy(100 + i, 40, ObjectType.Infantry);
+        Object.assign(f.queues.get(QueueType.Vehicles)!, { status, items: [{ rules: drone, quantity: 1 }] });
+        controller.onAiUpdate(f.context, null, f.requests, () => {});
+        expect(controller.getGlobalDebugText(f.game, f.context.player.production)).toContain("DRON(112)");
+        expect(controller.getGlobalDebugText(f.game, f.context.player.production)).not.toContain("HTNK(100)");
+        expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+    });
+    test.each([QueueStatus.Idle, QueueStatus.Active])("one-income infantry counter defers only a new lower-priority foot purchase in status%i", status => {
+        const f = fixture(1, 0), controller = new QueueController(); f.at(3394); f.player.credits = 100;
+        f.units.splice(f.units.findIndex(unit => unit.name === "NAREFN" && unit.tile.rx === 25), 1);
+        const foot = { name: "E2", type: ObjectType.Infantry, cost: 100 };
+        f.options.get(QueueType.Infantry)!.push(foot); f.requests.set("E2", { priority: 95, specificLocation: null });
+        if (status === QueueStatus.Active) Object.assign(f.queues.get(QueueType.Infantry)!, { status, items: [{ rules: foot, quantity: 1 }] });
+        for (let i = 0; i < 16; i++) f.enemy(100 + i, 40, ObjectType.Infantry);
+        controller.onAiUpdate(f.context, null, f.requests, () => {});
+        expect(controller.getGlobalDebugText(f.game, f.context.player.production)).toContain("E2(95)");
+        expect(controller.getGlobalDebugText(f.game, f.context.player.production)).toContain("HTNK(100)");
+        expect(f.actions.queueForProduction).not.toHaveBeenCalledWith(QueueType.Infantry, "E2", ObjectType.Infantry, 1);
+        expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+        expect(f.actions.pauseProduction).not.toHaveBeenCalledWith(QueueType.Infantry);
+    });
+    test.each(["quiet", "below-eight", "enough-core", "normal"])("the single-income infantry extension preserves the original %s case", condition => {
+        const f = fixture(1, condition === "enough-core" ? 3 : 0), controller = new QueueController(); f.at(3394);
+        f.units.splice(f.units.findIndex(unit => unit.name === "NAREFN" && unit.tile.rx === 25), 1);
+        for (let i = 0; i < (condition === "below-eight" ? 7 : 16); i++) f.enemy(100 + i, condition === "quiet" ? 80 : 40, ObjectType.Infantry);
+        if (condition === "normal") { f.context.difficulty = "normal"; f.requests.set("HARV", { priority: 110, specificLocation: null }); }
+        controller.onAiUpdate(f.context, null, f.requests, () => {});
+        expect(controller.getGlobalDebugText(f.game, f.context.player.production)).not.toContain("HTNK(100)");
+    });
+    test("the single-income infantry extension still leaves actual anti-air115 ahead of the counter100", () => {
+        const f = fixture(1, 0), controller = new QueueController(); f.at(3394);
+        f.units.splice(f.units.findIndex(unit => unit.name === "NAREFN" && unit.tile.rx === 25), 1);
+        for (let i = 0; i < 16; i++) f.enemy(100 + i, 40, ObjectType.Infantry);
+        f.enemy(200, 80, ObjectType.Aircraft);
+        controller.onAiUpdate(f.context, null, f.requests, () => {});
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTK", ObjectType.Vehicle, 1);
+    });
     test.each([1, 2, 3])("%i income miners do not lose a paid queue to remote visible armor outside the interception area", miners => {
         const f = fixture(miners, 0); f.at(7470); f.enemy(100, 80);
         const miner = f.options.get(QueueType.Vehicles)![0];
@@ -542,7 +602,7 @@ describe("brutal miner capacity and production table", () => {
             Object.assign(f.queues.get(QueueType.Vehicles)!, { status: QueueStatus.Active, items: [{ rules: miner, quantity: 1 }] });
             expect(desiredMiners(f.game, f.player)).toBe(country === "Russians" ? 4 : 5);
             f.run();
-            if (response === "warning" || response === "infantry") expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+            if (response === "warning") expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
             else expect(f.actions.unqueueFromProduction).toHaveBeenCalledWith(QueueType.Vehicles, miner.name, ObjectType.Vehicle, 1);
         }
     });
