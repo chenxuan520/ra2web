@@ -116,6 +116,50 @@ function nativeFundingFixture(priority: number, active: boolean, engineerStatus?
     };
 }
 
+function nativeBasicFundingFixture(footName = "E2", vehicleKind: "counter" | "miner" = "counter", status = QueueStatus.Idle) {
+    const f = fixture(2); Object.assign(f.rules, { owner: [], buildTimeMultiplier: 1 });
+    const foot: any = { name: footName, type: ObjectType.Infantry, cost: 100, owner: [], buildTimeMultiplier: 1 };
+    const vehicle: any = { name: vehicleKind === "miner" ? "HARV" : "HTNK", type: ObjectType.Vehicle,
+        cost: vehicleKind === "miner" ? 1400 : 900, harvester: vehicleKind === "miner", owner: [], buildTimeMultiplier: 1 };
+    const nativeQueues = new Map(QUEUES.map(type => [type, new ProductionQueue(type, 1, 1)]));
+    const options = [f.rules, foot, vehicle];
+    const actions = { ...f.actions,
+        queueForProduction: mock((type: QueueType, name: string) => {
+            const rules = options.find(rule => rule.name === name)!; nativeQueues.get(type)!.push(rules, 1, rules.cost);
+        }),
+        pauseProduction: mock((type: QueueType) => { nativeQueues.get(type)!.status = QueueStatus.OnHold; }),
+        resumeProduction: mock((type: QueueType) => { nativeQueues.get(type)!.status = QueueStatus.Active; }),
+    };
+    f.context.player.actions = actions;
+    f.context.player.production = {
+        getQueueData: (type: QueueType) => ({ type, status: nativeQueues.get(type)!.status, items: nativeQueues.get(type)!.getAll() }),
+        getAvailableObjects: (type: QueueType) => type === QueueType.Vehicles ? [vehicle] : type === QueueType.Infantry ? [foot]
+            : type === QueueType.Structures && vehicleKind === "counter" ? [f.rules] : [],
+    };
+    f.player.production = { buildSpeedModifier: 1, getAllQueues: () => [...nativeQueues.values()],
+        getFactoryTypeForQueueType: (type: QueueType) => type, getFactoryCount: () => 1 };
+    const native: NotifyTick = new ProductionTrait({ general: { buildSpeed: 1, multipleFactory: 1, wallBuildSpeedCoefficient: 1 },
+        buildingRules: new Map([[f.rules.name, f.rules]]), infantryRules: new Map([[foot.name, foot]]),
+        vehicleRules: new Map([[vehicle.name, vehicle]]), aircraftRules: new Map() }, { value: false });
+    const world = { getCombatants: () => [f.player], events: { dispatch() {} } };
+    if (vehicleKind === "counter") nativeQueues.get(QueueType.Structures)!.push(f.rules, 1, f.rules.cost);
+    if (status !== QueueStatus.Idle) {
+        nativeQueues.get(QueueType.Infantry)!.push(foot, 1, foot.cost);
+        f.player.credits = 20; native[NotifyTick.onTick](world); nativeQueues.get(QueueType.Infantry)!.status = status;
+    }
+    const controller = new QueueController();
+    return { ...f, actions, nativeQueues, foot, vehicle,
+        spend(tick: number, credits = 1, priority = vehicleKind === "miner" ? 110 : 100) {
+            f.at(tick); f.player.credits = credits;
+            controller.onAiUpdate(f.context, null, new Map<string, any>([
+                [vehicle.name, { priority, specificLocation: null }], [foot.name, { priority: 95, specificLocation: null }],
+                ...(vehicleKind === "counter" ? [[f.rules.name, { priority: 50, specificLocation: new Vector2(24, 0) }] as const] : []),
+            ]), () => {});
+            native[NotifyTick.onTick](world);
+        },
+    };
+}
+
 function subsidyFixture() {
     const f = fixture(2);
     f.resources.splice(1); // no reachable unserved field
@@ -306,6 +350,27 @@ describe("brutal refinery investment", () => {
             priority: 50, specificLocation: new Vector2(24, 0),
         }]]), () => {});
         expect(f.actions.pauseProduction).not.toHaveBeenCalledWith(QueueType.Structures);
+    });
+    test.each([["E1", "counter"], ["E2", "counter"], ["E1", "miner"], ["E2", "miner"]] as const)(
+        "new %s spending cannot drain the unfunded higher-tier %s vehicle", (name, kind) => {
+            const f = nativeBasicFundingFixture(name, kind);
+            for (let i = 0; i < 54; i++) f.spend(5400 + i * 2);
+            expect(f.nativeQueues.get(QueueType.Vehicles)!.getFirst()!.creditsSpent).toBe(54);
+            expect(f.nativeQueues.get(QueueType.Infantry)!.status).toBe(QueueStatus.Idle);
+            expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+        });
+    test.each([QueueStatus.Active, QueueStatus.OnHold])("an already paid basic infantry queue in status%i retains its original progress", status => {
+        const f = nativeBasicFundingFixture("E2", "counter", status);
+        const paid = f.nativeQueues.get(QueueType.Infantry)!.getFirst()!.creditsSpent; expect(paid).toBeGreaterThan(0);
+        for (let i = 0; i < 54; i++) f.spend(5400 + i * 2);
+        expect(f.nativeQueues.get(QueueType.Infantry)!.getFirst()!.creditsSpent).toBeGreaterThan(paid);
+        expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+    });
+    test.each(["ordinary", "funded", "normal"])("basic infantry retains its original start for the %s funding condition", condition => {
+        const f = nativeBasicFundingFixture(); if (condition === "normal") f.context.difficulty = "normal";
+        f.spend(5400, condition === "funded" ? f.vehicle.cost : 1, condition === "ordinary" ? 85 : 100);
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Infantry, "E2", ObjectType.Infantry, 1);
+        expect(f.nativeQueues.get(QueueType.Infantry)!.status).toBe(QueueStatus.Active);
     });
     test.each([85, 100, 115])("native funds reach the %i-priority vehicle before idle or active discretionary expansion", priority => {
         for (const active of [false, true]) {

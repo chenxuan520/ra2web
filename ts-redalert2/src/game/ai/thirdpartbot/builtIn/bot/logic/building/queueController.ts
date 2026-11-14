@@ -352,6 +352,11 @@ export class QueueController {
                     return;
                 }
             }
+            // Native infantry debits precede vehicles; defer only new, lower-priority basic infantry.
+            if (context.difficulty === "brutal" && priorityVehicle && priorityVehicle.priority >= 100 &&
+                playerData.credits < priorityVehicle.unit.cost && decision.queue === QueueType.Infantry && decision.topItem &&
+                ["E1", "E2"].includes(decision.topItem.unit.name) && decision.topItem.priority < priorityVehicle.priority &&
+                productionApi.getQueueData(QueueType.Infantry).status === QueueStatus.Idle) return;
             const buildingLocation = decision.topItem && requests.get(decision.topItem.unit.name)?.specificLocation;
             this.updateBuildQueue(
                 game,
