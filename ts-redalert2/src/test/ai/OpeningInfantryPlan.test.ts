@@ -132,6 +132,67 @@ describe('bounded paid infantry support during armor assembly', () => {
     });
 });
 
+function assemblingArmorFixture(enemyCount = 6, enemyType = ObjectType.Vehicle, enemyX = 36) {
+    const f = fixture(); f.at(8000);
+    const tankRules = { name: 'HTNK', type: ObjectType.Vehicle, isSelectableCombatant: true };
+    f.game.rulesApi.vehicleRules.set('HTNK', tankRules);
+    for (let id = 1; id <= 4; id++) f.units.set(id, { id, name: 'HTNK', owner: 'bot', type: ObjectType.Vehicle,
+        rules: tankRules, tile: { rx: 0, ry: 0 }, hitPoints: 400, maxHitPoints: 400,
+        zone: ZoneType.Ground, isIdle: true, canMove: true });
+    for (let i = 0; i < enemyCount; i++) f.enemies.set(1000 + i, { id: 1000 + i, owner: 'enemy',
+        name: enemyType === ObjectType.Vehicle ? 'HTNK' : 'E2', type: enemyType,
+        rules: { name: enemyType === ObjectType.Vehicle ? 'HTNK' : 'E2', type: enemyType,
+            isSelectableCombatant: true, strength: enemyType === ObjectType.Vehicle ? 400 : 100 },
+        tile: { rx: enemyX, ry: i % 2 }, zone: ZoneType.Ground });
+    const army = new FieldArmyMission(null, f.controller, () => {});
+    f.controller.addMission(army); for (let id = 1; id <= 4; id++) army.addUnit(id);
+    const orders: any[][] = [];
+    const run = () => {
+        const actionBatcher = new ActionBatcher(); army.onAiUpdate({ ...f.context, actionBatcher });
+        actionBatcher.resolve({ orderUnits: (...args: any[]) => orders.push(args) } as any, f.game.mapApi);
+    };
+    return { ...f, army, orders, run };
+}
+
+describe('assembling armor does not pursue a known superior approach', () => {
+    test.each([[6, ObjectType.Vehicle], [45, ObjectType.Infantry]])('the existing disadvantage predicate for%i visible type%i keeps the real squad at home', (count, type) => {
+        const f = assemblingArmorFixture(count, type); f.run();
+        expect(f.army.isAttacking()).toBe(false); expect(f.army.getAttackArea()).toEqual(new Vector2(4, 0));
+        expect((f.army as any).squad.radius).toBe(7);
+        expect(f.orders).toEqual([[[1, 2, 3, 4], OrderType.AttackMove, 4, 0]]);
+    });
+    test('actual removal of the visible advantage permits the original interception without a new hold timer', () => {
+        const f = assemblingArmorFixture(); f.run(); expect(f.army.getAttackArea().x).toBe(4);
+        for (const id of [1003, 1004, 1005]) f.enemies.delete(id);
+        f.at(8032); f.run();
+        expect(f.army.getAttackArea().x).toBe(36); expect((f.army as any).squad.radius).toBe(25);
+        expect(f.orders.at(-1)).toEqual([[1, 2, 3, 4], OrderType.AttackMove, 36, 0]);
+    });
+    test('an outnumbered assembly still protects the base against actual intruders', () => {
+        const f = assemblingArmorFixture(6, ObjectType.Vehicle, 18); f.run();
+        expect(f.army.isAttacking()).toBe(false); expect(f.army.getAttackArea().x).toBe(18);
+        expect((f.army as any).squad.radius).toBe(25);
+        expect(f.orders).toEqual([[[1, 2, 3, 4], OrderType.AttackMove, 18, 0]]);
+    });
+    test('a sufficient assembly keeps its original interception and radius', () => {
+        const f = assemblingArmorFixture(3); f.run();
+        expect(f.army.isAttacking()).toBe(false); expect(f.army.getAttackArea().x).toBe(36);
+        expect((f.army as any).squad.radius).toBe(25);
+    });
+    test('normal handling retains its original approach selection', () => {
+        const f = assemblingArmorFixture(); f.context.difficulty = 'normal'; f.run();
+        expect(f.army.getAttackArea().x).toBe(36); expect((f.army as any).squad.radius).toBe(25);
+    });
+    test('hidden opposing coordinates and strength are not read to withhold an interception', () => {
+        const f = assemblingArmorFixture(), visible = f.game.getVisibleUnits;
+        f.game.getVisibleUnits = (name: string, relation: string, predicate: any) =>
+            relation === 'enemy' ? [] : visible(name, relation, predicate);
+        for (const enemy of f.enemies.values()) Object.defineProperty(enemy, 'tile', { get() { throw Error('hidden enemy coordinate'); } });
+        f.run(); expect(f.army.isAttacking()).toBe(true); expect(f.army.getAttackArea()).toEqual(new Vector2(80, 0));
+        expect((f.army as any).squad.defendArea).toBe(false);
+    });
+});
+
 function production(ownedCount: number, tick: number, priority: number) {
     const rule: any = { name: 'E2', cost: 100, type: ObjectType.Infantry };
     const own = Array.from({ length: ownedCount }, () => rule), queues = new Map(QUEUES.map(type => [type, { type, status: QueueStatus.Idle, items: [], size: 0 }]));
