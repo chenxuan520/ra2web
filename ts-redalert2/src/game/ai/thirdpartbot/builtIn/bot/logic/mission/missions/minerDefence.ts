@@ -37,6 +37,8 @@ export class MinerDefence {
         }
         if (!isEcoOnly(context) && !this.active && tick >= this.nextDefenceAt && approaching.length >= 6 && !armorThreat) {
             miner = miners.filter(unit => unit.hitPoints >= unit.maxHitPoints * 0.8 &&
+                !(unit.isIdle === false && unit.harvestedOre !== undefined && unit.harvestedGems !== undefined &&
+                    unit.rules.storage > 0 && unit.harvestedOre + unit.harvestedGems >= unit.rules.storage) &&
                 home.distanceTo(new Vector2(unit.tile.rx, unit.tile.ry)) <= 28).sort((a, b) => a.id - b.id)[0];
             if (miner) this.active = { id: miner.id, until: tick + 300, lastOrder: -Infinity };
         }

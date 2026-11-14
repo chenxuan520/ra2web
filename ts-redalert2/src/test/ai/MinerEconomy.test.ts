@@ -1,6 +1,9 @@
 import { describe, expect, mock, test } from "bun:test";
 import { ObjectType, OrderType, SpeedType, Vector2, ZoneType } from "../../game/ai/thirdpartbot/builtIn/game-api";
 import { MinerDefence } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/minerDefence";
+import { HarvesterStatus, HarvesterTrait } from "../../game/gameobject/trait/HarvesterTrait";
+import { ReturnOreTask } from "../../game/gameobject/task/harvester/ReturnOreTask";
+import { TiberiumType } from "../../engine/type/TiberiumType";
 
 function fixture() {
     let tick = 60;
@@ -45,6 +48,68 @@ function hostile(id: number, rx: number, ry = 0) {
         primaryWeapon: { rules: { damage: 90 }, maxRange: 6 },
     };
 }
+
+describe("full cargo returns before miner defence", () => {
+    function rushingMiner(ore: number, gems: number, capacity = 40) {
+        const f = fixture(), harvester = new HarvesterTrait(capacity);
+        Object.assign(harvester, { ore, gems });
+        f.miner.rules.storage = capacity; f.miner.isIdle = false; f.resources.length = 0;
+        f.game.mapApi.hasBridgeOnTile = () => false; f.game.mapApi.isPassableTile = () => true;
+        Object.defineProperties(f.miner, {
+            harvestedOre: { configurable: true, enumerable: true, get: () => harvester.debugGetState().ore },
+            harvestedGems: { configurable: true, enumerable: true, get: () => harvester.debugGetState().gems },
+        });
+        for (let i = 0; i < 6; i++) f.enemies.push({ id: 20 + i, owner: "enemy", name: "E2", type: ObjectType.Infantry,
+            tile: { rx: 8, ry: 0, z: 0 }, rules: { name: "E2", isSelectableCombatant: true, crushable: true, strength: 100 } });
+        return { ...f, harvester };
+    }
+    test.each([[40, 0], [0, 40], [10, 30]])("a busy return with ore%i/gems%i is not reassigned to crushing at full native capacity", (ore, gems) => {
+        const f = rushingMiner(ore, gems); expect(f.harvester.isFull()).toBe(true);
+        f.run(); f.at(90); f.run();
+        expect(f.actions.orderUnits).not.toHaveBeenCalled();
+        expect(f.harvester.debugGetState()).toEqual({ ore, gems });
+    });
+    test("the preserved native return credits the full gem cargo, then its now-empty miner may defend", () => {
+        const f = rushingMiner(0, 40), owner = { name: "bot", credits: 0, buildings: [] };
+        const world: any = { map: { tileOccupation: {} }, areFriendly: () => true,
+            rules: { ai: { tiberiumNearScan: 1, tiberiumFarScan: 1 }, general: { purifierBonus: 0 },
+                getTiberium: (type: TiberiumType) => ({ value: type === TiberiumType.Gems ? 50 : 25 }) } };
+        const returnTask = new ReturnOreTask(world), tasks: any[] = [returnTask];
+        const native: any = { id: f.miner.id, owner, harvesterTrait: f.harvester,
+            unitOrderTrait: { getTasks: () => tasks, addTask: (task: any) => tasks.push(task) } };
+        (returnTask as any).target = { id: 10, owner, isSpawned: true, warpedOutTrait: { isActive: () => false } };
+        f.actions.orderUnits.mockImplementation((ids, order) => { if (ids.includes(7) && order === OrderType.Move) tasks.length = 0; });
+        f.run(); expect(tasks).toEqual([returnTask]); expect(owner.credits).toBe(0);
+        // Arrival/unloading is a native task contract fixture, not a new league delivery.
+        Object.assign(f.harvester, { status: HarvesterStatus.Unloading });
+        expect(returnTask.onTick(native)).toBe(true);
+        expect(owner.credits).toBe(2000); expect(f.harvester.isEmpty()).toBe(true);
+        f.at(96); f.run();
+        expect(f.actions.orderUnits).toHaveBeenCalledWith([7], OrderType.Move, 10, 0);
+    });
+    test("a different empty miner can defend without borrowing the loaded return", () => {
+        const f = rushingMiner(0, 40), empty = { ...f.miner, id: 8, harvestedOre: 0, harvestedGems: 0 };
+        const visible = f.game.getVisibleUnits, data = f.game.getUnitData;
+        f.game.getVisibleUnits = (name: string, relation: string, predicate = (_: any) => true) =>
+            [...visible(name, relation, predicate), ...(relation === "self" && predicate(empty.rules) ? [empty.id] : [])];
+        f.game.getUnitData = (id: number) => id === empty.id ? empty : data(id);
+        f.run();
+        expect(f.actions.orderUnits).toHaveBeenCalledWith([8], OrderType.Move, 10, 0);
+        expect(f.actions.orderUnits).not.toHaveBeenCalledWith([7], OrderType.Move, 10, 0);
+    });
+    test.each(["not-full", "larger-capacity", "idle-full", "missing-cargo", "missing-capacity"])("the original %s crushing eligibility is retained", condition => {
+        const f = rushingMiner(0, condition === "not-full" ? 39 : 40, condition === "larger-capacity" ? 80 : 40);
+        if (condition === "idle-full") f.miner.isIdle = true;
+        if (condition === "missing-cargo") delete f.miner.harvestedGems;
+        if (condition === "missing-capacity") delete f.miner.rules.storage;
+        f.run(); expect(f.actions.orderUnits).toHaveBeenCalledWith([7], OrderType.Move, 10, 0);
+    });
+    test("normal miner handling does not inspect the new full-cargo eligibility", () => {
+        const f = rushingMiner(0, 40); f.context.difficulty = "normal";
+        Object.defineProperty(f.miner.rules, "storage", { get() { throw Error("normal must retain its original handling"); } });
+        f.run(); expect(f.actions.orderUnits).not.toHaveBeenCalled();
+    });
+});
 
 describe("independent miner economy", () => {
     test("an idle healthy miner gathers visible gems without an infantry rush", () => {
