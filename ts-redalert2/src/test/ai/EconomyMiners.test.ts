@@ -209,6 +209,23 @@ describe("brutal miner capacity and production table", () => {
         onlyEconomy(() => { expect(f.priority()).toBe(110); });
         expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
     });
+    test("a pressured single-income Soviet retains ordinary85 until the required second core actually delivers", () => {
+        const f = fixture(1, 1), controller = new QueueController();
+        f.units.splice(f.units.findIndex(unit => unit.name === "NAREFN" && unit.tile.rx === 25), 1);
+        for (let i = 0; i < 3; i++) f.enemy(100 + i, 40, ObjectType.Infantry);
+        controller.onAiUpdate(f.context, null, f.requests, () => {});
+        expect(controller.getGlobalDebugText(f.game, f.context.player.production)).toContain("HTNK(85)");
+        f.own("HTNK"); f.at(102); controller.onAiUpdate(f.context, null, f.requests, () => {});
+        expect(controller.getGlobalDebugText(f.game, f.context.player.production)).toContain("HTNK(75)");
+        expect(controller.getGlobalDebugText(f.game, f.context.player.production)).toContain("HARV(90)");
+    });
+    test.each(["quiet", "allied", "two-cores"])("single-income ordinary armor retains the original tier in the %s case", condition => {
+        const f = fixture(1, condition === "two-cores" ? 2 : 1, condition === "allied" ? "Americans" : "Russians"), controller = new QueueController();
+        f.units.splice(f.units.findIndex(unit => unit.name === "NAREFN" && unit.tile.rx === 25), 1);
+        if (condition !== "quiet") for (let i = 0; i < 3; i++) f.enemy(100 + i, 40, ObjectType.Infantry);
+        controller.onAiUpdate(f.context, null, f.requests, () => {});
+        expect(controller.getGlobalDebugText(f.game, f.context.player.production)).toContain(`${condition === "allied" ? "MTNK" : "HTNK"}(75)`);
+    });
     test.each([1, 2, 3, 5, 7])("only an actually active supplied refinery reserves its future miner (miners=%i)", miners => {
         for (const active of [false, true]) {
             const f = fixture(miners, 6);

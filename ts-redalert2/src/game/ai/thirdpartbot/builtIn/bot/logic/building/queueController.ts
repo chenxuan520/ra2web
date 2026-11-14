@@ -250,7 +250,8 @@ export class QueueController {
                 const tank = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === tankName);
                 if (tank) {
                     const hasDualRefinery = (situation.own.NAREFN ?? 0) + (situation.own.GAREFN ?? 0) >= 2;
-                    if ((core < 1 && situation.harvesters >= 1) || (core < 4 && (situation.harvesters >= 2 || hasDualRefinery))) {
+                    if ((core < 1 && situation.harvesters >= 1) || (core < 4 && (situation.harvesters >= 2 || hasDualRefinery)) ||
+                        situation.harvesters === 1 && isSovietCountry(playerData.country?.name) && core < 2 && readPressure(context).pressured) {
                         if ((requests.get(tank.name)?.priority ?? 0) < 85) requests.set(tank.name, { priority: 85, specificLocation: null });
                     } else if (core < 8 && (requests.get(tank.name)?.priority ?? 0) < 75) {
                         requests.set(tank.name, { priority: 75, specificLocation: null });
