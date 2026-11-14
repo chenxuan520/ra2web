@@ -191,7 +191,8 @@ export class QueueController {
                 } else if (miners === 2 && pressure.pressured && (ecoOnly || core >= 4) && miners < desired) {
                     priority = 78;
                 } else if (miners >= 3 && miners < desired && !pressure.baseUnderSiege && !ownedBaseUnderAttack && (ecoOnly || core >= coreFactor * (miners - 2))) {
-                    priority = pressure.homeQuiet && miners < 5 && situation.enemy.infantry < 8 ? 110 : 78;
+                    priority = pressure.homeQuiet && miners < 5 && situation.enemy.infantry < 8 &&
+                        (ecoOnly || core > 0 || situation.enemy.defences >= BRUTAL_PARAMS.assault.heavyDefenceCount && situation.enemy.vehicles === 0) ? 110 : 78;
                 }
             }
             if (priority > (requests.get(option.name)?.priority ?? 0)) {
@@ -268,7 +269,7 @@ export class QueueController {
                 }
             }
             const openingTank = isSovietCountry(playerData.country?.name) ? "HTNK" : "MTNK";
-            if (situation.harvesters >= 3 && situation.enemy.infantry < 8 && !readPressure(context).pressured && !ownedBaseUnderAttack &&
+            if (situation.harvesters >= 3 && countCoreTanks(situation) > 0 && situation.enemy.infantry < 8 && !readPressure(context).pressured && !ownedBaseUnderAttack &&
                 requests.get(openingTank)?.priority === 85 && productionApi.getAvailableObjects(QueueType.Vehicles)
                     .some(option => option.harvester && requests.get(option.name)?.priority === 78)) {
                 requests.set(openingTank, { ...requests.get(openingTank)!, priority: 75 });

@@ -163,6 +163,40 @@ describe("brutal miner capacity and production table", () => {
         const allied = fixture(1, 1, "Americans"); allied.enemy(100, 22);
         expect(allied.priority()).toBe(90);
     });
+    test.each(["Russians", "Americans"])("%s fields one ordinary core before more unfortified quiet growth, then restores income110", country => {
+        const f = fixture(3, 0, country); f.at(5400);
+        expect(f.priority()).toBe(78);
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, country === "Russians" ? "HTNK" : "MTNK", ObjectType.Vehicle, 1);
+        f.own(country === "Russians" ? "HTNK" : "MTNK"); f.at(5402);
+        expect(f.priority()).toBe(110);
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, country === "Russians" ? "HARV" : "CMIN", ObjectType.Vehicle, 1);
+    });
+    test.each([QueueStatus.Active, QueueStatus.OnHold])("ordinary first-core precedence preserves an already committed miner in status%i", status => {
+        const f = fixture(3, 0); f.at(5400);
+        Object.assign(f.queues.get(QueueType.Vehicles)!, { status, items: [{ rules: f.options.get(QueueType.Vehicles)![0], quantity: 1 }] });
+        f.run(); expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+        expect(f.actions.queueForProduction).not.toHaveBeenCalled();
+    });
+    test.each(["visible-fortifications", "hidden-fortifications", "visible-mobile-force"])("quiet growth follows only the %s observation", condition => {
+        const f = fixture(3, 0); f.at(5400);
+        for (let i = 0; i < BRUTAL_PARAMS.assault.heavyDefenceCount; i++) f.enemy(100 + i, 100, ObjectType.Building, { name: "GAPILL", primary: "Vulcan" });
+        if (condition === "hidden-fortifications") {
+            const visible = f.game.getVisibleUnits;
+            f.game.getVisibleUnits = (name: string, relation: string, predicate: any) => relation === "enemy" ? [] : visible(name, relation, predicate);
+            for (const enemy of f.enemies) Object.defineProperty(enemy, "rules", { get() { throw Error("unknown fortifications cannot justify growth"); } });
+        }
+        if (condition === "visible-mobile-force") f.enemy(200, 100);
+        expect(f.priority()).toBe(condition === "visible-fortifications" ? 110 : 78);
+    });
+    test.each([0, 1, 2])("first-core quiet growth does not alter the original emergency/early income row for%i miners", miners => {
+        const f = fixture(miners, 0); f.at(5400);
+        expect(f.priority()).toBe(miners === 0 ? 120 : 110);
+    });
+    test("ecoOnly still buys income instead of inventing an ordinary core requirement", () => {
+        const f = fixture(3, 0); f.at(5400);
+        onlyEconomy(() => { expect(f.priority()).toBe(110); });
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
+    });
     test.each([1, 2, 3, 5, 7])("only an actually active supplied refinery reserves its future miner (miners=%i)", miners => {
         for (const active of [false, true]) {
             const f = fixture(miners, 6);
@@ -173,7 +207,7 @@ describe("brutal miner capacity and production table", () => {
         }
     });
     test.each([
-        [3, 0, "new", 110], [4, 0, "new", 110], [5, 3, "new", 78], [6, 4, "new", 78], [7, 6, "new", 0],
+        [3, 0, "new", 78], [4, 0, "new", 78], [3, 1, "new", 110], [5, 3, "new", 78], [6, 4, "new", 78], [7, 6, "new", 0],
         [3, 2, "duplicate", 0], [4, 0, "cancelled", 0], [4, 0, "hidden", 0], [3, 0, "pressure", 0],
     ] as const)("paid refinery capacity miners=%i core=%i %s gives factory priority%i with only one supplied-miner reservation", (miners, core, condition, expected) => {
         const f = fixture(miners, core);
@@ -214,13 +248,13 @@ describe("brutal miner capacity and production table", () => {
     });
     test.each(["Russians", "Americans"])("%s expands the first five miners only in the real quiet-home window", country => {
         const f = fixture(4, 0, country); f.at(2699); expect(f.priority()).toBe(0);
-        f.at(2700); expect(f.priority()).toBe(110);
+        f.at(2700); expect(f.priority()).toBe(78);
         expect(getEconomyPressureLimits(f.context, 4).minerCoreFactor).toBe(0);
         expect(readPressure(f.context)).toMatchObject({ homeQuiet: true, passiveEnemy: false });
         expect(getEconomyPressureLimits(f.context, 5).minerCoreFactor).toBe(1);
         expect(getEconomyPressureLimits(f.context, 4).extraRefineryCredits).toBe(1000);
         f.enemy(100, 60); f.at(2702); expect(f.priority()).toBe(0);
-        f.enemies.length = 0; f.at(5402); expect(f.priority()).toBe(110);
+        f.enemies.length = 0; f.at(5402); expect(f.priority()).toBe(78);
         f.resources.length = 0; f.at(5492); expect(f.priority()).toBe(0);
     });
     test.each([QueueStatus.Active, QueueStatus.OnHold])("needed early income can replace ordinary paid armor or a later drone in queue status%i", status => {
@@ -300,7 +334,7 @@ describe("brutal miner capacity and production table", () => {
         Object.assign(f.queues.get(QueueType.Vehicles)!, { status: QueueStatus.Active, items: [{ rules: miner, quantity: 1 }] });
         f.run(); expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
         Object.assign(f.queues.get(QueueType.Vehicles)!, { status: QueueStatus.Idle, items: [] }); f.at(7472); f.run();
-        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, miner.name, ObjectType.Vehicle, 1);
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, miners < 3 ? miner.name : "HTNK", ObjectType.Vehicle, 1);
     });
     test.each([48, 48.1])("opening armor urgency uses the existing interception distance%i from any actual owned anchor", distance => {
         const f = fixture(2, 0); f.at(7470); f.enemy(100, 25 + distance); f.run();
