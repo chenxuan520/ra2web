@@ -1,6 +1,7 @@
 import { describe, expect, mock, test } from 'bun:test';
 import { ObjectType, OrderType, QueueStatus, QueueType, Vector2, ZoneType } from '../../game/ai/thirdpartbot/builtIn/game-api';
 import { DefaultStrategy } from '../../game/ai/thirdpartbot/builtIn/bot/strategy/defaultStrategy';
+import { getBasicInfantryBudget } from '../../game/ai/thirdpartbot/builtIn/bot/strategy/basicInfantryBudget';
 import { ActionBatcher } from '../../game/ai/thirdpartbot/builtIn/bot/logic/mission/actionBatcher';
 import { FieldArmyMission } from '../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/fieldArmyMission';
 import { BaseReserveMission } from '../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/baseReserveMission';
@@ -8,22 +9,22 @@ import { InfantryHomeMission } from '../../game/ai/thirdpartbot/builtIn/bot/logi
 import { MissionController } from '../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missionController';
 import { QueueController, QUEUES } from '../../game/ai/thirdpartbot/builtIn/bot/logic/building/queueController';
 
-function fixture() {
+function fixture(name: 'E1' | 'E2' = 'E2') {
     let tick = 3000;
-    const foot: any = { name: 'E2', type: ObjectType.Infantry, strength: 100, isSelectableCombatant: true };
-    const units = new Map<number, any>(Array.from({ length: 8 }, (_, i) => [i + 1, { id: i + 1, name: 'E2', owner: 'bot',
+    const foot: any = { name, type: ObjectType.Infantry, strength: 100, isSelectableCombatant: true };
+    const units = new Map<number, any>(Array.from({ length: 8 }, (_, i) => [i + 1, { id: i + 1, name, owner: 'bot',
         type: ObjectType.Infantry, rules: foot, tile: { rx: 0, ry: 0 }, hitPoints: 100, maxHitPoints: 100, zone: ZoneType.Ground, isIdle: true, canMove: true }]));
     const enemies = new Map<number, any>();
     units.set(100, { id: 100, name: 'HARV', owner: 'bot', tile: { rx: 0, ry: 0 }, rules: { name: 'HARV', harvester: true } });
     units.set(101, { id: 101, name: 'NAWEAP', owner: 'bot', tile: { rx: 0, ry: 0 }, rules: { name: 'NAWEAP', weaponsFactory: true } });
-    const player: any = { name: 'bot', country: { name: 'Russians', side: 1 }, credits: 5000, startLocation: new Vector2() };
-    const available = [foot, { name: 'HTNK' }, { name: 'HTK' }];
+    const player: any = { name: 'bot', country: { name: name === 'E1' ? 'Americans' : 'Russians', side: name === 'E1' ? 0 : 1 }, credits: 5000, startLocation: new Vector2() };
+    const available = [foot, { name: name === 'E1' ? 'MTNK' : 'HTNK' }, { name: name === 'E1' ? 'FV' : 'HTK' }];
     const game: any = { getCurrentTick: () => tick, getPlayers: () => ['bot', 'enemy'], areAlliedPlayers: () => false, generateRandomInt: () => 0,
         getPlayerData: (name: string) => name === 'bot' ? player : { name, isCombatant: true },
         getVisibleUnits: (_: string, relation: string, predicate = (_: any) => true) =>
             [...(relation === 'enemy' ? enemies : units).values()].filter(unit => predicate(unit.rules)).map(unit => unit.id),
         getUnitData: (id: number) => units.get(id) ?? enemies.get(id), getGameObjectData: (id: number) => units.get(id) ?? enemies.get(id),
-        rulesApi: { infantryRules: new Map([['E2', foot]]), vehicleRules: new Map(), aircraftRules: new Map(), buildingRules: new Map() },
+        rulesApi: { infantryRules: new Map([[name, foot]]), vehicleRules: new Map(), aircraftRules: new Map(), buildingRules: new Map() },
         mapApi: { getTile: (rx: number, ry: number) => ({ rx, ry }), getStartingLocations: () => [new Vector2(), new Vector2(80, 0)],
             isVisibleTile: () => false, getRealMapSize: () => ({ width: 80, height: 80 }), isPassableTile: () => true } };
     const controller = new MissionController(() => {});
@@ -60,6 +61,7 @@ describe('fresh opening recruits use the real mission priority allocator', () =>
         f.at(3022); f.update();
         expect(f.army.getUnitIds()).toHaveLength(8); expect(f.army.isAttacking()).toBe(true);
         expect(f.home.getUnitIds()).toEqual([]); expect(f.reserve.getUnitIds()).toEqual([1, 2]);
+        expect(f.controller.getRequestedUnitTypes().has('E2')).toBe(false);
     });
     test.each(['countered', 'expired'])('a %s opening still leaves fresh conscripts eligible for their original home role', condition => {
         const f = recruitFixture(); f.at(condition === 'expired' ? 7000 : 3002);
@@ -80,8 +82,26 @@ describe('fresh opening recruits use the real mission priority allocator', () =>
 });
 
 describe('bounded paid infantry support during armor assembly', () => {
+    test.each(['E1', 'E2'] as const)('%s opening keeps eight field units plus the existing locked reserve budget', name => {
+        const f = fixture(name), plan = f.plan();
+        expect(plan.minimumUnits).toBe(8);
+        expect(plan.maximumUnits).toBe(8 + getBasicInfantryBudget(name, 'brutal').reserve);
+    });
+    test.each(['E1', 'E2'] as const)('%s stops new opening requests at field-eight plus reserve without disbanding the viable wave', name => {
+        const f = fixture(name), plan = f.plan(), reserve = new BaseReserveMission(() => {}), army = new FieldArmyMission(plan, f.controller, () => {});
+        f.controller.addMission(reserve); f.controller.addMission(army);
+        for (let id = 1; id <= 8; id++) army.addUnit(id);
+        const count = 8 + getBasicInfantryBudget(name, 'brutal').reserve, sample = f.units.get(1)!;
+        for (let id = 9; id <= count; id++) { f.units.set(id, { ...sample, id }); reserve.addUnit(id); }
+        f.at(3002);
+        const result: any = army.onAiUpdate({ ...f.context, actionBatcher: new ActionBatcher() });
+        expect(result.unitNameToPriority[name]).toBeUndefined();
+        expect(army.isAttacking()).toBe(true); expect(army.getUnitIds()).toHaveLength(8);
+        expect(reserve.getUnitIds()).toHaveLength(getBasicInfantryBudget(name, 'brutal').reserve);
+        expect(reserve.isUnitsLocked()).toBe(true);
+    });
     test('the explicit opening plan launches eight conscripts and requests bounded paid reinforcements', () => {
-        const f = fixture(), plan = f.plan(); expect(plan.minimumUnits).toBe(8); expect(plan.maximumUnits).toBe(16);
+        const f = fixture(), plan = f.plan(); expect(plan.minimumUnits).toBe(8); expect(plan.maximumUnits).toBe(10);
         const army = new FieldArmyMission(plan, f.controller, () => {}); f.controller.addMission(army);
         for (let id = 1; id <= 8; id++) army.addUnit(id);
         const actionBatcher = new ActionBatcher(), orders: any[][] = [];

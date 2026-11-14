@@ -21,6 +21,7 @@ import { DebugLogger } from "../logic/common/utils";
 import { Compositions, getValidCompositions, SideComposition } from "./compositionUtils";
 import { readStrategicSituation, selectNationalComposition } from "./nationalComposition";
 import { getOpeningAirBudget } from "./openingAirBudget";
+import { getBasicInfantryBudget } from "./basicInfantryBudget";
 import { isEcoOnly, readPressure } from "../logic/common/pressure";
 import { DroneRaidMissionFactory } from "../logic/mission/missions/droneRaidMission";
 
@@ -179,7 +180,8 @@ export class DefaultStrategy implements Strategy {
             const infantryOpening = validCompositions.includes("conscripts") ? DEFAULT_COMPOSITIONS.conscripts :
                 validCompositions.includes("gis") ? DEFAULT_COMPOSITIONS.gis : undefined;
             if (context.game.getCurrentTick() < 7000 && situation.harvesters > 0 && infantryOpening)
-                return { ...infantryOpening, minimumUnits: 8, maximumUnits: infantryOpening.composition.E2 ? 16 : 12 };
+                return { ...infantryOpening, minimumUnits: 8,
+                    maximumUnits: 8 + getBasicInfantryBudget(infantryOpening.composition.E2 ? "E2" : "E1", context.difficulty).reserve };
             const threat = context.matchAwareness.getThreatCache();
             const aggressiveAir = getOpeningAirBudget(context.game, playerData) === 8;
             if (validCompositions.includes("rocketeers") && (situation.own.JUMPJET ?? 0) < 8 &&
