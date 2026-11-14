@@ -255,7 +255,7 @@ export class FieldArmyMission extends Mission {
         const free = game.getVisibleUnits(player.name, "self", rules => rules.isSelectableCombatant && !rules.harvester &&
             !["DESO", "DOG", "ADOG", "DRON"].includes(rules.name) &&
             (rules.name !== "E1" || (s.own.E1 ?? 0) > 5) &&
-            (rules.name !== "E2" || ((!mobileRoles || openingInfantry && (s.own.E2 ?? 0) >= this.plan!.maximumUnits) && (s.own.E2 ?? 0) > conscripts.reserve)))
+            (rules.name !== "E2" || (!mobileRoles && (s.own.E2 ?? 0) > conscripts.reserve)))
             .filter(id => !assigned.has(id));
         if (free.length) return requestSpecificUnits(free, 50);
         return requestUnits(requests);
