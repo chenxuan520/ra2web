@@ -156,7 +156,7 @@ describe("T2 opening scout budget", () => {
     test("first dog visits the nearest other public start and second dog uses the old queue", () => {
         const f = fixture(); f.ensure();
         f.add(1, "DOG", 23); f.add(2, "DOG", 24); f.scout().addUnit(1); f.scout().addUnit(2);
-        f.missionStep(f.scout(), 32); f.missionStep(f.scout(), 64);
+        f.missionStep(f.scout(), 32); f.objects.get(1)!.tile = tile(80, 28); f.missionStep(f.scout(), 64);
         expect(f.orders).toContainEqual({ ids: [1], type: OrderType.AttackMove, xOrTarget: 140, y: 20 });
         expect(f.orders).toContainEqual({ ids: [2], type: OrderType.AttackMove, xOrTarget: 20, y: 80 });
         expect(f.privateReads()).toBe(0);
@@ -209,6 +209,34 @@ class OtherDogMission extends Mission {
 }
 
 describe("T2 scout directions, recruitment and real handoff", () => {
+    test("the first scout takes a public flank waypoint then continues to the unchanged public enemy start", () => {
+        const f = fixture(); f.ensure(); const dog = f.add(1, "DOG", 23); f.scout().addUnit(1);
+        f.missionStep(f.scout(), 32);
+        expect(f.orders[0]).toEqual({ ids: [1], type: OrderType.Move, xOrTarget: 80, y: 28 });
+        expect(f.passabilityReads).toHaveLength(0); expect(f.privateReads()).toBe(0);
+        dog.tile = tile(80, 28); f.missionStep(f.scout(), 64);
+        expect(f.orders.at(-1)).toEqual({ ids: [1], type: OrderType.AttackMove, xOrTarget: 140, y: 20 });
+        expect((f.scout() as OpeningScoutingMission).getTotalUnitsReceived()).toBe(1);
+    });
+    test("the public flank mirrors deterministically after swapping the known home start", () => {
+        const f = fixture(); f.player.startLocation = new Vector2(140, 20);
+        f.explored.delete("20_20"); f.explored.add("140_20");
+        f.objects.get(100)!.tile = tile(140, 20); f.objects.get(101)!.tile = tile(141, 20); f.ensure();
+        f.add(1, "DOG", 139); f.scout().addUnit(1); f.missionStep(f.scout(), 32);
+        expect(f.orders[0]).toEqual({ ids: [1], type: OrderType.Move, xOrTarget: 80, y: 12 });
+        expect(f.privateReads()).toBe(0); expect(f.passabilityReads).toHaveLength(0);
+    });
+    test("an already visible enemy start skips the public flank and preserves the original post handoff", () => {
+        const f = fixture(); f.explored.add("140_20"); f.ensure(); f.add(1, "DOG", 23); f.scout().addUnit(1);
+        f.missionStep(f.scout(), 32);
+        expect(f.orders[0]).toEqual({ ids: [1], type: OrderType.Move, xOrTarget: 80, y: 20 });
+    });
+    test("a blocked known flank with no legal fallback retains the original public enemy-start order", () => {
+        const f = fixture(); f.explored.add("80_28"); f.blocked.add("80_28"); f.ensure();
+        f.add(1, "DOG", 23); f.scout().addUnit(1); f.missionStep(f.scout(), 32);
+        expect(f.orders[0]).toEqual({ ids: [1], type: OrderType.AttackMove, xOrTarget: 140, y: 20 });
+        expect(f.privateReads()).toBe(0);
+    });
     test("private enemy start assignment cannot change either public direction or the first-dog order", () => {
         const a = fixture("brutal", "DOG", new Vector2(140, 20)), b = fixture("brutal", "DOG", new Vector2(20, 140));
         for (const f of [a, b]) {
@@ -216,7 +244,7 @@ describe("T2 scout directions, recruitment and real handoff", () => {
             f.ensure(); f.add(1, "DOG", 23); f.scout().addUnit(1); f.missionStep(f.scout(), 32);
         }
         expect(a.orders).toEqual(b.orders);
-        expect(a.orders[0]).toEqual({ ids: [1], type: OrderType.AttackMove, xOrTarget: 20, y: 100 });
+        expect(a.orders[0]).toEqual({ ids: [1], type: OrderType.Move, xOrTarget: 12, y: 60 });
         expect(a.watch(1).getPosition()).toEqual({ rx: 20, ry: 60 });
         expect(a.watch(1).getPosition()).toEqual(b.watch(1).getPosition());
         expect(a.privateReads() + b.privateReads()).toBe(0);

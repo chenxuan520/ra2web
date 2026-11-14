@@ -181,6 +181,7 @@ export class OpeningScoutingMission extends Mission {
     private initialScoutIds: number[] = [];
     private priority = 85;
     private firstTargetComplete = false;
+    private enemyApproachReached = false;
     private queueTarget: PrioritisedScoutTarget | null = null;
     private expandedHomeScouting = false;
     private nearHomeTargets?: PrioritisedScoutTarget[];
@@ -248,7 +249,18 @@ export class OpeningScoutingMission extends Mission {
         if (first && enemyStart && !this.firstTargetComplete) {
             const tile = game.mapApi.getTile(enemyStart.x, enemyStart.y);
             if (tile && game.mapApi.isVisibleTile(tile, player.name)) this.firstTargetComplete = true;
-            else this.orders.move(context, first, { rx: enemyStart.x, ry: enemyStart.y }, OrderType.AttackMove);
+            else {
+                if (!this.enemyApproachReached) {
+                    const home = game.getPlayerData(player.name).startLocation;
+                    const forward = enemyStart.clone().sub(home);
+                    const approach = home.clone().add(enemyStart).multiplyScalar(0.5)
+                        .add(new Vector2(-forward.y, forward.x).multiplyScalar(8 / forward.length()));
+                    const waypoint = legalDogPoint(context, { rx: approach.x, ry: approach.y });
+                    if (!waypoint || Math.hypot(first.tile.rx - waypoint.rx, first.tile.ry - waypoint.ry) <= 1) this.enemyApproachReached = true;
+                    else this.orders.move(context, first, waypoint);
+                }
+                if (this.enemyApproachReached) this.orders.move(context, first, { rx: enemyStart.x, ry: enemyStart.y }, OrderType.AttackMove);
+            }
         }
         if (first && this.firstTargetComplete) {
             // The completed first scout waits safely at the public midpoint,
