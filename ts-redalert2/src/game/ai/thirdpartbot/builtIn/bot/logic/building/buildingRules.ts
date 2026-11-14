@@ -144,6 +144,7 @@ export function getDefaultPlacementLocation(
     technoRules: TechnoRules,
     onWater: boolean = false,
     minSpace: number = 2,
+    canUseTile?: (tile: Tile) => boolean,
 ): { rx: number; ry: number } | undefined {
     // Closest possible location near `startPoint`.
     const size: BuildingPlacementData = game.getBuildingPlacementData(technoRules.name) as any;
@@ -175,7 +176,7 @@ export function getDefaultPlacementLocation(
     }).sort((a, b) => a.score - b.score);
 
     for (const entry of scored) {
-        if (entry.tile && game.canPlaceBuilding(playerData.name, technoRules.name, entry.tile)) {
+        if (entry.tile && (!canUseTile || canUseTile(entry.tile)) && game.canPlaceBuilding(playerData.name, technoRules.name, entry.tile)) {
             return entry.tile;
         }
     }

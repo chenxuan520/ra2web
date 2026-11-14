@@ -55,6 +55,39 @@ function fixture(miners = 2, refineries = 1) {
         subsidy() { return planMinerRefinery(context, player, rules, planRefinery(game, player, rules)); } };
 }
 
+function readyBlastRefineryFixture() {
+    const f = fixture(), controller = new QueueController();
+    const oil = { id: 900, owner: "enemy", name: "CAOILD", type: ObjectType.Building, tile: { rx: 24, ry: 0 },
+        foundation: { width: 2, height: 2 }, rules: { name: "CAOILD", type: ObjectType.Building, deathWeapon: "OilExplosion" } };
+    f.enemies.push(oil);
+    Object.assign(f.game.rulesApi, { getWeapon: () => ({ damage: 600, warhead: "OilExplosionWH" }), getWarhead: () => ({ cellSpread: 4 }) });
+    Object.assign(f.queues.get(QueueType.Structures)!, { status: QueueStatus.Ready, items: [{ rules: f.rules, quantity: 1 }], size: 1 });
+    (controller as any).refineryLocation = { name: f.rules.name, location: new Vector2(24, 0) };
+    const requests = new Map<string, any>();
+    return { ...f, requests, run: () => controller.onAiUpdate(f.context, null, requests, () => {}) };
+}
+
+describe("already completed refinery waits for current blast safety", () => {
+    test("a new visible blast at the paid remembered plot does not place or cancel it during repeated waits", () => {
+        const f = readyBlastRefineryFixture();
+        for (let i = 0; i < 20; i++) { f.at(100 + i * 2); f.run(); }
+        expect(f.actions.placeBuilding).not.toHaveBeenCalled();
+        expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+        expect(f.queues.get(QueueType.Structures)!.items[0].rules).toBe(f.rules);
+    });
+    test("the same completed refinery may place after the current visible blast threat disappears", () => {
+        const f = readyBlastRefineryFixture(); f.run(); expect(f.actions.placeBuilding).not.toHaveBeenCalled();
+        f.enemies.length = 0; f.at(140); f.run();
+        expect(f.actions.placeBuilding).toHaveBeenCalledWith("NAREFN", 24, 0);
+        expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+    });
+    test("a safe current field request is preferred over the old dangerous remembered location", () => {
+        const f = readyBlastRefineryFixture(); f.requests.set("NAREFN", { priority: 50, specificLocation: new Vector2(44, 0) });
+        f.run(); expect(f.actions.placeBuilding).toHaveBeenCalledWith("NAREFN", 44, 0);
+        expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+    });
+});
+
 function recoveryFundingFixture(status = QueueStatus.Idle) {
     const f = fixture(2); f.player.credits = 859;
     f.units.find(unit => unit.name === "NAREFN")!.tile.rx = -20;

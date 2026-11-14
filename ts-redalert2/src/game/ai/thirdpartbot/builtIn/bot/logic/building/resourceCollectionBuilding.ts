@@ -18,6 +18,24 @@ export interface RefineryPlan {
     unreachable: (ScoredPatch & { location: PatchPoint | undefined; distance: number | undefined })[];
 }
 
+/** Current apparent enemy buildings and public death-weapon rules only. */
+export function getRefineryBlastSafety(game: GameApi, playerName: string, technoRules: TechnoRules): (tile: PatchPoint) => boolean {
+    const hazards = game.getVisibleUnits(playerName, "enemy", rules => rules.type === ObjectType.Building && !!rules.deathWeapon)
+        .flatMap(id => {
+            const unit = game.getUnitData(id);
+            if (!unit?.foundation || !unit.rules.deathWeapon) return [];
+            const weapon = game.rulesApi.getWeapon(unit.rules.deathWeapon);
+            const radius = weapon?.damage > 0 ? game.rulesApi.getWarhead(weapon.warhead).cellSpread : 0;
+            return radius > 0 ? [{ tile: unit.tile, foundation: unit.foundation, radius }] : [];
+        });
+    const size = hazards.length ? game.getBuildingPlacementData(technoRules.name).foundation : undefined;
+    return tile => hazards.every(hazard => Math.hypot(
+        Math.max(tile.rx - (hazard.tile.rx + hazard.foundation.width - 1),
+            hazard.tile.rx - (tile.rx + size!.width - 1), 0),
+        Math.max(tile.ry - (hazard.tile.ry + hazard.foundation.height - 1),
+            hazard.tile.ry - (tile.ry + size!.height - 1), 0)) > hazard.radius);
+}
+
 /** Scored visible fields only; the first-refinery legacy fallback remains in getPlacementLocation. */
 export function planRefinery(game: GameApi, playerData: PlayerData, technoRules: TechnoRules): RefineryPlan {
     const patches = findVisiblePatches(game, playerData.name), tick = game.getCurrentTick();
@@ -51,6 +69,7 @@ export function planRefinery(game: GameApi, playerData: PlayerData, technoRules:
             b.score - a.score || a.g - b.g || (a.patch.id < b.patch.id ? -1 : a.patch.id > b.patch.id ? 1 : 0));
     const buildings = game.getVisibleUnits(playerData.name, "self", rules => rules.type === ObjectType.Building && !rules.wall)
         .map(id => game.getGameObjectData(id)?.tile).filter((tile): tile is Tile => !!tile);
+    const canUseTile = getRefineryBlastSafety(game, playerData.name, technoRules);
     const unreachable: RefineryPlan["unreachable"] = [];
     for (const entry of scored) {
         const building = minBy(buildings, tile => patchDistance(tile, entry.patch));
@@ -58,7 +77,7 @@ export function planRefinery(game: GameApi, playerData: PlayerData, technoRules:
         let location: PatchPoint | undefined, distance: number | undefined;
         if (target) {
             for (const spacing of [2, 1, 0]) {
-                const candidate = getDefaultPlacementLocation(game, playerData, new Vector2(target.rx, target.ry), technoRules, false, spacing);
+                const candidate = getDefaultPlacementLocation(game, playerData, new Vector2(target.rx, target.ry), technoRules, false, spacing, canUseTile);
                 const candidateDistance = candidate ? patchDistance(candidate, entry.patch) : undefined;
                 if (candidateDistance !== undefined && candidateDistance <= 9) return { patch: entry.patch, location: candidate, reachable: true, unreachable };
                 location ??= candidate;

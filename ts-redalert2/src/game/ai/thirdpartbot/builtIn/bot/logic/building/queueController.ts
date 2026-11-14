@@ -24,6 +24,7 @@ import { isCrawlProduction, observeBaseCrawl, planBaseCrawl, recordBaseCrawlOrde
 import { isDefenseProduction, planDefense, recordDefenseOrder } from "./defensePlan";
 import { getDronePriority } from "./droneProduction";
 import { findVisiblePatches, isServed, PatchPoint } from "../common/orePatches";
+import { getRefineryBlastSafety } from "./resourceCollectionBuilding";
 
 export const QUEUES = [
     QueueType.Structures,
@@ -516,6 +517,10 @@ export class QueueController {
                 const readyUnit = queueData.items[0].rules, committedRefinery = this.refineryLocation;
                 const heldLocation = difficulty === "brutal" && readyUnit.refinery && committedRefinery?.name === readyUnit.name
                     ? committedRefinery.location : undefined;
+                if (heldLocation) {
+                    const currentEconomyPlot = unitTypeRequests.get(readyUnit.name)?.specificLocation ?? heldLocation;
+                    if (!getRefineryBlastSafety(game, playerData.name, readyUnit)({ rx: currentEconomyPlot.x, ry: currentEconomyPlot.y })) return;
+                }
                 const specificEconomyLocation = difficulty === "brutal" &&
                     (!!heldLocation || isMinerRefineryProduction(game, playerData.name, readyUnit.name) || isCrawlProduction(game, playerData.name, queueType) ||
                         queueType === QueueType.Armory && isDefenseProduction(game, playerData.name));

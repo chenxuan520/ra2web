@@ -121,6 +121,56 @@ describe("ordinary refinery targets retain observed field identity", () => {
     });
 });
 
+function explosiveRefineryFixture() {
+    const f = fixture();
+    f.resources.splice(0, f.resources.length, resource(22, 0, 1000));
+    f.buildings.push(object(2, 0, 10, { name: "GAREFN", refinery: true }));
+    const oil = object(900, 20, 0, { name: "CAOILD", deathWeapon: "OilExplosion" });
+    oil.foundation = { width: 2, height: 2 }; f.enemies.push(oil);
+    Object.defineProperty(oil, "deathWeapon", { get() { throw Error("enemy runtime death weapons are private"); } });
+    f.game.getBuildingPlacementData = () => ({ foundation: { width: 4, height: 3 } });
+    f.game.rulesApi = { getWeapon: (name: string) => {
+        expect(name).toBe("OilExplosion"); return { damage: 600, warhead: "OilExplosionWH" };
+    }, getWarhead: () => ({ cellSpread: 4 }) };
+    setCandidates(f, [point(22, 0), point(26, 0)]);
+    return { ...f, oil };
+}
+
+describe("refinery placement beside a currently visible explosive enemy building", () => {
+    test("the scored field uses a legal safe footprint instead of the closest blast-exposed one", () => {
+        const f = explosiveRefineryFixture();
+        expect(planRefinery(f.game, f.player as any, f.rules as any)).toMatchObject({ reachable: true, location: point(26, 0) });
+    });
+    test("a footprint at the inclusive four-cell blast margin is excluded, while five is usable", () => {
+        const f = explosiveRefineryFixture(); setCandidates(f, [point(25, 0), point(26, 0)]);
+        expect(planRefinery(f.game, f.player as any, f.rules as any).location).toMatchObject(point(26, 0));
+    });
+    test.each(["all-unsafe", "safe-but-too-far", "safe-but-illegal"])("%s does not invent a reachable serviced field", condition => {
+        const f = explosiveRefineryFixture();
+        if (condition === "all-unsafe") setCandidates(f, [point(22, 0), point(24, 0)]);
+        if (condition === "safe-but-too-far") setCandidates(f, [point(22, 0), point(32, 0)]);
+        if (condition === "safe-but-illegal") f.legal.delete("26_0");
+        expect(planRefinery(f.game, f.player as any, f.rules as any).reachable).toBe(false);
+        expect(f.placement("brutal")).toBeUndefined();
+    });
+    test("a no-longer-visible threat is not retained as hidden placement knowledge", () => {
+        const f = explosiveRefineryFixture(); planRefinery(f.game, f.player as any, f.rules as any);
+        f.hiddenUnits.add(900); f.at(90);
+        Object.defineProperty(f.oil.rules, "deathWeapon", { get() { throw Error("hidden building rules cannot be read"); } });
+        expect(planRefinery(f.game, f.player as any, f.rules as any).location).toMatchObject(point(22, 0));
+    });
+    test.each(["no-death-weapon", "no-damage", "no-spread", "normal"])("%s retains its original closest legal placement", condition => {
+        const f = explosiveRefineryFixture();
+        if (condition === "no-death-weapon") Object.assign(f.oil.rules, { deathWeapon: undefined });
+        if (condition === "no-damage") f.game.rulesApi.getWeapon = () => ({ damage: 0, warhead: "OilExplosionWH" });
+        if (condition === "no-spread") f.game.rulesApi.getWarhead = () => ({ cellSpread: 0 });
+        if (condition === "normal") {
+            f.game.rulesApi.getWeapon = () => { throw Error("normal placement must not inspect death weapons"); };
+            expect(f.placement("normal")).toMatchObject(point(22, 0));
+        } else expect(planRefinery(f.game, f.player as any, f.rules as any).location).toMatchObject(point(22, 0));
+    });
+});
+
 describe("visible economic patches", () => {
     test.each([
         [resource(0, 0), resource(2, 2), resource(4, 4), resource(7, 4)],
