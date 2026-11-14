@@ -17,7 +17,8 @@ const point = (unit: UnitData) => new Vector2(unit.tile.rx, unit.tile.ry);
 export function selectDroneRaidTarget(drone: UnitData, enemies: readonly UnitData[], reserved: ReadonlySet<number>): UnitData | undefined {
     const defences = enemies.filter(enemy => (enemy.type as any) === ObjectType.Building && DEFENCES.has(enemy.name));
     return enemies.filter(enemy => (enemy.type as any) === ObjectType.Vehicle && enemy.zone === ZoneType.Ground &&
-        enemy.name !== "DRON" && !reserved.has(enemy.id) && !defences.some(defence =>
+        enemy.name !== "DRON" && (enemy.rules.harvester || point(drone).distanceToSquared(point(enemy)) <= 8 ** 2) &&
+        !reserved.has(enemy.id) && !defences.some(defence =>
             point(defence).distanceToSquared(point(enemy)) <= 6 ** 2))
         .sort((a, b) => (a.rules.harvester ? 0 : 1) - (b.rules.harvester ? 0 : 1) ||
             point(drone).distanceToSquared(point(a)) - point(drone).distanceToSquared(point(b)) || a.id - b.id)[0];

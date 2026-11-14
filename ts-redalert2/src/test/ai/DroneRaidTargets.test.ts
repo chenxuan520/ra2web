@@ -87,9 +87,21 @@ describe("drone raid visible targets", () => {
         expect(f.orders).toEqual([[[1], OrderType.Attack, 10]]);
     });
 
+    test.each([8, 8.01])("the non-miner fallback attacks only within eight current tiles: %s", distance => {
+        const f = fixture(); f.add(10, "HTNK", "enemy", distance);
+        f.step(0);
+        expect(f.orders).toEqual(distance <= 8 ? [[[1], OrderType.Attack, 10]] : [[[1], OrderType.Move, 80, 0]]);
+    });
+    test("no miner sighting does not lure a staged drone into a long vehicle pursuit", () => {
+        const f = fixture(); f.resources.push(resource(40, 68)); f.drone.tile = { rx: 40, ry: 68 };
+        const tank = f.add(10, "HTNK", "enemy", 75, 87); f.step(0);
+        expect(f.orders).toEqual([]);
+        tank.tile = { rx: 48, ry: 68 }; f.step(30);
+        expect(f.orders).toEqual([[[1], OrderType.Attack, 10]]);
+    });
     test.each(["GAPILL", "NALASR", "TESLA", "ATESLA"])("%s excludes a miner at six tiles, not seven", name => {
         const f = fixture();
-        f.add(10, "HARV", "enemy", 20); f.add(11, "HTNK", "enemy", 10, 10);
+        f.add(10, "HARV", "enemy", 20); f.add(11, "HTNK", "enemy", 4, 4);
         const defence = guard(f, 12, name, 26, 0);
         f.step(0);
         expect(f.orders).toEqual([[[1], OrderType.Attack, 11]]);
@@ -100,7 +112,7 @@ describe("drone raid visible targets", () => {
 
     test("the same defence exclusion applies to the vehicle fallback", () => {
         const f = fixture();
-        f.add(10, "HTNK", "enemy", 20); guard(f, 11, "NALASR", 26, 0);
+        f.add(10, "HTNK", "enemy", 8); guard(f, 11, "NALASR", 14, 0);
         f.step(0);
         expect(f.orders).toEqual([[[1], OrderType.Move, 80, 0]]);
     });
@@ -123,7 +135,7 @@ describe("drone raid visible targets", () => {
         f.add(12, "DLPH", "enemy", 3).zone = ZoneType.Air;
         f.add(13, "E1", "enemy", 4).type = ObjectType.Infantry;
         f.add(14, "ORCA", "enemy", 5).type = ObjectType.Aircraft;
-        f.add(15, "MTNK", "enemy", 20);
+        f.add(15, "MTNK", "enemy", 8);
         f.step(0);
         expect(f.orders).toEqual([[[1], OrderType.Attack, 15]]);
     });
