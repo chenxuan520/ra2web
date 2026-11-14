@@ -3,7 +3,6 @@ import { BaseBuildingMission } from "../../game/ai/thirdpartbot/builtIn/bot/logi
 import { ObjectType, QueueStatus, QueueType, Vector2 } from "../../game/ai/thirdpartbot/builtIn/game-api";
 import type { MissionContext } from "../../game/ai/thirdpartbot/builtIn/bot/logic/common/context";
 import { BRUTAL_PARAMS } from "../../game/ai/thirdpartbot/builtIn/bot/strategy/brutalParams";
-import { getEconomyBuildingPriority } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/economyPlan";
 
 function fixture(difficulty?: "normal" | "brutal") {
     const rules = (name: string) => ({ name, type: ObjectType.Building, adjacent: 8, power: 200 });
@@ -151,19 +150,14 @@ describe("reserve power while a single income needs its protective core", () => 
         f.at(3124);
         expect(f.run()).toMatchObject({ type: "buildStructureAtLocation", rulesName: f.power.name, priority: 20 });
     });
-    test("two incomes wait for protective armor before a new reserve plant", () => {
-        const f = reservePowerFixture("Russians"); f.add("HARV");
-        expect(f.run()).toEqual({ type: "noop" });
-        f.add(f.tankName); f.add(f.tankName); f.at(3124);
-        expect(f.run()).toMatchObject({ type: "buildStructureAtLocation", rulesName: f.power.name, priority: 20 });
-    });
-    test.each(["low-power", "first-plant", "active-commitment", "quiet", "normal", "ecoOnly"])(
+    test.each(["low-power", "first-plant", "active-commitment", "quiet", "two-incomes", "normal", "ecoOnly"])(
         "the original %s power behavior is retained", condition => {
             const f = reservePowerFixture("Russians");
             if (condition === "low-power") Object.assign(f.player.power, { total: 84, isLowPower: true });
             if (condition === "first-plant") { f.owned.splice(0, 1); Object.assign(f.player.power, { total: 0, isLowPower: true }); }
             if (condition === "active-commitment") Object.assign(f.queue, { status: QueueStatus.Active, items: [{ rules: f.power, quantity: 1 }] });
             if (condition === "quiet") f.enemies.length = 0;
+            if (condition === "two-incomes") f.add("HARV");
             if (condition === "normal") f.context.difficulty = "normal";
             const previous = BRUTAL_PARAMS.economy.ecoOnly;
             if (condition === "ecoOnly") BRUTAL_PARAMS.economy.ecoOnly = 1;
@@ -172,77 +166,4 @@ describe("reserve power while a single income needs its protective core", () => 
                     priority: condition === "low-power" || condition === "first-plant" ? 100 : 20 });
             } finally { BRUTAL_PARAMS.economy.ecoOnly = previous; }
         });
-});
-
-function guardedInvestmentFixture(country: "Russians" | "Americans") {
-    const f = reservePowerFixture(country);
-    f.enemies.splice(0, f.enemies.length, { id: 100, tile: { rx: 50, ry: 0 }, rules: {
-        name: "DOG", type: ObjectType.Infantry, isSelectableCombatant: true } });
-    f.context.game.getGameObjectData = f.context.game.getUnitData;
-    f.context.game.mapApi = { getAllTilesResourceData: () => [{ tile: { rx: 4, ry: 0 }, ore: 800, gems: 0, spawnsOre: false }],
-        getResourceCreditValues: () => ({ ore: 10, gems: 20 }), isVisibleTile: () => true,
-        getStartingLocations: () => [new Vector2(), new Vector2(200, 0)] };
-    const refinery = { name: country === "Russians" ? "NAREFN" : "GAREFN", refinery: true, cost: 2000,
-        freeUnit: country === "Russians" ? "HARV" : "CMIN", type: ObjectType.Building };
-    return { ...f, refinery, refineryPriority: (committed = false) => getEconomyBuildingPriority(f.context.game, f.player,
-        refinery as any, committed, f.context, { patch: undefined, location: { rx: 20, ry: 0 }, reachable: true, unreachable: [] }) };
-}
-
-const guardedOpeningCases = [["Russians", 0, 1], ["Russians", 1, 1], ["Americans", 0, 1],
-    ["Russians", 0, 2], ["Russians", 1, 2], ["Americans", 0, 2]] as const;
-
-describe("new building investment waits for the observed-contact protective core", () => {
-    test.each(guardedOpeningCases)("%s core%i income%i defers only a new refinery", (country, core, income) => {
-        const f = guardedInvestmentFixture(country);
-        for (let i = 0; i < core; i++) f.add(f.tankName);
-        if (income === 2) f.add(country === "Russians" ? "HARV" : "CMIN");
-        expect(f.refineryPriority()).toBe(0);
-    });
-    test.each(guardedOpeningCases)("%s core%i income%i defers a sufficient-power reserve through the actual selector", (country, core, income) => {
-        const f = guardedInvestmentFixture(country);
-        for (let i = 0; i < core; i++) f.add(f.tankName);
-        if (income === 2) f.add(country === "Russians" ? "HARV" : "CMIN");
-        expect(f.run()).toEqual({ type: "noop" });
-    });
-    test.each(["Russians", "Americans"] as const)("%s restores original refinery and reserve requests at its actual protective core count", country => {
-        const f = guardedInvestmentFixture(country); expect(f.refineryPriority()).toBe(0);
-        for (let i = 0; i < (country === "Russians" ? 2 : 1); i++) f.add(f.tankName);
-        f.at(3124); expect(f.refineryPriority()).toBe(50);
-        expect(f.run()).toMatchObject({ type: "buildStructureAtLocation", rulesName: f.power.name, priority: 20 });
-    });
-    test.each([QueueStatus.Active, QueueStatus.OnHold])("paid commitments remain available in status%i", status => {
-        const f = guardedInvestmentFixture("Russians");
-        Object.assign(f.queue, { status, items: [{ rules: f.power, quantity: 1 }] });
-        expect(f.refineryPriority(true)).toBe(50);
-        expect(f.run()).toMatchObject({ type: "buildStructureAtLocation", rulesName: f.power.name, priority: 20 });
-        expect(f.queue.items[0].rules).toBe(f.power);
-    });
-    test.each(["quiet", "three-incomes", "pre-window", "late", "normal", "ecoOnly"])("%s retains the original new investment requests", condition => {
-        const f = guardedInvestmentFixture("Russians");
-        if (condition === "quiet") f.enemies.length = 0;
-        if (condition === "three-incomes") { f.add("HARV"); f.add("HARV"); }
-        if (condition === "pre-window") f.at(2698);
-        if (condition === "late") f.at(9000);
-        if (condition === "normal") f.context.difficulty = "normal";
-        const previous = BRUTAL_PARAMS.economy.ecoOnly;
-        if (condition === "ecoOnly") BRUTAL_PARAMS.economy.ecoOnly = 1;
-        try {
-            expect(f.refineryPriority()).toBe(50);
-            expect(f.run()).toMatchObject({ type: "buildStructureAtLocation", rulesName: f.power.name, priority: 20 });
-        } finally { BRUTAL_PARAMS.economy.ecoOnly = previous; }
-    });
-    test("actual low power keeps the original100 plant priority even if the convenience flag is stale", () => {
-        for (const isLowPower of [true, false]) {
-            const f = guardedInvestmentFixture("Russians"); Object.assign(f.player.power, { total: 84, isLowPower });
-            expect(f.run()).toMatchObject({ type: "buildStructureAtLocation", rulesName: f.power.name, priority: 100 });
-        }
-    });
-    test("first refinery and first power plant retain their original admission", () => {
-        const firstRefinery = guardedInvestmentFixture("Russians");
-        firstRefinery.owned.splice(firstRefinery.owned.findIndex(unit => unit.rules.refinery), 1);
-        expect(firstRefinery.refineryPriority()).toBe(50);
-        const firstPower = guardedInvestmentFixture("Russians"); firstPower.owned.splice(0, 1);
-        Object.assign(firstPower.player.power, { total: 0, isLowPower: true });
-        expect(firstPower.run()).toMatchObject({ type: "buildStructureAtLocation", rulesName: firstPower.power.name, priority: 100 });
-    });
 });

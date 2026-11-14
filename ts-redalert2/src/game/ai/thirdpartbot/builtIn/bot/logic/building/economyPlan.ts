@@ -1,5 +1,5 @@
 import { GameApi, ObjectType, PlayerData, TechnoRules, UnitData } from "../../../game-api";
-import { countCoreTanks, readStrategicSituation } from "../../strategy/nationalComposition";
+import { readStrategicSituation } from "../../strategy/nationalComposition";
 import { getOpeningAirBudget } from "../../strategy/openingAirBudget";
 import { isSovietCountry } from "../../strategy/basicInfantryBudget";
 import { BRUTAL_PARAMS } from "../../strategy/brutalParams";
@@ -25,11 +25,6 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
     const refineries = (s.own.GAREFN ?? 0) + (s.own.NAREFN ?? 0);
     const factories = (s.own.GAWEAP ?? 0) + (s.own.NAWEAP ?? 0);
     const count = s.own[rules.name] ?? 0;
-    if (context?.difficulty === "brutal" && BRUTAL_PARAMS.economy.ecoOnly !== 1 && !committed &&
-        refineries > 0 && factories > 0 && s.harvesters >= 1 && s.harvesters <= 2 && s.tick >= 2700 && s.tick < 9000 &&
-        (rules.refinery || count > 0 && ["GAPOWR", "NAPOWR"].includes(rules.name) &&
-            player.power?.isLowPower === false && player.power.total >= player.power.drain) &&
-        countCoreTanks(s) < (isSovietCountry(s.country) ? 2 : 1) && !readPressure(context).homeQuiet) return 0;
     if (rules.refinery) {
         if (!refineries) return BRUTAL_PARAMS.economy.firstRefineryPriority;
         const plan = refineryPlan ?? planRefinery(game, player, rules);
