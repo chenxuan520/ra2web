@@ -334,11 +334,21 @@ describe("brutal miner capacity and production table", () => {
         for (let i = 0; i < 7; i++) f.enemy(100 + i, 80 + i);
         f.run(); expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
     });
-    test.each(["Russians", "Americans"])("%s completes the existing six-core assault formation before more quiet miners once enemy armor is visible", country => {
-        const f = fixture(3, 4, country); f.at(7470); f.enemy(100, 80); f.run();
+    test.each(["Russians", "Americans"])("%s forms the existing four-core reserve then resumes quiet mining against fewer visible tanks", country => {
+        const f = fixture(3, 2, country); f.at(7470); f.enemy(100, 80); f.run();
         expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, country === "Russians" ? "HTNK" : "MTNK", ObjectType.Vehicle, 1);
         f.own(country === "Russians" ? "HTNK" : "MTNK"); f.own(country === "Russians" ? "HTNK" : "MTNK"); f.at(7472); f.run();
         expect(f.actions.queueForProduction).toHaveBeenLastCalledWith(QueueType.Vehicles, country === "Russians" ? "HARV" : "CMIN", ObjectType.Vehicle, 1);
+    });
+    test("the formed reserve still matches larger visible armor up to the original six-core cap", () => {
+        const f = fixture(3, 4); f.at(7470);
+        for (let i = 0; i < 5; i++) f.enemy(100 + i, 80 + i);
+        f.run(); expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTNK", ObjectType.Vehicle, 1);
+        f.own("HTNK"); f.at(7472); f.run();
+        expect(f.actions.queueForProduction).toHaveBeenLastCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
+        const capped = fixture(3, 6); capped.at(7470);
+        for (let i = 0; i < 7; i++) capped.enemy(100 + i, 80 + i);
+        capped.run(); expect(capped.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
     });
     test.each(["no-refinery", "late", "unseen"])("the first-armor supplement does not expand the %s case", condition => {
         const f = fixture(1, 0); f.at(condition === "late" ? 9000 : 4500);
@@ -347,7 +357,7 @@ describe("brutal miner capacity and production table", () => {
         f.run(); expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
     });
     test.each(["no-core-armor", "harvester", "not-combatant", "sufficient-core", "zero-miner", "normal"])("visible-armor precedence preserves the original %s income policy", condition => {
-        const f = fixture(condition === "zero-miner" ? 0 : 2, condition === "sufficient-core" ? 6 : 0); f.at(5400);
+        const f = fixture(condition === "zero-miner" ? 0 : 2, condition === "sufficient-core" ? 4 : 0); f.at(5400);
         const enemy = f.enemy(100, 80);
         if (condition === "no-core-armor") enemy.rules.name = "HTK";
         if (condition === "harvester") enemy.rules.harvester = true;
