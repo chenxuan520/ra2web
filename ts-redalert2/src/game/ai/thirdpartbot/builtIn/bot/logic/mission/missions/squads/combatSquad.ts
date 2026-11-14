@@ -250,7 +250,7 @@ export class CombatSquad implements Squad {
                             this.submitMovement(context, unit, targetLocation, tick);
                             continue;
                         }
-                        const action = manageAttackMicro(unit, bestUnit, context.difficulty);
+                        const action = manageAttackMicro(unit, bestUnit, context.difficulty, game);
                         this.submitActionIfNew(actionBatcher, action, unit, tick);
                         if (brutal && action.orderType === OrderType.Attack && weapon?.damageKnown &&
                             new Vector2(unit.tile.rx, unit.tile.ry).distanceTo(new Vector2(bestUnit.tile.rx, bestUnit.tile.ry)) <= weapon.range) {

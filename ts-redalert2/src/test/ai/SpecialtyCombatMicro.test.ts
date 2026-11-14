@@ -1,5 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { GameApi } from "../../game/api/GameApi";
+import { Coords } from "../../game/Coords";
+import { RangeHelper } from "../../game/gameobject/unit/RangeHelper";
 import { AttackState, MovementZone, ObjectType, OrderType, SpeedType, StanceType, Vector2, ZoneType } from "../../game/ai/thirdpartbot/builtIn/game-api";
 import type { UnitData } from "../../game/api/interface/UnitData";
 import { ActionBatcher, BatchableAction } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/actionBatcher";
@@ -70,7 +72,7 @@ describe("deliberate infantry crushing", () => {
         expect(getInfantryCrushPoint(crusher(), victims(), { ...map, hasBridgeOnTile: () => true })).toBeNull();
     });
     test.each([AttackState.PrepareToFire, AttackState.FireUp, AttackState.Firing])("crush micro preserves the actual firing phase %i", attackState => {
-        const unit = { ...crusher(), attackState }, enemies = victims();
+        const unit = { ...crusher(), attackState: attackState as unknown as UnitData["attackState"] }, enemies = victims();
         const f = fixture([unit], enemies), orders: any[] = [];
         f.game.mapApi = map;
         const squad = new CombatSquad(new Vector2(), new Vector2(30, 0), 10);
@@ -329,6 +331,90 @@ describe("tank and artillery coordination", () => {
         expect(chooseTacticalTarget(launcher, [moving], new Map())).toBeNull();
         const closeStructure = tank(4, 2, 0, { type: ObjectType.Building, primaryWeapon: undefined });
         expect(getTacticalRetreatPoint(launcher, [closeStructure], map)?.x).toBeLessThan(0);
+    });
+});
+
+describe("GI safety around a visible explosive building", () => {
+    function setup() {
+        const gi = infantry(1, 59, 112, { isIdle: false, canMove: false, stance: StanceType.Deployed,
+            rules: { name: "E1", armor: 0, speedType: SpeedType.Foot, movementZone: MovementZone.Infantry,
+                isSelectableCombatant: true, deployFire: true, deployFireWeapon: 1 },
+            primaryWeapon: weapon(15, 4), secondaryWeapon: weapon(25, 5) });
+        const oil = tank(20, 58, 108, { name: "CAOILD", owner: "enemy", type: ObjectType.Building,
+            foundation: { width: 3, height: 3 }, primaryWeapon: undefined, secondaryWeapon: undefined,
+            hitPoints: undefined, maxHitPoints: undefined, purchaseValue: undefined,
+            rules: { name: "CAOILD", armor: 1, strength: 1000, deathWeapon: "OilExplosion" } });
+        Object.defineProperty(oil, "deathWeapon", { get() { throw Error("runtime enemy death weapons are private; use public rules"); } });
+        const f = fixture([gi], [oil]), orders: any[] = [], squad = new CombatSquad(new Vector2(), new Vector2(58, 108), 10);
+        (f.game.rulesApi as any).getWeapon = (name: string) => name === "OilExplosion" ? { damage: 600, warhead: "OilExplosionWH" } : undefined;
+        f.game.rulesApi.getWarhead = () => ({ cellSpread: 4, verses: new Map([[0, 1.5], [1, 1]]) }) as any;
+        (f.game.mapApi as any).isVisibleTile = () => true;
+        const mission = { getUnitIds: () => [1], getUnitsMatchingByRule: () => [1], getCenterOfMass: () => new Vector2(59, 112),
+            getMaxDistanceToCenterOfMass: () => 0, getUniqueName: () => "explosive-building" };
+        return { ...f, gi, oil, orders,
+            step(tick: number) {
+                f.at(tick); const actionBatcher = new ActionBatcher();
+                squad.onAiUpdate({ ...f.context, actionBatcher }, mission as any, () => {});
+                actionBatcher.resolve({ orderUnits: (...args: any[]) => orders.push(args) } as any);
+            } };
+    }
+    test("a deployed GI withdraws, takes a known safe firing position, then deploys and attacks beyond the blast", () => {
+        const f = setup(); f.step(0);
+        expect(f.orders).toEqual([[[1], OrderType.Deploy, 1]]);
+        f.gi.stance = StanceType.None as any; f.gi.canMove = true; f.step(6);
+        expect(f.orders.at(-1)).toEqual([[1], OrderType.Move, 59, 115]);
+        f.gi.tile.ry = 115; f.step(12);
+        expect(f.orders.at(-1)).toEqual([[1], OrderType.DeploySelected]);
+        f.gi.stance = StanceType.Deployed as any; f.gi.canMove = false; f.step(18);
+        expect(f.orders.at(-1)).toEqual([[1], OrderType.Attack, 20]);
+        f.step(24); expect(f.orders).toHaveLength(4);
+    });
+    test("the native range helper accepts the safe deployed firing position outside the public four-cell blast", () => {
+        const helper = new RangeHelper({ calculateTilesForGameObject: () => [] });
+        const object = (x: number, y: number, building: boolean) => ({ tile: { rx: x, ry: y, z: 0 },
+            position: { worldPosition: Coords.tile3dToWorld(x + (building ? 1.5 : 0.5), y + (building ? 1.5 : 0.5), 0), tileElevation: 0 },
+            isUnit: () => !building, isBuilding: () => building, isTechno: () => true,
+            rules: { movementZone: MovementZone.Infantry, airRangeBonus: 0 },
+            getFoundation: () => ({ width: building ? 3 : 1, height: building ? 3 : 1 }) });
+        const gi = object(59, 115, false), oil = object(58, 108, true), para = { minRange: 0, range: 5,
+            rules: { limboLaunch: false, cellRangefinding: false }, projectileRules: { arcing: false, vertical: false, subjectToElevation: false, isAntiAir: false },
+            warhead: { rules: { ivanBomb: false } } }, rules = { elevationModel: { getBonus: () => 0 } };
+        expect(helper.computeWeaponRangeVsTarget(gi, oil, para, rules).range).toBe(7);
+        expect(helper.isInWeaponRange(gi, oil, para, rules)).toBe(true);
+        expect(helper.distance3(gi, oil) / Coords.LEPTONS_PER_TILE).toBeGreaterThan(4.5);
+    });
+    test("a standing GI moves to safe known terrain before deploying beside an explosive building", () => {
+        const f = setup(); f.gi.stance = StanceType.None as any; f.gi.canMove = true; f.step(0);
+        expect(f.orders).toEqual([[[1], OrderType.Move, 59, 115]]);
+    });
+    test.each(["normal", "non-gi", "no-death-weapon", "no-spread", "no-damage", "insufficient-range"])(
+        "%s preserves the original engagement", condition => {
+            const f = setup();
+            if (condition === "normal") {
+                f.context.difficulty = "normal";
+                (f.game.rulesApi as any).getWeapon = () => { throw Error("normal micro must not query death-weapon rules"); };
+            }
+            if (condition === "non-gi") f.gi.name = "HTNK";
+            if (condition === "no-death-weapon") f.oil.rules.deathWeapon = undefined;
+            if (condition === "no-spread") f.game.rulesApi.getWarhead = () => ({ cellSpread: 0, verses: new Map() }) as any;
+            if (condition === "no-damage") (f.game.rulesApi as any).getWeapon = () => ({ damage: 0, warhead: "OilExplosionWH" });
+            if (condition === "insufficient-range") f.gi.secondaryWeapon.maxRange = 4;
+            f.step(0); if (condition === "normal") f.step(12);
+            expect(f.orders.at(-1)).toEqual([[1], OrderType.Attack, 20]);
+        });
+    test.each(["hidden-terrain", "blocked", "out-of-bounds"])("no legal safe point retains the original standing order: %s", condition => {
+        const f = setup(); f.gi.stance = StanceType.None as any; f.gi.canMove = true;
+        if (condition === "hidden-terrain") {
+            (f.game.mapApi as any).isVisibleTile = () => false;
+            f.game.mapApi.isPassableTile = () => { throw Error("hidden escape terrain cannot be inspected"); };
+        }
+        if (condition === "blocked") f.game.mapApi.isPassableTile = () => false;
+        if (condition === "out-of-bounds") f.game.mapApi.getTile = () => undefined as any;
+        f.step(0); expect(f.orders.at(-1)).toEqual([[1], OrderType.DeploySelected]);
+    });
+    test.each([AttackState.FireUp, AttackState.Firing])("explosion avoidance does not interrupt an actual firing sequence%i", phase => {
+        const f = setup(); f.gi.isFiring = phase === AttackState.Firing; f.gi.attackState = phase as any;
+        f.step(0); expect(f.orders).toEqual([]);
     });
 });
 
