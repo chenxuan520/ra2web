@@ -111,9 +111,7 @@ export class FieldArmyMission extends Mission {
                 (!isLongMap && armor.length >= 2 && enemyArmor === 0 && targetDist <= 45)
             ))
         );
-        // Conscripts need field armor before the paid opening marches out.
-        const infantryPush = openingInfantry && (!mobileRoles || armor.length > 0) &&
-            infantry.length >= this.plan!.minimumUnits && enemyArmor <= 2 && enemyAircraft === 0 && enemyDefences < 2;
+        const infantryPush = openingInfantry && infantry.length >= this.plan!.minimumUnits && enemyArmor <= 2 && enemyAircraft === 0 && enemyDefences < 2;
         if (canAssault || infantryPush ||
             air.length >= 2 || units.some(unit => unit.name === "ZEP") || infantry.length >= 20) {
             this.attacking = true;

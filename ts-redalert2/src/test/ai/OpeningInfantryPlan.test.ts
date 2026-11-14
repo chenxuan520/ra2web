@@ -58,8 +58,7 @@ describe('fresh opening recruits use the real mission priority allocator', () =>
             f.units.set(id, { ...recruit, id }); f.at(3000 + id * 2); f.update();
         }
         f.at(3022); f.update();
-        expect(f.army.getUnitIds()).toHaveLength(8); expect(f.army.isAttacking()).toBe(false);
-        addOpeningCover(f, f.army); f.at(3032); f.update(); expect(f.army.isAttacking()).toBe(true);
+        expect(f.army.getUnitIds()).toHaveLength(8); expect(f.army.isAttacking()).toBe(true);
         expect(f.home.getUnitIds()).toEqual([]); expect(f.reserve.getUnitIds()).toEqual([1, 2]);
     });
     test.each(['countered', 'expired'])('a %s opening still leaves fresh conscripts eligible for their original home role', condition => {
@@ -85,7 +84,6 @@ describe('bounded paid infantry support during armor assembly', () => {
         const f = fixture(), plan = f.plan(); expect(plan.minimumUnits).toBe(8); expect(plan.maximumUnits).toBe(16);
         const army = new FieldArmyMission(plan, f.controller, () => {}); f.controller.addMission(army);
         for (let id = 1; id <= 8; id++) army.addUnit(id);
-        addOpeningCover(f, army);
         const actionBatcher = new ActionBatcher(), orders: any[][] = [];
         const result: any = army.onAiUpdate({ ...f.context, actionBatcher });
         actionBatcher.resolve({ orderUnits: (...args: any[]) => orders.push(args) } as any, f.game.mapApi);
@@ -97,7 +95,6 @@ describe('bounded paid infantry support during armor assembly', () => {
         const f = fixture(); f.at(6500); const plan = f.plan(); expect(plan.minimumUnits).toBe(8);
         const army = new FieldArmyMission(plan, f.controller, () => {}); f.controller.addMission(army);
         for (let id = 1; id <= 8; id++) army.addUnit(id);
-        addOpeningCover(f, army);
         const actionBatcher = new ActionBatcher(), result: any = army.onAiUpdate({ ...f.context, actionBatcher });
         expect(result.type).not.toBe('releaseUnits'); expect(army.isAttacking()).toBe(true); expect(result.unitNameToPriority.E2).toBe(95);
         f.at(7000); expect(army.onAiUpdate({ ...f.context, actionBatcher }).type).toBe('releaseUnits');
@@ -132,52 +129,6 @@ describe('bounded paid infantry support during armor assembly', () => {
     test('ordinary infantry plans preserve the original Soviet home role', () => {
         const f = fixture(), army = new FieldArmyMission({ composition: { E2: 1 }, minimumUnits: 3, maximumUnits: 10 }, f.controller, () => {});
         army.addUnit(1); expect(army.onAiUpdate({ ...f.context, actionBatcher: new ActionBatcher() }).type).toBe('releaseUnits');
-    });
-});
-
-function addOpeningCover(f: ReturnType<typeof fixture>, army: FieldArmyMission, assigned = true) {
-    const rules = { name: 'HTNK', type: ObjectType.Vehicle, isSelectableCombatant: true };
-    f.game.rulesApi.vehicleRules.set('HTNK', rules);
-    f.units.set(102, { id: 102, name: 'HTNK', owner: 'bot', type: ObjectType.Vehicle, rules,
-        tile: { rx: 4, ry: 0 }, hitPoints: 400, maxHitPoints: 400, zone: ZoneType.Ground, isIdle: true, canMove: true });
-    if (assigned) army.addUnit(102);
-}
-
-describe('Soviet opening infantry waits for its field armor', () => {
-    function openingArmy() {
-        const f = fixture(), army = new FieldArmyMission(f.plan(), f.controller, () => {});
-        f.controller.addMission(army); for (let id = 1; id <= 8; id++) army.addUnit(id);
-        return { ...f, army, run: () => army.onAiUpdate({ ...f.context, actionBatcher: new ActionBatcher() }) as any };
-    }
-    test('a paid eight-conscript force keeps its original budget but does not march out with zero armor', () => {
-        const f = openingArmy(), result = f.run();
-        expect(f.army.isAttacking()).toBe(false); expect(f.army.getAttackArea()).toEqual(new Vector2(4, 0));
-        expect(result.unitNameToPriority.E2).toBe(95); expect(f.plan().maximumUnits).toBe(16);
-    });
-    test('an owned tank outside this army is not counted as its field escort', () => {
-        const f = openingArmy(); addOpeningCover(f, f.army, false); f.run();
-        expect(f.army.isAttacking()).toBe(false); expect(f.army.getAttackArea()).toEqual(new Vector2(4, 0));
-    });
-    test('real assigned armor releases the strike, and losing it restores assembly without a new timer', () => {
-        const f = openingArmy(); f.run(); expect(f.army.isAttacking()).toBe(false);
-        addOpeningCover(f, f.army); f.at(3032); f.run();
-        expect(f.army.isAttacking()).toBe(true); expect(f.army.getAttackArea()).toEqual(new Vector2(80, 0));
-        f.units.delete(102); f.army.removeUnit(102); f.at(3064); f.run();
-        expect(f.army.isAttacking()).toBe(false); expect(f.army.getAttackArea()).toEqual(new Vector2(4, 0));
-    });
-    test('the Allied GI opening retains its original independent push', () => {
-        const f = fixture(), foot = { ...f.units.get(1)!.rules, name: 'E1' };
-        f.player.country = { name: 'Americans', side: 0 }; f.game.rulesApi.infantryRules.set('E1', foot);
-        for (let id = 1; id <= 8; id++) Object.assign(f.units.get(id)!, { name: 'E1', rules: foot });
-        const available = f.context.player.production.getAvailableObjects(); available.splice(0, available.length, foot, { name: 'MTNK' }, { name: 'FV' });
-        const army = new FieldArmyMission(f.plan(), f.controller, () => {}); f.controller.addMission(army);
-        for (let id = 1; id <= 8; id++) army.addUnit(id);
-        const result: any = army.onAiUpdate({ ...f.context, actionBatcher: new ActionBatcher() });
-        expect(army.isAttacking()).toBe(true); expect(result.unitNameToPriority.E1).toBe(95); expect(f.plan().maximumUnits).toBe(12);
-    });
-    test('normal handling does not opt into the new Soviet opening condition', () => {
-        const f = openingArmy(); f.context.difficulty = 'normal'; f.run();
-        expect(f.army.isAttacking()).toBe(false); expect(f.army.getAttackArea()).toEqual(new Vector2(4, 0));
     });
 });
 
