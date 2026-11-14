@@ -473,6 +473,45 @@ describe("existing MCV economy expansion", () => {
         f.context.difficulty = "normal"; new PackConyardMission("normal-pack", mcv.id, () => {})._onAiUpdate(f.context);
         expect(f.context.player.actions.orderUnits).toHaveBeenCalledWith([mcv.id], OrderType.Move, 5, 0);
     });
+    test.each([6, 14])("an existing economic MCV returns home when visible armor comes within%i of its destination", distance => {
+        const f = mcvFixture(), missions = new MissionController(() => {}), factory = new ExpansionMissionFactory();
+        factory.maybeCreateMissions(f.context, missions, () => {});
+        f.units.splice(f.units.findIndex(unit => unit.name === "NACNST"), 1);
+        const mcv = f.own("SMCV", 8); f.at(9002); factory.maybeCreateMissions(f.context, missions, () => {});
+        const expand = missions.getMissions().find(mission => mission.getUniqueName() === `expansion-mcv-${mcv.id}`)!;
+        expand.addUnit(mcv.id); expand._onAiUpdate(f.context);
+        expect(f.context.player.actions.orderUnits).toHaveBeenLastCalledWith([mcv.id], OrderType.Move, 70, 0);
+        f.enemies.push({ id: 999, name: "HTNK", type: ObjectType.Vehicle, tile: { rx: 70 + distance, ry: 0 },
+            rules: { name: "HTNK", type: ObjectType.Vehicle, isSelectableCombatant: true } });
+        f.at(9064); expand._onAiUpdate(f.context);
+        expect(f.context.player.actions.orderUnits).toHaveBeenLastCalledWith([mcv.id], OrderType.Move, 0, 0);
+        expect(f.context.player.actions.queueForProduction).not.toHaveBeenCalled();
+        f.units.splice(f.units.indexOf(mcv), 1); f.own("NACNST", 0); f.at(9066);
+        factory.maybeCreateMissions(f.context, missions, () => {});
+        expect(isMcvRelocating(f.game, f.player.name)).toBe(false);
+    });
+    test.each(["outside", "miner", "hidden", "normal", "unmarked"])("the %s case preserves the existing MCV destination and deployment flow", reason => {
+        const f = mcvFixture(), missions = new MissionController(() => {}), factory = new ExpansionMissionFactory();
+        if (reason !== "unmarked") {
+            factory.maybeCreateMissions(f.context, missions, () => {});
+            f.units.splice(f.units.findIndex(unit => unit.name === "NACNST"), 1);
+        }
+        const mcv = f.own("SMCV", 8);
+        const expand = new ExpansionMission("destination-control", 100, mcv.id, [new Vector2(70, 0)], () => {});
+        expand.addUnit(mcv.id);
+        const enemy: any = { id: 999, name: "HTNK", type: ObjectType.Vehicle, tile: { rx: reason === "outside" ? 84.1 : 76, ry: 0 },
+            rules: { name: "HTNK", type: ObjectType.Vehicle, isSelectableCombatant: true, harvester: reason === "miner" } };
+        f.enemies.push(enemy);
+        if (reason === "hidden") {
+            const visible = f.game.getVisibleUnits;
+            f.game.getVisibleUnits = (name: string, relation: string, predicate: any) => relation === "enemy" ? [] : visible(name, relation, predicate);
+        }
+        if (reason === "hidden" || reason === "normal" || reason === "unmarked")
+            Object.defineProperty(enemy, "tile", { get() { throw Error("this MCV flow must not inspect the enemy coordinate"); } });
+        if (reason === "normal") f.context.difficulty = "normal";
+        f.at(9064); expand._onAiUpdate(f.context);
+        expect(f.context.player.actions.orderUnits).toHaveBeenLastCalledWith([mcv.id], OrderType.Move, 70, 0);
+    });
     test("a lost selected MCV cannot trigger production of another MCV in brutal", () => {
         const f = mcvFixture();
         expect(new ExpansionMission("lost-mcv", 100, 999, [new Vector2(70, 0)], () => {})._onAiUpdate(f.context)).toMatchObject({ type: "disband" });

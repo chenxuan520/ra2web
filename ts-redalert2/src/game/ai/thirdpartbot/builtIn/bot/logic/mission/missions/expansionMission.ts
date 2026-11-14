@@ -103,6 +103,7 @@ export class ExpansionMission extends Mission {
                 matchAwareness,
                 actionBatcher,
                 selectedMcvUnit,
+                context.difficulty,
             );
         } else {
             const reachableCandidates = this.candidates
@@ -141,9 +142,21 @@ export class ExpansionMission extends Mission {
         matchAwareness: MatchAwareness,
         actionBatcher: ActionBatcher,
         mcv: UnitData,
+        difficulty?: "normal" | "brutal",
     ) {
         if (!this.destination) {
             return noop();
+        }
+        if (difficulty === "brutal" && isMcvRelocating(gameApi, playerData.name) && !this.destination.equals(playerData.startLocation) &&
+            gameApi.getVisibleUnits(playerData.name, "enemy", rules => rules.type === ObjectType.Vehicle &&
+                rules.isSelectableCombatant && !rules.harvester).some(id => {
+                const enemy = gameApi.getUnitData(id);
+                return enemy && Math.hypot(enemy.tile.rx - this.destination!.x, enemy.tile.ry - this.destination!.y) <= 14;
+            })) {
+            this.destination = playerData.startLocation.clone();
+            mcvRelocations.get(gameApi)!.set(playerData.name, this.destination);
+            this.lastOrderDeploy = false;
+            this.deployAttempts = 0;
         }
         // if there's a conyard near the destination, we're done.
         const ownConyards = new Set(gameApi.getVisibleUnits(playerData.name, "self", (rules) => rules.constructionYard));
