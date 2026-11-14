@@ -71,8 +71,9 @@ function recoveryFundingFixture(status = QueueStatus.Idle) {
 }
 
 /** Native debit/progress, not a mock that treats a production request as a delivered unit. */
-function nativeFundingFixture(priority: number, active: boolean, engineerStatus?: QueueStatus) {
+function nativeFundingFixture(priority: number, active: boolean, engineerStatus?: QueueStatus, additionalFactory = false) {
     const f = fixture(5); Object.assign(f.rules, { owner: [], buildTimeMultiplier: 1 });
+    if (additionalFactory) Object.assign(f.rules, { name: "NAWEAP", refinery: false, weaponsFactory: true, freeUnit: "" });
     const vehicle: any = { name: priority === 115 ? "HTK" : "HTNK", type: ObjectType.Vehicle,
         cost: priority === 115 ? 500 : 900, owner: [], buildTimeMultiplier: 1 };
     const engineer: any = engineerStatus === undefined ? undefined : { name: "SENGINEER", type: ObjectType.Infantry,
@@ -384,6 +385,41 @@ describe("brutal refinery investment", () => {
             f.run(priority === 85 && !active ? 5508 : 2810, 85);
             expect(f.nativeQueues.get(QueueType.Structures)!.status).toBe(QueueStatus.Active);
         }
+    });
+    test.each([4, 5])("real loaded income at refinery distance%i supplements funding without changing nine-tile field service", gap => {
+        const f = nativeFundingFixture(100, true); f.resources[0].tile.rx = 15;
+        Object.assign(f.units.find(unit => unit.rules.harvester)!, { tile: { rx: 5 + gap, ry: 0 }, harvestedOre: 40, harvestedGems: 0 });
+        for (let i = 0; i < 54; i++) f.spend(9990 + i * 2);
+        expect(f.nativeQueues.get(QueueType.Vehicles)!.getFirst()!.creditsSpent).toBe(gap === 4 ? 54 : 0);
+        expect(f.nativeQueues.get(QueueType.Structures)!.getFirst()!.creditsSpent).toBe(gap === 4 ? 0 : 54);
+    });
+    test.each(["empty", "warped", "foreign", "no-refinery", "normal"])("a %s miner cannot invent loaded-refinery income funding", condition => {
+        const f = nativeFundingFixture(100, true); f.resources[0].tile.rx = 15;
+        const miner: any = f.units.find(unit => unit.rules.harvester)!;
+        Object.assign(miner, { tile: { rx: 7, ry: 0 }, harvestedOre: condition === "empty" ? 0 : 40, harvestedGems: 0 });
+        if (condition === "warped") miner.isWarpedOut = true;
+        if (condition === "foreign") miner.owner = "enemy";
+        if (condition === "no-refinery") f.units.splice(f.units.findIndex(unit => unit.name === "NAREFN"), 1);
+        if (condition === "normal") f.context.difficulty = "normal";
+        for (let i = 0; i < 54; i++) f.spend(9990 + i * 2);
+        expect(f.nativeQueues.get(QueueType.Structures)!.getFirst()!.creditsSpent).toBe(54);
+    });
+    test("an unfunded counter is not starved by an active additional war factory", () => {
+        const f = nativeFundingFixture(100, true, undefined, true);
+        for (let i = 0; i < 54; i++) f.spend(9990 + i * 2);
+        expect(f.nativeQueues.get(QueueType.Vehicles)!.getFirst()!.creditsSpent).toBe(54);
+        expect(f.nativeQueues.get(QueueType.Structures)!.getFirst()!.creditsSpent).toBe(0);
+        f.player.credits = f.vehicle.cost; f.run(10100);
+        expect(f.nativeQueues.get(QueueType.Structures)!.status).toBe(QueueStatus.Active);
+    });
+    test.each(["first", "normal", "funded", "ready"])("vehicle funding retains the original %s war-factory behavior", condition => {
+        const f = nativeFundingFixture(100, true, undefined, true);
+        if (condition === "first") f.units.splice(f.units.findIndex(unit => unit.name === "NAWEAP"), 1);
+        if (condition === "normal") f.context.difficulty = "normal";
+        if (condition === "ready") f.nativeQueues.get(QueueType.Structures)!.status = QueueStatus.Ready;
+        f.player.credits = condition === "funded" ? f.vehicle.cost : 1; f.run(9990);
+        expect(f.actions.pauseProduction).not.toHaveBeenCalledWith(QueueType.Structures);
+        if (condition === "ready") expect(f.actions.placeBuilding).toHaveBeenCalledWith("NAWEAP", 24, 0);
     });
     test("visible core armor deficit reaches the existing native counter-funding path without a birth-point siege", () => {
         const f = nativeFundingFixture(85, true);

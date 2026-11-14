@@ -315,7 +315,13 @@ export class QueueController {
             game.getVisibleUnits(player.name, "self", rules => rules.harvester).length > 0) {
             const sites = game.getVisibleUnits(player.name, "self", rules => rules.refinery)
                 .map(id => game.getGameObjectData(id)?.tile).filter((tile): tile is PatchPoint => !!tile);
-            fundPriorityVehicle = sites.length > 0 && findVisiblePatches(game, player.name).some(patch => isServed(patch, sites));
+            fundPriorityVehicle = sites.length > 0 && (findVisiblePatches(game, player.name).some(patch => isServed(patch, sites)) ||
+                game.getVisibleUnits(player.name, "self", rules => rules.harvester).some(id => {
+                    const miner = game.getUnitData(id);
+                    return miner?.owner === player.name && !miner.isWarpedOut &&
+                        (miner.harvestedOre ?? 0) + (miner.harvestedGems ?? 0) > 0 &&
+                        sites.some(site => Math.hypot(miner.tile.rx - site.rx, miner.tile.ry - site.ry) <= 4);
+                }));
         }
         const totalWeightAcrossQueues = this.queueStates
             .map((decision) => decision.topItem?.priority ?? 0)
@@ -351,6 +357,12 @@ export class QueueController {
                     if (queue.status === QueueStatus.Active) actionsApi.pauseProduction(QueueType.Vehicles);
                     return;
                 }
+            }
+            if (fundPriorityVehicle && decision.queue === QueueType.Structures && pendingRefinery?.weaponsFactory &&
+                [QueueStatus.Active, QueueStatus.OnHold].includes(refineryQueue.status) &&
+                game.getVisibleUnits(player.name, "self", rules => rules.weaponsFactory).length > 0) {
+                if (refineryQueue.status === QueueStatus.Active) actionsApi.pauseProduction(QueueType.Structures);
+                return;
             }
             // Native infantry debits precede vehicles; defer only new, lower-priority basic infantry.
             if (context.difficulty === "brutal" && priorityVehicle && priorityVehicle.priority >= 100 &&
