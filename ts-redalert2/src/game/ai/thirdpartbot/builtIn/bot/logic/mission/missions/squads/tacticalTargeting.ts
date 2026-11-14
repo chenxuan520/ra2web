@@ -175,7 +175,7 @@ export function getTacticalRetreatPoint(attacker: UnitData, targets: UnitData[],
         const norm = Math.max(1, GameMath.sqrt(vx * vx + vy * vy));
         const point = new Vector2(Math.round(origin.x + vx / norm * distance), Math.round(origin.y + vy / norm * distance));
         if (point.equals(origin) || !isSafeMove(point)) continue;
-        if (!injured && ownWeapon && point.distanceTo(new Vector2(nearestThreat.tile.rx, nearestThreat.tile.ry)) > ownWeapon.range) continue;
+        if (!injured && !fleeCrusher && ownWeapon && point.distanceTo(new Vector2(nearestThreat.tile.rx, nearestThreat.tile.ry)) > ownWeapon.range) continue;
         const steps = Math.max(Math.abs(point.x - origin.x), Math.abs(point.y - origin.y));
         let passable = true;
         for (let step = 1; step <= steps; step++) {

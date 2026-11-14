@@ -334,6 +334,51 @@ describe("tank and artillery coordination", () => {
     });
 });
 
+describe("infantry crush escape can leave rifle range", () => {
+    const map: any = { getTile: (rx: number, ry: number) => ({ rx, ry }), isPassableTile: () => true };
+    function setup() {
+        const rifleman = infantry(1, 40, 99, { name: "E2", isIdle: false, isFiring: false,
+            attackState: AttackState.PrepareToFire, primaryWeapon: { ...weapon(15, 4), cooldownTicks: 19 },
+            rules: { ...infantry(1, 0).rules, name: "E2", crushable: true } });
+        const crusher = tank(2, 41, 100, { owner: "enemy", hitPoints: undefined, maxHitPoints: undefined,
+            rules: { ...tank(2, 0).rules, strength: 400, crusher: true } });
+        return { rifleman, crusher };
+    }
+    test("a healthy recovering rifleman may escape past its own four-tile range", () => {
+        const { rifleman, crusher } = setup(); expect(isFiringBurst(rifleman)).toBe(false);
+        const retreat = getTacticalRetreatPoint(rifleman, [crusher], map);
+        expect(retreat).toEqual(new Vector2(38, 97));
+        expect(retreat!.distanceTo(new Vector2(crusher.tile.rx, crusher.tile.ry))).toBeGreaterThan(rifleman.primaryWeapon.maxRange);
+    });
+    test("the real combat squad submits the escape instead of another rifle attack", () => {
+        const { rifleman, crusher } = setup(), f = fixture([rifleman], [crusher]); f.game.mapApi = map;
+        const squad = new CombatSquad(new Vector2(40, 99), new Vector2(60, 100), 10), batcher = new ActionBatcher(), orders: any[] = [];
+        const mission = { getUnitIds: () => [1], getUnitsMatchingByRule: () => [1], getCenterOfMass: () => new Vector2(40, 99),
+            getMaxDistanceToCenterOfMass: () => 0, getUniqueName: () => "crush-escape" };
+        squad.onAiUpdate({ ...f.context, actionBatcher: batcher }, mission as any, () => {});
+        batcher.resolve({ orderUnits: (...args: any[]) => orders.push(args) } as any, map);
+        expect(orders).toEqual([[[1], OrderType.Move, 38, 97]]);
+    });
+    test.each(["non-crusher", "not-crushable"])("the original %s case does not flee", condition => {
+        const { rifleman, crusher } = setup();
+        if (condition === "non-crusher") (crusher.rules as any).crusher = false;
+        else (rifleman.rules as any).crushable = false;
+        expect(getTacticalRetreatPoint(rifleman, [crusher], map)).toBeNull();
+    });
+    test("initial aiming and actual firing remain protected", () => {
+        const { rifleman, crusher } = setup(); rifleman.primaryWeapon.cooldownTicks = 0;
+        expect(getTacticalRetreatPoint(rifleman, [crusher], map)).toBeNull();
+        rifleman.primaryWeapon.cooldownTicks = 19; rifleman.isFiring = true;
+        expect(getTacticalRetreatPoint(rifleman, [crusher], map)).toBeNull();
+    });
+    test("escaping rifle range still requires passable, reachable and safe ground", () => {
+        const { rifleman, crusher } = setup();
+        expect(getTacticalRetreatPoint(rifleman, [crusher], { ...map, isPassableTile: () => false })).toBeNull();
+        expect(getTacticalRetreatPoint(rifleman, [crusher], map, () => false)).toBeNull();
+        expect(getTacticalRetreatPoint(rifleman, [crusher], { ...map, findPath: () => [] })).toBeNull();
+    });
+});
+
 describe("GI safety around a visible explosive building", () => {
     function setup() {
         const gi = infantry(1, 59, 112, { isIdle: false, canMove: false, stance: StanceType.Deployed,
