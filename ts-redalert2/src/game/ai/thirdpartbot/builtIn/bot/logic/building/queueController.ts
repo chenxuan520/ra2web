@@ -223,7 +223,9 @@ export class QueueController {
                 rules.isSelectableCombatant && !rules.harvester && ["MTNK", "HTNK", "MGTK", "APOC", "SREF"].includes(rules.name)).length;
             if (situation.harvesters >= 2 && (situation.enemy.infantry >= 8 &&
                 (situation.own.MTNK ?? 0) + (situation.own.HTNK ?? 0) < Math.min(6, Math.max(2, Math.ceil(situation.enemy.infantry / 6))) ||
-                situation.tick < 9000 && visibleCoreArmor > 0 && countCoreTanks(situation) < Math.min(6, Math.max(2, visibleCoreArmor)))) {
+                situation.tick < 9000 && visibleCoreArmor > 0 && countCoreTanks(situation) < Math.min(6, Math.max(2, visibleCoreArmor))) ||
+                situation.harvesters === 1 && situation.tick < 9000 && visibleCoreArmor > 0 && countCoreTanks(situation) === 0 &&
+                game.getVisibleUnits(player.name, "self", rules => rules.refinery).length > 0) {
                 const tank = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === "MTNK" || option.name === "HTNK");
                 if (tank) {
                     requests.set(tank.name, { priority: 100, specificLocation: null });

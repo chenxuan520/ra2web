@@ -306,8 +306,24 @@ describe("brutal miner capacity and production table", () => {
             expect(f.actions.queueForProduction).not.toHaveBeenCalledWith(QueueType.Vehicles, "DRON", ObjectType.Vehicle, 1);
         }
     });
-    test.each(["no-core-armor", "harvester", "not-combatant", "sufficient-core", "zero-miner", "second-miner", "normal"])("visible-armor precedence preserves the original %s income policy", condition => {
-        const f = fixture(condition === "zero-miner" ? 0 : condition === "second-miner" ? 1 : 2, condition === "sufficient-core" ? 2 : 0); f.at(5400);
+    test.each(["Russians", "Americans"])("%s can fund its first armor against already visible tanks before buying another miner", country => {
+        const f = fixture(1, 0, country); f.at(4500); f.enemy(100, 80);
+        const miner = f.options.get(QueueType.Vehicles)![0];
+        Object.assign(f.queues.get(QueueType.Vehicles)!, { status: QueueStatus.Active, items: [{ rules: miner, quantity: 1 }] });
+        f.run(); expect(f.actions.unqueueFromProduction).toHaveBeenCalledWith(QueueType.Vehicles, miner.name, ObjectType.Vehicle, 1);
+        Object.assign(f.queues.get(QueueType.Vehicles)!, { status: QueueStatus.Idle, items: [] }); f.at(4502); f.run();
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, country === "Russians" ? "HTNK" : "MTNK", ObjectType.Vehicle, 1);
+        f.own(country === "Russians" ? "HTNK" : "MTNK"); f.at(4504); f.run();
+        expect(f.actions.queueForProduction).toHaveBeenLastCalledWith(QueueType.Vehicles, miner.name, ObjectType.Vehicle, 1);
+    });
+    test.each(["no-refinery", "late", "unseen"])("the first-armor supplement does not expand the %s case", condition => {
+        const f = fixture(1, 0); f.at(condition === "late" ? 9000 : 4500);
+        if (condition === "no-refinery") f.units.splice(0, f.units.length, ...f.units.filter(unit => !unit.rules.refinery));
+        if (condition !== "unseen") f.enemy(100, 80);
+        f.run(); expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
+    });
+    test.each(["no-core-armor", "harvester", "not-combatant", "sufficient-core", "zero-miner", "normal"])("visible-armor precedence preserves the original %s income policy", condition => {
+        const f = fixture(condition === "zero-miner" ? 0 : 2, condition === "sufficient-core" ? 2 : 0); f.at(5400);
         const enemy = f.enemy(100, 80);
         if (condition === "no-core-armor") enemy.rules.name = "HTK";
         if (condition === "harvester") enemy.rules.harvester = true;
@@ -401,7 +417,8 @@ describe("brutal miner capacity and production table", () => {
         for (const response of ["warning", "siege", "air", "infantry", "counter", "capped"]) {
             const f = fixture(response === "capped" ? 12 : 1, 0, country); f.resources.splice(1);
             f.units.find(unit => unit.name === "NAREFN" && unit.tile.rx === 25)!.tile.rx = 17;
-            f.enemy(100, response === "siege" ? 22 : 40);
+            const warning = f.enemy(100, response === "siege" ? 22 : 40);
+            if (response === "warning" || response === "infantry") warning.rules.name = "HTK";
             if (response === "air") {
                 f.enemy(200, 70, ObjectType.Aircraft); f.requests.set("HTK", { priority: 115, specificLocation: null });
             }
