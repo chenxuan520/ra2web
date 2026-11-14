@@ -68,7 +68,7 @@ function fixture(miners = 3, core = 4, country = "Russians") {
 
 describe("paid drone production and public own lifecycle", () => {
     test.each([
-        { built: 0, miners: 1, core: 0, enemy: false, priority: 100 },
+        { built: 0, miners: 1, core: 0, enemy: false, priority: 112 },
         { built: 1, miners: 2, core: 0, enemy: false, priority: 0 },
         { built: 1, miners: 3, core: 0, enemy: false, priority: 0 },
         { built: 1, miners: 3, core: 3, enemy: true, priority: 0 },
@@ -131,13 +131,23 @@ describe("paid drone production and public own lifecycle", () => {
         f.at(1899); expect(getDronePriority(f.context)).toBe(60);
         f.at(1900); expect(getDronePriority(f.context)).toBe(0);
     });
-    test("the adjusted request table funds income110 before drone100, while AA115 remains first", () => {
+    test("the restored first drone112 precedes new income110, while AA115 remains first", () => {
         const f = fixture(1, 0); f.produce();
-        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "DRON", ObjectType.Vehicle, 1);
         const funded = fixture(3, 0); funded.produce();
         expect(funded.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "DRON", ObjectType.Vehicle, 1);
         const aa = fixture(1, 0); aa.add("ORCA", "enemy", 100, 0, ObjectType.Aircraft); aa.produce();
         expect(aa.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTK", ObjectType.Vehicle, 1);
+    });
+    test.each([1, 2])("%i income miners still fund the existing visible-armor counter before the optional first drone", miners => {
+        const f = fixture(miners, 0); f.at(4500); f.add("MTNK", "enemy", 80); f.produce();
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTNK", ObjectType.Vehicle, 1);
+    });
+    test.each([QueueStatus.Active, QueueStatus.OnHold])("restored drone priority preserves an existing paid miner in status%i", status => {
+        const f = fixture(3, 0), miner = f.vehicles.find(option => option.name === "HARV")!;
+        Object.assign(f.queues.get(QueueType.Vehicles)!, { status, items: [{ rules: miner, quantity: 1 }] });
+        f.produce(); expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+        expect(f.actions.queueForProduction).not.toHaveBeenCalled();
     });
     test.each(["normal", "eco-only"])("%s produces no drone request", mode => {
         const f = fixture(1, 0), previous = BRUTAL_PARAMS.economy.ecoOnly;

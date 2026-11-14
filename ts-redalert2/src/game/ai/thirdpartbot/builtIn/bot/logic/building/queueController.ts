@@ -229,7 +229,7 @@ export class QueueController {
                 const tank = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === "MTNK" || option.name === "HTNK");
                 if (tank) {
                     requests.set(tank.name, { priority: 100, specificLocation: null });
-                    if (requests.get("DRON")?.priority === 100) requests.delete("DRON");
+                    if (requests.get("DRON")?.priority === 112) requests.delete("DRON");
                     for (const option of productionApi.getAvailableObjects(QueueType.Vehicles)) {
                         if (option.harvester && requests.get(option.name)?.priority === 110) requests.delete(option.name);
                     }
