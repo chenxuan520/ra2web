@@ -161,6 +161,42 @@ function nativeBasicFundingFixture(footName = "E2", vehicleKind: "counter" | "mi
     };
 }
 
+function nativeFutureMinerFixture(miners = 4) {
+    const f = fixture(miners); f.resources.splice(2); f.resources[1].ore = 1200;
+    Object.assign(f.rules, { owner: [], buildTimeMultiplier: 1 });
+    const miner: any = { name: "HARV", type: ObjectType.Vehicle, harvester: true, cost: 1400, owner: [], buildTimeMultiplier: 1 };
+    const nativeQueues = new Map(QUEUES.map(type => [type, new ProductionQueue(type, 1, 1)]));
+    const actions = { ...f.actions,
+        queueForProduction: mock((type: QueueType, name: string) => {
+            const rules = name === miner.name ? miner : f.rules; nativeQueues.get(type)!.push(rules, 1, rules.cost);
+        }),
+        pauseProduction: mock((type: QueueType) => { nativeQueues.get(type)!.status = QueueStatus.OnHold; }),
+        resumeProduction: mock((type: QueueType) => { nativeQueues.get(type)!.status = QueueStatus.Active; }),
+    };
+    let vehiclesAvailable = false;
+    f.context.player.actions = actions;
+    f.context.player.production = {
+        getQueueData: (type: QueueType) => ({ type, status: nativeQueues.get(type)!.status, items: nativeQueues.get(type)!.getAll() }),
+        getAvailableObjects: (type: QueueType) => type === QueueType.Structures ? [f.rules] : type === QueueType.Vehicles && vehiclesAvailable ? [miner] : [],
+    };
+    f.player.production = { buildSpeedModifier: 1, getAllQueues: () => [...nativeQueues.values()],
+        getFactoryTypeForQueueType: (type: QueueType) => type, getFactoryCount: () => 1 };
+    const native: NotifyTick = new ProductionTrait({ general: { buildSpeed: 1, multipleFactory: 1, wallBuildSpeedCoefficient: 1 },
+        buildingRules: new Map([[f.rules.name, f.rules]]), infantryRules: new Map(), vehicleRules: new Map([[miner.name, miner]]), aircraftRules: new Map() }, { value: false });
+    const world = { getCombatants: () => [f.player], events: { dispatch() {} } };
+    const controller = new QueueController(), requests = new Map<string, any>([[f.rules.name, { priority: 50, specificLocation: new Vector2(24, 0) }]]);
+    f.at(6000); f.player.credits = 500; controller.onAiUpdate(f.context, null, requests, () => {});
+    vehiclesAvailable = true; actions.queueForProduction.mockClear();
+    return { ...f, actions, miner, controller, requests, nativeQueues,
+        run(tick: number, credits = f.player.credits) {
+            f.at(tick); f.player.credits = credits; controller.onAiUpdate(f.context, null, requests, () => {});
+        },
+        spend(tick: number, credits = f.player.credits) {
+            this.run(tick, credits); native[NotifyTick.onTick](world);
+        },
+    };
+}
+
 function subsidyFixture() {
     const f = fixture(2);
     f.resources.splice(1); // no reachable unserved field
@@ -294,6 +330,35 @@ describe("brutal refinery investment", () => {
         Object.assign(f.queues.get(QueueType.Structures)!, { status: QueueStatus.Ready, items: [{ rules: f.rules, quantity: 1 }] });
         f.at(104); controller.onAiUpdate(f.context, null, new Map(), () => {});
         expect(f.actions.placeBuilding).toHaveBeenCalledWith("NAREFN", 0, 4);
+    });
+    test.each([QueueStatus.Active, QueueStatus.OnHold])("an underfunded marked refinery in status%i finishes before a new future-only miner is ordered", status => {
+        const f = nativeFutureMinerFixture(); f.nativeQueues.get(QueueType.Structures)!.status = status;
+        f.run(7000, 10);
+        expect(f.nativeQueues.get(QueueType.Vehicles)!.status).toBe(QueueStatus.Idle);
+        expect(f.actions.queueForProduction).not.toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
+        expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+    });
+    test("a finite native credit deposit reaches the refinery instead of being split with an unrealized-field miner", () => {
+        const f = nativeFutureMinerFixture();
+        for (let i = 0; i < 600; i++) f.spend(7000 + i * 2);
+        expect(f.nativeQueues.get(QueueType.Structures)!.getFirst()!.creditsSpent).toBe(500);
+        expect(f.nativeQueues.get(QueueType.Vehicles)!.status).toBe(QueueStatus.Idle);
+    });
+    test.each([QueueStatus.Active, QueueStatus.OnHold])("future-field admission does not cancel or pause an already paid miner in status%i", status => {
+        const f = nativeFutureMinerFixture(); f.nativeQueues.get(QueueType.Vehicles)!.push(f.miner, 1, f.miner.cost);
+        f.spend(6998, 20);
+        const paid = f.nativeQueues.get(QueueType.Vehicles)!.getFirst()!.creditsSpent; expect(paid).toBeGreaterThan(0);
+        f.nativeQueues.get(QueueType.Vehicles)!.status = status; f.spend(7000, 500);
+        expect(f.nativeQueues.get(QueueType.Vehicles)!.getFirst()!.creditsSpent).toBeGreaterThan(paid);
+        expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+        expect(f.actions.pauseProduction).not.toHaveBeenCalledWith(QueueType.Vehicles);
+    });
+    test.each(["current-deficit", "funded", "normal", "ready"])("the original %s case still permits miner production beside a refinery", condition => {
+        const f = nativeFutureMinerFixture(condition === "current-deficit" ? 3 : 4);
+        if (condition === "normal") { f.context.difficulty = "normal"; f.requests.set("HARV", { priority: 110, specificLocation: null }); }
+        if (condition === "ready") f.nativeQueues.get(QueueType.Structures)!.status = QueueStatus.Ready;
+        f.run(7000, condition === "funded" ? f.rules.cost : 500);
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
     });
     test("a quiet paid expansion first completes the paid third miner, then resumes its real supplied-miner construction", () => {
         const f = fixture(2); f.at(2700); f.player.credits = 100; f.resources[0].ore = 1200;

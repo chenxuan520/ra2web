@@ -371,6 +371,14 @@ export class QueueController {
                 playerData.credits < priorityVehicle.unit.cost && decision.queue === QueueType.Infantry && decision.topItem &&
                 ["E1", "E2"].includes(decision.topItem.unit.name) && decision.topItem.priority < priorityVehicle.priority &&
                 productionApi.getQueueData(QueueType.Infantry).status === QueueStatus.Idle) return;
+            // Fund the marked refinery before buying miners only its unfinished field can support.
+            if (context.difficulty === "brutal" && futureRefinery && pendingRefinery?.refinery &&
+                [QueueStatus.Active, QueueStatus.OnHold].includes(refineryQueue.status) &&
+                decision.queue === QueueType.Vehicles && decision.topItem?.unit.harvester &&
+                currentMinerTarget > 0 && minerTarget > currentMinerTarget &&
+                game.getVisibleUnits(player.name, "self", rules => rules.harvester).length >= currentMinerTarget &&
+                playerData.credits < pendingRefinery.cost && !readPressure(context).pressured && !ownedBaseUnderAttack &&
+                productionApi.getQueueData(QueueType.Vehicles).status === QueueStatus.Idle) return;
             const buildingLocation = decision.topItem && requests.get(decision.topItem.unit.name)?.specificLocation;
             this.updateBuildQueue(
                 game,
