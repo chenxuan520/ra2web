@@ -130,11 +130,6 @@ export class FieldArmyMission extends Mission {
             : undefined;
 
         const isArmorFormed = armor.length >= BRUTAL_PARAMS.assault.formedArmor;
-        const interceptApproaches = context.difficulty === "brutal" ? approachThreats.filter(enemy =>
-            !enemies.some(base => (base.rules.constructionYard || base.rules.refinery || base.rules.weaponsFactory) &&
-                location(base).distanceTo(location(enemy)) <= 22)) : approachThreats;
-        const canInterceptApproach = interceptApproaches.length >= 2 ||
-            interceptApproaches.some(enemy => (enemy.type as any) === ObjectType.Vehicle);
         const isDirectBaseAssault = !!nearestHomeThreat && (
             (nearestHomeThreat.type as any) === ObjectType.Vehicle ||
             nearestHomeThreat.rules.crushable === false ||
@@ -148,8 +143,8 @@ export class FieldArmyMission extends Mission {
                 if (shouldDefendHomeThreat && nearestHomeThreat) {
                     this.attackArea = location(nearestHomeThreat);
                     this.targetId = undefined;
-                } else if (isArmorFormed && canInterceptApproach && center.distanceTo(rally) < 45) {
-                    const intercept = [...interceptApproaches].sort((a, b) => location(a).distanceTo(center) - location(b).distanceTo(center) || a.id - b.id)[0];
+                } else if (isArmorFormed && incomingStrikeForce && center.distanceTo(rally) < 45) {
+                    const intercept = [...approachThreats].sort((a, b) => location(a).distanceTo(center) - location(b).distanceTo(center) || a.id - b.id)[0];
                     this.attackArea = location(intercept);
                     this.targetId = undefined;
                 } else {
@@ -221,7 +216,7 @@ export class FieldArmyMission extends Mission {
                 }
             }
         }
-        const isIntercepting = !this.attacking && isArmorFormed && canInterceptApproach && center.distanceTo(rally) < 45;
+        const isIntercepting = !this.attacking && isArmorFormed && incomingStrikeForce && center.distanceTo(rally) < 45;
         this.squad.setDefensiveRadius(this.attacking ? undefined : (shouldDefendHomeThreat || isIntercepting ? 25 : 7));
         this.squad.setAttackArea(this.attackArea);
         this.squad.onAiUpdate(context, this, this.logger);
