@@ -156,7 +156,7 @@ describe("T2 opening scout budget", () => {
     test("first dog visits the nearest other public start and second dog uses the old queue", () => {
         const f = fixture(); f.ensure();
         f.add(1, "DOG", 23); f.add(2, "DOG", 24); f.scout().addUnit(1); f.scout().addUnit(2);
-        f.missionStep(f.scout(), 32); f.objects.get(1)!.tile = tile(80, 28); f.missionStep(f.scout(), 64);
+        f.missionStep(f.scout(), 32); f.missionStep(f.scout(), 64);
         expect(f.orders).toContainEqual({ ids: [1], type: OrderType.AttackMove, xOrTarget: 140, y: 20 });
         expect(f.orders).toContainEqual({ ids: [2], type: OrderType.AttackMove, xOrTarget: 20, y: 80 });
         expect(f.privateReads()).toBe(0);
@@ -209,33 +209,39 @@ class OtherDogMission extends Mission {
 }
 
 describe("T2 scout directions, recruitment and real handoff", () => {
-    test("the first scout takes a public flank waypoint then continues to the unchanged public enemy start", () => {
-        const f = fixture(); f.ensure(); const dog = f.add(1, "DOG", 23); f.scout().addUnit(1);
-        f.missionStep(f.scout(), 32);
-        expect(f.orders[0]).toEqual({ ids: [1], type: OrderType.Move, xOrTarget: 80, y: 28 });
-        expect(f.passabilityReads).toHaveLength(0); expect(f.privateReads()).toBe(0);
-        dog.tile = tile(80, 28); f.missionStep(f.scout(), 64);
+    test.each(["DOG", "ADOG"])("the first %s scout retreats from a visible enemy dog and preserves a three-hundred-tick quiet window", name => {
+        const f = fixture("brutal", name); f.ensure(); f.add(1, name, 23); f.scout().addUnit(1);
+        f.add(200, "DOG", 31, 20, "enemy"); f.visibleEnemies.add(200); f.missionStep(f.scout(), 900);
+        expect(f.orders[0]).toEqual({ ids: [1], type: OrderType.Move, xOrTarget: 20, y: 20 });
+        const count = f.orders.length; f.visibleEnemies.clear(); f.missionStep(f.scout(), 1199);
+        expect(f.orders).toHaveLength(count);
+        f.missionStep(f.scout(), 1200);
         expect(f.orders.at(-1)).toEqual({ ids: [1], type: OrderType.AttackMove, xOrTarget: 140, y: 20 });
         expect((f.scout() as OpeningScoutingMission).getTotalUnitsReceived()).toBe(1);
-    });
-    test("the public flank mirrors deterministically after swapping the known home start", () => {
-        const f = fixture(); f.player.startLocation = new Vector2(140, 20);
-        f.explored.delete("20_20"); f.explored.add("140_20");
-        f.objects.get(100)!.tile = tile(140, 20); f.objects.get(101)!.tile = tile(141, 20); f.ensure();
-        f.add(1, "DOG", 139); f.scout().addUnit(1); f.missionStep(f.scout(), 32);
-        expect(f.orders[0]).toEqual({ ids: [1], type: OrderType.Move, xOrTarget: 80, y: 12 });
-        expect(f.privateReads()).toBe(0); expect(f.passabilityReads).toHaveLength(0);
-    });
-    test("an already visible enemy start skips the public flank and preserves the original post handoff", () => {
-        const f = fixture(); f.explored.add("140_20"); f.ensure(); f.add(1, "DOG", 23); f.scout().addUnit(1);
-        f.missionStep(f.scout(), 32);
-        expect(f.orders[0]).toEqual({ ids: [1], type: OrderType.Move, xOrTarget: 80, y: 20 });
-    });
-    test("a blocked known flank with no legal fallback retains the original public enemy-start order", () => {
-        const f = fixture(); f.explored.add("80_28"); f.blocked.add("80_28"); f.ensure();
-        f.add(1, "DOG", 23); f.scout().addUnit(1); f.missionStep(f.scout(), 32);
-        expect(f.orders[0]).toEqual({ ids: [1], type: OrderType.AttackMove, xOrTarget: 140, y: 20 });
         expect(f.privateReads()).toBe(0);
+    });
+    test.each(["outside", "hidden", "infantry"])("a first-scout %s observation retains the original public target", condition => {
+        const f = fixture(); f.ensure(); f.add(1, "DOG", 23); f.scout().addUnit(1);
+        const enemy = f.add(200, condition === "infantry" ? "E2" : "DOG", condition === "outside" ? 31.1 : 30, 20, "enemy");
+        if (condition !== "hidden") f.visibleEnemies.add(200);
+        if (condition === "hidden") Object.defineProperty(enemy, "tile", { get() { throw Error("hidden dog coordinates cannot trigger retreat"); } });
+        f.missionStep(f.scout(), 900);
+        expect(f.orders[0]).toEqual({ ids: [1], type: OrderType.AttackMove, xOrTarget: 140, y: 20 });
+    });
+    test("a visible enemy dog beside only the second scout does not rewrite either original scout role", () => {
+        const f = fixture(); f.ensure(); f.add(1, "DOG", 23); f.add(2, "DOG", 99); f.scout().addUnit(1); f.scout().addUnit(2);
+        f.add(200, "DOG", 100, 20, "enemy"); f.visibleEnemies.add(200); f.missionStep(f.scout(), 900);
+        expect(f.orders).toContainEqual({ ids: [1], type: OrderType.AttackMove, xOrTarget: 140, y: 20 });
+        expect(f.orders).toContainEqual({ ids: [2], type: OrderType.AttackMove, xOrTarget: 20, y: 80 });
+    });
+    test("the first scout completes an active firing sequence before executing its stored retreat", () => {
+        const f = fixture(); f.ensure(); const dog = f.add(1, "DOG", 23); f.scout().addUnit(1);
+        dog.isFiring = true; dog.attackState = AttackState.Firing as unknown as UnitData["attackState"];
+        f.add(200, "DOG", 30, 20, "enemy"); f.visibleEnemies.add(200); f.missionStep(f.scout(), 900);
+        expect(f.orders).toHaveLength(0);
+        dog.isFiring = false; dog.attackState = AttackState.Idle as unknown as UnitData["attackState"];
+        f.visibleEnemies.clear(); f.missionStep(f.scout(), 902);
+        expect(f.orders[0]).toEqual({ ids: [1], type: OrderType.Move, xOrTarget: 20, y: 20 });
     });
     test("private enemy start assignment cannot change either public direction or the first-dog order", () => {
         const a = fixture("brutal", "DOG", new Vector2(140, 20)), b = fixture("brutal", "DOG", new Vector2(20, 140));
@@ -244,7 +250,7 @@ describe("T2 scout directions, recruitment and real handoff", () => {
             f.ensure(); f.add(1, "DOG", 23); f.scout().addUnit(1); f.missionStep(f.scout(), 32);
         }
         expect(a.orders).toEqual(b.orders);
-        expect(a.orders[0]).toEqual({ ids: [1], type: OrderType.Move, xOrTarget: 12, y: 60 });
+        expect(a.orders[0]).toEqual({ ids: [1], type: OrderType.AttackMove, xOrTarget: 20, y: 100 });
         expect(a.watch(1).getPosition()).toEqual({ rx: 20, ry: 60 });
         expect(a.watch(1).getPosition()).toEqual(b.watch(1).getPosition());
         expect(a.privateReads() + b.privateReads()).toBe(0);

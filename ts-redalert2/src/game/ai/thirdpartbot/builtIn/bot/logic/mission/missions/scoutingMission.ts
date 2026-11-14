@@ -20,6 +20,7 @@ import { getKnownEnemyDirections } from "../../common/knownEnemyDirections";
 import { DogOrders, WatchPostMissions, getPublicEnemyStart, legalDogPoint, livingMissionDogs, preferredDog, selectWatchPost } from "./watchPostMission";
 import { findVisiblePatches, patchDistance } from "../../common/orePatches";
 import { isPressured } from "../../common/pressure";
+import { isFiringBurst } from "./squads/tacticalTargeting";
 
 const SCOUT_MOVE_COOLDOWN_TICKS = 30;
 
@@ -181,7 +182,7 @@ export class OpeningScoutingMission extends Mission {
     private initialScoutIds: number[] = [];
     private priority = 85;
     private firstTargetComplete = false;
-    private enemyApproachReached = false;
+    private firstScoutRetreatUntil = -Infinity;
     private queueTarget: PrioritisedScoutTarget | null = null;
     private expandedHomeScouting = false;
     private nearHomeTargets?: PrioritisedScoutTarget[];
@@ -245,24 +246,22 @@ export class OpeningScoutingMission extends Mission {
         const enemyStart = getPublicEnemyStart(game, game.getPlayerData(player.name));
         const first = scouts.find(scout => scout.id === this.initialScoutIds[0]);
         const second = scouts.find(scout => scout.id === this.initialScoutIds[1]);
+        if (first && game.getVisibleUnits(player.name, "enemy", rules => rules.name === "DOG" || rules.name === "ADOG").some(id => {
+            const enemy = game.getUnitData(id);
+            return enemy && Math.hypot(enemy.tile.rx - first.tile.rx, enemy.tile.ry - first.tile.ry) <= 8;
+        })) this.firstScoutRetreatUntil = tick + 300;
+        const firstRetreating = !!first && tick < this.firstScoutRetreatUntil;
+        if (first && firstRetreating && !isFiringBurst(first)) {
+            const home = game.getPlayerData(player.name).startLocation;
+            this.orders.move(context, first, { rx: home.x, ry: home.y });
+        }
         if (!enemyStart || this.initialScoutIds.length > 0 && !first) this.firstTargetComplete = true;
-        if (first && enemyStart && !this.firstTargetComplete) {
+        if (first && !firstRetreating && enemyStart && !this.firstTargetComplete) {
             const tile = game.mapApi.getTile(enemyStart.x, enemyStart.y);
             if (tile && game.mapApi.isVisibleTile(tile, player.name)) this.firstTargetComplete = true;
-            else {
-                if (!this.enemyApproachReached) {
-                    const home = game.getPlayerData(player.name).startLocation;
-                    const forward = enemyStart.clone().sub(home);
-                    const approach = home.clone().add(enemyStart).multiplyScalar(0.5)
-                        .add(new Vector2(-forward.y, forward.x).multiplyScalar(8 / forward.length()));
-                    const waypoint = legalDogPoint(context, { rx: approach.x, ry: approach.y });
-                    if (!waypoint || Math.hypot(first.tile.rx - waypoint.rx, first.tile.ry - waypoint.ry) <= 1) this.enemyApproachReached = true;
-                    else this.orders.move(context, first, waypoint);
-                }
-                if (this.enemyApproachReached) this.orders.move(context, first, { rx: enemyStart.x, ry: enemyStart.y }, OrderType.AttackMove);
-            }
+            else this.orders.move(context, first, { rx: enemyStart.x, ry: enemyStart.y }, OrderType.AttackMove);
         }
-        if (first && this.firstTargetComplete) {
+        if (first && !firstRetreating && this.firstTargetComplete) {
             // The completed first scout waits safely at the public midpoint,
             // still locked here until the actual two-slot ownership handoff.
             const post = selectWatchPost(context, 1);
