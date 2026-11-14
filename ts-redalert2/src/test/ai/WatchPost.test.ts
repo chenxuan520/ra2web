@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { ActionsApi, GameApi, ObjectType, OrderType, PlayerData, ProductionApi, SpeedType, TechnoRules, UnitData, Vector2 }
+import { ActionsApi, AttackState, GameApi, ObjectType, OrderType, PlayerData, ProductionApi, SpeedType, TechnoRules, UnitData, Vector2 }
     from "../../game/ai/thirdpartbot/builtIn/game-api";
 import { BuildStatus } from "../../game/gameobject/Building";
 import { MatchAwareness } from "../../game/ai/thirdpartbot/builtIn/bot/logic/awareness";
@@ -755,6 +755,30 @@ describe("T2 HomeDog conditions, orders and replacement limit", () => {
         expect(f.orders.at(-1)).toEqual({ ids: [3], type: OrderType.Move, xOrTarget: 25, y: 20 });
     });
 
+    test.each(["DOG", "ADOG"])("%s does not replace a live firing sequence with a home move when the visible target disappears", name => {
+        for (const phase of ["public-firing", "fire-up", "firing", "initial-aim"]) {
+            const f = homeFixture(name), dog = f.add(3, name, 30); f.home().addUnit(3); f.add(102, "GAREFN", 30);
+            f.add(200, "E2", 28, 20, "enemy"); f.visibleEnemies.add(200); f.missionStep(f.home(), 100);
+            expect(f.orders.at(-1)?.type).toBe(OrderType.Attack);
+            dog.isFiring = phase === "public-firing";
+            dog.attackState = (phase === "fire-up" ? AttackState.FireUp : phase === "firing" ? AttackState.Firing :
+                phase === "initial-aim" ? AttackState.PrepareToFire : AttackState.Idle) as unknown as UnitData["attackState"];
+            dog.primaryWeapon = { rules: { burst: 1 }, cooldownTicks: 0 } as unknown as UnitData["primaryWeapon"];
+            f.visibleEnemies.clear(); f.missionStep(f.home(), 102);
+            expect(f.orders).toHaveLength(1);
+            dog.isFiring = false; dog.attackState = AttackState.Idle as unknown as UnitData["attackState"];
+            f.missionStep(f.home(), 104);
+            expect(f.orders.at(-1)).toEqual({ ids: [3], type: OrderType.Move, xOrTarget: 25, y: 20 });
+        }
+    });
+    test.each(["DOG", "ADOG"])("%s can return home during a known post-shot single-bite cooldown", name => {
+        const f = homeFixture(name), dog = f.add(3, name, 30); f.home().addUnit(3); f.add(102, "GAREFN", 30);
+        f.add(200, "E2", 28, 20, "enemy"); f.visibleEnemies.add(200); f.missionStep(f.home(), 100);
+        dog.isFiring = false; dog.attackState = AttackState.PrepareToFire as unknown as UnitData["attackState"];
+        dog.primaryWeapon = { rules: { burst: 1 }, cooldownTicks: 7 } as unknown as UnitData["primaryWeapon"];
+        f.visibleEnemies.clear(); f.missionStep(f.home(), 102);
+        expect(f.orders.at(-1)).toEqual({ ids: [3], type: OrderType.Move, xOrTarget: 25, y: 20 });
+    });
     test("home targets use visible infantry only within twelve, then nearest dog distance and ID ties", () => {
         const f = homeFixture(); f.add(3, "DOG", 25); f.home().addUnit(3);
         f.add(200, "ENGINEER", 33, 20, "enemy"); f.add(201, "E2", 22, 20, "enemy");

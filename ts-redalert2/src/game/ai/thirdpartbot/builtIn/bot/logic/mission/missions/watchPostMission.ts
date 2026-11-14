@@ -7,6 +7,7 @@ import { DebugLogger } from "../../common/utils";
 import { BatchableAction } from "../actionBatcher";
 import { Mission, noop, releaseUnits, requestSpecificUnits, requestUnits } from "../mission";
 import { MissionController } from "../missionController";
+import { isFiringBurst } from "./squads/tacticalTargeting";
 
 const dogRule = (rules: { name: string }) => rules.name === "DOG" || rules.name === "ADOG";
 const distance = (a: PatchPoint, b: PatchPoint) => Math.hypot(a.rx - b.rx, a.ry - b.ry);
@@ -214,6 +215,7 @@ export class HomeDogMission extends Mission {
         if (excess.length) return releaseUnits(excess);
         const dog = dogs[0];
         if (dog) {
+            if (isFiringBurst(dog)) return noop();
             const target = game.getVisibleUnits(player.name, "enemy", rules => rules.type === ObjectType.Infantry)
                 .map(id => game.getGameObjectData(id)).filter(unit => unit && distance(unit.tile, home) <= 12)
                 .sort((a, b) => Number(["ENGINEER", "SENGINEER"].includes(b.name)) - Number(["ENGINEER", "SENGINEER"].includes(a.name)) ||
