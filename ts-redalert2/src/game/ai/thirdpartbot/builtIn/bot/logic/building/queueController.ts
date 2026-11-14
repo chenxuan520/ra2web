@@ -221,7 +221,10 @@ export class QueueController {
                 }
             }
             const visibleCoreArmor = game.getVisibleUnits(player.name, "enemy", rules => rules.type === ObjectType.Vehicle &&
-                rules.isSelectableCombatant && !rules.harvester && ["MTNK", "HTNK", "MGTK", "APOC", "SREF"].includes(rules.name)).length;
+                rules.isSelectableCombatant && !rules.harvester && ["MTNK", "HTNK", "MGTK", "APOC", "SREF"].includes(rules.name)).filter(id => {
+                const enemy = game.getUnitData(id);
+                return enemy && ownedAnchors.some(base => Math.hypot(enemy.tile.rx - base.rx, enemy.tile.ry - base.ry) <= 48);
+            }).length;
             if (situation.harvesters >= 2 && (situation.enemy.infantry >= 8 &&
                 (situation.own.MTNK ?? 0) + (situation.own.HTNK ?? 0) < Math.min(6, Math.max(2, Math.ceil(situation.enemy.infantry / 6))) ||
                 situation.tick < 9000 && visibleCoreArmor > 0 && countCoreTanks(situation) < Math.min(6, Math.max(BRUTAL_PARAMS.assault.formedArmor, visibleCoreArmor))) ||

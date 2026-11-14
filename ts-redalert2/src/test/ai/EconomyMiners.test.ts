@@ -294,9 +294,26 @@ describe("brutal miner capacity and production table", () => {
         f.run();
         expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
     });
+    test.each([1, 2, 3])("%i income miners do not lose a paid queue to remote visible armor outside the interception area", miners => {
+        const f = fixture(miners, 0); f.at(7470); f.enemy(100, 80);
+        const miner = f.options.get(QueueType.Vehicles)![0];
+        Object.assign(f.queues.get(QueueType.Vehicles)!, { status: QueueStatus.Active, items: [{ rules: miner, quantity: 1 }] });
+        f.run(); expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+        Object.assign(f.queues.get(QueueType.Vehicles)!, { status: QueueStatus.Idle, items: [] }); f.at(7472); f.run();
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, miner.name, ObjectType.Vehicle, 1);
+    });
+    test.each([48, 48.1])("opening armor urgency uses the existing interception distance%i from any actual owned anchor", distance => {
+        const f = fixture(2, 0); f.at(7470); f.enemy(100, 25 + distance); f.run();
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, distance <= 48 ? "HTNK" : "HARV", ObjectType.Vehicle, 1);
+    });
+    test("one-income nearby armor still requires an actual refinery before the supplement can displace income", () => {
+        const f = fixture(1, 0); f.at(5400);
+        f.units.splice(0, f.units.length, ...f.units.filter(unit => !unit.rules.refinery)); f.enemy(100, 40); f.run();
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
+    });
     test.each(["Russians", "Americans"])("%s uses the existing counter tier for visible core armor before another miner or optional first drone", country => {
         for (const miners of [2, 3]) for (const reverse of [false, true]) {
-            const f = fixture(miners, 0, country); f.at(5400); f.enemy(100, 80);
+            const f = fixture(miners, 0, country); f.at(5400); f.enemy(100, 65);
             if (country === "Russians") f.options.get(QueueType.Vehicles)!.push({ name: "DRON", type: ObjectType.Vehicle, cost: 500 });
             if (reverse) f.options.get(QueueType.Vehicles)!.reverse();
             expect(readPressure(f.context).baseUnderSiege).toBe(false);
@@ -307,7 +324,7 @@ describe("brutal miner capacity and production table", () => {
         }
     });
     test.each(["Russians", "Americans"])("%s can fund its first armor against already visible tanks before buying another miner", country => {
-        const f = fixture(1, 0, country); f.at(4500); f.enemy(100, 80);
+        const f = fixture(1, 0, country); f.at(4500); f.enemy(100, 65);
         const miner = f.options.get(QueueType.Vehicles)![0];
         Object.assign(f.queues.get(QueueType.Vehicles)!, { status: QueueStatus.Active, items: [{ rules: miner, quantity: 1 }] });
         f.run(); expect(f.actions.unqueueFromProduction).toHaveBeenCalledWith(QueueType.Vehicles, miner.name, ObjectType.Vehicle, 1);
@@ -320,7 +337,7 @@ describe("brutal miner capacity and production table", () => {
         const f = fixture(1, 2, country);
         f.units.splice(f.units.findIndex(unit => unit.name === "NAREFN" && unit.tile.rx === 25), 1);
         f.at(5390); const first = f.enemy(100, 40); readPressure(f.context);
-        first.tile.rx = 80; f.enemy(101, 82); f.enemy(102, 84); f.at(7470);
+        first.tile.rx = 44; f.enemy(101, 46); f.enemy(102, 48); f.at(7470);
         const miner = f.options.get(QueueType.Vehicles)![0];
         Object.assign(f.queues.get(QueueType.Vehicles)!, { status: QueueStatus.Active, items: [{ rules: miner, quantity: 1 }] });
         f.run(); expect(f.actions.unqueueFromProduction).toHaveBeenCalledWith(QueueType.Vehicles, miner.name, ObjectType.Vehicle, 1);
@@ -331,23 +348,23 @@ describe("brutal miner capacity and production table", () => {
     });
     test("the one-income visible-armor response does not exceed the existing six-core cap", () => {
         const f = fixture(1, 6); f.at(7470);
-        for (let i = 0; i < 7; i++) f.enemy(100 + i, 80 + i);
+        for (let i = 0; i < 7; i++) f.enemy(100 + i, 65 + i);
         f.run(); expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
     });
     test.each(["Russians", "Americans"])("%s forms the existing four-core reserve then resumes quiet mining against fewer visible tanks", country => {
-        const f = fixture(3, 2, country); f.at(7470); f.enemy(100, 80); f.run();
+        const f = fixture(3, 2, country); f.at(7470); f.enemy(100, 65); f.run();
         expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, country === "Russians" ? "HTNK" : "MTNK", ObjectType.Vehicle, 1);
         f.own(country === "Russians" ? "HTNK" : "MTNK"); f.own(country === "Russians" ? "HTNK" : "MTNK"); f.at(7472); f.run();
         expect(f.actions.queueForProduction).toHaveBeenLastCalledWith(QueueType.Vehicles, country === "Russians" ? "HARV" : "CMIN", ObjectType.Vehicle, 1);
     });
     test("the formed reserve still matches larger visible armor up to the original six-core cap", () => {
         const f = fixture(3, 4); f.at(7470);
-        for (let i = 0; i < 5; i++) f.enemy(100 + i, 80 + i);
+        for (let i = 0; i < 5; i++) f.enemy(100 + i, 65 + i);
         f.run(); expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTNK", ObjectType.Vehicle, 1);
         f.own("HTNK"); f.at(7472); f.run();
         expect(f.actions.queueForProduction).toHaveBeenLastCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
         const capped = fixture(3, 6); capped.at(7470);
-        for (let i = 0; i < 7; i++) capped.enemy(100 + i, 80 + i);
+        for (let i = 0; i < 7; i++) capped.enemy(100 + i, 65 + i);
         capped.run(); expect(capped.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
     });
     test.each(["no-refinery", "late", "unseen"])("the first-armor supplement does not expand the %s case", condition => {
@@ -358,7 +375,7 @@ describe("brutal miner capacity and production table", () => {
     });
     test.each(["no-core-armor", "harvester", "not-combatant", "sufficient-core", "zero-miner", "normal"])("visible-armor precedence preserves the original %s income policy", condition => {
         const f = fixture(condition === "zero-miner" ? 0 : 2, condition === "sufficient-core" ? 4 : 0); f.at(5400);
-        const enemy = f.enemy(100, 80);
+        const enemy = f.enemy(100, 65);
         if (condition === "no-core-armor") enemy.rules.name = "HTK";
         if (condition === "harvester") enemy.rules.harvester = true;
         if (condition === "not-combatant") enemy.rules.isSelectableCombatant = false;
@@ -367,13 +384,13 @@ describe("brutal miner capacity and production table", () => {
     });
     test.each(["Russians", "Americans"])("%s does not extend the opening armor counter into established late-game income", country => {
         const f = fixture(4, 4, country); f.at(9990);
-        for (let i = 0; i < 5; i++) f.enemy(100 + i, 80);
+        for (let i = 0; i < 5; i++) f.enemy(100 + i, 65);
         for (let i = 0; i < 9; i++) f.enemy(200 + i, 80, ObjectType.Infantry);
         f.run();
         expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, country === "Russians" ? "HARV" : "CMIN", ObjectType.Vehicle, 1);
     });
     test.each([8998, 9000])("only the new armor clause observes the existing opening boundary at tick%i", tick => {
-        const f = fixture(2, 0); f.at(tick); f.enemy(100, 80); f.run();
+        const f = fixture(2, 0); f.at(tick); f.enemy(100, 65); f.run();
         expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, tick < 9000 ? "HTNK" : "HARV", ObjectType.Vehicle, 1);
     });
     test("the historical infantry counter still responds after the opening armor window closes", () => {
@@ -382,7 +399,7 @@ describe("brutal miner capacity and production table", () => {
         f.run(); expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTNK", ObjectType.Vehicle, 1);
     });
     test("visible-armor precedence retains the existing higher-priority air response", () => {
-        const f = fixture(2, 0); f.at(5400); f.enemy(100, 80); f.enemy(101, 80, ObjectType.Aircraft);
+        const f = fixture(2, 0); f.at(5400); f.enemy(100, 65); f.enemy(101, 80, ObjectType.Aircraft);
         f.run(); expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTK", ObjectType.Vehicle, 1);
     });
     test("actual owned-refinery attack blocks the new miner78 override even outside the birth-point siege radius", () => {

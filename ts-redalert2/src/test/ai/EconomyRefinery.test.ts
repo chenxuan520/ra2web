@@ -488,7 +488,7 @@ describe("brutal refinery investment", () => {
     });
     test("visible core armor deficit reaches the existing native counter-funding path without a birth-point siege", () => {
         const f = nativeFundingFixture(85, true);
-        f.enemies.push({ id: 999, tile: { rx: 80, ry: 0 }, rules: { name: "MTNK", type: ObjectType.Vehicle, isSelectableCombatant: true } });
+        f.enemies.push({ id: 999, tile: { rx: 48, ry: 0 }, rules: { name: "MTNK", type: ObjectType.Vehicle, isSelectableCombatant: true } });
         for (let i = 0; i < 54; i++) f.spend(5400 + i * 2);
         expect(f.nativeQueues.get(QueueType.Vehicles)!.getFirst()!.creditsSpent).toBe(54);
         expect(f.nativeQueues.get(QueueType.Structures)!.getFirst()!.creditsSpent).toBe(0);

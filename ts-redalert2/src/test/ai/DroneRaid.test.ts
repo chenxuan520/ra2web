@@ -140,7 +140,7 @@ describe("paid drone production and public own lifecycle", () => {
         expect(aa.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTK", ObjectType.Vehicle, 1);
     });
     test.each([1, 2])("%i income miners still fund the existing visible-armor counter before the optional first drone", miners => {
-        const f = fixture(miners, 0); f.at(4500); f.add("MTNK", "enemy", 80); f.produce();
+        const f = fixture(miners, 0); f.at(4500); f.add("MTNK", "enemy", 48); f.produce();
         expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTNK", ObjectType.Vehicle, 1);
     });
     test.each([QueueStatus.Active, QueueStatus.OnHold])("restored drone priority preserves an existing paid miner in status%i", status => {
