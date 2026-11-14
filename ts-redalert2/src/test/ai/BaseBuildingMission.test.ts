@@ -1,7 +1,8 @@
 import { describe, expect, test } from "bun:test";
 import { BaseBuildingMission } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/baseBuildingMission";
-import { ObjectType, QueueType, Vector2 } from "../../game/ai/thirdpartbot/builtIn/game-api";
+import { ObjectType, QueueStatus, QueueType, Vector2 } from "../../game/ai/thirdpartbot/builtIn/game-api";
 import type { MissionContext } from "../../game/ai/thirdpartbot/builtIn/bot/logic/common/context";
+import { BRUTAL_PARAMS } from "../../game/ai/thirdpartbot/builtIn/bot/strategy/brutalParams";
 
 function fixture(difficulty?: "normal" | "brutal") {
     const rules = (name: string) => ({ name, type: ObjectType.Building, adjacent: 8, power: 200 });
@@ -107,4 +108,62 @@ describe("brutal building placement fallback", () => {
         expect(f.run()).toMatchObject({ type: "buildStructureAtLocation", rulesName: "GAAIRC" });
         expect(f.placementChecks).toEqual(["GAAIRC:6:0"]);
     });
+});
+
+function reservePowerFixture(country: "Russians" | "Americans") {
+    let tick = 3122;
+    const soviet = country === "Russians", powerName = soviet ? "NAPOWR" : "GAPOWR", tankName = soviet ? "HTNK" : "MTNK";
+    const player: any = { name: "bot", country: { name: country }, credits: 2439, startLocation: new Vector2(),
+        power: { total: 150, drain: 85, isLowPower: false } };
+    const power = { name: powerName, type: ObjectType.Building, power: 150, cost: 600 };
+    const owned: any[] = [];
+    const add = (name: string) => owned.push({ id: owned.length + 1, name, owner: "bot", tile: { rx: 0, ry: 0 }, rules: {
+        name, type: ["HARV", "CMIN", "HTNK", "MTNK"].includes(name) ? ObjectType.Vehicle : ObjectType.Building,
+        harvester: name === "HARV" || name === "CMIN", refinery: name.endsWith("REFN"), weaponsFactory: name.endsWith("WEAP"),
+    } });
+    for (const name of [powerName, soviet ? "NAREFN" : "GAREFN", soviet ? "NAWEAP" : "GAWEAP", soviet ? "HARV" : "CMIN"]) add(name);
+    const enemies = [0, 1, 2].map(i => ({ id: 100 + i, tile: { rx: 40, ry: i }, rules: {
+        name: "E2", type: ObjectType.Infantry, isSelectableCombatant: true } }));
+    const queue: any = { status: QueueStatus.Idle, items: [] };
+    const game: any = { getCurrentTick: () => tick, getPlayerData: () => player,
+        getVisibleUnits: (_: string, relation: string, predicate = (_: any) => true) =>
+            (relation === "self" ? owned : enemies).filter(u => predicate(u.rules)).map(u => u.id),
+        getUnitData: (id: number) => [...owned, ...enemies].find(u => u.id === id),
+    };
+    const context: any = { difficulty: "brutal", game, player: { name: "bot", production: {
+        getAvailableObjects: () => [power], getQueueData: () => queue } }, matchAwareness: { getThreatCache: () => null } };
+    const mission = new BaseBuildingMission(QueueType.Structures, () => {});
+    (mission as any).getBestLocationForStructure = () => ({ rx: 4, ry: 4 });
+    return { player, context, owned, enemies, power, queue, add, tankName,
+        at(value: number) { tick = value; }, run: () => mission._onAiUpdate(context) };
+}
+
+describe("reserve power while a single income needs its protective core", () => {
+    test.each([["Russians", 0], ["Russians", 1], ["Americans", 0]] as const)("%s with%i cores defers a new reserve plant through the actual building selector", (country, cores) => {
+        const f = reservePowerFixture(country); for (let i = 0; i < cores; i++) f.add(f.tankName);
+        expect(f.run()).toEqual({ type: "noop" });
+    });
+    test.each(["Russians", "Americans"] as const)("%s resumes its original reserve request after actual protective core delivery", country => {
+        const f = reservePowerFixture(country);
+        expect(f.run()).toEqual({ type: "noop" });
+        for (let i = 0; i < (country === "Russians" ? 2 : 1); i++) f.add(f.tankName);
+        f.at(3124);
+        expect(f.run()).toMatchObject({ type: "buildStructureAtLocation", rulesName: f.power.name, priority: 20 });
+    });
+    test.each(["low-power", "first-plant", "active-commitment", "quiet", "two-incomes", "normal", "ecoOnly"])(
+        "the original %s power behavior is retained", condition => {
+            const f = reservePowerFixture("Russians");
+            if (condition === "low-power") Object.assign(f.player.power, { total: 84, isLowPower: true });
+            if (condition === "first-plant") { f.owned.splice(0, 1); Object.assign(f.player.power, { total: 0, isLowPower: true }); }
+            if (condition === "active-commitment") Object.assign(f.queue, { status: QueueStatus.Active, items: [{ rules: f.power, quantity: 1 }] });
+            if (condition === "quiet") f.enemies.length = 0;
+            if (condition === "two-incomes") f.add("HARV");
+            if (condition === "normal") f.context.difficulty = "normal";
+            const previous = BRUTAL_PARAMS.economy.ecoOnly;
+            if (condition === "ecoOnly") BRUTAL_PARAMS.economy.ecoOnly = 1;
+            try {
+                expect(f.run()).toMatchObject({ type: "buildStructureAtLocation", rulesName: f.power.name,
+                    priority: condition === "low-power" || condition === "first-plant" ? 100 : 20 });
+            } finally { BRUTAL_PARAMS.economy.ecoOnly = previous; }
+        });
 });
