@@ -1,5 +1,9 @@
 import { describe, expect, mock, test } from "bun:test";
 import { BuildStatus } from "../../game/gameobject/Building";
+import { ProductionQueue } from "../../game/player/production/ProductionQueue";
+import { ProductionTrait } from "../../game/trait/ProductionTrait";
+import { NotifyTick } from "../../game/trait/interface/NotifyTick";
+import { observePressureEvent, readPressure } from "../../game/ai/thirdpartbot/builtIn/bot/logic/common/pressure";
 import { ApiEventType, MovementZone, ObjectType, OrderType, QueueStatus, QueueType, Vector2, ZoneType } from "../../game/ai/thirdpartbot/builtIn/game-api";
 import { getDronePriority, getDroneProductionState, observeDroneProductionEvent } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/droneProduction";
 import { QueueController, QUEUES } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/queueController";
@@ -91,6 +95,61 @@ describe("paid drone production and public own lifecycle", () => {
         if (reason === "deadline") f.at(9000);
         if (reason === "no-factory") for (const [id, object] of f.objects) if (object.name === "NAWEAP") f.objects.delete(id);
         expect(getDronePriority(f.context)).toBe(0);
+    });
+    test("the first drone retains its opening request during distant infantry warning without relaxing economic pressure", () => {
+        const f = fixture(1, 0); f.at(3122);
+        for (let i = 0; i < 3; i++) f.add("E2", "enemy", 40, i, ObjectType.Infantry);
+        expect(readPressure(f.context).pressured).toBe(true);
+        expect(readPressure(f.context).baseUnderSiege).toBe(false);
+        expect(getDronePriority(f.context)).toBe(112);
+        f.produce(); expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "DRON", ObjectType.Vehicle, 1);
+        expect(readPressure(f.context).pressured).toBe(true);
+    });
+    test.each([1, 2, 3])("produced count%i keeps later drones suppressed during the same warning", built => {
+        const f = fixture(); for (let i = 0; i < built; i++) f.destroy(f.spawnDrone().id);
+        f.add("HARV", "enemy", 80);
+        for (let i = 0; i < 3; i++) f.add("E2", "enemy", 40, i, ObjectType.Infantry);
+        f.at(3122); expect(getDronePriority(f.context)).toBe(0);
+    });
+    test.each([899, 900])("the first drone respects the actual economic-loss recovery window at%i", elapsed => {
+        const f = fixture(1, 0), yard = [...f.objects.values()].find(object => object.name === "NACNST")!;
+        f.at(3000); observePressureEvent(f.game, f.player.name, { type: ApiEventType.ObjectSpawn, target: yard.id });
+        observePressureEvent(f.game, f.player.name, { type: ApiEventType.ObjectDestroy, target: yard.id });
+        f.objects.delete(yard.id); f.at(3000 + elapsed);
+        expect(getDronePriority(f.context)).toBe(elapsed < 900 ? 0 : 112);
+    });
+    test("an actual attacked remote refinery still prevents the first drone without redefining public-home pressure", () => {
+        const f = fixture(1, 0); f.at(3122);
+        [...f.objects.values()].find(object => object.name === "NAREFN")!.tile.rx = 95;
+        f.add("E2", "enemy", 100, 0, ObjectType.Infantry);
+        expect(readPressure(f.context).pressured).toBe(false);
+        f.produce(); expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
+    });
+    test("a genuinely paid first drone completes its native queue instead of being replaced by ordinary armor85 on a warning", () => {
+        const f = fixture(1, 0), queue = new ProductionQueue(QueueType.Vehicles, 1, 1);
+        for (const option of f.vehicles) Object.assign(option, { owner: [], buildTimeMultiplier: 1 });
+        const drone = f.vehicles.find(option => option.name === "DRON")!, controller = new QueueController();
+        const actions = { ...f.actions,
+            queueForProduction: mock((type: QueueType, name: string) => { const rules = f.vehicles.find(option => option.name === name)!; queue.push(rules, 1, rules.cost); }),
+            unqueueFromProduction: mock((type: QueueType, name: string) => { const item = queue.getFirst()!; f.player.credits += item.creditsSpent; queue.pop(item.rules, 1); }),
+        };
+        f.context.player.actions = actions;
+        f.context.player.production.getQueueData = (type: QueueType) => type === QueueType.Vehicles
+            ? { type, status: queue.status, items: queue.getAll().map(item => ({ rules: item.rules, quantity: item.quantity })) } : f.queues.get(type)!;
+        f.player.production = { buildSpeedModifier: 1, getAllQueues: () => [queue], getFactoryTypeForQueueType: () => QueueType.Vehicles, getFactoryCount: () => 1 };
+        const native: NotifyTick = new ProductionTrait({ general: { buildSpeed: 1, multipleFactory: 1, wallBuildSpeedCoefficient: 1 },
+            buildingRules: new Map(), infantryRules: new Map(), vehicleRules: new Map(f.vehicles.map(option => [option.name, option])), aircraftRules: new Map() }, { value: false });
+        const world = { getCombatants: () => [f.player], events: { dispatch() {} } };
+        f.player.credits = drone.cost; f.at(3122); controller.onAiUpdate(f.context, null, new Map(), () => {});
+        for (let i = 0; i < 200; i++) native[NotifyTick.onTick](world);
+        const paidItem = queue.getFirst()!, paid = paidItem.creditsSpent;
+        expect(paid).toBeGreaterThan(0); expect(paid).toBeLessThan(drone.cost);
+        for (let i = 0; i < 3; i++) f.add("E2", "enemy", 40, i, ObjectType.Infantry);
+        f.at(3244); controller.onAiUpdate(f.context, null, new Map(), () => {});
+        expect(actions.unqueueFromProduction).not.toHaveBeenCalled(); expect(queue.getFirst()).toBe(paidItem);
+        for (let i = 0; i < 400 && queue.status !== QueueStatus.Ready; i++) native[NotifyTick.onTick](world);
+        expect(queue.status).toBe(QueueStatus.Ready); expect(queue.getFirst()!.creditsSpent).toBe(drone.cost);
+        expect(f.player.credits).toBe(0);
     });
     test("two alive drones include parasite limbo, not only current world counts", () => {
         const f = fixture(), a = f.spawnDrone(), b = f.spawnDrone();

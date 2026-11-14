@@ -35,7 +35,7 @@ export function observeDroneProductionEvent(game: GameApi, playerName: string, e
     }
 }
 
-export function getDronePriority(context: SupabotContext): number {
+export function getDronePriority(context: SupabotContext, ownedBaseUnderAttack = false): number {
     if (context.difficulty !== "brutal" || isEcoOnly(context)) return 0;
     const { game, player } = context, data = game.getPlayerData(player.name);
     if (!isSovietCountry(data.country?.name)) return 0;
@@ -45,9 +45,14 @@ export function getDronePriority(context: SupabotContext): number {
     for (const id of game.getVisibleUnits(player.name, "self", rules => rules.name === "DRON")) {
         state.seenIds.add(id); state.aliveIds.add(id);
     }
-    if (pressure.pressured || tick >= 9000 || state.built >= 4 || state.aliveIds.size >= 2) return 0;
+    if (tick >= 9000 || state.built >= 4 || state.aliveIds.size >= 2) return 0;
     const s = readStrategicSituation(game, data), core = countCoreTanks(s);
-    if (state.built === 0 && (s.own.NAWEAP ?? 0) + (s.own.GAWEAP ?? 0) > 0 && s.harvesters >= 1) return 112;
+    if (state.built === 0 && (s.own.NAWEAP ?? 0) + (s.own.GAWEAP ?? 0) > 0 && s.harvesters >= 1) {
+        // A distant warning does not obsolete the opening; actual base danger still does.
+        if (pressure.baseUnderSiege || ownedBaseUnderAttack || tick - pressure.lastEconomicLossTick < 900) return 0;
+        return 112;
+    }
+    if (pressure.pressured) return 0;
     if (state.built === 1 && s.harvesters >= 3 && core >= 4 && tick - pressure.lastEnemyMinerSeenTick < 1800) return 60;
     if ((state.built === 2 || state.built === 3) && core >= 4 && tick - pressure.lastEnemyMinerSeenTick < 1800) return 60;
     return 0;

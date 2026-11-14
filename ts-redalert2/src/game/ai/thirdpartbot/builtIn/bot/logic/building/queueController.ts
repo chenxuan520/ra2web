@@ -215,7 +215,7 @@ export class QueueController {
                 }
                 const drone = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === "DRON");
                 if (drone) {
-                    const priority = getDronePriority(context);
+                    const priority = getDronePriority(context, ownedBaseUnderAttack);
                     if (priority > 0) requests.set(drone.name, { priority, specificLocation: null });
                     else requests.delete(drone.name);
                 }
