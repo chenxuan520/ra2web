@@ -189,6 +189,9 @@ export class QueueController {
                     priority = 90;
                 } else if (miners === 2 && !pressure.pressured && miners < desired) {
                     priority = 110;
+                    if (!ecoOnly && situation.tick < 9000 && core < BRUTAL_PARAMS.assault.formedArmor &&
+                        game.getVisibleUnits(player.name, "enemy", rules => rules.type === ObjectType.Vehicle && rules.isSelectableCombatant &&
+                            !rules.harvester && ["MTNK", "HTNK", "MGTK", "APOC", "SREF"].includes(rules.name)).length > 0) priority = 78;
                 } else if (miners === 2 && pressure.pressured && (ecoOnly || core >= 4) && miners < desired) {
                     priority = 78;
                 } else if (miners >= 3 && miners < desired && !pressure.baseUnderSiege && !ownedBaseUnderAttack && (ecoOnly || core >= coreFactor * (miners - 2))) {
@@ -230,7 +233,8 @@ export class QueueController {
             const firstCoreQueue = productionApi.getQueueData(QueueType.Vehicles);
             if (situation.harvesters >= 2 && (situation.enemy.infantry >= 8 &&
                 (situation.own.MTNK ?? 0) + (situation.own.HTNK ?? 0) < Math.min(6, Math.max(2, Math.ceil(situation.enemy.infantry / 6))) ||
-                situation.tick < 9000 && visibleCoreArmor > 0 && countCoreTanks(situation) < Math.min(6, Math.max(BRUTAL_PARAMS.assault.formedArmor, visibleCoreArmor))) ||
+                (situation.tick < 9000 || ownedBaseUnderAttack && !firstCoreQueue.items[0]?.rules.harvester) &&
+                visibleCoreArmor > 0 && countCoreTanks(situation) < Math.min(6, Math.max(BRUTAL_PARAMS.assault.formedArmor, visibleCoreArmor))) ||
                 situation.harvesters === 1 && situation.tick < 9000 && visibleCoreArmor > 0 && countCoreTanks(situation) < Math.min(6, visibleCoreArmor) &&
                 game.getVisibleUnits(player.name, "self", rules => rules.refinery).length > 0 ||
                 situation.harvesters >= 1 && situation.harvesters <= 2 && situation.tick >= 2700 && situation.tick < 9000 && countCoreTanks(situation) === 0 &&
@@ -276,7 +280,7 @@ export class QueueController {
                 }
             }
             const openingTank = isSovietCountry(playerData.country?.name) ? "HTNK" : "MTNK";
-            if (situation.harvesters >= 3 && countCoreTanks(situation) > 0 && situation.enemy.infantry < 8 && !readPressure(context).pressured && !ownedBaseUnderAttack &&
+            if (situation.harvesters >= 3 && countCoreTanks(situation) > 0 && situation.enemy.infantry < 8 && situation.enemy.vehicles === 0 && !readPressure(context).pressured && !ownedBaseUnderAttack &&
                 requests.get(openingTank)?.priority === 85 && productionApi.getAvailableObjects(QueueType.Vehicles)
                     .some(option => option.harvester && requests.get(option.name)?.priority === 78)) {
                 requests.set(openingTank, { ...requests.get(openingTank)!, priority: 75 });
