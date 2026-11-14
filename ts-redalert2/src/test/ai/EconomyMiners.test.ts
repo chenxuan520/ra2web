@@ -188,6 +188,18 @@ describe("brutal miner capacity and production table", () => {
         if (condition === "visible-mobile-force") f.enemy(200, 100);
         expect(f.priority()).toBe(condition === "visible-fortifications" ? 110 : 78);
     });
+    test.each(["Russians", "Americans"])("%s may grow against one currently visible static defense without a visible mobile force", country => {
+        const f = fixture(3, 0, country); f.at(5400);
+        f.enemy(100, 100, ObjectType.Building, { name: "GAPILL", primary: "Vulcan" });
+        expect(f.priority()).toBe(110);
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, country === "Russians" ? "HARV" : "CMIN", ObjectType.Vehicle, 1);
+    });
+    test("one seen static defense does not displace the ordinary first core when a mobile force is currently visible", () => {
+        const f = fixture(3, 0); f.at(5400);
+        f.enemy(100, 100, ObjectType.Building, { name: "GAPILL", primary: "Vulcan" }); f.enemy(101, 100);
+        expect(f.priority()).toBe(78);
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTNK", ObjectType.Vehicle, 1);
+    });
     test.each([0, 1, 2])("first-core quiet growth does not alter the original emergency/early income row for%i miners", miners => {
         const f = fixture(miners, 0); f.at(5400);
         expect(f.priority()).toBe(miners === 0 ? 120 : 110);

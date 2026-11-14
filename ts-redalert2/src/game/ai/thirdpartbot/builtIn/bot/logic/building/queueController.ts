@@ -192,7 +192,7 @@ export class QueueController {
                     priority = 78;
                 } else if (miners >= 3 && miners < desired && !pressure.baseUnderSiege && !ownedBaseUnderAttack && (ecoOnly || core >= coreFactor * (miners - 2))) {
                     priority = pressure.homeQuiet && miners < 5 && situation.enemy.infantry < 8 &&
-                        (ecoOnly || core > 0 || situation.enemy.defences >= BRUTAL_PARAMS.assault.heavyDefenceCount && situation.enemy.vehicles === 0) ? 110 : 78;
+                        (ecoOnly || core > 0 || situation.enemy.defences > 0 && situation.enemy.vehicles === 0) ? 110 : 78;
                 }
             }
             if (priority > (requests.get(option.name)?.priority ?? 0)) {
