@@ -147,7 +147,7 @@ export class QueueController {
         if (defense && (activeDefense || defense.priority >= (requests.get(defense.rules.name)?.priority ?? 0))) {
             requests.set(defense.rules.name, { priority: defense.priority, specificLocation: new Vector2(defense.location.rx, defense.location.ry) });
         }
-        const crawl = planBaseCrawl(context);
+        const crawl = ownedBaseUnderAttack && !playerData.power?.isLowPower ? undefined : planBaseCrawl(context);
         if (crawl && crawl.priority > (requests.get(crawl.rules.name)?.priority ?? 0)) {
             requests.set(crawl.rules.name, { priority: crawl.priority, specificLocation: new Vector2(crawl.location.rx, crawl.location.ry) });
         }
@@ -353,7 +353,8 @@ export class QueueController {
                 if (resumeIncomeHold) { actionsApi.resumeProduction(QueueType.Structures); return; }
             }
             if (fundPriorityVehicle && decision.queue === QueueType.Structures && refineryQueue.status === QueueStatus.Idle && decision.topItem?.unit.refinery) return;
-            if (context.difficulty === "brutal" && isCrawlProduction(game, player.name, decision.queue) && readPressure(context).pressured) {
+            if (context.difficulty === "brutal" && isCrawlProduction(game, player.name, decision.queue) &&
+                (readPressure(context).pressured || ownedBaseUnderAttack && !playerData.power?.isLowPower)) {
                 if (productionApi.getQueueData(decision.queue).status === QueueStatus.Active) actionsApi.pauseProduction(decision.queue);
                 return;
             }

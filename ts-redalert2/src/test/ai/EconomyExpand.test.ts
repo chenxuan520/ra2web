@@ -100,6 +100,44 @@ describe("legal visible base crawl", () => {
         f.at(3002); expect(f.run()).toBeUndefined();
         f.enemies.length = 0; f.at(3004); expect(f.run()).toBeDefined();
     });
+    test("an actual attacked remote anchor prevents a new discretionary crawl without changing public-home pressure", () => {
+        const f = fixture(); f.at(12510); f.own("NAWEAP", 100);
+        f.enemies.push({ id: 999, name: "HTNK", type: ObjectType.Vehicle, tile: { rx: 120, ry: 0 },
+            rules: { name: "HTNK", type: ObjectType.Vehicle, isSelectableCombatant: true } });
+        expect(f.run()).toBeDefined();
+        new QueueController().onAiUpdate(f.context, null, new Map(), () => {});
+        expect(f.context.player.actions.queueForProduction).not.toHaveBeenCalledWith(QueueType.Structures, "NAPOWR", ObjectType.Building, 1);
+    });
+    test("an already marked crawl pauses through actual remote-base attack and resumes the same paid construction afterwards", () => {
+        const f = fixture(), controller = new QueueController(); f.at(12508); f.own("NAWEAP", 100);
+        controller.onAiUpdate(f.context, null, new Map(), () => {});
+        const queue = f.queues.get(QueueType.Structures)!;
+        Object.assign(queue, { status: QueueStatus.Active, items: [{ rules: f.power, quantity: 1 }] });
+        f.at(12510); observeBaseCrawl(f.context);
+        f.enemies.push({ id: 999, name: "HTNK", type: ObjectType.Vehicle, tile: { rx: 120, ry: 0 },
+            rules: { name: "HTNK", type: ObjectType.Vehicle, isSelectableCombatant: true } });
+        controller.onAiUpdate(f.context, null, new Map(), () => {});
+        expect(f.context.player.actions.pauseProduction).toHaveBeenCalledWith(QueueType.Structures);
+        expect(f.context.player.actions.unqueueFromProduction).not.toHaveBeenCalled();
+        queue.status = QueueStatus.OnHold; f.at(12512); controller.onAiUpdate(f.context, null, new Map(), () => {});
+        expect(f.context.player.actions.resumeProduction).not.toHaveBeenCalled();
+        f.enemies.length = 0; f.at(12514); controller.onAiUpdate(f.context, null, new Map(), () => {});
+        expect(f.context.player.actions.resumeProduction).toHaveBeenCalledWith(QueueType.Structures);
+        expect(queue.items).toEqual([{ rules: f.power, quantity: 1 }]);
+    });
+    test.each(["needed-power", "unmarked", "normal"])("remote-anchor danger preserves the original %s power queue", condition => {
+        const f = fixture(), controller = new QueueController(); f.at(12508); f.own("NAWEAP", 100);
+        if (condition === "needed-power") controller.onAiUpdate(f.context, null, new Map(), () => {});
+        Object.assign(f.queues.get(QueueType.Structures)!, { status: QueueStatus.Active, items: [{ rules: f.power, quantity: 1 }] });
+        f.at(12510); observeBaseCrawl(f.context);
+        f.enemies.push({ id: 999, name: "HTNK", type: ObjectType.Vehicle, tile: { rx: 120, ry: 0 },
+            rules: { name: "HTNK", type: ObjectType.Vehicle, isSelectableCombatant: true } });
+        if (condition === "needed-power") Object.assign(f.player.power, { total: 100, drain: 200, isLowPower: true });
+        if (condition === "normal") f.context.difficulty = "normal";
+        controller.onAiUpdate(f.context, null, new Map([[f.power.name, { priority: 100, specificLocation: null }]]), () => {});
+        expect(f.context.player.actions.pauseProduction).not.toHaveBeenCalled();
+        expect(f.context.player.actions.unqueueFromProduction).not.toHaveBeenCalled();
+    });
     test("g forty is eligible; real non-adjacency towers fall back to paid power even with margin 150", () => {
         const f = fixture(); f.player.credits = 800;
         expect(planRefinery(f.game, f.player, f.refinery).unreachable[0].g).toBe(40);
