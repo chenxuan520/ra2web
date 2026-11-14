@@ -460,17 +460,24 @@ describe("visible pressure and own event history", () => {
         enemy.tile.rx = 46; f.at(5404);
         expect(isPressured(f.context)).toBe(false);
     });
-    test.each([ObjectType.Vehicle, ObjectType.Infantry])("early %i signal lasts 2700 ticks and retains real mean position", type => {
+    test.each([ObjectType.Vehicle, ObjectType.Infantry])("the authorized early %i signal lasts 4500 ticks and retains real mean position", type => {
         const f = fixture();
         const count = type === ObjectType.Vehicle ? 1 : 3;
         for (let i = 0; i < count; i++) f.enemy(100 + i, 40 + i, type);
         expect(readPressure(f.context)).toMatchObject({ pressured: true, earlyPressure: true,
-            earlyPressureUntil: 2800, earlyPressurePosition: { rx: 40 + (count - 1) / 2, ry: 0 } });
-        f.enemies.length = 0; f.at(2799);
-        expect(isPressured(f.context)).toBe(true);
-        f.at(2800);
+            earlyPressureUntil: 4600, earlyPressurePosition: { rx: 40 + (count - 1) / 2, ry: 0 } });
+        f.enemies.length = 0; f.at(2800); expect(isPressured(f.context)).toBe(true);
+        f.at(4599); expect(isPressured(f.context)).toBe(true);
+        f.at(4600);
         expect(readPressure(f.context).earlyPressure).toBe(false);
         expect(isPressured(f.context)).toBe(false);
+    });
+    test("the last eligible early signal retains 4500 ticks but cannot renew at the unchanged 5400 cutoff", () => {
+        const f = fixture(); f.at(5399); f.enemy(100, 40);
+        expect(readPressure(f.context).earlyPressureUntil).toBe(9899);
+        f.at(5400); expect(readPressure(f.context).earlyPressureUntil).toBe(9899);
+        f.enemies.length = 0; f.at(9898); expect(isPressured(f.context)).toBe(true);
+        f.at(9899); expect(isPressured(f.context)).toBe(false);
     });
     test.each([ObjectType.Vehicle, ObjectType.Infantry])("below the adjusted early %i threshold does not trigger pressure", type => {
         const f = fixture(), count = type === ObjectType.Vehicle ? 0 : 2;

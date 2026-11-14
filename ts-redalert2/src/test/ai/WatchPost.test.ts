@@ -653,14 +653,15 @@ describe("T2 watch-post behavior and replacement budget", () => {
 });
 
 describe("T2 P1 integrates the real E7 pressure module", () => {
-    test("one visible vehicle exactly twelve from P1 triggers the adjusted threshold outside base range for 2700 ticks", () => {
+    test("one visible vehicle exactly twelve from P1 triggers the adjusted threshold outside base range for 4500 ticks", () => {
         const f = fixture(); f.ensure();
         f.add(200, "MTNK", 92, 20, "enemy");
         f.visibleEnemies.add(200); f.at(100);
         expect(readPressure(f.context)).toMatchObject({ pressured: true, baseUnderSiege: false, earlyPressure: true,
-            earlyPressureUntil: 2800, earlyPressurePosition: { rx: 92, ry: 20 } });
-        f.visibleEnemies.clear(); f.at(2799); expect(isPressured(f.context)).toBe(true);
-        f.at(2800); expect(isPressured(f.context)).toBe(false);
+            earlyPressureUntil: 4600, earlyPressurePosition: { rx: 92, ry: 20 } });
+        f.visibleEnemies.clear(); f.at(2800); expect(isPressured(f.context)).toBe(true);
+        f.at(4599); expect(isPressured(f.context)).toBe(true);
+        f.at(4600); expect(isPressured(f.context)).toBe(false);
     });
 
     test("P1 registers the real legal fallback coordinate rather than the blocked raw midpoint", () => {
