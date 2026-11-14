@@ -224,14 +224,15 @@ export class QueueController {
             if (situation.harvesters >= 2 && (situation.enemy.infantry >= 8 &&
                 (situation.own.MTNK ?? 0) + (situation.own.HTNK ?? 0) < Math.min(6, Math.max(2, Math.ceil(situation.enemy.infantry / 6))) ||
                 situation.tick < 9000 && visibleCoreArmor > 0 && countCoreTanks(situation) < Math.min(6, Math.max(2, visibleCoreArmor))) ||
-                situation.harvesters === 1 && situation.tick < 9000 && visibleCoreArmor > 0 && countCoreTanks(situation) === 0 &&
+                situation.harvesters === 1 && situation.tick < 9000 && visibleCoreArmor > 0 && countCoreTanks(situation) < Math.min(6, visibleCoreArmor) &&
                 game.getVisibleUnits(player.name, "self", rules => rules.refinery).length > 0) {
                 const tank = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === "MTNK" || option.name === "HTNK");
                 if (tank) {
                     requests.set(tank.name, { priority: 100, specificLocation: null });
                     if (requests.get("DRON")?.priority === 112) requests.delete("DRON");
                     for (const option of productionApi.getAvailableObjects(QueueType.Vehicles)) {
-                        if (option.harvester && requests.get(option.name)?.priority === 110) requests.delete(option.name);
+                        if (option.harvester && (requests.get(option.name)?.priority === 110 ||
+                            situation.harvesters === 1 && requests.get(option.name)?.priority === 90)) requests.delete(option.name);
                     }
                     if (productionApi.getQueueData(QueueType.Infantry).status === QueueStatus.Idle) {
                         requests.delete("ENGINEER"); requests.delete("SENGINEER");

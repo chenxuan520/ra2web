@@ -316,6 +316,24 @@ describe("brutal miner capacity and production table", () => {
         f.own(country === "Russians" ? "HTNK" : "MTNK"); f.at(4504); f.run();
         expect(f.actions.queueForProduction).toHaveBeenLastCalledWith(QueueType.Vehicles, miner.name, ObjectType.Vehicle, 1);
     });
+    test.each(["Russians", "Americans"])("%s responds to a growing visible armor deficit after its first one-income cores, then hands back at parity", country => {
+        const f = fixture(1, 2, country);
+        f.units.splice(f.units.findIndex(unit => unit.name === "NAREFN" && unit.tile.rx === 25), 1);
+        f.at(5390); const first = f.enemy(100, 40); readPressure(f.context);
+        first.tile.rx = 80; f.enemy(101, 82); f.enemy(102, 84); f.at(7470);
+        const miner = f.options.get(QueueType.Vehicles)![0];
+        Object.assign(f.queues.get(QueueType.Vehicles)!, { status: QueueStatus.Active, items: [{ rules: miner, quantity: 1 }] });
+        f.run(); expect(f.actions.unqueueFromProduction).toHaveBeenCalledWith(QueueType.Vehicles, miner.name, ObjectType.Vehicle, 1);
+        Object.assign(f.queues.get(QueueType.Vehicles)!, { status: QueueStatus.Idle, items: [] }); f.at(7472); f.run();
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, country === "Russians" ? "HTNK" : "MTNK", ObjectType.Vehicle, 1);
+        f.own(country === "Russians" ? "HTNK" : "MTNK"); f.at(7474); f.run();
+        expect(f.actions.queueForProduction).toHaveBeenLastCalledWith(QueueType.Vehicles, miner.name, ObjectType.Vehicle, 1);
+    });
+    test("the one-income visible-armor response does not exceed the existing six-core cap", () => {
+        const f = fixture(1, 6); f.at(7470);
+        for (let i = 0; i < 7; i++) f.enemy(100 + i, 80 + i);
+        f.run(); expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
+    });
     test.each(["no-refinery", "late", "unseen"])("the first-armor supplement does not expand the %s case", condition => {
         const f = fixture(1, 0); f.at(condition === "late" ? 9000 : 4500);
         if (condition === "no-refinery") f.units.splice(0, f.units.length, ...f.units.filter(unit => !unit.rules.refinery));
@@ -460,24 +478,17 @@ describe("visible pressure and own event history", () => {
         enemy.tile.rx = 46; f.at(5404);
         expect(isPressured(f.context)).toBe(false);
     });
-    test.each([ObjectType.Vehicle, ObjectType.Infantry])("the authorized early %i signal lasts 4500 ticks and retains real mean position", type => {
+    test.each([ObjectType.Vehicle, ObjectType.Infantry])("early %i signal lasts 2700 ticks and retains real mean position", type => {
         const f = fixture();
         const count = type === ObjectType.Vehicle ? 1 : 3;
         for (let i = 0; i < count; i++) f.enemy(100 + i, 40 + i, type);
         expect(readPressure(f.context)).toMatchObject({ pressured: true, earlyPressure: true,
-            earlyPressureUntil: 4600, earlyPressurePosition: { rx: 40 + (count - 1) / 2, ry: 0 } });
-        f.enemies.length = 0; f.at(2800); expect(isPressured(f.context)).toBe(true);
-        f.at(4599); expect(isPressured(f.context)).toBe(true);
-        f.at(4600);
+            earlyPressureUntil: 2800, earlyPressurePosition: { rx: 40 + (count - 1) / 2, ry: 0 } });
+        f.enemies.length = 0; f.at(2799);
+        expect(isPressured(f.context)).toBe(true);
+        f.at(2800);
         expect(readPressure(f.context).earlyPressure).toBe(false);
         expect(isPressured(f.context)).toBe(false);
-    });
-    test("the last eligible early signal retains 4500 ticks but cannot renew at the unchanged 5400 cutoff", () => {
-        const f = fixture(); f.at(5399); f.enemy(100, 40);
-        expect(readPressure(f.context).earlyPressureUntil).toBe(9899);
-        f.at(5400); expect(readPressure(f.context).earlyPressureUntil).toBe(9899);
-        f.enemies.length = 0; f.at(9898); expect(isPressured(f.context)).toBe(true);
-        f.at(9899); expect(isPressured(f.context)).toBe(false);
     });
     test.each([ObjectType.Vehicle, ObjectType.Infantry])("below the adjusted early %i threshold does not trigger pressure", type => {
         const f = fixture(), count = type === ObjectType.Vehicle ? 0 : 2;

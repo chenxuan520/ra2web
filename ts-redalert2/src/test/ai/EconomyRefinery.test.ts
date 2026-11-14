@@ -447,7 +447,7 @@ describe("brutal refinery investment", () => {
             expect(f.nativeQueues.get(QueueType.Structures)!.getFirst()?.creditsSpent ?? 0).toBe(0);
             expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
             f.enemies.length = 0; f.player.credits = 1;
-            f.run(priority === 85 && !active ? 7308 : 2810, 85);
+            f.run(priority === 85 && !active ? 5508 : 2810, 85);
             expect(f.nativeQueues.get(QueueType.Structures)!.status).toBe(QueueStatus.Active);
         }
     });
