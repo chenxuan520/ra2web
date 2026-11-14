@@ -16,6 +16,7 @@ import { UnitRequest } from "../mission/missionController";
 import { countCoreTanks, NATIONAL_SUPPORT_LIMITS, readStrategicSituation } from "../../strategy/nationalComposition";
 import { getBasicInfantryBudget, isSovietCountry } from "../../strategy/basicInfantryBudget";
 import { desiredMiners } from "./harvester";
+import { BRUTAL_PARAMS } from "../../strategy/brutalParams";
 import { getEconomyPressureLimits, isEcoOnly, readPressure } from "../common/pressure";
 import { isCivilianEconomy } from "./economyPlan";
 import { isMinerRefineryProduction, observeRefineryEconomy, recordRefineryOrder, sellDuplicateRefinery } from "./refineryEconomy";
@@ -223,7 +224,7 @@ export class QueueController {
                 rules.isSelectableCombatant && !rules.harvester && ["MTNK", "HTNK", "MGTK", "APOC", "SREF"].includes(rules.name)).length;
             if (situation.harvesters >= 2 && (situation.enemy.infantry >= 8 &&
                 (situation.own.MTNK ?? 0) + (situation.own.HTNK ?? 0) < Math.min(6, Math.max(2, Math.ceil(situation.enemy.infantry / 6))) ||
-                situation.tick < 9000 && visibleCoreArmor > 0 && countCoreTanks(situation) < Math.min(6, Math.max(2, visibleCoreArmor))) ||
+                situation.tick < 9000 && visibleCoreArmor > 0 && countCoreTanks(situation) < BRUTAL_PARAMS.assault.assaultMinArmor) ||
                 situation.harvesters === 1 && situation.tick < 9000 && visibleCoreArmor > 0 && countCoreTanks(situation) < Math.min(6, visibleCoreArmor) &&
                 game.getVisibleUnits(player.name, "self", rules => rules.refinery).length > 0) {
                 const tank = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === "MTNK" || option.name === "HTNK");

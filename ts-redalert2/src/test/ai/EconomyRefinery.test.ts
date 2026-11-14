@@ -508,7 +508,7 @@ describe("brutal refinery investment", () => {
         const f = nativeFundingFixture(85, true);
         if (condition === "warning") {
             f.own("HTNK", 0); f.own("HTNK", 0);
-            f.enemies.push({ id: 999, tile: { rx: 28, ry: 0 }, rules: { name: "MTNK", type: ObjectType.Vehicle, isSelectableCombatant: true } });
+            f.enemies.push({ id: 999, tile: { rx: 28, ry: 0 }, rules: { name: "HTK", type: ObjectType.Vehicle, isSelectableCombatant: true } });
         }
         for (let i = 0; i < 54; i++) f.spend(2700 + i * 2);
         expect(f.nativeQueues.get(QueueType.Structures)!.getFirst()!.creditsSpent).toBe(54);
