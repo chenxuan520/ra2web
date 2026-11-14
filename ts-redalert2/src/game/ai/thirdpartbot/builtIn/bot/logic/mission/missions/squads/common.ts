@@ -7,10 +7,11 @@ const NONCE_GI_DEPLOY = 0;
 const NONCE_GI_UNDEPLOY = 1;
 
 // Micro methods
-export function manageMoveMicro(attacker: UnitData, attackPoint: Vector2): BatchableAction {
+export function manageMoveMicro(attacker: UnitData, attackPoint: Vector2, difficulty?: "normal" | "brutal"): BatchableAction {
     if (attacker.name === "E1") {
         const isDeployed = (attacker.stance as any) === StanceType.Deployed;
         if (isDeployed) {
+            if (difficulty === "brutal") return BatchableAction.toTargetId(attacker.id, OrderType.Deploy, attacker.id, NONCE_GI_UNDEPLOY);
             return BatchableAction.noTarget(attacker.id, OrderType.DeploySelected, NONCE_GI_UNDEPLOY);
         }
     }
@@ -18,7 +19,7 @@ export function manageMoveMicro(attacker: UnitData, attackPoint: Vector2): Batch
     return BatchableAction.toPoint(attacker.id, OrderType.AttackMove, attackPoint);
 }
 
-export function manageAttackMicro(attacker: UnitData, target: UnitData): BatchableAction {
+export function manageAttackMicro(attacker: UnitData, target: UnitData, difficulty?: "normal" | "brutal"): BatchableAction {
     const distance = getDistanceBetweenUnits(attacker, target);
     if (attacker.name === "E1") {
         // Para (deployed weapon) range is 5.
@@ -27,6 +28,7 @@ export function manageAttackMicro(attacker: UnitData, target: UnitData): Batchab
         if (!isDeployed && (distance <= deployedWeaponRange || (attacker.attackState as any) === AttackState.JustFired)) {
             return BatchableAction.noTarget(attacker.id, OrderType.DeploySelected, NONCE_GI_DEPLOY);
         } else if (isDeployed && distance > deployedWeaponRange + 1.5) {
+            if (difficulty === "brutal") return BatchableAction.toTargetId(attacker.id, OrderType.Deploy, attacker.id, NONCE_GI_UNDEPLOY);
             return BatchableAction.noTarget(attacker.id, OrderType.DeploySelected, NONCE_GI_UNDEPLOY);
         }
     }
