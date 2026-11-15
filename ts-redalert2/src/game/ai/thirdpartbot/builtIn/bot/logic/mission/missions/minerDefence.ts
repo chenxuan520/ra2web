@@ -223,15 +223,19 @@ export class MinerDefence {
                 }
             }
 
-            // A busy empty miner near a resource-less refinery needs a fresh known haul, not an idle-state wait.
+            // Empty departures need a known free field slot; a live default task is not a valid allocation.
             for (const m of allMiners) {
                 if (m.isIdle !== false || m.harvestedOre !== 0 || m.harvestedGems !== 0 ||
                     !(m.hitPoints >= m.maxHitPoints * 0.7) || this.active?.id === m.id || this.dispatchTargets.has(m.id) ||
                     tick - (this.lastGemOrder.get(m.id) ?? -Infinity) < 300 || !game.mapApi.isVisibleTile(m.tile, player.name)) continue;
                 const underfoot = game.mapApi.getTileResourceData(m.tile);
                 if (underfoot && (underfoot.ore !== 0 || underfoot.gems !== 0)) continue;
-                if (!refineries.some(ref => Math.hypot(ref.tile.rx - m.tile.rx, ref.tile.ry - m.tile.ry) <= 9 &&
-                    !patches.some(patch => isServed(patch, [ref.tile])))) continue;
+                const currentField = assignments.get(m.id);
+                if (!refineries.some(ref => {
+                    const distance = Math.hypot(ref.tile.rx - m.tile.rx, ref.tile.ry - m.tile.ry);
+                    return distance <= 4 && (!currentField || !isServed(currentField, refinerySites)) ||
+                        distance <= 9 && !patches.some(patch => isServed(patch, [ref.tile]));
+                })) continue;
                 const origin = new Vector2(m.tile.rx, m.tile.ry);
                 const target = game.mapApi.getAllTilesResourceData().filter(resource =>
                     game.mapApi.isVisibleTile(resource.tile, player.name) && resource.ore + resource.gems > 0)

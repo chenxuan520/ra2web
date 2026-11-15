@@ -70,7 +70,8 @@ describe("unload-aware gem dispatch", () => {
     });
     test("a serviced capacity-four gem field with four miners cannot receive another", () => {
         const f = fixture(); f.refinery(18); for (let i = 0; i < 4; i++) f.miner(20, true);
-        f.run(); expect(f.actions.orderUnits).not.toHaveBeenCalled();
+        f.run(); expect(f.actions.orderUnits).toHaveBeenCalledWith([f.miners[0].id], OrderType.Gather, -8, 0);
+        expect(f.actions.orderUnits).not.toHaveBeenCalledWith([f.miners[0].id], OrderType.Gather, 20, 0);
     });
     test("four transit reservations prevent a fifth miner being dispatched before arrivals", () => {
         const f = fixture(); f.refinery(18); f.miners[0].isIdle = true; for (let i = 0; i < 4; i++) f.miner(4, true);
@@ -214,6 +215,55 @@ describe("busy empty miners leave resource-less refinery neighborhoods", () => {
         const f = scenario(); f.refineries.splice(1, 1); const second = f.miner(8); second.name = second.rules.name = "CMIN";
         f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(1);
         expect(f.actions.orderUnits).toHaveBeenCalledWith([f.miners[0].id], OrderType.Gather, 30, 0);
+    });
+});
+
+describe("empty refinery departures use a field with an available slot", () => {
+    function scenario(gems = true) {
+        const f = fixture(); f.miners[0].name = f.miners[0].rules.name = "CMIN";
+        if (gems) f.refinery(18);
+        else {
+            f.resources.splice(0, f.resources.length, { tile: { rx: -8, ry: 0 }, ore: 18000, gems: 0 },
+                { tile: { rx: 30, ry: 0 }, ore: 18000, gems: 0 }); f.refinery(27);
+        }
+        for (let i = 0; i < 5; i++) {
+            const m = f.miner(gems ? 20 : -8); m.name = m.rules.name = "CMIN"; m.harvestedOre = 1;
+        }
+        return f;
+    }
+    test("a full gem allocation sends the empty departing miner to served ore, not the default crowded field", () => {
+        const f = scenario(); f.run();
+        expect(f.actions.orderUnits).toHaveBeenCalledWith([f.miners[0].id], OrderType.Gather, -8, 0);
+        f.at(60); f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(1);
+    });
+    test("a pure-ore map also sends a departure to a second field when its old field is full", () => {
+        const f = scenario(false); f.run();
+        expect(f.actions.orderUnits).toHaveBeenCalledWith([f.miners[0].id], OrderType.Gather, 30, 0);
+    });
+    test.each([4, 4.01])("the original four-tile departure distance%s remains the eligibility boundary", distance => {
+        const f = scenario(); f.miners[0].tile.rx = distance; f.run();
+        expect(f.actions.orderUnits).toHaveBeenCalledTimes(distance <= 4 ? 1 : 0);
+    });
+    test("available gems still take the original priority without a second recovery order", () => {
+        const f = scenario(); f.miners.pop(); f.run();
+        expect(f.actions.orderUnits.mock.calls).toEqual([[[f.miners[0].id], OrderType.Gather, 20, 0]]);
+    });
+    test("a miner already assigned to a served field remains under the original balancing cadence", () => {
+        const f = scenario(); f.miners[0].tile.rx = -4; f.run();
+        expect(f.actions.orderUnits).not.toHaveBeenCalled();
+    });
+    test.each(["cargo", "unknown", "underfoot", "injured", "normal", "blocked", "hidden-ore"])("%s cannot be turned into a new departure order", condition => {
+        const f = scenario(), m = f.miners[0];
+        if (condition === "cargo") m.harvestedGems = 1;
+        if (condition === "unknown") delete m.harvestedOre;
+        if (condition === "underfoot") f.resources.push({ tile: { ...m.tile }, ore: 1, gems: 0 });
+        if (condition === "injured") m.hitPoints = 600;
+        if (condition === "normal") f.context.difficulty = "normal";
+        if (condition === "blocked") f.blocked.add("-8_0");
+        if (condition === "hidden-ore") {
+            f.hidden.add("-8_0"); Object.defineProperty(f.resources[0], "ore", { get() { throw Error("hidden ore read"); } });
+        }
+        f.run(); expect(f.actions.orderUnits).not.toHaveBeenCalled();
     });
 });
 
