@@ -238,7 +238,8 @@ export class QueueController {
                 situation.harvesters === 1 && situation.tick < 9000 && visibleCoreArmor > 0 && countCoreTanks(situation) < Math.min(6, visibleCoreArmor) &&
                 game.getVisibleUnits(player.name, "self", rules => rules.refinery).length > 0 ||
                 situation.harvesters >= 1 && situation.harvesters <= 2 && situation.tick >= 2700 && situation.tick < 9000 && countCoreTanks(situation) === 0 &&
-                !readPressure(context).homeQuiet && requests.get("DRON")?.priority !== 112 &&
+                !readPressure(context).homeQuiet && (requests.get("DRON")?.priority !== 112 ||
+                    [QueueStatus.Active, QueueStatus.OnHold].includes(firstCoreQueue.status) && ["HTNK", "MTNK"].includes(firstCoreQueue.items[0]?.rules.name)) &&
                 (firstCoreQueue.status === QueueStatus.Idle || ["HTNK", "MTNK"].includes(firstCoreQueue.items[0]?.rules.name)) &&
                 (situation.own.GAREFN ?? 0) + (situation.own.NAREFN ?? 0) > 0) {
                 const tank = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === "MTNK" || option.name === "HTNK");

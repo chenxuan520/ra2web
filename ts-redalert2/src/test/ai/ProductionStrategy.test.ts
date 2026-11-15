@@ -282,6 +282,35 @@ describe("new engineer suppression survives an ordinary infantry queue item", ()
     });
 });
 
+describe("an already paid first core keeps its response through a planned opening drone", () => {
+    function scenario(status: QueueStatus, completedCore = false) {
+        const s = productionScenario(600, "brutal"); s.at(3400);
+        s.owned.push({ name: "NAREFN", refinery: true, type: ObjectType.Building },
+            { name: "NAWEAP", weaponsFactory: true, type: ObjectType.Building },
+            { name: "HARV", harvester: true, type: ObjectType.Vehicle });
+        if (completedCore) s.owned.push({ name: "HTNK", type: ObjectType.Vehicle });
+        s.hostiles.push({ name: "E2", type: ObjectType.Infantry, isSelectableCombatant: true });
+        s.request(QueueType.Vehicles, "DRON", 0, 500);
+        s.request(QueueType.Vehicles, "HTNK", 75, 900, status);
+        const engineer = s.request(QueueType.Infantry, "SENGINEER", 100, 500);
+        engineer.type = ObjectType.Infantry; Object.assign(engineer, { engineer: true });
+        return s;
+    }
+    test.each([QueueStatus.Active, QueueStatus.OnHold])("paid first core status%i does not reopen new engineer spending for an unbuilt drone", status => {
+        const s = scenario(status); s.run();
+        expect(s.actions.queueForProduction).not.toHaveBeenCalledWith(QueueType.Infantry, "SENGINEER", ObjectType.Infantry, 1);
+        expect(s.actions.unqueueFromProduction).not.toHaveBeenCalled();
+        if (status === QueueStatus.OnHold) expect(s.actions.resumeProduction).toHaveBeenCalledWith(QueueType.Vehicles);
+        expect(s.queues.get(QueueType.Vehicles)!.items[0].rules.name).toBe("HTNK");
+    });
+    test.each(["idle-first-drone", "completed-core"])("%s keeps the old planned first-drone and engineer path", condition => {
+        const s = scenario(condition === "idle-first-drone" ? QueueStatus.Idle : QueueStatus.Active, condition === "completed-core");
+        s.run();
+        expect(s.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Infantry, "SENGINEER", ObjectType.Infantry, 1);
+        if (condition === "idle-first-drone") expect(s.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "DRON", ObjectType.Vehicle, 1);
+    });
+});
+
 describe("AI base investment", () => {
     test("cloned API rule data still counts existing factories toward the building cap", () => {
         const factory = { name: "GAWEAP", type: ObjectType.Building } as any;
