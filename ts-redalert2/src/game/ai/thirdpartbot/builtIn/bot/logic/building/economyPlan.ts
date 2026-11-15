@@ -73,7 +73,9 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
     const armor = (s.own.MTNK ?? 0) + (s.own.HTNK ?? 0) + (s.own.MGTK ?? 0) + (s.own.APOC ?? 0) + (s.own.SREF ?? 0);
     if (context?.difficulty === "brutal" && !committed && count > 0 && ["GAPOWR", "NAPOWR"].includes(rules.name) &&
         player.power?.isLowPower === false && player.power.total >= player.power.drain && s.harvesters === 1 &&
-        armor < (isSovietCountry(s.country) ? 2 : 1) && isPressured(context)) return 0;
+        armor < (isSovietCountry(s.country) ? 2 : 1) && (isPressured(context) ||
+            BRUTAL_PARAMS.economy.ecoOnly !== 1 && s.tick >= 2700 && s.tick < 9000 &&
+            s.enemy.infantry + s.enemy.vehicles + s.enemy.aircraft > 0)) return 0;
     if (rules.name === "NARADR") {
         if (s.country === "Russians" && (refineries < BRUTAL_PARAMS.economy.russianRadarMinRefineries || armor < BRUTAL_PARAMS.economy.russianRadarMinArmor || s.credits < BRUTAL_PARAMS.economy.russianRadarMinCredits)) return 0;
         if (!count && s.harvesters >= BRUTAL_PARAMS.economy.radarMinHarvesters && armor >= BRUTAL_PARAMS.economy.radarMinArmor) return BRUTAL_PARAMS.economy.radarPriority;

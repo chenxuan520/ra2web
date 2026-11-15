@@ -3,6 +3,7 @@ import { BaseBuildingMission } from "../../game/ai/thirdpartbot/builtIn/bot/logi
 import { ObjectType, QueueStatus, QueueType, Vector2 } from "../../game/ai/thirdpartbot/builtIn/game-api";
 import type { MissionContext } from "../../game/ai/thirdpartbot/builtIn/bot/logic/common/context";
 import { BRUTAL_PARAMS } from "../../game/ai/thirdpartbot/builtIn/bot/strategy/brutalParams";
+import { readPressure } from "../../game/ai/thirdpartbot/builtIn/bot/logic/common/pressure";
 
 function fixture(difficulty?: "normal" | "brutal") {
     const rules = (name: string) => ({ name, type: ObjectType.Building, adjacent: 8, power: 200 });
@@ -166,4 +167,44 @@ describe("reserve power while a single income needs its protective core", () => 
                     priority: condition === "low-power" || condition === "first-plant" ? 100 : 20 });
             } finally { BRUTAL_PARAMS.economy.ecoOnly = previous; }
         });
+});
+
+describe("seen mobile opposition defers only a new single-income reserve plant", () => {
+    function scenario(country: "Russians" | "Americans" = "Russians") {
+        const f = reservePowerFixture(country);
+        f.enemies.splice(0, f.enemies.length, { id: 100, tile: { rx: 80, ry: 0 }, rules: {
+            name: "DOG", type: ObjectType.Infantry, isSelectableCombatant: true } });
+        return f;
+    }
+    test.each([["Russians", 0], ["Russians", 1], ["Americans", 0]] as const)("%s core%i preserves supplied power while known mobile opposition exists", (country, core) => {
+        const f = scenario(country); for (let i = 0; i < core; i++) f.add(f.tankName);
+        expect(readPressure(f.context)).toMatchObject({ pressured: false, homeQuiet: true });
+        expect(f.run()).toEqual({ type: "noop" });
+    });
+    test.each(["Russians", "Americans"] as const)("%s resumes after its original protective core delivery", country => {
+        const f = scenario(country); expect(f.run()).toEqual({ type: "noop" });
+        for (let i = 0; i < (country === "Russians" ? 2 : 1); i++) f.add(f.tankName);
+        f.at(3124); expect(f.run()).toMatchObject({ type: "buildStructureAtLocation", rulesName: f.power.name, priority: 20 });
+    });
+    test.each(["none", "harvester", "building", "hidden", "before", "late", "normal", "ecoOnly", "paid-active", "paid-hold", "low-power", "first-plant", "two-incomes"])("%s retains the original plant admission", condition => {
+        const f = scenario();
+        if (condition === "none") f.enemies.length = 0;
+        if (condition === "harvester") (f.enemies[0].rules as any).harvester = true;
+        if (condition === "building") f.enemies[0].rules.type = ObjectType.Building;
+        if (condition === "hidden") {
+            const visible = f.context.game.getVisibleUnits;
+            f.context.game.getVisibleUnits = (name: string, relation: string, predicate: any) => relation === "enemy" ? [] : visible(name, relation, predicate);
+            Object.defineProperty(f.enemies[0], "tile", { get() { throw Error("unseen opposition coordinate"); } });
+        }
+        if (condition === "before") f.at(2698);
+        if (condition === "late") f.at(9000);
+        if (condition === "normal") f.context.difficulty = "normal";
+        if (condition === "paid-active" || condition === "paid-hold") Object.assign(f.queue, { status: condition === "paid-active" ? QueueStatus.Active : QueueStatus.OnHold, items: [{ rules: f.power, quantity: 1 }] });
+        if (condition === "low-power") Object.assign(f.player.power, { total: 84, isLowPower: true });
+        if (condition === "first-plant") { f.owned.splice(0, 1); Object.assign(f.player.power, { total: 0, isLowPower: true }); }
+        if (condition === "two-incomes") f.add("HARV");
+        const previous = BRUTAL_PARAMS.economy.ecoOnly; if (condition === "ecoOnly") BRUTAL_PARAMS.economy.ecoOnly = 1;
+        try { expect(f.run()).toMatchObject({ type: "buildStructureAtLocation", rulesName: f.power.name, priority: condition === "low-power" || condition === "first-plant" ? 100 : 20 }); }
+        finally { BRUTAL_PARAMS.economy.ecoOnly = previous; }
+    });
 });
