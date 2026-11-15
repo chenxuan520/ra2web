@@ -270,6 +270,49 @@ describe("an active harmless drone transit is not redirected by changing seen pa
     });
 });
 
+describe("visible engineer tools do not reset an active drone transit", () => {
+    function scenario() {
+        const f = fixture(); f.resources.push(resource(90, 0)); f.drone.isIdle = false;
+        f.step(3400); expect(f.orders).toEqual([[[1], OrderType.Move, 90, 0]]);
+        f.drone.tile.rx = 20; f.resources.splice(0, f.resources.length, resource(30, 0));
+        return f;
+    }
+    test.each([["ENGINEER", 1], ["ENGINEER", 40], ["SENGINEER", 1], ["SENGINEER", 40]] as const)(
+        "%s with declared tools at%i tiles does not cause a busy ambush reset", (name, distance) => {
+            const f = scenario(), unit = f.add(10, name, "enemy", 20 + distance, 0,
+                { engineer: true, isSelectableCombatant: false, primary: "DefuseKit", secondary: "VirtualScanner" });
+            unit.type = unit.rules.type = ObjectType.Infantry;
+            for (const field of ["hitPoints", "maxHitPoints", "primaryWeapon", "secondaryWeapon"]) Object.defineProperty(unit, field, { get: forbidden });
+            f.step(3490); expect(f.orders).toEqual([[[1], OrderType.Move, 90, 0]]);
+        });
+    test.each([false, undefined])("engineer marker%s is not inferred from an arbitrary weapon name", marker => {
+        const f = scenario(), unit = f.add(10, "E1", "enemy", 60, 0,
+            { engineer: marker, isSelectableCombatant: false, primary: "DefuseKit", secondary: "VirtualScanner" });
+        unit.type = unit.rules.type = ObjectType.Infantry;
+        f.step(3490); expect(f.orders.at(-1)).toEqual([[1], OrderType.Move, 30, 0]);
+    });
+    test("a normal armed infantry appearance still requests the original replanning", () => {
+        const f = scenario(), unit = f.add(10, "E1", "enemy", 60, 0, { engineer: false, isSelectableCombatant: true, primary: "M60" });
+        unit.type = unit.rules.type = ObjectType.Infantry;
+        f.step(3490); expect(f.orders.at(-1)).toEqual([[1], OrderType.Move, 30, 0]);
+    });
+    test("a newly visible miner still takes priority over harmless engineer transit", () => {
+        const f = scenario(), unit = f.add(10, "ENGINEER", "enemy", 60, 0, { engineer: true, primary: "DefuseKit" });
+        unit.type = unit.rules.type = ObjectType.Infantry; f.add(11, "HARV", "enemy", 50);
+        f.step(3490); expect(f.orders.at(-1)).toEqual([[1], OrderType.Attack, 11]);
+    });
+    test("an idle drone still replans even if the only visible unit is an engineer", () => {
+        const f = scenario(), unit = f.add(10, "ENGINEER", "enemy", 60, 0, { engineer: true, primary: "DefuseKit" });
+        unit.type = unit.rules.type = ObjectType.Infantry; f.drone.isIdle = true;
+        f.step(3490); expect(f.orders.at(-1)).toEqual([[1], OrderType.Move, 30, 0]);
+    });
+    test("hidden engineer fields are never read to alter transit", () => {
+        const f = scenario(), unit = f.add(10, "ENGINEER", "enemy", 60, 0, { engineer: true, primary: "DefuseKit" }); f.hidden.add(unit.id);
+        for (const field of ["tile", "rules", "owner"]) Object.defineProperty(unit, field, { get: forbidden });
+        f.step(3490); expect(f.orders).toEqual([[[1], OrderType.Move, 90, 0]]);
+    });
+});
+
 describe("drone raid cadence and ownership", () => {
     test("checks targets every thirty ticks and does not repeat an idle target before sixty", () => {
         const f = fixture(); f.add(10, "HARV", "enemy", 20);
