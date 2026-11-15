@@ -3,7 +3,7 @@ import { BuildStatus } from "../../game/gameobject/Building";
 import { LandType, ObjectType, OrderType, QueueStatus, QueueType, SpeedType, TerrainType, Vector2 } from "../../game/ai/thirdpartbot/builtIn/game-api";
 import { getAdjacencyTiles, planRefinery } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/buildingRules";
 import { QueueController, QUEUES } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/queueController";
-import { getBaseCrawlState, isCrawlBlocked, isCrawlDefense, observeBaseCrawl, planBaseCrawl, recordBaseCrawlOrder }
+import { getBaseCrawlState, isCrawlBlocked, isCrawlDefense, isCrawlProduction, observeBaseCrawl, planBaseCrawl, recordBaseCrawlOrder }
     from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/baseCrawl";
 import { ExpansionMission, ExpansionMissionFactory, PackConyardMission, isMcvRelocating, planMcvExpansion }
     from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/expansionMission";
@@ -74,6 +74,54 @@ function fixture(targetX = 45) {
     return { game, context, player, units, enemies, resources, queues, candidates, expansions, refinery, power, defense, own, build,
         at(value: number) { tick = value; }, run: () => planBaseCrawl(context) };
 }
+
+describe("placed crawl hands production control back before its building becomes Ready", () => {
+    function prepared(placed = true) {
+        const f = fixture(), controller = new QueueController(); f.at(12508); f.own("NAWEAP", 100);
+        controller.onAiUpdate(f.context, null, new Map(), () => {});
+        expect(f.context.player.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Structures, "NAPOWR", ObjectType.Building, 1);
+        const queue = f.queues.get(QueueType.Structures)!;
+        Object.assign(queue, { status: QueueStatus.Active, items: [{ rules: f.power, quantity: 1 }] });
+        f.at(12510); observeBaseCrawl(f.context);
+        const active = getBaseCrawlState(f.game, f.player.name).active!;
+        expect(active).toBeDefined();
+        const plant = placed ? f.own(active.rules.name, active.location.rx, BuildStatus.BuildUp) : undefined;
+        if (plant) { queue.status = QueueStatus.Idle; queue.items = []; f.at(12512); observeBaseCrawl(f.context); }
+        return { ...f, controller, plant, active };
+    }
+    test.each(["NAWEAP", "NAREFN", "NAPOWR"])("a placed unfinished crawl does not pause successor%s under real remote pressure", name => {
+        const f = prepared(), queue = f.queues.get(QueueType.Structures)!;
+        const rules = name === "NAREFN" ? f.refinery : name === "NAPOWR" ? f.power
+            : { name, cost: 2000, type: ObjectType.Building, weaponsFactory: true };
+        const available = f.context.player.production.getAvailableObjects;
+        if (name === "NAWEAP") f.context.player.production.getAvailableObjects = (type: QueueType) =>
+            type === QueueType.Structures ? [...available(type), rules] : available(type);
+        Object.assign(queue, { status: QueueStatus.Active, items: [{ rules, quantity: 1 }] });
+        f.enemies.push({ id: 999, name: "HTNK", type: ObjectType.Vehicle, tile: { rx: 120, ry: 0 },
+            rules: { name: "HTNK", type: ObjectType.Vehicle, isSelectableCombatant: true } });
+        f.at(12514); expect(f.run()).toBeUndefined();
+        f.controller.onAiUpdate(f.context, null, new Map([[name, { priority: 100, specificLocation: null }]]), () => {});
+        expect(f.context.player.actions.pauseProduction).not.toHaveBeenCalledWith(QueueType.Structures);
+        expect(isCrawlProduction(f.game, f.player.name, QueueType.Structures)).toBe(false);
+        expect(getBaseCrawlState(f.game, f.player.name).active?.placedId).toBe(f.plant!.id);
+        expect(getBaseCrawlState(f.game, f.player.name).targets.get(f.active.patch.id)?.builtIds.size ?? 0).toBe(0);
+        f.plant!.buildStatus = BuildStatus.Ready; f.at(12516); observeBaseCrawl(f.context);
+        expect(getBaseCrawlState(f.game, f.player.name).targets.get(f.active.patch.id)?.builtIds.size).toBe(1);
+    });
+    test("an unplaced paid crawl still pauses and resumes the same queue without claiming completed progress", () => {
+        const f = prepared(false), queue = f.queues.get(QueueType.Structures)!;
+        f.enemies.push({ id: 999, name: "HTNK", type: ObjectType.Vehicle, tile: { rx: 120, ry: 0 },
+            rules: { name: "HTNK", type: ObjectType.Vehicle, isSelectableCombatant: true } });
+        f.at(12514); f.controller.onAiUpdate(f.context, null, new Map(), () => {});
+        expect(isCrawlProduction(f.game, f.player.name, QueueType.Structures)).toBe(true);
+        expect(f.context.player.actions.pauseProduction).toHaveBeenCalledWith(QueueType.Structures);
+        queue.status = QueueStatus.OnHold; f.enemies.length = 0; f.at(12516);
+        f.controller.onAiUpdate(f.context, null, new Map(), () => {});
+        expect(f.context.player.actions.resumeProduction).toHaveBeenCalledWith(QueueType.Structures);
+        expect(queue.items).toEqual([{ rules: f.power, quantity: 1 }]);
+        expect(getBaseCrawlState(f.game, f.player.name).active?.placedId).toBeUndefined();
+    });
+});
 
 describe("legal visible base crawl", () => {
     test.each(["reachable", "no-target", "hidden", "far", "factory", "miners", "pressure", "queue", "credits", "normal"])(

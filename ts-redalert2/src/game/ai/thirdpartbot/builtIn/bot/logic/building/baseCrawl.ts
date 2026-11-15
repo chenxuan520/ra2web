@@ -57,14 +57,15 @@ export function isCrawlBlocked(game: GameApi, playerName: string, patch: OrePatc
 }
 
 export function isCrawlProduction(game: GameApi, playerName: string, queue: QueueType): boolean {
-    return stateFor(game, playerName).active?.queue === queue;
+    const active = stateFor(game, playerName).active;
+    return active?.queue === queue && active.placedId === undefined;
 }
 
 export function planBaseCrawl(context: SupabotContext): CrawlPlan | undefined {
     if (context.difficulty !== "brutal" || isPressured(context)) return undefined;
     const { game, player } = context, state = stateFor(game, player.name);
     if (state.active) {
-        return player.production.getQueueData(state.active.queue).items[0]?.rules.name === state.active.rules.name ? state.active : undefined;
+        return state.active.placedId === undefined && player.production.getQueueData(state.active.queue).items[0]?.rules.name === state.active.rules.name ? state.active : undefined;
     }
     const data = game.getPlayerData(player.name);
     const miners = game.getVisibleUnits(player.name, "self", rules => rules.harvester).length;
