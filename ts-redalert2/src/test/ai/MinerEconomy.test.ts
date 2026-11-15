@@ -4,6 +4,7 @@ import { MinerDefence } from "../../game/ai/thirdpartbot/builtIn/bot/logic/missi
 import { HarvesterStatus, HarvesterTrait } from "../../game/gameobject/trait/HarvesterTrait";
 import { ReturnOreTask } from "../../game/gameobject/task/harvester/ReturnOreTask";
 import { TiberiumType } from "../../engine/type/TiberiumType";
+import { BuildStatus } from "../../game/gameobject/Building";
 
 function fixture() {
     let tick = 60;
@@ -108,6 +109,102 @@ describe("full cargo returns before miner defence", () => {
         const f = rushingMiner(0, 40); f.context.difficulty = "normal";
         Object.defineProperty(f.miner.rules, "storage", { get() { throw Error("normal must retain its original handling"); } });
         f.run(); expect(f.actions.orderUnits).not.toHaveBeenCalled();
+    });
+});
+
+describe("cargo from a completed miner defence returns before gathering again", () => {
+    function borrowed(ore = 5, gems = 0, name = "CMIN") {
+        const f = fixture(); f.miner.name = f.miner.rules.name = name;
+        Object.assign(f.miner, { isIdle: false, harvestedOre: ore, harvestedGems: gems }); f.miner.rules.storage = 40;
+        f.refineries[0].buildStatus = BuildStatus.Ready;
+        f.resources[0] = { tile: { rx: 4, ry: 0, z: 0 }, ore: 8000, gems: 0 };
+        f.game.mapApi.hasBridgeOnTile = () => false; f.game.mapApi.isPassableTile = () => true;
+        for (let i = 0; i < 6; i++) f.enemies.push({ id: 20 + i, owner: "enemy", name: "E2", type: ObjectType.Infantry,
+            tile: { rx: 8, ry: 0, z: 0 }, rules: { name: "E2", isSelectableCombatant: true, crushable: true, strength: 100 } });
+        f.run(); expect(f.actions.orderUnits).toHaveBeenCalledWith([7], OrderType.Move, 10, 0);
+        return f;
+    }
+    test.each([
+        ["HARV", 5, 0], ["HARV", 0, 5], ["HARV", 2, 3],
+        ["CMIN", 5, 0], ["CMIN", 0, 5], ["CMIN", 2, 3],
+    ] as const)("%s releases known ore%i/gems%i through one Dock rather than another partial Gather", (name, ore, gems) => {
+        const f = borrowed(ore, gems, name); f.at(360); f.run();
+        expect(f.actions.orderUnits).toHaveBeenLastCalledWith([7], OrderType.Dock, 10);
+        f.at(390); f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(2);
+        expect([f.miner.harvestedOre, f.miner.harvestedGems]).toEqual([ore, gems]);
+    });
+    test.each(["empty", "unknown-ore", "unknown-gems", "no-refinery", "unfinished-refinery", "warped-refinery"])(
+        "%s retains the existing visible Gather release", condition => {
+            const f = borrowed();
+            if (condition === "empty") f.miner.harvestedOre = 0;
+            if (condition === "unknown-ore") delete f.miner.harvestedOre;
+            if (condition === "unknown-gems") delete f.miner.harvestedGems;
+            if (condition === "no-refinery") f.refineries.length = 0;
+            if (condition === "unfinished-refinery") f.refineries[0].buildStatus = BuildStatus.BuildUp;
+            if (condition === "warped-refinery") f.refineries[0].isWarpedOut = true;
+            f.at(360); f.run(); expect(f.actions.orderUnits).toHaveBeenLastCalledWith([7], OrderType.Gather, 4, 0);
+        });
+    test("a loaded release skips an unfinished first refinery for a real Ready refinery", () => {
+        const f = borrowed(); f.refineries[0].buildStatus = BuildStatus.BuildUp;
+        f.refineries.push({ ...f.refineries[0], id: 11, buildStatus: BuildStatus.Ready });
+        f.at(360); f.run(); expect(f.actions.orderUnits).toHaveBeenLastCalledWith([7], OrderType.Dock, 11);
+    });
+    test("the existing active-defence deadline is not shortened to unload partial cargo", () => {
+        const f = borrowed(); f.at(354); f.run();
+        expect(f.actions.orderUnits).toHaveBeenCalledTimes(1);
+    });
+    test("the existing no-resource Dock fallback remains", () => {
+        const f = borrowed(); f.resources.length = 0; f.at(360); f.run();
+        expect(f.actions.orderUnits).toHaveBeenLastCalledWith([7], OrderType.Dock, 10);
+    });
+    test("the release update cannot replace an idle loaded miner's Dock with a gem Gather", () => {
+        const f = borrowed(); f.miner.isIdle = true;
+        f.resources.push({ tile: { rx: 30, ry: 0, z: 0 }, ore: 0, gems: 200 });
+        f.at(360); f.run();
+        expect(f.actions.orderUnits).toHaveBeenCalledTimes(2);
+        expect(f.actions.orderUnits).toHaveBeenLastCalledWith([7], OrderType.Dock, 10);
+    });
+    test("the release update cannot rebalance an idle loaded miner out of its Dock", () => {
+        const f = borrowed(5, 0, "HARV"); f.miner.isIdle = true; f.refineries[0].tile.ry = -4;
+        f.refineries.push({ ...f.refineries[0], id: 11, tile: { rx: 32, ry: 0, z: 0 } });
+        f.resources.push({ tile: { rx: 30, ry: 0, z: 0 }, ore: 8000, gems: 0 });
+        const others = [40, 41, 42, 43, 44].map(id => ({ ...f.miner, id, isIdle: false, harvestedOre: 20 }));
+        const visible = f.game.getVisibleUnits, data = f.game.getUnitData;
+        f.game.getVisibleUnits = (name: string, relation: string, predicate = (_: any) => true) =>
+            [...visible(name, relation, predicate), ...(relation === "self" ? others.filter(unit => predicate(unit.rules)).map(unit => unit.id) : [])];
+        f.game.getUnitData = (id: number) => others.find(unit => unit.id === id) ?? data(id);
+        f.at(450); f.run();
+        expect(f.actions.orderUnits).toHaveBeenCalledTimes(2);
+        expect(f.actions.orderUnits).toHaveBeenLastCalledWith([7], OrderType.Dock, 10);
+    });
+    test("a released cargo return does not suppress another miner's eligible gem departure", () => {
+        const f = borrowed(); f.miner.isIdle = true;
+        f.resources.push({ tile: { rx: 30, ry: 0, z: 0 }, ore: 0, gems: 200 });
+        const empty = { ...f.miner, id: 8, harvestedOre: 0 };
+        const visible = f.game.getVisibleUnits, data = f.game.getUnitData;
+        f.game.getVisibleUnits = (name: string, relation: string, predicate = (_: any) => true) =>
+            [...visible(name, relation, predicate), ...(relation === "self" && predicate(empty.rules) ? [empty.id] : [])];
+        f.game.getUnitData = (id: number) => id === empty.id ? empty : data(id);
+        f.at(360); f.run();
+        expect(f.actions.orderUnits).toHaveBeenCalledWith([7], OrderType.Dock, 10);
+        expect(f.actions.orderUnits).toHaveBeenCalledWith([8], OrderType.Gather, 30, 0);
+        expect(f.actions.orderUnits).toHaveBeenCalledTimes(3);
+    });
+    test("the issued Dock is not income until the native partial-cargo unloading contract executes", () => {
+        const f = borrowed(), owner = { name: "bot", credits: 0, buildings: [] }, harvester = new HarvesterTrait(40);
+        Object.assign(harvester, { ore: 5, gems: 0 }); f.at(360); f.run();
+        expect(f.actions.orderUnits).toHaveBeenLastCalledWith([7], OrderType.Dock, 10);
+        expect(owner.credits).toBe(0); expect(harvester.debugGetState()).toEqual({ ore: 5, gems: 0 });
+        const world: any = { map: { tileOccupation: {} }, areFriendly: () => true,
+            rules: { ai: { tiberiumNearScan: 1, tiberiumFarScan: 1 }, general: { purifierBonus: 0 },
+                getTiberium: (type: TiberiumType) => ({ value: type === TiberiumType.Gems ? 50 : 25 }) } };
+        const returnTask = new ReturnOreTask(world), tasks: any[] = [returnTask];
+        (returnTask as any).target = { id: 10, owner, isSpawned: true, warpedOutTrait: { isActive: () => false } };
+        // Supplied arrival/unloading is a native mechanics fixture, not a league delivery or alternative trajectory.
+        Object.assign(harvester, { status: HarvesterStatus.Unloading });
+        expect(returnTask.onTick({ owner, harvesterTrait: harvester,
+            unitOrderTrait: { getTasks: () => tasks, addTask: (task: any) => tasks.push(task) } })).toBe(true);
+        expect(owner.credits).toBe(125); expect(harvester.isEmpty()).toBe(true);
     });
 });
 

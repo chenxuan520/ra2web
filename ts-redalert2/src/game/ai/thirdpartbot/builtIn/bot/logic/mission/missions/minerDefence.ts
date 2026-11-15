@@ -1,3 +1,4 @@
+import { BuildStatus } from "@/game/gameobject/Building";
 import { estimatedCombatWeapons } from "../../common/observedUnit";
 import { ObjectType, OrderType, QueueStatus, QueueType, UnitData, Vector2 } from "../../../../game-api";
 import { SupabotContext } from "../../common/context";
@@ -32,6 +33,7 @@ export class MinerDefence {
         const miners = game.getVisibleUnits(player.name, "self", rules => rules.harvester && rules.crusher)
             .map(id => game.getUnitData(id)).filter((unit): unit is UnitData => !!unit && unit.canMove && !unit.isWarpedOut && !context.parasiteRepair?.isRepairing(unit.id));
         let miner = this.active ? miners.find(unit => unit.id === this.active!.id) : undefined;
+        let cargoReturnId: number | undefined;
         if (this.active && !miner) {
             this.active = undefined;
             this.nextDefenceAt = tick + 300;
@@ -65,7 +67,17 @@ export class MinerDefence {
                     resource.ore + resource.gems > 0).sort((a, b) =>
                     (a.tile.rx - miner!.tile.rx) ** 2 + (a.tile.ry - miner!.tile.ry) ** 2 -
                     ((b.tile.rx - miner!.tile.rx) ** 2 + (b.tile.ry - miner!.tile.ry) ** 2))[0];
-                if (ore) player.actions.orderUnits([miner.id], OrderType.Gather, ore.tile.rx, ore.tile.ry);
+                // Unload the released loan before a new Gather can tie up its partial cargo.
+                const returnRefinery = miner.harvestedOre !== undefined && miner.harvestedGems !== undefined &&
+                    miner.harvestedOre + miner.harvestedGems > 0
+                    ? game.getVisibleUnits(player.name, "self", rules => rules.refinery).find(id => {
+                        const refinery = game.getUnitData(id);
+                        return refinery?.owner === player.name && Number(refinery.buildStatus) === BuildStatus.Ready && !refinery.isWarpedOut;
+                    }) : undefined;
+                if (returnRefinery !== undefined) {
+                    player.actions.orderUnits([miner.id], OrderType.Dock, returnRefinery);
+                    cargoReturnId = miner.id;
+                } else if (ore) player.actions.orderUnits([miner.id], OrderType.Gather, ore.tile.rx, ore.tile.ry);
                 else {
                     const refinery = game.getVisibleUnits(player.name, "self", rules => rules.refinery)[0];
                     if (refinery !== undefined) player.actions.orderUnits([miner.id], OrderType.Dock, refinery);
@@ -173,6 +185,7 @@ export class MinerDefence {
                 }
             }
             const canDispatch = (miner: UnitData) => {
+                if (miner.id === cargoReturnId) return false;
                 if (!game.mapApi.isVisibleTile(miner.tile, player.name)) return false;
                 const resource = game.mapApi.getTileResourceData(miner.tile);
                 // A real empty return can stand over ore beneath the refinery; full cargo and active gem mining stay untouched.
