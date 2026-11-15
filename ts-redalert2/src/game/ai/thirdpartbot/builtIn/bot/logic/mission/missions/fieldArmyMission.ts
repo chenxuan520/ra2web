@@ -228,9 +228,7 @@ export class FieldArmyMission extends Mission {
         };
         const allied = available.has("MTNK");
         const conscripts = getBasicInfantryBudget("E2", context.difficulty);
-        // Do not keep funding an opening that its visible counters already prevent from pushing.
-        if (openingInfantry && enemyArmor <= 2 && enemyAircraft === 0 && enemyDefences < 2)
-            want(this.plan!.composition.E2 ? "E2" : "E1", this.plan!.maximumUnits, 95);
+        if (openingInfantry) want(this.plan!.composition.E2 ? "E2" : "E1", this.plan!.maximumUnits, 95);
         if (s.harvesters && !allied && !mobileRoles) want("E2", conscripts.total, 20);
         const tank = allied ? "MTNK" : "HTNK", aa = allied ? "FV" : "HTK";
         const heavyTank = allied ? (available.has("SREF") ? "SREF" : (available.has("MGTK") ? "MGTK" : "MTNK")) : null;

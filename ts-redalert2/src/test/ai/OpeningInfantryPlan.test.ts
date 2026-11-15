@@ -61,12 +61,14 @@ describe('fresh opening recruits use the real mission priority allocator', () =>
         expect(f.army.getUnitIds()).toHaveLength(8); expect(f.army.isAttacking()).toBe(true);
         expect(f.home.getUnitIds()).toEqual([]); expect(f.reserve.getUnitIds()).toEqual([1, 2]);
     });
-    test.each(['countered', 'expired'])('a %s opening still leaves fresh conscripts eligible for their original home role', condition => {
+    test.each(['countered', 'expired'])('a %s opening keeps active recruits separate from its finished home contingent', condition => {
         const f = recruitFixture(); f.at(condition === 'expired' ? 7000 : 3002);
         if (condition === 'countered') for (let id = 1000; id < 1003; id++) f.enemies.set(id, { id, name: 'MTNK', owner: 'enemy',
             type: ObjectType.Vehicle, rules: { name: 'MTNK', type: ObjectType.Vehicle, isSelectableCombatant: true },
             tile: { rx: 80, ry: 0 }, hitPoints: 500, maxHitPoints: 500, zone: ZoneType.Ground });
-        f.update(); expect(f.home.getUnitIds()).toEqual([3]); expect(f.army.getUnitIds()).toEqual([]);
+        f.update();
+        expect(f.home.getUnitIds()).toEqual(condition === 'expired' ? [3] : []);
+        expect(f.army.getUnitIds()).toEqual(condition === 'expired' ? [] : [3]);
         expect(f.home.isUnitsLocked()).toBe(true); expect(f.reserve.getUnitIds()).toEqual([1, 2]);
     });
     test('the original home-to-reserve casualty replacement and locks remain unchanged after the opening', () => {
@@ -76,6 +78,28 @@ describe('fresh opening recruits use the real mission priority allocator', () =>
             tile: { rx: 0, ry: 0 }, hitPoints: 900, maxHitPoints: 900, zone: ZoneType.Ground, isIdle: true });
         f.update(); expect(f.reserve.getUnitIds()).toEqual([1, 3]); expect(f.home.getUnitIds()).toEqual([]);
         expect(f.reserve.isUnitsLocked()).toBe(true);
+    });
+});
+
+describe('a transient counter does not strand already paid opening recruits', () => {
+    function counters(f: ReturnType<typeof recruitFixture>) {
+        for (let id = 1000; id < 1003; id++) f.enemies.set(id, { id, name: 'MTNK', owner: 'enemy',
+            type: ObjectType.Vehicle, rules: { name: 'MTNK', type: ObjectType.Vehicle, isSelectableCombatant: true },
+            tile: { rx: 80, ry: 0 }, hitPoints: 500, maxHitPoints: 500, zone: ZoneType.Ground });
+    }
+    test.each([false, true])('an active paid cohort keeps the C3 recruit request through a counter sighting, reverse=%s', reverse => {
+        const f = recruitFixture(reverse); counters(f); f.at(3002); f.update();
+        expect(f.army.getUnitIds()).toEqual([3]); expect(f.home.getUnitIds()).toEqual([]);
+        expect(f.reserve.getUnitIds()).toEqual([1, 2]); expect(f.army.isAttacking()).toBe(false);
+        f.at(3004); f.update(); expect(f.controller.getRequestedUnitTypes().get('E2')?.priority).toBe(95);
+        f.enemies.clear(); f.at(3030); f.update();
+        expect(f.army.getUnitIds()).toEqual([3]); expect(f.home.getUnitIds()).toEqual([]);
+    });
+    test('the restored missing-recruit request does not steal an already locked home member', () => {
+        const f = recruitFixture(), recruit = f.units.get(3)!; f.home.addUnit(3);
+        f.units.set(4, { ...recruit, id: 4 }); counters(f); f.at(3002); f.update();
+        expect(f.army.getUnitIds()).toEqual([4]); expect(f.home.getUnitIds()).toEqual([3]);
+        expect(f.home.isUnitsLocked()).toBe(true); expect(f.reserve.getUnitIds()).toEqual([1, 2]);
     });
 });
 
@@ -99,7 +123,7 @@ describe('bounded paid infantry support during armor assembly', () => {
         expect(result.type).not.toBe('releaseUnits'); expect(army.isAttacking()).toBe(true); expect(result.unitNameToPriority.E2).toBe(95);
         f.at(7000); expect(army.onAiUpdate({ ...f.context, actionBatcher }).type).toBe('releaseUnits');
     });
-    test.each(['fortified', 'armor', 'air'])('the opening stops paid foot reinforcements when visible %s already prevents its infantry push', counter => {
+    test.each(['fortified', 'armor', 'air'])('the C3 cohort request persists when visible %s prevents a pure infantry push', counter => {
         const f = fixture(), plan = f.plan(), army = new FieldArmyMission(plan, f.controller, () => {});
         f.controller.addMission(army);
         const type = counter === 'fortified' ? ObjectType.Building : counter === 'armor' ? ObjectType.Vehicle : ObjectType.Aircraft;
@@ -110,7 +134,7 @@ describe('bounded paid infantry support during armor assembly', () => {
             hitPoints: 500, maxHitPoints: 500, zone: counter === 'air' ? ZoneType.Air : ZoneType.Ground });
         f.at(3002);
         const result: any = army.onAiUpdate({ ...f.context, actionBatcher: new ActionBatcher() });
-        expect(result.unitNameToPriority.E2).toBeUndefined();
+        expect(result.unitNameToPriority.E2).toBe(95);
         expect(result.unitNameToPriority.HTNK).toBe(75);
     });
     test('one tower and two vehicles keep the original viable paid infantry opening', () => {

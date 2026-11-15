@@ -154,7 +154,7 @@ export class MinerDefence {
                     this.dispatchTargets.delete(id);
                     continue;
                 }
-                if (current) counts.set(current.id, counts.get(current.id)! - 1);
+                // Keep physical source occupancy while reserving the destination.
                 counts.set(target.id, counts.get(target.id)! + 1);
                 assignments.set(id, target);
             }
@@ -170,7 +170,6 @@ export class MinerDefence {
             const reserveDispatch = (miner: UnitData, tile: PatchPoint) => {
                 const target = patchByTile.get(tileKey(tile))!, current = assignments.get(miner.id);
                 if (current?.id !== target.id) {
-                    if (current) counts.set(current.id, counts.get(current.id)! - 1);
                     counts.set(target.id, counts.get(target.id)! + 1);
                 }
                 assignments.set(miner.id, target);
@@ -257,7 +256,10 @@ export class MinerDefence {
                     .find(resource => {
                         const patch = patchByTile.get(tileKey(resource.tile));
                         if (!patch) return false;
-                        const served = isServed(patch, refinerySites), capacity = served ? patchCapacity(patch, chrono) : 1;
+                        const served = isServed(patch, refinerySites);
+                        const observedOreHaul = !patch.isGem && inventory.some(miner => (miner.harvestedOre ?? 0) > 0 &&
+                            patchDistance(miner.tile, patch) <= 6) && refinerySites.some(site => patchDistance(site, patch) <= 40);
+                        const capacity = served || observedOreHaul ? patchCapacity(patch, chrono) : 1;
                         return (served || patchDistance({ rx: home.x, ry: home.y }, patch) <= 40) &&
                             counts.get(patch.id)! - Number(assignments.get(m.id)?.id === patch.id) < capacity &&
                             !enemyCombatants.some(enemy => Math.hypot(enemy.tile.rx - resource.tile.rx, enemy.tile.ry - resource.tile.ry) <= 14) &&

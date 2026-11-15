@@ -369,6 +369,63 @@ describe("recovery paths use a bounded long-haul search", () => {
     });
 });
 
+describe("physical source occupancy remains reserved until actual departure", () => {
+    function scenario(incoming = true) {
+        const f = fixture(); f.resources.splice(0, f.resources.length,
+            { tile: { rx: 8, ry: 0 }, ore: 18000, gems: 0 }, { tile: { rx: 30, ry: 0 }, ore: 0, gems: 4000 });
+        f.refineries[0].tile.rx = 5; f.miners[0].tile.rx = 6;
+        for (let i = 0; i < 4; i++) { const m = f.miner(8); m.harvestedOre = 20; }
+        const arrival = incoming ? f.miner(1) : undefined;
+        return { ...f, arrival };
+    }
+    test("an issued Gather cannot sell the source slot to another miner before moving", () => {
+        const f = scenario(); f.run();
+        expect(f.actions.orderUnits.mock.calls).toEqual([[[f.miners[0].id], OrderType.Gather, 30, 0]]);
+        f.at(60); f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(1);
+        f.miners[0].tile.rx = 30; f.at(90); f.run();
+        expect(f.actions.orderUnits.mock.calls[1]).toEqual([[f.arrival!.id], OrderType.Gather, 8, 0]);
+    });
+    test("a prior live reservation also retains the source's real five occupants", () => {
+        const f = scenario(false); f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(1);
+        f.miner(1); f.at(60); f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(1);
+    });
+});
+
+describe("observed ordinary-ore hauls use the existing field capacity", () => {
+    function scenario(name = "HARV") {
+        const f = fixture(); f.resources.splice(0, f.resources.length,
+            { tile: { rx: 8, ry: 0 }, ore: 18000, gems: 0 }, { tile: { rx: 30, ry: 0 }, ore: 4000, gems: 0 });
+        f.refineries[0].tile.rx = 5; f.miners[0].tile.rx = 12;
+        for (let i = 0; i < 5; i++) { const m = f.miner(8); m.harvestedOre = 20; }
+        const hauling = f.miner(30); hauling.harvestedOre = 20;
+        for (const miner of f.miners) miner.name = miner.rules.name = name;
+        return { ...f, hauling };
+    }
+    test.each(["HARV", "CMIN"])("%s can add a second miner to a known already worked ordinary haul", name => {
+        const f = scenario(name); f.run();
+        expect(f.actions.orderUnits.mock.calls).toEqual([[[f.miners[0].id], OrderType.Gather, 30, 0]]);
+        f.at(60); f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(1);
+    });
+    test.each(["empty-hauler", "unknown-hauler", "gems-only-cargo", "gem-field", "at-capacity", "not-overfull", "blocked", "unsafe", "hidden", "normal"])(
+        "%s cannot invent an ordinary worked-route slot", condition => {
+            const f = scenario();
+            if (condition === "empty-hauler") f.hauling.harvestedOre = 0;
+            if (condition === "unknown-hauler") delete f.hauling.harvestedOre;
+            if (condition === "gems-only-cargo") { f.hauling.harvestedOre = 0; f.hauling.harvestedGems = 20; }
+            if (condition === "gem-field") { f.resources[1].ore = 0; f.resources[1].gems = 4000; }
+            if (condition === "at-capacity") { const miner = f.miner(30); miner.harvestedOre = 20; }
+            if (condition === "not-overfull") f.miners.splice(1, 1);
+            if (condition === "blocked") f.blocked.add("30_0");
+            if (condition === "unsafe") f.enemies.push({ id: 999, type: ObjectType.Infantry,
+                tile: { rx: 44, ry: 0 }, rules: { isSelectableCombatant: true } });
+            if (condition === "hidden") {
+                f.hidden.add("30_0"); Object.defineProperty(f.resources[1], "ore", { get() { throw Error("hidden ore read"); } });
+            }
+            if (condition === "normal") f.context.difficulty = "normal";
+            f.run(); expect(f.actions.orderUnits).not.toHaveBeenCalled();
+        });
+});
+
 describe("served-field one-miner balancing", () => {
     test("five miners on capacity four versus one on capacity four moves exactly one at tick 150", () => {
         const f = balanceFixture();
