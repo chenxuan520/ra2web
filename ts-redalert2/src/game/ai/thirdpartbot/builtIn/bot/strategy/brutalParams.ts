@@ -23,7 +23,7 @@ export const BRUTAL_PARAMS = {
         techPriority: 30,
         depotMinCredits: 6000,
         depotMinArmor: 8,
-        defenseMaxCount: 6,
+        defenseMaxCount: 4,
         defenseMinCredits: 1000,
         defenseCooldownTicks: 450,
         defenseStartRadius: 20,

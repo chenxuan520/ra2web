@@ -18,6 +18,12 @@ const keys = {
         retreatForceRatio decimatedEarly decimatedVsHeavyDefence decimatedLate formedArmor`,
 };
 
+describe('authorized G5 defense-count adjustment', () => {
+    test('the basic defense budget uses the prescribed four-tower candidate value', () => {
+        expect(BRUTAL_PARAMS.economy.defenseMaxCount).toBe(4);
+    });
+});
+
 describe('central brutal strategy parameters', () => {
     test('keys retain the champion thresholds and the numeric eco-only diagnostic switch', () => {
         expect(Object.keys(BRUTAL_PARAMS)).toEqual(['economy', 'assault']);

@@ -81,6 +81,17 @@ function fixture() {
         plan: (emergency?: any) => planDefense(context, emergency), observe: () => observeDefense(context) };
 }
 
+describe("authorized G5 four-basic-defense budget", () => {
+    test.each([[3, true], [4, false]] as const)("%i ordinary towers permit another defense=%s without changing its signal", (count, permitted) => {
+        const f = fixture(); for (let i = 0; i < count; i++) f.own("NALASR", 60 + i * 2);
+        f.enemy("DRON");
+        expect(canRequestDefense(f.game, f.player, "NALASR")).toBe(permitted);
+        if (permitted) expect(f.plan()).toMatchObject({ signal: "D1", priority: 75 });
+        else expect(f.plan()).toBeUndefined();
+        expect(canRequestDefense(f.game, f.player, "NAFLAK")).toBe(true);
+    });
+});
+
 describe("visible-signal defense plans", () => {
     test("no signal produces neither a plan nor generic anti-air production", () => {
         const f = fixture(); expect(f.plan()).toBeUndefined();
@@ -156,8 +167,8 @@ describe("visible-signal defense plans", () => {
         f.enemies.length = 0; f.at(2704); f.build(); f.at(3156); f.enemy("DRON");
         expect(f.plan()?.refineryId).toBe(f.refinery.id); // Only the unprotected home refinery needs D1.
     });
-    test("six basic towers cap all signals; classified crawl towers do not use this cap", () => {
-        const f = fixture(); const towers = Array.from({ length: 6 }, (_, i) => f.own("NALASR", 60 + i * 2)); f.enemy("DRON");
+    test("four basic towers cap all signals; classified crawl towers do not use this cap", () => {
+        const f = fixture(); const towers = Array.from({ length: 4 }, (_, i) => f.own("NALASR", 60 + i * 2)); f.enemy("DRON");
         expect(f.plan()).toBeUndefined();
         getBaseCrawlState(f.game, f.player.name).defenseIds.add(towers[0].id); // Classified actual-ID fixture; production is tested in EconomyExpand.
         expect(f.plan()).toMatchObject({ signal: "D1" });
