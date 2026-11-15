@@ -91,7 +91,8 @@ export class DroneRaidMission extends Mission {
                     else {
                         if (this.orders.get(drone.id)?.action.orderType === OrderType.Move && drone.isIdle === false &&
                             !enemies.some(enemy => !enemy.rules.engineer &&
-                                (enemy.rules.isSelectableCombatant || enemy.rules.primary || enemy.rules.secondary))) continue;
+                                (enemy.rules.isSelectableCombatant || enemy.rules.primary || enemy.rules.secondary) &&
+                                ((enemy.type as any) !== ObjectType.Vehicle || point(drone).distanceToSquared(point(enemy)) <= 8 ** 2))) continue;
                         if (!plannedAmbush) {
                             ambush = getDroneRaidAmbushPoint(context);
                             plannedAmbush = true;

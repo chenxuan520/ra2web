@@ -313,6 +313,53 @@ describe("visible engineer tools do not reset an active drone transit", () => {
     });
 });
 
+describe("distant vehicles do not reset an active drone ambush transit", () => {
+    function scenario() {
+        const f = fixture(); f.resources.push(resource(90, 0)); f.drone.isIdle = false;
+        f.step(3400); expect(f.orders).toEqual([[[1], OrderType.Move, 90, 0]]);
+        f.drone.tile.rx = 20; f.resources.splice(0, f.resources.length, resource(30, 0));
+        return f;
+    }
+    test("a currently seen tank34 tiles away cannot replace the live ambush Move", () => {
+        const f = scenario(); f.add(10, "MTNK", "enemy", 54, 0, { isSelectableCombatant: true, primary: "105mm" });
+        f.step(3490); expect(f.orders).toEqual([[[1], OrderType.Move, 90, 0]]);
+    });
+    test.each([8, 8.01])("only a vehicle inside the existing eight-tile fallback distance%s may replan a no-target transit", distance => {
+        const f = scenario(), unit = f.add(10, "SUB", "enemy", 20 + distance, 0, { isSelectableCombatant: true, primary: "Torpedo" });
+        unit.zone = ZoneType.Water;
+        f.step(3490);
+        expect(f.orders).toEqual(distance <= 8 ? [[[1], OrderType.Move, 90, 0], [[1], OrderType.Move, 30, 0]] : [[[1], OrderType.Move, 90, 0]]);
+    });
+    test("an unseen far vehicle cannot leak position or armament", () => {
+        const f = scenario(), unit = f.add(10, "MTNK", "enemy", 54, 0, { primary: "105mm" }); f.hidden.add(unit.id);
+        for (const field of ["tile", "rules", "owner"]) Object.defineProperty(unit, field, { get: forbidden });
+        f.step(3490); expect(f.orders).toEqual([[[1], OrderType.Move, 90, 0]]);
+    });
+    test("a miner outside eight tiles still immediately becomes the Attack target", () => {
+        const f = scenario(); f.add(10, "HARV", "enemy", 60, 0); f.step(3490);
+        expect(f.orders.at(-1)).toEqual([[1], OrderType.Attack, 10]);
+    });
+    test("a nearby eligible ground tank still takes the original Attack branch", () => {
+        const f = scenario(); f.add(10, "MTNK", "enemy", 28, 0, { primary: "105mm" }); f.step(3490);
+        expect(f.orders.at(-1)).toEqual([[1], OrderType.Attack, 10]);
+    });
+    test("an idle drone still replans with a far visible vehicle", () => {
+        const f = scenario(); f.drone.isIdle = true; f.add(10, "MTNK", "enemy", 54, 0, { primary: "105mm" });
+        f.step(3490); expect(f.orders.at(-1)).toEqual([[1], OrderType.Move, 30, 0]);
+    });
+    test.each([ObjectType.Infantry, ObjectType.Building])("non-vehicle threat type%s retains its old replanning condition", type => {
+        const f = scenario(), unit = f.add(10, type === ObjectType.Infantry ? "E1" : "GAPILL", "enemy", 150, 0, { primary: "Vulcan" });
+        unit.type = unit.rules.type = type;
+        f.step(3490); expect(f.orders.at(-1)).toEqual([[1], OrderType.Move, 30, 0]);
+    });
+    test("each owned moving drone retains its route when the only armed vehicle is distant", () => {
+        const f = fixture(); f.resources.push(resource(90, 0)); f.drone.isIdle = false;
+        const second = f.add(2, "DRON"); second.isIdle = false; f.mission.addUnit(second.id); f.step(3400);
+        f.resources.splice(0, f.resources.length, resource(30, 0)); f.add(10, "MTNK", "enemy", 70, 0, { primary: "105mm" });
+        f.step(3490); expect(f.orders).toEqual([[[1, 2], OrderType.Move, 90, 0]]);
+    });
+});
+
 describe("drone raid cadence and ownership", () => {
     test("checks targets every thirty ticks and does not repeat an idle target before sixty", () => {
         const f = fixture(); f.add(10, "HARV", "enemy", 20);
