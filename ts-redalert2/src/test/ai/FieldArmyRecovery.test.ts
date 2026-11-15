@@ -1,4 +1,4 @@
-import { expect, test } from "bun:test";
+import { describe, expect, test } from "bun:test";
 import { MovementZone, ObjectType, Vector2, ZoneType } from "../../game/ai/thirdpartbot/builtIn/game-api";
 import { MissionController } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missionController";
 import { FieldArmyMission } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/fieldArmyMission";
@@ -48,9 +48,91 @@ function scenario(tankCount: number, threatX: number) {
     for (let id = 1; id <= tankCount; id++) army.addUnit(id);
     const context: any = { game, difficulty: "brutal", player: { name: "bot", production: { getAvailableObjects: () => [] } },
         matchAwareness: { getMainRallyPoint: () => new Vector2(10, 0), getThreatCache: () => null } };
-    return { army, own, enemies, at(value: number) { tick = value; },
+    return { army, own, enemies, game, context, at(value: number) { tick = value; },
         run() { army.onAiUpdate(context); }, radius: () => defensiveRadius };
 }
+
+describe("nearby visible attacks on own miners reach the existing close-defence rule", () => {
+    function miningScenario(tanks = 2, gap = 3, name = "CMIN") {
+        const f = scenario(tanks, 80 + gap);
+        const miner: any = { id: 40, name, owner: "bot", type: ObjectType.Vehicle, zone: ZoneType.Ground,
+            tile: { rx: 80, ry: 0 }, hitPoints: 1000, maxHitPoints: 1000, isWarpedOut: false,
+            rules: { name, type: ObjectType.Vehicle, harvester: true, armor: 1 } };
+        f.own.push(miner); f.at(7000);
+        const cannon = { damage: 65, rof: 60, range: 5, projectile: "ground", warhead: "AP" };
+        const teeth = { damage: 30, rof: 30, range: 1.5, projectile: "ground", warhead: "infantry" };
+        const lookups: string[] = [];
+        f.game.rulesApi = {
+            getWeapon(name: string) { lookups.push(name); return name === "120mm" ? cannon : name === "Teeth" ? teeth : undefined; },
+            getProjectile: (_name: string) => ({ isAntiGround: true, isAntiAir: false }),
+            getWarhead: (name: string) => ({ verses: new Map([[1, name === "infantry" ? 0 : 1]]) }),
+        };
+        return { ...f, miner, cannon, lookups };
+    }
+    test.each(["HARV", "CMIN"])("two tanks can defend %s outside every static base anchor without changing formation thresholds", name => {
+        const f = miningScenario(2, 3, name); f.at(15930); f.run();
+        expect(f.army.isAttacking()).toBe(false);
+        expect(f.army.getAttackArea().x).toBe(83); expect(f.radius()).toBe(25);
+        expect(f.lookups).toContain("120mm");
+        for (const enemy of f.enemies) expect(Object.hasOwn(enemy, "hitPoints")).toBe(false);
+    });
+    test("the existing twenty-two-tile close-defence boundary includes a mining threat", () => {
+        const f = miningScenario(2, 22); f.run(); expect(f.army.getAttackArea().x).toBe(102);
+    });
+    test.each(["no-miner", "dead-miner", "warped-miner", "foreign-miner", "unknown-own-health", "hidden-enemy", "dead-enemy"])(
+        "%s does not create a new mining close-defence target", condition => {
+            const f = miningScenario();
+            if (condition === "no-miner") f.own.splice(f.own.indexOf(f.miner), 1);
+            if (condition === "dead-miner") f.miner.hitPoints = 0;
+            if (condition === "warped-miner") f.miner.isWarpedOut = true;
+            if (condition === "foreign-miner") f.miner.owner = "enemy";
+            if (condition === "unknown-own-health") delete f.miner.hitPoints;
+            if (condition === "hidden-enemy") {
+                const visible = f.game.getVisibleUnits;
+                f.game.getVisibleUnits = (name: string, relation: string, predicate: any) => relation === "enemy" ? [] : visible(name, relation, predicate);
+            }
+            if (condition === "dead-enemy") for (const enemy of f.enemies) enemy.hitPoints = 0;
+            f.run(); expect(f.army.getAttackArea().distanceTo(new Vector2())).toBeLessThanOrEqual(4);
+        });
+    test.each([23, 48])("a miner's %i-tile outer neighborhood does not become a new approach/interception anchor", gap => {
+        const f = miningScenario(4, gap); f.run();
+        expect(f.army.isAttacking()).toBe(false);
+        expect(f.army.getAttackArea().distanceTo(new Vector2())).toBeLessThanOrEqual(4);
+    });
+    test.each(["DOG", "ADOG", "ENGINEER", "air-only", "never-use", "zero-damage"])(
+        "%s cannot activate mining defence without a public weapon able to damage that miner", condition => {
+            const f = miningScenario(4);
+            if (["DOG", "ADOG", "ENGINEER"].includes(condition)) {
+                const guards = f.enemies.map(enemy => ({ ...enemy, id: enemy.id + 30, tile: { rx: 200, ry: 0 }, rules: { ...enemy.rules } }));
+                for (const enemy of f.enemies) {
+                    enemy.name = enemy.rules.name = condition; enemy.type = enemy.rules.type = ObjectType.Infantry;
+                    enemy.rules.primary = condition === "ENGINEER" ? undefined : "Teeth";
+                }
+                f.enemies.push(...guards);
+            }
+            if (condition === "air-only") f.game.rulesApi.getProjectile = () => ({ isAntiGround: false, isAntiAir: true });
+            if (condition === "never-use") Object.assign(f.cannon, { neverUse: true });
+            if (condition === "zero-damage") f.cannon.damage = 0;
+            f.run(); expect(f.army.getAttackArea().distanceTo(new Vector2())).toBeLessThanOrEqual(4);
+        });
+    test.each([false, true])("public psionic immunity=%s filters a mind-control-only mining threat", immune => {
+        const f = miningScenario(4); f.miner.rules.immuneToPsionics = immune;
+        f.game.rulesApi.getWeapon = () => ({ damage: 0, rof: 60, range: 5, projectile: "ground", warhead: "mind" });
+        f.game.rulesApi.getWarhead = () => ({ mindControl: true, verses: new Map([[1, 1]]) });
+        f.run();
+        if (immune) expect(f.army.getAttackArea().distanceTo(new Vector2())).toBeLessThanOrEqual(4);
+        else expect(f.army.getAttackArea().x).toBe(83);
+    });
+    test("the original static-base close defence still works without a mining target", () => {
+        const f = miningScenario(); for (const enemy of f.enemies) enemy.tile.rx = 10;
+        f.run(); expect(f.army.getAttackArea().x).toBe(10); expect(f.radius()).toBe(25);
+    });
+    test("Normal retains its original defence inputs and does not inspect the new miner health", () => {
+        const f = miningScenario(); f.context.difficulty = "normal";
+        Object.defineProperty(f.miner, "hitPoints", { get() { throw Error("Normal must not inspect a new mining defence input"); } });
+        f.run(); expect(f.army.getAttackArea().distanceTo(new Vector2())).toBeLessThanOrEqual(4);
+    });
+});
 
 test("two surviving tanks regroup at home instead of chasing a distant approaching column", () => {
     const f = scenario(2, 40);

@@ -11,6 +11,7 @@ import { DebugLogger } from "../../common/utils";
 import { Mission, releaseUnits, requestSpecificUnits, requestUnits } from "../mission";
 import { MissionController } from "../missionController";
 import { CombatSquad } from "./squads/combatSquad";
+import { getCombatWeapon } from "./squads/tacticalTargeting";
 
 const location = (unit: UnitData) => new Vector2(unit.tile.rx, unit.tile.ry);
 
@@ -53,8 +54,15 @@ export class FieldArmyMission extends Mission {
             .filter((unit): unit is UnitData => isObservedLivingUnit(unit));
         const anchors = game.getVisibleUnits(player.name, "self", rules => rules.constructionYard || rules.refinery || rules.weaponsFactory)
             .map(id => game.getUnitData(id)).filter((unit): unit is UnitData => !!unit);
+        const miners = context.difficulty === "brutal" ? game.getVisibleUnits(player.name, "self", rules => rules.harvester)
+            .map(id => game.getUnitData(id)).filter((unit): unit is UnitData => !!unit && unit.owner === player.name && unit.hitPoints > 0 && !unit.isWarpedOut) : [];
         const homeThreats = enemies.filter(enemy => enemy.rules.isSelectableCombatant && !enemy.rules.harvester &&
-            anchors.some(base => location(base).distanceTo(location(enemy)) <= 22));
+            (anchors.some(base => location(base).distanceTo(location(enemy)) <= 22) ||
+                miners.some(miner => {
+                    if (location(miner).distanceTo(location(enemy)) > 22) return false;
+                    const weapon = getCombatWeapon(enemy, miner, true, game);
+                    return !!weapon && !(weapon.weapon.warheadRules?.mindControl && miner.rules.immuneToPsionics);
+                })));
         const approachThreats = enemies.filter(enemy => enemy.rules.isSelectableCombatant && !enemy.rules.harvester &&
             anchors.some(base => {
                 const d = location(base).distanceTo(location(enemy));
