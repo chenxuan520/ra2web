@@ -2,7 +2,7 @@ import { estimatedCombatWeapons } from "../../common/observedUnit";
 import { ObjectType, OrderType, QueueStatus, QueueType, UnitData, Vector2 } from "../../../../game-api";
 import { SupabotContext } from "../../common/context";
 import { getInfantryCrushPoint } from "./squads/infantryCrushing";
-import { isEcoOnly, readPressure } from "../../common/pressure";
+import { isEcoOnly } from "../../common/pressure";
 import { findVisiblePatches, isServed, OrePatch, patchDistance, PatchPoint } from "../../common/orePatches";
 import { patchCapacity } from "../../building/harvester";
 
@@ -238,36 +238,6 @@ export class MinerDefence {
                     });
 
                     if (targetGem) {
-                        const forayPatch = patchByTile.get(tileKey(targetGem.tile))!;
-                        const soloIncomeState = inventory.length === 1 && m.harvestedOre === 0 && m.harvestedGems === 0 &&
-                            !isServed(forayPatch, refinerySites) && forayPatch.value < 6000
-                            ? readPressure(context) : undefined;
-                        // Preserve a nearer ordinary route while the lone miner would make a small unserved foray.
-                        if (soloIncomeState && (enemyCombatants.some(enemy => (enemy.type as any) !== ObjectType.Building && !enemy.rules.harvester) ||
-                            tick >= 2700 && !soloIncomeState.homeQuiet)) {
-                            const ore = game.mapApi.getAllTilesResourceData().filter(resource =>
-                                game.mapApi.isVisibleTile(resource.tile, player.name) && resource.ore > 0 &&
-                                mPos.distanceToSquared(new Vector2(resource.tile.rx, resource.tile.ry)) < mPos.distanceToSquared(new Vector2(targetGem.tile.rx, targetGem.tile.ry)))
-                                .sort((a, b) => mPos.distanceToSquared(new Vector2(a.tile.rx, a.tile.ry)) -
-                                    mPos.distanceToSquared(new Vector2(b.tile.rx, b.tile.ry)) || a.tile.rx - b.tile.rx || a.tile.ry - b.tile.ry)
-                                .find(resource => {
-                                    const patch = patchByTile.get(tileKey(resource.tile));
-                                    if (!patch || patch.isGem) return false;
-                                    const served = isServed(patch, refinerySites), capacity = served ? patchCapacity(patch, chrono) : 1;
-                                    return (served || patchDistance({ rx: home.x, ry: home.y }, patch) <= 40) &&
-                                        counts.get(patch.id)! - Number(assignments.get(m.id)?.id === patch.id) < capacity &&
-                                        !enemyCombatants.some(enemy => Math.hypot(enemy.tile.rx - resource.tile.rx, enemy.tile.ry - resource.tile.ry) <= 14) &&
-                                        game.mapApi.findPath(m.rules.speedType, { tile: m.tile, onBridge: !!m.onBridge },
-                                            { tile: resource.tile, onBridge: false }, { bestEffort: false, maxExpandedNodes: 256 })
-                                            .some(node => node.tile.rx === resource.tile.rx && node.tile.ry === resource.tile.ry);
-                                });
-                            if (ore) {
-                                player.actions.orderUnits([m.id], OrderType.Gather, ore.tile.rx, ore.tile.ry);
-                                this.lastGemOrder.set(m.id, tick);
-                                reserveDispatch(m, ore.tile);
-                                continue;
-                            }
-                        }
                         player.actions.orderUnits([m.id], OrderType.Gather, targetGem.tile.rx, targetGem.tile.ry);
                         this.lastGemOrder.set(m.id, tick);
                         reserveDispatch(m, targetGem.tile);

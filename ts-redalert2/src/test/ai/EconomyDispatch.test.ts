@@ -46,53 +46,6 @@ function balanceFixture() {
     return f;
 }
 
-describe("the sole miner keeps nearer ordinary income during observed enemy activity", () => {
-    function scenario(name = "HARV") {
-        const f = fixture(); f.at(1950); f.resources[1].gems = 2500;
-        f.miners[0].name = f.miners[0].rules.name = name;
-        f.enemies.push({ id: 999, name: "ADOG", type: ObjectType.Infantry, tile: { rx: 50, ry: 0 },
-            rules: { name: "ADOG", type: ObjectType.Infantry, isSelectableCombatant: true } });
-        return f;
-    }
-    test.each(["HARV", "CMIN"])("%s takes a nearer known ore route before a small unserved gem foray", name => {
-        const f = scenario(name); f.run();
-        expect(f.actions.orderUnits.mock.calls).toEqual([[[f.miners[0].id], OrderType.Gather, -8, 0]]);
-        f.at(1980); f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(1);
-        expect((f.controller as any).smallGemForays).toEqual([]);
-    });
-    test.each(["quiet", "static-building", "two-miners", "served-gems", "large-gems", "farther-ore", "hidden-ore", "blocked-ore", "unsafe-ore", "no-ore-patch", "idle-loaded", "idle-unknown"])(
-        "%s retains the existing gem priority rather than inventing an ore route", condition => {
-            const f = scenario();
-            if (condition === "idle-loaded") { f.miners[0].isIdle = true; f.miners[0].harvestedGems = 1; }
-            if (condition === "idle-unknown") { f.miners[0].isIdle = true; delete f.miners[0].harvestedOre; delete f.miners[0].harvestedGems; }
-            if (condition === "quiet") f.enemies.length = 0;
-            if (condition === "static-building") {
-                f.enemies[0].type = f.enemies[0].rules.type = ObjectType.Building;
-                f.enemies[0].name = f.enemies[0].rules.name = "GAPILL";
-            }
-            if (condition === "two-miners") f.miner(4);
-            if (condition === "served-gems") f.refinery(18);
-            if (condition === "large-gems") f.resources[1].gems = 3000;
-            if (condition === "farther-ore") f.resources[0].tile.rx = -20;
-            if (condition === "hidden-ore") {
-                f.hidden.add("-8_0"); Object.defineProperty(f.resources[0], "ore", { get() { throw Error("hidden ore read"); } });
-            }
-            if (condition === "blocked-ore") f.blocked.add("-8_0");
-            if (condition === "unsafe-ore") f.enemies.push({ id: 998, name: "E2", type: ObjectType.Infantry,
-                tile: { rx: -22, ry: 0 }, rules: { name: "E2", type: ObjectType.Infantry, isSelectableCombatant: true } });
-            if (condition === "no-ore-patch") f.resources[0].ore = 1000;
-            f.run(); expect(f.actions.orderUnits.mock.calls[0]).toEqual([[f.miners[0].id], OrderType.Gather, 20, 0]);
-        });
-    test("the existing 2700-tick quiet window, not private enemy state, releases the deferred gem priority", () => {
-        const f = scenario(); f.run();
-        expect(f.actions.orderUnits.mock.calls[0]).toEqual([[f.miners[0].id], OrderType.Gather, -8, 0]);
-        f.enemies.length = 0; f.miners[0].isIdle = true; f.at(3030); f.run();
-        expect(f.actions.orderUnits.mock.calls[1]).toEqual([[f.miners[0].id], OrderType.Gather, -8, 0]);
-        f.at(4680); f.run();
-        expect(f.actions.orderUnits.mock.calls[2]).toEqual([[f.miners[0].id], OrderType.Gather, 20, 0]);
-    });
-});
-
 describe("unload-aware gem dispatch", () => {
     test.each([[4, false, false, true], [5, false, false, false], [5, true, false, true], [4, false, true, true], [4, true, true, true], [5, false, true, false]])(
         "refinery distance=%i idle=%s underfoot-resource=%s dispatch=%s", (distance, idle, ore, dispatch) => {
