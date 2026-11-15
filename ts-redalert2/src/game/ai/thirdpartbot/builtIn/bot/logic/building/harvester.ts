@@ -11,7 +11,7 @@ const workedFieldTiles = new WeakMap<GameApi, Map<string, Map<string, number>>>(
 const WORKED_FIELD_WINDOW = 1800;
 
 export function patchCapacity(patch: Pick<OrePatch, "value">, chrono: boolean): number {
-    return patch.value >= 12000 ? (chrono ? 6 : 5) : patch.value >= 6000 ? (chrono ? 5 : 4) : patch.value >= 3000 ? 2 : 1;
+    return patch.value >= 12000 ? 5 : patch.value >= 6000 ? (chrono ? 5 : 4) : patch.value >= 3000 ? 2 : 1;
 }
 
 export function desiredMiners(game: GameApi, playerData: PlayerData, futureRefinery?: PatchPoint): number {

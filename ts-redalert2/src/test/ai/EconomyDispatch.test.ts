@@ -145,6 +145,78 @@ describe("unload-aware gem dispatch", () => {
     });
 });
 
+describe("busy empty miners leave resource-less refinery neighborhoods", () => {
+    function scenario(name = "CMIN") {
+        const f = fixture(); f.at(9000); f.resources.splice(0, f.resources.length,
+            { tile: { rx: 30, ry: 0 }, ore: 18000, gems: 0 });
+        f.refinery(27); f.miners[0].tile.rx = 8;
+        f.miners[0].name = f.miners[0].rules.name = name;
+        return f;
+    }
+    test.each(["HARV", "CMIN"])("%s restores a known live haul instead of keeping an empty busy task by an unserved refinery", name => {
+        const f = scenario(name); f.run();
+        expect(f.actions.orderUnits).toHaveBeenCalledWith([f.miners[0].id], OrderType.Gather, 30, 0);
+        f.at(9030); f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(1);
+    });
+    test("six empty busy miners reserve at most five slots in the surviving large field", () => {
+        const f = scenario(); for (let i = 0; i < 5; i++) { const m = f.miner(8); m.name = m.rules.name = "CMIN"; }
+        f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(5);
+        f.at(9030); f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(5);
+    });
+    test.each([9, 9.01])("the existing nine-tile service distance%s bounds recovery near a resource-less depot", distance => {
+        const f = scenario(); f.miners[0].tile.rx = distance; f.run();
+        expect(f.actions.orderUnits).toHaveBeenCalledTimes(distance <= 9 ? 1 : 0);
+    });
+    test.each(["ore", "gems", "unknown-cargo", "underfoot-ore", "underfoot-gems", "productive-depot", "idle", "unknown-idle", "injured", "normal"])(
+        "%s preserves its original live collection or non-recovery flow", condition => {
+            const f = scenario(), m = f.miners[0];
+            if (condition === "ore") m.harvestedOre = 1;
+            if (condition === "gems") m.harvestedGems = 7;
+            if (condition === "unknown-cargo") delete m.harvestedGems;
+            if (condition === "underfoot-ore") f.resources.push({ tile: { ...m.tile }, ore: 1, gems: 0 });
+            if (condition === "underfoot-gems") f.resources.push({ tile: { ...m.tile }, ore: 0, gems: 1 });
+            if (condition === "productive-depot") f.resources.push({ tile: { rx: 4, ry: 0 }, ore: 4000, gems: 0 });
+            if (condition === "idle") m.isIdle = true;
+            if (condition === "unknown-idle") delete m.isIdle;
+            if (condition === "injured") m.hitPoints = 600;
+            if (condition === "normal") f.context.difficulty = "normal";
+            f.run(); expect(f.actions.orderUnits).not.toHaveBeenCalled();
+        });
+    test("a still-live watched gem route is not replaced even while passing an unserved refinery", () => {
+        const f = fixture(); f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(1);
+        f.resources.splice(0, 1); f.resources.push({ tile: { rx: 60, ry: 0 }, ore: 8000, gems: 0 }); f.refinery(57);
+        f.miners[0].tile.rx = 8; f.at(60); f.run();
+        expect(f.actions.orderUnits).toHaveBeenCalledTimes(1);
+        expect(f.actions.orderUnits.mock.calls[0]).toEqual([[f.miners[0].id], OrderType.Gather, 20, 0]);
+    });
+    test.each(["hidden-current", "hidden-target", "blocked", "unsafe", "unknown-underfoot"])("%s cannot invent a valid recovery route", condition => {
+        const f = scenario();
+        if (condition === "hidden-current") {
+            f.hidden.add("8_0"); f.game.mapApi.getTileResourceData = () => { throw Error("hidden current resource read"); };
+        }
+        if (condition === "hidden-target") {
+            f.hidden.add("30_0"); Object.defineProperty(f.resources[0], "ore", { get() { throw Error("hidden target resource read"); } });
+        }
+        if (condition === "blocked") f.blocked.add("30_0");
+        if (condition === "unsafe") f.enemies.push({ id: 999, type: ObjectType.Infantry, tile: { rx: 44, ry: 0 }, rules: { isSelectableCombatant: true } });
+        if (condition === "unknown-underfoot") f.game.mapApi.getTileResourceData = () => ({ ore: undefined, gems: undefined });
+        f.run(); expect(f.actions.orderUnits).not.toHaveBeenCalled();
+    });
+    test("the public API's absent resource object on a visible tile means no overlay, not unknown ore", () => {
+        const f = scenario(); f.game.mapApi.getTileResourceData = () => undefined;
+        f.run(); expect(f.actions.orderUnits).toHaveBeenCalledWith([f.miners[0].id], OrderType.Gather, 30, 0);
+    });
+    test("a full live-field allocation does not accept another empty miner", () => {
+        const f = scenario(); for (let i = 0; i < 5; i++) { const m = f.miner(30); m.name = m.rules.name = "CMIN"; m.harvestedOre = 20; }
+        f.run(); expect(f.actions.orderUnits).not.toHaveBeenCalled();
+    });
+    test("unserved known home ore uses one existing foray slot, not a whole free field budget", () => {
+        const f = scenario(); f.refineries.splice(1, 1); const second = f.miner(8); second.name = second.rules.name = "CMIN";
+        f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(1);
+        expect(f.actions.orderUnits).toHaveBeenCalledWith([f.miners[0].id], OrderType.Gather, 30, 0);
+    });
+});
+
 describe("served-field one-miner balancing", () => {
     test("five miners on capacity four versus one on capacity four moves exactly one at tick 150", () => {
         const f = balanceFixture();

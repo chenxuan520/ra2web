@@ -250,6 +250,16 @@ describe("seen combat vehicles preserve ordinary armor funding before optional i
     }));
 });
 
+describe("large-field allocations respect the five-miner ceiling", () => {
+    test.each([12000, 40000])("a large chrono-miner field value%i never allocates a sixth miner", value => {
+        expect(patchCapacity({ value }, true)).toBe(5);
+    });
+    test.each([[5999, true, 2], [6000, true, 5], [11999, true, 5], [12000, false, 5]] as const)(
+        "value%i chrono%s retains its existing capacity%i", (value, chrono, expected) => {
+            expect(patchCapacity({ value }, chrono)).toBe(expected);
+        });
+});
+
 describe("brutal miner capacity and production table", () => {
     test.each([[2999, 1], [3000, 2], [5999, 2], [6000, 4], [11999, 4], [12000, 5]])("value %i has ordinary capacity %i", (value, expected) => {
         expect(patchCapacity({ value } as any, false)).toBe(expected);
@@ -257,7 +267,7 @@ describe("brutal miner capacity and production table", () => {
     test("chrono miners get one extra slot in each rich band", () => {
         expect(patchCapacity({ value: 6000 } as any, true)).toBe(5);
         expect(patchCapacity({ value: 11999 } as any, true)).toBe(5);
-        expect(patchCapacity({ value: 12000 } as any, true)).toBe(6);
+        expect(patchCapacity({ value: 12000 } as any, true)).toBe(5);
         expect(patchCapacity({ value: 5999 } as any, true)).toBe(2);
     });
     test("sums only visible served patches, floors a refinery at two and caps at twelve", () => {

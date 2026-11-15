@@ -223,6 +223,38 @@ export class MinerDefence {
                 }
             }
 
+            // A busy empty miner near a resource-less refinery needs a fresh known haul, not an idle-state wait.
+            for (const m of allMiners) {
+                if (m.isIdle !== false || m.harvestedOre !== 0 || m.harvestedGems !== 0 ||
+                    !(m.hitPoints >= m.maxHitPoints * 0.7) || this.active?.id === m.id || this.dispatchTargets.has(m.id) ||
+                    tick - (this.lastGemOrder.get(m.id) ?? -Infinity) < 300 || !game.mapApi.isVisibleTile(m.tile, player.name)) continue;
+                const underfoot = game.mapApi.getTileResourceData(m.tile);
+                if (underfoot && (underfoot.ore !== 0 || underfoot.gems !== 0)) continue;
+                if (!refineries.some(ref => Math.hypot(ref.tile.rx - m.tile.rx, ref.tile.ry - m.tile.ry) <= 9 &&
+                    !patches.some(patch => isServed(patch, [ref.tile])))) continue;
+                const origin = new Vector2(m.tile.rx, m.tile.ry);
+                const target = game.mapApi.getAllTilesResourceData().filter(resource =>
+                    game.mapApi.isVisibleTile(resource.tile, player.name) && resource.ore + resource.gems > 0)
+                    .sort((a, b) => origin.distanceToSquared(new Vector2(a.tile.rx, a.tile.ry)) -
+                        origin.distanceToSquared(new Vector2(b.tile.rx, b.tile.ry)) || a.tile.rx - b.tile.rx || a.tile.ry - b.tile.ry)
+                    .find(resource => {
+                        const patch = patchByTile.get(tileKey(resource.tile));
+                        if (!patch) return false;
+                        const served = isServed(patch, refinerySites), capacity = served ? patchCapacity(patch, chrono) : 1;
+                        return (served || patchDistance({ rx: home.x, ry: home.y }, patch) <= 40) &&
+                            counts.get(patch.id)! - Number(assignments.get(m.id)?.id === patch.id) < capacity &&
+                            !enemyCombatants.some(enemy => Math.hypot(enemy.tile.rx - resource.tile.rx, enemy.tile.ry - resource.tile.ry) <= 14) &&
+                            game.mapApi.findPath(m.rules.speedType, { tile: m.tile, onBridge: !!m.onBridge },
+                                { tile: resource.tile, onBridge: false }, { bestEffort: false, maxExpandedNodes: 256 })
+                                .some(node => node.tile.rx === resource.tile.rx && node.tile.ry === resource.tile.ry);
+                    });
+                if (target) {
+                    player.actions.orderUnits([m.id], OrderType.Gather, target.tile.rx, target.tile.ry);
+                    this.lastGemOrder.set(m.id, tick);
+                    reserveDispatch(m, target.tile);
+                }
+            }
+
             if (tick % 150 === 0) {
                 const served = patches.filter(patch => isServed(patch, refineries.map(ref => ref.tile)));
                 const destination = served.filter(patch => counts.get(patch.id)! < patchCapacity(patch, chrono))
