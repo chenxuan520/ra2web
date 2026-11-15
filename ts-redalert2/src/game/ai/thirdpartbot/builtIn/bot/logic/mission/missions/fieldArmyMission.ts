@@ -251,14 +251,19 @@ export class FieldArmyMission extends Mission {
         // Take command of free paradrops and returning units. The queue controller
         // caps ordinary infantry; this low request cannot borrow the locked reserve.
         const assigned = new Set(this.controller.getMissions().flatMap(mission => mission.getUnitIds()));
-        // An owned recruit claim must not start another infantry purchase or consume the standing reserve.
+        // An owned recruit claim must consume the lower home request without starting another purchase.
         const canClaimOpeningConscripts = openingInfantry && mobileRoles &&
             (this.controller.getMissions().find(mission => mission.getUniqueName() === "baseReserve")
                 ?.getUnitsOfTypes(game, "E2").filter(unit => unit.owner === player.name && unit.hitPoints > 0).length ?? 0) >= conscripts.reserve;
+        if (canClaimOpeningConscripts && requests.E2 === undefined &&
+            game.getVisibleUnits(player.name, "self", rules => rules.name === "E2").some(id => !assigned.has(id))) {
+            requests.E2 = 50;
+            return requestUnits(requests);
+        }
         const free = game.getVisibleUnits(player.name, "self", rules => rules.isSelectableCombatant && !rules.harvester &&
             !["DESO", "DOG", "ADOG", "DRON"].includes(rules.name) &&
             (rules.name !== "E1" || (s.own.E1 ?? 0) > 5) &&
-            (rules.name !== "E2" || (!mobileRoles && (s.own.E2 ?? 0) > conscripts.reserve) || canClaimOpeningConscripts))
+            (rules.name !== "E2" || (!mobileRoles && (s.own.E2 ?? 0) > conscripts.reserve)))
             .filter(id => !assigned.has(id));
         if (free.length) return requestSpecificUnits(free, 50);
         return requestUnits(requests);

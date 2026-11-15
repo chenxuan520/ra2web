@@ -249,7 +249,7 @@ export class QueueController {
                         if (option.harvester && (requests.get(option.name)?.priority === 110 ||
                             situation.harvesters === 1 && requests.get(option.name)?.priority === 90)) requests.delete(option.name);
                     }
-                    if (productionApi.getQueueData(QueueType.Infantry).status === QueueStatus.Idle) {
+                    if (!["ENGINEER", "SENGINEER"].includes(productionApi.getQueueData(QueueType.Infantry).items[0]?.rules.name)) {
                         requests.delete("ENGINEER"); requests.delete("SENGINEER");
                     }
                 }
@@ -298,7 +298,7 @@ export class QueueController {
             restoringIncome = sites.length === 1 && patches.length > 0 && !patches.some(patch => isServed(patch, sites)) &&
                 situation.enemy.aircraft === 0 && situation.enemy.infantry < 8;
         }
-        if (restoringIncome && productionApi.getQueueData(QueueType.Infantry).status === QueueStatus.Idle &&
+        if (restoringIncome && !["ENGINEER", "SENGINEER"].includes(productionApi.getQueueData(QueueType.Infantry).items[0]?.rules.name) &&
             game.getVisibleUnits(player.name, "self", rules => rules.capturable && rules.produceCashAmount > 0).length > 0) {
             requests.delete("ENGINEER"); requests.delete("SENGINEER");
         }

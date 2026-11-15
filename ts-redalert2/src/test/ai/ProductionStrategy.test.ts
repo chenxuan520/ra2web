@@ -44,7 +44,7 @@ function productionScenario(credits = 100, difficulty?: "normal" | "brutal") {
         queues.set(type, { type, status, items: status === QueueStatus.Idle ? [] : [{ rules: { ...rules }, quantity: 1 }], size: status === QueueStatus.Idle ? 0 : 1 });
         return rules;
     }
-    return { available, queues, owned, hostiles, requests, actions, request,
+    return { available, queues, owned, hostiles, requests, actions, request, context,
         at(value: number) { tick = value; }, country(value: string) { country = value; },
         run: () => controller.onAiUpdate(context as any, null, requests, () => {}) };
 }
@@ -221,6 +221,64 @@ describe("AI production economy", () => {
         s.available.get(QueueType.Vehicles)!.push({ name: "HARV", cost: 1400, type: ObjectType.Vehicle, harvester: true });
         s.run();
         expect(s.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTNK", ObjectType.Vehicle, 1);
+    });
+});
+
+describe("new engineer suppression survives an ordinary infantry queue item", () => {
+    function scenario(income = false, engineerName = "SENGINEER", difficulty: "normal" | "brutal" = "brutal") {
+        const s = productionScenario(income ? 1500 : 2000, difficulty); s.at(3000);
+        s.owned.push({ name: "NAREFN", refinery: true, type: ObjectType.Building }, { name: "HARV", harvester: true });
+        if (income) {
+            s.owned.push({ name: "CAOILD", capturable: true, produceCashAmount: 1, type: ObjectType.Building });
+            s.context.game.mapApi.getAllTilesResourceData = () => [{ tile: { rx: 30, ry: 0 }, ore: 800, gems: 0 }];
+            const refinery = s.request(QueueType.Structures, "NAREFN", 50, 2000, QueueStatus.Active);
+            Object.assign(refinery, { refinery: true, freeUnit: "HARV" });
+            Object.assign(s.queues.get(QueueType.Structures)!.items[0].rules, { refinery: true, freeUnit: "HARV" });
+        } else {
+            s.owned.push({ name: "HARV", harvester: true });
+            for (let i = 0; i < 8; i++) s.hostiles.push({ name: "E2", type: ObjectType.Infantry, isSelectableCombatant: true });
+            s.request(QueueType.Vehicles, "HTNK", 75, 900, QueueStatus.Active);
+        }
+        const dog = s.request(QueueType.Infantry, "DOG", 25, 200); dog.type = ObjectType.Infantry;
+        const engineer = s.request(QueueType.Infantry, engineerName, 100, 500); engineer.type = ObjectType.Infantry;
+        Object.assign(engineer, { engineer: true });
+        s.actions.queueForProduction.mockImplementation((...args: any[]) => {
+            const [type, name, , quantity] = args, queue = s.queues.get(type)!;
+            queue.status = QueueStatus.Active; queue.items = [{ rules: s.available.get(type)!.find(rule => rule.name === name), quantity }]; queue.size = quantity;
+        });
+        s.actions.unqueueFromProduction.mockImplementation((...args: any[]) => {
+            const [type, name] = args, queue = s.queues.get(type)!;
+            queue.items = queue.items.filter(item => item.rules.name !== name); queue.size = queue.items.length;
+            queue.status = queue.items.length ? QueueStatus.Active : QueueStatus.Idle;
+        });
+        s.actions.pauseProduction.mockImplementation((...args: any[]) => { s.queues.get(args[0])!.status = QueueStatus.OnHold; });
+        s.actions.resumeProduction.mockImplementation((...args: any[]) => { s.queues.get(args[0])!.status = QueueStatus.Active; });
+        return { ...s, engineer };
+    }
+    test.each(["ENGINEER", "SENGINEER"])("a first-core response lets DOG finish instead of repeatedly cancelling it for%s", engineerName => {
+        const s = scenario(false, engineerName);
+        for (const tick of [3000, 3002, 3004, 3006]) { s.at(tick); s.run(); }
+        expect((s.actions.queueForProduction.mock.calls as any[][]).filter(call => call[0] === QueueType.Infantry))
+            .toEqual([[QueueType.Infantry, "DOG", ObjectType.Infantry, 1]]);
+        expect(s.actions.unqueueFromProduction).not.toHaveBeenCalled();
+        expect(s.queues.get(QueueType.Infantry)!.items[0].rules.name).toBe("DOG");
+    });
+    test.each(["ENGINEER", "SENGINEER"])("a real income-restoring refinery keeps%s out while DOG is active", engineerName => {
+        const s = scenario(true, engineerName);
+        for (const tick of [3000, 3002, 3004, 3006]) { s.at(tick); s.run(); }
+        expect((s.actions.queueForProduction.mock.calls as any[][]).filter(call => call[0] === QueueType.Infantry))
+            .toEqual([[QueueType.Infantry, "DOG", ObjectType.Infantry, 1]]);
+        expect(s.actions.unqueueFromProduction).not.toHaveBeenCalled();
+    });
+    test.each([QueueStatus.Active, QueueStatus.OnHold])("an already started engineer status%i remains funded", status => {
+        const s = scenario(); s.queues.set(QueueType.Infantry, { type: QueueType.Infantry, status,
+            items: [{ rules: s.engineer, quantity: 1 }], size: 1 });
+        s.run(); expect(s.actions.unqueueFromProduction).not.toHaveBeenCalled();
+        expect(s.queues.get(QueueType.Infantry)!.items[0].rules.name).toBe("SENGINEER");
+    });
+    test("normal retains its historical highest-priority engineer choice", () => {
+        const s = scenario(false, "SENGINEER", "normal"); s.run();
+        expect(s.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Infantry, "SENGINEER", ObjectType.Infantry, 1);
     });
 });
 

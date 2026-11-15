@@ -1,5 +1,5 @@
 import { estimatedCombatWeapons } from "../../common/observedUnit";
-import { ObjectType, OrderType, UnitData, Vector2 } from "../../../../game-api";
+import { ObjectType, OrderType, QueueStatus, QueueType, UnitData, Vector2 } from "../../../../game-api";
 import { SupabotContext } from "../../common/context";
 import { getInfantryCrushPoint } from "./squads/infantryCrushing";
 import { isEcoOnly } from "../../common/pressure";
@@ -157,6 +157,20 @@ export class MinerDefence {
                 // Keep physical source occupancy while reserving the destination.
                 counts.set(target.id, counts.get(target.id)! + 1);
                 assignments.set(id, target);
+            }
+            const factories = game.getVisibleUnits(player.name, "self", rules => rules.weaponsFactory)
+                .map(id => game.getUnitData(id)).filter((unit): unit is UnitData => !!unit);
+            if (factories.length === 1) {
+                const source = patches.filter(patch => patchDistance(factories[0].tile, patch) <= 9)
+                    .sort((a, b) => patchDistance(factories[0].tile, a) - patchDistance(factories[0].tile, b) ||
+                        (a.id < b.id ? -1 : a.id > b.id ? 1 : 0))[0];
+                if (source) {
+                    const vehicleQueue = player.production?.getQueueData(QueueType.Vehicles);
+                    // Reserve one confirmed paid arrival, not a delivered miner or its income.
+                    if (vehicleQueue?.items[0]?.rules.harvester &&
+                        (vehicleQueue.status === QueueStatus.Active || vehicleQueue.status === QueueStatus.OnHold))
+                        counts.set(source.id, counts.get(source.id)! + 1);
+                }
             }
             const canDispatch = (miner: UnitData) => {
                 if (!game.mapApi.isVisibleTile(miner.tile, player.name)) return false;

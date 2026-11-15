@@ -1,5 +1,5 @@
 import { describe, expect, mock, test } from "bun:test";
-import { ObjectType, OrderType, SpeedType, Vector2 } from "../../game/ai/thirdpartbot/builtIn/game-api";
+import { ObjectType, OrderType, QueueStatus, QueueType, SpeedType, Vector2 } from "../../game/ai/thirdpartbot/builtIn/game-api";
 import { MinerDefence } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/minerDefence";
 
 function fixture() {
@@ -424,6 +424,44 @@ describe("observed ordinary-ore hauls use the existing field capacity", () => {
             if (condition === "normal") f.context.difficulty = "normal";
             f.run(); expect(f.actions.orderUnits).not.toHaveBeenCalled();
         });
+});
+
+describe("a paid miner in the sole factory reserves its source field before spawning", () => {
+    function scenario(status = QueueStatus.Active, miner = true, factoryCount = 1) {
+        const f = fixture(); f.at(150); f.miners.length = 0; f.refineries.length = 0;
+        f.resources.splice(0, f.resources.length, { tile: { rx: 8, ry: 0 }, ore: 18000, gems: 0 },
+            { tile: { rx: 30, ry: 0 }, ore: 18000, gems: 0 }); f.refinery(5); f.refinery(27);
+        f.miner(6); for (let i = 0; i < 4; i++) { const unit = f.miner(8); unit.harvestedOre = 20; }
+        const destination = f.miner(30); destination.harvestedOre = 20;
+        const factories = Array.from({ length: factoryCount }, (_, i) => ({ id: 500 + i, owner: "bot", name: "GAWEAP",
+            type: ObjectType.Building, tile: { rx: 15 + i, ry: 0 }, rules: { name: "GAWEAP", weaponsFactory: true } }));
+        const visible = f.game.getVisibleUnits, data = f.game.getUnitData;
+        f.game.getVisibleUnits = (name: string, relation: string, predicate = (_rules: any) => true) =>
+            [...visible(name, relation, predicate), ...(relation === "self" ? factories.filter(unit => predicate(unit.rules)).map(unit => unit.id) : [])];
+        f.game.getUnitData = (id: number) => factories.find(unit => unit.id === id) ?? data(id);
+        f.context.player.production = { getQueueData: (type: QueueType) => ({ type, status,
+            items: type === QueueType.Vehicles ? [{ rules: { name: miner ? "CMIN" : "MTNK", harvester: miner }, quantity: 1 }] : [] }) };
+        return { ...f, factories };
+    }
+    test.each([QueueStatus.Active, QueueStatus.OnHold])("confirmed paid miner status%i moves one empty occupant before delivery", status => {
+        const f = scenario(status); f.run();
+        expect(f.actions.orderUnits.mock.calls).toEqual([[[f.miners[0].id], OrderType.Gather, 30, 0]]);
+        expect((f.controller as any).lastBalanceOrder.get(f.miners[0].id)).toBe(150);
+    });
+    test.each(["idle", "tank", "multiple-factories", "no-factory", "local-slot", "destination-full", "blocked", "unknown-queue"])(
+        "%s does not create a speculative factory-source reservation", condition => {
+            const f = scenario(condition === "idle" ? QueueStatus.Idle : QueueStatus.Active, condition !== "tank",
+                condition === "multiple-factories" ? 2 : condition === "no-factory" ? 0 : 1);
+            if (condition === "local-slot") f.miners.splice(1, 1);
+            if (condition === "destination-full") for (let i = 0; i < 4; i++) { const unit = f.miner(30); unit.harvestedOre = 20; }
+            if (condition === "blocked") f.blocked.add("30_0");
+            if (condition === "unknown-queue") f.context.player.production = undefined;
+            f.run(); expect(f.actions.orderUnits).not.toHaveBeenCalled();
+        });
+    test.each([9, 9.01])("the existing factory-neighborhood distance%s bounds the known source reservation", distance => {
+        const f = scenario(); f.factories[0].tile.rx = 8 - distance; f.run();
+        expect(f.actions.orderUnits).toHaveBeenCalledTimes(distance <= 9 ? 1 : 0);
+    });
 });
 
 describe("served-field one-miner balancing", () => {

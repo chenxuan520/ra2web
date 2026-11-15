@@ -129,6 +129,49 @@ describe('owned opening recruits are independent of new infantry spending', () =
     });
 });
 
+describe('the first owned-recruit update consumes its type claim without a leaked purchase', () => {
+    function pipeline(reverse = false, countered = true) {
+        const f = recruitFixture(reverse), foot = f.units.get(3)!.rules;
+        foot.cost = 100;
+        const tank: any = { name: 'HTNK', type: ObjectType.Vehicle, cost: 900 };
+        f.game.rulesApi.vehicleRules.set('HTNK', tank);
+        f.units.set(103, { id: 103, name: 'NAREFN', owner: 'bot', type: ObjectType.Building,
+            tile: { rx: 0, ry: 0 }, rules: { name: 'NAREFN', refinery: true, type: ObjectType.Building } });
+        const queues = new Map(QUEUES.map(type => [type, { type, status: QueueStatus.Idle, items: [] as any[], size: 0 }]));
+        const purchases: any[][] = [];
+        Object.assign(f.context.player.actions, { queueForProduction: (...args: any[]) => purchases.push(args),
+            unqueueFromProduction: () => {}, pauseProduction: () => {}, resumeProduction: () => {} });
+        f.context.player.production = { getAvailableObjects: (type?: QueueType) => type === QueueType.Infantry ? [foot]
+            : type === QueueType.Vehicles ? [tank] : type === undefined ? [foot, tank] : [], getQueueData: (type: QueueType) => queues.get(type) };
+        Object.assign(f.game.mapApi, { getAllTilesResourceData: () => [{ tile: { rx: 5, ry: 0 }, ore: 8000, gems: 0 }],
+            getResourceCreditValues: () => ({ ore: 1, gems: 2 }), findPath: (_speed: number, _start: any, end: any) => [end] });
+        if (countered) for (let id = 1000; id < 1003; id++) f.enemies.set(id, { id, name: 'MTNK', owner: 'enemy',
+            type: ObjectType.Vehicle, rules: { name: 'MTNK', type: ObjectType.Vehicle, isSelectableCombatant: true },
+            tile: { rx: 80, ry: 0 }, hitPoints: 500, maxHitPoints: 500, zone: ZoneType.Ground });
+        f.at(3002);
+        return { ...f, purchases, buy() { new QueueController().onAiUpdate(f.context, null, f.controller.getRequestedUnitTypes(), () => {}); } };
+    }
+    test.each([false, true])('countered already-owned E2 claim leaves no Home20 purchase in its FIRST update, reverse=%s', reverse => {
+        const f = pipeline(reverse); f.update();
+        expect(f.army.getUnitIds()).toEqual([3]); expect(f.controller.getRequestedUnitTypes().get('E2')).toBeUndefined();
+        expect(f.controller.getRequestedUnitTypes().get('HTNK')?.priority).toBe(75);
+        f.buy(); expect(f.purchases.some(order => order[0] === QueueType.Infantry && order[1] === 'E2')).toBe(false);
+        expect(f.reserve.getUnitIds()).toEqual([1, 2]);
+    });
+    test('the normal95 cohort path also preserves its other needed type requests', () => {
+        const f = pipeline(false, false); f.update();
+        expect(f.army.getUnitIds()).toEqual([3]); expect(f.controller.getRequestedUnitTypes().get('E2')).toBeUndefined();
+        expect(f.controller.getRequestedUnitTypes().get('HTNK')?.priority).toBe(75);
+        f.buy(); expect(f.purchases.some(order => order[0] === QueueType.Infantry && order[1] === 'E2')).toBe(false);
+    });
+    test('a previously locked home member is not consumed by the one new type claim', () => {
+        const f = pipeline(), recruit = f.units.get(3)!; f.home.addUnit(3); f.units.set(4, { ...recruit, id: 4 });
+        f.update(); expect(f.home.getUnitIds()).toEqual([3]); expect(f.army.getUnitIds()).toEqual([4]);
+        expect(f.controller.getRequestedUnitTypes().get('E2')).toBeUndefined();
+        expect(f.controller.getRequestedUnitTypes().get('HTNK')?.priority).toBe(75);
+    });
+});
+
 describe('bounded paid infantry support during armor assembly', () => {
     test('the explicit opening plan launches eight conscripts and requests bounded paid reinforcements', () => {
         const f = fixture(), plan = f.plan(); expect(plan.minimumUnits).toBe(8); expect(plan.maximumUnits).toBe(16);
