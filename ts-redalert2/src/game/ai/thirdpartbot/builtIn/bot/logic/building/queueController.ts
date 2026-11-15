@@ -609,7 +609,7 @@ export class QueueController {
                 const keepPaidMiner = difficulty === "brutal" && currentProduction.harvester && miners < 12 &&
                     (decision.unit.name === "DRON" || ["HTNK", "MTNK"].includes(decision.unit.name) && newItemPriority < 100 &&
                         miners < minerTarget &&
-                        !readPressure({ game, player: { name: playerData.name }, difficulty }).baseUnderSiege && !ownedBaseUnderAttack &&
+                        !readPressure({ game, player: { name: playerData.name }, difficulty }).pressured && !ownedBaseUnderAttack &&
                         (miners === 1 || readStrategicSituation(game, playerData).enemy.infantry < 8));
                 if (!keepPaidMiner && (currentItemPriority === 0 ? newItemPriority >= 80 : newItemPriority > currentItemPriority * 2)) {
                     logger(
