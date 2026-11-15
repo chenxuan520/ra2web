@@ -101,8 +101,6 @@ describe("first core funding before new miners after observed home combat", () =
         expect(f.controller.getGlobalDebugText(f.game, f.context.player.production)).toContain("HTNK(100)");
         expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
         f.own("HTNK"); Object.assign(f.queues.get(QueueType.Vehicles)!, { status: QueueStatus.Idle, items: [] }); f.at(3396); f.run();
-        expect(f.actions.queueForProduction).toHaveBeenLastCalledWith(QueueType.Vehicles, "HTNK", ObjectType.Vehicle, 1);
-        f.own("HTNK"); f.at(3398); f.run();
         expect(f.actions.queueForProduction).toHaveBeenLastCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
     });
     test("first drone112 and actual anti-air115 remain ahead of the first core100", () => {
@@ -111,15 +109,15 @@ describe("first core funding before new miners after observed home combat", () =
         f.enemy(101, 80, ObjectType.Aircraft); f.at(3396); f.run();
         expect(f.actions.queueForProduction).toHaveBeenLastCalledWith(QueueType.Vehicles, "HTK", ObjectType.Vehicle, 1);
     });
-    test.each(["quiet", "distant", "core-delivered", "late", "normal", "no-tank-option"])("the %s miner admission follows the protective-core boundary", condition => {
+    test.each(["quiet", "distant", "core-delivered", "late", "normal", "no-tank-option"])("the original %s miner behavior is preserved", condition => {
         const f = scenario();
         if (condition === "quiet") f.enemies.length = 0;
         if (condition === "distant") f.enemies[0].tile.rx = 61;
-        if (condition === "core-delivered") { f.own("HTNK"); f.own("HTNK"); }
+        if (condition === "core-delivered") f.own("HTNK");
         if (condition === "late") f.at(9000);
         if (condition === "normal") { f.context.difficulty = "normal"; f.requests.set("HARV", { priority: 110, specificLocation: null }); }
         if (condition === "no-tank-option") f.options.get(QueueType.Vehicles)!.splice(1, 1);
-        f.run(); expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, condition === "distant" ? "HTNK" : "HARV", ObjectType.Vehicle, 1);
+        f.run(); expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
     });
     test("ecoOnly retains its original unpressured miner order", () => onlyEconomy(() => {
         const f = scenario(); f.run(); expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
@@ -250,69 +248,6 @@ describe("seen combat vehicles preserve ordinary armor funding before optional i
         const f = scenario(); f.run();
         expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
     }));
-});
-
-describe("new second income waits for the existing protective core after mobile sightings", () => {
-    function scenario(country = "Russians", core = 0) {
-        const f = fixture(1, core, country); f.at(4300);
-        f.units.splice(f.units.findIndex(unit => unit.name === "NAREFN" && unit.tile.rx === 25), 1);
-        f.enemy(100, 80, ObjectType.Infantry, { name: "DOG" });
-        const controller = new QueueController(), tankName = country === "Russians" ? "HTNK" : "MTNK";
-        return { ...f, tankName, minerName: country === "Russians" ? "HARV" : "CMIN",
-            run: () => controller.onAiUpdate(f.context, null, f.requests, () => {}),
-            debug: () => controller.getGlobalDebugText(f.game, f.context.player.production) };
-    }
-    test.each([["Russians", 0], ["Russians", 1], ["Americans", 0]] as const)("%s core%i retains ordinary armor85 before a new miner without inventing remote urgency", (country, core) => {
-        const f = scenario(country, core); expect(readPressure(f.context)).toMatchObject({ pressured: false, homeQuiet: true });
-        f.run(); expect(f.debug()).toContain(`${f.tankName}(85)`); expect(f.debug()).not.toContain(`${f.tankName}(100)`);
-        expect(f.debug()).not.toContain(`${f.minerName}(110)`);
-        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, f.tankName, ObjectType.Vehicle, 1);
-    });
-    test.each(["Russians", "Americans"])("%s restores income110 after its original protective core actually delivers", country => {
-        const f = scenario(country); f.run();
-        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, f.tankName, ObjectType.Vehicle, 1);
-        for (let i = 0; i < (country === "Russians" ? 2 : 1); i++) f.own(f.tankName);
-        f.at(4302); f.run(); expect(f.debug()).toContain(`${f.minerName}(110)`);
-        expect(f.actions.queueForProduction).toHaveBeenLastCalledWith(QueueType.Vehicles, f.minerName, ObjectType.Vehicle, 1);
-    });
-    test.each([QueueStatus.Active, QueueStatus.OnHold])("a paid miner remains the original income110 in status%i", status => {
-        const f = scenario(), miner = f.options.get(QueueType.Vehicles)![0];
-        Object.assign(f.queues.get(QueueType.Vehicles)!, { status, items: [{ rules: miner, quantity: 1 }] });
-        f.run(); expect(f.debug()).toContain("HARV(110)"); expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
-    });
-    test.each([QueueStatus.Active, QueueStatus.OnHold])("the existing paid armor stays ahead of a new second miner in status%i", status => {
-        const f = scenario("Russians", 1), tank = f.options.get(QueueType.Vehicles)![1];
-        Object.assign(f.queues.get(QueueType.Vehicles)!, { status, items: [{ rules: tank, quantity: 1 }] });
-        f.run(); expect(f.debug()).not.toContain("HARV(110)"); expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
-    });
-    test.each(["none", "harvester", "building", "hidden", "early", "late", "no-refinery", "no-tank-option", "normal"])("%s keeps the original second-miner admission", condition => {
-        const f = scenario();
-        if (condition === "none") f.enemies.length = 0;
-        if (condition === "no-refinery") f.units.splice(0, f.units.length, ...f.units.filter(unit => !unit.rules.refinery));
-        if (condition === "harvester") f.enemies[0].rules.harvester = true;
-        if (condition === "building") f.enemies[0].rules.type = f.enemies[0].type = ObjectType.Building;
-        if (condition === "hidden") {
-            const visible = f.game.getVisibleUnits;
-            f.game.getVisibleUnits = (name: string, relation: string, predicate: any) => relation === "enemy" ? [] : visible(name, relation, predicate);
-            Object.defineProperty(f.enemies[0], "tile", { get() { throw Error("unseen mobile opposition"); } });
-        }
-        if (condition === "early") f.at(2698);
-        if (condition === "late") f.at(9000);
-        if (condition === "no-tank-option") f.options.get(QueueType.Vehicles)!.splice(1, 1);
-        if (condition === "normal") { f.context.difficulty = "normal"; f.requests.set("HARV", { priority: 110, specificLocation: null }); }
-        f.run(); expect(f.debug()).toContain("HARV(110)");
-        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
-    });
-    test("ecoOnly keeps its original second-miner110", () => onlyEconomy(() => {
-        const f = scenario(); f.run(); expect(f.debug()).toContain("HARV(110)");
-        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
-    }));
-    test("first drone112 and anti-air115 remain higher than ordinary protective armor", () => {
-        const f = scenario(); f.options.get(QueueType.Vehicles)!.push({ name: "DRON", cost: 500, type: ObjectType.Vehicle });
-        f.run(); expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "DRON", ObjectType.Vehicle, 1);
-        f.enemy(101, 80, ObjectType.Aircraft); f.at(4302); f.run();
-        expect(f.actions.queueForProduction).toHaveBeenLastCalledWith(QueueType.Vehicles, "HTK", ObjectType.Vehicle, 1);
-    });
 });
 
 describe("brutal miner capacity and production table", () => {
@@ -595,7 +530,7 @@ describe("brutal miner capacity and production table", () => {
         for (let i = 0; i < (condition === "below-threshold" ? 7 : 13); i++) f.enemy(100 + i, 80, ObjectType.Infantry);
         if (condition === "normal") { f.context.difficulty = "normal"; f.requests.set("HARV", { priority: 110, specificLocation: null }); }
         f.run();
-        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, condition === "second-miner" ? "HTNK" : "HARV", ObjectType.Vehicle, 1);
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
     });
     test.each([1, 2, 3])("%i income miners do not lose a paid queue to remote visible armor outside the interception area", miners => {
         const f = fixture(miners, 0); f.at(7470); f.enemy(100, 80);
@@ -603,7 +538,7 @@ describe("brutal miner capacity and production table", () => {
         Object.assign(f.queues.get(QueueType.Vehicles)!, { status: QueueStatus.Active, items: [{ rules: miner, quantity: 1 }] });
         f.run(); expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
         Object.assign(f.queues.get(QueueType.Vehicles)!, { status: QueueStatus.Idle, items: [] }); f.at(7472); f.run();
-        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTNK", ObjectType.Vehicle, 1);
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, miners === 1 ? miner.name : "HTNK", ObjectType.Vehicle, 1);
     });
     test.each([48, 48.1])("opening armor urgency uses the existing interception distance%i from any actual owned anchor", distance => {
         const f = fixture(2, 0); f.at(7470); f.enemy(100, 25 + distance);
@@ -635,9 +570,7 @@ describe("brutal miner capacity and production table", () => {
         f.run(); expect(f.actions.unqueueFromProduction).toHaveBeenCalledWith(QueueType.Vehicles, miner.name, ObjectType.Vehicle, 1);
         Object.assign(f.queues.get(QueueType.Vehicles)!, { status: QueueStatus.Idle, items: [] }); f.at(4502); f.run();
         expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, country === "Russians" ? "HTNK" : "MTNK", ObjectType.Vehicle, 1);
-        f.own(country === "Russians" ? "HTNK" : "MTNK");
-        if (country === "Russians") f.own("HTNK");
-        f.at(4504); f.run();
+        f.own(country === "Russians" ? "HTNK" : "MTNK"); f.at(4504); f.run();
         expect(f.actions.queueForProduction).toHaveBeenLastCalledWith(QueueType.Vehicles, miner.name, ObjectType.Vehicle, 1);
     });
     test.each(["Russians", "Americans"])("%s responds to a growing visible armor deficit after its first one-income cores, then hands back at parity", country => {

@@ -185,11 +185,6 @@ export class QueueController {
                     priority = 120;
                 } else if (miners === 1 && !pressure.pressured) {
                     priority = 110;
-                    if (!ecoOnly && situation.tick >= 2700 && situation.tick < 9000 && core < minCoreBeforeMiner2 &&
-                        (situation.own.GAREFN ?? 0) + (situation.own.NAREFN ?? 0) > 0 &&
-                        situation.enemy.infantry + situation.enemy.vehicles + situation.enemy.aircraft > 0 &&
-                        !productionApi.getQueueData(QueueType.Vehicles).items[0]?.rules.harvester &&
-                        productionApi.getAvailableObjects(QueueType.Vehicles).some(option => option.name === "HTNK" || option.name === "MTNK")) priority = 0;
                 } else if (miners === 1 && pressure.pressured && (ecoOnly || core >= minCoreBeforeMiner2)) {
                     priority = 90;
                 } else if (miners === 2 && !pressure.pressured && miners < desired) {
@@ -266,9 +261,7 @@ export class QueueController {
                 if (tank) {
                     const hasDualRefinery = (situation.own.NAREFN ?? 0) + (situation.own.GAREFN ?? 0) >= 2;
                     if ((core < 1 && situation.harvesters >= 1) || (core < 4 && (situation.harvesters >= 2 || hasDualRefinery)) ||
-                        situation.harvesters === 1 && isSovietCountry(playerData.country?.name) && core < 2 && (readPressure(context).pressured ||
-                            situation.tick >= 2700 && situation.tick < 9000 && (situation.own.GAREFN ?? 0) + (situation.own.NAREFN ?? 0) > 0 &&
-                            situation.enemy.infantry + situation.enemy.vehicles + situation.enemy.aircraft > 0)) {
+                        situation.harvesters === 1 && isSovietCountry(playerData.country?.name) && core < 2 && readPressure(context).pressured) {
                         if ((requests.get(tank.name)?.priority ?? 0) < 85) requests.set(tank.name, { priority: 85, specificLocation: null });
                     } else if (core < 8 && (requests.get(tank.name)?.priority ?? 0) < 75) {
                         requests.set(tank.name, { priority: 75, specificLocation: null });

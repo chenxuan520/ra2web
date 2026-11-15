@@ -123,8 +123,7 @@ describe("paid drone production and public own lifecycle", () => {
         [...f.objects.values()].find(object => object.name === "NAREFN")!.tile.rx = 95;
         f.add("E2", "enemy", 100, 0, ObjectType.Infantry);
         expect(readPressure(f.context).pressured).toBe(false);
-        f.produce(); expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTNK", ObjectType.Vehicle, 1);
-        expect(f.actions.queueForProduction).not.toHaveBeenCalledWith(QueueType.Vehicles, "DRON", ObjectType.Vehicle, 1);
+        f.produce(); expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
     });
     test("a genuinely paid first drone completes its native queue instead of being replaced by ordinary armor85 on a warning", () => {
         const f = fixture(1, 0), queue = new ProductionQueue(QueueType.Vehicles, 1, 1);
