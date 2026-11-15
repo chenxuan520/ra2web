@@ -308,6 +308,67 @@ describe("a newly empty own miner gets a fresh field allocation", () => {
     });
 });
 
+describe("overfull fields release empty miners outside the unload radius", () => {
+    function scenario(servedTarget = true, sourceMiners = 6) {
+        const f = fixture(); f.resources.splice(0, f.resources.length,
+            { tile: { rx: 8, ry: 0 }, ore: 18000, gems: 0 }, { tile: { rx: 30, ry: 0 }, ore: 18000, gems: 0 });
+        f.refineries[0].tile.rx = 5; if (servedTarget) f.refinery(27);
+        f.miners[0].tile.rx = 12;
+        for (let i = 1; i < sourceMiners; i++) { const m = f.miner(8); m.harvestedOre = 20; }
+        return f;
+    }
+    test("a busy empty miner seven tiles from its refinery leaves a six-miner live field", () => {
+        const f = scenario(); f.run();
+        expect(f.actions.orderUnits.mock.calls).toEqual([[[f.miners[0].id], OrderType.Gather, 30, 0]]);
+        f.at(60); f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(1);
+    });
+    test("a known unserved home field accepts only one departure, including its live reservation", () => {
+        const f = scenario(false); f.miner(13); f.run();
+        expect(f.actions.orderUnits.mock.calls).toEqual([[[f.miners[0].id], OrderType.Gather, 30, 0]]);
+        f.at(60); f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(1);
+    });
+    test.each(["not-overfull", "loaded", "unknown-cargo", "underfoot", "injured", "normal", "hidden-current", "hidden-target", "blocked", "unsafe"])(
+        "%s preserves the existing guarded collection flow", condition => {
+            const f = scenario(true, condition === "not-overfull" ? 5 : 6), m = f.miners[0];
+            if (condition === "loaded") m.harvestedOre = 1;
+            if (condition === "unknown-cargo") delete m.harvestedGems;
+            if (condition === "underfoot") f.resources.push({ tile: { ...m.tile }, ore: 1, gems: 0 });
+            if (condition === "injured") m.hitPoints = 600;
+            if (condition === "normal") f.context.difficulty = "normal";
+            if (condition === "hidden-current") f.hidden.add("12_0");
+            if (condition === "hidden-target") f.hidden.add("30_0");
+            if (condition === "blocked") f.blocked.add("30_0");
+            if (condition === "unsafe") f.enemies.push({ id: 999, type: ObjectType.Infantry,
+                tile: { rx: 44, ry: 0 }, rules: { isSelectableCombatant: true } });
+            f.run(); expect(f.actions.orderUnits).not.toHaveBeenCalled();
+        });
+    test("miners eligible for the original balancing rule retain its one-per-150 cadence", () => {
+        const f = balanceFixture(); f.run();
+        expect(f.actions.orderUnits.mock.calls).toEqual([[[f.miners[0].id], OrderType.Gather, 30, 0]]);
+        expect((f.controller as any).lastBalanceOrder.get(f.miners[0].id)).toBe(150);
+        expect((f.controller as any).lastGemOrder.has(f.miners[0].id)).toBe(false);
+    });
+});
+
+describe("recovery paths use a bounded long-haul search", () => {
+    test("a known safe long route is not rejected solely by the old 256-node budget", () => {
+        const f = fixture(); f.at(9000); f.resources.splice(0, f.resources.length,
+            { tile: { rx: 30, ry: 0 }, ore: 18000, gems: 0 }); f.refinery(27); f.miners[0].tile.rx = 8;
+        const paths = mock((_speed: number, _start: any, end: any, options: any) =>
+            options.maxExpandedNodes === 1500 ? [end] : []);
+        f.game.mapApi.findPath = paths; f.run();
+        expect(paths).toHaveBeenCalledWith(SpeedType.Track, { tile: f.miners[0].tile, onBridge: false },
+            { tile: f.resources[0].tile, onBridge: false }, { bestEffort: false, maxExpandedNodes: 1500 });
+        expect(f.actions.orderUnits).toHaveBeenCalledWith([f.miners[0].id], OrderType.Gather, 30, 0);
+    });
+    test("a path that still misses the exact resource endpoint cannot admit a recovery order", () => {
+        const f = fixture(); f.at(9000); f.resources.splice(0, f.resources.length,
+            { tile: { rx: 30, ry: 0 }, ore: 18000, gems: 0 }); f.refinery(27); f.miners[0].tile.rx = 8;
+        f.game.mapApi.findPath = () => [{ tile: { rx: 29, ry: 0 }, onBridge: false }];
+        f.run(); expect(f.actions.orderUnits).not.toHaveBeenCalled();
+    });
+});
+
 describe("served-field one-miner balancing", () => {
     test("five miners on capacity four versus one on capacity four moves exactly one at tick 150", () => {
         const f = balanceFixture();

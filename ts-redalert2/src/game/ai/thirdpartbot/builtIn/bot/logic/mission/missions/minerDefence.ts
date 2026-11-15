@@ -248,7 +248,7 @@ export class MinerDefence {
                     const distance = Math.hypot(ref.tile.rx - m.tile.rx, ref.tile.ry - m.tile.ry);
                     return distance <= 4 && (!currentField || !isServed(currentField, refinerySites) || newlyEmpty.has(m.id)) ||
                         distance <= 9 && !patches.some(patch => isServed(patch, [ref.tile]));
-                })) continue;
+                }) && (!currentField || counts.get(currentField.id)! <= patchCapacity(currentField, chrono) || canDispatch(m))) continue;
                 const origin = new Vector2(m.tile.rx, m.tile.ry);
                 const target = game.mapApi.getAllTilesResourceData().filter(resource =>
                     game.mapApi.isVisibleTile(resource.tile, player.name) && resource.ore + resource.gems > 0)
@@ -262,7 +262,7 @@ export class MinerDefence {
                             counts.get(patch.id)! - Number(assignments.get(m.id)?.id === patch.id) < capacity &&
                             !enemyCombatants.some(enemy => Math.hypot(enemy.tile.rx - resource.tile.rx, enemy.tile.ry - resource.tile.ry) <= 14) &&
                             game.mapApi.findPath(m.rules.speedType, { tile: m.tile, onBridge: !!m.onBridge },
-                                { tile: resource.tile, onBridge: false }, { bestEffort: false, maxExpandedNodes: 256 })
+                                { tile: resource.tile, onBridge: false }, { bestEffort: false, maxExpandedNodes: 1500 })
                                 .some(node => node.tile.rx === resource.tile.rx && node.tile.ry === resource.tile.ry);
                     });
                 if (target) {
