@@ -39,7 +39,7 @@ export const BRUTAL_PARAMS = {
         firstFactoryPrioritySoviet: 60,
         firstFactoryPriorityAllied: 30,
         secondFactoryMinRefineries: 2,
-        secondFactoryMinHarvesters: 5,
+        secondFactoryMinHarvesters: 4,
         secondFactoryMinCredits: 800,
         secondFactoryMinArmor: 5,
         secondFactoryHarvesterOverride: 6,

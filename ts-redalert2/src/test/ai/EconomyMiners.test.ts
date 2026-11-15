@@ -835,12 +835,14 @@ describe("visible pressure and own event history", () => {
 });
 
 describe("factory income ratio and real eco-only mode", () => {
-    test.each([[4, 0], [5, 35], [6, 35]])("second factory with %i miners gives %i", (miners, expected) => {
+    test.each([[4, 35], [5, 35], [6, 35]])("second factory with %i miners gives %i", (miners, expected) => {
         const f = fixture(miners, 5);
         expect(getEconomyBuildingPriority(f.game, f.player, { name: "NAWEAP" } as any, false, f.context)).toBe(expected);
     });
-    test("pressure permits a cash-funded four-miner second factory at exactly 3000", () => {
-        const f = fixture(4, 5); f.enemy(100, 22); f.player.credits = 2999;
+    test("pressure permits a cash-funded four-miner second factory at exactly 3000 even with one refinery", () => {
+        const f = fixture(4, 5);
+        f.units.splice(f.units.findIndex(unit => unit.name === "NAREFN" && unit.tile.rx === 25), 1);
+        f.enemy(100, 22); f.player.credits = 2999;
         expect(getEconomyBuildingPriority(f.game, f.player, { name: "NAWEAP" } as any, false, f.context)).toBe(0);
         f.player.credits = 3000; f.at(102);
         expect(getEconomyBuildingPriority(f.game, f.player, { name: "NAWEAP" } as any, false, f.context)).toBe(35);

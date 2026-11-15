@@ -24,6 +24,12 @@ describe('authorized G5 defense-count adjustment', () => {
     });
 });
 
+describe('authorized G5 second-factory adjustment', () => {
+    test('the second factory uses the prescribed four-miner candidate value', () => {
+        expect(BRUTAL_PARAMS.economy.secondFactoryMinHarvesters).toBe(4);
+    });
+});
+
 describe('central brutal strategy parameters', () => {
     test('keys retain the champion thresholds and the numeric eco-only diagnostic switch', () => {
         expect(Object.keys(BRUTAL_PARAMS)).toEqual(['economy', 'assault']);

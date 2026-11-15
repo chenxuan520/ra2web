@@ -67,6 +67,16 @@ test("Soviet tech and duplicate factories require miners and an existing armor c
     expect(rich("NAWEAP")).toBeGreaterThan(0);
 });
 
+test.each([
+    ["Russians", "NAREFN", "NAWEAP", "HARV", "HTNK", 3, 0],
+    ["Russians", "NAREFN", "NAWEAP", "HARV", "HTNK", 4, 35],
+    ["Americans", "GAREFN", "GAWEAP", "CMIN", "MTNK", 3, 0],
+    ["Americans", "GAREFN", "GAWEAP", "CMIN", "MTNK", 4, 35],
+] as const)("authorized G5 %s/%s/%s/%s/%s miners=%i priority=%i retains the other prerequisites", (country, refinery, factory, miner, tank, miners, priority) => {
+    const owned = [refinery, refinery, factory, ...Array.from({ length: miners }, () => miner), ...Array.from({ length: 5 }, () => tank)];
+    expect(scenario(owned, 800, 120, country)(factory)).toBe(priority);
+});
+
 test("under pressure the existing two-rocketeer refinery exception is retained", () => {
     const one = scenario(["GAREFN", "CMIN", "GAAIRC", "JUMPJET"], 5000, 120, "Arabs", true);
     expect(one("GAREFN", { refinery: true })).toBe(0);
