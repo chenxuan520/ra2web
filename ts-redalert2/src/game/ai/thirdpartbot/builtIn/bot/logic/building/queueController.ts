@@ -377,7 +377,8 @@ export class QueueController {
                 game.getVisibleUnits(player.name, "self", rules => rules.refinery).length > 0 &&
                 game.getVisibleUnits(player.name, "self", rules => ["MTNK", "HTNK", "MGTK", "APOC", "SREF"].includes(rules.name)).length === 0) return;
             if (context.difficulty === "brutal" && isCrawlProduction(game, player.name, decision.queue) &&
-                (readPressure(context).pressured || ownedBaseUnderAttack && !playerData.power?.isLowPower)) {
+                (readPressure(context).pressured || ownedBaseUnderAttack && !playerData.power?.isLowPower) &&
+                !(playerData.power?.isLowPower && (productionApi.getQueueData(decision.queue).items[0]?.rules.power ?? 0) > 0)) {
                 if (productionApi.getQueueData(decision.queue).status === QueueStatus.Active) actionsApi.pauseProduction(decision.queue);
                 return;
             }

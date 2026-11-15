@@ -123,6 +123,42 @@ describe("placed crawl hands production control back before its building becomes
     });
 });
 
+describe("a paid crawl power plant can recover a genuinely low-power base under pressure", () => {
+    function prepared(nonPower = false) {
+        const f = fixture(), controller = new QueueController(); f.at(19000); f.power.power = 150;
+        if (nonPower) f.defense.baseNormal = true;
+        controller.onAiUpdate(f.context, null, new Map(), () => {});
+        const ordered = getBaseCrawlState(f.game, f.player.name).ordered!;
+        expect(ordered).toBeDefined();
+        const queue = f.queues.get(ordered.queue)!;
+        Object.assign(queue, { status: QueueStatus.Active, items: [{ rules: ordered.rules, quantity: 1 }] });
+        f.at(19002); observeBaseCrawl(f.context);
+        expect(isCrawlProduction(f.game, f.player.name, ordered.queue)).toBe(true);
+        Object.assign(f.player.power, { total: 200, drain: 210, isLowPower: true }); f.player.credits = 1481;
+        f.enemies.push({ id: 999, name: "HTNK", type: ObjectType.Vehicle, tile: { rx: 20, ry: 0 },
+            rules: { name: "HTNK", type: ObjectType.Vehicle, isSelectableCombatant: true } });
+        f.at(19004);
+        return { ...f, controller, ordered, queue };
+    }
+    test.each([QueueStatus.Active, QueueStatus.OnHold])("an unplaced paid power plant status%i receives its existing power100 response", status => {
+        const f = prepared(); f.queue.status = status;
+        f.controller.onAiUpdate(f.context, null, new Map([[f.power.name, { priority: 100, specificLocation: null }]]), () => {});
+        expect(f.context.player.actions.pauseProduction).not.toHaveBeenCalledWith(f.ordered.queue);
+        if (status === QueueStatus.OnHold) expect(f.context.player.actions.resumeProduction).toHaveBeenCalledWith(f.ordered.queue);
+        expect(f.context.player.actions.unqueueFromProduction).not.toHaveBeenCalled();
+        expect(f.context.player.actions.queueForProduction.mock.calls.filter((call: any[]) => call[0] === f.ordered.queue)).toHaveLength(1);
+        expect(getBaseCrawlState(f.game, f.player.name).active?.placedId).toBeUndefined();
+        expect(f.queue.items).toEqual([{ rules: f.ordered.rules, quantity: 1 }]);
+    });
+    test.each(["adequate-power", "non-power-crawl"])("%s preserves the original discretionary-crawl pressure pause", condition => {
+        const f = prepared(condition === "non-power-crawl");
+        if (condition === "adequate-power") Object.assign(f.player.power, { total: 300, drain: 210, isLowPower: false });
+        f.controller.onAiUpdate(f.context, null, new Map([[f.power.name, { priority: 100, specificLocation: null }]]), () => {});
+        expect(f.context.player.actions.pauseProduction).toHaveBeenCalledWith(f.ordered.queue);
+        expect(f.context.player.actions.unqueueFromProduction).not.toHaveBeenCalled();
+    });
+});
+
 describe("legal visible base crawl", () => {
     test.each(["reachable", "no-target", "hidden", "far", "factory", "miners", "pressure", "queue", "credits", "normal"])(
         "does not crawl when %s fails", reason => {
