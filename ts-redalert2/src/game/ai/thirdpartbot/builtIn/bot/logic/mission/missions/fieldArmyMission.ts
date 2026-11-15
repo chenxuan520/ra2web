@@ -228,7 +228,8 @@ export class FieldArmyMission extends Mission {
         };
         const allied = available.has("MTNK");
         const conscripts = getBasicInfantryBudget("E2", context.difficulty);
-        if (openingInfantry) want(this.plan!.composition.E2 ? "E2" : "E1", this.plan!.maximumUnits, 95);
+        if (openingInfantry && enemyArmor <= 2 && enemyAircraft === 0 && enemyDefences < 2)
+            want(this.plan!.composition.E2 ? "E2" : "E1", this.plan!.maximumUnits, 95);
         if (s.harvesters && !allied && !mobileRoles) want("E2", conscripts.total, 20);
         const tank = allied ? "MTNK" : "HTNK", aa = allied ? "FV" : "HTK";
         const heavyTank = allied ? (available.has("SREF") ? "SREF" : (available.has("MGTK") ? "MGTK" : "MTNK")) : null;
@@ -250,10 +251,14 @@ export class FieldArmyMission extends Mission {
         // Take command of free paradrops and returning units. The queue controller
         // caps ordinary infantry; this low request cannot borrow the locked reserve.
         const assigned = new Set(this.controller.getMissions().flatMap(mission => mission.getUnitIds()));
+        // An owned recruit claim must not start another infantry purchase or consume the standing reserve.
+        const canClaimOpeningConscripts = openingInfantry && mobileRoles &&
+            (this.controller.getMissions().find(mission => mission.getUniqueName() === "baseReserve")
+                ?.getUnitsOfTypes(game, "E2").filter(unit => unit.owner === player.name && unit.hitPoints > 0).length ?? 0) >= conscripts.reserve;
         const free = game.getVisibleUnits(player.name, "self", rules => rules.isSelectableCombatant && !rules.harvester &&
             !["DESO", "DOG", "ADOG", "DRON"].includes(rules.name) &&
             (rules.name !== "E1" || (s.own.E1 ?? 0) > 5) &&
-            (rules.name !== "E2" || (!mobileRoles && (s.own.E2 ?? 0) > conscripts.reserve)))
+            (rules.name !== "E2" || (!mobileRoles && (s.own.E2 ?? 0) > conscripts.reserve) || canClaimOpeningConscripts))
             .filter(id => !assigned.has(id));
         if (free.length) return requestSpecificUnits(free, 50);
         return requestUnits(requests);
