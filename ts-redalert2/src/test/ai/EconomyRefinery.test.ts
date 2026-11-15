@@ -7,7 +7,6 @@ import { ObjectType, QueueStatus, QueueType, Vector2 } from "../../game/ai/third
 import { getEconomyBuildingPriority } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/economyPlan";
 import { BaseBuildingMission } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/baseBuildingMission";
 import { QueueController, QUEUES } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/queueController";
-import { BRUTAL_PARAMS } from "../../game/ai/thirdpartbot/builtIn/bot/strategy/brutalParams";
 import { planRefinery } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/resourceCollectionBuilding";
 import { getRefineryEconomics, getRefineryEconomyState, noteMinerRefineryRequest, observeRefineryEconomy,
     planMinerRefinery, recordRefineryOrder, sellDuplicateRefinery } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/refineryEconomy";
@@ -153,7 +152,7 @@ function nativeFundingFixture(priority: number, active: boolean, engineerStatus?
 
 function nativeBasicFundingFixture(footName = "E2", vehicleKind: "counter" | "miner" = "counter", status = QueueStatus.Idle) {
     const f = fixture(2); Object.assign(f.rules, { owner: [], buildTimeMultiplier: 1 });
-    const foot: any = { name: footName, type: ObjectType.Infantry, cost: ["DOG", "ADOG"].includes(footName) ? 200 : 100, owner: [], buildTimeMultiplier: 1 };
+    const foot: any = { name: footName, type: ObjectType.Infantry, cost: 100, owner: [], buildTimeMultiplier: 1 };
     const vehicle: any = { name: vehicleKind === "miner" ? "HARV" : "HTNK", type: ObjectType.Vehicle,
         cost: vehicleKind === "miner" ? 1400 : 900, harvester: vehicleKind === "miner", owner: [], buildTimeMultiplier: 1 };
     const nativeQueues = new Map(QUEUES.map(type => [type, new ProductionQueue(type, 1, 1)]));
@@ -187,7 +186,7 @@ function nativeBasicFundingFixture(footName = "E2", vehicleKind: "counter" | "mi
         spend(tick: number, credits = 1, priority = vehicleKind === "miner" ? 110 : 100) {
             f.at(tick); f.player.credits = credits;
             controller.onAiUpdate(f.context, null, new Map<string, any>([
-                [vehicle.name, { priority, specificLocation: null }], [foot.name, { priority: ["DOG", "ADOG"].includes(foot.name) ? 100 : 95, specificLocation: null }],
+                [vehicle.name, { priority, specificLocation: null }], [foot.name, { priority: 95, specificLocation: null }],
                 ...(vehicleKind === "counter" ? [[f.rules.name, { priority: 50, specificLocation: new Vector2(24, 0) }] as const] : []),
             ]), () => {});
             native[NotifyTick.onTick](world);
@@ -764,44 +763,6 @@ describe("paid subsidy refinery conditions and real lifecycle", () => {
         recordRefineryOrder(f.game, f.player.name, "NAPOWR", new Vector2(1, 0));
         observeRefineryEconomy(f.context);
         expect(getRefineryEconomyState(f.game, f.player.name).lastMinerRefineryStart).toBe(-Infinity);
-    });
-});
-
-describe("spare dogs do not take a paid counter core's native income", () => {
-    function scenario(name = "DOG", dogs = 3, paidCore = true) {
-        const f = nativeBasicFundingFixture(name);
-        for (let i = 0; i < dogs; i++) f.own(name, 0, { type: ObjectType.Infantry });
-        if (paidCore) f.nativeQueues.get(QueueType.Vehicles)!.push(f.vehicle, 1, f.vehicle.cost);
-        return f;
-    }
-    test.each(["DOG", "ADOG"])("three existing %s leave54 native credits to the paid100 core instead of a new dog", name => {
-        const f = scenario(name);
-        for (let i = 0; i < 54; i++) f.spend(3626 + i * 2);
-        expect(f.nativeQueues.get(QueueType.Vehicles)!.getFirst()!.creditsSpent).toBe(54);
-        expect(f.nativeQueues.get(QueueType.Infantry)!.getFirst()).toBeUndefined();
-        expect(f.actions.queueForProduction).not.toHaveBeenCalledWith(QueueType.Infantry, name, ObjectType.Infantry, 1);
-        expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
-    });
-    test.each([QueueStatus.Active, QueueStatus.OnHold])("a previously paid dog remains intact and funded in status%i", status => {
-        const f = scenario(); f.nativeQueues.get(QueueType.Infantry)!.push(f.foot, 1, f.foot.cost);
-        f.nativeQueues.get(QueueType.Infantry)!.status = status; f.spend(3626);
-        expect(f.nativeQueues.get(QueueType.Infantry)!.getFirst()!.creditsSpent).toBe(1);
-        expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
-        expect(f.actions.pauseProduction).not.toHaveBeenCalledWith(QueueType.Infantry);
-    });
-    test.each(["two-dogs", "early", "ordinary", "funded", "unpaid-core", "anti-air", "normal"])("%s retains the original new dog admission", condition => {
-        const f = scenario("DOG", condition === "two-dogs" ? 2 : 3, condition !== "unpaid-core");
-        if (condition === "anti-air") f.vehicle.name = "HTK";
-        if (condition === "normal") f.context.difficulty = "normal";
-        if (condition === "ordinary" || condition === "normal") f.nativeQueues.get(QueueType.Structures)!.status = QueueStatus.OnHold;
-        f.spend(condition === "early" ? 1798 : 3626, condition === "funded" ? 1000 : 1,
-            condition === "ordinary" ? 85 : condition === "anti-air" ? 115 : 100);
-        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Infantry, "DOG", ObjectType.Infantry, 1);
-    });
-    test("ecoOnly keeps its original no-dog production", () => {
-        const previous = BRUTAL_PARAMS.economy.ecoOnly; BRUTAL_PARAMS.economy.ecoOnly = 1;
-        try { const f = scenario(); f.spend(3626); expect(f.actions.queueForProduction).not.toHaveBeenCalledWith(QueueType.Infantry, "DOG", ObjectType.Infantry, 1); }
-        finally { BRUTAL_PARAMS.economy.ecoOnly = previous; }
     });
 });
 

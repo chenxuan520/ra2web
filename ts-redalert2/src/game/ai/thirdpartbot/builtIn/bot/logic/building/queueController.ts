@@ -384,14 +384,10 @@ export class QueueController {
                 if (refineryQueue.status === QueueStatus.Active) actionsApi.pauseProduction(QueueType.Structures);
                 return;
             }
-            // Native infantry debits precede vehicles; defer new basic infantry or a spare dog.
+            // Native infantry debits precede vehicles; defer only new, lower-priority basic infantry.
             if (context.difficulty === "brutal" && priorityVehicle && priorityVehicle.priority >= 100 &&
                 playerData.credits < priorityVehicle.unit.cost && decision.queue === QueueType.Infantry && decision.topItem &&
-                (["E1", "E2"].includes(decision.topItem.unit.name) && decision.topItem.priority < priorityVehicle.priority ||
-                    ["DOG", "ADOG"].includes(decision.topItem.unit.name) && decision.topItem.priority <= priorityVehicle.priority &&
-                    ["MTNK", "HTNK", "MGTK", "APOC", "SREF"].includes(priorityVehicle.unit.name) && game.getCurrentTick() >= 1800 &&
-                    productionApi.getQueueData(QueueType.Vehicles).items[0]?.rules.name === priorityVehicle.unit.name &&
-                    game.getVisibleUnits(player.name, "self", rules => rules.name === "DOG" || rules.name === "ADOG").length >= 3) &&
+                ["E1", "E2"].includes(decision.topItem.unit.name) && decision.topItem.priority < priorityVehicle.priority &&
                 productionApi.getQueueData(QueueType.Infantry).status === QueueStatus.Idle) return;
             // Fund the marked refinery before buying miners only its unfinished field can support.
             if (context.difficulty === "brutal" && futureRefinery && pendingRefinery?.refinery &&
