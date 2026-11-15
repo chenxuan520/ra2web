@@ -12,6 +12,7 @@ export class MinerDefence {
     private nextDefenceAt = 0;
     private lastGemOrder = new Map<number, number>();
     private lastBalanceOrder = new Map<number, number>();
+    private lastCargo = new Map<number, number>();
     private safetyDocks = new Map<number, { refineryId: number; cargo?: number }>();
     private dispatchTargets = new Map<number, { tile: PatchPoint; tick: number }>();
     private smallGemForays: { tiles: Set<string>; minerId: number; returned: boolean }[] = [];
@@ -126,6 +127,18 @@ export class MinerDefence {
             const forayFor = (patch: OrePatch) => this.smallGemForays.find(foray => patch.tiles.some(tile => foray.tiles.has(tileKey(tile))));
             const inventory = game.getVisibleUnits(player.name, "self", rules => rules.harvester)
                 .map(id => game.getUnitData(id)).filter((unit): unit is UnitData => !!unit);
+            // Cargo changes identify a fresh empty departure, not measured income or a lifecycle event.
+            const newlyEmpty = new Set<number>(), inventoryIds = new Set(inventory.map(miner => miner.id));
+            for (const id of this.lastCargo.keys()) if (!inventoryIds.has(id)) this.lastCargo.delete(id);
+            for (const miner of inventory) {
+                if (miner.harvestedOre === undefined || miner.harvestedGems === undefined) {
+                    this.lastCargo.delete(miner.id);
+                    continue;
+                }
+                if (miner.harvestedOre === 0 && miner.harvestedGems === 0 && (this.lastCargo.get(miner.id) ?? 0) > 0)
+                    newlyEmpty.add(miner.id);
+                this.lastCargo.set(miner.id, miner.harvestedOre + miner.harvestedGems);
+            }
             const chrono = inventory.some(miner => miner.name === "CMIN");
             const counts = new Map(patches.map(patch => [patch.id, 0]));
             const assignments = new Map(inventory.map(miner => {
@@ -229,11 +242,11 @@ export class MinerDefence {
                     !(m.hitPoints >= m.maxHitPoints * 0.7) || this.active?.id === m.id || this.dispatchTargets.has(m.id) ||
                     tick - (this.lastGemOrder.get(m.id) ?? -Infinity) < 300 || !game.mapApi.isVisibleTile(m.tile, player.name)) continue;
                 const underfoot = game.mapApi.getTileResourceData(m.tile);
-                if (underfoot && (underfoot.ore !== 0 || underfoot.gems !== 0)) continue;
+                if (underfoot && (underfoot.ore !== 0 || underfoot.gems !== 0) && !newlyEmpty.has(m.id)) continue;
                 const currentField = assignments.get(m.id);
                 if (!refineries.some(ref => {
                     const distance = Math.hypot(ref.tile.rx - m.tile.rx, ref.tile.ry - m.tile.ry);
-                    return distance <= 4 && (!currentField || !isServed(currentField, refinerySites)) ||
+                    return distance <= 4 && (!currentField || !isServed(currentField, refinerySites) || newlyEmpty.has(m.id)) ||
                         distance <= 9 && !patches.some(patch => isServed(patch, [ref.tile]));
                 })) continue;
                 const origin = new Vector2(m.tile.rx, m.tile.ry);

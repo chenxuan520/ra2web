@@ -267,6 +267,47 @@ describe("empty refinery departures use a field with an available slot", () => {
     });
 });
 
+describe("a newly empty own miner gets a fresh field allocation", () => {
+    function scenario(cargo = 20) {
+        const f = fixture(); f.resources.splice(0, f.resources.length,
+            { tile: { rx: 8, ry: 0 }, ore: 18000, gems: 0 }, { tile: { rx: 30, ry: 0 }, ore: 18000, gems: 0 });
+        f.refineries[0].tile.rx = 5; f.refinery(27); f.miners[0].tile.rx = 8; f.miners[0].harvestedOre = cargo;
+        for (let i = 0; i < 5; i++) { const m = f.miner(8); m.harvestedOre = 20; }
+        f.run(); expect(f.actions.orderUnits).not.toHaveBeenCalled();
+        return f;
+    }
+    test("a known positive-to-zero departure can leave its full served field even over its resource overlay", () => {
+        const f = scenario(); f.miners[0].harvestedOre = 0; f.at(60); f.run();
+        expect(f.actions.orderUnits).toHaveBeenCalledWith([f.miners[0].id], OrderType.Gather, 30, 0);
+        f.at(90); f.run(); expect(f.actions.orderUnits).toHaveBeenCalledTimes(1);
+    });
+    test("gems becoming empty are observed by quantity, not by an assumed income event", () => {
+        const f = scenario(0); f.miners[0].harvestedGems = 20; f.at(60); f.run();
+        f.miners[0].harvestedGems = 0; f.at(90); f.run();
+        expect(f.actions.orderUnits).toHaveBeenCalledWith([f.miners[0].id], OrderType.Gather, 30, 0);
+    });
+    test.each(["always-empty", "still-loaded", "unknown-before", "unknown-after", "injured", "hidden-current", "blocked"])(
+        "%s does not establish an eligible fresh departure", condition => {
+            const f = scenario(condition === "always-empty" ? 0 : 20), m = f.miners[0];
+            if (condition === "unknown-before") { delete m.harvestedOre; f.at(60); f.run(); }
+            if (condition !== "still-loaded") m.harvestedOre = 0;
+            if (condition === "unknown-after") delete m.harvestedGems;
+            if (condition === "injured") m.hitPoints = 600;
+            if (condition === "hidden-current") f.hidden.add("8_0");
+            if (condition === "blocked") f.blocked.add("30_0");
+            f.at(90); f.run(); expect(f.actions.orderUnits).not.toHaveBeenCalled();
+        });
+    test("an owned ID disappearing does not turn its later empty appearance into a cargo transition", () => {
+        const f = scenario(), m = f.miners.shift()!; f.at(60); f.run();
+        m.harvestedOre = 0; f.miners.unshift(m); f.at(90); f.run();
+        expect(f.actions.orderUnits).not.toHaveBeenCalled();
+    });
+    test("fresh observations remain isolated between miner controllers", () => {
+        const a = scenario(), b = scenario(0); a.miners[0].harvestedOre = 0; a.at(60); b.at(60);
+        a.run(); b.run(); expect(a.actions.orderUnits).toHaveBeenCalledTimes(1); expect(b.actions.orderUnits).not.toHaveBeenCalled();
+    });
+});
+
 describe("served-field one-miner balancing", () => {
     test("five miners on capacity four versus one on capacity four moves exactly one at tick 150", () => {
         const f = balanceFixture();
