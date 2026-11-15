@@ -113,13 +113,13 @@ describe('bounded paid infantry support during armor assembly', () => {
         expect(result.unitNameToPriority.E2).toBeUndefined();
         expect(result.unitNameToPriority.HTNK).toBe(75);
     });
-    test('one tower and two vehicles keep the original viable paid infantry opening', () => {
+    test('one tower does not make a two-vehicle counter safe for paid infantry', () => {
         const f = fixture(), army = new FieldArmyMission(f.plan(), f.controller, () => {}); f.controller.addMission(army);
         for (const [id, type, name] of [[1000, ObjectType.Building, 'GAPILL'], [1001, ObjectType.Vehicle, 'MTNK'], [1002, ObjectType.Vehicle, 'MTNK']] as const)
             f.enemies.set(id, { id, name, owner: 'enemy', type, rules: { name, type, primary: 'weapon', isSelectableCombatant: true },
                 tile: { rx: 80, ry: 0 }, hitPoints: 500, maxHitPoints: 500, zone: ZoneType.Ground });
         f.at(3002);
-        expect((army.onAiUpdate({ ...f.context, actionBatcher: new ActionBatcher() }) as any).unitNameToPriority.E2).toBe(95);
+        expect((army.onAiUpdate({ ...f.context, actionBatcher: new ActionBatcher() }) as any).unitNameToPriority.E2).toBeUndefined();
     });
     test('no income, normal difficulty and the fixed deadline do not opt into this plan', () => {
         const noIncome = fixture(); noIncome.units.delete(100); expect(noIncome.plan()?.minimumUnits).not.toBe(8);
@@ -129,6 +129,69 @@ describe('bounded paid infantry support during armor assembly', () => {
     test('ordinary infantry plans preserve the original Soviet home role', () => {
         const f = fixture(), army = new FieldArmyMission({ composition: { E2: 1 }, minimumUnits: 3, maximumUnits: 10 }, f.controller, () => {});
         army.addUnit(1); expect(army.onAiUpdate({ ...f.context, actionBatcher: new ActionBatcher() }).type).toBe('releaseUnits');
+    });
+});
+
+describe('a visible vehicle counters the unsupported paid infantry opening', () => {
+    function scenario(country: 'Russians' | 'Americans') {
+        const f = fixture(), name = country === 'Russians' ? 'E2' : 'E1';
+        f.player.country = { name: country, side: country === 'Russians' ? 1 : 0 };
+        for (let id = 1; id <= 8; id++) { f.units.get(id).name = name; f.units.get(id).rules.name = name; }
+        f.game.rulesApi.infantryRules.set(name, f.units.get(1).rules);
+        const army = new FieldArmyMission(f.plan(), f.controller, () => {}); f.controller.addMission(army);
+        for (let id = 1; id <= 8; id++) army.addUnit(id);
+        const orders: any[][] = [];
+        const vehicle = (id = 1000, harvester = false) => f.enemies.set(id, { id, name: harvester ? 'HARV' : 'MTNK', owner: 'enemy',
+            type: ObjectType.Vehicle, rules: { name: harvester ? 'HARV' : 'MTNK', type: ObjectType.Vehicle,
+                isSelectableCombatant: true, harvester, primary: '105mm', crusher: true },
+            tile: { rx: 80, ry: 0 }, zone: ZoneType.Ground });
+        return { ...f, army, name, orders, vehicle,
+            step(tick: number) {
+                f.at(tick); const actionBatcher = new ActionBatcher();
+                const result: any = army.onAiUpdate({ ...f.context, actionBatcher });
+                actionBatcher.resolve({ orderUnits: (...args: any[]) => orders.push(args) } as any, f.game.mapApi);
+                return result;
+            } };
+    }
+    test.each([['Russians', 1], ['Russians', 2], ['Americans', 1], ['Americans', 2]] as const)(
+        '%s with%i visible vehicles does not fund or launch the unsupported infantry strike', (country, count) => {
+            const f = scenario(country); for (let i = 0; i < count; i++) f.vehicle(1000 + i);
+            const result = f.step(3002);
+            expect(f.army.isAttacking()).toBe(false); expect(result.unitNameToPriority[f.name]).toBeUndefined();
+            expect(result.unitNameToPriority.HTNK).toBe(75);
+        });
+    test.each(['Russians', 'Americans'] as const)('%s turns an already launched opening back before a newly seen vehicle reaches its rifles', country => {
+        const f = scenario(country); f.step(3000); expect(f.army.isAttacking()).toBe(true);
+        f.vehicle(); const result = f.step(3030);
+        expect(f.army.isAttacking()).toBe(false); expect(f.army.getAttackArea()).toEqual(new Vector2(4, 0));
+        expect(result.unitNameToPriority[f.name]).toBeUndefined();
+        expect(f.orders.at(-1)).toEqual([[1, 2, 3, 4, 5, 6, 7, 8], OrderType.AttackMove, 4, 0]);
+    });
+    test.each(['Russians', 'Americans'] as const)('%s keeps the original no-counter opening and resumes only from current observations', country => {
+        const f = scenario(country); f.step(3000); expect(f.army.isAttacking()).toBe(true);
+        f.vehicle(); f.step(3030); f.enemies.clear(); const result = f.step(3060);
+        expect(f.army.isAttacking()).toBe(true); expect(result.unitNameToPriority[f.name]).toBe(95);
+    });
+    test('a visible armed miner is not counted as a vehicle counter', () => {
+        const f = scenario('Russians'); f.vehicle(1000, true);
+        expect(f.step(3000).unitNameToPriority.E2).toBe(95); expect(f.army.isAttacking()).toBe(true);
+    });
+    test('an unseen vehicle does not leak position, weapon or ownership to suppress the opening', () => {
+        const f = scenario('Russians'); f.vehicle();
+        const visible = f.game.getVisibleUnits;
+        f.game.getVisibleUnits = (name: string, relation: string, predicate: any) => relation === 'enemy' ? [] : visible(name, relation, predicate);
+        for (const field of ['tile', 'rules', 'owner']) Object.defineProperty(f.enemies.get(1000), field,
+            { get() { throw Error('hidden counter read'); } });
+        expect(f.step(3000).unitNameToPriority.E2).toBe(95); expect(f.army.isAttacking()).toBe(true);
+    });
+    test('a real six-tank assault is not disabled by the infantry-opening counter', () => {
+        const f = scenario('Russians'); f.vehicle();
+        for (let id = 200; id < 206; id++) {
+            f.units.set(id, { id, name: 'HTNK', owner: 'bot', type: ObjectType.Vehicle,
+                rules: { name: 'HTNK', type: ObjectType.Vehicle, isSelectableCombatant: true }, tile: { rx: 0, ry: 0 },
+                hitPoints: 900, maxHitPoints: 900, zone: ZoneType.Ground, isIdle: true }); f.army.addUnit(id);
+        }
+        f.step(3002); expect(f.army.isAttacking()).toBe(true);
     });
 });
 
