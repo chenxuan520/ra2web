@@ -111,7 +111,7 @@ export class FieldArmyMission extends Mission {
                 (!isLongMap && armor.length >= 2 && enemyArmor === 0 && targetDist <= 45)
             ))
         );
-        const infantryPush = openingInfantry && infantry.length >= this.plan!.minimumUnits && enemyArmor === 0 && enemyAircraft === 0 && enemyDefences < 2;
+        const infantryPush = openingInfantry && infantry.length >= this.plan!.minimumUnits && enemyArmor <= 2 && enemyAircraft === 0 && enemyDefences < 2;
         if (canAssault || infantryPush ||
             air.length >= 2 || units.some(unit => unit.name === "ZEP") || infantry.length >= 20) {
             this.attacking = true;
@@ -229,7 +229,7 @@ export class FieldArmyMission extends Mission {
         const allied = available.has("MTNK");
         const conscripts = getBasicInfantryBudget("E2", context.difficulty);
         // Do not keep funding an opening that its visible counters already prevent from pushing.
-        if (openingInfantry && enemyArmor === 0 && enemyAircraft === 0 && enemyDefences < 2)
+        if (openingInfantry && enemyArmor <= 2 && enemyAircraft === 0 && enemyDefences < 2)
             want(this.plan!.composition.E2 ? "E2" : "E1", this.plan!.maximumUnits, 95);
         if (s.harvesters && !allied && !mobileRoles) want("E2", conscripts.total, 20);
         const tank = allied ? "MTNK" : "HTNK", aa = allied ? "FV" : "HTK";
