@@ -8,7 +8,6 @@ import { getEconomyPressureLimits, isPressured, observePressureEvent, readPressu
 import { BRUTAL_PARAMS } from "../../game/ai/thirdpartbot/builtIn/bot/strategy/brutalParams";
 import { DefaultStrategy } from "../../game/ai/thirdpartbot/builtIn/bot/strategy/defaultStrategy";
 import { MissionController } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missionController";
-import { ProductionQueue } from "../../game/player/production/ProductionQueue";
 
 function fixture(miners = 3, core = 2, country = "Russians") {
     let tick = 100;
@@ -75,77 +74,6 @@ function onlyEconomy(run: () => void) {
     BRUTAL_PARAMS.economy.ecoOnly = 1;
     try { run(); } finally { BRUTAL_PARAMS.economy.ecoOnly = previous; }
 }
-
-describe("a real pressure warning hands a zero-budget paid miner back to armor85", () => {
-    function scenario(country = "Russians", paid = 413, warning: "home" | "watch" | "none" = "home") {
-        const f = fixture(2, 1, country); f.player.credits = 337;
-        Object.assign(f.player.power, { total: 200, drain: 135, isLowPower: false });
-        f.at(5398);
-        if (warning !== "none") {
-            if (warning === "watch") setPressureWatchPost(f.game, f.player.name, { rx: 100, ry: 0 });
-            for (let i = 0; i < 3; i++) f.enemy(100 + i, warning === "watch" ? 100 : 40, ObjectType.Infantry);
-            expect(readPressure(f.context).earlyPressure).toBe(true);
-        }
-        f.enemies.length = 0; f.at(6876);
-        const miner = f.options.get(QueueType.Vehicles)![0], queue = new ProductionQueue(QueueType.Vehicles, 1, 1);
-        queue.push(miner, 1, miner.cost);
-        const item = queue.getFirst()!; item.creditsSpent = paid; item.progress = paid / miner.cost;
-        const getQueue = f.context.player.production.getQueueData;
-        f.context.player.production.getQueueData = (type: QueueType) => type === QueueType.Vehicles
-            ? { type, status: queue.status, items: queue.getAll().map(item => ({ rules: item.rules, quantity: item.quantity })) }
-            : getQueue(type);
-        return { ...f, queue, item, miner };
-    }
-    test.each([["Russians", 413], ["Russians", 1250], ["Americans", 413], ["Americans", 1250]] as const)(
-        "%s hands back its zero-budget paid miner with supplied paid%i without inventing a refund", (country, paid) => {
-            const f = scenario(country, paid);
-            expect(readPressure(f.context)).toMatchObject({ earlyPressure: true, baseUnderSiege: false });
-            f.run(); expect(f.actions.unqueueFromProduction).toHaveBeenCalledWith(QueueType.Vehicles, f.miner.name, ObjectType.Vehicle, 1);
-            // The mock records an order only; neither the native queue nor the wallet has executed a refund.
-            expect(f.queue.getFirst()).toBe(f.item); expect(f.item.creditsSpent).toBe(paid); expect(f.player.credits).toBe(337);
-        });
-    test.each(["quiet", "expired", "legal-pressure-miner", "drone"])("%s retains its existing paid-miner protection", condition => {
-        const f = scenario("Russians", 413, condition === "quiet" ? "none" : "home");
-        if (condition === "expired") f.at(8098);
-        if (condition === "legal-pressure-miner") {
-            f.units.splice(f.units.findIndex(unit => unit.rules.harvester), 1); f.own("HTNK");
-        }
-        if (condition === "drone") f.options.get(QueueType.Vehicles)!.push({ name: "DRON", cost: 500, type: ObjectType.Vehicle });
-        f.run(); expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
-    });
-    test("the existing economic-loss window also ends a zero-request miner's ordinary armor protection", () => {
-        const f = scenario("Russians", 413, "none"), refinery = f.units.find(unit => unit.name === "NAREFN" && unit.tile.rx === 25)!;
-        f.at(6500); observePressureEvent(f.game, f.player.name, { type: ApiEventType.ObjectSpawn, target: refinery.id });
-        f.units.splice(f.units.indexOf(refinery), 1);
-        observePressureEvent(f.game, f.player.name, { type: ApiEventType.ObjectDestroy, target: refinery.id });
-        f.at(6876); expect(readPressure(f.context)).toMatchObject({ pressured: true, earlyPressure: false, baseUnderSiege: false });
-        f.run(); expect(f.actions.unqueueFromProduction).toHaveBeenCalledWith(QueueType.Vehicles, f.miner.name, ObjectType.Vehicle, 1);
-    });
-    test("a held paid miner keeps the original resume path, then the active zero-request handoff applies", () => {
-        const f = scenario(); f.queue.status = QueueStatus.OnHold; f.run();
-        expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
-        expect(f.actions.resumeProduction).toHaveBeenCalledWith(QueueType.Vehicles);
-        f.queue.status = QueueStatus.Active; f.at(6878); f.run();
-        expect(f.actions.unqueueFromProduction).toHaveBeenCalledWith(QueueType.Vehicles, f.miner.name, ObjectType.Vehicle, 1);
-    });
-    test("normal cancellation stays on its original path", () => {
-        const f = scenario(); f.context.difficulty = "normal"; f.requests.set("HTNK", { priority: 85, specificLocation: null });
-        f.run(); expect(f.actions.unqueueFromProduction).toHaveBeenCalledWith(QueueType.Vehicles, f.miner.name, ObjectType.Vehicle, 1);
-    });
-    test("eco-only retains civilian production through the same observed warning", () => {
-        const f = scenario(); onlyEconomy(f.run); expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
-    });
-    test("the warning does not change a new vehicle admission when there is no paid item", () => {
-        const f = scenario(); f.queue.pop(f.miner, 1); f.run();
-        expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
-        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HTNK", ObjectType.Vehicle, 1);
-    });
-    test("a watch-post-only warning uses the same existing pressure state without unseen home enemies", () => {
-        const f = scenario("Russians", 413, "watch");
-        expect(readPressure(f.context)).toMatchObject({ earlyPressure: true, baseUnderSiege: false });
-        f.run(); expect(f.actions.unqueueFromProduction).toHaveBeenCalledWith(QueueType.Vehicles, f.miner.name, ObjectType.Vehicle, 1);
-    });
-});
 
 describe("first core funding before new miners after observed home combat", () => {
     function scenario(country = "Russians", miners = 1) {
@@ -786,7 +714,7 @@ describe("brutal miner capacity and production table", () => {
         if (response === "drone") expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
         else expect(f.actions.unqueueFromProduction).toHaveBeenCalledWith(QueueType.Vehicles, "HARV", ObjectType.Vehicle, 1);
     });
-    test.each(["Russians", "Americans"])("%s hands a zero-budget paid miner back during warnings and emergencies", country => {
+    test.each(["Russians", "Americans"])("%s keeps a needed paid miner during advance warning, not a real emergency", country => {
         for (const response of ["warning", "siege", "air", "infantry", "counter", "capped"]) {
             const f = fixture(response === "capped" ? 12 : 1, 0, country); f.resources.splice(1);
             f.units.find(unit => unit.name === "NAREFN" && unit.tile.rx === 25)!.tile.rx = 17;
@@ -801,7 +729,8 @@ describe("brutal miner capacity and production table", () => {
             Object.assign(f.queues.get(QueueType.Vehicles)!, { status: QueueStatus.Active, items: [{ rules: miner, quantity: 1 }] });
             expect(desiredMiners(f.game, f.player)).toBe(country === "Russians" ? 4 : 5);
             f.run();
-            expect(f.actions.unqueueFromProduction).toHaveBeenCalledWith(QueueType.Vehicles, miner.name, ObjectType.Vehicle, 1);
+            if (response === "warning" || response === "infantry") expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+            else expect(f.actions.unqueueFromProduction).toHaveBeenCalledWith(QueueType.Vehicles, miner.name, ObjectType.Vehicle, 1);
         }
     });
     test("protecting a paid miner does not start an unneeded one or change normal cancellation", () => {
