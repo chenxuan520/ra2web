@@ -365,6 +365,17 @@ export class QueueController {
                 if (resumeIncomeHold) { actionsApi.resumeProduction(QueueType.Structures); return; }
             }
             if (fundPriorityVehicle && decision.queue === QueueType.Structures && refineryQueue.status === QueueStatus.Idle && decision.topItem?.unit.refinery) return;
+            if (context.difficulty === "brutal" && !ecoOnly && decision.queue === QueueType.Structures &&
+                refineryQueue.status === QueueStatus.Idle && decision.topItem?.unit.refinery && priorityVehicle &&
+                priorityVehicle.priority >= 100 && decision.topItem.priority < priorityVehicle.priority &&
+                ["MTNK", "HTNK", "MGTK", "APOC", "SREF"].includes(priorityVehicle.unit.name) &&
+                [QueueStatus.Active, QueueStatus.OnHold].includes(paidMinerQueue.status) &&
+                paidMinerQueue.items[0]?.rules.name === priorityVehicle.unit.name &&
+                playerData.credits < decision.topItem.unit.cost + priorityVehicle.unit.cost &&
+                game.getCurrentTick() >= 2700 && game.getCurrentTick() < 9000 &&
+                game.getVisibleUnits(player.name, "self", rules => rules.harvester).length === 1 &&
+                game.getVisibleUnits(player.name, "self", rules => rules.refinery).length > 0 &&
+                game.getVisibleUnits(player.name, "self", rules => ["MTNK", "HTNK", "MGTK", "APOC", "SREF"].includes(rules.name)).length === 0) return;
             if (context.difficulty === "brutal" && isCrawlProduction(game, player.name, decision.queue) &&
                 (readPressure(context).pressured || ownedBaseUnderAttack && !playerData.power?.isLowPower)) {
                 if (productionApi.getQueueData(decision.queue).status === QueueStatus.Active) actionsApi.pauseProduction(decision.queue);

@@ -7,6 +7,7 @@ import { ObjectType, QueueStatus, QueueType, Vector2 } from "../../game/ai/third
 import { getEconomyBuildingPriority } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/economyPlan";
 import { BaseBuildingMission } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/baseBuildingMission";
 import { QueueController, QUEUES } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/queueController";
+import { BRUTAL_PARAMS } from "../../game/ai/thirdpartbot/builtIn/bot/strategy/brutalParams";
 import { planRefinery } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/resourceCollectionBuilding";
 import { getRefineryEconomics, getRefineryEconomyState, noteMinerRefineryRequest, observeRefineryEconomy,
     planMinerRefinery, recordRefineryOrder, sellDuplicateRefinery } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/refineryEconomy";
@@ -182,7 +183,7 @@ function nativeBasicFundingFixture(footName = "E2", vehicleKind: "counter" | "mi
         f.player.credits = 20; native[NotifyTick.onTick](world); nativeQueues.get(QueueType.Infantry)!.status = status;
     }
     const controller = new QueueController();
-    return { ...f, actions, nativeQueues, foot, vehicle,
+    return { ...f, actions, nativeQueues, foot, vehicle, native,
         spend(tick: number, credits = 1, priority = vehicleKind === "miner" ? 110 : 100) {
             f.at(tick); f.player.credits = credits;
             controller.onAiUpdate(f.context, null, new Map<string, any>([
@@ -763,6 +764,66 @@ describe("paid subsidy refinery conditions and real lifecycle", () => {
         recordRefineryOrder(f.game, f.player.name, "NAPOWR", new Vector2(1, 0));
         observeRefineryEconomy(f.context);
         expect(getRefineryEconomyState(f.game, f.player.name).lastMinerRefineryStart).toBe(-Infinity);
+    });
+});
+
+describe("a new refinery respects the already queued first core budget", () => {
+    function scenario(name = "HTNK", cost = 900, queued = true) {
+        const f = nativeBasicFundingFixture();
+        const extraMiner = f.units.filter(unit => unit.rules.harvester)[1];
+        f.units.splice(f.units.indexOf(extraMiner), 1);
+        f.resources.splice(0, f.resources.length, { tile: { rx: 30, ry: 0 }, ore: 800, gems: 0, spawnsOre: false });
+        f.nativeQueues.get(QueueType.Structures)!.pop(f.rules, 1);
+        Object.assign(f.vehicle, { name, cost, harvester: name === "HARV" });
+        if (queued) {
+            f.nativeQueues.get(QueueType.Vehicles)!.push(f.vehicle, 1, cost);
+            f.player.credits = 1;
+            f.native[NotifyTick.onTick]({ getCombatants: () => [f.player], events: { dispatch() {} } });
+            expect(f.nativeQueues.get(QueueType.Vehicles)!.getFirst()!.creditsSpent).toBe(1);
+        }
+        return f;
+    }
+    test.each([["HTNK", 900, QueueStatus.Active], ["HTNK", 900, QueueStatus.OnHold],
+        ["MTNK", 700, QueueStatus.Active], ["MTNK", 700, QueueStatus.OnHold]] as const)(
+        "%s with fixture cost%i in status%i receives54 native credits before a NEW unserved-field refinery", (name, cost, status) => {
+            const f = scenario(name, cost); f.nativeQueues.get(QueueType.Vehicles)!.status = status;
+            for (let i = 0; i < 54; i++) f.spend(3446 + i * 2);
+            expect(f.nativeQueues.get(QueueType.Vehicles)!.getFirst()!.creditsSpent).toBe(55);
+            expect(f.nativeQueues.get(QueueType.Structures)!.getFirst()).toBeUndefined();
+            expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+            expect(f.actions.pauseProduction).not.toHaveBeenCalled();
+        });
+    test.each([QueueStatus.Active, QueueStatus.OnHold])("a previously queued refinery keeps its original native funding in status%i", status => {
+        const f = scenario(); f.nativeQueues.get(QueueType.Structures)!.push(f.rules, 1, f.rules.cost);
+        f.nativeQueues.get(QueueType.Structures)!.status = status; f.spend(3446);
+        expect(f.nativeQueues.get(QueueType.Structures)!.getFirst()!.creditsSpent).toBe(status === QueueStatus.OnHold ? 0 : 1);
+        expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+        expect(f.actions.pauseProduction).not.toHaveBeenCalled();
+    });
+    test.each([-1, 0])("both full nominal orders fit only at the shared cost boundary offset%i", offset => {
+        const f = scenario(); f.spend(3446, f.rules.cost + f.vehicle.cost + offset);
+        expect(!!f.nativeQueues.get(QueueType.Structures)!.getFirst()).toBe(offset === 0);
+    });
+    test.each(["uncommitted-core", "owned-core", "two-incomes", "no-refinery", "ordinary", "anti-air", "before", "late", "normal"])(
+        "%s retains the original new refinery admission", condition => {
+            const f = scenario(condition === "anti-air" ? "HTK" : "HTNK", condition === "anti-air" ? 500 : 900, condition !== "uncommitted-core");
+            if (condition === "owned-core") f.own("HTNK", 0);
+            if (condition === "two-incomes") f.own("HARV", 0);
+            if (condition === "no-refinery") f.units.splice(0, f.units.length, ...f.units.filter(unit => !unit.rules.refinery));
+            if (condition === "normal") f.context.difficulty = "normal";
+            f.spend(condition === "before" ? 2698 : condition === "late" ? 9000 : 3446,
+                condition === "normal" ? 3000 : 1, condition === "ordinary" ? 85 : condition === "anti-air" ? 115 : 100);
+            expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Structures, "NAREFN", ObjectType.Building, 1);
+        });
+    test("a paid miner is not a first-core reservation", () => {
+        const f = scenario("HARV", 1400); f.spend(3446, 1, 110);
+        expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Structures, "NAREFN", ObjectType.Building, 1);
+        expect(f.actions.unqueueFromProduction).not.toHaveBeenCalled();
+    });
+    test("ecoOnly retains its original refinery admission", () => {
+        const previous = BRUTAL_PARAMS.economy.ecoOnly; BRUTAL_PARAMS.economy.ecoOnly = 1;
+        try { const f = scenario(); f.spend(3446); expect(f.actions.queueForProduction).toHaveBeenCalledWith(QueueType.Structures, "NAREFN", ObjectType.Building, 1); }
+        finally { BRUTAL_PARAMS.economy.ecoOnly = previous; }
     });
 });
 
