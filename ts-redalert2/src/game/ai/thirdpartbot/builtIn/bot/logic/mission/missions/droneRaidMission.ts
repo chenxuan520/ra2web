@@ -89,6 +89,8 @@ export class DroneRaidMission extends Mission {
                     let action: BatchableAction;
                     if (target) action = BatchableAction.toTargetId(drone.id, OrderType.Attack, target.id);
                     else {
+                        if (this.orders.get(drone.id)?.action.orderType === OrderType.Move && drone.isIdle === false &&
+                            !enemies.some(enemy => enemy.rules.isSelectableCombatant || enemy.rules.primary || enemy.rules.secondary)) continue;
                         if (!plannedAmbush) {
                             ambush = getDroneRaidAmbushPoint(context);
                             plannedAmbush = true;

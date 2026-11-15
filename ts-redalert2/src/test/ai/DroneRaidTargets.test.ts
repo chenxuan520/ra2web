@@ -219,6 +219,57 @@ describe("drone raid public ambush points", () => {
     });
 });
 
+describe("an active harmless drone transit is not redirected by changing seen patches", () => {
+    function scenario() {
+        const f = fixture(); f.resources.push(resource(90, 0)); f.drone.isIdle = false;
+        f.step(3400); expect(f.orders).toEqual([[[1], OrderType.Move, 90, 0]]);
+        f.drone.tile.rx = 20; f.resources.splice(0, f.resources.length, resource(30, 0));
+        return f;
+    }
+    test("a busy Move keeps its original ambush instead of returning toward the newly selected home patch", () => {
+        const f = scenario(); f.step(3490);
+        expect(f.orders).toEqual([[[1], OrderType.Move, 90, 0]]);
+    });
+    test.each([true, undefined])("idle state%s does not falsely prove an active path", idle => {
+        const f = scenario(); f.drone.isIdle = idle; f.step(3490);
+        expect(f.orders.at(-1)).toEqual([[1], OrderType.Move, 30, 0]);
+    });
+    test("a newly seen eligible miner still immediately interrupts transit for a real Attack order", () => {
+        const f = scenario(); f.add(10, "HARV", "enemy", 50); f.step(3490);
+        expect(f.orders.at(-1)).toEqual([[1], OrderType.Attack, 10]);
+    });
+    test.each(["combatant", "primary", "secondary"])("a currently visible %s threat retains the original replanning flow", kind => {
+        const f = scenario();
+        if (kind === "combatant") {
+            const unit = f.add(10, "E1", "enemy", 150, 0, { isSelectableCombatant: true });
+            unit.type = unit.rules.type = ObjectType.Infantry;
+        } else {
+            const unit = guard(f, 10, "GAPILL", 150, 0); unit.rules[kind] = "Vulcan";
+        }
+        f.step(3490); expect(f.orders.at(-1)).toEqual([[1], OrderType.Move, 30, 0]);
+    });
+    test("an invisible threat cannot redirect an owned active path or leak its rules", () => {
+        const f = scenario(), unit = guard(f, 10, "GAPILL", 150, 0); f.hidden.add(unit.id);
+        for (const field of ["tile", "rules", "owner"]) Object.defineProperty(unit, field, { get: forbidden });
+        f.step(3490); expect(f.orders).toEqual([[[1], OrderType.Move, 90, 0]]);
+    });
+    test("a lost Attack target is not mistaken for protected transit", () => {
+        const f = fixture(); f.resources.push(resource(90, 0)); f.drone.isIdle = false;
+        f.add(10, "HARV", "enemy", 50); f.step(3400); f.hidden.add(10);
+        f.resources.splice(0, f.resources.length, resource(30, 0)); f.step(3490);
+        expect(f.orders.at(-1)).toEqual([[1], OrderType.Move, 30, 0]);
+    });
+    test("each owned drone keeps its own active transit without a new shared planner state", () => {
+        const f = fixture(); f.resources.push(resource(90, 0)); f.drone.isIdle = false;
+        const second = f.add(2, "DRON"); second.isIdle = false; f.mission.addUnit(second.id);
+        f.step(3400); f.resources.splice(0, f.resources.length, resource(30, 0)); f.step(3490);
+        expect(f.orders).toEqual([[[1, 2], OrderType.Move, 90, 0]]);
+    });
+    test("normal remains outside drone mission execution", () => {
+        const f = fixture(); f.context.difficulty = "normal"; f.step(3400); expect(f.orders).toEqual([]);
+    });
+});
+
 describe("drone raid cadence and ownership", () => {
     test("checks targets every thirty ticks and does not repeat an idle target before sixty", () => {
         const f = fixture(); f.add(10, "HARV", "enemy", 20);
