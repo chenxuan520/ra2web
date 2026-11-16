@@ -1,4 +1,4 @@
-import { describe, expect, mock, test } from "bun:test";
+import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test";
 import { BuildStatus } from "../../game/gameobject/Building";
 import { ApiEventType, ObjectType, QueueStatus, QueueType, Vector2, ZoneType } from "../../game/ai/thirdpartbot/builtIn/game-api";
 import { canRequestDefense, getDefenseState, hasSeenEnemyDrone, observeDefense, observeDefenseEvent, planDefense, recordDefenseOrder }
@@ -93,6 +93,13 @@ describe("authorized G5 four-basic-defense budget", () => {
 });
 
 describe("visible-signal defense plans", () => {
+    let previousOpeningDefense: number;
+    beforeEach(() => {
+        previousOpeningDefense = BRUTAL_PARAMS.economy.openingDefense;
+        BRUTAL_PARAMS.economy.openingDefense = 1;
+    });
+    afterEach(() => { BRUTAL_PARAMS.economy.openingDefense = previousOpeningDefense; });
+
     test("no signal produces neither a plan nor generic anti-air production", () => {
         const f = fixture(); expect(f.plan()).toBeUndefined();
         expect(getEconomyBuildingPriority(f.game, f.player, f.aa, false, f.context)).toBe(0);

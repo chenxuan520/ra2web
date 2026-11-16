@@ -1,6 +1,9 @@
 export const BRUTAL_PARAMS = {
     economy: {
         ecoOnly: 0,
+        openingDefense: 1,
+        openingMinerFirst: 1,
+        openingRaid: 1,
         firstRefineryPriority: 50,
         barracksPriority: 55,
         secondRefineryIntruderRadius: 25,

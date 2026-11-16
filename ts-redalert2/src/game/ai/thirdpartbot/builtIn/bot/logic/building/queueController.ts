@@ -142,7 +142,10 @@ export class QueueController {
             }
         }
         const basicDefense = isSovietCountry(playerData.country?.name) ? "NALASR" : "GAPILL";
-        const defense = planDefense(context, requests.get(basicDefense));
+        const holdDefense = context.difficulty === "brutal" && BRUTAL_PARAMS.economy.openingDefense === 0 && game.getCurrentTick() < 9000;
+        if (holdDefense) requests.delete(basicDefense);
+        const plannedDefense = planDefense(context, requests.get(basicDefense), holdDefense);
+        const defense = holdDefense && plannedDefense?.rules.name === basicDefense ? undefined : plannedDefense;
         const activeDefense = defense && isDefenseProduction(game, player.name) &&
             productionApi.getQueueData(QueueType.Armory).items[0]?.rules.name === defense.rules.name;
         if (defense && (activeDefense || defense.priority >= (requests.get(defense.rules.name)?.priority ?? 0))) {
@@ -179,20 +182,21 @@ export class QueueController {
                 const pressure = readPressure(context);
                 const minCoreBeforeMiner2 = isSovietCountry(playerData.country?.name) ? 2 : 1;
                 const coreFactor = getEconomyPressureLimits(context, miners).minerCoreFactor;
+                const minerPressured = pressure.pressured || (BRUTAL_PARAMS.economy.openingMinerFirst === 0 && !ecoOnly && game.getCurrentTick() < 9000);
 
                 priority = 0;
                 if (miners === 0) {
                     priority = 120;
-                } else if (miners === 1 && !pressure.pressured) {
+                } else if (miners === 1 && !minerPressured) {
                     priority = 110;
-                } else if (miners === 1 && pressure.pressured && (ecoOnly || core >= minCoreBeforeMiner2)) {
+                } else if (miners === 1 && minerPressured && (ecoOnly || core >= minCoreBeforeMiner2)) {
                     priority = 90;
-                } else if (miners === 2 && !pressure.pressured && miners < desired) {
+                } else if (miners === 2 && !minerPressured && miners < desired) {
                     priority = 110;
                     if (!ecoOnly && situation.tick < 9000 && core < BRUTAL_PARAMS.assault.formedArmor &&
                         game.getVisibleUnits(player.name, "enemy", rules => rules.type === ObjectType.Vehicle && rules.isSelectableCombatant &&
                             !rules.harvester && ["MTNK", "HTNK", "MGTK", "APOC", "SREF"].includes(rules.name)).length > 0) priority = 78;
-                } else if (miners === 2 && pressure.pressured && (ecoOnly || core >= 4) && miners < desired) {
+                } else if (miners === 2 && minerPressured && (ecoOnly || core >= 4) && miners < desired) {
                     priority = 78;
                 } else if (miners >= 3 && miners < desired && !pressure.baseUnderSiege && !ownedBaseUnderAttack && (ecoOnly || core >= coreFactor * (miners - 2))) {
                     priority = pressure.homeQuiet && miners < 5 && situation.enemy.infantry < 8 &&

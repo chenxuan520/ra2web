@@ -1,4 +1,4 @@
-import { describe, expect, mock, test } from "bun:test";
+import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test";
 import { BuildStatus } from "../../game/gameobject/Building";
 import { ProductionQueue } from "../../game/player/production/ProductionQueue";
 import { ProductionTrait } from "../../game/trait/ProductionTrait";
@@ -240,6 +240,13 @@ function subsidyFixture() {
 }
 
 describe("brutal refinery investment", () => {
+    let previousOpeningMinerFirst: number;
+    beforeEach(() => {
+        previousOpeningMinerFirst = BRUTAL_PARAMS.economy.openingMinerFirst;
+        BRUTAL_PARAMS.economy.openingMinerFirst = 1;
+    });
+    afterEach(() => { BRUTAL_PARAMS.economy.openingMinerFirst = previousOpeningMinerFirst; });
+
     test("first refinery retains priority fifty", () => { expect(fixture(0, 0).priority()).toBe(50); });
     test("unpressured second refinery uses factory, reachability and three miners or cash 1500", () => {
         const f = fixture(); f.player.credits = 1499; expect(f.priority()).toBe(0);

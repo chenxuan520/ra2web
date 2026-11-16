@@ -144,10 +144,10 @@ export function isDefenseProduction(game: GameApi, playerName: string): boolean 
 }
 
 /** The existing base-building mission supplies D0 unchanged; the queue checks it before all new signals. */
-export function planDefense(context: SupabotContext, emergency?: { priority: number; specificLocation: Vector2 | null }): DefensePlan | undefined {
+export function planDefense(context: SupabotContext, emergency?: { priority: number; specificLocation: Vector2 | null }, excludeBasic = false): DefensePlan | undefined {
     if (context.difficulty !== "brutal" || isEcoOnly(context)) return undefined;
     const { game, player } = context, state = stateFor(game, player.name);
-    const options = player.production.getAvailableObjects(QueueType.Armory);
+    const options = player.production.getAvailableObjects(QueueType.Armory).filter(option => !excludeBasic || !BASIC.has(option.name));
     if (!options.length && !state.active) return undefined;
     observeDefense(context);
     const data = game.getPlayerData(player.name);

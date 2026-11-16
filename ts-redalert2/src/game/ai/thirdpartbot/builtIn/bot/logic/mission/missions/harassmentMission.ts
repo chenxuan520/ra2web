@@ -6,6 +6,7 @@ import { Mission, MissionAction, disbandMission, noop, requestSpecificUnits } fr
 import { MissionController } from "../missionController";
 import { CombatSquad } from "./squads/combatSquad";
 import { isPressured } from "../../common/pressure";
+import { BRUTAL_PARAMS } from "../../../strategy/brutalParams";
 import { isFiringBurst } from "./squads/tacticalTargeting";
 import { findBaseThreat, isLivingUnit, isCoreRaidTank, isRaidTank, RAID_SIZE, RAID_TARGET_SEPARATION, raidTargetIsSafe, raidUnderPressure, selectEarlyRaidTarget, selectRaidTarget, visibleEnemies } from "./strategicTargets";
 
@@ -90,7 +91,7 @@ export class HarassmentMissionFactory {
 
     private tryEarlyRaid(context: SupabotContext, controller: MissionController, logger: DebugLogger, mainForces: MainForce[]): boolean {
         const tick = context.game.getCurrentTick();
-        if (tick >= 9000 || tick - this.lastEarlyLaunch < 1800 || isPressured(context)) return false;
+        if (BRUTAL_PARAMS.economy.openingRaid === 0 || tick >= 9000 || tick - this.lastEarlyLaunch < 1800 || isPressured(context)) return false;
         const main = mainForces.filter(force => force.isActive()).map(force => ({ force, units: force.getUnits(context.game)
             .filter(unit => unit.owner === context.player.name && isLivingUnit(unit)) }));
         const cores = main.flatMap(entry => entry.units).filter(unit => ["MTNK", "HTNK", "MGTK", "APOC", "SREF"].includes(unit.name));

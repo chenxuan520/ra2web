@@ -1,5 +1,6 @@
 import { ApiEvent, ApiEventType, GameApi, ObjectType } from "../../../game-api";
 import { isSovietCountry } from "../../strategy/basicInfantryBudget";
+import { BRUTAL_PARAMS } from "../../strategy/brutalParams";
 import { countCoreTanks, readStrategicSituation } from "../../strategy/nationalComposition";
 import { SupabotContext } from "../common/context";
 import { isEcoOnly, readPressure } from "../common/pressure";
@@ -37,6 +38,7 @@ export function observeDroneProductionEvent(game: GameApi, playerName: string, e
 
 export function getDronePriority(context: SupabotContext, ownedBaseUnderAttack = false): number {
     if (context.difficulty !== "brutal" || isEcoOnly(context)) return 0;
+    if (BRUTAL_PARAMS.economy.openingRaid === 0) return 0;
     const { game, player } = context, data = game.getPlayerData(player.name);
     if (!isSovietCountry(data.country?.name)) return 0;
     const state = stateFor(game, player.name), tick = game.getCurrentTick(), pressure = readPressure(context);

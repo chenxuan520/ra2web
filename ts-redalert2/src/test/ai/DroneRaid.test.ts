@@ -1,4 +1,4 @@
-import { describe, expect, mock, test } from "bun:test";
+import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test";
 import { BuildStatus } from "../../game/gameobject/Building";
 import { ProductionQueue } from "../../game/player/production/ProductionQueue";
 import { ProductionTrait } from "../../game/trait/ProductionTrait";
@@ -13,6 +13,14 @@ import { RAID_TARGET_SEPARATION, selectEarlyRaidTarget } from "../../game/ai/thi
 import { Mission, grabCombatants, noop } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/mission";
 import { MissionController } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missionController";
 import { BRUTAL_PARAMS } from "../../game/ai/thirdpartbot/builtIn/bot/strategy/brutalParams";
+
+// Preserve the enabled-policy prerequisites of these lifecycle and detachment scenarios.
+let previousOpening: Pick<typeof BRUTAL_PARAMS.economy, "openingMinerFirst" | "openingRaid">;
+beforeEach(() => {
+    previousOpening = { openingMinerFirst: BRUTAL_PARAMS.economy.openingMinerFirst, openingRaid: BRUTAL_PARAMS.economy.openingRaid };
+    Object.assign(BRUTAL_PARAMS.economy, { openingMinerFirst: 1, openingRaid: 1 });
+});
+afterEach(() => { Object.assign(BRUTAL_PARAMS.economy, previousOpening); });
 
 function fixture(miners = 3, core = 4, country = "Russians") {
     let tick = 100, nextId = 1;

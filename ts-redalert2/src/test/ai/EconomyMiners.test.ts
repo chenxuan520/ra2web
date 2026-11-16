@@ -1,4 +1,4 @@
-import { describe, expect, mock, test } from "bun:test";
+import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test";
 import { ApiEventType, ObjectType, QueueStatus, QueueType, Vector2 } from "../../game/ai/thirdpartbot/builtIn/game-api";
 import { Harvester, desiredMiners, patchCapacity } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/harvester";
 import { QueueController, QUEUES } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/queueController";
@@ -8,6 +8,14 @@ import { getEconomyPressureLimits, isPressured, observePressureEvent, readPressu
 import { BRUTAL_PARAMS } from "../../game/ai/thirdpartbot/builtIn/bot/strategy/brutalParams";
 import { DefaultStrategy } from "../../game/ai/thirdpartbot/builtIn/bot/strategy/defaultStrategy";
 import { MissionController } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missionController";
+
+// Legacy scenarios exercise the enabled opening policy; explicit off-switch cases are separate.
+let previousOpening: Pick<typeof BRUTAL_PARAMS.economy, "openingMinerFirst" | "openingRaid">;
+beforeEach(() => {
+    previousOpening = { openingMinerFirst: BRUTAL_PARAMS.economy.openingMinerFirst, openingRaid: BRUTAL_PARAMS.economy.openingRaid };
+    Object.assign(BRUTAL_PARAMS.economy, { openingMinerFirst: 1, openingRaid: 1 });
+});
+afterEach(() => { Object.assign(BRUTAL_PARAMS.economy, previousOpening); });
 
 function fixture(miners = 3, core = 2, country = "Russians") {
     let tick = 100;

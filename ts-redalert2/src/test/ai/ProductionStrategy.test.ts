@@ -1,4 +1,4 @@
-import { describe, expect, mock, test } from "bun:test";
+import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test";
 import { QueueController, QUEUES } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/queueController";
 import { QueueStatus, QueueType, ObjectType, MovementZone, Vector2 } from "../../game/ai/thirdpartbot/builtIn/game-api";
 import { DEFAULT_COMPOSITIONS } from "../../game/ai/thirdpartbot/builtIn/bot/strategy/defaultStrategy";
@@ -7,6 +7,7 @@ import { GlobalThreat } from "../../game/ai/thirdpartbot/builtIn/bot/logic/threa
 import type { UnitRequest } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missionController";
 import { BasicBuilding } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/basicBuilding";
 import { ResourceCollectionBuilding } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/resourceCollectionBuilding";
+import { BRUTAL_PARAMS } from "../../game/ai/thirdpartbot/builtIn/bot/strategy/brutalParams";
 
 function productionScenario(credits = 100, difficulty?: "normal" | "brutal") {
     const available = new Map<number, any[]>();
@@ -283,6 +284,13 @@ describe("new engineer suppression survives an ordinary infantry queue item", ()
 });
 
 describe("an already paid first core keeps its response through a planned opening drone", () => {
+    let previousOpeningRaid: number;
+    beforeEach(() => {
+        previousOpeningRaid = BRUTAL_PARAMS.economy.openingRaid;
+        BRUTAL_PARAMS.economy.openingRaid = 1;
+    });
+    afterEach(() => { BRUTAL_PARAMS.economy.openingRaid = previousOpeningRaid; });
+
     function scenario(status: QueueStatus, completedCore = false) {
         const s = productionScenario(600, "brutal"); s.at(3400);
         s.owned.push({ name: "NAREFN", refinery: true, type: ObjectType.Building },
