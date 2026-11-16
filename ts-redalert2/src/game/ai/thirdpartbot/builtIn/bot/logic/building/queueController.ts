@@ -237,10 +237,19 @@ export class QueueController {
                 return enemy && ownedAnchors.some(base => Math.hypot(enemy.tile.rx - base.rx, enemy.tile.ry - base.ry) <= 48);
             }).length;
             const firstCoreQueue = productionApi.getQueueData(QueueType.Vehicles);
+            const previousVehicle = this.queueStates.find(state => state.queue === QueueType.Vehicles)?.topItem;
             if (situation.harvesters >= 2 && (situation.enemy.infantry >= 8 &&
                 (situation.own.MTNK ?? 0) + (situation.own.HTNK ?? 0) < Math.min(6, Math.max(2, Math.ceil(situation.enemy.infantry / 6))) ||
                 (situation.tick < 9000 || ownedBaseUnderAttack && !firstCoreQueue.items[0]?.rules.harvester) &&
                 visibleCoreArmor > 0 && countCoreTanks(situation) < Math.min(6, Math.max(BRUTAL_PARAMS.assault.formedArmor, visibleCoreArmor))) ||
+                situation.harvesters === 1 && situation.tick < 9000 && situation.enemy.infantry >= 8 &&
+                (situation.own.MTNK ?? 0) + (situation.own.HTNK ?? 0) < Math.min(6, Math.max(2, Math.ceil(situation.enemy.infantry / 6))) &&
+                (situation.own.GAREFN ?? 0) + (situation.own.NAREFN ?? 0) > 0 &&
+                (previousVehicle?.priority === 100 && ["MTNK", "HTNK"].includes(previousVehicle.unit.name) ||
+                    game.getVisibleUnits(player.name, "self", rules => rules.type === ObjectType.Infantry && ["E1", "E2"].includes(rules.name)).some(id => {
+                        const unit = game.getUnitData(id);
+                        return unit?.owner === player.name && unit.isFiring === true;
+                    })) ||
                 situation.harvesters === 1 && situation.tick < 9000 && visibleCoreArmor > 0 && countCoreTanks(situation) < Math.min(6, visibleCoreArmor) &&
                 game.getVisibleUnits(player.name, "self", rules => rules.refinery).length > 0 ||
                 situation.harvesters >= 1 && situation.harvesters <= 2 && situation.tick >= 2700 && situation.tick < 9000 && countCoreTanks(situation) === 0 &&
