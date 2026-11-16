@@ -432,7 +432,8 @@ export class QueueController {
             if (context.difficulty === "brutal" && priorityVehicle && priorityVehicle.priority >= 100 &&
                 playerData.credits < priorityVehicle.unit.cost && decision.queue === QueueType.Infantry && decision.topItem &&
                 ["E1", "E2"].includes(decision.topItem.unit.name) && decision.topItem.priority < priorityVehicle.priority &&
-                productionApi.getQueueData(QueueType.Infantry).status === QueueStatus.Idle) return;
+                productionApi.getQueueData(QueueType.Infantry).status === QueueStatus.Idle &&
+                !(this.engagedInfantryCounter && decision.topItem.priority >= 95)) return;
             // Fund the marked refinery before buying miners only its unfinished field can support.
             if (context.difficulty === "brutal" && futureRefinery && pendingRefinery?.refinery &&
                 [QueueStatus.Active, QueueStatus.OnHold].includes(refineryQueue.status) &&
