@@ -1,5 +1,6 @@
 import { isObservedLivingUnit } from "../../common/observedUnit";
 import { GameApi, ObjectType, UnitData, Vector2, ZoneType } from "../../../../game-api";
+import { manageMoveMicro } from "./squads/common";
 import { SideComposition } from "../../../strategy/compositionUtils";
 import { countCoreTanks, readStrategicSituation } from "../../../strategy/nationalComposition";
 import { getOpeningAirBudget } from "../../../strategy/openingAirBudget";
@@ -27,6 +28,9 @@ export class FieldArmyMission extends Mission {
     private searchDistance = Infinity;
     private failedSearches = new Map<string, number>();
     private lastEnemyLocation?: Vector2;
+    private sweeping = false;
+    private enemyBaseSeen = false;
+    private sweep = new Map<number, { point: Vector2; best: number; progressAt: number; orderedAt: number }>();
 
     constructor(private plan: SideComposition | null, private controller: MissionController, logger: DebugLogger) { super("fieldArmy", logger); }
 
@@ -147,6 +151,7 @@ export class FieldArmyMission extends Mission {
 
         if (tick >= this.nextTargetCheck) {
             this.nextTargetCheck = tick + 30;
+            this.sweeping = false;
             if (!this.attacking) {
                 if (shouldDefendHomeThreat && nearestHomeThreat) {
                     this.attackArea = location(nearestHomeThreat);
@@ -172,7 +177,12 @@ export class FieldArmyMission extends Mission {
                 this.attackArea = location(intercept);
                 this.targetId = intercept.id;
             } else {
-                const previous = enemies.find(enemy => enemy.id === this.targetId);
+                // Once the enemy base has been seen and nothing but miners is visible, the rest of the base is under shroud.
+                const finishing = context.difficulty === "brutal" && this.enemyBaseSeen && !enemies.some(enemy =>
+                    (enemy.type as any) === ObjectType.Building || (enemy.rules.isSelectableCombatant && !enemy.rules.harvester &&
+                        (!["DOG", "ADOG"].includes(enemy.name) || units.some(unit =>
+                            location(unit).distanceTo(location(enemy)) <= 22 && !!getCombatWeapon(enemy, unit, true, game)))));
+                const previous = finishing ? undefined : enemies.find(enemy => enemy.id === this.targetId);
                 const prevDist = previous ? center.distanceTo(location(previous)) : Infinity;
                 const prevIsArmedDefense = previous && (previous.type as any) === ObjectType.Building &&
                     (previous.rules.primary || previous.rules.secondary);
@@ -188,7 +198,7 @@ export class FieldArmyMission extends Mission {
                         enemies.some(e => (e.type as any) === ObjectType.Building && center.distanceTo(location(e)) <= 18));
 
                 const hasEnemyCombatants = enemies.some(e => (e.type as any) === ObjectType.Vehicle && e.rules.isSelectableCombatant && !e.rules.harvester);
-                const objective = (!shouldRetarget && previous) ? previous : enemies.map(enemy => {
+                const objective = (!shouldRetarget && previous) ? previous : (finishing ? [] : enemies).map(enemy => {
                     const isArmedDefense = (enemy.type as any) === ObjectType.Building &&
                         (enemy.rules.primary || enemy.rules.secondary);
                     const isCombatVehicle = (enemy.type as any) === ObjectType.Vehicle && enemy.rules.isSelectableCombatant && !enemy.rules.harvester;
@@ -209,25 +219,31 @@ export class FieldArmyMission extends Mission {
                     this.attackArea = location(objective);
                     if ((objective.type as any) === ObjectType.Building || objective.rules.constructionYard || objective.rules.refinery || objective.rules.weaponsFactory) {
                         this.lastEnemyLocation = location(objective);
+                        this.enemyBaseSeen = true;
                     } else {
                         this.lastEnemyLocation ??= location(objective);
                     }
-                } else if (this.lastEnemyLocation && center.distanceTo(this.lastEnemyLocation) > 8) {
+                } else if (this.lastEnemyLocation && center.distanceTo(this.lastEnemyLocation) > 8 &&
+                    !finishing) {
                     this.attackArea = this.lastEnemyLocation;
                 } else {
                     this.lastEnemyLocation = undefined;
+                    this.sweeping = finishing;
                     const fallbackDir = rally;
                     const searchDirection = getKnownEnemyDirections(game, playerData)[0] ?? fallbackDir;
                     const startTile = game.mapApi.getTile(searchDirection.x, searchDirection.y);
-                    this.attackArea = startTile && game.mapApi.isVisibleTile(startTile, player.name)
+                    this.attackArea = !(finishing && units.length >= 4) && startTile && game.mapApi.isVisibleTile(startTile, player.name)
                         ? this.searchUnexplored(game, player.name, center, searchDirection) : searchDirection;
                 }
             }
         }
         const isIntercepting = !this.attacking && isArmorFormed && incomingStrikeForce && center.distanceTo(rally) < 45;
-        this.squad.setDefensiveRadius(this.attacking ? undefined : (shouldDefendHomeThreat || isIntercepting ? 25 : 7));
-        this.squad.setAttackArea(this.attackArea);
-        this.squad.onAiUpdate(context, this, this.logger);
+        if (!(this.sweeping && this.attacking && units.length >= 4 && this.runSweep(context, units))) {
+            this.sweep.clear();
+            this.squad.setDefensiveRadius(this.attacking ? undefined : (shouldDefendHomeThreat || isIntercepting ? 25 : 7));
+            this.squad.setAttackArea(this.attackArea);
+            this.squad.onAiUpdate(context, this, this.logger);
+        }
 
         const available = new Set(player.production.getAvailableObjects().map(option => option.name));
         const requests: Record<string, number> = {};
@@ -275,6 +291,53 @@ export class FieldArmyMission extends Mission {
             .filter(id => !assigned.has(id));
         if (free.length) return requestSpecificUnits(free, 50);
         return requestUnits(requests);
+    }
+
+    /** No enemy is visible anywhere: spread the army over the remaining shroud, one public grid point per unit. */
+    private runSweep(context: MissionContext, units: UnitData[]): boolean {
+        const { game, player, actionBatcher } = context;
+        const tick = game.getCurrentTick();
+        const size = game.mapApi.getRealMapSize();
+        const key = (point: Vector2) => `${point.x},${point.y}`;
+        const shrouded = (point: Vector2) => {
+            const tile = game.mapApi.getTile(point.x, point.y);
+            return !!tile && !game.mapApi.isVisibleTile(tile, player.name);
+        };
+        const open: Vector2[] = [];
+        for (let x = 4; x < size.width; x += 8) for (let y = 4; y < size.height; y += 8) {
+            const point = new Vector2(x, y);
+            if (tick < (this.failedSearches.get(key(point)) ?? -Infinity) + 3600) continue;
+            if (shrouded(point)) open.push(point);
+        }
+        if (!open.length) return false;
+        const eligibleUnits = units.filter(unit => !context.parasiteRepair?.isRepairing(unit.id));
+        const eligibleIds = new Set(eligibleUnits.map(unit => unit.id));
+        for (const id of [...this.sweep.keys()]) if (!eligibleIds.has(id)) this.sweep.delete(id);
+        const taken = new Set<string>([...this.sweep.values()].map(task => key(task.point)));
+        for (const unit of [...eligibleUnits].sort((a, b) => a.id - b.id)) {
+            const here = location(unit);
+            let task = this.sweep.get(unit.id);
+            if (task) {
+                const distance = here.distanceTo(task.point);
+                if (distance < task.best - 1) { task.best = distance; task.progressAt = tick; }
+                if (!shrouded(task.point)) task = undefined;
+                else if (tick >= task.progressAt + 900) { this.failedSearches.set(key(task.point), tick); task = undefined; }
+                if (!task) { taken.delete(key(this.sweep.get(unit.id)!.point)); this.sweep.delete(unit.id); }
+            }
+            if (!task) {
+                const point = open.filter(option => !taken.has(key(option)) && tick >= (this.failedSearches.get(key(option)) ?? -Infinity) + 3600)
+                    .sort((a, b) => here.distanceTo(a) - here.distanceTo(b) || a.x - b.x || a.y - b.y)[0];
+                if (!point) continue;
+                task = { point, best: Infinity, progressAt: tick, orderedAt: -Infinity };
+                this.sweep.set(unit.id, task);
+            }
+            taken.add(key(task.point));
+            if (tick >= task.orderedAt + 300) {
+                task.orderedAt = tick;
+                actionBatcher.push(manageMoveMicro(unit, task.point, context.difficulty));
+            }
+        }
+        return true;
     }
 
     private searchUnexplored(game: GameApi, player: string, center: Vector2, fallback: Vector2): Vector2 {
