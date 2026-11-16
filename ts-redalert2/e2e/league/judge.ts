@@ -275,6 +275,9 @@ export async function main() {
     const { values } = parseArgs({ options: { mode: { type: 'string' }, games: { type: 'string' }, id: { type: 'string' }, target: { type: 'string' },
         candidate: { type: 'string' }, champion: { type: 'string' }, 'candidate-games': { type: 'string' }, 'baseline-games': { type: 'string' },
         attempt: { type: 'string' }, fixes: { type: 'string' }, write: { type: 'boolean' }, 'eco-candidate': { type: 'string' }, 'eco-baseline': { type: 'string' } } });
+    if (values.mode === 'champion' && values.fixes === 'eco') {
+        if (!values['eco-candidate'] || !values['eco-baseline']) throw new Error('--fixes eco requires --eco-candidate and --eco-baseline');
+    }
     const league = await loadLeague();
     if (values.mode === 'readme') {
         const directory = resolve(REPO_ROOT, 'docs/ai-league'), games = parseGames(await Bun.file(resolve(directory, 'results.jsonl')).text());

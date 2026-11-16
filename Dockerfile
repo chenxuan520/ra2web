@@ -14,6 +14,7 @@ COPY ts-redalert2/src ./src
 COPY ts-redalert2/e2e ./e2e
 COPY ts-redalert2/server ./server
 COPY ts-redalert2/deploy ./deploy
+COPY docs /docs
 COPY --from=pvpgn-build /opt/pvpgn /opt/pvpgn
 RUN mkdir -p /tmp/opencode && bun run prepare:bundled /tmp/opencode/cdn && PVPGN_TEST_PREFIX=/opt/pvpgn RA2_PREPARED_CDN=/tmp/opencode/cdn bun run typecheck:entry && PVPGN_TEST_PREFIX=/opt/pvpgn RA2_PREPARED_CDN=/tmp/opencode/cdn bun run typecheck:server && PVPGN_TEST_PREFIX=/opt/pvpgn RA2_PREPARED_CDN=/tmp/opencode/cdn bun test && bun --bun vite build && test ! -e dist/cdn
 
