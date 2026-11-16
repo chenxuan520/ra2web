@@ -141,7 +141,7 @@ export class FieldArmyMission extends Mission {
         }
         const center = this.getCenterOfMass() ?? rally;
         const nearestHomeThreat = homeThreats.length
-            ? [...homeThreats].sort((a, b) => location(a).distanceTo(center) - location(b).distanceTo(center) || a.id - b.id)[0]
+            ? [...homeThreats].filter(enemy => !defendInfantryRush || !["DOG", "ADOG"].includes(enemy.name)).sort((a, b) => location(a).distanceTo(center) - location(b).distanceTo(center) || a.id - b.id)[0]
             : undefined;
 
         const isArmorFormed = armor.length >= BRUTAL_PARAMS.assault.formedArmor;
