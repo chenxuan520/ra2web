@@ -7,6 +7,7 @@ import { getOpeningAirBudget } from "../../../strategy/openingAirBudget";
 import { BRUTAL_PARAMS } from "../../../strategy/brutalParams";
 import { getBasicInfantryBudget, isSovietCountry } from "../../../strategy/basicInfantryBudget";
 import { getKnownEnemyDirections } from "../../common/knownEnemyDirections";
+import { isEcoOnly, readPressure } from "../../common/pressure";
 import { MissionContext } from "../../common/context";
 import { DebugLogger } from "../../common/utils";
 import { Mission, releaseUnits, requestSpecificUnits, requestUnits } from "../mission";
@@ -123,7 +124,9 @@ export class FieldArmyMission extends Mission {
                 (!isLongMap && armor.length >= 2 && enemyArmor === 0 && targetDist <= 45)
             ))
         );
-        const infantryPush = openingInfantry && infantry.length >= this.plan!.minimumUnits && enemyArmor <= 2 && enemyAircraft === 0 && enemyDefences < 2;
+        const defendInfantryRush = openingInfantry && !isEcoOnly(context) && readPressure(context).earlyPressure && !canAssault &&
+            (enemyPower > 0 ? forceRatio < BRUTAL_PARAMS.assault.assaultForceRatio : !this.attacking);
+        const infantryPush = openingInfantry && infantry.length >= this.plan!.minimumUnits && enemyArmor <= 2 && enemyAircraft === 0 && enemyDefences < 2 && !defendInfantryRush;
         if (canAssault || infantryPush ||
             air.length >= 2 || units.some(unit => unit.name === "ZEP") || infantry.length >= 20) {
             this.attacking = true;
@@ -131,7 +134,7 @@ export class FieldArmyMission extends Mission {
         const outnumbered = enemyArmor > 0 && armor.length < Math.min(enemyArmor, BRUTAL_PARAMS.assault.retreatArmorCap);
         const powerDeficit = enemyPower > BRUTAL_PARAMS.assault.retreatPowerFloor && forceRatio < BRUTAL_PARAMS.assault.retreatForceRatio;
         const decimated = armor.length < (isLateGame ? BRUTAL_PARAMS.assault.decimatedLate : (hasHeavyDefences ? BRUTAL_PARAMS.assault.decimatedVsHeavyDefence : BRUTAL_PARAMS.assault.decimatedEarly));
-        if (!infantryPush && (decimated || outnumbered || powerDeficit || (units.length < 2 && !air.length))) {
+        if (!infantryPush && (defendInfantryRush || decimated || outnumbered || powerDeficit || (units.length < 2 && !air.length))) {
             if (!air.length && !units.some(unit => unit.name === "ZEP")) {
                 this.attacking = false;
             }

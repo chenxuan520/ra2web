@@ -144,10 +144,10 @@ export class QueueController {
             }
         }
         const basicDefense = isSovietCountry(playerData.country?.name) ? "NALASR" : "GAPILL";
-        const holdDefense = context.difficulty === "brutal" && BRUTAL_PARAMS.economy.openingDefense === 0 && game.getCurrentTick() < 9000 && !readPressure(context).earlyPressure;
+        const holdDefense = context.difficulty === "brutal" && BRUTAL_PARAMS.economy.openingDefense === 0 && game.getCurrentTick() < 9000;
         if (holdDefense) requests.delete(basicDefense);
         const plannedDefense = planDefense(context, requests.get(basicDefense), holdDefense);
-        const defense = holdDefense && plannedDefense?.rules.name === basicDefense && !isDefenseProduction(game, player.name) ? undefined : plannedDefense;
+        const defense = holdDefense && plannedDefense?.rules.name === basicDefense ? undefined : plannedDefense;
         const activeDefense = defense && isDefenseProduction(game, player.name) &&
             productionApi.getQueueData(QueueType.Armory).items[0]?.rules.name === defense.rules.name;
         if (defense && (activeDefense || defense.priority >= (requests.get(defense.rules.name)?.priority ?? 0))) {
