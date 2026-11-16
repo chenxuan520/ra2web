@@ -1,6 +1,7 @@
 import {
     ActionsApi,
     GameApi,
+    MovementZone,
     ObjectType,
     PlayerData,
     ProductionApi,
@@ -87,6 +88,7 @@ export class QueueController {
         threatCache: GlobalThreat | null,
         unitTypeRequests: Map<string, UnitRequest>,
         logger: (message: string) => void,
+        fieldArmyRegrouping = false,
     ) {
         const { game, player } = context;
         const { production: productionApi, actions: actionsApi } = player;
@@ -274,6 +276,20 @@ export class QueueController {
                         requests.set(tank.name, { priority: 60, specificLocation: null });
                     } else if ((requests.get(tank.name)?.priority ?? 0) < 50) {
                         requests.set(tank.name, { priority: 50, specificLocation: null });
+                    }
+                    const coreRequest = requests.get(tank.name);
+                    if (fieldArmyRegrouping && situation.harvesters >= 2 &&
+                        (situation.own.NAREFN ?? 0) + (situation.own.GAREFN ?? 0) > 0 && coreRequest && coreRequest.priority > 0 &&
+                        (firstCoreQueue.status === QueueStatus.Idle ||
+                            [QueueStatus.Active, QueueStatus.OnHold].includes(firstCoreQueue.status) && firstCoreQueue.items[0]?.rules.name === tank.name) &&
+                        game.getVisibleUnits(player.name, "enemy", rules =>
+                            (rules.type === ObjectType.Infantry || rules.type === ObjectType.Vehicle) && rules.movementZone !== MovementZone.Fly &&
+                            rules.isSelectableCombatant && !rules.harvester && !["DOG", "ADOG", "ENGINEER", "SENGINEER"].includes(rules.name) &&
+                            !!(rules.primary || rules.secondary)).length > 0) {
+                        requests.set(tank.name, { ...coreRequest, priority: Math.max(100, coreRequest.priority) });
+                        for (const option of productionApi.getAvailableObjects(QueueType.Vehicles)) {
+                            if (option.harvester) requests.delete(option.name);
+                        }
                     }
                 }
                 if (!isSovietCountry(playerData.country?.name)) {

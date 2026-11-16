@@ -9,6 +9,7 @@ import { SupabotContext } from "./logic/common/context";
 import { Strategy } from "./strategy/strategy";
 import { DefaultStrategy } from "./strategy/defaultStrategy";
 import { BaseBuildingMission } from "./logic/mission/missions/baseBuildingMission";
+import type { FieldArmyMission } from "./logic/mission/missions/fieldArmyMission";
 import { isEcoOnly, observePressureEvent } from "./logic/common/pressure";
 import { observeDefense, observeDefenseEvent } from "./logic/building/defensePlan";
 import { ParasiteRepair } from "./logic/mission/missions/parasiteRepair";
@@ -165,6 +166,8 @@ export class BuiltInBot extends Bot {
             // Queue-controller logic.
             this.queueController.onAiUpdate(fullContext, threatCache, unitTypeRequests, (message) =>
                 this.logBotStatus(message),
+                this.difficulty === "brutal" && (this.missionController.getMissions?.().find(mission => mission.getUniqueName() === "fieldArmy") as FieldArmyMission | undefined)
+                    ?.isAttacking() === false,
             );
         }
     }
