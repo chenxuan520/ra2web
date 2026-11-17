@@ -5,6 +5,9 @@ import { FieldArmyMission } from "../../game/ai/thirdpartbot/builtIn/bot/logic/m
 import { MissionController } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missionController";
 import { ActionBatcher } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/actionBatcher";
 import { BRUTAL_PARAMS } from "../../game/ai/thirdpartbot/builtIn/bot/strategy/brutalParams";
+import { useLegacyAssaultDefaults } from "./legacyAssaultDefaults";
+
+useLegacyAssaultDefaults();
 
 function unit(id: number, name: string, x: number, y = 0, owner = "bot"): any {
     const infantry = name === "DOG" || name === "E2";

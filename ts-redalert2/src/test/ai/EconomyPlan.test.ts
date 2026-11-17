@@ -1,6 +1,9 @@
 import { expect, test } from "bun:test";
 import { getEconomyBuildingPriority } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/economyPlan";
 import { ObjectType, Vector2 } from "../../game/ai/thirdpartbot/builtIn/game-api";
+import { useLegacyAssaultDefaults } from "./legacyAssaultDefaults";
+
+useLegacyAssaultDefaults();
 
 function scenario(names: string[], credits = 5000, distance = 120, country = "Arabs") {
     const owned = names.map(name => ({ name, harvester: ["HARV", "CMIN"].includes(name) }));

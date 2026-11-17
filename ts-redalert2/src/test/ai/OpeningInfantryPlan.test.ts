@@ -5,6 +5,9 @@ import { ActionBatcher } from '../../game/ai/thirdpartbot/builtIn/bot/logic/miss
 import { FieldArmyMission } from '../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/fieldArmyMission';
 import { MissionController } from '../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missionController';
 import { QueueController, QUEUES } from '../../game/ai/thirdpartbot/builtIn/bot/logic/building/queueController';
+import { useLegacyAssaultDefaults } from './legacyAssaultDefaults';
+
+useLegacyAssaultDefaults();
 
 function fixture() {
     let tick = 3000;

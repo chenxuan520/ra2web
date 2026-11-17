@@ -5,6 +5,7 @@ import { MissionController } from "../../game/ai/thirdpartbot/builtIn/bot/logic/
 import { FieldArmyMission } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/fieldArmyMission";
 import { ActionBatcher } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/actionBatcher";
 import { calculateGlobalThreat } from "../../game/ai/thirdpartbot/builtIn/bot/logic/threat/threatCalculator";
+import { useLegacyAssaultDefaults } from "./legacyAssaultDefaults";
 
 class RequestMission extends Mission {
     requested: Record<string, number> = {};
@@ -90,7 +91,7 @@ function fieldFixture() {
         getPlayerData: () => ({ name: "bot", country: { name: "Russians" }, startLocation: new Vector2(), credits: 5000 }),
         getPlayers: () => ["bot"],
         rulesApi: { vehicleRules: new Map(), infantryRules: new Map(), aircraftRules: new Map(), buildingRules: new Map() },
-        mapApi: { getTile: (rx: number, ry: number) => ({ rx, ry }), isVisibleTile: () => false,
+        mapApi: { getTile: (rx: number, ry: number) => ({ rx, ry }), isVisibleTile: (_tile: any) => false,
             getStartingLocations: () => [new Vector2(), new Vector2(120, 0)],
             getRealMapSize: () => ({ width: 60, height: 60 }) },
     };
@@ -112,6 +113,7 @@ function fieldFixture() {
 }
 
 describe("persistent field army", () => {
+    useLegacyAssaultDefaults();
     test("the opening does not fund more than two rocketeers before its second miner", () => {
         const f = fieldFixture();
         f.context.player.production.getAvailableObjects = () => ["MTNK", "JUMPJET"].map(name => ({ name }));
