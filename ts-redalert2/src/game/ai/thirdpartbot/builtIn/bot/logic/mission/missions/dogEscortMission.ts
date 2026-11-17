@@ -7,6 +7,7 @@ import { BatchableAction } from "../actionBatcher";
 import type { FieldArmyMission } from "./fieldArmyMission";
 import { DesolatorTactics } from "./squads/desolatorTactics";
 import { getCombatWeapon, isFiringBurst } from "./squads/tacticalTargeting";
+import { BRUTAL_PARAMS } from "../../../strategy/brutalParams";
 
 const pointOf = (unit: UnitData) => new Vector2(unit.tile.rx, unit.tile.ry);
 
@@ -36,6 +37,8 @@ export class DogEscortMission extends Mission {
             this.safety.observe(context, dogs);
             const live = new Set(dogs.map(unit => unit.id));
             for (const id of this.orders.keys()) if (!live.has(id)) this.orders.delete(id);
+            const hunt = BRUTAL_PARAMS.assault.dogHunt === 1;
+            const claimed = new Set<number>();
             for (const [index, dog] of [...dogs].sort((a, b) => a.id - b.id).entries()) {
                 if (isFiringBurst(dog)) continue;
                 const anchor = tanks.length ? tanks[index % tanks.length] : undefined;
@@ -51,10 +54,12 @@ export class DogEscortMission extends Mission {
                     .map(id => game.getUnitData(id)).filter((enemy): enemy is UnitData => isObservedLivingUnit(enemy) &&
                         pointOf(enemy).distanceTo(pointOf(anchor)) <= 12) : [];
                 const bite = anchor && near.filter(enemy => (enemy.type as any) === ObjectType.Infantry &&
-                    pointOf(enemy).distanceTo(pointOf(dog)) <= 1.75 && pointOf(enemy).distanceTo(pointOf(anchor)) <= 4 &&
+                    pointOf(enemy).distanceTo(pointOf(dog)) <= (hunt ? BRUTAL_PARAMS.assault.dogBiteRange : 1.75) &&
+                    pointOf(enemy).distanceTo(pointOf(anchor)) <= (hunt ? BRUTAL_PARAMS.assault.dogLeash : 4) && !claimed.has(enemy.id) &&
                     getCombatWeapon(dog, enemy, true, game) && this.safety.isSafeMove(dog, pointOf(enemy)))
                     .sort((a, b) => pointOf(a).distanceTo(pointOf(dog)) - pointOf(b).distanceTo(pointOf(dog)) || a.id - b.id)[0];
                 if (bite) {
+                    if (hunt) claimed.add(bite.id);
                     this.submit(context, dog, BatchableAction.toTargetId(dog.id, OrderType.Attack, bite.id));
                     continue;
                 }
@@ -77,10 +82,13 @@ export class DogEscortMission extends Mission {
         const available = player.production.getAvailableObjects().find(rule => rule.name === "DOG" || rule.name === "ADOG");
         const miners = game.getVisibleUnits(player.name, "self", rule => rule.harvester).length;
         const totalDogs = game.getVisibleUnits(player.name, "self", rule => rule.name === "DOG" || rule.name === "ADOG").length;
-        const desired = tanks.length ? Math.min(6, Math.max(1, Math.floor(tanks.length / 2))) : 0;
+        const huntBudget = BRUTAL_PARAMS.assault.dogHunt === 1;
+        const desired = !tanks.length ? 0 : huntBudget
+            ? Math.min(BRUTAL_PARAMS.assault.dogMax, Math.max(1, Math.ceil(tanks.length * BRUTAL_PARAMS.assault.dogsPerTank)))
+            : Math.min(6, Math.max(1, Math.floor(tanks.length / 2)));
         const committed = player.production.getQueueData?.(QueueType.Infantry).items[0]?.rules.name === available?.name;
-        return available && miners >= 1 && tanks.length >= 1 && dogs.length < desired && totalDogs < 8 &&
-            (committed || playerData.credits >= available.cost) ? requestUnits({ [available.name]: 25 }) : noop();
+        return available && miners >= 1 && tanks.length >= 1 && dogs.length < desired && totalDogs < (huntBudget ? BRUTAL_PARAMS.assault.dogMax + 2 : 8) &&
+            (committed || playerData.credits >= available.cost) ? requestUnits({ [available.name]: huntBudget ? 70 : 25 }) : noop();
     }
 
     private submit(context: MissionContext, unit: UnitData, action: BatchableAction) {

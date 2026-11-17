@@ -4,6 +4,7 @@ import { DogEscortMission, dogEscortPoint } from "../../game/ai/thirdpartbot/bui
 import { FieldArmyMission } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missions/fieldArmyMission";
 import { MissionController } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/missionController";
 import { ActionBatcher } from "../../game/ai/thirdpartbot/builtIn/bot/logic/mission/actionBatcher";
+import { BRUTAL_PARAMS } from "../../game/ai/thirdpartbot/builtIn/bot/strategy/brutalParams";
 
 function unit(id: number, name: string, x: number, y = 0, owner = "bot"): any {
     const infantry = name === "DOG" || name === "E2";
@@ -43,6 +44,26 @@ function fixture(enabled = true) {
             const result = mission.onAiUpdate({ ...context, actionBatcher: batcher });
             batcher.resolve({ orderUnits: (...args: any[]) => orders.push(args) } as any); return result; },
     };
+}
+
+function withDogHunt(enabled: number, run: () => void) {
+    const params = BRUTAL_PARAMS.assault as Record<string, number>;
+    const previous = params.dogHunt;
+    Object.assign(params, { dogHunt: enabled });
+    try { run(); } finally {
+        if (previous === undefined) delete params.dogHunt;
+        else params.dogHunt = previous;
+    }
+}
+
+function huntFixture(infantryDistanceFromTank = 7) {
+    const f = fixture();
+    const enemyX = 10 + infantryDistanceFromTank;
+    f.objects[2].tile.rx = enemyX - 5;
+    f.objects.push(unit(6, "DOG", enemyX - 5, 2),
+        unit(100, "E2", enemyX, 0, "enemy"), unit(101, "E2", enemyX, 2, "enemy"));
+    f.mission.addUnit(3); f.mission.addUnit(6);
+    return f;
 }
 
 describe("rhino dog escort", () => {
@@ -87,5 +108,37 @@ describe("rhino dog escort", () => {
         const enemy = unit(3, "HTNK", 12, 0, "enemy");
         expect(dogEscortPoint(dog, tank, [enemy], new Vector2(30, 0), 0, () => true)!.x).toBeLessThan(10);
         expect(dogEscortPoint(dog, tank, [], new Vector2(30, 0), 0, () => false)).toBeNull();
+    });
+});
+
+describe("active dog hunting", () => {
+    test("F3 off: dogs do not attack infantry five tiles away", () => withDogHunt(0, () => {
+        const f = huntFixture(); f.step();
+        expect(f.orders.filter(order => order[1] === OrderType.Attack)).toEqual([]);
+    }));
+    test("F3 on: two dogs claim two different infantry targets", () => withDogHunt(1, () => {
+        const f = huntFixture(); f.step();
+        expect(f.orders.filter(order => order[1] === OrderType.Attack)).toEqual([
+            [[3], OrderType.Attack, 100], [[6], OrderType.Attack, 101],
+        ]);
+    }));
+    test("F3 on: dogs do not chase infantry twelve tiles from their tanks", () => withDogHunt(1, () => {
+        const f = huntFixture(12); f.step();
+        expect(f.orders.filter(order => order[1] === OrderType.Attack)).toEqual([]);
+    }));
+    test("F3 production raises priority to 70 and preserves the old quota and priority 25", () => {
+        const f = huntFixture();
+        for (const [id, y] of [[7, 4], [8, 6], [9, 8]]) {
+            f.objects.push(unit(id, "HTNK", 10, y)); f.army.addUnit(id);
+        }
+        withDogHunt(1, () => {
+            expect(f.step()).toEqual({ type: "request", unitNameToPriority: { DOG: 70 } });
+        });
+        withDogHunt(0, () => {
+            // Two assigned dogs already fill the old floor(5 / 2) escort quota.
+            expect(f.step(12)).toEqual({ type: "noop" });
+            f.mission.removeUnit(6); // Still two total dogs, but only one belongs to the escort.
+            expect(f.step(24)).toEqual({ type: "request", unitNameToPriority: { DOG: 25 } });
+        });
     });
 });
