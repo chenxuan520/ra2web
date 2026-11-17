@@ -182,6 +182,12 @@ export class CombatSquad implements Squad {
                     ? units.filter(unit => unit.zone !== ZoneType.Air) : [];
                 const marchMedian = marchers.length >= 3
                     ? marchers.map(marchDistance).sort((a, b) => a - b)[Math.floor(marchers.length / 2)] : undefined;
+                // F2 engagement spread: ground vehicles close on their targets abreast instead of in a column.
+                const spreaders = brutal && BRUTAL_PARAMS.assault.engageSpread === 1
+                    ? units.filter(unit => (unit.type as any) === ObjectType.Vehicle && unit.zone !== ZoneType.Air && !!unit.primaryWeapon && !isMissileArtillery(unit)) : [];
+                const spreadCenter = spreaders.length >= 3 ? new Vector2(
+                    spreaders.reduce((sum, unit) => sum + unit.tile.rx, 0) / spreaders.length,
+                    spreaders.reduce((sum, unit) => sum + unit.tile.ry, 0) / spreaders.length) : undefined;
                 for (const unit of brutal ? [...units].sort((a, b) => a.id - b.id) : units) {
                     // AttackMove may have acquired a target autonomously. The API does
                     // not expose it, so preserve the live firing sequence before retargeting.
@@ -257,6 +263,14 @@ export class CombatSquad implements Squad {
                             this.submitMovement(context, unit, targetLocation, tick);
                             continue;
                         }
+                        if (spreadCenter && weapon && spreaders.includes(unit) && ownPoint.distanceTo(targetLocation) > weapon.range + 1 &&
+                            tick >= (this.maneuverUntil.get(unit.id) ?? 0)) {
+                            const slot = this.spreadSlot(game, unit, spreaders, spreadCenter, targetLocation, weapon.range);
+                            if (slot && ownPoint.distanceTo(slot) > 1.5) {
+                                this.submitMovement(context, unit, slot, tick);
+                                continue;
+                            }
+                        }
                         const action = manageAttackMicro(unit, bestUnit);
                         this.submitActionIfNew(actionBatcher, action, unit, tick);
                         if (brutal && action.orderType === OrderType.Attack && weapon?.damageKnown &&
@@ -295,6 +309,23 @@ export class CombatSquad implements Squad {
             }
         }
         return noop();
+    }
+
+    /** A firing position at weapon range from the target, offset sideways by the unit's rank across the line of advance. */
+    private spreadSlot(game: GameApi, unit: UnitData, spreaders: UnitData[], center: Vector2, target: Vector2, range: number): Vector2 | null {
+        const approach = target.clone().sub(center);
+        if (approach.length() < 1) return null;
+        approach.multiplyScalar(1 / approach.length());
+        const lateral = (other: UnitData) => (other.tile.rx - center.x) * -approach.y + (other.tile.ry - center.y) * approach.x;
+        const own = lateral(unit);
+        const rank = spreaders.filter(other => lateral(other) < own || (lateral(other) === own && other.id < unit.id)).length;
+        const offset = Math.max(-BRUTAL_PARAMS.assault.spreadMaxOffset, Math.min(BRUTAL_PARAMS.assault.spreadMaxOffset,
+            (rank - (spreaders.length - 1) / 2) * BRUTAL_PARAMS.assault.spreadSpacing));
+        const reach = Math.max(1, range - 1);
+        const slot = new Vector2(Math.round(target.x - approach.x * reach - approach.y * offset),
+            Math.round(target.y - approach.y * reach + approach.x * offset));
+        const tile = game.mapApi.getTile(slot.x, slot.y);
+        return tile && tile.z === unit.tile.z && game.mapApi.isPassableTile(tile, unit.rules.speedType, false, false) ? slot : null;
     }
 
     private followTankEscort(context: MissionContext, unit: UnitData, units: UnitData[], target: Vector2, tick: number) {
