@@ -21,6 +21,7 @@ import { DebugLogger } from "../logic/common/utils";
 import { Compositions, getValidCompositions, SideComposition } from "./compositionUtils";
 import { readStrategicSituation, selectNationalComposition } from "./nationalComposition";
 import { getOpeningAirBudget } from "./openingAirBudget";
+import { BRUTAL_PARAMS } from "./brutalParams";
 
 // These could be loaded from ai.ini
 export const DEFAULT_COMPOSITIONS: Compositions = {
@@ -166,6 +167,10 @@ export class DefaultStrategy implements Strategy {
 
         if (context.difficulty === "brutal") {
             const situation = readStrategicSituation(context.game, playerData);
+            if (BRUTAL_PARAMS.assault.tankOpening === 1 && situation.tick < BRUTAL_PARAMS.assault.tankOpeningUntil && situation.harvesters > 0) {
+                const tankCore = validCompositions.find(name => name === "sovietTanks" || name === "alliedTanks");
+                return tankCore ? DEFAULT_COMPOSITIONS[tankCore] : null;
+            }
             const infantryOpening = validCompositions.includes("conscripts") ? DEFAULT_COMPOSITIONS.conscripts :
                 validCompositions.includes("gis") ? DEFAULT_COMPOSITIONS.gis : undefined;
             if (context.game.getCurrentTick() < 7000 && situation.harvesters > 0 && infantryOpening)

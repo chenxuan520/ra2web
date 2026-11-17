@@ -94,6 +94,8 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
     if (rules.name === "GAWEAP" || rules.name === "NAWEAP") {
         if (!factories) {
             if (!refineries) return committed ? (rules.name === "NAWEAP" ? BRUTAL_PARAMS.economy.firstFactoryPrioritySoviet : BRUTAL_PARAMS.economy.firstFactoryPriorityAllied) : 0;
+            if (BRUTAL_PARAMS.assault.tankOpening === 1 && s.harvesters > 0 && game.getCurrentTick() < BRUTAL_PARAMS.assault.tankOpeningUntil)
+                return BRUTAL_PARAMS.assault.tankOpeningFactoryPriority;
             return rules.name === "NAWEAP" ? BRUTAL_PARAMS.economy.firstFactoryPrioritySoviet : BRUTAL_PARAMS.economy.firstFactoryPriorityAllied;
         }
         if (factories === 1) {

@@ -15,6 +15,7 @@ import { SupabotContext } from "../common/context";
 import { UnitRequest } from "../mission/missionController";
 import { countCoreTanks, NATIONAL_SUPPORT_LIMITS, readStrategicSituation } from "../../strategy/nationalComposition";
 import { getBasicInfantryBudget, isSovietCountry } from "../../strategy/basicInfantryBudget";
+import { BRUTAL_PARAMS } from "../../strategy/brutalParams";
 
 export const QUEUES = [
     QueueType.Structures,
@@ -84,6 +85,11 @@ export class QueueController {
         const cappedSupport = new Set<string>();
         if (context.difficulty === "brutal") {
             for (const name of ["E1", "E2"]) {
+                // Armor and reactive machineguns replace paid basic infantry in the tank opening.
+                if (BRUTAL_PARAMS.assault.tankOpening === 1) {
+                    requests.delete(name);
+                    continue;
+                }
                 const count = game.getVisibleUnits(player.name, "self", rules => rules.name === name).length;
                 const openingRequest = game.getCurrentTick() < 7000 && (requests.get(name)?.priority ?? 0) >= 95;
                 const limit = openingRequest ? (name === "E2" ? 16 : 12) : getBasicInfantryBudget(name, context.difficulty).total;

@@ -14,6 +14,7 @@ const keys = {
         secondFactoryHarvesterOverride extraFactoryPriority maxFactories`,
     assault: `marchCohesion marchLead marchResume marchArrive engageSpread spreadSpacing spreadMaxOffset
         dogHunt dogBiteRange dogLeash dogsPerTank dogMax
+        tankOpening tankOpeningUntil tankOpeningFactoryPriority
         lateGameTick heavyDefenceCount defenceArmorFloor defenceForceRatio lateAdvantageMinArmor
         lateAdvantageForceRatio lateAdvantageMinHpFraction emptyFieldForceRatio minArmorShortMap minArmorLongMapVsArmor
         assaultMinArmor assaultArmorLead assaultArmorCap assaultForceRatio retreatArmorCap retreatPowerFloor
@@ -26,9 +27,9 @@ describe('central brutal strategy parameters', () => {
         for (const group of ['economy', 'assault'] as const)
             expect(Object.keys(BRUTAL_PARAMS[group]).sort()).toEqual(keys[group].trim().split(/\s+/).sort());
     });
-    test('all 77 values are finite and have at most two decimal places', () => {
+    test('all 80 values are finite and have at most two decimal places', () => {
         const values = Object.values(BRUTAL_PARAMS).flatMap(group => Object.values(group));
-        expect(values).toHaveLength(77);
+        expect(values).toHaveLength(80);
         expect(values.every(Number.isFinite)).toBe(true);
         expect(values.every(value => Number(value.toFixed(2)) === value)).toBe(true);
     });
