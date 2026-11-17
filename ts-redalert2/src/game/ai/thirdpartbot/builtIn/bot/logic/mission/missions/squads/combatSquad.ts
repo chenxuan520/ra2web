@@ -23,6 +23,7 @@ import { chooseTacticalTarget, getCombatWeapon, getTacticalRetreatPoint, isFirin
 import { DesolatorTactics } from "./desolatorTactics";
 import { getInfantryCrushPoint } from "./infantryCrushing";
 import { antiAirThreats, getAirEvasionPoint, getAirTransitWaypoint, isAirAttackApproachSafe } from "./airSafety";
+import { BRUTAL_PARAMS } from "../../../../strategy/brutalParams";
 
 const TARGET_UPDATE_INTERVAL_TICKS = 10;
 
@@ -52,6 +53,7 @@ export class CombatSquad implements Squad {
     private lastOrderTick = new Map<number, number>();
     private maneuverUntil = new Map<number, number>();
     private injuredReserveUntil = new Map<number, number>();
+    private marchHolding = new Set<number>();
     private desolatorTactics = new DesolatorTactics();
     private protectAir = true;
 
@@ -174,6 +176,12 @@ export class CombatSquad implements Squad {
 
                 const committedDamage = new Map<number, number>();
                 const unitDataCache = new Map<number, UnitData | undefined>(nearbyHostiles.map(unit => [unit.id, unit]));
+                // F1 march cohesion: on the way to a distant objective the leading units wait for the body.
+                const marchDistance = (unit: UnitData) => new Vector2(unit.tile.rx, unit.tile.ry).distanceTo(targetPoint);
+                const marchers = brutal && !this.defendArea && BRUTAL_PARAMS.assault.marchCohesion === 1
+                    ? units.filter(unit => unit.zone !== ZoneType.Air) : [];
+                const marchMedian = marchers.length >= 3
+                    ? marchers.map(marchDistance).sort((a, b) => a - b)[Math.floor(marchers.length / 2)] : undefined;
                 for (const unit of brutal ? [...units].sort((a, b) => a.id - b.id) : units) {
                     // AttackMove may have acquired a target autonomously. The API does
                     // not expose it, so preserve the live firing sequence before retargeting.
@@ -272,7 +280,15 @@ export class CombatSquad implements Squad {
                             const waypoint = getAirTransitWaypoint(unit, targetPoint, hostiles, game.mapApi, game);
                             if (waypoint) this.submitActionIfNew(actionBatcher, BatchableAction.toPoint(unit.id, OrderType.Move, waypoint), unit, tick);
                             else if (!unit.isIdle) this.submitActionIfNew(actionBatcher, BatchableAction.noTarget(unit.id, OrderType.Stop), unit, tick);
-                        } else this.submitMovement(context, unit, targetPoint, tick);
+                        } else if (marchMedian !== undefined && unit.zone !== ZoneType.Air &&
+                            marchDistance(unit) > BRUTAL_PARAMS.assault.marchArrive &&
+                            marchDistance(unit) < marchMedian - (this.marchHolding.has(unit.id) ? BRUTAL_PARAMS.assault.marchResume : BRUTAL_PARAMS.assault.marchLead)) {
+                            this.marchHolding.add(unit.id);
+                            if (!unit.isIdle) this.submitActionIfNew(actionBatcher, BatchableAction.noTarget(unit.id, OrderType.Stop), unit, tick);
+                        } else {
+                            this.marchHolding.delete(unit.id);
+                            this.submitMovement(context, unit, targetPoint, tick);
+                        }
                         this.debugLastTarget = `@${targetPoint.x},${targetPoint.y}`;
                     }
                 }

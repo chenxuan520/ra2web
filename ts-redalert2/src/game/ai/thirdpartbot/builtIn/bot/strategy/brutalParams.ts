@@ -46,6 +46,10 @@ export const BRUTAL_PARAMS = {
         maxFactories: 3,
     },
     assault: {
+        marchCohesion: 0,
+        marchLead: 6,
+        marchResume: 3,
+        marchArrive: 10,
         lateGameTick: 10000,
         heavyDefenceCount: 2,
         defenceArmorFloor: 8,
