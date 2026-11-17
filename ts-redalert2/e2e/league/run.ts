@@ -6,6 +6,7 @@ import { archiveJobAttempt } from '../ai-tournament-storage';
 import { validateJobReport } from '../ai-tournament-plan';
 import { BUILTIN, loadLeague, gitQuery, type Profile } from './registry';
 import { MAPS, pairingJobs, lightPairingJobs, roundRobinJobs, shardJobs, compareGames, convertResult, assertSelfMirror, type Kind, type LeagueGame, type LeagueJob } from './schedule';
+import { assertRoundIsolation } from './p4/arena';
 
 const projectRoot = resolve(import.meta.dir, '../..');
 const hash = (data: string | Uint8Array) => createHash('sha256').update(data).digest('hex');
@@ -123,6 +124,9 @@ export async function main() {
         if (member && tree !== member.tree) throw new Error(`Changed tree for ${id}`);
         versions[id] = { id, ref, commit, tree, profile: member?.profile ?? 'brutal' };
     }
+    assertRoundIsolation(round, { ...values, ref: [...(values.ref ?? []), ...Object.values(versions).flatMap(version =>
+        league.members.filter(member => member.tree === version.tree).map(member => member.id))] },
+        league.members.filter(member => member.active).map(member => member.id));
     if ([...overrides.keys()].some(id => !versions[id])) throw new Error('Unused --ref candidate');
     const runtime = await runtimeSnapshot(), resources = await readResources(cdn);
     const config = { round, kind, generation: generation ?? null, versions, runtime, resources, jobs, cdn, shard: values.shard ?? null };

@@ -1,0 +1,134 @@
+[
+  {
+    "map": "mp01t4",
+    "seed": 9401,
+    "c8Wins": 2,
+    "c3Wins": 6,
+    "timeouts": 0,
+    "errors": 0,
+    "winsAtStart0": 4,
+    "winsAtStart1": 4,
+    "admitted": true
+  },
+  {
+    "map": "mp05t4",
+    "seed": 9401,
+    "c8Wins": 5,
+    "c3Wins": 3,
+    "timeouts": 0,
+    "errors": 0,
+    "winsAtStart0": 3,
+    "winsAtStart1": 5,
+    "admitted": true
+  },
+  {
+    "map": "mp12s4",
+    "seed": 9401,
+    "c8Wins": 6,
+    "c3Wins": 2,
+    "timeouts": 0,
+    "errors": 0,
+    "winsAtStart0": 4,
+    "winsAtStart1": 4,
+    "admitted": true
+  },
+  {
+    "map": "tn02s4",
+    "seed": 9401,
+    "c8Wins": 6,
+    "c3Wins": 0,
+    "timeouts": 2,
+    "errors": 0,
+    "winsAtStart0": 3,
+    "winsAtStart1": 3,
+    "admitted": true
+  },
+  {
+    "map": "mp03t4",
+    "seed": 9401,
+    "c8Wins": 5,
+    "c3Wins": 1,
+    "timeouts": 2,
+    "errors": 0,
+    "winsAtStart0": 5,
+    "winsAtStart1": 1,
+    "admitted": true
+  },
+  {
+    "map": "mp13s4",
+    "seed": 9401,
+    "c8Wins": 3,
+    "c3Wins": 4,
+    "timeouts": 1,
+    "errors": 0,
+    "winsAtStart0": 3,
+    "winsAtStart1": 4,
+    "admitted": true
+  },
+  {
+    "map": "mp19t4",
+    "seed": 9401,
+    "c8Wins": 2,
+    "c3Wins": 6,
+    "timeouts": 0,
+    "errors": 0,
+    "winsAtStart0": 2,
+    "winsAtStart1": 6,
+    "admitted": true
+  },
+  {
+    "map": "mp15s4",
+    "seed": 9401,
+    "c8Wins": 5,
+    "c3Wins": 3,
+    "timeouts": 0,
+    "errors": 0,
+    "winsAtStart0": 5,
+    "winsAtStart1": 3,
+    "admitted": true
+  },
+  {
+    "map": "mp16s4",
+    "seed": 9401,
+    "c8Wins": 1,
+    "c3Wins": 6,
+    "timeouts": 1,
+    "errors": 0,
+    "winsAtStart0": 5,
+    "winsAtStart1": 2,
+    "admitted": true
+  },
+  {
+    "map": "mp23t4",
+    "seed": 9401,
+    "c8Wins": 0,
+    "c3Wins": 7,
+    "timeouts": 1,
+    "errors": 0,
+    "winsAtStart0": 3,
+    "winsAtStart1": 4,
+    "admitted": true
+  },
+  {
+    "map": "mp33u4",
+    "seed": 9401,
+    "c8Wins": 0,
+    "c3Wins": 0,
+    "timeouts": 0,
+    "errors": 8,
+    "winsAtStart0": 0,
+    "winsAtStart1": 0,
+    "admitted": false
+  },
+  {
+    "map": "mp34u4",
+    "seed": 9401,
+    "c8Wins": 0,
+    "c3Wins": 0,
+    "timeouts": 0,
+    "errors": 8,
+    "winsAtStart0": 0,
+    "winsAtStart1": 0,
+    "admitted": false
+  }
+]
