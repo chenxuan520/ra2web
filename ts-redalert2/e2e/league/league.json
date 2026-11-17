@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "round": 3,
-  "champion": "c3",
+  "round": 8,
+  "champion": "c8",
   "members": [
     {
       "id": "orig",
@@ -159,7 +159,7 @@
       "tag": "league/c3",
       "tree": "5bd750e6673226789bbe4644083127b11e25baf1",
       "profile": "brutal",
-      "role": "champion",
+      "role": "history",
       "active": true,
       "attempts": 2,
       "note": "round 3; G1-G5 passed"
@@ -200,6 +200,16 @@
       "target": "c3",
       "winsVsTarget": 0,
       "note": "经济试跑专用假人，不参加联赛"
+    },
+    {
+      "id": "c8",
+      "tag": "league/c8",
+      "tree": "640704528a7fe8e0139a5631dfdcc76a674f6eb4",
+      "profile": "brutal",
+      "role": "champion",
+      "active": true,
+      "fixes": "eco",
+      "note": "phase 4 base adopted by owner decision from latest accepted tactics 9821189; replaces handoff eco baseline; league gates not run"
     }
   ]
 }
