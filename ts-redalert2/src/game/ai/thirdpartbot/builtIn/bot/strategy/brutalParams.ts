@@ -379,4 +379,14 @@ export const BRUTAL_PARAMS = {
         approachProgressTimeoutTicks: 1800,
     },
 };
+export const BRUTAL_OVERRIDES = {
+    smallMap: {
+    },
+    largeMap: {
+    },
+    allied: {
+    },
+    soviet: {
+    },
+};
 export type BrutalParams = typeof BRUTAL_PARAMS;
