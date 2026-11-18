@@ -30,12 +30,14 @@ export interface AiBuildingRules {
         playerData: PlayerData,
         technoRules: TechnoRules,
         threatCache: GlobalThreat | null,
+        difficulty?: "normal" | "brutal",
     ): number;
 
     getPlacementLocation(
         game: GameApi,
         playerData: PlayerData,
         technoRules: TechnoRules,
+        difficulty?: "normal" | "brutal",
     ): { rx: number; ry: number } | undefined;
 
     getMaxCount(

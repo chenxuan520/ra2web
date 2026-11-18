@@ -1,3 +1,4 @@
+import { sp } from "../../../strategy/params";
 import { estimatedMaxHitPoints } from "../../common/observedUnit";
 import { GameApi, ObjectType, PlayerData, QueueStatus, UnitData, Vector2 } from "../../../../game-api";
 import { CombatSquad } from "./squads/combatSquad";
@@ -36,9 +37,6 @@ const ATTACK_MISSION_MAX_PRIORITY = 50;
 const REQUESTED_UNIT_COUNT_DECAY_TICKS = 120;
 // A tank needs longer than the old 24-second six-to-four-unit mission lifetime.
 // Preserve its production request while it is being built instead of restarting the wave.
-const MINIMUM_WAVE_WAIT_TICKS = 30 * 15;
-const REINFORCEMENT_TIMEOUT_TICKS = 90 * 15;
-const MAX_PREPARATION_TICKS = 5 * 60 * 15;
 
 /**
  * A mission that tries to attack a certain area.
@@ -67,10 +65,11 @@ export class AttackMission extends Mission<AttackFailReason> {
         private radius: number,
         private composition: SideComposition,
         logger: DebugLogger,
+        context?: SupabotContext,
     ) {
         super(uniqueName, logger);
         this.squad = new CombatSquad(rallyArea, attackArea, radius);
-        this.preparingSquad = new CombatSquad(rallyArea, rallyArea, 18, true);
+        this.preparingSquad = new CombatSquad(rallyArea, rallyArea, (context?.difficulty === "brutal" ? sp(context!.game, context!.player.name, 'assault.preparingWaveRadius') : 18), true);
         this.requestedUnitCount = composition.maximumUnits;
     }
 
@@ -111,11 +110,11 @@ export class AttackMission extends Mission<AttackFailReason> {
             // do not erase the request just because producing it takes time.
             const armor = this.getUnits(game).filter(unit => ["MTNK", "HTNK", "MGTK", "APOC"].includes(unit.name)).length;
             const needsAirCover = (context.matchAwareness.getThreatCache?.()?.totalOffensiveAirThreat ?? 0) > 0;
-            if (tick - this.preparationStartedAt >= MINIMUM_WAVE_WAIT_TICKS &&
+            if (tick - this.preparationStartedAt >= sp(context.game, context.player.name, 'assault.minimumWaveWaitTicks') &&
                 (this.getMissingUnits(game, this.getDesiredComposition(this.composition.minimumUnits, false)).length === 0 ||
-                    (!needsAirCover && armor >= Math.max(4, this.composition.minimumUnits)))) {
+                    (!needsAirCover && armor >= Math.max(sp(context.game, context.player.name, 'assault.noAirCoverWaveArmorCount'), this.composition.minimumUnits)))) {
                 this.requestedUnitCount = this.composition.minimumUnits;
-                return this.startAttack(tick);
+                return this.startAttack(tick, context);
             }
             const missingNames = new Set(missingUnits.map(([name]) => name));
             const pendingReinforcements = context.player.production.getAvailableObjects()
@@ -124,13 +123,13 @@ export class AttackMission extends Mission<AttackFailReason> {
                     const queue = context.player.production.getQueueData(context.player.production.getQueueTypeForObject(option));
                     return queue.status !== QueueStatus.Idle && queue.items.some(item => missingNames.has(item.rules.name));
                 });
-            if (tick - this.preparationStartedAt >= MAX_PREPARATION_TICKS ||
-                (tick - this.lastReinforcementAt >= REINFORCEMENT_TIMEOUT_TICKS && !pendingReinforcements)) {
+            if (tick - this.preparationStartedAt >= sp(context.game, context.player.name, 'assault.maxPreparationTicks') ||
+                (tick - this.lastReinforcementAt >= sp(context.game, context.player.name, 'assault.reinforcementTimeoutTicks') && !pendingReinforcements)) {
                 return disbandMission(AttackFailReason.UnableToAcquireUnits);
             }
         }
         if (missingUnits.length > 0) {
-            this.priority = Math.min(this.priority * ATTACK_MISSION_PRIORITY_RAMP, ATTACK_MISSION_MAX_PRIORITY);
+            this.priority = Math.min(this.priority * (context.difficulty === "brutal" ? sp(context.game, context.player.name, 'assault.wavePriorityRampFactor') : ATTACK_MISSION_PRIORITY_RAMP), (context.difficulty === "brutal" ? sp(context.game, context.player.name, 'assault.waveMaximumPriority') : ATTACK_MISSION_MAX_PRIORITY));
             // distribute the priority among the amount of missing units of each type
             const totalMissingUnits = missingUnits.reduce((sum, [, numMissing]) => sum + numMissing, 0);
             const unitPriorities = Object.fromEntries(
@@ -141,12 +140,12 @@ export class AttackMission extends Mission<AttackFailReason> {
             );
             return requestUnits(unitPriorities);
         } else {
-            return this.startAttack(tick);
+            return this.startAttack(tick, context);
         }
     }
 
-    private startAttack(tick: number): MissionAction {
-        this.priority = ATTACK_MISSION_INITIAL_PRIORITY;
+    private startAttack(tick: number, context: MissionContext): MissionAction {
+        this.priority = (context.difficulty === "brutal" ? sp(context.game, context.player.name, 'assault.attackMissionInitialPriority') : ATTACK_MISSION_INITIAL_PRIORITY);
         this.state = AttackMissionState.Attacking;
         this.lastTargetSeenAt = tick;
         this.hasPickedNewTarget = false;
@@ -175,18 +174,18 @@ export class AttackMission extends Mission<AttackFailReason> {
             return update;
         }
 
-        const approaching = context.difficulty === "brutal" && this.isApproachingTarget(game.getCurrentTick());
+        const approaching = context.difficulty === "brutal" && this.isApproachingTarget(game.getCurrentTick(), context);
         if (foundTargets.length > 0) {
             this.lastTargetSeenAt = game.getCurrentTick();
             this.hasPickedNewTarget = false;
-        } else if (game.getCurrentTick() > this.lastTargetSeenAt + NO_TARGET_IDLE_TIMEOUT_TICKS &&
+        } else if (game.getCurrentTick() > this.lastTargetSeenAt + (context.difficulty === "brutal" ? sp(context.game, context.player.name, 'assault.noTargetIdleTimeoutTicks') : NO_TARGET_IDLE_TIMEOUT_TICKS) &&
             !approaching) {
             return disbandMission(AttackFailReason.NoTargets);
         } else if (
             !this.hasPickedNewTarget &&
-            game.getCurrentTick() > this.lastTargetSeenAt + NO_TARGET_RETARGET_TICKS
+            game.getCurrentTick() > this.lastTargetSeenAt + (context.difficulty === "brutal" ? sp(context.game, context.player.name, 'assault.noTargetRetargetTicks') : NO_TARGET_RETARGET_TICKS)
         ) {
-            const newTarget = generateTarget(game, playerData, matchAwareness);
+            const newTarget = generateTarget(game, playerData, matchAwareness, false, context.difficulty);
             if (newTarget) {
                 this.attackArea = newTarget;
                 this.squad.setAttackArea(newTarget);
@@ -200,7 +199,7 @@ export class AttackMission extends Mission<AttackFailReason> {
         return noop();
     }
 
-    private isApproachingTarget(tick: number) {
+    private isApproachingTarget(tick: number, context: MissionContext) {
         const center = this.getCenterOfMass();
         if (!center) return false;
         const distance = center.distanceTo(this.attackArea);
@@ -208,7 +207,7 @@ export class AttackMission extends Mission<AttackFailReason> {
             this.closestApproach = distance;
             this.lastApproachProgressAt = tick;
         }
-        return distance > this.radius && tick - this.lastApproachProgressAt < 1800;
+        return distance > this.radius && tick - this.lastApproachProgressAt < sp(context.game, context.player.name, 'assault.approachProgressTimeoutTicks');
     }
 
     private handleRetreatingState(context: MissionContext) {
@@ -273,11 +272,11 @@ export class AttackMission extends Mission<AttackFailReason> {
 
 // Calculates the weight for initiating an attack on the position of a unit or building.
 // This is separate from unit micro; the squad will be ordered to attack in the vicinity of the point.
-const getTargetWeight: (unitData: UnitData, tryFocusHarvester: boolean) => number = (unitData, tryFocusHarvester) => {
+const getTargetWeight: (unitData: UnitData, tryFocusHarvester: boolean, game: GameApi, playerName: string, difficulty?: "normal" | "brutal") => number = (unitData, tryFocusHarvester, game, playerName, difficulty) => {
     if (tryFocusHarvester && unitData.rules.harvester) {
-        return 100000;
+        return (difficulty === "brutal" ? sp(game, playerName, 'assault.harvesterFocusWeight') : 100000);
     } else if (unitData.type as any === ObjectType.Building) {
-        return (estimatedMaxHitPoints(unitData) ?? 1) * 10;
+        return (estimatedMaxHitPoints(unitData) ?? 1) * (difficulty === "brutal" ? sp(game, playerName, 'assault.buildingTargetHpFactor') : 10);
     } else {
         return estimatedMaxHitPoints(unitData) ?? 1;
     }
@@ -288,6 +287,7 @@ function generateTarget(
     playerData: PlayerData,
     matchAwareness: MatchAwareness,
     includeBaseLocations: boolean = false,
+    difficulty?: "normal" | "brutal",
 ): Vector2 | null {
     // Randomly decide between harvester and base.
     try {
@@ -297,7 +297,7 @@ function generateTarget(
             .map((unitId) => gameApi.getUnitData(unitId))
             .filter((u) => !!u && gameApi.getPlayerData(u.owner).isCombatant) as UnitData[];
 
-        const maxUnit = maxBy(enemyUnits, (u) => getTargetWeight(u, tryFocusHarvester));
+        const maxUnit = maxBy(enemyUnits, (u) => getTargetWeight(u, tryFocusHarvester, gameApi, playerData.name, difficulty));
         if (maxUnit) {
             return new Vector2(maxUnit.tile.rx, maxUnit.tile.ry);
         }
@@ -364,11 +364,11 @@ export class AttackMissionFactory {
             return;
         }
 
-        const attackRadius = 10;
+        const attackRadius = (context.difficulty === "brutal" ? sp(context.game, context.player.name, 'assault.attackTargetRadius') : 10);
 
-        const includeEnemyBases = game.getCurrentTick() > this.lastAttackAt + BASE_ATTACK_COOLDOWN_TICKS;
+        const includeEnemyBases = game.getCurrentTick() > this.lastAttackAt + (context.difficulty === "brutal" ? sp(context.game, context.player.name, 'assault.baseAttackCooldownTicks') : BASE_ATTACK_COOLDOWN_TICKS);
 
-        const attackArea = generateTarget(game, playerData, matchAwareness, includeEnemyBases);
+        const attackArea = generateTarget(game, playerData, matchAwareness, includeEnemyBases, context.difficulty);
 
         if (!attackArea) {
             return;
@@ -379,12 +379,13 @@ export class AttackMissionFactory {
         const tryAttack = missionController.addMission(
             new AttackMission(
                 squadName,
-                ATTACK_MISSION_INITIAL_PRIORITY,
+                (context.difficulty === "brutal" ? sp(context.game, context.player.name, 'assault.attackMissionInitialPriority') : ATTACK_MISSION_INITIAL_PRIORITY),
                 matchAwareness.getMainRallyPoint(),
                 attackArea,
                 attackRadius,
                 composition,
                 logger,
+                context,
             ).withOnFinish((unitIds, reason) => {
                 logger(
                     `Attack ${squadName} (${JSON.stringify(composition)}) with ${

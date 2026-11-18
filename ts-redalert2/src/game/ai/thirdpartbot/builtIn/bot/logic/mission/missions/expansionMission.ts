@@ -1,3 +1,4 @@
+import { sp } from "../../../strategy/params";
 import {
     ActionsApi,
     BotContext,
@@ -94,6 +95,7 @@ export class ExpansionMission extends Mission {
                 matchAwareness,
                 actionBatcher,
                 selectedMcvUnit,
+                context.difficulty,
             );
         } else {
             const reachableCandidates = this.candidates
@@ -132,6 +134,7 @@ export class ExpansionMission extends Mission {
         matchAwareness: MatchAwareness,
         actionBatcher: ActionBatcher,
         mcv: UnitData,
+        difficulty?: "normal" | "brutal",
     ) {
         if (!this.destination) {
             return noop();
@@ -141,8 +144,8 @@ export class ExpansionMission extends Mission {
         const conYards = gameApi
             .getUnitsInArea(
                 new Box2(
-                    this.destination.clone().subScalar(CONYARD_SCAN_DISTANCE),
-                    this.destination.clone().addScalar(CONYARD_SCAN_DISTANCE),
+                    this.destination.clone().subScalar((difficulty === "brutal" ? sp(gameApi, playerData.name, 'expand.existingYardRadius') : CONYARD_SCAN_DISTANCE)),
+                    this.destination.clone().addScalar((difficulty === "brutal" ? sp(gameApi, playerData.name, 'expand.existingYardRadius') : CONYARD_SCAN_DISTANCE)),
                 ),
             )
             .filter((id) => ownConyards.has(id))
@@ -151,7 +154,7 @@ export class ExpansionMission extends Mission {
         if (conYards.length > 0) {
             return disbandMission();
         }
-        const isClose = toVector2(mcv.tile).distanceTo(this.destination) <= CONYARD_DEPLOY_DISTANCE;
+        const isClose = toVector2(mcv.tile).distanceTo(this.destination) <= (difficulty === "brutal" ? sp(gameApi, playerData.name, 'expand.deployArrivalRadius') : CONYARD_DEPLOY_DISTANCE);
         const canOrder = !this.lastOrderAt || gameApi.getCurrentTick() > this.lastOrderAt + ORDER_COOLDOWN_TICKS;
         if (!canOrder) {
             return noop();
@@ -159,7 +162,7 @@ export class ExpansionMission extends Mission {
         if (isClose) {
             this.deployAttempts++;
             // If too many failed attempts at this location, find a new deployable spot
-            if (this.deployAttempts > ExpansionMission.MAX_DEPLOY_ATTEMPTS) {
+            if (this.deployAttempts > (difficulty === "brutal" ? sp(gameApi, playerData.name, 'expand.maxDeployAttemptsCap') : ExpansionMission.MAX_DEPLOY_ATTEMPTS)) {
                 const deployableLocations = findDeployableLocations(
                     playerData.name,
                     gameApi,
@@ -303,8 +306,8 @@ export class PackConyardMission extends Mission {
         return `Pack conyard ${this.conyardId}`;
     }
 
-    public getPriority() {
-        return 10000;
+    public getPriority(context: MissionContext) {
+        return (context.difficulty === "brutal" ? sp(context.game, context.player.name, 'expand.packMissionPriority') : 10000);
     }
 }
 
@@ -324,16 +327,16 @@ export class ExpansionMissionFactory {
         const expandToCandidates = matchAwareness.getNextExpansionCandidates();
 
         // This is used for deploying the initial MCV.
-        if (game.getCurrentTick() < DO_NOT_EXPAND_BEFORE_TICKS) {
+        if (game.getCurrentTick() < (context.difficulty === "brutal" ? sp(game, player.name, 'expand.expandStartTick') : DO_NOT_EXPAND_BEFORE_TICKS)) {
             mcvs.forEach((mcv) => {
                 missionController.addMission(
-                    new ExpansionMission("initial-deploy-mcv-" + mcv, 100, mcv, [playerData.startLocation], logger),
+                    new ExpansionMission("initial-deploy-mcv-" + mcv, (context.difficulty === "brutal" ? sp(game, player.name, 'expand.mcvMissionPriority') : 100), mcv, [playerData.startLocation], logger),
                 );
             });
         } else if (expandToCandidates.length > 0) {
             mcvs.forEach((mcv) => {
                 missionController.addMission(
-                    new ExpansionMission("expansion-mcv-" + mcv, 100, mcv, expandToCandidates, logger),
+                    new ExpansionMission("expansion-mcv-" + mcv, (context.difficulty === "brutal" ? sp(game, player.name, 'expand.mcvMissionPriority') : 100), mcv, expandToCandidates, logger),
                 );
             });
         }
@@ -344,8 +347,8 @@ export class ExpansionMissionFactory {
         }
 
         if (
-            game.getCurrentTick() < DO_NOT_EXPAND_BEFORE_TICKS ||
-            game.getCurrentTick() < this.lastConyardPackAt + CONYARD_PACK_COOLDOWN
+            game.getCurrentTick() < (context.difficulty === "brutal" ? sp(game, player.name, 'expand.expandStartTick') : DO_NOT_EXPAND_BEFORE_TICKS) ||
+            game.getCurrentTick() < this.lastConyardPackAt + (context.difficulty === "brutal" ? sp(game, player.name, 'expand.packCooldownTicks') : CONYARD_PACK_COOLDOWN)
         ) {
             return;
         }
@@ -363,14 +366,14 @@ export class ExpansionMissionFactory {
             const yard = game.getGameObjectData(conYards[0]);
             const nearbyOre = yard && game.mapApi.getAllTilesResourceData().some(resource =>
                 (resource.ore > 0 || resource.gems > 0 || resource.spawnsOre) && game.mapApi.isVisibleTile(resource.tile, player.name) &&
-                Math.hypot(resource.tile.rx - yard.tile.rx, resource.tile.ry - yard.tile.ry) <= 25);
+                Math.hypot(resource.tile.rx - yard.tile.rx, resource.tile.ry - yard.tile.ry) <= (context.difficulty === "brutal" ? sp(game, player.name, 'expand.homeResourceRadius') : 25));
             if (nearbyOre || context.player.production.getQueueData(QueueType.Structures).items.length) return;
         }
         const selectedConyard = game.getGameObjectData(conYards[0])!;
         const ownRefineries = new Set(refineries);
         const refineryNearconyard = game
             .getUnitsInArea(
-                new Box2(toVector2(selectedConyard.tile).subScalar(10), toVector2(selectedConyard.tile).addScalar(14)),
+                new Box2(toVector2(selectedConyard.tile).subScalar((context.difficulty === "brutal" ? sp(game, player.name, 'expand.refineryLowerRadius') : 10)), toVector2(selectedConyard.tile).addScalar((context.difficulty === "brutal" ? sp(game, player.name, 'expand.refineryUpperRadius') : 14))),
             )
             .filter((id) => ownRefineries.has(id))
             .map((id) => game.getGameObjectData(id))

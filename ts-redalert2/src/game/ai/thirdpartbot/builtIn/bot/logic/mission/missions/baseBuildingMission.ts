@@ -122,7 +122,7 @@ export class BaseBuildingMission extends Mission {
         }
         if (BUILDING_NAME_TO_RULES.has(objectReady.name)) {
             let logic = BUILDING_NAME_TO_RULES.get(objectReady.name)!;
-            const location = logic.getPlacementLocation(game, playerData, objectReady);
+            const location = logic.getPlacementLocation(game, playerData, objectReady, difficulty);
             return location ?? (difficulty === "brutal" ? getCompactFirstFactoryPlacement(game, playerData, objectReady) : undefined);
         } else {
             // fallback placement logic

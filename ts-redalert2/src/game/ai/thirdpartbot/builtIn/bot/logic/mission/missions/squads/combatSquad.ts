@@ -1,3 +1,4 @@
+import { sp } from "../../../../strategy/params";
 import {
     ActionsApi,
     AttackState,
@@ -23,7 +24,6 @@ import { chooseTacticalTarget, getCombatWeapon, getTacticalRetreatPoint, isFirin
 import { DesolatorTactics } from "./desolatorTactics";
 import { getInfantryCrushPoint } from "./infantryCrushing";
 import { antiAirThreats, getAirEvasionPoint, getAirTransitWaypoint, isAirAttackApproachSafe } from "./airSafety";
-import { BRUTAL_PARAMS } from "../../../../strategy/brutalParams";
 
 const TARGET_UPDATE_INTERVAL_TICKS = 10;
 
@@ -178,12 +178,12 @@ export class CombatSquad implements Squad {
                 const unitDataCache = new Map<number, UnitData | undefined>(nearbyHostiles.map(unit => [unit.id, unit]));
                 // F1 march cohesion: on the way to a distant objective the leading units wait for the body.
                 const marchDistance = (unit: UnitData) => new Vector2(unit.tile.rx, unit.tile.ry).distanceTo(targetPoint);
-                const marchers = brutal && !this.defendArea && BRUTAL_PARAMS.assault.marchCohesion === 1
+                const marchers = brutal && !this.defendArea && sp(game, context.player.name, 'assault.marchCohesion') === 1
                     ? units.filter(unit => unit.zone !== ZoneType.Air) : [];
                 const marchMedian = marchers.length >= 3
                     ? marchers.map(marchDistance).sort((a, b) => a - b)[Math.floor(marchers.length / 2)] : undefined;
                 // F2 engagement spread: ground vehicles close on their targets abreast instead of in a column.
-                const spreaders = brutal && BRUTAL_PARAMS.assault.engageSpread === 1
+                const spreaders = brutal && sp(game, context.player.name, 'assault.engageSpread') === 1
                     ? units.filter(unit => (unit.type as any) === ObjectType.Vehicle && unit.zone !== ZoneType.Air && !!unit.primaryWeapon && !isMissileArtillery(unit)) : [];
                 const spreadCenter = spreaders.length >= 3 ? new Vector2(
                     spreaders.reduce((sum, unit) => sum + unit.tile.rx, 0) / spreaders.length,
@@ -295,8 +295,8 @@ export class CombatSquad implements Squad {
                             if (waypoint) this.submitActionIfNew(actionBatcher, BatchableAction.toPoint(unit.id, OrderType.Move, waypoint), unit, tick);
                             else if (!unit.isIdle) this.submitActionIfNew(actionBatcher, BatchableAction.noTarget(unit.id, OrderType.Stop), unit, tick);
                         } else if (marchMedian !== undefined && unit.zone !== ZoneType.Air &&
-                            marchDistance(unit) > BRUTAL_PARAMS.assault.marchArrive &&
-                            marchDistance(unit) < marchMedian - (this.marchHolding.has(unit.id) ? BRUTAL_PARAMS.assault.marchResume : BRUTAL_PARAMS.assault.marchLead)) {
+                            marchDistance(unit) > sp(game, context.player.name, 'assault.marchArrive') &&
+                            marchDistance(unit) < marchMedian - (this.marchHolding.has(unit.id) ? sp(game, context.player.name, 'assault.marchResume') : sp(game, context.player.name, 'assault.marchLead'))) {
                             this.marchHolding.add(unit.id);
                             if (!unit.isIdle) this.submitActionIfNew(actionBatcher, BatchableAction.noTarget(unit.id, OrderType.Stop), unit, tick);
                         } else {
@@ -319,8 +319,8 @@ export class CombatSquad implements Squad {
         const lateral = (other: UnitData) => (other.tile.rx - center.x) * -approach.y + (other.tile.ry - center.y) * approach.x;
         const own = lateral(unit);
         const rank = spreaders.filter(other => lateral(other) < own || (lateral(other) === own && other.id < unit.id)).length;
-        const offset = Math.max(-BRUTAL_PARAMS.assault.spreadMaxOffset, Math.min(BRUTAL_PARAMS.assault.spreadMaxOffset,
-            (rank - (spreaders.length - 1) / 2) * BRUTAL_PARAMS.assault.spreadSpacing));
+        const offset = Math.max(-sp(game, unit.owner, 'assault.spreadMaxOffset'), Math.min(sp(game, unit.owner, 'assault.spreadMaxOffset'),
+            (rank - (spreaders.length - 1) / 2) * sp(game, unit.owner, 'assault.spreadSpacing')));
         const reach = Math.max(1, range - 1);
         const slot = new Vector2(Math.round(target.x - approach.x * reach - approach.y * offset),
             Math.round(target.y - approach.y * reach + approach.x * offset));

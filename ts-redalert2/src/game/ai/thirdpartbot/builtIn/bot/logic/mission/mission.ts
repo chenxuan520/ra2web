@@ -163,7 +163,7 @@ export abstract class Mission<FailureReasons = undefined> {
         return true;
     }
 
-    abstract getPriority(): number;
+    abstract getPriority(context: MissionContext): number;
 }
 
 export type MissionWithAction<T extends MissionAction> = {

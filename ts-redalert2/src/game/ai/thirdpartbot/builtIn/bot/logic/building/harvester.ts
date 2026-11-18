@@ -1,3 +1,4 @@
+import { sp } from "../../strategy/params";
 import { GameApi, PlayerData, TechnoRules } from "../../../game-api";
 import { GlobalThreat } from "../threat/threat";
 import { BasicGroundUnit } from "./basicGroundUnit";
@@ -22,16 +23,17 @@ export class Harvester extends BasicGroundUnit {
         playerData: PlayerData,
         technoRules: TechnoRules,
         threatCache: GlobalThreat | null,
+        difficulty?: "normal" | "brutal",
     ): number {
         const refineries = game.getVisibleUnits(playerData.name, "self", (r) => r.refinery).length;
         const harvesters = game.getVisibleUnits(playerData.name, "self", (r) => r.harvester).length;
 
-        const desired = Math.min(MAX_HARVESTERS_TOTAL, refineries * IDEAL_HARVESTERS_PER_REFINERY);
+        const desired = Math.min((difficulty === "brutal" ? sp(game, playerData.name, 'economy.maxHarvestersCap') : MAX_HARVESTERS_TOTAL), refineries * (difficulty === "brutal" ? sp(game, playerData.name, 'economy.harvestersPerRefinery') : IDEAL_HARVESTERS_PER_REFINERY));
         if (refineries === 0 || harvesters >= desired) return 0;
 
         // Rebuild the income source before funding ordinary combat requests.
-        if (harvesters === 0) return this.basePriority * 6;
-        if (harvesters < this.minNeeded) return this.basePriority * 4;
+        if (harvesters === 0) return this.basePriority * (difficulty === "brutal" ? sp(game, playerData.name, 'economy.emptyHarvesterPriorityFactor') : 6);
+        if (harvesters < this.minNeeded) return this.basePriority * (difficulty === "brutal" ? sp(game, playerData.name, 'economy.lowHarvesterPriorityFactor') : 4);
         return this.basePriority * (1 + (desired - harvesters) / desired);
     }
 

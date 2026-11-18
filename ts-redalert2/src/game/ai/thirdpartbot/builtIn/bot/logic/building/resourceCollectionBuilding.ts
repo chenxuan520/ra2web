@@ -1,3 +1,4 @@
+import { sp } from "../../strategy/params";
 import { Box2, GameApi, GameMath, PlayerData, TechnoRules, Tile, Vector2 } from "../../../game-api";
 import { GlobalThreat } from "../threat/threat";
 import { BasicBuilding } from "./basicBuilding";
@@ -16,6 +17,7 @@ export class ResourceCollectionBuilding extends BasicBuilding {
         game: GameApi,
         playerData: PlayerData,
         technoRules: TechnoRules,
+        difficulty?: "normal" | "brutal",
     ): { rx: number; ry: number } | undefined {
         // Prefer spawning close to ore.
         const conyardVectors = game
@@ -43,7 +45,7 @@ export class ResourceCollectionBuilding extends BasicBuilding {
 
         const unservicedActive = allTileResourceData.filter(res =>
             (res.ore > 0 || res.gems > 0) &&
-            !existingRefineries.some(ref => ref.distanceTo(new Vector2(res.tile.rx, res.tile.ry)) <= 8)
+            !existingRefineries.some(ref => ref.distanceTo(new Vector2(res.tile.rx, res.tile.ry)) <= (difficulty === "brutal" ? sp(game, playerData.name, 'economy.refineryServiceRadius') : 8))
         );
 
         const candidates = unservicedActive.length > 0

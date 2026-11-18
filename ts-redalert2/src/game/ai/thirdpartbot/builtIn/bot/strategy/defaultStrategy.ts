@@ -1,3 +1,4 @@
+import { sp } from "./params";
 import { Strategy } from "./strategy";
 import { selectAdaptiveComposition } from "./adaptiveComposition";
 import { ExpansionMissionFactory } from "../logic/mission/missions/expansionMission";
@@ -21,7 +22,6 @@ import { DebugLogger } from "../logic/common/utils";
 import { Compositions, getValidCompositions, SideComposition } from "./compositionUtils";
 import { readStrategicSituation, selectNationalComposition } from "./nationalComposition";
 import { getOpeningAirBudget } from "./openingAirBudget";
-import { BRUTAL_PARAMS } from "./brutalParams";
 
 // These could be loaded from ai.ini
 export const DEFAULT_COMPOSITIONS: Compositions = {
@@ -157,7 +157,15 @@ export class DefaultStrategy implements Strategy {
             return null;
         }
 
-        const validCompositions = getValidCompositions(context, DEFAULT_COMPOSITIONS);
+        const compositions: Compositions = context.difficulty === "brutal"
+            ? Object.fromEntries(Object.entries(DEFAULT_COMPOSITIONS).map(([name, plan]): [string, SideComposition] => [name, {
+                ...plan, composition: Object.fromEntries(Object.keys(plan.composition).map((unit): [string, number] =>
+                    [unit, sp(context.game, playerData.name, `production.${name}${unit}Factor`)]).filter(([, weight]) => weight > 0)),
+                minimumUnits: sp(context.game, playerData.name, `production.${name}MinCount`),
+                maximumUnits: sp(context.game, playerData.name, `production.${name}Cap`),
+            }]).filter(([, plan]) => Object.keys(plan.composition).length > 0))
+            : DEFAULT_COMPOSITIONS;
+        const validCompositions = getValidCompositions(context, compositions);
 
         if (validCompositions.length === 0) {
             return null;
@@ -167,24 +175,24 @@ export class DefaultStrategy implements Strategy {
 
         if (context.difficulty === "brutal") {
             const situation = readStrategicSituation(context.game, playerData);
-            if (BRUTAL_PARAMS.assault.tankOpening === 1 && situation.tick < BRUTAL_PARAMS.assault.tankOpeningUntil && situation.harvesters > 0) {
+            if (sp(context.game, playerData.name, 'assault.tankOpening') === 1 && situation.tick < sp(context.game, playerData.name, 'assault.tankOpeningUntil') && situation.harvesters > 0) {
                 const tankCore = validCompositions.find(name => name === "sovietTanks" || name === "alliedTanks");
-                return tankCore ? DEFAULT_COMPOSITIONS[tankCore] : null;
+                return tankCore ? compositions[tankCore] : null;
             }
-            const infantryOpening = validCompositions.includes("conscripts") ? DEFAULT_COMPOSITIONS.conscripts :
-                validCompositions.includes("gis") ? DEFAULT_COMPOSITIONS.gis : undefined;
-            if (context.game.getCurrentTick() < 7000 && situation.harvesters > 0 && infantryOpening)
-                return { ...infantryOpening, minimumUnits: 8, maximumUnits: infantryOpening.composition.E2 ? 16 : 12 };
+            const infantryOpening = validCompositions.includes("conscripts") ? compositions.conscripts :
+                validCompositions.includes("gis") ? compositions.gis : undefined;
+            if (context.game.getCurrentTick() < sp(context.game, playerData.name, 'production.infantryOpeningEndTick') && situation.harvesters > 0 && infantryOpening)
+                return { ...infantryOpening, minimumUnits: sp(context.game, playerData.name, 'production.infantryOpeningMinCount'), maximumUnits: infantryOpening.composition.E2 ? sp(context.game, playerData.name, 'production.sovietOpeningInfantryCap') : sp(context.game, playerData.name, 'production.alliedOpeningInfantryCap') };
             const threat = context.matchAwareness.getThreatCache();
             const aggressiveAir = getOpeningAirBudget(context.game, playerData) === 8;
-            if (validCompositions.includes("rocketeers") && (situation.own.JUMPJET ?? 0) < 8 &&
-                (threat?.totalOffensiveAntiAirThreat ?? 0) < Math.max(aggressiveAir ? 3 : 0.1,
-                    (threat?.totalAvailableAirPower ?? 0) * (aggressiveAir ? 0.6 : 0.25))) {
-                return { ...DEFAULT_COMPOSITIONS.rocketeers, maximumUnits: 4 };
+            if (validCompositions.includes("rocketeers") && (situation.own.JUMPJET ?? 0) < sp(context.game, playerData.name, 'production.openingRocketeerCap') &&
+                (threat?.totalOffensiveAntiAirThreat ?? 0) < Math.max(aggressiveAir ? sp(context.game, playerData.name, 'production.aggressiveAirThreatFloor') : sp(context.game, playerData.name, 'production.airThreatFloor'),
+                    (threat?.totalAvailableAirPower ?? 0) * (aggressiveAir ? sp(context.game, playerData.name, 'production.aggressiveAirThreatRatio') : sp(context.game, playerData.name, 'production.airThreatRatio')))) {
+                return { ...compositions.rocketeers, maximumUnits: sp(context.game, playerData.name, 'production.openingAirWaveCap') };
             }
-            if (validCompositions.includes("kirovs") && (situation.own.ZEP ?? 0) < 2 &&
-                (threat?.totalOffensiveAntiAirThreat ?? 0) < Math.max(6, (threat?.totalAvailableAirPower ?? 0) * 0.8)) {
-                return { ...DEFAULT_COMPOSITIONS.kirovs, maximumUnits: 2 };
+            if (validCompositions.includes("kirovs") && (situation.own.ZEP ?? 0) < sp(context.game, playerData.name, 'production.kirovCap') &&
+                (threat?.totalOffensiveAntiAirThreat ?? 0) < Math.max(sp(context.game, playerData.name, 'production.kirovThreatFloor'), (threat?.totalAvailableAirPower ?? 0) * sp(context.game, playerData.name, 'production.kirovThreatRatio'))) {
+                return { ...compositions.kirovs, maximumUnits: sp(context.game, playerData.name, 'production.kirovCap') };
             }
             const reservedSupport: Record<string, number> = {};
             for (const mission of missionController.getMissions()) {
@@ -195,7 +203,7 @@ export class DefaultStrategy implements Strategy {
                 }
             }
             const core = selectAdaptiveComposition(
-                DEFAULT_COMPOSITIONS, validCompositions, context.matchAwareness.getThreatCache(), situation.harvesters,
+                compositions, validCompositions, context.matchAwareness.getThreatCache(), situation.harvesters,
             );
             if (core?.composition.E1 || core?.composition.E2) return null;
             return core ? selectNationalComposition(core,

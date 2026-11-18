@@ -210,7 +210,7 @@ export class MissionController {
             .filter((unitWithMission) => !unitWithMission.mission || unitWithMission.mission.isUnitsLocked() === false);
 
         // Sort free units so that unassigned units get chosen before assigned (but unlocked) units.
-        freeUnits.sort((u1, u2) => (u1.mission?.getPriority() ?? 0) - (u2.mission?.getPriority() ?? 0));
+        freeUnits.sort((u1, u2) => (u1.mission?.getPriority(missionContext) ?? 0) - (u2.mission?.getPriority(missionContext) ?? 0));
 
         type AssignmentWithType = { unitName: string; missionName: string; method: "type" | "grab" };
         const newAssignmentsByType = freeUnits
@@ -221,7 +221,7 @@ export class MissionController {
                     if (donatingMission) {
                         if (
                             donatingMission === requestingMission ||
-                            donatingMission.getPriority() > requestedPriority
+                            donatingMission.getPriority(missionContext) > requestedPriority
                         ) {
                             return [];
                         }
@@ -248,7 +248,7 @@ export class MissionController {
                         if (donatingMission) {
                             if (
                                 donatingMission === grantedMission.mission ||
-                                donatingMission.getPriority() > grantedMission.mission.getPriority()
+                                donatingMission.getPriority(missionContext) > grantedMission.mission.getPriority(missionContext)
                             ) {
                                 return [];
                             }
@@ -297,7 +297,7 @@ export class MissionController {
             const { rulesName, rx, ry } = a.action;
             if (rulesName in unitTypeToHighestRequest) {
                 const currentPriority = unitTypeToHighestRequest[rulesName].priority;
-                if (a.mission.getPriority() > currentPriority) {
+                if (a.mission.getPriority(missionContext) > currentPriority) {
                     unitTypeToHighestRequest[rulesName] = {
                         mission: a.mission,
                         priority: a.action.priority,

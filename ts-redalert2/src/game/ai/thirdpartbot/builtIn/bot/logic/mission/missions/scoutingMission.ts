@@ -1,3 +1,4 @@
+import { sp } from "../../../strategy/params";
 import { ActionsApi, BotContext, GameApi, OrderType, PlayerData, Vector2 } from "../../../../game-api";
 import { MatchAwareness } from "../../awareness";
 import {
@@ -64,14 +65,14 @@ export class ScoutingMission extends Mission {
         }
 
         const factories = game.getVisibleUnits(playerData.name, "self", rules => rules.weaponsFactory).length;
-        this.priority = factories === 0 ? 85 : 50;
+        this.priority = factories === 0 ? (context.difficulty === "brutal" ? sp(context.game, context.player.name, 'scout.beforeFactoryPriority') : 85) : (context.difficulty === "brutal" ? sp(context.game, context.player.name, 'scout.afterFactoryPriority') : 50);
 
-        if ((matchAwareness.getSectorCache().getOverallVisibility() || 0) > 0.9) {
+        if ((matchAwareness.getSectorCache().getOverallVisibility() || 0) > (context.difficulty === "brutal" ? sp(context.game, context.player.name, 'scout.revealedStopRatio') : 0.9)) {
             return disbandMission();
         }
 
         // Once initial scout dog has been deployed and completed its run (or died/late game), disband to prevent infinite dog feeding
-        if (this.totalUnitsReceived >= 1 && (scouts.length === 0 || game.getCurrentTick() > 3600)) {
+        if (this.totalUnitsReceived >= (context.difficulty === "brutal" ? sp(context.game, context.player.name, 'scout.maxReceivedScoutsCap') : 1) && (scouts.length === 0 || game.getCurrentTick() > (context.difficulty === "brutal" ? sp(context.game, context.player.name, 'scout.initialScoutEndTick') : 3600))) {
             const knownEnemy = getKnownEnemyDirections(game, playerData);
             if (knownEnemy.length > 0 || scouts.length === 0) {
                 this.logger(`Enemy location known or scout completed, disbanding scouting mission ${this.getUniqueName()}`);
@@ -79,13 +80,13 @@ export class ScoutingMission extends Mission {
             }
         }
 
-        if (scouts.length > 1) {
-            const excess = scouts.slice(1).map((unit) => unit.id);
+        if (scouts.length > (context.difficulty === "brutal" ? sp(context.game, context.player.name, 'scout.maxConcurrentScoutsCap') : 1)) {
+            const excess = scouts.slice((context.difficulty === "brutal" ? sp(context.game, context.player.name, 'scout.maxConcurrentScoutsCap') : 1)).map((unit) => unit.id);
             return releaseUnits(excess);
         }
 
         if (scouts.length === 0) {
-            if (this.totalUnitsReceived >= 1) {
+            if (this.totalUnitsReceived >= (context.difficulty === "brutal" ? sp(context.game, context.player.name, 'scout.maxReceivedScoutsCap') : 1)) {
                 return disbandMission();
             }
             // Count the number of times the scout dies trying to uncover the current scoutTarget.
@@ -102,14 +103,14 @@ export class ScoutingMission extends Mission {
         } else if (this.scoutTarget) {
             this.hadUnit = true;
             if (!this.scoutTargetIsPermanent) {
-                if (this.attemptsOnCurrentTarget > MAX_ATTEMPTS_PER_TARGET) {
+                if (this.attemptsOnCurrentTarget > (context.difficulty === "brutal" ? sp(context.game, context.player.name, 'scout.maxTargetAttemptsCap') : MAX_ATTEMPTS_PER_TARGET)) {
                     this.logger(
                         `Scout target ${this.scoutTarget.x},${this.scoutTarget.y} took too many attempts, moving to next`,
                     );
                     this.setScoutTarget(null, 0);
                     return noop();
                 }
-                if (game.getCurrentTick() > this.scoutTargetRefreshedAt + MAX_TICKS_PER_TARGET) {
+                if (game.getCurrentTick() > this.scoutTargetRefreshedAt + (context.difficulty === "brutal" ? sp(context.game, context.player.name, 'scout.targetTimeoutTicks') : MAX_TICKS_PER_TARGET)) {
                     this.logger(
                         `Scout target ${this.scoutTarget.x},${this.scoutTarget.y} took too long, moving to next`,
                     );
@@ -188,13 +189,13 @@ export class ScoutingMissionFactory {
         if (this.initialMissionsCreated) {
             return;
         }
-        if (game.getCurrentTick() < this.lastScoutAt + SCOUT_COOLDOWN_TICKS) {
+        if (game.getCurrentTick() < this.lastScoutAt + (context.difficulty === "brutal" ? sp(context.game, context.player.name, 'scout.initialCooldownTicks') : SCOUT_COOLDOWN_TICKS)) {
             return;
         }
         if (!matchAwareness.getScoutingManager().hasScoutTargets()) {
             return;
         }
-        const scoutPriority = context.difficulty === "brutal" ? 85 : 50;
+        const scoutPriority = context.difficulty === "brutal" ? sp(context.game, context.player.name, 'scout.beforeFactoryPriority') : 50;
         const created0 = !!missionController.addMission(new ScoutingMission("globalScout", scoutPriority, logger));
         let created1 = false;
         if (context.difficulty === "brutal") {

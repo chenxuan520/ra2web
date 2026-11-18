@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'bun:test';
 import { BRUTAL_PARAMS } from '../../game/ai/thirdpartbot/builtIn/bot/strategy/brutalParams';
+import { GROUPS, parseParams, renderParams } from '../../../e2e/league/p4/paramSpace';
 
 // V0 has no later refinery-hold mechanism, so its three absent knobs are not invented.
 const keys = {
@@ -22,15 +23,20 @@ const keys = {
 };
 
 describe('central brutal strategy parameters', () => {
-    test('keys are exactly the thresholds present in the selected v0 champion', () => {
-        expect(Object.keys(BRUTAL_PARAMS)).toEqual(['economy', 'assault']);
+    test('the eight strategy groups retain every legacy economy and assault name', () => {
+        expect(Object.keys(BRUTAL_PARAMS)).toEqual([...GROUPS]);
         for (const group of ['economy', 'assault'] as const)
-            expect(Object.keys(BRUTAL_PARAMS[group]).sort()).toEqual(keys[group].trim().split(/\s+/).sort());
+            for (const key of keys[group].trim().split(/\s+/)) expect(Object.hasOwn(BRUTAL_PARAMS[group], key)).toBe(true);
     });
-    test('all 80 values are finite and have at most two decimal places', () => {
+    test('all values are finite and have at most two decimal places', () => {
         const values = Object.values(BRUTAL_PARAMS).flatMap(group => Object.values(group));
-        expect(values).toHaveLength(80);
         expect(values.every(Number.isFinite)).toBe(true);
         expect(values.every(value => Number(value.toFixed(2)) === value)).toBe(true);
+    });
+    test('the line parser round-trips the parameter file byte for byte', async () => {
+        const source = await Bun.file(new URL('../../game/ai/thirdpartbot/builtIn/bot/strategy/brutalParams.ts', import.meta.url)).text();
+        const parsed = parseParams(source);
+        expect(Object.keys(parsed)).toHaveLength(Object.values(BRUTAL_PARAMS).flatMap(group => Object.keys(group)).length);
+        expect(renderParams(source, parsed)).toBe(source);
     });
 });

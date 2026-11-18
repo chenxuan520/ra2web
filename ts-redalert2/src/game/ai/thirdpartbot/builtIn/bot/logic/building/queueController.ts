@@ -1,3 +1,4 @@
+import { sp } from "../../strategy/params";
 import {
     ActionsApi,
     GameApi,
@@ -15,7 +16,6 @@ import { SupabotContext } from "../common/context";
 import { UnitRequest } from "../mission/missionController";
 import { countCoreTanks, NATIONAL_SUPPORT_LIMITS, readStrategicSituation } from "../../strategy/nationalComposition";
 import { getBasicInfantryBudget, isSovietCountry } from "../../strategy/basicInfantryBudget";
-import { BRUTAL_PARAMS } from "../../strategy/brutalParams";
 
 export const QUEUES = [
     QueueType.Structures,
@@ -86,25 +86,25 @@ export class QueueController {
         if (context.difficulty === "brutal") {
             for (const name of ["E1", "E2"]) {
                 // Armor and reactive machineguns replace paid basic infantry in the tank opening.
-                if (BRUTAL_PARAMS.assault.tankOpening === 1) {
+                if (sp(game, player.name, 'assault.tankOpening') === 1) {
                     requests.delete(name);
                     continue;
                 }
                 const count = game.getVisibleUnits(player.name, "self", rules => rules.name === name).length;
-                const openingRequest = game.getCurrentTick() < 7000 && (requests.get(name)?.priority ?? 0) >= 95;
-                const limit = openingRequest ? (name === "E2" ? 16 : 12) : getBasicInfantryBudget(name, context.difficulty).total;
+                const openingRequest = game.getCurrentTick() < sp(game, player.name, 'production.infantryOpeningEndTick') && (requests.get(name)?.priority ?? 0) >= sp(game, player.name, 'production.infantryOpeningPriority');
+                const limit = openingRequest ? (name === "E2" ? sp(game, player.name, 'production.sovietOpeningInfantryCap') : sp(game, player.name, 'production.alliedOpeningInfantryCap')) : getBasicInfantryBudget(name, context.difficulty).total;
                 if (count >= limit) requests.delete(name);
             }
             // Before War Factory is established, never let basic foot infantry starve the refinery and factory
             const factories = game.getVisibleUnits(player.name, "self", rules => rules.weaponsFactory).length;
-            const openingRequest = game.getCurrentTick() < 7000 && ["E1", "E2"].some(name => (requests.get(name)?.priority ?? 0) >= 95);
+            const openingRequest = game.getCurrentTick() < sp(game, player.name, 'production.infantryOpeningEndTick') && ["E1", "E2"].some(name => (requests.get(name)?.priority ?? 0) >= sp(game, player.name, 'production.infantryOpeningPriority'));
             if (factories === 0 && !openingRequest) {
                 const start = playerData.startLocation;
                 const hasHomeThreat = !start || game.getVisibleUnits(player.name, "enemy", rules => rules.isSelectableCombatant && !rules.harvester)
                     .some(id => {
                         const unit = game.getUnitData(id);
                         if (!unit?.tile) return true;
-                        return (unit.tile.rx - start.x) ** 2 + (unit.tile.ry - start.y) ** 2 <= 25 ** 2;
+                        return (unit.tile.rx - start.x) ** 2 + (unit.tile.ry - start.y) ** 2 <= sp(game, player.name, 'pressure.preFactoryGuardRadius') ** 2;
                     });
                 if (!hasHomeThreat) {
                     requests.delete("E1");
@@ -128,7 +128,7 @@ export class QueueController {
                     item.rules.refinery && item.rules.freeUnit === option.name) ||
                  productionApi.getAvailableObjects(QueueType.Structures).some(rules =>
                     rules.refinery && rules.freeUnit === option.name && (requests.get(rules.name)?.priority ?? 0) > 0))) continue;
-            let priority = logic.getPriority(game, playerData, option, threatCache);
+            let priority = logic.getPriority(game, playerData, option, threatCache, context.difficulty);
             if (context.difficulty === "brutal") {
                 const miners = game.getVisibleUnits(player.name, "self", rules => rules.harvester).length;
                 const refineries = game.getVisibleUnits(player.name, "self", rules => rules.refinery).length;
@@ -140,19 +140,19 @@ export class QueueController {
                 ) ?? true);
                 const intruders = game.getVisibleUnits(player.name, "enemy", option => option.isSelectableCombatant && !option.harvester)
                     .map(id => game.getUnitData?.(id) ?? game.getGameObjectData?.(id)).filter((unit): unit is UnitData => !!unit &&
-                        (unit.tile.rx - playerData.startLocation.x) ** 2 + (unit.tile.ry - playerData.startLocation.y) ** 2 <= 22 ** 2);
+                        (unit.tile.rx - playerData.startLocation.x) ** 2 + (unit.tile.ry - playerData.startLocation.y) ** 2 <= sp(game, player.name, 'pressure.minerSiegeRadius') ** 2);
                 const baseUnderSiege = intruders.length > 0;
-                const minCoreBeforeMiner2 = isSovietCountry(playerData.country?.name) ? 2 : 1;
+                const minCoreBeforeMiner2 = isSovietCountry(playerData.country?.name) ? sp(game, player.name, 'production.secondMinerSovietCoreCount') : sp(game, player.name, 'production.secondMinerAlliedCoreCount');
 
                 let minerPriority = 0;
                 if (miners === 0) {
-                    minerPriority = 120;
-                } else if (miners < 2 && core >= minCoreBeforeMiner2) {
-                    minerPriority = 90;
-                } else if (miners === 2 && !baseUnderSiege && hasOreFields && (core >= 6 || (refineries >= 2 && core >= 4))) {
-                    minerPriority = 78;
-                } else if (miners === 3 && !baseUnderSiege && hasOreFields && (core >= 8 || (refineries >= 2 && core >= 6))) {
-                    minerPriority = 70;
+                    minerPriority = sp(game, player.name, 'economy.recoveryMinerPriority');
+                } else if (miners < sp(game, player.name, 'economy.secondMinerCount') && core >= minCoreBeforeMiner2) {
+                    minerPriority = sp(game, player.name, 'economy.secondMinerPriority');
+                } else if (miners === sp(game, player.name, 'economy.thirdMinerPreviousCount') && !baseUnderSiege && hasOreFields && (core >= sp(game, player.name, 'economy.thirdMinerCoreCount') || (refineries >= 2 && core >= sp(game, player.name, 'economy.thirdMinerDualRefineryCoreCount')))) {
+                    minerPriority = sp(game, player.name, 'economy.thirdMinerPriority');
+                } else if (miners === sp(game, player.name, 'economy.fourthMinerPreviousCount') && !baseUnderSiege && hasOreFields && (core >= sp(game, player.name, 'economy.fourthMinerCoreCount') || (refineries >= 2 && core >= sp(game, player.name, 'economy.fourthMinerDualRefineryCoreCount')))) {
+                    minerPriority = sp(game, player.name, 'economy.fourthMinerPriority');
                 }
                 if (minerPriority > 0) {
                     priority = Math.max(priority, minerPriority);
@@ -168,20 +168,20 @@ export class QueueController {
                 const tick = game.getCurrentTick();
                 if (situation.enemy.aircraft > 0) {
                     this.airResponseTarget = Math.max(this.airResponseTarget,
-                        Math.min(6, Math.max(2, Math.ceil(situation.enemy.aircraft / 2))));
-                    this.airResponseUntil = tick + 600;
+                        Math.min(sp(game, player.name, 'production.airResponseCap'), Math.max(sp(game, player.name, 'production.airResponseMinCount'), Math.ceil(situation.enemy.aircraft / sp(game, player.name, 'production.aircraftPerCounterFactor')))));
+                    this.airResponseUntil = tick + sp(game, player.name, 'production.airResponseMemoryTicks');
                 } else if (tick >= this.airResponseUntil) this.airResponseTarget = 0;
                 const aa = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === "HTK");
-                if (aa && (situation.own.HTK ?? 0) < this.airResponseTarget && (requests.get(aa.name)?.priority ?? 0) < 100) {
+                if (aa && (situation.own.HTK ?? 0) < this.airResponseTarget && (requests.get(aa.name)?.priority ?? 0) < sp(game, player.name, 'production.airResponsePriority')) {
                     // Visible air pressure needs actual counters before another
                     // miner is sent out. Retain the observation briefly across fog.
-                    requests.set(aa.name, { priority: 100, specificLocation: null });
+                    requests.set(aa.name, { priority: sp(game, player.name, 'production.emergencyArmorPriority'), specificLocation: null });
                 }
             }
-            if (situation.harvesters >= 2 && situation.enemy.infantry >= 8 &&
-                (situation.own.MTNK ?? 0) + (situation.own.HTNK ?? 0) < Math.min(6, Math.max(2, Math.ceil(situation.enemy.infantry / 6)))) {
+            if (situation.harvesters >= 2 && situation.enemy.infantry >= sp(game, player.name, 'production.infantryResponseCount') &&
+                (situation.own.MTNK ?? 0) + (situation.own.HTNK ?? 0) < Math.min(sp(game, player.name, 'production.infantryResponseArmorCap'), Math.max(sp(game, player.name, 'production.infantryResponseArmorMinCount'), Math.ceil(situation.enemy.infantry / sp(game, player.name, 'production.infantryPerArmorFactor'))))) {
                 const tank = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === "MTNK" || option.name === "HTNK");
-                if (tank) requests.set(tank.name, { priority: 100, specificLocation: null });
+                if (tank) requests.set(tank.name, { priority: sp(game, player.name, 'production.emergencyArmorPriority'), specificLocation: null });
             }
             if (situation.harvesters >= 1) {
                 const core = countCoreTanks(situation);
@@ -189,21 +189,21 @@ export class QueueController {
                 const tank = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === tankName);
                 if (tank) {
                     const hasDualRefinery = (situation.own.NAREFN ?? 0) + (situation.own.GAREFN ?? 0) >= 2;
-                    if ((core < 1 && situation.harvesters >= 1) || (core < 4 && (situation.harvesters >= 2 || hasDualRefinery))) {
-                        requests.set(tank.name, { priority: 85, specificLocation: null });
-                    } else if (core < 8 && (requests.get(tank.name)?.priority ?? 0) < 75) {
-                        requests.set(tank.name, { priority: 75, specificLocation: null });
-                    } else if (core < 16 && (requests.get(tank.name)?.priority ?? 0) < 60) {
-                        requests.set(tank.name, { priority: 60, specificLocation: null });
-                    } else if ((requests.get(tank.name)?.priority ?? 0) < 50) {
-                        requests.set(tank.name, { priority: 50, specificLocation: null });
+                    if ((core < 1 && situation.harvesters >= 1) || (core < sp(game, player.name, 'production.initialCoreTankCount') && (situation.harvesters >= 2 || hasDualRefinery))) {
+                        requests.set(tank.name, { priority: sp(game, player.name, 'production.initialCorePriority'), specificLocation: null });
+                    } else if (core < sp(game, player.name, 'production.mediumCoreTankCount') && (requests.get(tank.name)?.priority ?? 0) < sp(game, player.name, 'production.mediumCorePriority')) {
+                        requests.set(tank.name, { priority: sp(game, player.name, 'production.mediumCorePriority'), specificLocation: null });
+                    } else if (core < sp(game, player.name, 'production.largeCoreTankCount') && (requests.get(tank.name)?.priority ?? 0) < sp(game, player.name, 'production.largeCorePriority')) {
+                        requests.set(tank.name, { priority: sp(game, player.name, 'production.largeCorePriority'), specificLocation: null });
+                    } else if ((requests.get(tank.name)?.priority ?? 0) < sp(game, player.name, 'production.overflowCorePriority')) {
+                        requests.set(tank.name, { priority: sp(game, player.name, 'production.overflowCorePriority'), specificLocation: null });
                     }
                 }
                 if (!isSovietCountry(playerData.country?.name)) {
                     const heavyName = productionApi.getAvailableObjects(QueueType.Vehicles).some(o => o.name === "SREF") ? "SREF" : "MGTK";
                     const heavy = productionApi.getAvailableObjects(QueueType.Vehicles).find(option => option.name === heavyName);
-                    if (heavy && situation.credits >= heavy.cost && (requests.get(heavy.name)?.priority ?? 0) < 60) {
-                        requests.set(heavy.name, { priority: 60, specificLocation: null });
+                    if (heavy && situation.credits >= heavy.cost && (requests.get(heavy.name)?.priority ?? 0) < sp(game, player.name, 'production.largeCorePriority')) {
+                        requests.set(heavy.name, { priority: sp(game, player.name, 'production.largeCorePriority'), specificLocation: null });
                     }
                 }
             }
@@ -240,6 +240,7 @@ export class QueueController {
                 totalCostAcrossQueues,
                 logger,
                 cappedSupport,
+                context.difficulty,
             );
         });
 
@@ -260,7 +261,7 @@ export class QueueController {
         // Emergency salvage: if we have 0 harvesters or 0 refineries and cannot afford replacement (< 800 credits),
         // sell non-essential auxiliary structures (tech lab, radar, or static defense) to recover cash.
         const tick = game.getCurrentTick();
-        if (context.difficulty === "brutal" && playerData.credits < 800 && tick > this.lastEmergencySaleAt + 450) {
+        if (context.difficulty === "brutal" && playerData.credits < sp(game, player.name, 'economy.emergencySaleCredits') && tick > this.lastEmergencySaleAt + sp(game, player.name, 'economy.emergencySaleCooldownTicks')) {
             const situation = readStrategicSituation(game, playerData);
             const needsEmergencyCash = situation.harvesters === 0 || ((situation.own.NAREFN ?? 0) + (situation.own.GAREFN ?? 0) === 0);
             if (needsEmergencyCash) {
@@ -291,12 +292,13 @@ export class QueueController {
         totalCostAcrossQueues: number,
         logger: (message: string) => void,
         cappedSupport: ReadonlySet<string>,
+        difficulty?: "normal" | "brutal",
     ): void {
         const myCredits = playerData.credits;
         // With five or six queues, every queue can fall below 25%. Always
         // let the highest-priority queue progress rather than holding all of them.
         const highestPriority = Math.max(0, ...this.queueStates.map(state => state.topItem?.priority ?? 0));
-        const minimumPriority = highestPriority >= 85 ? 60 : Math.min(totalWeightAcrossQueues * 0.25, highestPriority);
+        const minimumPriority = highestPriority >= (difficulty === "brutal" ? sp(game, playerData.name, 'production.emergencyQueuePriorityThreshold') : 85) ? (difficulty === "brutal" ? sp(game, playerData.name, 'production.emergencyQueueMinimumPriority') : 60) : Math.min(totalWeightAcrossQueues * (difficulty === "brutal" ? sp(game, playerData.name, 'production.queueWeightRatio') : 0.25), highestPriority);
 
         const queueData = productionApi.getQueueData(queueType);
         const currentItem = queueData.items[0];
@@ -309,7 +311,7 @@ export class QueueController {
         if (queueData.status == QueueStatus.Idle) {
             this.placementFailures.clear();
             // Start building the decided item.
-            const canAffordBuilding = isBuildingQueue(queueType) && decision !== undefined && decision.priority >= 18 && myCredits >= decision.unit.cost + 400;
+            const canAffordBuilding = isBuildingQueue(queueType) && decision !== undefined && decision.priority >= (difficulty === "brutal" ? sp(game, playerData.name, 'production.affordableBuildingMinimumPriority') : 18) && myCredits >= decision.unit.cost + (difficulty === "brutal" ? sp(game, playerData.name, 'production.buildingCostMargin') : 400);
             if (decision !== undefined && (canAffordBuilding || !(totalCostAcrossQueues > myCredits && decision.priority < minimumPriority))) {
                 logger(`Decision (${queueTypeToName(queueType)}): ${decision.unit.name}`);
                 actionsApi.queueForProduction(queueType, decision.unit.name, decision.unit.type, 1);
@@ -321,7 +323,7 @@ export class QueueController {
                 this.placementFailures.set(readyUnit.name, failures + 1);
 
                 // If too many failures, cancel the building to unblock the queue
-                if (failures >= PLACEMENT_FAILURE_CANCEL_THRESHOLD) {
+                if (failures >= (difficulty === "brutal" ? sp(game, playerData.name, 'production.maxPlacementFailuresCap') : PLACEMENT_FAILURE_CANCEL_THRESHOLD)) {
                     logger(`Cancelling ready ${readyUnit.name} after ${failures} placement failures`);
                     actionsApi.unqueueFromProduction(queueType, readyUnit.name, readyUnit.type, 1);
                     this.placementFailures.delete(readyUnit.name);
@@ -336,7 +338,7 @@ export class QueueController {
                 let canPlace = placeX !== undefined && placeY !== undefined &&
                     game.canPlaceBuilding(playerData.name, readyUnit.name, { rx: placeX, ry: placeY });
 
-                if (!canPlace || failures >= PLACEMENT_FAILURE_RETRY_THRESHOLD) {
+                if (!canPlace || failures >= (difficulty === "brutal" ? sp(game, playerData.name, 'production.placementRetryCount') : PLACEMENT_FAILURE_RETRY_THRESHOLD)) {
                     // After threshold, find an alternative placement location
                     const conYards = game.getVisibleUnits(playerData.name, "self", (r: TechnoRules) => r.constructionYard);
                     const conYardData = conYards.length > 0 ? game.getUnitData(conYards[0]) : undefined;
@@ -373,7 +375,7 @@ export class QueueController {
                 const newItemPriority = decision.priority;
                 // Only cancel if current item is explicitly obsolete/capped (0 priority) and new item is an emergency (>= 80),
                 // or if new item is genuinely more than 2x higher priority than the active request.
-                if (currentItemPriority === 0 ? newItemPriority >= 80 : newItemPriority > currentItemPriority * 2) {
+                if (currentItemPriority === 0 ? newItemPriority >= (difficulty === "brutal" ? sp(game, playerData.name, 'production.obsoleteUnitReplacementPriority') : 80) : newItemPriority > currentItemPriority * (difficulty === "brutal" ? sp(game, playerData.name, 'production.unitReplacementPriorityFactor') : 2)) {
                     logger(
                         `Dequeueing queue ${queueTypeToName(queueData.type)} unit ${currentProduction.name} because ${
                             decision.unit.name
@@ -385,7 +387,7 @@ export class QueueController {
                 // Not changing our mind, but maybe other queues are more important for now.
                 // Do not pause if we can easily afford this unit, or if it is an active military response
                 const isVitalBuilding = isBuildingQueue(queueType) && currentProduction && (currentProduction.refinery || currentProduction.weaponsFactory);
-                if (!isVitalBuilding && totalCostAcrossQueues > myCredits && myCredits < (isBuildingQueue(queueType) ? 200 : decision.unit.cost) && decision.priority < minimumPriority) {
+                if (!isVitalBuilding && totalCostAcrossQueues > myCredits && myCredits < (isBuildingQueue(queueType) ? (difficulty === "brutal" ? sp(game, playerData.name, 'production.buildingLiquidityCredits') : 200) : decision.unit.cost) && decision.priority < minimumPriority) {
                     logger(
                         `Pausing queue ${queueTypeToName(queueData.type)} because weight is low (${
                             decision.priority
@@ -404,9 +406,9 @@ export class QueueController {
                 return;
             }
             // Consider resuming queue if priority is high relative to other queues or if we can afford this item.
-            const affordable = isBuildingQueue(queueData.type) ? myCredits >= 200 : (decision && myCredits >= decision.unit.cost);
+            const affordable = isBuildingQueue(queueData.type) ? myCredits >= (difficulty === "brutal" ? sp(game, playerData.name, 'production.buildingLiquidityCredits') : 200) : (decision && myCredits >= decision.unit.cost);
             if (totalWeightAcrossQueues === 0 || myCredits >= totalCostAcrossQueues ||
-                (decision && affordable && decision.priority >= 15)) {
+                (decision && affordable && decision.priority >= (difficulty === "brutal" ? sp(game, playerData.name, 'production.minimumResumePriority') : 15))) {
                 logger(`Resuming queue ${queueTypeToName(queueData.type)} because credits are high or item is affordable`);
                 actionsApi.resumeProduction(queueData.type);
             } else if (decision && decision.priority >= minimumPriority) {

@@ -1,3 +1,4 @@
+import { sp } from "../../../strategy/params";
 import { estimatedCombatWeapons } from "../../common/observedUnit";
 import { ObjectType, OrderType, UnitData, Vector2 } from "../../../../game-api";
 import { SupabotContext } from "../../common/context";
@@ -18,25 +19,25 @@ export class MinerDefence {
         const enemies = game.getVisibleUnits(player.name, "enemy").map(id => game.getUnitData(id))
             .filter((unit): unit is UnitData => !!unit);
         const approaching = enemies.filter(unit => (unit.type as any) === ObjectType.Infantry && unit.rules.crushable &&
-            home.distanceTo(new Vector2(unit.tile.rx, unit.tile.ry)) <= 32);
+            home.distanceTo(new Vector2(unit.tile.rx, unit.tile.ry)) <= sp(game, player.name, 'defense.minerInfantryWarningRadius'));
         const armorThreat = enemies.some(unit => (unit.type as any) !== ObjectType.Infantry && !unit.rules.harvester &&
-            !!estimatedCombatWeapons(unit, game)[0] && home.distanceTo(new Vector2(unit.tile.rx, unit.tile.ry)) <= 24);
+            !!estimatedCombatWeapons(unit, game)[0] && home.distanceTo(new Vector2(unit.tile.rx, unit.tile.ry)) <= sp(game, player.name, 'defense.minerArmorWarningRadius'));
         const miners = game.getVisibleUnits(player.name, "self", rules => rules.harvester && rules.crusher)
             .map(id => game.getUnitData(id)).filter((unit): unit is UnitData => !!unit && unit.canMove && !unit.isWarpedOut);
         let miner = this.active ? miners.find(unit => unit.id === this.active!.id) : undefined;
         if (this.active && !miner) {
             this.active = undefined;
-            this.nextDefenceAt = tick + 300;
+            this.nextDefenceAt = tick + sp(game, player.name, 'defense.minerDefenseCooldownTicks');
         }
-        if (!this.active && tick >= this.nextDefenceAt && approaching.length >= 6 && !armorThreat) {
-            miner = miners.filter(unit => unit.hitPoints >= unit.maxHitPoints * 0.8 &&
-                home.distanceTo(new Vector2(unit.tile.rx, unit.tile.ry)) <= 28).sort((a, b) => a.id - b.id)[0];
-            if (miner) this.active = { id: miner.id, until: tick + 300, lastOrder: -Infinity };
+        if (!this.active && tick >= this.nextDefenceAt && approaching.length >= sp(game, player.name, 'defense.minerDefenseInfantryCount') && !armorThreat) {
+            miner = miners.filter(unit => unit.hitPoints >= unit.maxHitPoints * sp(game, player.name, 'defense.minerDefenseStartHpRatio') &&
+                home.distanceTo(new Vector2(unit.tile.rx, unit.tile.ry)) <= sp(game, player.name, 'defense.minerDefenseLeashRadius')).sort((a, b) => a.id - b.id)[0];
+            if (miner) this.active = { id: miner.id, until: tick + sp(game, player.name, 'defense.minerDefenseDurationTicks'), lastOrder: -Infinity };
         }
         if (this.active && miner) {
             let destination: Vector2 | null = null;
-            if (tick < this.active.until && !armorThreat && approaching.length >= 2 && miner.hitPoints >= miner.maxHitPoints * 0.55 &&
-                home.distanceTo(new Vector2(miner.tile.rx, miner.tile.ry)) <= 28) {
+            if (tick < this.active.until && !armorThreat && approaching.length >= sp(game, player.name, 'defense.minerDefenseContinueCount') && miner.hitPoints >= miner.maxHitPoints * sp(game, player.name, 'defense.minerDefenseContinueHpRatio') &&
+                home.distanceTo(new Vector2(miner.tile.rx, miner.tile.ry)) <= sp(game, player.name, 'defense.minerDefenseLeashRadius')) {
                 destination = getInfantryCrushPoint(miner, enemies, game.mapApi, game);
                 if (!destination) {
                     const center = new Vector2(approaching.reduce((sum, unit) => sum + unit.tile.rx, 0) / approaching.length,
@@ -60,7 +61,7 @@ export class MinerDefence {
                     if (refinery !== undefined) player.actions.orderUnits([miner.id], OrderType.Dock, refinery);
                 }
                 this.active = undefined;
-                this.nextDefenceAt = tick + 300;
+                this.nextDefenceAt = tick + sp(game, player.name, 'defense.minerDefenseCooldownTicks');
             } else if (tick - this.active.lastOrder >= 18 &&
                 (miner.isIdle || !this.active.destination?.equals(destination))) {
                 player.actions.orderUnits([miner.id], OrderType.Move, destination.x, destination.y);
@@ -74,14 +75,14 @@ export class MinerDefence {
             const allMiners = game.getVisibleUnits(player.name, "self", rules => rules.harvester)
                 .map(id => game.getUnitData(id)).filter((unit): unit is UnitData => !!unit && unit.canMove && !unit.isWarpedOut);
             for (const m of allMiners) {
-                if (m.hitPoints < m.maxHitPoints * 0.5) {
+                if (m.hitPoints < m.maxHitPoints * sp(game, player.name, 'defense.minerRetreatHpRatio')) {
                     const nearbyHostiles = enemies.filter(e => e.rules.isSelectableCombatant && !e.rules.harvester &&
-                        new Vector2(e.tile.rx, e.tile.ry).distanceTo(new Vector2(m.tile.rx, m.tile.ry)) <= 10);
+                        new Vector2(e.tile.rx, e.tile.ry).distanceTo(new Vector2(m.tile.rx, m.tile.ry)) <= sp(game, player.name, 'defense.minerRetreatThreatRadius'));
                     if (nearbyHostiles.length > 0) {
                         const refinery = game.getVisibleUnits(player.name, "self", rules => rules.refinery)
                             .map(id => game.getUnitData(id)).filter((unit): unit is UnitData => !!unit && !enemies.some(enemy =>
                                 enemy.rules.isSelectableCombatant && !enemy.rules.harvester &&
-                                (enemy.tile.rx - unit.tile.rx) ** 2 + (enemy.tile.ry - unit.tile.ry) ** 2 <= 10 ** 2))
+                                (enemy.tile.rx - unit.tile.rx) ** 2 + (enemy.tile.ry - unit.tile.ry) ** 2 <= sp(game, player.name, 'defense.safeRefineryThreatRadius') ** 2))
                             .sort((a, b) => (a.tile.rx - m.tile.rx) ** 2 + (a.tile.ry - m.tile.ry) ** 2 -
                                 ((b.tile.rx - m.tile.rx) ** 2 + (b.tile.ry - m.tile.ry) ** 2) || a.id - b.id)[0];
                         if (refinery) {
@@ -98,14 +99,14 @@ export class MinerDefence {
                 .map(id => game.getUnitData(id)).filter((u): u is UnitData => !!u);
             const gemResources = game.mapApi.getAllTilesResourceData().filter(res =>
                 game.mapApi.isVisibleTile(res.tile, player.name) && res.gems > 0 &&
-                (home.distanceTo(new Vector2(res.tile.rx, res.tile.ry)) <= 32 ||
-                 refineries.some(ref => new Vector2(ref.tile.rx, ref.tile.ry).distanceTo(new Vector2(res.tile.rx, res.tile.ry)) <= 25)) &&
-                !enemyCombatants.some(e => (e.tile.rx - res.tile.rx) ** 2 + (e.tile.ry - res.tile.ry) ** 2 <= 14 ** 2)
+                (home.distanceTo(new Vector2(res.tile.rx, res.tile.ry)) <= sp(game, player.name, 'economy.gemHomeRadius') ||
+                 refineries.some(ref => new Vector2(ref.tile.rx, ref.tile.ry).distanceTo(new Vector2(res.tile.rx, res.tile.ry)) <= sp(game, player.name, 'economy.gemRefineryRadius'))) &&
+                !enemyCombatants.some(e => (e.tile.rx - res.tile.rx) ** 2 + (e.tile.ry - res.tile.ry) ** 2 <= sp(game, player.name, 'economy.gemThreatRadius') ** 2)
             );
 
             if (gemResources.length > 0) {
                 for (const m of allMiners) {
-                    if (this.active?.id === m.id || m.hitPoints < m.maxHitPoints * 0.7) continue;
+                    if (this.active?.id === m.id || m.hitPoints < m.maxHitPoints * sp(game, player.name, 'economy.gemMinerHpRatio')) continue;
                     const last = this.lastGemOrder.get(m.id) ?? -Infinity;
                     if (tick - last < 90) continue;
                     const mPos = new Vector2(m.tile.rx, m.tile.ry);

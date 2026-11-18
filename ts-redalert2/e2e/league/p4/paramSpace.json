@@ -1,0 +1,2543 @@
+{
+  "assault.airAssaultCount": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.airUnitPower": {
+    "min": 28,
+    "max": 175,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.approachProgressTimeoutTicks": {
+    "min": 720,
+    "max": 4500,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.assaultArmorCap": {
+    "min": 1,
+    "max": 15,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.assaultArmorLead": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.assaultForceRatio": {
+    "min": 0.3,
+    "max": 3,
+    "int": false,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.assaultMinArmor": {
+    "min": 2,
+    "max": 15,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.attackMissionInitialPriority": {
+    "min": 1,
+    "max": 1,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "assault.attackTargetRadius": {
+    "min": 4,
+    "max": 25,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.baseAttackCooldownTicks": {
+    "min": 240,
+    "max": 1500,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.buildingTargetHpFactor": {
+    "min": 0,
+    "max": 13,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.buildingTargetWeight": {
+    "min": 24,
+    "max": 150,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.chasingVehicleRadius": {
+    "min": 8,
+    "max": 50,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.conyardTargetWeight": {
+    "min": 46,
+    "max": 288,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.coreArmorPower": {
+    "min": 40,
+    "max": 250,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.counterArmorPower": {
+    "min": 20,
+    "max": 125,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.decimatedEarly": {
+    "min": 1,
+    "max": 8,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.decimatedLate": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.decimatedVsHeavyDefence": {
+    "min": 2,
+    "max": 13,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.defenceArmorFloor": {
+    "min": 3,
+    "max": 20,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.defenceForceRatio": {
+    "min": 0.3,
+    "max": 3,
+    "int": false,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.defenseArmorFactor": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.defenseTargetWeight": {
+    "min": 54,
+    "max": 338,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.dogBiteRange": {
+    "min": 2,
+    "max": 15,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.dogHunt": {
+    "min": 0,
+    "max": 1,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.dogLeash": {
+    "min": 3,
+    "max": 23,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.dogMax": {
+    "min": 3,
+    "max": 20,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.dogsPerTank": {
+    "min": 0,
+    "max": 3,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.earlyAssaultRadius": {
+    "min": 18,
+    "max": 113,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.emptyFieldBuildingWeight": {
+    "min": 60,
+    "max": 375,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.emptyFieldForceRatio": {
+    "min": 0.3,
+    "max": 3,
+    "int": false,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.engageSpread": {
+    "min": 0,
+    "max": 1,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.exhaustedArmyCount": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.factoryTargetWeight": {
+    "min": 52,
+    "max": 325,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.failedSearchCooldownTicks": {
+    "min": 1440,
+    "max": 9000,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.fieldArmyPriority": {
+    "min": 50,
+    "max": 50,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "assault.fieldTargetRadius": {
+    "min": 6,
+    "max": 38,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.formedArmor": {
+    "min": 1,
+    "max": 10,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.freeUnitPriority": {
+    "min": 50,
+    "max": 50,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "assault.harvesterFocusWeight": {
+    "min": 40000,
+    "max": 250000,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.harvesterTargetWeight": {
+    "min": 10,
+    "max": 63,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.heavyArmorPower": {
+    "min": 60,
+    "max": 375,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.heavyDefenceCount": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.heavyDefensePower": {
+    "min": 56,
+    "max": 350,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.infantryAssaultCount": {
+    "min": 8,
+    "max": 50,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.infantryPower": {
+    "min": 6,
+    "max": 38,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.infantryPushEnemyArmorCap": {
+    "min": 1,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.infantryPushEnemyDefenseCount": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.kirovPower": {
+    "min": 88,
+    "max": 550,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.lastEnemyArrivalRadius": {
+    "min": 3,
+    "max": 20,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.lateAdvantageForceRatio": {
+    "min": 0.3,
+    "max": 3,
+    "int": false,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.lateAdvantageMinArmor": {
+    "min": 1,
+    "max": 8,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.lateAdvantageMinHpFraction": {
+    "min": 0,
+    "max": 2.7,
+    "int": false,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.lateGameTick": {
+    "min": 4000,
+    "max": 25000,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.lightDefensePower": {
+    "min": 16,
+    "max": 100,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.longMapDimension": {
+    "min": 40,
+    "max": 250,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.longMapEnemyArmorCount": {
+    "min": 1,
+    "max": 8,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.longStartSeparationRadius": {
+    "min": 32,
+    "max": 200,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.marchArrive": {
+    "min": 4,
+    "max": 25,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.marchCohesion": {
+    "min": 0,
+    "max": 1,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.marchLead": {
+    "min": 2,
+    "max": 15,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.marchResume": {
+    "min": 1,
+    "max": 8,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.maxPreparationTicks": {
+    "min": 1,
+    "max": 4503,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.minArmorLongMapVsArmor": {
+    "min": 2,
+    "max": 15,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.minArmorShortMap": {
+    "min": 1,
+    "max": 10,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.minimumWaveWaitTicks": {
+    "min": 180,
+    "max": 1125,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.nearbyDefenseRadius": {
+    "min": 7,
+    "max": 45,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.noAirCoverWaveArmorCount": {
+    "min": 1,
+    "max": 10,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.noEnemyForceRatio": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.noTargetIdleTimeoutTicks": {
+    "min": 240,
+    "max": 1500,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.noTargetRetargetTicks": {
+    "min": 120,
+    "max": 750,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.opportunisticArmorCount": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.opportunisticEnemyArmorCap": {
+    "min": 1,
+    "max": 4,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.otherTargetWeight": {
+    "min": 8,
+    "max": 50,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.preparingWaveRadius": {
+    "min": 7,
+    "max": 45,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.refineryTargetWeight": {
+    "min": 44,
+    "max": 275,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.reinforcementTimeoutTicks": {
+    "min": 540,
+    "max": 3375,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.retargetFarRadius": {
+    "min": 10,
+    "max": 63,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.retargetNearRadius": {
+    "min": 6,
+    "max": 38,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.retreatArmorCap": {
+    "min": 1,
+    "max": 9,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.retreatForceRatio": {
+    "min": 0.3,
+    "max": 3,
+    "int": false,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.retreatPowerFloor": {
+    "min": 120,
+    "max": 750,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.searchFallbackDistanceFactor": {
+    "min": 0.15,
+    "max": 3,
+    "int": false,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.searchProgressTimeoutTicks": {
+    "min": 360,
+    "max": 2250,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.spreadMaxOffset": {
+    "min": 3,
+    "max": 20,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.spreadSpacing": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.startPatrolPeriodTicks": {
+    "min": 360,
+    "max": 2250,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.tankOpening": {
+    "min": 0,
+    "max": 1,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.tankOpeningFactoryPriority": {
+    "min": 60,
+    "max": 60,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "assault.tankOpeningUntil": {
+    "min": 2800,
+    "max": 17500,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.targetDistancePenaltyFactor": {
+    "min": 0.3,
+    "max": 3,
+    "int": false,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.vehicleTargetWeight": {
+    "min": 48,
+    "max": 300,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "assault.waveMaximumPriority": {
+    "min": 50,
+    "max": 50,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "assault.wavePriorityRampFactor": {
+    "min": 0.3,
+    "max": 3,
+    "int": false,
+    "mutable": true,
+    "weight": 3
+  },
+  "defense.activeArmyRadius": {
+    "min": 10,
+    "max": 63,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.armedBaseIntruderRadius": {
+    "min": 5,
+    "max": 35,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.attackingHomeResponseCount": {
+    "min": 1,
+    "max": 8,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.attackingHomeResponseRadius": {
+    "min": 16,
+    "max": 100,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.cannonRangePenaltyFactor": {
+    "min": 0,
+    "max": 6,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.directBaseAssaultRadius": {
+    "min": 4,
+    "max": 25,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.extraCannonCoreCount": {
+    "min": 1,
+    "max": 10,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.extraCannonCostMargin": {
+    "min": 240,
+    "max": 1500,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.extraCannonEnemyCount": {
+    "min": 1,
+    "max": 10,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.extraCannonPriority": {
+    "min": 16,
+    "max": 16,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "defense.firstCannonPriority": {
+    "min": 24,
+    "max": 24,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "defense.freeGiReserveCount": {
+    "min": 2,
+    "max": 13,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.frenchOpeningEnemyInfantryCount": {
+    "min": 2,
+    "max": 15,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.frenchOpeningEnemyVehicleCount": {
+    "min": 1,
+    "max": 8,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.frenchOpeningInfantryCount": {
+    "min": 1,
+    "max": 10,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.frenchOpeningWarningRadius": {
+    "min": 18,
+    "max": 113,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.interceptRallyRadius": {
+    "min": 18,
+    "max": 113,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.minerArmorWarningRadius": {
+    "min": 9,
+    "max": 60,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.minerDefenseContinueCount": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.minerDefenseContinueHpRatio": {
+    "min": 0.3,
+    "max": 3,
+    "int": false,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.minerDefenseCooldownTicks": {
+    "min": 120,
+    "max": 750,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.minerDefenseDurationTicks": {
+    "min": 120,
+    "max": 750,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.minerDefenseInfantryCount": {
+    "min": 2,
+    "max": 15,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.minerDefenseLeashRadius": {
+    "min": 11,
+    "max": 70,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.minerDefenseStartHpRatio": {
+    "min": 0.3,
+    "max": 3,
+    "int": false,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.minerInfantryWarningRadius": {
+    "min": 12,
+    "max": 80,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.minerRetreatHpRatio": {
+    "min": 0.3,
+    "max": 3,
+    "int": false,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.minerRetreatThreatRadius": {
+    "min": 4,
+    "max": 25,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.openingCannonCredits": {
+    "min": 240,
+    "max": 1500,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.openingCannonPriority": {
+    "min": 30,
+    "max": 30,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "defense.reserveArmyRadius": {
+    "min": 2,
+    "max": 18,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.safeRefineryThreatRadius": {
+    "min": 4,
+    "max": 25,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.secondCannonCoreCount": {
+    "min": 3,
+    "max": 20,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.secondCannonEnemyCount": {
+    "min": 3,
+    "max": 20,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.secondCannonMinHarvesters": {
+    "min": 1,
+    "max": 10,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "defense.threatenedAnchorRadius": {
+    "min": 12,
+    "max": 75,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.barracksPriority": {
+    "min": 55,
+    "max": 55,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "economy.defenseAnchorRadius": {
+    "min": 7,
+    "max": 45,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.defenseCooldownTicks": {
+    "min": 720,
+    "max": 4500,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.defenseInfantryIntruders": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.defenseMaxCount": {
+    "min": 0,
+    "max": 3,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.defenseMinCredits": {
+    "min": 400,
+    "max": 2500,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.defensePriority": {
+    "min": 70,
+    "max": 70,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "economy.defenseStartRadius": {
+    "min": 8,
+    "max": 50,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.depotMinArmor": {
+    "min": 3,
+    "max": 20,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.depotMinCredits": {
+    "min": 2400,
+    "max": 15000,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.emergencySaleCooldownTicks": {
+    "min": 180,
+    "max": 1125,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.emergencySaleCredits": {
+    "min": 320,
+    "max": 2000,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.emptyHarvesterPriorityFactor": {
+    "min": 0,
+    "max": 9,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.extraFactoryPriority": {
+    "min": 35,
+    "max": 35,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "economy.extraRefineryPriority": {
+    "min": 18,
+    "max": 18,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "economy.firstFactoryPriorityAllied": {
+    "min": 30,
+    "max": 30,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "economy.firstFactoryPrioritySoviet": {
+    "min": 60,
+    "max": 60,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "economy.firstRefineryPriority": {
+    "min": 50,
+    "max": 50,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "economy.fourthMinerCoreCount": {
+    "min": 3,
+    "max": 20,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.fourthMinerDualRefineryCoreCount": {
+    "min": 2,
+    "max": 15,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.fourthMinerPreviousCount": {
+    "min": 1,
+    "max": 8,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.fourthMinerPriority": {
+    "min": 70,
+    "max": 70,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "economy.gemHomeRadius": {
+    "min": 12,
+    "max": 80,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.gemMinerHpRatio": {
+    "min": 0.3,
+    "max": 3,
+    "int": false,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.gemRefineryRadius": {
+    "min": 10,
+    "max": 63,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.gemThreatRadius": {
+    "min": 5,
+    "max": 35,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.harvestersPerRefinery": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.lowHarvesterPriorityFactor": {
+    "min": 0,
+    "max": 7,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.maxFactories": {
+    "min": 1,
+    "max": 6,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.maxHarvestersCap": {
+    "min": 1,
+    "max": 13,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.maxRefineries": {
+    "min": 1,
+    "max": 7,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.openingAlliedRadarPriority": {
+    "min": 45,
+    "max": 45,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "economy.radarIncomeFloor": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.radarMinArmor": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.radarMinHarvesters": {
+    "min": 1,
+    "max": 8,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.radarPriority": {
+    "min": 24,
+    "max": 24,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "economy.recoveryMinerPriority": {
+    "min": 120,
+    "max": 120,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "economy.refineryServiceRadius": {
+    "min": 3,
+    "max": 20,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.russianRadarMinArmor": {
+    "min": 2,
+    "max": 15,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.russianRadarMinCredits": {
+    "min": 1000,
+    "max": 6250,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.russianRadarMinRefineries": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.safeExpansionCoreCount": {
+    "min": 1,
+    "max": 10,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.safeExpansionThreatRatio": {
+    "min": 0.3,
+    "max": 3,
+    "int": false,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.safeRefineryExpansionTick": {
+    "min": 2160,
+    "max": 13500,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.secondFactoryHarvesterOverride": {
+    "min": 1,
+    "max": 10,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.secondFactoryMinArmor": {
+    "min": 2,
+    "max": 13,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.secondFactoryMinCredits": {
+    "min": 320,
+    "max": 2000,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.secondFactoryMinHarvesters": {
+    "min": 1,
+    "max": 8,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.secondFactoryMinRefineries": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.secondMinerCount": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.secondMinerPriority": {
+    "min": 90,
+    "max": 90,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "economy.secondRefineryCoreArmor": {
+    "min": 1,
+    "max": 10,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.secondRefineryCostMargin": {
+    "min": 160,
+    "max": 1000,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.secondRefineryCredits": {
+    "min": 800,
+    "max": 5000,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.secondRefineryIntruderCount": {
+    "min": 1,
+    "max": 8,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.secondRefineryIntruderCreditsBelow": {
+    "min": 1200,
+    "max": 7500,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.secondRefineryIntruderRadius": {
+    "min": 10,
+    "max": 63,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.secondRefineryMinHarvesters": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.techMinArmor": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.techMinHarvesters": {
+    "min": 1,
+    "max": 8,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.techPriority": {
+    "min": 30,
+    "max": 30,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "economy.teslaMaxCount": {
+    "min": 0,
+    "max": 3,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.teslaMinArmor": {
+    "min": 3,
+    "max": 20,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.teslaMinCredits": {
+    "min": 1400,
+    "max": 8750,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.teslaMinPowerMargin": {
+    "min": 30,
+    "max": 188,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.teslaPriority": {
+    "min": 60,
+    "max": 60,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "economy.teslaRadius": {
+    "min": 7,
+    "max": 45,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.thirdMinerCoreCount": {
+    "min": 2,
+    "max": 15,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.thirdMinerDualRefineryCoreCount": {
+    "min": 1,
+    "max": 10,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.thirdMinerPreviousCount": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "economy.thirdMinerPriority": {
+    "min": 78,
+    "max": 78,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "expand.deployArrivalRadius": {
+    "min": 2,
+    "max": 13,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "expand.existingYardRadius": {
+    "min": 6,
+    "max": 38,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "expand.expandStartTick": {
+    "min": 2160,
+    "max": 13500,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "expand.homeResourceRadius": {
+    "min": 10,
+    "max": 63,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "expand.maxDeployAttemptsCap": {
+    "min": 1,
+    "max": 11,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "expand.mcvMissionPriority": {
+    "min": 100,
+    "max": 100,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "expand.packCooldownTicks": {
+    "min": 2160,
+    "max": 13500,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "expand.packMissionPriority": {
+    "min": 10000,
+    "max": 10000,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "expand.refineryLowerRadius": {
+    "min": 4,
+    "max": 25,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "expand.refineryUpperRadius": {
+    "min": 5,
+    "max": 35,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "harass.claimPriority": {
+    "min": 80,
+    "max": 80,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "harass.claimTimeoutTicks": {
+    "min": 48,
+    "max": 300,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "harass.donorCombatantFloor": {
+    "min": 1,
+    "max": 8,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "harass.donorTankFloor": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "harass.mainCombatantFloor": {
+    "min": 2,
+    "max": 15,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "harass.mainTankFloor": {
+    "min": 1,
+    "max": 8,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "harass.raidContinueTankCount": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "harass.raidLaunchCooldownTicks": {
+    "min": 180,
+    "max": 1125,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "harass.raidLifetimeTicks": {
+    "min": 1080,
+    "max": 6750,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "harass.raidMissionPriority": {
+    "min": 20,
+    "max": 20,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "harass.raidTargetRadius": {
+    "min": 3,
+    "max": 20,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "harass.returnArrivalRadius": {
+    "min": 2,
+    "max": 13,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "harass.returnTimeoutTicks": {
+    "min": 360,
+    "max": 2250,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "pressure.armyApproachRadius": {
+    "min": 19,
+    "max": 120,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "pressure.armyHomeThreatRadius": {
+    "min": 8,
+    "max": 55,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "pressure.incomingStrikeForceCount": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "pressure.minerSiegeRadius": {
+    "min": 8,
+    "max": 55,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "pressure.preFactoryGuardRadius": {
+    "min": 10,
+    "max": 63,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.affordableBuildingMinimumPriority": {
+    "min": 18,
+    "max": 18,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "production.aggressiveAirThreatFloor": {
+    "min": 1,
+    "max": 8,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.aggressiveAirThreatRatio": {
+    "min": 0.3,
+    "max": 3,
+    "int": false,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.airPlanTankCap": {
+    "min": 1,
+    "max": 7,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.airResponseCap": {
+    "min": 1,
+    "max": 9,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.airResponseMemoryTicks": {
+    "min": 240,
+    "max": 1500,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.airResponseMinCount": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.airResponsePriority": {
+    "min": 100,
+    "max": 100,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "production.airThreatFloor": {
+    "min": 0,
+    "max": 2.1,
+    "int": false,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.airThreatRatio": {
+    "min": 0.25,
+    "max": 3,
+    "int": false,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.aircraftPerCounterFactor": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.alliedArtilleryCap": {
+    "min": 1,
+    "max": 13,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.alliedArtilleryMTNKFactor": {
+    "min": 0,
+    "max": 4,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.alliedArtilleryMinCount": {
+    "min": 1,
+    "max": 8,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.alliedArtillerySREFFactor": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.alliedOpeningInfantryCap": {
+    "min": 1,
+    "max": 15,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.alliedTanksCap": {
+    "min": 1,
+    "max": 23,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.alliedTanksFVFactor": {
+    "min": 0,
+    "max": 4,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.alliedTanksMTNKFactor": {
+    "min": 0,
+    "max": 8,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.alliedTanksMinCount": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.artilleryCap": {
+    "min": 1,
+    "max": 6,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.buildingCostMargin": {
+    "min": 160,
+    "max": 1000,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.buildingLiquidityCredits": {
+    "min": 80,
+    "max": 500,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.committedInvestmentPriority": {
+    "min": 18,
+    "max": 18,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "production.conscriptsCap": {
+    "min": 1,
+    "max": 13,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.conscriptsE2Factor": {
+    "min": 0,
+    "max": 4,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.conscriptsMinCount": {
+    "min": 1,
+    "max": 8,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.corePerAirCounterFactor": {
+    "min": 0,
+    "max": 6,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.corePerIdleCounterFactor": {
+    "min": 0,
+    "max": 11,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.desolatorEnemyVehicleCount": {
+    "min": 1,
+    "max": 10,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.emergencyArmorPriority": {
+    "min": 100,
+    "max": 100,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "production.emergencyQueueMinimumPriority": {
+    "min": 60,
+    "max": 60,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "production.emergencyQueuePriorityThreshold": {
+    "min": 34,
+    "max": 213,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.extraFactoryHarvesterFactor": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.extraFactoryHarvesterFloor": {
+    "min": 1,
+    "max": 10,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.fieldCounterCoreCount": {
+    "min": 1,
+    "max": 10,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.fieldCounterPriority": {
+    "min": 45,
+    "max": 45,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "production.fieldInfantryCounterCap": {
+    "min": 1,
+    "max": 6,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.fieldInfantryResponseCount": {
+    "min": 2,
+    "max": 15,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.fieldInitialTankPriority": {
+    "min": 75,
+    "max": 75,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "production.fieldLargeTankPriority": {
+    "min": 55,
+    "max": 55,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "production.fieldMediumTankPriority": {
+    "min": 65,
+    "max": 65,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "production.fieldTankCap": {
+    "min": 1,
+    "max": 53,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.fieldUrgentCounterPriority": {
+    "min": 65,
+    "max": 65,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "production.fieldUrgentInfantryCount": {
+    "min": 3,
+    "max": 20,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.firstKirovPriority": {
+    "min": 100,
+    "max": 100,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "production.frenchRadarCostMargin": {
+    "min": 240,
+    "max": 1500,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.frenchRadarPriority": {
+    "min": 32,
+    "max": 32,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "production.frenchSpecialistEnemyCount": {
+    "min": 1,
+    "max": 10,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.germanSpecialistEnemyVehicleCount": {
+    "min": 1,
+    "max": 8,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.gisCap": {
+    "min": 1,
+    "max": 13,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.gisE1Factor": {
+    "min": 0,
+    "max": 4,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.gisMinCount": {
+    "min": 1,
+    "max": 8,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.heavyAlliedTanksCap": {
+    "min": 1,
+    "max": 13,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.heavyAlliedTanksMGTKFactor": {
+    "min": 0,
+    "max": 4,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.heavyAlliedTanksMTNKFactor": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.heavyAlliedTanksMinCount": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.heavySovietTanksAPOCFactor": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.heavySovietTanksCap": {
+    "min": 1,
+    "max": 13,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.heavySovietTanksHTNKFactor": {
+    "min": 0,
+    "max": 4,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.heavySovietTanksMinCount": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.heavyTankCap": {
+    "min": 1,
+    "max": 7,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.heavyTankPriority": {
+    "min": 60,
+    "max": 60,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "production.infantryOpeningEndTick": {
+    "min": 2800,
+    "max": 17500,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.infantryOpeningMinCount": {
+    "min": 3,
+    "max": 20,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.infantryOpeningPriority": {
+    "min": 95,
+    "max": 95,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "production.infantryPerArmorFactor": {
+    "min": 0,
+    "max": 9,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.infantryResponseArmorCap": {
+    "min": 1,
+    "max": 9,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.infantryResponseArmorMinCount": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.infantryResponseCount": {
+    "min": 3,
+    "max": 20,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.initialCorePriority": {
+    "min": 85,
+    "max": 85,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "production.initialCoreTankCount": {
+    "min": 1,
+    "max": 10,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.kirovCap": {
+    "min": 1,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.kirovThreatFloor": {
+    "min": 2,
+    "max": 15,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.kirovThreatRatio": {
+    "min": 0.3,
+    "max": 3,
+    "int": false,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.kirovsCap": {
+    "min": 1,
+    "max": 6,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.kirovsMinCount": {
+    "min": 0,
+    "max": 3,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.kirovsZEPFactor": {
+    "min": 0,
+    "max": 4,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.labCostMargin": {
+    "min": 280,
+    "max": 1750,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.labEnemyVehicleCount": {
+    "min": 1,
+    "max": 8,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.labPriority": {
+    "min": 18,
+    "max": 18,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "production.labSurplusCostMargin": {
+    "min": 480,
+    "max": 3000,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.largeAirCap": {
+    "min": 1,
+    "max": 11,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.largeAirMinHarvesters": {
+    "min": 1,
+    "max": 10,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.largeCorePriority": {
+    "min": 60,
+    "max": 60,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "production.largeCoreTankCount": {
+    "min": 6,
+    "max": 40,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.lowCoreRadarCostMargin": {
+    "min": 200,
+    "max": 1250,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.maxPlacementFailuresCap": {
+    "min": 1,
+    "max": 13,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.mediumAirCap": {
+    "min": 1,
+    "max": 7,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.mediumCorePriority": {
+    "min": 75,
+    "max": 75,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "production.mediumCoreTankCount": {
+    "min": 3,
+    "max": 20,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.minimumResumePriority": {
+    "min": 15,
+    "max": 15,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "production.obsoleteUnitReplacementPriority": {
+    "min": 80,
+    "max": 80,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "production.openingAirWaveCap": {
+    "min": 1,
+    "max": 7,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.openingRocketeerCap": {
+    "min": 1,
+    "max": 11,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.otherSupportCap": {
+    "min": 1,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.overflowCorePriority": {
+    "min": 50,
+    "max": 50,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "production.placementRetryCount": {
+    "min": 1,
+    "max": 8,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.queueWeightRatio": {
+    "min": 0.25,
+    "max": 3,
+    "int": false,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.radarCoreCount": {
+    "min": 1,
+    "max": 8,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.radarCreditsFloor": {
+    "min": 120,
+    "max": 750,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.rocketeersCap": {
+    "min": 1,
+    "max": 9,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.rocketeersJUMPJETFactor": {
+    "min": 0,
+    "max": 4,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.rocketeersMinCount": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.russianSpecialistCoreCount": {
+    "min": 3,
+    "max": 20,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.russianSpecialistCostMargin": {
+    "min": 400,
+    "max": 2500,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.secondMinerAlliedCoreCount": {
+    "min": 0,
+    "max": 3,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.secondMinerSovietCoreCount": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.sovietArtilleryCap": {
+    "min": 1,
+    "max": 13,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.sovietArtilleryHTNKFactor": {
+    "min": 0,
+    "max": 4,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.sovietArtilleryMinCount": {
+    "min": 1,
+    "max": 8,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.sovietArtilleryV3Factor": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.sovietOpeningInfantryCap": {
+    "min": 1,
+    "max": 19,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.sovietTanksCap": {
+    "min": 1,
+    "max": 23,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.sovietTanksHTKFactor": {
+    "min": 0,
+    "max": 4,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.sovietTanksHTNKFactor": {
+    "min": 0,
+    "max": 8,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.sovietTanksMinCount": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.specialistCoreCount": {
+    "min": 1,
+    "max": 10,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.specialistCostMargin": {
+    "min": 240,
+    "max": 1500,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.specialistEnemyInfantryCount": {
+    "min": 1,
+    "max": 8,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.superweaponCoreCount": {
+    "min": 2,
+    "max": 15,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.superweaponCostMargin": {
+    "min": 600,
+    "max": 3750,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "production.superweaponPriority": {
+    "min": 16,
+    "max": 16,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "production.supportUnitPriority": {
+    "min": 40,
+    "max": 40,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "production.unitReplacementPriorityFactor": {
+    "min": 0,
+    "max": 5,
+    "int": true,
+    "mutable": true,
+    "weight": 3
+  },
+  "scout.afterFactoryPriority": {
+    "min": 50,
+    "max": 50,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "scout.beforeFactoryPriority": {
+    "min": 85,
+    "max": 85,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "scout.initialCooldownTicks": {
+    "min": 300,
+    "max": 300,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "scout.initialScoutEndTick": {
+    "min": 3600,
+    "max": 3600,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  },
+  "scout.maxConcurrentScoutsCap": {
+    "min": 1,
+    "max": 4,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "scout.maxReceivedScoutsCap": {
+    "min": 1,
+    "max": 4,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "scout.maxTargetAttemptsCap": {
+    "min": 1,
+    "max": 8,
+    "int": true,
+    "mutable": true,
+    "weight": 1
+  },
+  "scout.revealedStopRatio": {
+    "min": 0.3,
+    "max": 3,
+    "int": false,
+    "mutable": true,
+    "weight": 1
+  },
+  "scout.targetTimeoutTicks": {
+    "min": 600,
+    "max": 600,
+    "int": true,
+    "mutable": false,
+    "weight": 0
+  }
+}

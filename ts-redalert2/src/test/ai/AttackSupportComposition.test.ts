@@ -48,7 +48,7 @@ describe('national support slots in attack waves', () => {
             units.set(id, { id, name, tile: { rx: 0, ry: 0 } });
             mission.addUnit(id);
         }
-        expect(mission.onAiUpdate({ game, difficulty: 'brutal',
+        expect(mission.onAiUpdate({ game, difficulty: 'brutal', player: { name: 'bot' },
             matchAwareness: { getMainRallyPoint: () => new Vector2() } } as any)).toEqual({ type: 'noop' });
         mission.removeUnit(1);
         expect(mission.getPendingSupportUnits(game)).toEqual({});

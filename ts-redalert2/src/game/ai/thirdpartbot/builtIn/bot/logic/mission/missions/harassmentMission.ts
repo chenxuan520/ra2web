@@ -1,3 +1,4 @@
+import { sp } from "../../../strategy/params";
 import { OrderType, UnitData, Vector2 } from "../../../../game-api";
 import { MissionContext, SupabotContext } from "../../common/context";
 import { DebugLogger } from "../../common/utils";
@@ -10,7 +11,6 @@ import { findBaseThreat, isLivingUnit, isRaidTank, RAID_SIZE, RAID_TARGET_SEPARA
 
 type MainForce = Mission<any> & { getAttackArea(): Vector2 };
 const CHECK_INTERVAL = 30;
-const RAID_LIFETIME = 3 * 60 * 15;
 
 /** An existing surplus detachment. Never requests a unit type for production. */
 export class HarassmentMission extends Mission<string> {
@@ -23,9 +23,9 @@ export class HarassmentMission extends Mission<string> {
 
     constructor(name: string, private claimedIds: number[], private targetId: number,
         private home: Vector2, target: Vector2, private createdAt: number, logger: DebugLogger,
-        private getMainTargets: () => Vector2[] = () => []) {
+        private getMainTargets: () => Vector2[] = () => [], context?: SupabotContext) {
         super(name, logger);
-        this.squad = new CombatSquad(home, target, 8);
+        this.squad = new CombatSquad(home, target, (context?.difficulty === "brutal" ? sp(context!.game, context!.player.name, 'harass.raidTargetRadius') : 8));
     }
 
     _onAiUpdate(context: MissionContext): MissionAction {
@@ -33,8 +33,8 @@ export class HarassmentMission extends Mission<string> {
         const units = this.getUnits(context.game).filter(isLivingUnit);
         if (this.stage === "claiming") {
             if (units.length >= RAID_SIZE) this.stage = "raiding";
-            else if (tick - this.createdAt >= 120) this.beginReturn("claim-timeout");
-            else return requestSpecificUnits(this.claimedIds, 80);
+            else if (tick - this.createdAt >= sp(context.game, context.player.name, 'harass.claimTimeoutTicks')) this.beginReturn("claim-timeout");
+            else return requestSpecificUnits(this.claimedIds, sp(context.game, context.player.name, 'harass.claimPriority'));
         }
         if (!units.length) return disbandMission("out-of-units");
 
@@ -43,8 +43,8 @@ export class HarassmentMission extends Mission<string> {
             const enemies = visibleEnemies(context);
             const target = enemies.find(enemy => enemy.id === this.targetId);
             if (findBaseThreat(context)) this.beginReturn("base-under-attack");
-            else if (tick - this.createdAt >= RAID_LIFETIME) this.beginReturn("raid-timeout");
-            else if (units.filter(isRaidTank).length < 2) this.beginReturn("insufficient-force");
+            else if (tick - this.createdAt >= sp(context.game, context.player.name, 'harass.raidLifetimeTicks')) this.beginReturn("raid-timeout");
+            else if (units.filter(isRaidTank).length < sp(context.game, context.player.name, 'harass.raidContinueTankCount')) this.beginReturn("insufficient-force");
             else if (raidUnderPressure(units, enemies, context.game)) this.beginReturn("local-force-disadvantage");
             else if (!target) this.beginReturn("target-no-longer-visible");
             else if (this.getMainTargets().some(point => point.distanceTo(new Vector2(target.tile.rx, target.tile.ry)) < RAID_TARGET_SEPARATION)) {
@@ -55,7 +55,7 @@ export class HarassmentMission extends Mission<string> {
         }
         if (this.stage === "returning") {
             this.returnStartedAt ??= tick;
-            if (tick - this.returnStartedAt >= 900 || units.every(unit => this.home.distanceTo(new Vector2(unit.tile.rx, unit.tile.ry)) <= 5)) {
+            if (tick - this.returnStartedAt >= sp(context.game, context.player.name, 'harass.returnTimeoutTicks') || units.every(unit => this.home.distanceTo(new Vector2(unit.tile.rx, unit.tile.ry)) <= sp(context.game, context.player.name, 'harass.returnArrivalRadius'))) {
                 // No final movement order: the controller may allocate released units this frame.
                 return disbandMission(this.returnReason);
             }
@@ -77,7 +77,7 @@ export class HarassmentMission extends Mission<string> {
     }
 
     getState() { return this.stage; }
-    getPriority() { return 20; }
+    getPriority(context: MissionContext) { return sp(context.game, context.player.name, 'harass.raidMissionPriority'); }
     getGlobalDebugText() { return `${this.stage} target=${this.targetId}`; }
 }
 
@@ -89,7 +89,7 @@ export class HarassmentMissionFactory {
         const tick = context.game.getCurrentTick();
         if (context.difficulty !== "brutal" || tick < this.lastCheck + CHECK_INTERVAL) return;
         this.lastCheck = tick;
-        if (tick < this.lastLaunch + 450 || controller.getMissions().some(mission => mission.isActive() && mission instanceof HarassmentMission) ||
+        if (tick < this.lastLaunch + sp(context.game, context.player.name, 'harass.raidLaunchCooldownTicks') || controller.getMissions().some(mission => mission.isActive() && mission instanceof HarassmentMission) ||
             findBaseThreat(context)) return;
         const main = mainForces.filter(force => force.isActive()).map(force => {
             const units = force.getUnits(context.game).filter(isLivingUnit);
@@ -98,7 +98,7 @@ export class HarassmentMissionFactory {
         });
         let mainCombatants = main.reduce((sum, entry) => sum + entry.combatants.length, 0);
         let mainTanks = main.reduce((sum, entry) => sum + entry.tanks.length, 0);
-        if (mainCombatants < 6 || mainTanks < 3) return;
+        if (mainCombatants < sp(context.game, context.player.name, 'harass.mainCombatantFloor') || mainTanks < sp(context.game, context.player.name, 'harass.mainTankFloor')) return;
         const assigned = new Set(controller.getMissions().flatMap(mission => mission.getUnitIds()));
         const owned = context.game.getVisibleUnits(context.player.name, "self")
             .map(id => context.game.getUnitData(id)).filter((unit): unit is UnitData => isLivingUnit(unit));
@@ -108,8 +108,8 @@ export class HarassmentMissionFactory {
             // Pool only surplus from already attacking waves. Preparing waves
             // retain every reservation, so a raid cannot create replacement demand.
             for (const donor of main) {
-                const count = Math.min(RAID_SIZE - raiders.length, donor.combatants.length - 3,
-                    donor.tanks.length - 2, mainCombatants - 6, mainTanks - 3);
+                const count = Math.min(RAID_SIZE - raiders.length, donor.combatants.length - sp(context.game, context.player.name, 'harass.donorCombatantFloor'),
+                    donor.tanks.length - sp(context.game, context.player.name, 'harass.donorTankFloor'), mainCombatants - sp(context.game, context.player.name, 'harass.mainCombatantFloor'), mainTanks - sp(context.game, context.player.name, 'harass.mainTankFloor'));
                 if (count <= 0) continue;
                 const tanks = donor.tanks.slice(-count);
                 donations.set(donor.force, tanks);
@@ -124,7 +124,7 @@ export class HarassmentMissionFactory {
         if (!target) return;
         const mission = new HarassmentMission(`harassment_${tick}`, raiders.map(unit => unit.id), target.id,
             context.matchAwareness.getMainRallyPoint(), new Vector2(target.tile.rx, target.tile.ry), tick, logger,
-            () => mainForces.filter(force => force.isActive()).map(force => force.getAttackArea()));
+            () => mainForces.filter(force => force.isActive()).map(force => force.getAttackArea()), context);
         if (!controller.addMission(mission)) return;
         // The controller rebuilds ownership before polling missions; these IDs can then
         // be claimed once, before generic production requests allocate free units.

@@ -1,0 +1,14 @@
+{
+  "logic/building/queueController.ts": 15,
+  "logic/building/economyPlan.ts": 0,
+  "logic/building/harvester.ts": 3,
+  "logic/building/resourceCollectionBuilding.ts": 3,
+  "logic/building/strategicBuildings.ts": 2,
+  "logic/mission/missions/fieldArmyMission.ts": 9,
+  "logic/mission/missions/attackMission.ts": 11,
+  "logic/mission/missions/harassmentMission.ts": 3,
+  "logic/mission/missions/scoutingMission.ts": 9,
+  "logic/mission/missions/expansionMission.ts": 18,
+  "logic/mission/missions/minerDefence.ts": 7,
+  "strategy/defaultStrategy.ts": 17
+}
