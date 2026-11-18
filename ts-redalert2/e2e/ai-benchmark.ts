@@ -1,6 +1,6 @@
 /**
  * Real-engine AI tournament. Requires prepared local resources (see --help).
- * No renderer, browser, mocked combat, bonus credits, or forced winner is used.
+ * No renderer, browser, mocked combat or bonus credits. An explicit training-only value model may end a game early.
  */
 import { createHash } from 'node:crypto';
 import { mkdir, readdir } from 'node:fs/promises';
@@ -27,6 +27,9 @@ import { observeBuildingMissions } from './ai-building-probe';
 import { observeSpecialtyCombat, readForceComposition } from './ai-specialty-telemetry';
 import { AiMobilityProbe } from './ai-mobility-probe';
 import { createEcoTelemetry } from './ai-eco-telemetry';
+import { TRAIN_MAPS } from './league/p4/arena';
+import { samplePlayer } from './league/p4/play';
+import { advanceStop, predict, validateValueModel, type StopState } from './league/p4/valueCore';
 
 const projectRoot = fileURLToPath(new URL('../', import.meta.url));
 const repositoryRoot = resolve(projectRoot, '..');
@@ -44,6 +47,7 @@ const { values: args } = parseArgs({ options: {
     'no-specialty-telemetry': { type: 'boolean', default: false },
     'no-eco-telemetry': { type: 'boolean', default: false },
     'unit-details': { type: 'boolean', default: false },
+    'early-stop': { type: 'string' },
     credits: { type: 'string', default: '10000' },
     units: { type: 'string', default: '0' },
     cdn: { type: 'string', default: process.env.RA2_BENCHMARK_CDN ?? resolve(repositoryRoot, '.cache/ai-resources/cdn') },
@@ -66,6 +70,7 @@ if (args.help) {
   --no-specialty-telemetry    Disable specialty observers for state-equivalence checks
   --no-eco-telemetry          Disable read-only economic sampling for state-equivalence checks
   --unit-details             Include sampled unit positions and engine task names for diagnosis
+  --early-stop MODEL         Explicit P4 training-only stopping; requires an accepted model, 900-tick samples and a 27000-tick limit
   --credits 10000 --units 0   Identical starting resources and units for both players
   --out PATH                  Incremental JSON report; errors are recorded, never counted as wins
 Resources are prepared with deploy/prepare-resources.ts; no download is performed by this runner.`);
@@ -88,6 +93,10 @@ if (matchups.some(pair => pair.length !== 2 || pair.some(country => !country))) 
 const writeProgress = (message: string) => process.stderr.write(message + '\n');
 const jsonString = (value: unknown) => JSON.stringify(value, (_key, item) => item instanceof Error ? item.stack : item);
 const hash = (bytes: string | Uint8Array) => createHash('sha256').update(bytes).digest('hex');
+const modelText = args['early-stop'] === undefined ? undefined : await Bun.file(args['early-stop']).text();
+const earlyStopModel = modelText === undefined ? undefined : validateValueModel(JSON.parse(modelText));
+if (earlyStopModel && (maxTicks !== 27000 || sampleTicks !== 900 || args.map!.split(',').some(map =>
+    !(TRAIN_MAPS as readonly string[]).includes(map.replace(/\.(map|mpr)$/, ''))))) throw new Error('Early stopping is restricted to the fixed P4 training arena');
 async function git(...parameters: string[]): Promise<string> {
     const child = Bun.spawn(['git', ...parameters], { cwd: repositoryRoot, stdout: 'pipe', stderr: 'pipe' });
     const [output, errors, code] = await Promise.all([new Response(child.stdout).text(), new Response(child.stderr).text(), child.exited]);
@@ -169,7 +178,8 @@ const report: any = {
     baseline: { commit: baseline.commit, profile: args['baseline-profile'] },
     settings: { maxTicks, sampleTicks, credits, unitCount, gameSpeed: 3, engineDifficulty: AiDifficulty.Normal,
         pairedSpawnSwap: !args['no-swap'], pairedPlayerOrderSwap: !args['no-swap'], simulationTicksPerSecond: GameSpeed.BASE_TICKS_PER_SECOND,
-        shortGame: true, superWeapons: false, crates: false, engineStalemateDetection: false },
+        shortGame: true, superWeapons: false, crates: false, engineStalemateDetection: false,
+        ...(earlyStopModel ? { earlyStop: { sha256: hash(modelText!), threshold: earlyStopModel.threshold } } : {}) },
     resources: { iniSha256: hash(baseBytes), customIniSha256: hash(customBytes) },
     metricNotes: {
         playerOrder: 'Every player array is [candidate, baseline], including swapped games.',
@@ -361,20 +371,30 @@ for (const mapName of args.map!.split(',')) {
                 writeProgress(`  tick=${game.currentTick} ${playerSamples.map((player: any, side: number) => `${side === 0 ? 'candidate' : 'baseline'} credits=${player.credits} miners=${player.harvesters} army=${player.army} buildings=${player.buildings}`).join(' | ')}`);
             };
             sample();
+            let stopState: StopState = { side: null, count: 0 }, earlyWinner: 'a' | 'b' | null = null;
             while (game.currentTick < maxTicks && game.status !== GameStatus.Ended) {
                 game.update();
                 if (game.currentTick % 30 === 0) mobility.sample(game.currentTick, players, bots, match.startingLocations);
                 players.forEach((player: any, side: number) => { if (player.credits < 100) telemetry.lowCreditTicks[side]++; });
-                if (game.currentTick % sampleTicks === 0) sample();
+                if (game.currentTick % sampleTicks === 0) {
+                    sample();
+                    if (earlyStopModel && game.status !== GameStatus.Ended && !telemetry.errorCount && game.currentTick < maxTicks) {
+                        const observed = samples.at(-1).players;
+                        const probability = predict(earlyStopModel, game.currentTick, samplePlayer(observed[0]), samplePlayer(observed[1]));
+                        const next = advanceStop(stopState, game.currentTick, probability, earlyStopModel.threshold); stopState = next.state;
+                        if (next.winner) { earlyWinner = next.winner; break; }
+                    }
+                }
             }
             if (samples.at(-1)?.tick !== game.currentTick) sample();
             match.ticks = game.currentTick;
             telemetry.mobility = mobility.snapshot();
             match.simulationSeconds = game.currentTick / GameSpeed.BASE_TICKS_PER_SECOND;
             const survivors = players.map((player: any, side: number) => ({ side, alive: !player.defeated && !player.resigned })).filter((player: any) => player.alive);
-            match.result = telemetry.errorCount ? 'error' : game.status === GameStatus.Ended && survivors.length === 1
-                ? survivors[0].side === 0 ? 'candidate-win' : 'baseline-win' : 'draw';
-            match.reason = telemetry.errorCount ? 'logged-runtime-errors' : game.status !== GameStatus.Ended ? 'tick-limit' : 'engine-victory-conditions';
+            match.result = telemetry.errorCount ? 'error' : earlyWinner ? earlyWinner === 'a' ? 'candidate-win' : 'baseline-win'
+                : game.status === GameStatus.Ended && survivors.length === 1 ? survivors[0].side === 0 ? 'candidate-win' : 'baseline-win' : 'draw';
+            match.reason = telemetry.errorCount ? 'logged-runtime-errors' : earlyWinner ? 'value-model-early-stop'
+                : game.status !== GameStatus.Ended ? 'tick-limit' : 'engine-victory-conditions';
         } catch (error) {
             match.reason = 'uncaught-runtime-error';
             match.error = error instanceof Error ? error.stack : String(error);

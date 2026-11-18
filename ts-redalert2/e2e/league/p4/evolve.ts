@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
@@ -7,13 +8,14 @@ import { buildCommit, git, PARAMETER_PATH } from './commit';
 import { chooseCandidate, measureFitness, population, selectParents, type Child, type Fitness } from './evolveCore';
 import { parseGenome, renderGenome, validateGenome, type Genome, type ParamSpace } from './paramSpace';
 import type { ArenaGame } from './play';
+import { validateValueModel } from './valueCore';
 
 const projectRoot = resolve(REPO_ROOT, 'ts-redalert2');
 const stateRoot = join(projectRoot, '.artifacts/p4/evo-state');
 interface State {
     run: number; champion: string; baseCommit: string; generation: number; parents: Genome[]; parentOrigins: string[];
     history: { generation: number; bestScore: number; controlScore: number; lead: number; seconds: number }[];
-    earlyStop: boolean; fromRun?: number; seedOn?: string;
+    earlyStop: boolean; fromRun?: number; seedOn?: string; valueModelSha256?: string;
 }
 interface Individual extends Child { index: number; id: string; origin: string; commit: string; tree: string }
 interface Manifest { run: number; generation: number; baseCommit: string; individuals: Individual[]; opponents: Record<string, string>; spawnSeconds: number }
@@ -43,6 +45,8 @@ async function requireBase(s: State) {
     if (league.champion !== s.champion || await git(['rev-parse', 'HEAD']) !== s.baseCommit || await git(['rev-parse', 'refs/heads/master']) !== s.baseCommit)
         throw new Error('Champion/baseCommit changed; do not continue this evolution run');
     if (await git(['status', '--porcelain', '--untracked-files=all', '--', BUILTIN])) throw new Error('Freeze BUILTIN before evolution');
+    if (s.earlyStop && createHash('sha256').update(await readFile(join(import.meta.dir, 'valueModel.json'))).digest('hex') !== s.valueModelSha256)
+        throw new Error('Frozen value model changed; do not continue this evolution run');
     const champion = league.members.find(member => member.id === s.champion)!;
     if (await git(['rev-parse', `${s.baseCommit}:${BUILTIN}`]) !== champion.tree) throw new Error('master BUILTIN tree must equal the registered champion');
     return league;
@@ -145,6 +149,10 @@ export async function main() {
         if (await Bun.file(join(runFolder(run), 'state.json')).exists()) throw new Error('Run state already exists; resume with run, never reset it');
         const league = await loadLeague(); if (!league.champion) throw new Error('A champion is required');
         const s: State = { run, champion: league.champion, baseCommit: await git(['rev-parse', 'HEAD']), generation: 0, parents: [], parentOrigins: [], history: [], earlyStop: !!values['early-stop'] };
+        if (s.earlyStop) {
+            const text = await readFile(join(import.meta.dir, 'valueModel.json'), 'utf8');
+            validateValueModel(JSON.parse(text)); s.valueModelSha256 = createHash('sha256').update(text).digest('hex');
+        }
         await requireBase(s);
         if (values['from-run'] && values['seed-on']) throw new Error('from-run and seed-on are mutually exclusive');
         if (values['from-run']) {
@@ -157,7 +165,6 @@ export async function main() {
             if (!bound?.mutable || !bound.int || bound.min !== 0 || bound.max !== 1) throw new Error('seed-on must name a mutable switch');
             s.seedOn = values['seed-on'];
         }
-        if (s.earlyStop && !(await json<{ accepted: boolean }>(join(import.meta.dir, 'valueModel.json'))).accepted) throw new Error('Early stopping has not passed V1-V3');
         await save(join(runFolder(run), 'state.json'), s); console.log(JSON.stringify(s, null, 2)); return;
     }
     const s = await state(run);

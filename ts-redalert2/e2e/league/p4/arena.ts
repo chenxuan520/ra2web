@@ -28,6 +28,7 @@ export interface ArenaJob {
     seed: number;
     aCountry: Country;
     bCountry: Country;
+    earlyStop?: boolean;
 }
 
 function integer(value: number, name: string, min: number, max: number): void {

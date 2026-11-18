@@ -8,6 +8,7 @@ import { BUILTIN, gitQuery, loadLeague } from '../registry';
 import type { FrozenMember } from '../run';
 import { convertResult, type GameResult } from '../schedule';
 import { ALL_MAPS, HOLDOUT_MAPS, HOLDOUT_OPPONENTS, MATCHUPS, TRAIN_MAPS, jobId, promotionSeed, trainingSeed, type ArenaJob } from './arena';
+import { advanceStop, predict, validateValueModel, type StopState, type ValueModel } from './valueCore';
 
 const projectRoot = resolve(import.meta.dir, '../../..');
 const hash = (data: string | Uint8Array) => createHash('sha256').update(data).digest('hex');
@@ -56,6 +57,7 @@ export function validateJobs(value: unknown, earlyStop?: string): ArenaJob[] {
     for (const raw of value) {
         if (!raw || typeof raw !== 'object' || Array.isArray(raw)) throw new Error('Job must be an object');
         const job = raw as ArenaJob;
+        if (job.earlyStop !== undefined && typeof job.earlyStop !== 'boolean') throw new Error('Invalid early-stop job flag');
         if (![job.a, job.b].every(id => typeof id === 'string' && /^[a-z][a-z0-9-]*$/.test(id))) throw new Error('Invalid job member');
         if (![job.aRef, job.bRef].every(ref => typeof ref === 'string' && ref.trim() && ref !== 'working-tree')) throw new Error('Job refs must be frozen');
         if (![job.aProfile, job.bProfile].every(profile => profile === 'normal' || profile === 'brutal')) throw new Error('Invalid job profile');
@@ -82,7 +84,8 @@ export function benchmarkCommand(job: ArenaJob, cdn: string, out: string, earlyS
         '--candidate-profile', job.aProfile, '--baseline-profile', job.bProfile, '--map', job.map, '--seeds', String(job.seed),
         '--matchups', `${job.aCountry}:${job.bCountry}`, '--max-ticks', '27000', '--sample-ticks', '900',
         '--credits', '10000', '--units', '0', '--cdn', cdn, '--out', out];
-    if (earlyStop !== undefined) command.push('--early-stop', earlyStop);
+    const model = earlyStop ?? (job.earlyStop ? join(import.meta.dir, 'valueModel.json') : undefined);
+    if (model !== undefined) command.push('--early-stop', model);
     return command;
 }
 export function samplePlayer(player: any): PlayerSample {
@@ -94,11 +97,33 @@ export function samplePlayer(player: any): PlayerSample {
         refineries: (player.counts.GAREFN ?? 0) + (player.counts.NAREFN ?? 0),
         factories: (player.counts.GAWEAP ?? 0) + (player.counts.NAWEAP ?? 0) };
 }
-export function normalizeReport(report: any, job: ArenaJob, a: FrozenMember, b: FrozenMember, engineCommit: string, resources: ArenaResources) {
+export interface EarlyStopModel { model: ValueModel; sha256: string }
+export function normalizeReport(report: any, job: ArenaJob, a: FrozenMember, b: FrozenMember, engineCommit: string, resources: ArenaResources, earlyStop?: EarlyStopModel) {
+    let validationReport = report;
+    if (earlyStop) {
+        if (job.stage !== 'train' || report.settings?.earlyStop?.sha256 !== earlyStop.sha256 || report.settings.earlyStop.threshold !== earlyStop.model.threshold)
+            throw new Error(`${job.id}: early-stop model or stage mismatch`);
+        validationReport = { ...report, matches: report.matches?.map((match: any) => {
+            if (match.reason !== 'value-model-early-stop') return match;
+            if (!['candidate-win', 'baseline-win'].includes(match.result) || !Number.isSafeInteger(match.ticks) || match.ticks < 9900 || match.ticks >= 27000 || match.ticks % 900 !== 0)
+                throw new Error(`${job.id}: invalid early-stop ending`);
+            let state: StopState = { side: null, count: 0 }, winner: 'a' | 'b' | null = null, stopTick = -1;
+            for (const sample of match.samples ?? []) {
+                if (sample.tick % 900 !== 0 || sample.tick >= 27000) continue;
+                const probability = predict(earlyStop.model, sample.tick, samplePlayer(sample.players?.[0]), samplePlayer(sample.players?.[1]));
+                const next = advanceStop(state, sample.tick, probability, earlyStop.model.threshold); state = next.state;
+                if (next.winner) { winner = next.winner; stopTick = sample.tick; break; }
+            }
+            if (stopTick !== match.ticks || winner !== (match.result === 'candidate-win' ? 'a' : 'b')) throw new Error(`${job.id}: early-stop prediction mismatch`);
+            // The legacy validator knows only native winners. Adapt its input after verifying the training-only prediction;
+            // the original report and exported reason remain value-model-early-stop, never an engine victory.
+            return { ...match, reason: 'engine-victory-conditions' };
+        }) };
+    } else if (report.settings?.earlyStop) throw new Error(`${job.id}: unexpected early-stop model`);
     const expected = { candidateCommit: a.commit, baselineCommit: b.commit, engineCommit, candidateProfile: a.profile, baselineProfile: b.profile,
         maxTicks: 27000, sampleTicks: 900, credits: 10000, unitCount: 0, iniSha256: resources.iniSha256,
         customIniSha256: resources.customIniSha256, ...resources.maps[job.map] };
-    if (!validateJobReport(report, { id: job.id, map: job.map, seed: job.seed, candidateCountry: job.aCountry, baselineCountry: job.bCountry }, expected))
+    if (!validateJobReport(validationReport, { id: job.id, map: job.map, seed: job.seed, candidateCountry: job.aCountry, baselineCountry: job.bCountry }, expected))
         throw new Error(`${job.id}: incomplete paired report`);
     if (!Array.isArray(report.startupIssues) || report.startupIssues.length) throw new Error(`${job.id}: invalid benchmark startup`);
     const games: ArenaGame[] = [], samples: ArenaSample[] = [];
@@ -167,6 +192,11 @@ export async function main() {
     const concurrency = Number(values.concurrency);
     if (!Number.isSafeInteger(concurrency) || concurrency < 1) throw new Error('Invalid --concurrency');
     const jobs = validateJobs(await Bun.file(values.jobs).json(), values['early-stop']).sort((a, b) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+    const modelPath = values['early-stop'] ?? (jobs.some(job => job.earlyStop) ? join(import.meta.dir, 'valueModel.json') : undefined);
+    const modelText = modelPath === undefined ? undefined : await readFile(modelPath, 'utf8');
+    const earlyStop: EarlyStopModel | undefined = modelText === undefined ? undefined : { model: validateValueModel(JSON.parse(modelText)), sha256: hash(modelText) };
+    const valueModel = earlyStop ? { path: modelPath!, sha256: earlyStop.sha256, coreSha256: hash(await readFile(join(import.meta.dir, 'valueCore.ts'))) } : undefined;
+    const modelForJob = (job: ArenaJob) => values['early-stop'] !== undefined || job.earlyStop ? earlyStop : undefined;
     const cdnInput = process.env.RA2_BENCHMARK_CDN;
     if (!cdnInput) throw new Error('Set RA2_BENCHMARK_CDN');
     const cdn = resolve(cdnInput), output = resolve(values.out), league = await loadLeague();
@@ -188,9 +218,11 @@ export async function main() {
     for (const job of jobs) if (job.stage === 'train' && [job.a, job.b].some(id => holdoutTrees.has(versions[id].tree)))
         throw new Error(`Train job ${job.id} aliases a holdout snapshot`);
     const runtime = await runtimeSnapshot(), resources = await readResources(cdn);
-    const config = { jobs, versions, runtime, resources, cdn, earlyStop: values['early-stop'] ?? null };
+    const config = { jobs, versions, runtime, resources, cdn, earlyStop: values['early-stop'] ?? null, ...(valueModel ? { valueModel } : {}) };
     const fingerprint = hash(JSON.stringify(config)), manifestPath = join(output, 'manifest.json');
     const verifyRuntime = async () => {
+        if (valueModel && (hash(await readFile(valueModel.path)) !== valueModel.sha256 || hash(await readFile(join(import.meta.dir, 'valueCore.ts'))) !== valueModel.coreSha256))
+            throw new Error('Frozen value model changed during arena execution');
         if (JSON.stringify(await runtimeSnapshot()) !== JSON.stringify(runtime) || JSON.stringify(await readResources(cdn)) !== JSON.stringify(resources))
             throw new Error('Frozen runtime/resources changed during arena execution');
     };
@@ -211,7 +243,7 @@ export async function main() {
         if (await file.exists()) {
             if (!values.resume) throw new Error(`Refusing to overwrite ${job.id}`);
             try {
-                const text = await file.text(), rows = normalizeReport(JSON.parse(text), job, versions[job.a], versions[job.b], runtime.engineCommit, resources);
+                const text = await file.text(), rows = normalizeReport(JSON.parse(text), job, versions[job.a], versions[job.b], runtime.engineCommit, resources, modelForJob(job));
                 const receipt = await Bun.file(join(output, 'jobs', `${job.id}.verified.json`)).json();
                 if (!rows.games.some(row => row.result === 'error') && receipt.fingerprint === fingerprint && receipt.reportSha256 === hash(text)) { results.set(job.id, rows); continue; }
             } catch { /* Interrupted, invalid or error jobs are preserved before a fresh paired run. */ }
@@ -232,7 +264,7 @@ export async function main() {
                     cwd: projectRoot, stdout: 'ignore', stderr: Bun.file(join(output, 'jobs', `${job.id}.log`)) });
                 active.add(child); const code = await child.exited; active.delete(child);
                 await verifyRuntime();
-                const text = await Bun.file(reportPath(job)).text(), rows = normalizeReport(JSON.parse(text), job, versions[job.a], versions[job.b], runtime.engineCommit, resources);
+                const text = await Bun.file(reportPath(job)).text(), rows = normalizeReport(JSON.parse(text), job, versions[job.a], versions[job.b], runtime.engineCommit, resources, modelForJob(job));
                 if (code && !rows.games.some(row => row.result === 'error')) throw new Error(`Worker exit ${code} despite complete error-free report`);
                 results.set(job.id, rows);
                 await atomicJson(join(output, 'jobs', `${job.id}.verified.json`), { fingerprint, reportSha256: hash(text) });
