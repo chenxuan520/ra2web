@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "round": 8,
-  "champion": "c8",
+  "round": 9,
+  "champion": "c9",
   "members": [
     {
       "id": "orig",
@@ -206,10 +206,19 @@
       "tag": "league/c8",
       "tree": "640704528a7fe8e0139a5631dfdcc76a674f6eb4",
       "profile": "brutal",
-      "role": "champion",
-      "active": true,
+      "role": "history",
+      "active": false,
       "fixes": "eco",
       "note": "phase 4 base adopted by owner decision from latest accepted tactics 9821189; replaces handoff eco baseline; league gates not run"
+    },
+    {
+      "id": "c9",
+      "tag": "league/c9",
+      "tree": "6196a7c0bf70dbfdcb27d309ad126b84eca01963",
+      "profile": "brutal",
+      "role": "champion",
+      "active": true,
+      "note": "equivalent source rebase of c8 after P3/P4; empty overrides; owner decision; exact equivalence check passed; not a performance promotion"
     }
   ]
 }

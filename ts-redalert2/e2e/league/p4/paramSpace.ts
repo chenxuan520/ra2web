@@ -74,6 +74,69 @@ export function initSpace(params: BaseParams, existing: ParamSpace = {}): ParamS
     for (const path of Object.keys(params).sort()) if (!Object.hasOwn(result, path)) result[path] = boundsFor(path, params[path]);
     return result;
 }
+export const OVERRIDE_LABELS = ['smallMap', 'largeMap', 'allied', 'soviet'] as const;
+export type OverrideLabel = typeof OVERRIDE_LABELS[number];
+export interface Genome { base: BaseParams; overrides: Record<OverrideLabel, BaseParams> }
+function emptyOverrides(): Genome['overrides'] { return { smallMap: {}, largeMap: {}, allied: {}, soviet: {} }; }
+const overrideBlock = /^export const BRUTAL_OVERRIDES = \{\r?\n[\s\S]*?^\};/m;
+export function parseGenome(source: string): Genome {
+    const base = parseParams(source), overrides = emptyOverrides(), block = overrideBlock.exec(source)?.[0];
+    if (!block) return { base, overrides };
+    let label: OverrideLabel | undefined;
+    const seen = new Set<string>();
+    for (const line of block.split(/\r?\n/).slice(1, -1)) {
+        const head = /^ {4}(\w+):\s*\{$/.exec(line);
+        if (head) {
+            if (!(OVERRIDE_LABELS as readonly string[]).includes(head[1]) || seen.has(head[1])) throw new Error('Invalid override table');
+            label = head[1] as OverrideLabel; seen.add(label); continue;
+        }
+        if (line.trim() === '},') { label = undefined; continue; }
+        const entry = /^ {8}'([A-Za-z]\w*\.[A-Za-z]\w*)':\s*(-?\d+(?:\.\d{1,2})?),\s*$/.exec(line);
+        if (!entry || !label || Object.hasOwn(overrides[label], entry[1])) throw new Error(`Invalid override line ${line}`);
+        overrides[label][entry[1]] = Number(entry[2]);
+    }
+    if (seen.size !== 4) throw new Error('Missing override table');
+    return { base, overrides };
+}
+export function renderGenome(source: string, genome: Genome): string {
+    const base = renderParams(source, genome.base), block = overrideBlock.exec(base);
+    if (!block) {
+        if (overrideCount(genome)) throw new Error('Source has no override tables');
+        return base;
+    }
+    const ending = source.includes('\r\n') ? '\r\n' : '\n';
+    const replacement = 'export const BRUTAL_OVERRIDES = {' + ending + OVERRIDE_LABELS.map(label =>
+        `    ${label}: {` + ending + Object.keys(genome.overrides[label]).sort().map(path => {
+            const value = genome.overrides[label][path];
+            if (!Number.isFinite(value) || Number(value.toFixed(2)) !== value) throw new Error(`Invalid override ${path}`);
+            return `        '${path}': ${value},` + ending;
+        }).join('') + '    },' + ending).join('') + '};';
+    return base.slice(0, block.index) + replacement + base.slice(block.index + block[0].length);
+}
+export function overrideCount(genome: Genome): number { return OVERRIDE_LABELS.reduce((sum, label) => sum + Object.keys(genome.overrides[label]).length, 0); }
+export function validateGenome(genome: Genome, space: ParamSpace): string[] {
+    const errors: string[] = [];
+    const check = (path: string, value: number, override: boolean) => {
+        const bound = space[path];
+        if (!bound) { errors.push(`Unknown parameter ${path}`); return; }
+        if (!Number.isFinite(value) || value < bound.min || value > bound.max || Number(value.toFixed(2)) !== value || (bound.int && !Number.isInteger(value)))
+            errors.push(`Out of range ${path}: ${value}`);
+        if (override && !bound.mutable) errors.push(`Immutable override ${path}`);
+    };
+    for (const path of Object.keys(space)) if (!Object.hasOwn(genome.base, path)) errors.push(`Missing parameter ${path}`);
+    for (const [path, value] of Object.entries(genome.base)) check(path, value, false);
+    for (const label of OVERRIDE_LABELS) {
+        if (!genome.overrides[label]) { errors.push(`Missing override table ${label}`); continue; }
+        for (const [path, value] of Object.entries(genome.overrides[label])) check(path, value, true);
+    }
+    if (Object.keys(genome.overrides).some(label => !(OVERRIDE_LABELS as readonly string[]).includes(label))) errors.push('Unknown override table');
+    if (OVERRIDE_LABELS.every(label => genome.overrides[label]) && overrideCount(genome) > 24) errors.push('More than 24 overrides');
+    return errors;
+}
+export function genomeKey(genome: Genome): string {
+    return JSON.stringify({ base: Object.fromEntries(Object.entries(genome.base).sort(([a], [b]) => a < b ? -1 : a > b ? 1 : 0)),
+        overrides: Object.fromEntries(OVERRIDE_LABELS.map(label => [label, Object.fromEntries(Object.entries(genome.overrides[label]).sort(([a], [b]) => a < b ? -1 : a > b ? 1 : 0))])) });
+}
 if (import.meta.main) {
     try {
         const { values } = parseArgs({ options: { init: { type: 'boolean' } } });
