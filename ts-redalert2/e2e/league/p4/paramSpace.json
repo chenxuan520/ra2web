@@ -2539,5 +2539,12 @@
     "int": true,
     "mutable": false,
     "weight": 0
+  },
+  "economy.enableEarlyIncomeRefinery": {
+    "min": 0,
+    "max": 1,
+    "int": true,
+    "mutable": true,
+    "weight": 1
   }
 }

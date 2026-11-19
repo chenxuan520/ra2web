@@ -8,6 +8,7 @@ export const BRUTAL_PARAMS = {
     },
     economy: {
         firstRefineryPriority: 50,
+        enableEarlyIncomeRefinery: 0,
         barracksPriority: 55,
         secondRefineryIntruderRadius: 25,
         secondRefineryIntruderCount: 3,
