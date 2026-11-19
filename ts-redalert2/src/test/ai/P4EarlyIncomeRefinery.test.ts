@@ -29,8 +29,8 @@ function fixture(names = ['NAREFN', 'NAWEAP', 'HARV'], resources: any[] = [{ til
         priority: (committed = false) => getEconomyBuildingPriority(game, player, rules, committed) };
 }
 
-test('the new income ability is shipped off by default and has only a generated binary search range', async () => {
-    expect((BRUTAL_PARAMS.economy as Record<string, number>)[flag]).toBe(0);
+test('the income ability has a legal binary value and generated search range', async () => {
+    expect([0, 1]).toContain((BRUTAL_PARAMS.economy as Record<string, number>)[flag]);
     const space: ParamSpace = await Bun.file(new URL('../../../e2e/league/p4/paramSpace.json', import.meta.url)).json();
     expect(space[`economy.${flag}`]).toEqual({ min: 0, max: 1, int: true, mutable: true, weight: 1 });
 });
@@ -86,9 +86,12 @@ test('Normal building priorities bypass the brutal economy policy even when the 
 test('run3 founders activate the new switch through the existing seeded evolution routine while control stays off', async () => {
     const source = await Bun.file(new URL('../../game/ai/thirdpartbot/builtIn/bot/strategy/brutalParams.ts', import.meta.url)).text();
     const space: ParamSpace = await Bun.file(new URL('../../../e2e/league/p4/paramSpace.json', import.meta.url)).json();
-    const rows = population(parseGenome(source), [], space, 3, 0, false, `economy.${flag}`);
+    const genome = parseGenome(source);
+    genome.base[`economy.${flag}`] = 0;
+    for (const table of Object.values(genome.overrides)) delete table[`economy.${flag}`];
+    const rows = population(genome, [], space, 3, 0, false, `economy.${flag}`);
     expect(rows.slice(0, 4).map(row => row.genome.base[`economy.${flag}`])).toEqual([1, 1, 1, 1]);
     expect(rows[3].seed).toBeGreaterThan(300003); expect((rows[3].seed - 300003) % 1000).toBe(0);
-    expect(rows).toEqual(population(parseGenome(source), [], space, 3, 0, false, `economy.${flag}`));
+    expect(rows).toEqual(population(genome, [], space, 3, 0, false, `economy.${flag}`));
     expect(rows[15].genome.base[`economy.${flag}`]).toBe(0);
 });

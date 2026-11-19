@@ -1,6 +1,7 @@
 import { expect, test } from "bun:test";
 import { getEconomyBuildingPriority } from "../../game/ai/thirdpartbot/builtIn/bot/logic/building/economyPlan";
 import { ObjectType, Vector2 } from "../../game/ai/thirdpartbot/builtIn/game-api";
+import { BRUTAL_PARAMS } from "../../game/ai/thirdpartbot/builtIn/bot/strategy/brutalParams";
 import { useLegacyAssaultDefaults } from "./legacyAssaultDefaults";
 
 useLegacyAssaultDefaults();
@@ -84,11 +85,15 @@ test.each([
     ["NAREFN", "NAWEAP", "HARV", "HTNK"],
     ["GAREFN", "GAWEAP", "CMIN", "MTNK"],
 ])("a funded %s opening uses the second refinery's supplied miner after the first tank", (refinery, factory, miner, tank) => {
-    const opening = scenario([refinery, factory, miner, tank], 3000);
-    expect(opening(refinery, { refinery: true, cost: 2000, freeUnit: miner })).toBeGreaterThan(0);
-    expect(scenario([refinery, factory, miner, tank], 2399)(refinery, { refinery: true, cost: 2000, freeUnit: miner })).toBe(0);
-    expect(scenario([refinery, factory, miner], 3000)(refinery, { refinery: true, cost: 2000, freeUnit: miner })).toBe(0);
-    expect(opening(refinery, { refinery: true, cost: 2000, freeUnit: "DOG" })).toBe(0);
+    const earlyIncome = BRUTAL_PARAMS.economy.enableEarlyIncomeRefinery;
+    BRUTAL_PARAMS.economy.enableEarlyIncomeRefinery = 0;
+    try {
+        const opening = scenario([refinery, factory, miner, tank], 3000);
+        expect(opening(refinery, { refinery: true, cost: 2000, freeUnit: miner })).toBeGreaterThan(0);
+        expect(scenario([refinery, factory, miner, tank], 2399)(refinery, { refinery: true, cost: 2000, freeUnit: miner })).toBe(0);
+        expect(scenario([refinery, factory, miner], 3000)(refinery, { refinery: true, cost: 2000, freeUnit: miner })).toBe(0);
+        expect(opening(refinery, { refinery: true, cost: 2000, freeUnit: "DOG" })).toBe(0);
+    } finally { BRUTAL_PARAMS.economy.enableEarlyIncomeRefinery = earlyIncome; }
 });
 
 function defensiveScenario(name: string, initialTick: number) {
