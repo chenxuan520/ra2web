@@ -20,12 +20,15 @@ export function getEconomyBuildingPriority(game: GameApi, player: PlayerData, ru
                         (unit.tile.rx - player.startLocation.x) ** 2 + (unit.tile.ry - player.startLocation.y) ** 2 <= sp(game, player.name, 'economy.secondRefineryIntruderRadius') ** 2);
                 if (intruders.length >= sp(game, player.name, 'economy.secondRefineryIntruderCount') && s.credits < sp(game, player.name, 'economy.secondRefineryIntruderCreditsBelow')) return 0;
             }
+            const earlyIncome = !committed && factories > 0 && s.harvesters > 0 &&
+                sp(game, player.name, 'economy.enableEarlyIncomeRefinery') === 1 && (rules.freeUnit === "HARV" || rules.freeUnit === "CMIN") &&
+                game.mapApi.getAllTilesResourceData().some(resource => game.mapApi.isVisibleTile(resource.tile, player.name) && (resource.ore > 0 || resource.gems > 0));
             const core = (s.own.MTNK ?? 0) + (s.own.HTNK ?? 0);
             const canExpand = (s.harvesters >= sp(game, player.name, 'economy.secondRefineryMinHarvesters') && (s.credits >= sp(game, player.name, 'economy.secondRefineryCredits') || core >= sp(game, player.name, 'economy.secondRefineryCoreArmor'))) ||
                 (s.harvesters === 1 && factories > 0 && core >= 1 && s.credits >= rules.cost + sp(game, player.name, 'economy.secondRefineryCostMargin') &&
-                    (rules.freeUnit === "HARV" || rules.freeUnit === "CMIN"));
+                    (rules.freeUnit === "HARV" || rules.freeUnit === "CMIN")) || earlyIncome;
             return (committed || (factories > 0 && canExpand) ||
-                (!factories && (s.own.JUMPJET ?? 0) >= 2 && getOpeningAirBudget(game, player) === 2)) ? sp(game, player.name, 'economy.firstRefineryPriority') : 0;
+                (!factories && (s.own.JUMPJET ?? 0) >= 2 && getOpeningAirBudget(game, player) === 2)) ? sp(game, player.name, earlyIncome ? 'economy.secondMinerPriority' : 'economy.firstRefineryPriority') : 0;
         }
         return refineries < sp(game, player.name, 'economy.maxRefineries') && s.harvesters >= refineries * sp(game, player.name, 'economy.harvestersPerRefinery') ? sp(game, player.name, 'economy.extraRefineryPriority') : 0;
     }

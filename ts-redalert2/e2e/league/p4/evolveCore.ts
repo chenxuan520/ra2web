@@ -34,7 +34,7 @@ function entries(genome: Genome) {
     return OVERRIDE_LABELS.flatMap(table => Object.keys(genome.overrides[table]).map(path => ({ table, path })))
         .sort((a, b) => `${a.table}.${a.path}` < `${b.table}.${b.path}` ? -1 : 1);
 }
-export function makeChild(parents: readonly Genome[], space: ParamSpace, seed: number, existing: ReadonlySet<string>, crossover = true): Child {
+export function makeChild(parents: readonly Genome[], space: ParamSpace, seed: number, existing: ReadonlySet<string>, crossover = true, requiredOn?: string): Child {
     if (parents.length !== 4) throw new Error('Exactly four parents are required');
     for (let attempt = 0; attempt < 20; attempt++) {
         const actualSeed = seed + attempt * 1000, random = mulberry32(actualSeed);
@@ -70,7 +70,8 @@ export function makeChild(parents: readonly Genome[], space: ParamSpace, seed: n
                 delete genome.overrides[table][path]; mutations.push({ kind: 'delete', table, path, before });
             }
         }
-        if (!validateGenome(genome, space).length && !existing.has(genomeKey(genome))) return { genome, parentIndices, mutations, seed: actualSeed };
+        if (!validateGenome(genome, space).length && !existing.has(genomeKey(genome)) && (!requiredOn || genome.base[requiredOn] === 1))
+            return { genome, parentIndices, mutations, seed: actualSeed };
     }
     throw new Error(`Unable to generate a unique valid child after 20 attempts: ${seed}`);
 }
@@ -91,7 +92,7 @@ export function population(champion: Genome, parents: readonly Genome[], space: 
         const sourceParents = seedOn && index < 4 ? ordinaryParents.map(parent => {
             const genome = structuredClone(parent); genome.base[seedOn] = 1; return genome;
         }) : ordinaryParents;
-        const child = makeChild(sourceParents, space, seed, seen, generation > 0 || reuseParents);
+        const child = makeChild(sourceParents, space, seed, seen, generation > 0 || reuseParents, seedOn && index < 4 ? seedOn : undefined);
         result.push(child); seen.add(genomeKey(child.genome));
     }
     result.push({ genome: structuredClone(champion), seed: run * 100000 + generation * 100 + 15, parentIndices: [], mutations: [] });

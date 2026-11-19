@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "round": 9,
-  "champion": "c9",
+  "round": 10,
+  "champion": "c10",
   "members": [
     {
       "id": "orig",
@@ -216,9 +216,18 @@
       "tag": "league/c9",
       "tree": "6196a7c0bf70dbfdcb27d309ad126b84eca01963",
       "profile": "brutal",
+      "role": "history",
+      "active": false,
+      "note": "equivalent source rebase of c8 after P3/P4; empty overrides; owner decision; exact equivalence check passed; not a performance promotion"
+    },
+    {
+      "id": "c10",
+      "tag": "league/c10",
+      "tree": "1f4508cda02f5cecc461827ef2f2c1bd7332052a",
+      "profile": "brutal",
       "role": "champion",
       "active": true,
-      "note": "equivalent source rebase of c8 after P3/P4; empty overrides; owner decision; exact equivalence check passed; not a performance promotion"
+      "note": "equivalent source re-registration of c9 for the single phase 4 capability round; early income switch default off; 24-game exact equivalence passed; not a performance promotion"
     }
   ]
 }
